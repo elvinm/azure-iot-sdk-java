@@ -55,8 +55,7 @@ public class TwinMetadata
 
     /**
      * CONSTRUCTOR
-     * <p>
-     * <p> This private constructor will receive and store the metadata parameters.
+     * <p> This private constructor will receive and store the metadata parameters.</p>
      *
      * @param lastUpdated        the {@code String} with the date and time UTC of the last update on the entity. It can be {@code null}, empty or invalid.
      * @param lastUpdatedVersion the {@code Integer} with the version of the last update on the entity. It can be {@code null}.
@@ -83,8 +82,7 @@ public class TwinMetadata
 
     /**
      * CONSTRUCTOR (copy)
-     * <p>
-     * <P> This private constructor will create a new instance of the TwinMetadata coping the information from the provided one.
+     * <P> This private constructor will create a new instance of the TwinMetadata coping the information from the provided one.</p>
      *
      * @param metadata the original {@code TwinMetadata} to copy.
      */
@@ -103,18 +101,17 @@ public class TwinMetadata
 
     /**
      * Metadata extractor
-     * <p>
      * <p> This internal method will try to find $lastUpdated and $lastUpdatedVersion at the first
      * level of the provided Map (Object), and create a new instance of the TwinMetadata with
      * this information.
-     * <p>
+     * </p>
      * <p> Once the provide Object can or cannot be a Map, and, if it is a Map, it can or cannot
      * contains a valid metadata, this method contains the label <b>try</b>, which means that
      * it can return a valid TwinMetadata or {@code null}.
-     * <p>
+     * </p>
      * <p> For instance, for the follow Map, this method will create a TwinMetadata with
      * {@code lastUpdated = 2015-09-21T02:07:44.238Z} and {@code lastUpdatedVersion = 3}
-     * <p>
+     * </p>
      * <pre>
      * {@code
      * "$lastUpdated":"2015-09-21T02:07:44.238Z",
@@ -203,9 +200,9 @@ public class TwinMetadata
     /**
      * Serializer
      * <p>
-     * <p>
      * Creates a {@code JsonElement}, which the content represents
      * the information in this class in a JSON format.
+     * </p>
      * <p>
      * This is useful if the caller will integrate this JSON with JSON from
      * other classes to generate a consolidated JSON.

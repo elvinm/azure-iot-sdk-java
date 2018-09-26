@@ -107,9 +107,8 @@ public class TwinCollection extends HashMap<String, Object>
 
     /**
      * Constructor
-     * <p>
      * <p> Creates an empty collection. Fill it with {@link #put(String, Object)}
-     * or {@link #putAll(Map)}.
+     * or {@link #putAll(Map)}.</p>
      */
     public TwinCollection()
     {
@@ -119,8 +118,7 @@ public class TwinCollection extends HashMap<String, Object>
 
     /**
      * Constructor
-     * <p>
-     * <p> Creates a new Twin collection coping the provided Map.
+     * <p> Creates a new Twin collection coping the provided Map.</p>
      *
      * @param map the Map of {@code ? extends String} and {@code Object} with the Twin collection
      */
@@ -136,8 +134,7 @@ public class TwinCollection extends HashMap<String, Object>
 
     /**
      * Constructor
-     * <p>
-     * <p> Creates a new Twin collection coping the provided collection.
+     * <p> Creates a new Twin collection coping the provided collection.</p>
      *
      * @param collection the Collection of {@code ? extends String} and {@code Object} with the Twin collection
      */
@@ -167,14 +164,12 @@ public class TwinCollection extends HashMap<String, Object>
 
     /**
      * Internal Constructor from raw map.
-     * <p>
-     * <p> This internal constructor is used to the deserialization process.
-     * <p>
+     * <p> This internal constructor is used to the deserialization process.</p>
      * <p> During the deserialization process, the GSON will convert both tags and
      * properties to a raw Map, which will includes the $version and $metadata
      * as part of the collection. So, we need to reorganize this map using the
      * TwinCollection format. This constructor will do that.
-     * <p>
+     * </p>
      * <p> For instance, the following JSON is a valid TwinCollection with its metadata.
      * <pre>
      * {@code
@@ -208,7 +203,7 @@ public class TwinCollection extends HashMap<String, Object>
      * }
      * }
      * </pre>
-     *
+     * </p>
      * @param rawCollection the {@code Map<? extends String, Object>} with contain all TwinCollection information, without
      *                      any differentiation between each entity is the Twin information and each entity is part
      *                      of the Twin metadata.
@@ -295,16 +290,13 @@ public class TwinCollection extends HashMap<String, Object>
 
     /**
      * Add all information in the provided Map to the TwinCollection.
-     * <p>
-     * <p> Override {@code HashMap.putAll(Map)}.
-     * <p>
+     * <p> Override {@code HashMap.putAll(Map)}. </p>
      * <p> This function will add all entries in the Map to the TwinCollection. If the provided
      * key already exists, it will replace the value by the new one. This function will not
-     * delete or change the content of the other keys in the Map.
-     * <p>
+     * delete or change the content of the other keys in the Map.</p>
      * <p> As defined by the Twin, the value of a entry can be an inner Map. TwinCollection will
      * accept up to 5 levels of inner Maps.
-     *
+     * </p>
      * @param map A {@code Map} of entries to add to the TwinCollection.
      */
     @Override
@@ -325,13 +317,11 @@ public class TwinCollection extends HashMap<String, Object>
 
     /**
      * Add a single new entry in the TwinCollection.
-     * <p>
-     * <p> Override {@code HashMap.put(String, Object)}.
-     * <p>
+     * <p> Override {@code HashMap.put(String, Object)}.</p>
      * <p> This function will add a single pair key value to the TwinCollection. By the
      * Twin definition, the {@code Object} can contain types of {@code Boolean},
      * {@code Number}, {@code String}, {@code Object}, or up to 5 levels of
-     * sub-TwinCollection, but it cannot be types defined by the user or arrays.
+     * sub-TwinCollection, but it cannot be types defined by the user or arrays.</p>
      *
      * @param key   the {@code String} that represent the key of the new entry. It cannot be {#code null} or empty.
      * @param value the {@code Object} that represents the value of the new entry. It cannot be user defined type or array.
@@ -360,12 +350,10 @@ public class TwinCollection extends HashMap<String, Object>
 
     /**
      * Serializer
-     * <p>
      * <p> Creates a {@code JsonElement}, which the content represents
-     * the information in this class and its subclasses in a JSON format.
-     * <p>
+     * the information in this class and its subclasses in a JSON format.</p>
      * <p> This is useful if the caller will integrate this JSON with JSON from
-     * other classes to generate a consolidated JSON.
+     * other classes to generate a consolidated JSON.</p>
      *
      * @return The {@code JsonElement} with the content of this class.
      */
@@ -378,9 +366,8 @@ public class TwinCollection extends HashMap<String, Object>
 
     /**
      * Serializer with metadata.
-     * <p>
      * <p> Return a JsonElement with the full content of this class,
-     * including the metadata.
+     * including the metadata.</p>
      *
      * @return The {@code JsonElement} with the full content of this class.
      */

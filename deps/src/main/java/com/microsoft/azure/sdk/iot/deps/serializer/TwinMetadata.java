@@ -14,7 +14,7 @@ import java.util.TimeZone;
 
 /**
  * INNER TWINPARSER CLASS
- * <p>
+ *
  * TwinParser metadata representation
  *
  * @deprecated As of release 0.4.0, replaced by {@link com.microsoft.azure.sdk.iot.deps.twin.TwinMetadata}
@@ -22,7 +22,6 @@ import java.util.TimeZone;
 @Deprecated
 public class TwinMetadata
 {
-
     private static final String DATEFORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     private static final String TIMEZONE = "UTC";
 

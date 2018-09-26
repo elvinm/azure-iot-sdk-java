@@ -106,17 +106,12 @@ public class IotHubSSLContext
     }
 
     /**
-     *
-     *
-
-     */
-    /**
      * Creates a default SSLContext for the IotHub with the specified certificate.
      *
-     * @param publicKeyCertificateString
-     * @param privateKeyString
-     * @param cert
-     * @param isPath
+     * @param publicKeyCertificateString the public key used for identifying the device
+     * @param privateKeyString the private key used for identifying the device
+     * @param cert the trusted cert
+     * @param isPath if the trusted cert is a path, or false if it is a PEM string
      * @throws KeyManagementException   As per https://docs.oracle.com/javase/7/docs/api/java/security/KeyManagementException.html
      * @throws IOException              If the certificate provided was null or invalid
      * @throws CertificateException     As per https://docs.oracle.com/javase/7/docs/api/java/security/cert/CertificateException.html

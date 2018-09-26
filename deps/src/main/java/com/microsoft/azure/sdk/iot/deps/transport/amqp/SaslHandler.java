@@ -23,7 +23,7 @@ public interface SaslHandler
 
     /**
      * Based on the chosen mechanism, builds and returns the bytes to be sent in the payload for the Sasl init message
-     *
+     * @param chosenMechanism the sasl mechnism that was chosen
      * @return the bytes to be used as the paylaod for the Sasl init message
      * @throws Exception if an exception is encountered
      */

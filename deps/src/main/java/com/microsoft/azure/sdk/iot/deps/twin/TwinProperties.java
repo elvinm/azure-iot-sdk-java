@@ -90,10 +90,9 @@ public class TwinProperties
 
     /**
      * CONSTRUCTOR
-     * <p>
      * <p> This constructor creates an instance of the TwinProperties with the provided {@link TwinCollection}
      * desired property.
-     * <p>
+     * </p>
      * <p> When serialized, this class will looks like the following example:
      * <pre>
      * {@code
@@ -113,7 +112,7 @@ public class TwinProperties
      *  }
      * }
      * </pre>
-     *
+     * </p>
      * @param desired  the {@link TwinCollection} with the desired property. It cannot be {@code null}.
      * @param reported the {@link TwinCollection} with the reported property. It cannot be {@code null}.
      * @throws IllegalArgumentException if both desired and reported properties are {@code null}.
@@ -140,7 +139,6 @@ public class TwinProperties
     /**
      * Empty constructor
      * <p>
-     * <p>
      * Used only by the tools that will deserialize this class.
      * </p>
      */
@@ -153,9 +151,9 @@ public class TwinProperties
     /**
      * Serializer
      * <p>
-     * <p>
      * Creates a {@code JsonElement}, which the content represents
      * the information in this class and its subclasses in a JSON format.
+     * </p>
      * <p>
      * This is useful if the caller will integrate this JSON with JSON from
      * other classes to generate a consolidated JSON.
@@ -186,10 +184,9 @@ public class TwinProperties
     /**
      * Serializer
      * <p>
-     * <p>
      * Creates a {@code JsonElement}, which the content represents
      * the information in this class and its subclasses in a JSON format.
-     * <p>
+     * </p>
      * If the desired property contains metadata, this method will include
      * it in the final JSON.
      * <p>
