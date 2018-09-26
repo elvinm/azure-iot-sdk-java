@@ -23,8 +23,6 @@ package com.microsoft.azure.sdk.iot.deps.ws.impl;
 import com.microsoft.azure.sdk.iot.deps.ws.WebSocket;
 import com.microsoft.azure.sdk.iot.deps.ws.WebSocketHandler;
 import com.microsoft.azure.sdk.iot.deps.ws.WebSocketHeader;
-import com.microsoft.azure.sdk.iot.deps.ws.impl.WebSocketHandlerImpl;
-import com.microsoft.azure.sdk.iot.deps.ws.impl.WebSocketImpl;
 import org.apache.qpid.proton.engine.Transport;
 import org.apache.qpid.proton.engine.TransportException;
 import org.apache.qpid.proton.engine.impl.ByteBufferUtils;

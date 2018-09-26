@@ -11,7 +11,7 @@ import mockit.Deencapsulation;
 import mockit.Mocked;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Unit test for Provisioning Connection String

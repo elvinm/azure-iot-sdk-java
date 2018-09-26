@@ -8,7 +8,9 @@ import com.microsoft.azure.sdk.iot.deps.transport.http.HttpResponse;
 import com.microsoft.azure.sdk.iot.provisioning.service.configs.DeviceRegistrationState;
 import com.microsoft.azure.sdk.iot.provisioning.service.configs.QuerySpecification;
 import com.microsoft.azure.sdk.iot.provisioning.service.contract.ContractApiHttp;
-import com.microsoft.azure.sdk.iot.provisioning.service.exceptions.*;
+import com.microsoft.azure.sdk.iot.provisioning.service.exceptions.ProvisioningServiceClientException;
+import com.microsoft.azure.sdk.iot.provisioning.service.exceptions.ProvisioningServiceClientServiceException;
+import com.microsoft.azure.sdk.iot.provisioning.service.exceptions.ProvisioningServiceClientTransportException;
 
 import java.util.HashMap;
 import java.util.Map;

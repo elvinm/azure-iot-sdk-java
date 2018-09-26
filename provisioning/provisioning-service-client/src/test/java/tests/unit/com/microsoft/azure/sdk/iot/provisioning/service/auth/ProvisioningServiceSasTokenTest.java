@@ -5,12 +5,12 @@
 
 package tests.unit.com.microsoft.azure.sdk.iot.provisioning.service.auth;
 
+import com.microsoft.azure.sdk.iot.deps.util.Base64;
 import com.microsoft.azure.sdk.iot.provisioning.service.auth.ProvisioningConnectionString;
 import com.microsoft.azure.sdk.iot.provisioning.service.auth.ProvisioningConnectionStringBuilder;
 import com.microsoft.azure.sdk.iot.provisioning.service.auth.ProvisioningSasToken;
 import mockit.Deencapsulation;
 import mockit.Expectations;
-import com.microsoft.azure.sdk.iot.deps.util.Base64;
 import org.junit.Test;
 
 import javax.crypto.Mac;

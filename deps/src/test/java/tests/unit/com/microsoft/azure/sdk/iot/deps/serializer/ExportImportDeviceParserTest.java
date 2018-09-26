@@ -5,7 +5,6 @@ package tests.unit.com.microsoft.azure.sdk.iot.deps.serializer;
 
 import com.microsoft.azure.sdk.iot.deps.serializer.*;
 import com.microsoft.azure.sdk.iot.deps.twin.TwinCollection;
-
 import org.junit.Test;
 
 import java.security.NoSuchAlgorithmException;

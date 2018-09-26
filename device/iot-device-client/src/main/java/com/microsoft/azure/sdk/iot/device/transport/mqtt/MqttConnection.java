@@ -12,7 +12,6 @@ import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import javax.net.ssl.SSLContext;
-import java.io.IOException;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class MqttConnection

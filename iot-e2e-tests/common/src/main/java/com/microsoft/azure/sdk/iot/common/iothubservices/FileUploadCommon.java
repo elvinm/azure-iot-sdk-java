@@ -5,6 +5,7 @@
 
 package com.microsoft.azure.sdk.iot.common.iothubservices;
 
+import com.microsoft.azure.sdk.iot.common.DeviceConnectionString;
 import com.microsoft.azure.sdk.iot.device.DeviceClient;
 import com.microsoft.azure.sdk.iot.device.IotHubClientProtocol;
 import com.microsoft.azure.sdk.iot.device.IotHubEventCallback;
@@ -12,8 +13,10 @@ import com.microsoft.azure.sdk.iot.device.IotHubStatusCode;
 import com.microsoft.azure.sdk.iot.service.*;
 import com.microsoft.azure.sdk.iot.service.exceptions.IotHubException;
 import com.microsoft.azure.sdk.iot.service.exceptions.IotHubNotFoundException;
-import org.junit.*;
-import com.microsoft.azure.sdk.iot.common.DeviceConnectionString;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -25,11 +28,11 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.*;
 
+import static com.microsoft.azure.sdk.iot.common.iothubservices.FileUploadCommon.STATUS.FAILURE;
+import static com.microsoft.azure.sdk.iot.common.iothubservices.FileUploadCommon.STATUS.SUCCESS;
 import static com.microsoft.azure.sdk.iot.device.IotHubStatusCode.OK;
 import static com.microsoft.azure.sdk.iot.device.IotHubStatusCode.OK_EMPTY;
 import static org.junit.Assert.*;
-import static com.microsoft.azure.sdk.iot.common.iothubservices.FileUploadCommon.STATUS.FAILURE;
-import static com.microsoft.azure.sdk.iot.common.iothubservices.FileUploadCommon.STATUS.SUCCESS;
 
 public class FileUploadCommon extends MethodNameLoggingIntegrationTest
 {

@@ -21,10 +21,10 @@
 
 package tests.unit.com.microsoft.azure.sdk.iot.deps.ws.impl;
 
+import com.microsoft.azure.sdk.iot.deps.util.Base64;
 import com.microsoft.azure.sdk.iot.deps.ws.impl.WebSocketUpgrade;
 import org.junit.Test;
 
-import com.microsoft.azure.sdk.iot.deps.util.Base64;
 import java.security.InvalidParameterException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

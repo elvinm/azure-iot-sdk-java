@@ -5,18 +5,16 @@
 
 package tests.unit.com.microsoft.azure.sdk.iot.device.edge;
 
-import com.microsoft.azure.sdk.iot.device.hsm.parser.TrustBundleResponse;
+import com.microsoft.azure.sdk.iot.device.edge.HttpsHsmTrustBundleProvider;
 import com.microsoft.azure.sdk.iot.device.exceptions.TransportException;
 import com.microsoft.azure.sdk.iot.device.hsm.HsmException;
 import com.microsoft.azure.sdk.iot.device.hsm.HttpsHsmClient;
-import com.microsoft.azure.sdk.iot.device.edge.HttpsHsmTrustBundleProvider;
+import com.microsoft.azure.sdk.iot.device.hsm.parser.TrustBundleResponse;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
 import static junit.framework.TestCase.assertEquals;

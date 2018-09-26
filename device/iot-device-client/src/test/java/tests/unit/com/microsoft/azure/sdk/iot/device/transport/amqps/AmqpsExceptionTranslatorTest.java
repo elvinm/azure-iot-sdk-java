@@ -6,9 +6,9 @@
 package tests.unit.com.microsoft.azure.sdk.iot.device.transport.amqps;
 
 import com.microsoft.azure.sdk.iot.device.exceptions.ProtocolException;
-import com.microsoft.azure.sdk.iot.device.transport.amqps.*;
+import com.microsoft.azure.sdk.iot.device.transport.amqps.AmqpsExceptionTranslator;
 import com.microsoft.azure.sdk.iot.device.transport.amqps.exceptions.*;
-import mockit.*;
+import mockit.Deencapsulation;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;

@@ -5,14 +5,15 @@
 
 package tests.integration.com.microsoft.azure.sdk.iot.iothubservices;
 
-import com.microsoft.azure.sdk.iot.common.X509Cert;
 import com.microsoft.azure.sdk.iot.common.TestConstants;
-import com.microsoft.azure.sdk.iot.common.iothubservices.ReceiveMessagesCommon;
-import com.microsoft.azure.sdk.iot.service.Module;
+import com.microsoft.azure.sdk.iot.common.X509Cert;
 import com.microsoft.azure.sdk.iot.common.helpers.Tools;
-import com.microsoft.azure.sdk.iot.device.*;
+import com.microsoft.azure.sdk.iot.common.iothubservices.ReceiveMessagesCommon;
+import com.microsoft.azure.sdk.iot.device.InternalClient;
+import com.microsoft.azure.sdk.iot.device.IotHubClientProtocol;
 import com.microsoft.azure.sdk.iot.device.exceptions.ModuleClientException;
 import com.microsoft.azure.sdk.iot.service.Device;
+import com.microsoft.azure.sdk.iot.service.Module;
 import com.microsoft.azure.sdk.iot.service.auth.AuthenticationType;
 import com.microsoft.azure.sdk.iot.service.exceptions.IotHubException;
 import org.junit.runner.RunWith;

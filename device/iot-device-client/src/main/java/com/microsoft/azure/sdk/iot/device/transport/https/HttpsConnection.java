@@ -3,9 +3,6 @@
 
 package com.microsoft.azure.sdk.iot.device.transport.https;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.microsoft.azure.sdk.iot.deps.transport.http.HttpMethod;
 import com.microsoft.azure.sdk.iot.device.exceptions.TransportException;
 
 import javax.net.ssl.HttpsURLConnection;

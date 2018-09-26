@@ -11,7 +11,7 @@ import mockit.Mocked;
 import mockit.Verifications;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Unit test for Device Provisioning Service Authentication With Shared Access Policy Key

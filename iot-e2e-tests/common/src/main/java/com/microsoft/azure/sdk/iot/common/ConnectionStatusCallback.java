@@ -5,7 +5,6 @@
 
 package com.microsoft.azure.sdk.iot.common;
 
-import com.microsoft.azure.sdk.iot.common.Success;
 import com.microsoft.azure.sdk.iot.device.IotHubConnectionState;
 import com.microsoft.azure.sdk.iot.device.IotHubConnectionStateCallback;
 

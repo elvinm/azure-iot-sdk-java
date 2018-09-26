@@ -8,7 +8,6 @@ import com.microsoft.azure.sdk.iot.deps.serializer.FileUploadRequestParser;
 import com.microsoft.azure.sdk.iot.deps.serializer.FileUploadResponseParser;
 import com.microsoft.azure.sdk.iot.deps.serializer.FileUploadStatusParser;
 import com.microsoft.azure.sdk.iot.device.*;
-import com.microsoft.azure.sdk.iot.device.net.IotHubUri;
 import com.microsoft.azure.sdk.iot.device.transport.IotHubTransportMessage;
 import com.microsoft.azure.sdk.iot.device.transport.https.HttpsTransportManager;
 import com.microsoft.azure.storage.StorageException;

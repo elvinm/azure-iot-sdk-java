@@ -3,14 +3,16 @@
 
 package tests.unit.com.microsoft.azure.sdk.iot.device.transport;
 
-import com.microsoft.azure.sdk.iot.device.transport.RetryDecision;
 import com.microsoft.azure.sdk.iot.device.transport.ExponentialBackoffWithJitter;
+import com.microsoft.azure.sdk.iot.device.transport.RetryDecision;
 import com.microsoft.azure.sdk.iot.device.transport.RetryPolicy;
-import java.util.Random;
 import mockit.Deencapsulation;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import org.junit.Test;
+
+import java.util.Random;
+
 import static org.junit.Assert.*;
 
 public class ExponentialBackoffWithJitterTest

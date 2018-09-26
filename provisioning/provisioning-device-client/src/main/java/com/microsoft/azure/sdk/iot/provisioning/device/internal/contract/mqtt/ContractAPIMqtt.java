@@ -3,15 +3,21 @@
 
 package com.microsoft.azure.sdk.iot.provisioning.device.internal.contract.mqtt;
 
+import com.microsoft.azure.sdk.iot.deps.transport.mqtt.MqttConnection;
+import com.microsoft.azure.sdk.iot.deps.transport.mqtt.MqttListener;
+import com.microsoft.azure.sdk.iot.deps.transport.mqtt.MqttMessage;
+import com.microsoft.azure.sdk.iot.deps.transport.mqtt.MqttQos;
 import com.microsoft.azure.sdk.iot.deps.util.ObjectLock;
 import com.microsoft.azure.sdk.iot.provisioning.device.internal.ProvisioningDeviceClientConfig;
 import com.microsoft.azure.sdk.iot.provisioning.device.internal.SDKUtils;
 import com.microsoft.azure.sdk.iot.provisioning.device.internal.contract.ProvisioningDeviceClientContract;
-import com.microsoft.azure.sdk.iot.provisioning.device.internal.exceptions.*;
 import com.microsoft.azure.sdk.iot.provisioning.device.internal.contract.ResponseCallback;
-import com.microsoft.azure.sdk.iot.provisioning.device.internal.task.RequestData;
-import com.microsoft.azure.sdk.iot.deps.transport.mqtt.*;
+import com.microsoft.azure.sdk.iot.provisioning.device.internal.exceptions.ProvisioningDeviceClientException;
+import com.microsoft.azure.sdk.iot.provisioning.device.internal.exceptions.ProvisioningDeviceConnectionException;
+import com.microsoft.azure.sdk.iot.provisioning.device.internal.exceptions.ProvisioningDeviceHubException;
+import com.microsoft.azure.sdk.iot.provisioning.device.internal.exceptions.ProvisioningDeviceTransportException;
 import com.microsoft.azure.sdk.iot.provisioning.device.internal.task.ContractState;
+import com.microsoft.azure.sdk.iot.provisioning.device.internal.task.RequestData;
 import com.microsoft.azure.sdk.iot.provisioning.device.internal.task.ResponseData;
 
 import javax.net.ssl.SSLContext;

@@ -5,17 +5,16 @@
 
 package tests.unit.com.microsoft.azure.sdk.iot.deps.transport.amqp;
 
+import com.microsoft.azure.sdk.iot.deps.transport.amqp.AmqpMessage;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import mockit.integration.junit4.JMockit;
-import org.apache.qpid.proton.Proton;
+import org.apache.qpid.proton.amqp.messaging.ApplicationProperties;
 import org.apache.qpid.proton.amqp.messaging.Data;
 import org.apache.qpid.proton.message.Message;
 import org.apache.qpid.proton.message.impl.MessageImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import com.microsoft.azure.sdk.iot.deps.transport.amqp.AmqpMessage;
-import org.apache.qpid.proton.amqp.messaging.ApplicationProperties;
 
 import java.io.IOException;
 import java.util.HashMap;

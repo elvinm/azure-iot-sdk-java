@@ -1,9 +1,10 @@
 package tests.unit.com.microsoft.azure.sdk.iot.deps.serializer;
 
-import com.microsoft.azure.sdk.iot.deps.serializer.*;
-import mockit.integration.junit4.JMockit;
+import com.microsoft.azure.sdk.iot.deps.serializer.ConfigurationContentParser;
+import com.microsoft.azure.sdk.iot.deps.serializer.ConfigurationMetricsParser;
+import com.microsoft.azure.sdk.iot.deps.serializer.ConfigurationParser;
+import com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.HashMap;
 

@@ -7,7 +7,9 @@ package com.microsoft.azure.sdk.iot.common.iothubservices;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.microsoft.azure.sdk.iot.common.*;
+import com.microsoft.azure.sdk.iot.common.DeviceConnectionString;
+import com.microsoft.azure.sdk.iot.common.ErrorInjectionHelper;
+import com.microsoft.azure.sdk.iot.common.MessageAndResult;
 import com.microsoft.azure.sdk.iot.device.*;
 import com.microsoft.azure.sdk.iot.device.DeviceTwin.Device;
 import com.microsoft.azure.sdk.iot.device.DeviceTwin.Property;

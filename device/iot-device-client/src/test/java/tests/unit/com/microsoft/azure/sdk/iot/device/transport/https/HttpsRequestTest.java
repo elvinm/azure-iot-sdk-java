@@ -20,9 +20,7 @@ import java.net.URL;
 import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /** Unit tests for HttpsRequest. */
 public class HttpsRequestTest

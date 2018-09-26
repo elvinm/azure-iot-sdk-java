@@ -8,7 +8,10 @@ import com.microsoft.azure.sdk.iot.provisioning.service.Query;
 import com.microsoft.azure.sdk.iot.provisioning.service.configs.*;
 import com.microsoft.azure.sdk.iot.provisioning.service.exceptions.ProvisioningServiceClientException;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Create, get, query, and delete a set of individual enrollments on the Microsoft Azure IoT Hub Device

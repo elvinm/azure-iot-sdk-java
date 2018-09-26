@@ -5,6 +5,7 @@
 
 package tests.integration.com.microsoft.azure.sdk.iot.serviceclient;
 
+import com.microsoft.azure.sdk.iot.common.helpers.Tools;
 import com.microsoft.azure.sdk.iot.deps.serializer.ExportImportDeviceParser;
 import com.microsoft.azure.sdk.iot.deps.twin.TwinCollection;
 import com.microsoft.azure.sdk.iot.service.*;
@@ -13,8 +14,10 @@ import com.microsoft.azure.storage.CloudStorageAccount;
 import com.microsoft.azure.storage.StorageException;
 import com.microsoft.azure.storage.blob.*;
 import mockit.Deencapsulation;
-import org.junit.*;
-import com.microsoft.azure.sdk.iot.common.helpers.Tools;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

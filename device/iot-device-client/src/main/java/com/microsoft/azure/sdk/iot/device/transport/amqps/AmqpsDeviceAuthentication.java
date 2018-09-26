@@ -4,7 +4,8 @@ import com.microsoft.azure.sdk.iot.device.DeviceClientConfig;
 import com.microsoft.azure.sdk.iot.device.exceptions.TransportException;
 import org.apache.qpid.proton.Proton;
 import org.apache.qpid.proton.ProtonUnsupportedOperationException;
-import org.apache.qpid.proton.engine.*;
+import org.apache.qpid.proton.engine.SslDomain;
+import org.apache.qpid.proton.engine.Transport;
 
 import javax.net.ssl.SSLContext;
 import java.util.UUID;

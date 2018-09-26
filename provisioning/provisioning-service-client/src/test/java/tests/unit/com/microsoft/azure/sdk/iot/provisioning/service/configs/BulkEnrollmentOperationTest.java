@@ -8,7 +8,8 @@ import com.microsoft.azure.sdk.iot.provisioning.service.configs.*;
 import org.junit.Test;
 import tests.unit.com.microsoft.azure.sdk.iot.provisioning.service.Helpers;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Unit tests for Device Provisioning Service bulk operation serializer

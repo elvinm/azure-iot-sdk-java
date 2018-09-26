@@ -7,17 +7,15 @@ package com.microsoft.azure.sdk.iot.android;
 
 import android.os.Bundle;
 import android.support.test.InstrumentationRegistry;
-
-import com.microsoft.azure.sdk.iot.common.iothubservices.SendMessagesCommon;
+import com.microsoft.azure.sdk.iot.android.helper.Tools;
 import com.microsoft.azure.sdk.iot.common.TestConstants;
+import com.microsoft.azure.sdk.iot.common.iothubservices.SendMessagesCommon;
 import com.microsoft.azure.sdk.iot.device.InternalClient;
 import com.microsoft.azure.sdk.iot.device.IotHubClientProtocol;
 import com.microsoft.azure.sdk.iot.device.exceptions.ModuleClientException;
 import com.microsoft.azure.sdk.iot.service.Device;
-import com.microsoft.azure.sdk.iot.android.helper.Tools;
 import com.microsoft.azure.sdk.iot.service.auth.AuthenticationType;
 import com.microsoft.azure.sdk.iot.service.exceptions.IotHubException;
-
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 

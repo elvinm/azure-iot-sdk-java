@@ -15,7 +15,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static com.microsoft.azure.sdk.iot.provisioning.device.internal.task.ContractState.DPS_REGISTRATION_UNKNOWN;
-import static mockit.Deencapsulation.*;
+import static mockit.Deencapsulation.invoke;
+import static mockit.Deencapsulation.newInstance;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 

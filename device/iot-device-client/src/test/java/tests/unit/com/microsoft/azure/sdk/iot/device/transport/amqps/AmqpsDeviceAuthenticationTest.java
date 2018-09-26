@@ -14,7 +14,6 @@ import org.apache.qpid.proton.engine.Transport;
 import org.junit.Test;
 
 import javax.net.ssl.SSLContext;
-
 import java.util.Map;
 import java.util.UUID;
 

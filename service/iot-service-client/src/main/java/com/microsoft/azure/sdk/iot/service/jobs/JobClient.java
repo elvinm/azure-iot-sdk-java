@@ -18,7 +18,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Date;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * JobClient enables service client to schedule and cancel jobs for a group of devices using the IoTHub.

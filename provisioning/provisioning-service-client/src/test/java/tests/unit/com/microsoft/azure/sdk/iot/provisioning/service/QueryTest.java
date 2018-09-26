@@ -5,11 +5,16 @@ package tests.unit.com.microsoft.azure.sdk.iot.provisioning.service;
 
 import com.microsoft.azure.sdk.iot.deps.transport.http.HttpMethod;
 import com.microsoft.azure.sdk.iot.deps.transport.http.HttpResponse;
-import com.microsoft.azure.sdk.iot.provisioning.service.*;
-import com.microsoft.azure.sdk.iot.provisioning.service.configs.*;
+import com.microsoft.azure.sdk.iot.provisioning.service.Query;
+import com.microsoft.azure.sdk.iot.provisioning.service.configs.QueryResult;
+import com.microsoft.azure.sdk.iot.provisioning.service.configs.QuerySpecification;
 import com.microsoft.azure.sdk.iot.provisioning.service.contract.ContractApiHttp;
-import com.microsoft.azure.sdk.iot.provisioning.service.exceptions.*;
-import mockit.*;
+import com.microsoft.azure.sdk.iot.provisioning.service.exceptions.ProvisioningServiceClientBadFormatException;
+import com.microsoft.azure.sdk.iot.provisioning.service.exceptions.ProvisioningServiceClientException;
+import mockit.Deencapsulation;
+import mockit.Mocked;
+import mockit.NonStrictExpectations;
+import mockit.StrictExpectations;
 import org.junit.Test;
 
 import java.util.HashMap;

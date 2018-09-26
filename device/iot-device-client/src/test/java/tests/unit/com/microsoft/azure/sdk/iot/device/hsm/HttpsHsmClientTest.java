@@ -6,12 +6,13 @@
 package tests.unit.com.microsoft.azure.sdk.iot.device.hsm;
 
 import com.microsoft.azure.sdk.iot.device.exceptions.TransportException;
-import com.microsoft.azure.sdk.iot.device.hsm.*;
+import com.microsoft.azure.sdk.iot.device.hsm.HsmException;
+import com.microsoft.azure.sdk.iot.device.hsm.HttpsHsmClient;
+import com.microsoft.azure.sdk.iot.device.hsm.HttpsRequestResponseSerializer;
 import com.microsoft.azure.sdk.iot.device.hsm.parser.ErrorResponse;
 import com.microsoft.azure.sdk.iot.device.hsm.parser.SignRequest;
 import com.microsoft.azure.sdk.iot.device.hsm.parser.SignResponse;
 import com.microsoft.azure.sdk.iot.device.hsm.parser.TrustBundleResponse;
-import com.microsoft.azure.sdk.iot.device.transport.TransportUtils;
 import com.microsoft.azure.sdk.iot.device.transport.https.HttpsConnection;
 import com.microsoft.azure.sdk.iot.device.transport.https.HttpsMethod;
 import com.microsoft.azure.sdk.iot.device.transport.https.HttpsRequest;
@@ -21,14 +22,15 @@ import jnr.unixsocket.UnixSocketChannel;
 import mockit.*;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
-import static junit.framework.TestCase.fail;
+import static junit.framework.TestCase.*;
 
 public class HttpsHsmClientTest
 {

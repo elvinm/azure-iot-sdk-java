@@ -5,25 +5,22 @@
 
 package tests.unit.com.microsoft.azure.sdk.iot.deps.transport.amqp;
 
+import com.microsoft.azure.sdk.iot.deps.transport.amqp.AmqpDeviceOperations;
 import com.microsoft.azure.sdk.iot.deps.transport.amqp.AmqpMessage;
-import org.apache.qpid.proton.amqp.messaging.Target;
-
 import mockit.Deencapsulation;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import mockit.integration.junit4.JMockit;
-import com.microsoft.azure.sdk.iot.deps.transport.amqp.AmqpDeviceOperations;
 import org.apache.qpid.proton.amqp.Symbol;
+import org.apache.qpid.proton.amqp.messaging.Target;
 import org.apache.qpid.proton.amqp.transport.SenderSettleMode;
 import org.apache.qpid.proton.engine.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import java.util.Map;
 
 import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
+import java.util.Map;
 
 /** Unit tests for AmqpConnection.
  * Coverage : 100% method, 100% line */

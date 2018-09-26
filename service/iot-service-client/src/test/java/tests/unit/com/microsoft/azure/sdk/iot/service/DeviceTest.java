@@ -12,7 +12,8 @@ import com.microsoft.azure.sdk.iot.service.DeviceConnectionState;
 import com.microsoft.azure.sdk.iot.service.DeviceStatus;
 import com.microsoft.azure.sdk.iot.service.auth.AuthenticationType;
 import com.microsoft.azure.sdk.iot.service.auth.SymmetricKey;
-import mockit.*;
+import mockit.Deencapsulation;
+import mockit.Expectations;
 import org.junit.Test;
 
 import java.security.NoSuchAlgorithmException;

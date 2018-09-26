@@ -5,12 +5,12 @@
 
 package tests.unit.com.microsoft.azure.sdk.iot.service.auth;
 
+import com.microsoft.azure.sdk.iot.deps.util.Base64;
 import com.microsoft.azure.sdk.iot.service.IotHubConnectionString;
 import com.microsoft.azure.sdk.iot.service.IotHubConnectionStringBuilder;
 import com.microsoft.azure.sdk.iot.service.auth.IotHubServiceSasToken;
 import mockit.Deencapsulation;
 import mockit.Expectations;
-import com.microsoft.azure.sdk.iot.deps.util.Base64;
 import org.junit.Test;
 
 import javax.crypto.Mac;

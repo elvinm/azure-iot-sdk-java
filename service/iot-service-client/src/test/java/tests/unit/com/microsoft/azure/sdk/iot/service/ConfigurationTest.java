@@ -1,22 +1,17 @@
 package tests.unit.com.microsoft.azure.sdk.iot.service;
 
-import com.microsoft.azure.sdk.iot.deps.serializer.*;
-import com.microsoft.azure.sdk.iot.service.BaseDevice;
+import com.microsoft.azure.sdk.iot.deps.serializer.ConfigurationMetricsParser;
+import com.microsoft.azure.sdk.iot.deps.serializer.ConfigurationParser;
+import com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility;
 import com.microsoft.azure.sdk.iot.service.Configuration;
-import com.microsoft.azure.sdk.iot.service.ConfigurationContent;
-import com.microsoft.azure.sdk.iot.service.ConfigurationMetrics;
-import com.microsoft.azure.sdk.iot.service.auth.AuthenticationType;
 import mockit.Deencapsulation;
-import mockit.Mocked;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 public class ConfigurationTest
 {

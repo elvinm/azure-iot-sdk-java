@@ -21,7 +21,6 @@
 package com.microsoft.azure.sdk.iot.deps.ws.impl;
 
 import com.microsoft.azure.sdk.iot.deps.ws.WebSocketHeader;
-import com.microsoft.azure.sdk.iot.deps.ws.impl.WebSocketSniffer;
 import org.apache.qpid.proton.engine.impl.TransportWrapper;
 import org.junit.Test;
 

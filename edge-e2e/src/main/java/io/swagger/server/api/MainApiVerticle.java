@@ -1,25 +1,24 @@
 package io.swagger.server.api;
 
-import java.nio.charset.Charset;
-import java.util.function.Function;
-
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.phiz71.vertx.swagger.router.OperationIdServiceIdResolver;
 import com.github.phiz71.vertx.swagger.router.SwaggerRouter;
-
 import io.swagger.models.Swagger;
 import io.swagger.parser.SwaggerParser;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Context;
 import io.vertx.core.Future;
+import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.file.FileSystem;
 import io.vertx.core.json.Json;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
-import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
+
+import java.nio.charset.Charset;
+import java.util.function.Function;
 
 public class MainApiVerticle extends AbstractVerticle {
     final static Logger LOGGER = LoggerFactory.getLogger(MainApiVerticle.class);

@@ -2,7 +2,6 @@ package com.microsoft.azure.sdk.iot.device.transport.amqps;
 
 import com.microsoft.azure.sdk.iot.device.Message;
 import com.microsoft.azure.sdk.iot.device.MessageCallback;
-import com.microsoft.azure.sdk.iot.device.transport.IotHubTransportMessage;
 
 public class AmqpsConvertFromProtonReturnValue
 {

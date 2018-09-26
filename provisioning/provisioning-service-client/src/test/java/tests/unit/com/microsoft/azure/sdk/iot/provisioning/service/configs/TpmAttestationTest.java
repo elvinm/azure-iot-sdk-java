@@ -7,7 +7,8 @@ import com.microsoft.azure.sdk.iot.provisioning.service.configs.TpmAttestation;
 import mockit.Deencapsulation;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Unit tests for Device Provisioning Service TPM attestation

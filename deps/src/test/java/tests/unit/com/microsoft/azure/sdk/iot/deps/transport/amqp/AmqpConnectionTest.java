@@ -8,23 +8,21 @@ package tests.unit.com.microsoft.azure.sdk.iot.deps.transport.amqp;
 import com.microsoft.azure.sdk.iot.deps.transport.amqp.*;
 import com.microsoft.azure.sdk.iot.deps.util.ObjectLock;
 import mockit.Deencapsulation;
-import org.apache.qpid.proton.Proton;
-
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import mockit.integration.junit4.JMockit;
+import org.apache.qpid.proton.Proton;
 import org.apache.qpid.proton.amqp.transport.DeliveryState;
 import org.apache.qpid.proton.engine.*;
-import org.apache.qpid.proton.reactor.*;
+import org.apache.qpid.proton.reactor.Reactor;
 import org.apache.qpid.proton.reactor.ReactorOptions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.nio.BufferOverflowException;
-import java.util.concurrent.*;
-
 import java.io.IOException;
+import java.nio.BufferOverflowException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 

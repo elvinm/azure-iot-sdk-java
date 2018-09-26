@@ -30,10 +30,7 @@ import static com.microsoft.azure.sdk.iot.common.SasTokenGenerator.generateSasTo
 import static com.microsoft.azure.sdk.iot.common.iothubservices.IotHubServicesCommon.sendMessagesExpectingConnectionStatusChangeUpdate;
 import static com.microsoft.azure.sdk.iot.common.iothubservices.IotHubServicesCommon.sendMessagesExpectingUnrecoverableConnectionLossAndTimeout;
 import static com.microsoft.azure.sdk.iot.device.IotHubClientProtocol.*;
-import static com.microsoft.azure.sdk.iot.device.IotHubClientProtocol.AMQPS;
-import static com.microsoft.azure.sdk.iot.service.auth.AuthenticationType.CERTIFICATE_AUTHORITY;
-import static com.microsoft.azure.sdk.iot.service.auth.AuthenticationType.SAS;
-import static com.microsoft.azure.sdk.iot.service.auth.AuthenticationType.SELF_SIGNED;
+import static com.microsoft.azure.sdk.iot.service.auth.AuthenticationType.*;
 import static junit.framework.TestCase.fail;
 
 public class SendMessagesCommon extends MethodNameLoggingIntegrationTest

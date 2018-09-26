@@ -9,7 +9,9 @@ package tests.unit.com.microsoft.azure.sdk.iot.provisioning.security;
 
 import com.microsoft.azure.sdk.iot.provisioning.security.SecurityProviderX509;
 import com.microsoft.azure.sdk.iot.provisioning.security.exceptions.SecurityProviderException;
-import mockit.*;
+import mockit.Mocked;
+import mockit.NonStrictExpectations;
+import mockit.Verifications;
 import org.junit.Test;
 
 import javax.net.ssl.*;

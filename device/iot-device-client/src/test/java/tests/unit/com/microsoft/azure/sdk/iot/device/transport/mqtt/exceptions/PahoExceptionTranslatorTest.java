@@ -8,7 +8,9 @@ package tests.unit.com.microsoft.azure.sdk.iot.device.transport.mqtt.exceptions;
 import com.microsoft.azure.sdk.iot.device.exceptions.ProtocolException;
 import com.microsoft.azure.sdk.iot.device.exceptions.TransportException;
 import com.microsoft.azure.sdk.iot.device.transport.mqtt.exceptions.*;
-import mockit.*;
+import mockit.Mocked;
+import mockit.NonStrictExpectations;
+import mockit.StrictExpectations;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.junit.Test;
 

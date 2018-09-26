@@ -14,14 +14,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.net.ssl.SSLContext;
-
 import java.util.Random;
 
 import static mockit.Deencapsulation.invoke;
 import static mockit.Deencapsulation.newInstance;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /*
     Unit test for RequestData

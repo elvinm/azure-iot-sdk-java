@@ -3,11 +3,12 @@ package tests.unit.com.microsoft.azure.sdk.iot.device.transport.amqps;
 import com.microsoft.azure.sdk.iot.device.DeviceClientConfig;
 import com.microsoft.azure.sdk.iot.device.MessageType;
 import com.microsoft.azure.sdk.iot.device.ProductInfo;
-import com.microsoft.azure.sdk.iot.device.transport.amqps.*;
+import com.microsoft.azure.sdk.iot.device.transport.amqps.AmqpsDeviceAuthenticationCBS;
+import com.microsoft.azure.sdk.iot.device.transport.amqps.AmqpsDeviceOperationLinkState;
+import com.microsoft.azure.sdk.iot.device.transport.amqps.AmqpsMessage;
 import mockit.*;
 import org.apache.qpid.proton.Proton;
 import org.apache.qpid.proton.amqp.Symbol;
-import org.apache.qpid.proton.amqp.messaging.AmqpValue;
 import org.apache.qpid.proton.amqp.messaging.ApplicationProperties;
 import org.apache.qpid.proton.amqp.messaging.Properties;
 import org.apache.qpid.proton.amqp.messaging.Section;
@@ -25,9 +26,7 @@ import java.util.UUID;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Unit tests for AmqpsDeviceAuthenticationCBSTest

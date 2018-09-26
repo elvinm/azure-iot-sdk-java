@@ -11,9 +11,7 @@ import com.microsoft.azure.sdk.iot.provisioning.device.internal.parser.Registrat
 import com.microsoft.azure.sdk.iot.provisioning.device.internal.parser.TpmRegistrationResultParser;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /*
     Unit tests for  RegistrationOperationStatusParser, DeviceRegistrationResult,

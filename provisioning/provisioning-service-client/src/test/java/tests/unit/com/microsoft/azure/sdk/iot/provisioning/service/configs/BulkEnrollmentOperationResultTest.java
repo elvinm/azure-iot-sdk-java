@@ -4,8 +4,8 @@
 package tests.unit.com.microsoft.azure.sdk.iot.provisioning.service.configs;
 
 import com.google.gson.JsonSyntaxException;
-import com.microsoft.azure.sdk.iot.provisioning.service.configs.BulkEnrollmentOperationResult;
 import com.microsoft.azure.sdk.iot.provisioning.service.configs.BulkEnrollmentOperationError;
+import com.microsoft.azure.sdk.iot.provisioning.service.configs.BulkEnrollmentOperationResult;
 import mockit.Deencapsulation;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;

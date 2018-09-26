@@ -10,11 +10,9 @@ import com.microsoft.azure.sdk.iot.device.hsm.parser.SignRequest;
 import mockit.Deencapsulation;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.crypto.Mac;
-
 import java.util.Arrays;
 
 import static junit.framework.TestCase.assertEquals;

@@ -5,6 +5,7 @@
 
 package com.microsoft.azure.sdk.iot.common.iothubservices;
 
+import com.microsoft.azure.sdk.iot.common.DeviceConnectionString;
 import com.microsoft.azure.sdk.iot.device.DeviceClient;
 import com.microsoft.azure.sdk.iot.device.DeviceTwin.Property;
 import com.microsoft.azure.sdk.iot.device.DeviceTwin.TwinPropertyCallBack;
@@ -16,9 +17,10 @@ import com.microsoft.azure.sdk.iot.service.devicetwin.DeviceTwin;
 import com.microsoft.azure.sdk.iot.service.devicetwin.DeviceTwinDevice;
 import com.microsoft.azure.sdk.iot.service.devicetwin.Pair;
 import com.microsoft.azure.sdk.iot.service.exceptions.IotHubException;
-import org.junit.*;
-import com.microsoft.azure.sdk.iot.common.DeviceConnectionString;
-import com.microsoft.azure.sdk.iot.common.helpers.Tools;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

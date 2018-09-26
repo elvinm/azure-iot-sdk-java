@@ -8,9 +8,9 @@
 package com.microsoft.azure.sdk.iot.provisioning.device;
 
 import com.microsoft.azure.sdk.iot.provisioning.device.internal.ProvisioningDeviceClientConfig;
-import com.microsoft.azure.sdk.iot.provisioning.device.internal.task.ProvisioningTask;
 import com.microsoft.azure.sdk.iot.provisioning.device.internal.contract.ProvisioningDeviceClientContract;
 import com.microsoft.azure.sdk.iot.provisioning.device.internal.exceptions.ProvisioningDeviceClientException;
+import com.microsoft.azure.sdk.iot.provisioning.device.internal.task.ProvisioningTask;
 import com.microsoft.azure.sdk.iot.provisioning.security.SecurityProvider;
 
 import java.util.concurrent.ExecutorService;

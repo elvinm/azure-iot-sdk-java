@@ -5,6 +5,7 @@
 package com.microsoft.azure.sdk.iot.deps.ws.impl;
 
 import com.microsoft.azure.sdk.iot.deps.util.Base64;
+
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidParameterException;
 import java.security.MessageDigest;

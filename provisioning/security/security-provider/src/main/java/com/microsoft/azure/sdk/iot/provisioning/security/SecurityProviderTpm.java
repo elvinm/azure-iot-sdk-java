@@ -7,13 +7,12 @@
 
 package com.microsoft.azure.sdk.iot.provisioning.security;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManagerFactory;
-import java.io.IOException;
-
 import com.microsoft.azure.sdk.iot.provisioning.security.exceptions.SecurityProviderException;
 import org.apache.commons.codec.binary.Base32;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
+import java.io.IOException;
 import java.security.*;
 import java.security.cert.CertificateException;
 

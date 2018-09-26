@@ -11,7 +11,7 @@ import com.microsoft.azure.sdk.iot.provisioning.security.SecurityProviderX509;
 import com.microsoft.azure.sdk.iot.provisioning.security.exceptions.SecurityProviderException;
 import com.microsoft.msr.RiotEmulator.RIoT;
 
-import java.security.*;
+import java.security.Key;
 import java.security.cert.X509Certificate;
 import java.util.Collection;
 import java.util.LinkedList;

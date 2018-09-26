@@ -6,7 +6,6 @@
 package tests.unit.com.microsoft.azure.sdk.iot.deps.transport.amqp;
 
 import com.microsoft.azure.sdk.iot.deps.transport.amqp.AmqpReactor;
-
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import mockit.integration.junit4.JMockit;

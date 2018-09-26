@@ -7,7 +7,9 @@ package tests.integration.com.microsoft.azure.sdk.iot.iothubservices;
 
 import com.microsoft.azure.sdk.iot.common.EventCallback;
 import com.microsoft.azure.sdk.iot.common.Success;
+import com.microsoft.azure.sdk.iot.common.helpers.Tools;
 import com.microsoft.azure.sdk.iot.common.iothubservices.IotHubServicesCommon;
+import com.microsoft.azure.sdk.iot.common.iothubservices.MethodNameLoggingIntegrationTest;
 import com.microsoft.azure.sdk.iot.device.*;
 import com.microsoft.azure.sdk.iot.device.DeviceTwin.DeviceMethodData;
 import com.microsoft.azure.sdk.iot.device.DeviceTwin.Property;
@@ -16,8 +18,6 @@ import com.microsoft.azure.sdk.iot.service.*;
 import com.microsoft.azure.sdk.iot.service.devicetwin.*;
 import com.microsoft.azure.sdk.iot.service.exceptions.IotHubException;
 import org.junit.*;
-import com.microsoft.azure.sdk.iot.common.iothubservices.MethodNameLoggingIntegrationTest;
-import com.microsoft.azure.sdk.iot.common.helpers.Tools;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

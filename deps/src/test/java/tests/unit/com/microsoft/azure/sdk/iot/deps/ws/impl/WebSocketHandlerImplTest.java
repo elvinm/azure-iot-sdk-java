@@ -21,11 +21,11 @@
 
 package com.microsoft.azure.sdk.iot.deps.ws.impl;
 
+import com.microsoft.azure.sdk.iot.deps.util.Base64;
 import com.microsoft.azure.sdk.iot.deps.ws.WebSocketHandler;
 import com.microsoft.azure.sdk.iot.deps.ws.WebSocketHeader;
 import org.junit.Test;
 
-import com.microsoft.azure.sdk.iot.deps.util.Base64;
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
 import java.util.*;
