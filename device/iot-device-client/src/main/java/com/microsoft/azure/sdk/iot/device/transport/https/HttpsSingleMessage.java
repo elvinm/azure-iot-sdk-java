@@ -11,14 +11,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-/** A single HTTPS message. */
+/**
+ * A single HTTPS message.
+ */
 public final class HttpsSingleMessage implements HttpsMessage
 {
-    private static final String HTTPS_SINGLE_MESSAGE_CONTENT_TYPE =
-            "binary/octet-stream";
-    private static final String HTTPS_SINGLE_JSON_MESSAGE_CONTENT_TYPE =
-            "application/json;charset=utf-8";
-
     /**
      * The property names as they are saved in the system properties of this object
      */
@@ -28,20 +25,24 @@ public final class HttpsSingleMessage implements HttpsMessage
     protected static final String USER_ID_KEY = HTTPS_SYSTEM_PROPERTY_PREFIX + "userid";
     protected static final String CONTENT_ENCODING_KEY = HTTPS_SYSTEM_PROPERTY_PREFIX + "contentencoding";
     protected static final String CONTENT_TYPE_KEY = HTTPS_SYSTEM_PROPERTY_PREFIX + "contenttype";
-
+    private static final String HTTPS_SINGLE_MESSAGE_CONTENT_TYPE = "binary/octet-stream";
+    private static final String HTTPS_SINGLE_JSON_MESSAGE_CONTENT_TYPE = "application/json;charset=utf-8";
     private byte[] body;
     private boolean base64Encoded;
     private MessageProperty[] properties;
     private Map<String, String> systemProperties;
     private String contentType;
 
+    private HttpsSingleMessage()
+    {
+    }
+
     /**
      * Returns the HTTPS message represented by the service-bound message for
      * binary octets.  Content type "binary/octet-stream"
      *
      * @param message the service-bound message to be mapped to its HTTPS message
-     * equivalent.
-     *
+     *                equivalent.
      * @return the HTTPS message represented by the service-bound message.
      */
     public static HttpsSingleMessage parseHttpsMessage(Message message)
@@ -60,8 +61,7 @@ public final class HttpsSingleMessage implements HttpsMessage
      * application json format. Content type "application/json;charset=utf-8"
      *
      * @param message the service-bound message to be mapped to its HTTPS message
-     * equivalent.
-     *
+     *                equivalent.
      * @return the HTTPS message represented by the service-bound message.
      */
     public static HttpsSingleMessage parseHttpsJsonMessage(Message message)
@@ -91,9 +91,7 @@ public final class HttpsSingleMessage implements HttpsMessage
         {
             MessageProperty property = msgProperties[countProperty];
 
-            httpsMsg.properties[countProperty] = new MessageProperty(
-                    HTTPS_APP_PROPERTY_PREFIX + property.getName(),
-                    property.getValue());
+            httpsMsg.properties[countProperty] = new MessageProperty(HTTPS_APP_PROPERTY_PREFIX + property.getName(), property.getValue());
         }
 
         // Codes_SRS_HTTPSSINGLEMESSAGE_34_014: [If the message contains a system property, the parsed HttpsSingleMessage shall add the corresponding property with property value]
@@ -137,7 +135,6 @@ public final class HttpsSingleMessage implements HttpsMessage
      * Returns the HTTPS message represented by the HTTPS response.
      *
      * @param response the HTTPS response.
-     *
      * @return the HTTPS message represented by the HTTPS response.
      */
     public static HttpsSingleMessage parseHttpsMessage(HttpsResponse response) {
@@ -171,6 +168,55 @@ public final class HttpsSingleMessage implements HttpsMessage
         msg.systemProperties = systemProperties;
 
         return msg;
+    }
+
+    /**
+     * Returns whether the property name and value constitute a valid HTTPS
+     * application property. The property is valid if it is a valid application
+     * property and its name begins with 'iothub-app-'.
+     *
+     * @param name  the property name.
+     * @param value the property value.
+     * @return whether the property is a valid HTTPS property.
+     */
+    private static boolean isValidHttpsAppProperty(String name, String value)
+    {
+        String lowercaseName = name.toLowerCase();
+        return (MessageProperty.isValidAppProperty(name.toLowerCase(), value) && lowercaseName.startsWith(HTTPS_APP_PROPERTY_PREFIX));
+    }
+
+    /**
+     * Returns whether the property name and value constitute a valid HTTPS
+     * system property. The property is valid if it is a reserved
+     * property and its name begins with 'iothub-'.
+     *
+     * @param name  the property name.
+     * @param value the property value.
+     * @return whether the property is a valid HTTPS property.
+     */
+    private static boolean isValidHttpsSystemProperty(String name, String value)
+    {
+        String lowercaseName = name.toLowerCase();
+        return (MessageProperty.isValidSystemProperty(name.toLowerCase(), value) && lowercaseName.startsWith(HTTPS_SYSTEM_PROPERTY_PREFIX) && !lowercaseName.startsWith(HTTPS_APP_PROPERTY_PREFIX));
+    }
+
+    /**
+     * Returns an application-defined property name with the prefix 'iothub-app'
+     * removed. If the prefix is not present, the property name is left
+     * untouched.
+     *
+     * @param httpsAppProperty the HTTPS property name.
+     * @return the property name with the prefix 'iothub-app' removed.
+     */
+    private static String httpsAppPropertyToAppProperty(String httpsAppProperty)
+    {
+        String canonicalizedProperty = httpsAppProperty.toLowerCase();
+        if (canonicalizedProperty.startsWith(HTTPS_APP_PROPERTY_PREFIX))
+        {
+            return canonicalizedProperty.substring(HTTPS_APP_PROPERTY_PREFIX.length());
+        }
+
+        return canonicalizedProperty;
     }
 
     /**
@@ -277,15 +323,12 @@ public final class HttpsSingleMessage implements HttpsMessage
     {
         // Codes_SRS_HTTPSSINGLEMESSAGE_11_013: [The function shall return a copy of the message properties.]
         int propertiesSize = this.properties.length;
-        MessageProperty[] propertiesCopy =
-                new MessageProperty[propertiesSize];
+        MessageProperty[] propertiesCopy = new MessageProperty[propertiesSize];
 
         for (int i = 0; i < propertiesSize; ++i)
         {
             MessageProperty property = this.properties[i];
-            MessageProperty propertyCopy =
-                    new MessageProperty(property.getName(),
-                            property.getValue());
+            MessageProperty propertyCopy = new MessageProperty(property.getName(), property.getValue());
             propertiesCopy[i] = propertyCopy;
         }
 
@@ -301,66 +344,5 @@ public final class HttpsSingleMessage implements HttpsMessage
     {
         // Codes_SRS_HTTPSSINGLEMESSAGE_34_015: [The function shall return a copy of the message's system properties.]
         return new HashMap<>(this.systemProperties);
-    }
-
-    /**
-     * Returns whether the property name and value constitute a valid HTTPS
-     * application property. The property is valid if it is a valid application
-     * property and its name begins with 'iothub-app-'.
-     *
-     * @param name the property name.
-     * @param value the property value.
-     *
-     * @return whether the property is a valid HTTPS property.
-     */
-    private static boolean isValidHttpsAppProperty(String name, String value)
-    {
-        String lowercaseName = name.toLowerCase();
-        return (MessageProperty.isValidAppProperty(name.toLowerCase(), value)
-                && lowercaseName.startsWith(HTTPS_APP_PROPERTY_PREFIX));
-    }
-
-    /**
-     * Returns whether the property name and value constitute a valid HTTPS
-     * system property. The property is valid if it is a reserved
-     * property and its name begins with 'iothub-'.
-     *
-     * @param name the property name.
-     * @param value the property value.
-     *
-     * @return whether the property is a valid HTTPS property.
-     */
-    private static boolean isValidHttpsSystemProperty(String name, String value)
-    {
-        String lowercaseName = name.toLowerCase();
-        return (MessageProperty.isValidSystemProperty(name.toLowerCase(), value)
-                && lowercaseName.startsWith(HTTPS_SYSTEM_PROPERTY_PREFIX)
-                && !lowercaseName.startsWith(HTTPS_APP_PROPERTY_PREFIX));
-    }
-
-    /**
-     * Returns an application-defined property name with the prefix 'iothub-app'
-     * removed. If the prefix is not present, the property name is left
-     * untouched.
-     *
-     * @param httpsAppProperty the HTTPS property name.
-     *
-     * @return the property name with the prefix 'iothub-app' removed.
-     */
-    private static String httpsAppPropertyToAppProperty(
-            String httpsAppProperty)
-    {
-        String canonicalizedProperty = httpsAppProperty.toLowerCase();
-        if (canonicalizedProperty.startsWith(HTTPS_APP_PROPERTY_PREFIX))
-        {
-            return canonicalizedProperty
-                    .substring(HTTPS_APP_PROPERTY_PREFIX.length());
-        }
-
-        return canonicalizedProperty;
-    }
-
-    private HttpsSingleMessage()
-    {
     }
 }

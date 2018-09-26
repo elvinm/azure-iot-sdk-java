@@ -34,6 +34,7 @@ import static org.junit.Assert.*;
  */
 public class HttpsIotHubConnectionTest
 {
+    private static final String testSasToken = "SharedAccessSignature sr=test&sig=test&se=0";
     @Mocked
     DeviceClientConfig mockConfig;
     @Mocked
@@ -57,9 +58,6 @@ public class HttpsIotHubConnectionTest
     @Mocked
     IotHubTransportMessage mockedTransportMessage;
 
-
-    private static final String testSasToken = "SharedAccessSignature sr=test&sig=test&se=0";
-
     @Before
     public void setup() throws IOException, TransportException
     {
@@ -67,7 +65,7 @@ public class HttpsIotHubConnectionTest
         {
             {
                 mockConfig.getSasTokenAuthentication().getRenewedSasToken();
-                result=testSasToken;
+                result = testSasToken;
             }
         };
     }
@@ -75,8 +73,7 @@ public class HttpsIotHubConnectionTest
     // Tests_SRS_HTTPSIOTHUBCONNECTION_11_002: [The function shall send a request to the URL 'https://[iotHubHostname]/devices/[deviceId]/messages/events?api-version=2016-02-03'.] 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_11_001: [The constructor shall save the client configuration.]
     @Test
-    public void sendEventHasCorrectUrl(
-            @Mocked final IotHubEventUri mockUri) throws IOException, TransportException
+    public void sendEventHasCorrectUrl(@Mocked final IotHubEventUri mockUri) throws IOException, TransportException
     {
         final String iotHubHostname = "test.iothub";
         final String deviceId = "test-device-id";
@@ -110,8 +107,7 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_11_003: [The function shall send a POST request.]
     @Test
-    public void sendEventSendsPostRequest(
-            @Mocked final IotHubEventUri mockUri) throws TransportException
+    public void sendEventSendsPostRequest(@Mocked final IotHubEventUri mockUri) throws TransportException
     {
         HttpsIotHubConnection conn = new HttpsIotHubConnection(mockConfig);
         conn.setListener(mockedListener);
@@ -128,10 +124,9 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_11_004: [The function shall set the request body to the message body.]
     @Test
-    public void sendEventSendsMessageBody(
-            @Mocked final IotHubEventUri mockUri) throws TransportException
+    public void sendEventSendsMessageBody(@Mocked final IotHubEventUri mockUri) throws TransportException
     {
-        final byte[] body = { 0x61, 0x62 };
+        final byte[] body = {0x61, 0x62};
         new NonStrictExpectations()
         {
             {
@@ -155,11 +150,9 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_11_005: [The function shall write each message property as a request header.]
     @Test
-    public void sendEventSendsMessageProperties(
-            @Mocked final IotHubEventUri mockUri,
-            @Mocked final MessageProperty mockProperty) throws TransportException
+    public void sendEventSendsMessageProperties(@Mocked final IotHubEventUri mockUri, @Mocked final MessageProperty mockProperty) throws TransportException
     {
-        final MessageProperty[] properties = { mockProperty };
+        final MessageProperty[] properties = {mockProperty};
         final String propertyName = "test-property-name";
         final String propertyValue = "test-property-value";
         new NonStrictExpectations()
@@ -183,8 +176,7 @@ public class HttpsIotHubConnectionTest
         new Verifications()
         {
             {
-                mockRequest.setHeaderField(expectedPropertyName,
-                        expectedPropertyValue);
+                mockRequest.setHeaderField(expectedPropertyName, expectedPropertyValue);
             }
         };
     }
@@ -219,8 +211,7 @@ public class HttpsIotHubConnectionTest
 
     //Tests_SRS_HTTPSIOTHUBCONNECTION_25_040: [The function shall set the IotHub SSL context by calling setSSLContext on the request.]
     @Test
-    public void sendEventSetsIotHubSSLContext(@Mocked final IotHubEventUri mockUri,
-                                              @Mocked final SSLContext mockContext) throws IOException, TransportException
+    public void sendEventSetsIotHubSSLContext(@Mocked final IotHubEventUri mockUri, @Mocked final SSLContext mockContext) throws IOException, TransportException
     {
         new NonStrictExpectations()
         {
@@ -277,8 +268,7 @@ public class HttpsIotHubConnectionTest
         new Verifications()
         {
             {
-                mockRequest.setHeaderField(withMatch("(?i)authorization"),
-                        expectedTokenStr);
+                mockRequest.setHeaderField(withMatch("(?i)authorization"), expectedTokenStr);
             }
         };
     }
@@ -291,9 +281,9 @@ public class HttpsIotHubConnectionTest
         new NonStrictExpectations()
         {
             {
-                new IotHubEventUri((String)any, (String)any, null);
+                new IotHubEventUri((String) any, (String) any, null);
                 result = mockUri;
-                new HttpsRequest((URL)any, HttpsMethod.POST, (byte[]) any, anyString);
+                new HttpsRequest((URL) any, HttpsMethod.POST, (byte[]) any, anyString);
                 result = mockRequest;
                 mockUri.getPath();
                 result = path;
@@ -310,8 +300,7 @@ public class HttpsIotHubConnectionTest
         new Verifications()
         {
             {
-                mockRequest.setHeaderField(withMatch("(?i)iothub-to"),
-                        expectedPath);
+                mockRequest.setHeaderField(withMatch("(?i)iothub-to"), expectedPath);
             }
         };
     }
@@ -326,9 +315,9 @@ public class HttpsIotHubConnectionTest
         new NonStrictExpectations()
         {
             {
-                new IotHubEventUri((String)any, (String)any, null);
+                new IotHubEventUri((String) any, (String) any, null);
                 result = mockUri;
-                new HttpsRequest((URL)any, HttpsMethod.POST, (byte[]) any, anyString);
+                new HttpsRequest((URL) any, HttpsMethod.POST, (byte[]) any, anyString);
                 result = mockRequest;
                 mockUri.getPath();
                 result = "some path";
@@ -364,9 +353,9 @@ public class HttpsIotHubConnectionTest
         new NonStrictExpectations()
         {
             {
-                new IotHubEventUri((String)any, (String)any, null);
+                new IotHubEventUri((String) any, (String) any, null);
                 result = mockUri;
-                new HttpsRequest((URL)any, HttpsMethod.POST, (byte[]) any, anyString);
+                new HttpsRequest((URL) any, HttpsMethod.POST, (byte[]) any, anyString);
                 result = mockRequest;
                 mockMsg.getContentType();
                 result = contentType;
@@ -383,8 +372,7 @@ public class HttpsIotHubConnectionTest
         new Verifications()
         {
             {
-                mockRequest.setHeaderField(withMatch("(?i)content-type"),
-                        expectedContentType);
+                mockRequest.setHeaderField(withMatch("(?i)content-type"), expectedContentType);
             }
         };
     }
@@ -399,7 +387,7 @@ public class HttpsIotHubConnectionTest
         new NonStrictExpectations()
         {
             {
-                new HttpsRequest((URL)any, HttpsMethod.POST, (byte[]) any, anyString);
+                new HttpsRequest((URL) any, HttpsMethod.POST, (byte[]) any, anyString);
                 result = mockRequest;
                 mockRequest.send();
                 result = mockResponse;
@@ -439,8 +427,7 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_21_041: [The function shall send a request to the URL https://[iotHubHostname]/[httpsPath]?api-version=2016-02-03.]
     @Test
-    public void sendHttpsMessageHasCorrectUrl(
-            @Mocked final IotHubUri mockUri) throws IOException, TransportException
+    public void sendHttpsMessageHasCorrectUrl(@Mocked final IotHubUri mockUri) throws IOException, TransportException
     {
         final String iotHubHostname = "test.iothub";
         final String deviceId = "test-device-id";
@@ -470,8 +457,7 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_21_042: [The function shall send a `httpsMethod` request.]
     @Test
-    public void sendHttpsMessageSendsPostRequest(
-            @Mocked final IotHubUri mockUri) throws IOException, TransportException
+    public void sendHttpsMessageSendsPostRequest(@Mocked final IotHubUri mockUri) throws IOException, TransportException
     {
         HttpsIotHubConnection conn = new HttpsIotHubConnection(mockConfig);
         final String uriPath = "/files";
@@ -489,10 +475,9 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_21_043: [The function shall set the request body to the message body.]
     @Test
-    public void sendHttpsMessageSendsMessageBody(
-            @Mocked final IotHubUri mockUri) throws IOException, TransportException
+    public void sendHttpsMessageSendsMessageBody(@Mocked final IotHubUri mockUri) throws IOException, TransportException
     {
-        final byte[] body = { 0x61, 0x62 };
+        final byte[] body = {0x61, 0x62};
         final String uriPath = "/files";
         final HttpsMethod httpsMethod = HttpsMethod.POST;
         new NonStrictExpectations()
@@ -517,11 +502,9 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_21_044: [The function shall write each message property as a request header.]
     @Test
-    public void sendHttpsMessageSendsMessageProperties(
-            @Mocked final IotHubUri mockUri,
-            @Mocked final MessageProperty mockProperty) throws TransportException
+    public void sendHttpsMessageSendsMessageProperties(@Mocked final IotHubUri mockUri, @Mocked final MessageProperty mockProperty) throws TransportException
     {
-        final MessageProperty[] properties = { mockProperty };
+        final MessageProperty[] properties = {mockProperty};
         final String propertyName = "test-property-name";
         final String propertyValue = "test-property-value";
         final String uriPath = "/files";
@@ -546,8 +529,7 @@ public class HttpsIotHubConnectionTest
         new Verifications()
         {
             {
-                mockRequest.setHeaderField(expectedPropertyName,
-                        expectedPropertyValue);
+                mockRequest.setHeaderField(expectedPropertyName, expectedPropertyValue);
             }
         };
     }
@@ -581,8 +563,7 @@ public class HttpsIotHubConnectionTest
 
     //Tests_SRS_HTTPSIOTHUBCONNECTION_21_046: [The function shall set the IotHub SSL context by calling setSSLContext on the request.]
     @Test
-    public void sendHttpsMessageSetsIotHubSSLContext(@Mocked final IotHubUri mockUri,
-                                              @Mocked final SSLContext mockContext) throws IOException, TransportException
+    public void sendHttpsMessageSetsIotHubSSLContext(@Mocked final IotHubUri mockUri, @Mocked final SSLContext mockContext) throws IOException, TransportException
     {
         final String uriPath = "/files";
         final HttpsMethod httpsMethod = HttpsMethod.POST;
@@ -639,8 +620,7 @@ public class HttpsIotHubConnectionTest
         new Verifications()
         {
             {
-                mockRequest.setHeaderField(withMatch("(?i)authorization"),
-                        expectedTokenStr);
+                mockRequest.setHeaderField(withMatch("(?i)authorization"), expectedTokenStr);
             }
         };
     }
@@ -654,7 +634,7 @@ public class HttpsIotHubConnectionTest
         new NonStrictExpectations()
         {
             {
-                new HttpsRequest((URL)any, HttpsMethod.POST, (byte[]) any, anyString);
+                new HttpsRequest((URL) any, HttpsMethod.POST, (byte[]) any, anyString);
                 result = mockRequest;
                 mockUri.getPath();
                 result = path;
@@ -682,7 +662,7 @@ public class HttpsIotHubConnectionTest
         new NonStrictExpectations()
         {
             {
-                new HttpsRequest((URL)any, HttpsMethod.POST, (byte[]) any, anyString);
+                new HttpsRequest((URL) any, HttpsMethod.POST, (byte[]) any, anyString);
                 result = mockRequest;
                 mockUri.getPath();
                 result = path;
@@ -727,7 +707,7 @@ public class HttpsIotHubConnectionTest
         new NonStrictExpectations()
         {
             {
-                new HttpsRequest((URL)any, HttpsMethod.POST, (byte[]) any, anyString);
+                new HttpsRequest((URL) any, HttpsMethod.POST, (byte[]) any, anyString);
                 result = mockRequest;
                 mockMsg.getContentType();
                 result = contentType;
@@ -741,8 +721,7 @@ public class HttpsIotHubConnectionTest
         new Verifications()
         {
             {
-                mockRequest.setHeaderField(withMatch("(?i)content-type"),
-                        expectedContentType);
+                mockRequest.setHeaderField(withMatch("(?i)content-type"), expectedContentType);
             }
         };
     }
@@ -758,7 +737,7 @@ public class HttpsIotHubConnectionTest
         new NonStrictExpectations()
         {
             {
-                new HttpsRequest((URL)any, HttpsMethod.POST, (byte[]) any, anyString);
+                new HttpsRequest((URL) any, HttpsMethod.POST, (byte[]) any, anyString);
                 result = mockRequest;
                 mockRequest.send();
                 result = mockResponse;
@@ -888,8 +867,7 @@ public class HttpsIotHubConnectionTest
         new Verifications()
         {
             {
-                mockRequest.setHeaderField(withMatch("(?i)authorization"),
-                        expectedTokenStr);
+                mockRequest.setHeaderField(withMatch("(?i)authorization"), expectedTokenStr);
             }
         };
     }
@@ -914,8 +892,7 @@ public class HttpsIotHubConnectionTest
         new Verifications()
         {
             {
-                mockRequest.setHeaderField(withMatch("(?i)iothub-to"),
-                        expectedPath);
+                mockRequest.setHeaderField(withMatch("(?i)iothub-to"), expectedPath);
             }
         };
     }
@@ -936,22 +913,18 @@ public class HttpsIotHubConnectionTest
         HttpsIotHubConnection conn = new HttpsIotHubConnection(mockConfig);
         conn.receiveMessage();
 
-        final String expectedMessageLockTimeoutSecs =
-                Integer.toString(messageLockTimeoutSecs);
+        final String expectedMessageLockTimeoutSecs = Integer.toString(messageLockTimeoutSecs);
         new Verifications()
         {
             {
-                mockRequest.setHeaderField(
-                        withMatch("(?i)iothub-messagelocktimeout"),
-                        expectedMessageLockTimeoutSecs);
+                mockRequest.setHeaderField(withMatch("(?i)iothub-messagelocktimeout"), expectedMessageLockTimeoutSecs);
             }
         };
     }
 
     //Tests_SRS_HTTPSIOTHUBCONNECTION_25_041: [The function shall set the IotHub SSL context by calling setSSLContext on the request.]
     @Test
-    public void receiveMessageSetsIotHubSSLContext(@Mocked final IotHubMessageUri mockUri,
-                                                   @Mocked final SSLContext mockContext) throws IOException, TransportException
+    public void receiveMessageSetsIotHubSSLContext(@Mocked final IotHubMessageUri mockUri, @Mocked final SSLContext mockContext) throws IOException, TransportException
     {
         new NonStrictExpectations()
         {
@@ -980,7 +953,7 @@ public class HttpsIotHubConnectionTest
     @Test
     public void receiveMessageReturnsMessageBody(@Mocked final IotHubMessageUri mockUri, @Mocked final Message mockedMessage, final @Mocked IotHubStatusCode mockStatusCode) throws TransportException
     {
-        final byte[] body = { 0x61, 0x62 };
+        final byte[] body = {0x61, 0x62};
         final String eTag = "test-etag";
         new NonStrictExpectations()
         {
@@ -1198,8 +1171,7 @@ public class HttpsIotHubConnectionTest
         new Verifications()
         {
             {
-                mockRequest.setHeaderField(withMatch("(?i)iothub-to"),
-                        expectedPath);
+                mockRequest.setHeaderField(withMatch("(?i)iothub-to"), expectedPath);
             }
         };
     }
@@ -1324,8 +1296,7 @@ public class HttpsIotHubConnectionTest
         new Verifications()
         {
             {
-                mockRequest.setHeaderField(withMatch("(?i)iothub-to"),
-                        expectedPath);
+                mockRequest.setHeaderField(withMatch("(?i)iothub-to"), expectedPath);
             }
         };
     }
@@ -1449,8 +1420,7 @@ public class HttpsIotHubConnectionTest
         new Verifications()
         {
             {
-                mockRequest.setHeaderField(withMatch("(?i)iothub-to"),
-                        expectedPath);
+                mockRequest.setHeaderField(withMatch("(?i)iothub-to"), expectedPath);
             }
         };
     }
@@ -1531,8 +1501,7 @@ public class HttpsIotHubConnectionTest
         new Verifications()
         {
             {
-                mockRequest.setHeaderField(withMatch("(?i)authorization"),
-                        expectedTokenStr);
+                mockRequest.setHeaderField(withMatch("(?i)authorization"), expectedTokenStr);
             }
         };
     }
@@ -1565,16 +1534,14 @@ public class HttpsIotHubConnectionTest
         new Verifications()
         {
             {
-                mockRequest.setHeaderField(withMatch("(?i)if-match"),
-                        expectedEtag);
+                mockRequest.setHeaderField(withMatch("(?i)if-match"), expectedEtag);
             }
         };
     }
 
     //Tests_SRS_HTTPSIOTHUBCONNECTION_25_042: [The function shall set the IotHub SSL context by calling setSSLContext on the request.]
     @Test
-    public void sendMessageResultSetsIotHubSSLContext(@Mocked final IotHubRejectUri mockUri,
-                                                      @Mocked final SSLContext mockedContext, final @Mocked IotHubStatusCode mockStatusCode) throws IOException, TransportException
+    public void sendMessageResultSetsIotHubSSLContext(@Mocked final IotHubRejectUri mockUri, @Mocked final SSLContext mockedContext, final @Mocked IotHubStatusCode mockStatusCode) throws IOException, TransportException
     {
         final String eTag = "test-etag";
         final int readTimeoutMillis = 23;
@@ -1668,8 +1635,7 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_11_039: [If the function is called before receiveMessage() returns a message, the function shall throw an IllegalStateException.]
     @Test(expected = IllegalStateException.class)
-    public void sendMessageResultFailsIfReceiveNotCalled(
-            @Mocked final IotHubRejectUri mockUri) throws TransportException
+    public void sendMessageResultFailsIfReceiveNotCalled(@Mocked final IotHubRejectUri mockUri) throws TransportException
     {
         HttpsIotHubConnection conn = new HttpsIotHubConnection(mockConfig);
         conn.sendMessageResult(mockedMessage, IotHubMessageResult.REJECT);
@@ -1677,8 +1643,7 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_11_039: [If the function is called before receiveMessage() returns a message, the function shall throw an IllegalStateException.]
     @Test(expected = IllegalStateException.class)
-    public void sendMessageResultFailsIfNoMessageReceived(
-            @Mocked final IotHubRejectUri mockUri) throws TransportException
+    public void sendMessageResultFailsIfNoMessageReceived(@Mocked final IotHubRejectUri mockUri) throws TransportException
     {
         HttpsIotHubConnection conn = new HttpsIotHubConnection(mockConfig);
         conn.receiveMessage();
@@ -1862,7 +1827,7 @@ public class HttpsIotHubConnectionTest
     }
 
     //Tests_SRS_HTTPSIOTHUBCONNECTION_34_065: [If the provided listener object is null, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void addListenerThrowsForNullListener()
     {
         //arrange

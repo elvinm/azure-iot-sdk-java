@@ -11,6 +11,7 @@ public class Template
 
     /**
      * Constructor which creates an instance of this class if valid tag is provided
+     *
      * @param tag Object to be saved. Cannot be {@code null}
      * @throws IllegalArgumentException if the input parameter is {@code null}
      */
@@ -64,6 +65,7 @@ public class Template
 
     /**
      * Getter for the private object
+     *
      * @return the private object.
      */
     public Object getTemplateTestPrivate()
@@ -74,6 +76,7 @@ public class Template
 
     /**
      * Getter for the state of set at the invoked instance
+     *
      * @return the set with (or without) union invoked so far.
      */
     public Set<?> getUnionSet()
@@ -84,6 +87,7 @@ public class Template
 
     /**
      * Adds the given collection to the existing set
+     *
      * @param collection A collection which cannot be {@code null} or empty
      *                   to be added to existing collection
      * @throws IllegalArgumentException if the given collection is {@code null}
@@ -91,7 +95,7 @@ public class Template
      */
     public void addToSet(Set<?> collection) throws IllegalArgumentException
     {
-        if(collection == null || collection.size() == 0)
+        if (collection == null || collection.size() == 0)
         {
             // Codes_SRS_TEMPLATE_99_011: [The method shall throw IllegalArgumentException if the collection to be added was either empty or null .]
             throw new IllegalArgumentException("New set cannot be null or empty");

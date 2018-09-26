@@ -17,8 +17,10 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 
-/** Unit tests for MqttMessage.
- * Coverage : 100% method, 100% line */
+/**
+ * Unit tests for MqttMessage.
+ * Coverage : 100% method, 100% line
+ */
 @RunWith(JMockit.class)
 public class MqttMessageTest
 {

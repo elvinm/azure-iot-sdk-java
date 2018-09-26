@@ -37,7 +37,8 @@ public class RegistryGlue
             ConnectResponse cr = new ConnectResponse();
             cr.setConnectionId(connectionId);
             handler.handle(Future.succeededFuture(cr));
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             handler.handle(Future.failedFuture(e));
         }
@@ -86,7 +87,8 @@ public class RegistryGlue
             try
             {
                 client.getTwin(twin);
-            } catch (IOException | IotHubException e)
+            }
+            catch (IOException | IotHubException e)
             {
                 handler.handle(Future.failedFuture(e));
             }

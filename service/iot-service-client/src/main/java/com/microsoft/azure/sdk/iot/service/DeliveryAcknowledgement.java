@@ -8,22 +8,22 @@ package com.microsoft.azure.sdk.iot.service;
 public enum DeliveryAcknowledgement
 {
     /**
-    * Acknowledgement is NOT sent on delivery or failure.
-    **/
+     * Acknowledgement is NOT sent on delivery or failure.
+     **/
     None,
 
     /**
-    * Acknowledgement is sent only if delivery fails.
-    **/
+     * Acknowledgement is sent only if delivery fails.
+     **/
     NegativeOnly,
 
     /**
-    * Acknowledgement is sent only on delivery succeeds.
-    **/
+     * Acknowledgement is sent only on delivery succeeds.
+     **/
     PositiveOnly,
 
     /**
-    * An acknowledgement is sent on delivery success or failure.
-    **/
+     * An acknowledgement is sent on delivery success or failure.
+     **/
     Full
 }

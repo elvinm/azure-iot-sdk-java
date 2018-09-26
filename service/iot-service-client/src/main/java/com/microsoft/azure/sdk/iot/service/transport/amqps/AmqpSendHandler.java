@@ -44,17 +44,14 @@ public class AmqpSendHandler extends BaseHandler
     public static final String MODULE_PATH_FORMAT = "/devices/%s/modules/%s/messages/devicebound";
     public static final String WEBSOCKET_PATH = "/$iothub/websocket";
     public static final String WEBSOCKET_SUB_PROTOCOL = "AMQPWSB10";
-    private Queue<AmqpResponseVerification> sendStatusQueue = new LinkedBlockingQueue<>();
-    private Queue<org.apache.qpid.proton.message.Message> messagesToBeSent = new LinkedBlockingQueue<>();
-
     protected final String hostName;
     protected final String userName;
     protected final String sasToken;
-    private int nextTag = 0;
-
     protected final IotHubServiceClientProtocol iotHubServiceClientProtocol;
     protected final String webSocketHostName;
-
+    private Queue<AmqpResponseVerification> sendStatusQueue = new LinkedBlockingQueue<>();
+    private Queue<org.apache.qpid.proton.message.Message> messagesToBeSent = new LinkedBlockingQueue<>();
+    private int nextTag = 0;
     private boolean isConnected = false;
     private Exception savedException = null;
     private boolean connectionWasOpened = false;
@@ -62,9 +59,9 @@ public class AmqpSendHandler extends BaseHandler
     /**
      * Constructor to set up connection parameters and initialize handshaker for transport
      *
-     * @param hostName The address string of the service (example: AAA.BBB.CCC)
-     * @param userName The username string to use SASL authentication (example: user@sas.service)
-     * @param sasToken The SAS token string
+     * @param hostName                    The address string of the service (example: AAA.BBB.CCC)
+     * @param userName                    The username string to use SASL authentication (example: user@sas.service)
+     * @param sasToken                    The SAS token string
      * @param iotHubServiceClientProtocol protocol to use
      */
     public AmqpSendHandler(String hostName, String userName, String sasToken, IotHubServiceClientProtocol iotHubServiceClientProtocol)
@@ -82,12 +79,12 @@ public class AmqpSendHandler extends BaseHandler
         {
             throw new IllegalArgumentException("sasToken can not be null or empty");
         }
-        
+
         if (iotHubServiceClientProtocol == null)
         {
             throw new IllegalArgumentException("iotHubServiceClientProtocol cannot be null");
         }
-     
+
         this.iotHubServiceClientProtocol = iotHubServiceClientProtocol;
         this.webSocketHostName = hostName;
         if (this.iotHubServiceClientProtocol == IotHubServiceClientProtocol.AMQPS_WS)
@@ -112,8 +109,9 @@ public class AmqpSendHandler extends BaseHandler
 
     /**
      * Create Proton message from deviceId and content string
+     *
      * @param deviceId The device name string
-     * @param message The message to be sent
+     * @param message  The message to be sent
      */
     public void createProtonMessage(String deviceId, com.microsoft.azure.sdk.iot.service.Message message)
     {
@@ -122,9 +120,10 @@ public class AmqpSendHandler extends BaseHandler
 
     /**
      * Create Proton message from deviceId and content string
+     *
      * @param deviceId The device name string
      * @param moduleId The device name string
-     * @param message The message to be sent
+     * @param message  The message to be sent
      */
     public void createProtonMessage(String deviceId, String moduleId, com.microsoft.azure.sdk.iot.service.Message message)
     {
@@ -154,7 +153,7 @@ public class AmqpSendHandler extends BaseHandler
         if (message.getProperties() != null && message.getProperties().size() > 0)
         {
             Map<String, Object> applicationPropertiesMap = new HashMap<>(message.getProperties().size());
-            for(Map.Entry<String, String> entry : message.getProperties().entrySet())
+            for (Map.Entry<String, String> entry : message.getProperties().entrySet())
             {
                 applicationPropertiesMap.put(entry.getKey(), entry.getValue());
             }
@@ -173,6 +172,7 @@ public class AmqpSendHandler extends BaseHandler
 
     /**
      * Create Proton SslDomain object from Address using the given Ssl mode
+     *
      * @param mode The proton enum value of requested Ssl mode
      * @return The created Ssl domain
      */
@@ -197,6 +197,7 @@ public class AmqpSendHandler extends BaseHandler
 
     /**
      * Event handler for the connection bound event
+     *
      * @param event The proton event object
      */
     @Override
@@ -211,7 +212,7 @@ public class AmqpSendHandler extends BaseHandler
             {
                 WebSocketImpl webSocket = new WebSocketImpl();
                 webSocket.configure(this.webSocketHostName, WEBSOCKET_PATH, 0, WEBSOCKET_SUB_PROTOCOL, null, null);
-                ((TransportInternal)transport).addTransportLayer(webSocket);
+                ((TransportInternal) transport).addTransportLayer(webSocket);
             }
             Sasl sasl = transport.sasl();
             sasl.plain(this.userName, this.sasToken);
@@ -224,6 +225,7 @@ public class AmqpSendHandler extends BaseHandler
 
     /**
      * Event handler for the connection init event
+     *
      * @param event The proton event object
      */
     @Override
@@ -261,6 +263,7 @@ public class AmqpSendHandler extends BaseHandler
 
     /**
      * Event handler for the transport error event. This triggers reconnection attempts until successful.
+     *
      * @param event The Proton Event object.
      */
     @Override
@@ -272,6 +275,7 @@ public class AmqpSendHandler extends BaseHandler
 
     /**
      * Event handler for the link init event
+     *
      * @param event The proton event object
      */
     @Override
@@ -287,6 +291,7 @@ public class AmqpSendHandler extends BaseHandler
 
     /**
      * Event handler for the link flow event
+     *
      * @param event The proton event object
      */
     @Override
@@ -296,7 +301,7 @@ public class AmqpSendHandler extends BaseHandler
         {
             org.apache.qpid.proton.message.Message protonMessage = messagesToBeSent.remove();
             // Codes_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_12_018: [The event handler shall get the Sender (Proton) object from the link]
-            Sender snd = (Sender)event.getLink();
+            Sender snd = (Sender) event.getLink();
             // Codes_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_12_019: [The event handler shall encode the message and copy to the byte buffer]
             if (snd.getCredit() > 0)
             {
@@ -308,7 +313,8 @@ public class AmqpSendHandler extends BaseHandler
                     {
                         length = protonMessage.encode(msgData, 0, msgData.length);
                         break;
-                    } catch (BufferOverflowException e)
+                    }
+                    catch (BufferOverflowException e)
                     {
                         msgData = new byte[msgData.length * 2];
                     }
@@ -335,7 +341,7 @@ public class AmqpSendHandler extends BaseHandler
     public void onDelivery(Event event)
     {
         //Codes_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_25_023: [ The event handler shall get the Delivery from the event only if the event type is DELIVERY **]**
-        if(event.getType() == Event.Type.DELIVERY)
+        if (event.getType() == Event.Type.DELIVERY)
         {
             // Codes_SRS_AMQPSIOTHUBCONNECTION_15_038: [If this link is the Sender link and the event type is DELIVERY, the event handler shall get the Delivery (Proton) object from the event.]
             Delivery d = event.getDelivery();

@@ -26,7 +26,7 @@ public class FeedbackReceiverTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_hostName_null() throws Exception
     {
         // Arrange
@@ -38,10 +38,10 @@ public class FeedbackReceiverTest
         // Act
         FeedbackReceiver feedbackReceiver = new FeedbackReceiver(hostName, userName, sasToken, iotHubServiceClientProtocol, deviceId);
     }
-    
+
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_hostName_null_without_deviceId() throws Exception
     {
         // Arrange
@@ -56,7 +56,7 @@ public class FeedbackReceiverTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_userName_null() throws Exception
     {
         // Arrange
@@ -68,10 +68,10 @@ public class FeedbackReceiverTest
         // Act
         FeedbackReceiver feedbackReceiver = new FeedbackReceiver(hostName, userName, sasToken, iotHubServiceClientProtocol, deviceId);
     }
-    
+
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_userName_null_without_deviceId() throws Exception
     {
         // Arrange
@@ -86,7 +86,7 @@ public class FeedbackReceiverTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_sasToken_null() throws Exception
     {
         // Arrange
@@ -98,10 +98,10 @@ public class FeedbackReceiverTest
         // Act
         FeedbackReceiver feedbackReceiver = new FeedbackReceiver(hostName, userName, sasToken, iotHubServiceClientProtocol, deviceId);
     }
-    
-     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
+
+    // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_sasToken_null_without_deviceId() throws Exception
     {
         // Arrange
@@ -116,7 +116,7 @@ public class FeedbackReceiverTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_deviceId_null() throws Exception
     {
         // Arrange
@@ -128,10 +128,10 @@ public class FeedbackReceiverTest
         // Act
         FeedbackReceiver feedbackReceiver = new FeedbackReceiver(hostName, userName, sasToken, iotHubServiceClientProtocol, deviceId);
     }
-    
-     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
+
+    // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_protocol_null() throws Exception
     {
         // Arrange
@@ -142,10 +142,10 @@ public class FeedbackReceiverTest
         // Act
         FeedbackReceiver feedbackReceiver = new FeedbackReceiver(hostName, userName, sasToken, iotHubServiceClientProtocol);
     }
-    
-  
+
+
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_hostName_empty() throws Exception
     {
         // Arrange
@@ -157,9 +157,9 @@ public class FeedbackReceiverTest
         // Act
         FeedbackReceiver feedbackReceiver = new FeedbackReceiver(hostName, userName, sasToken, iotHubServiceClientProtocol, deviceId);
     }
-    
+
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_hostName_empty_without_deviceId() throws Exception
     {
         // Arrange
@@ -171,9 +171,9 @@ public class FeedbackReceiverTest
         FeedbackReceiver feedbackReceiver = new FeedbackReceiver(hostName, userName, sasToken, iotHubServiceClientProtocol);
     }
 
-      // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
+    // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_userName_empty() throws Exception
     {
         // Arrange
@@ -189,7 +189,7 @@ public class FeedbackReceiverTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_userName_empty_without_deviceId() throws Exception
     {
         // Arrange
@@ -204,7 +204,7 @@ public class FeedbackReceiverTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_sasToken_empty() throws Exception
     {
         // Arrange
@@ -216,10 +216,10 @@ public class FeedbackReceiverTest
         // Act
         FeedbackReceiver feedbackReceiver = new FeedbackReceiver(hostName, userName, sasToken, iotHubServiceClientProtocol, deviceId);
     }
-    
+
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_sasToken_empty_without_deviceId() throws Exception
     {
         // Arrange
@@ -234,7 +234,7 @@ public class FeedbackReceiverTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_deviceId_empty() throws Exception
     {
         // Arrange
@@ -242,7 +242,7 @@ public class FeedbackReceiverTest
         String userName = "xxx";
         String sasToken = "xxx";
         String deviceId = "";
-        
+
         IotHubServiceClientProtocol iotHubServiceClientProtocol = IotHubServiceClientProtocol.AMQPS;
         // Act
         FeedbackReceiver feedbackReceiver = new FeedbackReceiver(hostName, userName, sasToken, iotHubServiceClientProtocol, deviceId);
@@ -271,13 +271,11 @@ public class FeedbackReceiverTest
         // Assert
         assertEquals(deviceId, Deencapsulation.getField(feedbackReceiver, "deviceId"));
     }
-    
-   
-  
+
 
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_004: [The function shall throw IOException if the member AMQPReceive object has not been initialized]
     // Assert
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void open_receiver_null() throws Exception
     {
         // Arrange
@@ -291,10 +289,10 @@ public class FeedbackReceiverTest
         // Act
         feedbackReceiver.open();
     }
-    
-     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_004: [The function shall throw IOException if the member AMQPReceive object has not been initialized]
+
+    // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_004: [The function shall throw IOException if the member AMQPReceive object has not been initialized]
     // Assert
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void open_receiver_null_without_deviceId() throws Exception
     {
         // Arrange
@@ -331,10 +329,9 @@ public class FeedbackReceiverTest
         // Act
         feedbackReceiver.open();
     }
-    
-    
-    
-       // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_005: [The function shall call open() on the member AMQPReceive object]
+
+
+    // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_005: [The function shall call open() on the member AMQPReceive object]
     @Test
     public void open_call_receiver_open_without_deviceId() throws Exception
     {
@@ -355,11 +352,10 @@ public class FeedbackReceiverTest
         feedbackReceiver.open();
     }
 
- 
 
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_006: [The function shall throw IOException if the member AMQPReceive object has not been initialized]
     // Assert
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void close_receiver_null() throws Exception
     {
         // Arrange
@@ -373,10 +369,10 @@ public class FeedbackReceiverTest
         // Act
         feedbackReceiver.close();
     }
-    
-      // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_006: [The function shall throw IOException if the member AMQPReceive object has not been initialized]
+
+    // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_006: [The function shall throw IOException if the member AMQPReceive object has not been initialized]
     // Assert
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void close_receiver_null_without_deviceId() throws Exception
     {
         // Arrange
@@ -411,8 +407,8 @@ public class FeedbackReceiverTest
         // Act
         feedbackReceiver.close();
     }
-    
-     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_007: [The function shall call close() on the member AMQPReceive object]
+
+    // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_007: [The function shall call close() on the member AMQPReceive object]
     @Test
     public void close_call_receiver_close_without_deviceId() throws Exception
     {
@@ -455,10 +451,10 @@ public class FeedbackReceiverTest
         // Act
         feedbackReceiver.receive();
     }
-    
-     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_009: [The function shall throw IOException if the member AMQPReceive object has not been initialized]
+
+    // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_009: [The function shall throw IOException if the member AMQPReceive object has not been initialized]
     // Assert
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void receive_with_timeout_receiver_null() throws Exception
     {
         // Arrange
@@ -474,7 +470,7 @@ public class FeedbackReceiverTest
         feedbackReceiver.receive(timeoutMs);
     }
 
-    
+
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_008: [The function shall call receive(long timeoutMs) function with the default timeout]
     @Test
     public void receive_call_receive_timeout_without_deviceId() throws Exception
@@ -499,7 +495,7 @@ public class FeedbackReceiverTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_009: [The function shall throw IOException if the member AMQPReceive object has not been initialized]
     // Assert
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void receive_with_timeout_receiver_null_without_deviceId() throws Exception
     {
         // Arrange
@@ -536,8 +532,8 @@ public class FeedbackReceiverTest
         // Act
         feedbackReceiver.receive(timeoutMs);
     }
-    
-      // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_010: [The function shall call receive() on the member AMQPReceive object and return with the result]
+
+    // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_010: [The function shall call receive() on the member AMQPReceive object and return with the result]
     @Test
     public void receive_with_timout_call_receive_timeout_without_deviceId() throws Exception
     {
@@ -559,7 +555,7 @@ public class FeedbackReceiverTest
         feedbackReceiver.receive(timeoutMs);
     }
 
-      // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_011: [The function shall create an async wrapper around the open() function call]
+    // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_011: [The function shall create an async wrapper around the open() function call]
     @Test
     public void open_async() throws Exception
     {
@@ -630,8 +626,8 @@ public class FeedbackReceiverTest
         CompletableFuture<Void> completableFuture = feedbackReceiver.closeAsync();
         completableFuture.get();
     }
-    
-      // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_012: [The function shall create an async wrapper around the close() function call]
+
+    // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_012: [The function shall create an async wrapper around the close() function call]
     @Test
     public void close_async_without_deviceId() throws Exception
     {
@@ -678,8 +674,8 @@ public class FeedbackReceiverTest
         CompletableFuture<FeedbackBatch> completableFuture = feedbackReceiver.receiveAsync();
         completableFuture.get();
     }
-    
-     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_013: [The function shall create an async wrapper around the receive() function call]
+
+    // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_013: [The function shall create an async wrapper around the receive() function call]
     @Test
     public void receive_async_without_deviceId() throws Exception
     {
@@ -727,7 +723,7 @@ public class FeedbackReceiverTest
         CompletableFuture<FeedbackBatch> completableFuture = feedbackReceiver.receiveAsync(timeoutMs);
         completableFuture.get();
     }
-    
+
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_014: [The function shall create an async wrapper around the receive(long timeoutMs) function call]
     @Test
     public void receive_with_timout_async_without_deviceId() throws Exception

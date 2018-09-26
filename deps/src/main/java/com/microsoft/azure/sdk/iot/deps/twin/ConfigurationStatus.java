@@ -7,11 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 public enum ConfigurationStatus
 {
-    @SerializedName("targeted")
-    TARGETED(1),
+    @SerializedName("targeted") TARGETED(1),
 
-    @SerializedName("applied")
-    APPLIED(2);
+    @SerializedName("applied") APPLIED(2);
 
     private int numVal;
 

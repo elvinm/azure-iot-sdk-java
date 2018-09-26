@@ -33,11 +33,7 @@ public class SampleUtils
         SharedAccessBlobPolicy sasConstraints = new SharedAccessBlobPolicy();
         Date expirationDate = Date.from(Instant.now().plus(Duration.ofDays(1)));
         sasConstraints.setSharedAccessExpiryTime(expirationDate);
-        EnumSet<SharedAccessBlobPermissions> permissions = EnumSet.of(
-                SharedAccessBlobPermissions.WRITE,
-                SharedAccessBlobPermissions.LIST,
-                SharedAccessBlobPermissions.READ,
-                SharedAccessBlobPermissions.DELETE);
+        EnumSet<SharedAccessBlobPermissions> permissions = EnumSet.of(SharedAccessBlobPermissions.WRITE, SharedAccessBlobPermissions.LIST, SharedAccessBlobPermissions.READ, SharedAccessBlobPermissions.DELETE);
         sasConstraints.setPermissions(permissions);
 
         //Generate the shared access signature on the container, setting the constraints directly on the signature.

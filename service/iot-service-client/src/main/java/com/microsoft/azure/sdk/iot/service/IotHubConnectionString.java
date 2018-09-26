@@ -22,15 +22,6 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
     protected static final String SHARED_ACCESS_KEY_NAME_PROPERTY_NAME = "SharedAccessKeyName";
     protected static final String SHARED_ACCESS_KEY_PROPERTY_NAME = "SharedAccessKey";
     protected static final String SHARED_ACCESS_SIGNATURE_PROPERTY_NAME = "SharedAccessSignature";
-
-    // Included in the device connection string
-    protected String hostName;
-    protected String iotHubName;
-    protected AuthenticationMethod authenticationMethod;
-    protected String sharedAccessKeyName;
-    protected String sharedAccessKey;
-    protected String sharedAccessSignature;
-
     // Connection
     private static final String URL_SEPARATOR_0 = "/";
     private static final String URL_SEPARATOR_1 = "?";
@@ -45,13 +36,11 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
     private static final String USER_SEPARATOR = "@";
     private static final String USER_SAS = "SAS.";
     private static final String USER_ROOT = "root.";
-
     // twin
     private static final String URL_PATH_TWIN = "twins";
     private static final String URL_PATH_PROPERTIES = "properties";
     private static final String URL_PATH_METHODS = "methods";
     private static final String URL_PATH_TWIN_DEVICES = "devices";
-
     // jobs
     private static final String URL_PATH_JOBS = "jobs";
     private static final String URL_PATH_VERSION = "v2";
@@ -59,11 +48,18 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
     private static final String URL_PATH_JOB_TYPE = "jobType";
     private static final String URL_PATH_JOB_STATUS = "jobStatus";
     private static final String URL_PATH_CANCEL = "cancel";
-
     // configurations
     private static final String URL_PATH_APPLY_CONTENT_CONFIGURATION = "applyConfigurationContent";
-    
-    protected IotHubConnectionString() {}
+    // Included in the device connection string
+    protected String hostName;
+    protected String iotHubName;
+    protected AuthenticationMethod authenticationMethod;
+    protected String sharedAccessKeyName;
+    protected String sharedAccessKey;
+    protected String sharedAccessSignature;
+
+    protected IotHubConnectionString() {
+    }
 
     /**
      * Serialize user string
@@ -88,7 +84,7 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
      *
      * @param deviceId The name of the device
      * @return The Url in the following format: "https:hostname/twins/deviceId/methods/"
-     * @throws MalformedURLException This exception is thrown if the URL creation failed due to malformed string
+     * @throws MalformedURLException    This exception is thrown if the URL creation failed due to malformed string
      * @throws IllegalArgumentException This exception is thrown if device id is null or empty
      */
     public URL getUrlMethod(String deviceId) throws MalformedURLException, IllegalArgumentException
@@ -120,7 +116,7 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
      * @param deviceId The name of the device
      * @param moduleId The name of the module
      * @return The Url in the following format: "https:hostname/twins/deviceId/methods/"
-     * @throws MalformedURLException This exception is thrown if the URL creation failed due to malformed string
+     * @throws MalformedURLException    This exception is thrown if the URL creation failed due to malformed string
      * @throws IllegalArgumentException This exception is thrown if device id is null or empty
      */
     public URL getUrlModuleMethod(String deviceId, String moduleId) throws MalformedURLException, IllegalArgumentException
@@ -162,7 +158,7 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
      *
      * @param jobId is the name of the job
      * @return the URL in the follow format: "https:[hostname]/jobs/v2/[jobId]?api-version=2016-11-14"
-     * @throws MalformedURLException This exception is thrown if the URL creation failed due to malformed string
+     * @throws MalformedURLException    This exception is thrown if the URL creation failed due to malformed string
      * @throws IllegalArgumentException This exception is thrown if job id is null or empty
      */
     public URL getUrlJobs(String jobId) throws MalformedURLException, IllegalArgumentException
@@ -211,8 +207,9 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
 
     /**
      * Create url for querying
+     *
      * @param jobStatus jobStatus as String
-     * @param jobType jobType as String
+     * @param jobType   jobType as String
      * @return the URL in the follow format: "https:[hostname]/jobs/v2/query?jobType=jobTypeValue&amp;jobStatus=jobStatusValue&amp;api-version=2016-11-14"
      * @throws MalformedURLException This exception is thrown if the URL creation failed due to malformed string
      */
@@ -232,7 +229,7 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
         stringBuilder.append(URL_SEPARATOR_1);
 
         // Codes_SRS_SERVICE_SDK_JAVA_IOTHUBCONNECTIONSTRING_21_024: [** If the jobType is null or empty, the function shall not include the jobType in the URL **]**
-        if(!Tools.isNullOrEmpty(jobType))
+        if (!Tools.isNullOrEmpty(jobType))
         {
             stringBuilder.append(URL_PATH_JOB_TYPE);
             stringBuilder.append(VALUE_PAIR_SEPARATOR);
@@ -241,7 +238,7 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
         }
 
         // Codes_SRS_SERVICE_SDK_JAVA_IOTHUBCONNECTIONSTRING_21_025: [** If the jobStatus is null or empty, the function shall not include the jobStatus in the URL **]**
-        if(!Tools.isNullOrEmpty(jobStatus))
+        if (!Tools.isNullOrEmpty(jobStatus))
         {
             stringBuilder.append(URL_PATH_JOB_STATUS);
             stringBuilder.append(VALUE_PAIR_SEPARATOR);
@@ -258,7 +255,7 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
      *
      * @param jobId is the name of the job
      * @return the URL in the follow format: "https:[hostname]/jobs/v2/[jobId]/cancel?api-version=2016-11-14"
-     * @throws MalformedURLException This exception is thrown if the URL creation failed due to malformed string
+     * @throws MalformedURLException    This exception is thrown if the URL creation failed due to malformed string
      * @throws IllegalArgumentException This exception is thrown if job id is null or empty
      */
     public URL getUrlJobsCancel(String jobId) throws MalformedURLException, IllegalArgumentException
@@ -291,7 +288,7 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
      *
      * @param deviceId The name of the device
      * @return The Url in the following format: "https:hostname/twins/deviceId?api-version=201X-XX-XX"
-     * @throws MalformedURLException This exception is thrown if the URL creation failed due to malformed string
+     * @throws MalformedURLException    This exception is thrown if the URL creation failed due to malformed string
      * @throws IllegalArgumentException This exception is thrown if device id is null or empty
      */
     public URL getUrlTwin(String deviceId) throws MalformedURLException, IllegalArgumentException
@@ -321,7 +318,7 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
      * @param deviceId The name of the device
      * @param moduleId The name of the device
      * @return The Url in the following format: "https:hostname/twins/deviceId/modules/moduleId?api-version=201X-XX-XX"
-     * @throws MalformedURLException This exception is thrown if the URL creation failed due to malformed string
+     * @throws MalformedURLException    This exception is thrown if the URL creation failed due to malformed string
      * @throws IllegalArgumentException This exception is thrown if device id is null or empty
      */
     public URL getUrlModuleTwin(String deviceId, String moduleId) throws MalformedURLException, IllegalArgumentException
@@ -361,7 +358,7 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
      *
      * @param deviceId The name of the device
      * @return The device Url in the following format: "https:hostname/devices/deviceId?api-version=201X-XX-XX"
-     * @throws MalformedURLException This exception is thrown if the URL creation failed due to malformed string
+     * @throws MalformedURLException    This exception is thrown if the URL creation failed due to malformed string
      * @throws IllegalArgumentException This exception is thrown if device id is null or empty
      */
     public URL getUrlDevice(String deviceId) throws MalformedURLException, IllegalArgumentException
@@ -393,7 +390,7 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
      * @param deviceId The name of the device
      * @param moduleId The name of the device
      * @return The device Url in the following format: "https:hostname/devices/deviceId/modules/moduleId?api-version=201X-XX-XX"
-     * @throws MalformedURLException This exception is thrown if the URL creation failed due to malformed string
+     * @throws MalformedURLException    This exception is thrown if the URL creation failed due to malformed string
      * @throws IllegalArgumentException This exception is thrown if device id is null or empty
      */
     public URL getUrlModule(String deviceId, String moduleId) throws MalformedURLException, IllegalArgumentException
@@ -432,9 +429,10 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
 
     /**
      * Create the url needed to apply some configuration content to a device
+     *
      * @param deviceId The device to apply the configuration content to
      * @return The device Url in the following format: "https:[hostname]/devices/[deviceId]/applyConfigurationContent?api-version=201X-XX-XX"
-     * @throws MalformedURLException if the deviceId contains unexpected characters, and a URL cannot be constructed using it
+     * @throws MalformedURLException    if the deviceId contains unexpected characters, and a URL cannot be constructed using it
      * @throws IllegalArgumentException if deviceId is null or empty
      */
     public URL getUrlApplyConfigurationContent(String deviceId) throws MalformedURLException, IllegalArgumentException
@@ -468,7 +466,7 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
      *
      * @param configurationId The name of the configuration
      * @return The device Url in the following format: "https:hostname/configurations/configurationId?api-version=201X-XX-XX"
-     * @throws MalformedURLException This exception is thrown if the URL creation failed due to malformed string
+     * @throws MalformedURLException    This exception is thrown if the URL creation failed due to malformed string
      * @throws IllegalArgumentException This exception is thrown if device id is null or empty
      */
     public URL getUrlConfiguration(String configurationId) throws MalformedURLException, IllegalArgumentException
@@ -499,7 +497,7 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
      *
      * @param maxCount The maximum number of configuration data to return
      * @return The Url in the following format: "https:hostname/configurations/?top=maxcount{@literal &}api-version=201X-XX-XX"
-     * @throws MalformedURLException This exception is thrown if the URL creation failed due to malformed string
+     * @throws MalformedURLException    This exception is thrown if the URL creation failed due to malformed string
      * @throws IllegalArgumentException This exception is thrown if device id is null or empty
      */
     public URL getUrlConfigurationsList(Integer maxCount) throws MalformedURLException, IllegalArgumentException
@@ -531,7 +529,7 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
      *
      * @param deviceId The name of the device
      * @return The device Url in the following format: "https:hostname/devices/deviceId?api-version=201X-XX-XX"
-     * @throws MalformedURLException This exception is thrown if the URL creation failed due to malformed string
+     * @throws MalformedURLException    This exception is thrown if the URL creation failed due to malformed string
      * @throws IllegalArgumentException This exception is thrown if device id is null or empty
      */
     public URL getUrlModulesOnDevice(String deviceId) throws MalformedURLException, IllegalArgumentException
@@ -564,7 +562,7 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
      *
      * @param maxCount The number of requested devices
      * @return URL string to get the device list from IotHub
-     * @throws MalformedURLException This exception is thrown if the URL creation failed due to malformed string
+     * @throws MalformedURLException    This exception is thrown if the URL creation failed due to malformed string
      * @throws IllegalArgumentException This exception is thrown if maxCount is null or empty
      */
     public URL getUrlDeviceList(Integer maxCount) throws MalformedURLException, IllegalArgumentException
@@ -637,7 +635,6 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
     }
 
     /**
-     *
      * @param jobId Create url for retrieving a bulk import/export job
      * @return The import/export job URL in the following format: "https:hostname/jobs/jobId?api-version=201X-XX-XX"
      * @throws MalformedURLException This exception is thrown if the URL creation failed due to malformed string
@@ -722,36 +719,6 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
     }
 
     /**
-     * Getter for sharedAccessKey
-     *
-     * @return The sharedAccessKey string
-     */
-    public String getSharedAccessKey()
-    {
-        return this.sharedAccessKey;
-    }
-
-    /**
-     * Getter for sharedAccessSignature
-     *
-     * @return The sharedAccessSignature string
-     */
-    public String getSharedAccessSignature()
-    {
-        return this.sharedAccessSignature;
-    }
-
-    /**
-     * Getter for hostName
-     *
-     * @return The hostName string
-     */
-    public String getHostName()
-    {
-        return this.hostName;
-    }
-
-    /**
      * Setter for sharedAccessKeyName
      *
      * @param sharedAccessKeyName The value of the signature to set
@@ -759,6 +726,16 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
     protected void setSharedAccessKeyName(String sharedAccessKeyName)
     {
         this.sharedAccessKeyName = sharedAccessKeyName;
+    }
+
+    /**
+     * Getter for sharedAccessKey
+     *
+     * @return The sharedAccessKey string
+     */
+    public String getSharedAccessKey()
+    {
+        return this.sharedAccessKey;
     }
 
     /**
@@ -772,6 +749,16 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
     }
 
     /**
+     * Getter for sharedAccessSignature
+     *
+     * @return The sharedAccessSignature string
+     */
+    public String getSharedAccessSignature()
+    {
+        return this.sharedAccessSignature;
+    }
+
+    /**
      * Setter for sharedAccessSignature
      *
      * @param sharedAccessSignature The value of the signature to set
@@ -779,6 +766,16 @@ public class IotHubConnectionString extends IotHubConnectionStringBuilder
     protected void setSharedAccessSignature(String sharedAccessSignature)
     {
         this.sharedAccessSignature = sharedAccessSignature;
+    }
+
+    /**
+     * Getter for hostName
+     *
+     * @return The hostName string
+     */
+    public String getHostName()
+    {
+        return this.hostName;
     }
 
 }

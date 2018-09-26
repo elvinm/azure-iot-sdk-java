@@ -23,6 +23,7 @@ public final class IotHubRejectUri
      * The reject URI query parameter.
      */
     private static final Map<String, String> REJECT_QUERY_PARAM;
+
     static
     {
         HashMap<String, String> rejectQueryParam = new HashMap<>();
@@ -30,7 +31,9 @@ public final class IotHubRejectUri
         REJECT_QUERY_PARAM = Collections.unmodifiableMap(rejectQueryParam);
     }
 
-    /** The underlying IoT Hub URI. */
+    /**
+     * The underlying IoT Hub URI.
+     */
     private final IotHubUri uri;
 
     /**
@@ -38,17 +41,22 @@ public final class IotHubRejectUri
      * message as being rejected. The URI does not include a protocol.
      *
      * @param iotHubHostname the IoT Hub name.
-     * @param deviceId the device ID.
-     * @param eTag the message e-tag.
-     * @param moduleId the module id, or null if not communicating as a module
+     * @param deviceId       the device ID.
+     * @param eTag           the message e-tag.
+     * @param moduleId       the module id, or null if not communicating as a module
      */
     public IotHubRejectUri(String iotHubHostname, String deviceId, String eTag, String moduleId)
     {
         // Codes_SRS_IOTHUBREJECTURI_11_001: [The constructor returns a URI with the format "[iotHubHostname]/devices/[deviceId]/messages/devicebound/[eTag]??reject=true&api-version=2016-02-03" (the query parameters can be in any order).]
         String rejectPath = String.format(REJECT_PATH_FORMAT, eTag);
 
-        this.uri = new IotHubUri(iotHubHostname, deviceId, rejectPath,
-                        REJECT_QUERY_PARAM, moduleId);
+        this.uri = new IotHubUri(iotHubHostname, deviceId, rejectPath, REJECT_QUERY_PARAM, moduleId);
+    }
+
+    @SuppressWarnings("unused")
+    protected IotHubRejectUri()
+    {
+        this.uri = null;
     }
 
     /**
@@ -83,11 +91,5 @@ public final class IotHubRejectUri
     {
         // Codes_SRS_IOTHUBREJECTURI_11_004: [The function shall return a URI with the format '/devices/[deviceId]/messages/devicebound/[eTag].]
         return this.uri.getPath();
-    }
-
-    @SuppressWarnings("unused")
-    protected IotHubRejectUri()
-    {
-        this.uri = null;
     }
 }

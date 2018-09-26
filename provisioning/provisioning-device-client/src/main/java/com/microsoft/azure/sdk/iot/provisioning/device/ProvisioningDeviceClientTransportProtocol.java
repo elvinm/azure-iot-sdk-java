@@ -9,9 +9,5 @@ package com.microsoft.azure.sdk.iot.provisioning.device;
 
 public enum ProvisioningDeviceClientTransportProtocol
 {
-    HTTPS,
-    MQTT,
-    MQTT_WS,
-    AMQPS,
-    AMQPS_WS
+    HTTPS, MQTT, MQTT_WS, AMQPS, AMQPS_WS
 }

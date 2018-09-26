@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package tests.unit.com.microsoft.azure.sdk.iot.service.devicetwin;
 
@@ -53,7 +53,7 @@ public class QueryOptionsTest
     }
 
     //Tests_SRS_QUERYOPTIONS_34_004: [If the provided continuation token is null or empty, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setContinuationTokenThrowsForNullContinuationToken()
     {
         //act
@@ -61,7 +61,7 @@ public class QueryOptionsTest
     }
 
     //Tests_SRS_QUERYOPTIONS_34_004: [If the provided continuation token is null or empty, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setContinuationTokenThrowsForEmptyContinuationToken()
     {
         //act
@@ -101,7 +101,7 @@ public class QueryOptionsTest
     }
 
     //Tests_SRS_QUERYOPTIONS_34_005: [If the provided page size is null or is not a positive integer, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setPageSizeThrowsForNullPageSize()
     {
         //act
@@ -109,7 +109,7 @@ public class QueryOptionsTest
     }
 
     //Tests_SRS_QUERYOPTIONS_34_005: [If the provided page size is null or is not a positive integer, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setPageSizeThrowsForZeroPageSize()
     {
         //act
@@ -117,7 +117,7 @@ public class QueryOptionsTest
     }
 
     //Tests_SRS_QUERYOPTIONS_34_005: [If the provided page size is null or is not a positive integer, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setPageSizeThrowsForNegativePageSize()
     {
         //act

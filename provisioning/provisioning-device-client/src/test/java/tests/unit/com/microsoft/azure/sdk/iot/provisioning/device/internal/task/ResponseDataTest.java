@@ -59,7 +59,7 @@ public class ResponseDataTest
     public void setAndGetResponseData() throws Exception
     {
         //arrange
-        byte [] testData = "testData".getBytes();
+        byte[] testData = "testData".getBytes();
         ResponseData testResponseData = newInstance(ResponseData.class);
 
         //act

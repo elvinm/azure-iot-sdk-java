@@ -35,7 +35,7 @@ public class QueryRequestParserTest
     }
 
     //Tests_SRS_QUERY_REQUEST_PARSER_25_003: [If the provided query is null, empty, or not valid, the constructor shall throws IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsInvalidQuery1() throws IllegalArgumentException
     {
         //arrange
@@ -45,7 +45,7 @@ public class QueryRequestParserTest
         QueryRequestParser testParser = new QueryRequestParser(testQuery);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsInvalidQuery2() throws IllegalArgumentException
     {
         //arrange
@@ -55,7 +55,7 @@ public class QueryRequestParserTest
         QueryRequestParser testParser = new QueryRequestParser(testQuery);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsInvalidQuery3() throws IllegalArgumentException
     {
         //arrange
@@ -71,9 +71,7 @@ public class QueryRequestParserTest
     {
         //arrange
         final String testQuery = "select * from abc";
-        final String actualJsonQuery = "{\n" +
-                "    \"query\": \"" + testQuery + "\"\n" +
-                "}";
+        final String actualJsonQuery = "{\n" + "    \"query\": \"" + testQuery + "\"\n" + "}";
         QueryRequestParser testParser = new QueryRequestParser(testQuery);
 
         //act

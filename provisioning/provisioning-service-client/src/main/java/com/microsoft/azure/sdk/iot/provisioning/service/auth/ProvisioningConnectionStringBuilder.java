@@ -44,7 +44,7 @@ public class ProvisioningConnectionStringBuilder
     /**
      * Static constructor to create ProvisioningConnectionString from host name and authentication method
      *
-     * @param hostName The hostName string
+     * @param hostName             The hostName string
      * @param authenticationMethod The AuthenticationMethod object
      * @return The ProvisioningConnectionString object
      * @throws IllegalArgumentException This exception is thrown if the object creation failed
@@ -72,7 +72,7 @@ public class ProvisioningConnectionStringBuilder
     /**
      * Deserialize connection string
      *
-     * @param connectionString The connection string to deserialize
+     * @param connectionString             The connection string to deserialize
      * @param provisioningConnectionString The target object for deserialization
      * @throws IllegalArgumentException This exception is thrown if the parsing failed
      */
@@ -99,7 +99,9 @@ public class ProvisioningConnectionStringBuilder
 
             String[] splitString = currentToken.split(ProvisioningConnectionString.VALUE_PAIR_SEPARATOR, 2);
             if (splitString.length == 2)
+            {
                 keyValueMap.put(splitString[0], splitString[1]);
+            }
         }
 
         provisioningConnectionString.hostName = Tools.getValueStringByKey(keyValueMap, ProvisioningConnectionString.HOST_NAME_PROPERTY_NAME);
@@ -111,16 +113,12 @@ public class ProvisioningConnectionStringBuilder
         /* Codes_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_010: [The function shall create a new ServiceAuthenticationWithSharedAccessPolicyToken and set the authenticationMethod if sharedAccessKey is not defined.] */
         if (Tools.isNullOrWhiteSpace(provisioningConnectionString.sharedAccessKey))
         {
-            provisioningConnectionString.authenticationMethod = new ServiceAuthenticationWithSharedAccessPolicyToken(
-                    provisioningConnectionString.sharedAccessKeyName,
-                    provisioningConnectionString.sharedAccessSignature);
+            provisioningConnectionString.authenticationMethod = new ServiceAuthenticationWithSharedAccessPolicyToken(provisioningConnectionString.sharedAccessKeyName, provisioningConnectionString.sharedAccessSignature);
         }
         /* Codes_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_011: [The function shall create a new ServiceAuthenticationWithSharedAccessPolicyKey and set the authenticationMethod if the sharedAccessSignature is not defined.] */
         else if (Tools.isNullOrWhiteSpace(provisioningConnectionString.sharedAccessSignature))
         {
-            provisioningConnectionString.authenticationMethod = new ServiceAuthenticationWithSharedAccessPolicyKey(
-                    provisioningConnectionString.sharedAccessKeyName,
-                    provisioningConnectionString.sharedAccessKey);
+            provisioningConnectionString.authenticationMethod = new ServiceAuthenticationWithSharedAccessPolicyKey(provisioningConnectionString.sharedAccessKeyName, provisioningConnectionString.sharedAccessKey);
         }
 
         /* Codes_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_012: [The function shall validate the connection string object.] */
@@ -177,9 +175,9 @@ public class ProvisioningConnectionStringBuilder
     /**
      * Validate string property using given regex
      *
-     * @param value The string value to validate
+     * @param value        The string value to validate
      * @param propertyName The property name
-     * @param regex The regex used for validation
+     * @param regex        The regex used for validation
      * @throws IllegalArgumentException if the the connection string has an invalid value for property.
      */
     private static void validateFormat(String value, String propertyName, String regex)
@@ -196,9 +194,9 @@ public class ProvisioningConnectionStringBuilder
     /**
      * Validate string property using given regex if value is not null or empty
      *
-     * @param value string value to validate
+     * @param value        string value to validate
      * @param propertyName property name
-     * @param regex regex used for validation
+     * @param regex        regex used for validation
      * @throws IllegalArgumentException if the the connection string has an invalid value for property.
      */
     private static void validateFormatIfSpecified(String value, String propertyName, String regex)
@@ -213,7 +211,7 @@ public class ProvisioningConnectionStringBuilder
     /**
      * Set host name value to target ProvisioningConnectionString object
      *
-     * @param hostName host name string
+     * @param hostName                     host name string
      * @param provisioningConnectionString target ProvisioningConnectionString object
      * @throws IllegalArgumentException if the connectionString has an invalid hostName.
      */
@@ -229,7 +227,7 @@ public class ProvisioningConnectionStringBuilder
     /**
      * Set authentication method to target ProvisioningConnectionString object
      *
-     * @param authenticationMethod value to set
+     * @param authenticationMethod         value to set
      * @param provisioningConnectionString target ProvisioningConnectionString object
      */
     private static void setAuthenticationMethod(AuthenticationMethod authenticationMethod, ProvisioningConnectionString provisioningConnectionString)

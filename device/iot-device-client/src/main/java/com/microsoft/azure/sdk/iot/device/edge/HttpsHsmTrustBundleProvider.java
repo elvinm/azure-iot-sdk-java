@@ -21,13 +21,14 @@ public class HttpsHsmTrustBundleProvider implements TrustBundleProvider
 {
     /**
      * Retrieve the list of certificates to be trusted as dictated by the HSM
+     *
      * @param providerUri the provider uri of the HSM to communicate with
-     * @param apiVersion the api version to use
+     * @param apiVersion  the api version to use
      * @return the raw string containing all of the certificates to be trusted. May be one certificate or many certificates
      * @throws URISyntaxException if the providerUri cannot be parsed as a uri
      * @throws TransportException if the hsm cannot be reacheed
-     * @throws IOException if the hsm cannot be reached
-     * @throws HsmException if the hsm cannot give the trust bundle
+     * @throws IOException        if the hsm cannot be reached
+     * @throws HsmException       if the hsm cannot give the trust bundle
      */
     public String getTrustBundleCerts(String providerUri, String apiVersion) throws URISyntaxException, TransportException, IOException, HsmException
     {

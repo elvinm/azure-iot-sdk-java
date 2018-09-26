@@ -9,13 +9,13 @@ import com.microsoft.azure.sdk.iot.provisioning.service.Tools;
 
 /**
  * Representation of a single Device Provisioning Service X509 Primary and Secondary CA reference.
- *
+ * <p>
  * <p> this class creates a representation of an X509 CA references. It can receive primary and secondary
- *     CA references, but only the primary is mandatory.
- *
+ * CA references, but only the primary is mandatory.
+ * <p>
  * <p> Users must provide the CA reference as a {@code String}. This class will encapsulate both in a
- *     single {@link X509Attestation}.
- *
+ * single {@link X509Attestation}.
+ * <p>
  * <p> The following JSON is an example of the result of this class.
  * <pre>
  * {@code
@@ -32,31 +32,30 @@ public class X509CAReferences
 {
     // the primary X509 CA reference [mandatory]
     private static final String PRIMARY_TAG = "primary";
+    // the secondary X509 CA reference
+    private static final String SECONDARY_TAG = "secondary";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(PRIMARY_TAG)
     private String primary;
-
-    // the secondary X509 CA reference
-    private static final String SECONDARY_TAG = "secondary";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(SECONDARY_TAG)
     private String secondary;
 
     /**
      * CONSTRUCTOR
-     *
+     * <p>
      * <p> Creates a new instance of the X509 CA references using the provided CA references.
-     *
+     * <p>
      * <P> The CA reference is a {@code String} with the name that you gave for your certificate.
      *
-     * @param primary the {@code String} with the primary CA reference.
+     * @param primary   the {@code String} with the primary CA reference.
      * @param secondary the {@code String} with the secondary CA reference.
      * @throws IllegalArgumentException if the primary CA reference is {@code null} or empty.
      */
     X509CAReferences(String primary, String secondary)
     {
         /* SRS_X509_CAREFERENCE_21_001: [The constructor shall throw IllegalArgumentException if the primary CA reference is null or empty.] */
-        if(Tools.isNullOrEmpty(primary))
+        if (Tools.isNullOrEmpty(primary))
         {
             throw new IllegalArgumentException("primary CA reference cannot be null or empty");
         }
@@ -67,7 +66,7 @@ public class X509CAReferences
 
     /**
      * Constructor [COPY]
-     *
+     * <p>
      * <p> Creates a new instance of the {@code X509CAReferences} copping the content of the provided one.
      *
      * @param x509CAReferences the original {@code X509CAReferences} to copy.
@@ -76,13 +75,26 @@ public class X509CAReferences
     public X509CAReferences(X509CAReferences x509CAReferences)
     {
         /* SRS_X509_CAREFERENCE_21_003: [The constructor shall throw IllegalArgumentException if the provide X509CAReferences is null or if its primary certificate is null.] */
-        if((x509CAReferences == null) || (x509CAReferences.getPrimary() == null))
+        if ((x509CAReferences == null) || (x509CAReferences.getPrimary() == null))
         {
             throw new IllegalArgumentException("original x509CAReferences cannot be null and its primary certificate cannot be null.");
         }
         /* SRS_X509_CAREFERENCE_21_004: [The constructor shall create a copy of the primary and secondary CA references and store it.] */
         this.primary = x509CAReferences.primary;
         this.secondary = x509CAReferences.secondary;
+    }
+
+    /**
+     * Empty constructor
+     * <p>
+     * <p>
+     * Used only by the tools that will deserialize this class.
+     * </p>
+     */
+    @SuppressWarnings("unused")
+    X509CAReferences()
+    {
+        /* SRS_X509_CAREFERENCE_21_007: [The X509CAReferences shall provide an empty constructor to make GSON happy.] */
     }
 
     /**
@@ -105,18 +117,5 @@ public class X509CAReferences
     {
         /* SRS_X509_CAREFERENCE_21_006: [The getSecondary shall return the stored secondary.] */
         return this.secondary;
-    }
-
-    /**
-     * Empty constructor
-     *
-     * <p>
-     *     Used only by the tools that will deserialize this class.
-     * </p>
-     */
-    @SuppressWarnings("unused")
-    X509CAReferences()
-    {
-        /* SRS_X509_CAREFERENCE_21_007: [The X509CAReferences shall provide an empty constructor to make GSON happy.] */
     }
 }

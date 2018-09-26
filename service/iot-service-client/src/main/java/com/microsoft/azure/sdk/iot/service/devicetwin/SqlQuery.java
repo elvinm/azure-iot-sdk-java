@@ -17,28 +17,6 @@ public class SqlQuery
 
     private final StringBuilder query;
 
-    /**
-     * From clause for Query
-     */
-    public enum FromType
-    {
-        DEVICES("devices"),
-        MODULES("devices.modules"),
-        JOBS("devices.jobs");
-
-        private final String type;
-
-        FromType(String type)
-        {
-            this.type = type;
-        }
-
-        public String getValue()
-        {
-            return type;
-        }
-    }
-
     private SqlQuery()
     {
         this.query = new StringBuilder();
@@ -46,10 +24,11 @@ public class SqlQuery
 
     /**
      * Creates a Sql style query for IotHub
+     *
      * @param selection Select clause for query. Cannot be {@code null}.
-     * @param fromType From enum for Query. Cannot be {@code null}.
-     * @param where Where clause for Query. Can be {@code null}.
-     * @param groupby GroupBy clause for query. Can be {@code null}
+     * @param fromType  From enum for Query. Cannot be {@code null}.
+     * @param where     Where clause for Query. Can be {@code null}.
+     * @param groupby   GroupBy clause for query. Can be {@code null}
      * @return SqlQuery Object as specified by param
      * @throws IOException If input parameter is invalid
      */
@@ -64,27 +43,19 @@ public class SqlQuery
         SqlQuery sqlQuery = new SqlQuery();
 
         //Codes_SRS_SQL_QUERY_25_002: [ The constructor shall build the sql query string from the given Input ]
-        sqlQuery.query.append(SELECT)
-                .append(selection)
-                .append(SPACE)
-                .append(FROM)
-                .append(fromType.getValue())
-                .append(SPACE);
+        sqlQuery.query.append(SELECT).append(selection).append(SPACE).append(FROM).append(fromType.getValue()).append(SPACE);
 
 
         if (where != null && where.length() > 0)
         {
             //Codes_SRS_SQL_QUERY_25_003: [ The constructor shall append where to the sql query string only when provided ]
-            sqlQuery.query.append(WHERE)
-                    .append(where)
-                    .append(SPACE);
+            sqlQuery.query.append(WHERE).append(where).append(SPACE);
         }
 
         if (groupby != null && groupby.length() > 0)
         {
             //Codes_SRS_SQL_QUERY_25_004: [ The constructor shall append groupby to the sql query string only when provided ]
-            sqlQuery.query.append(GROUP_BY)
-                    .append(groupby);
+            sqlQuery.query.append(GROUP_BY).append(groupby);
         }
 
         //Codes_SRS_SQL_QUERY_25_005: [ The constructor shall create a new SqlQuery instance and return it ]
@@ -93,11 +64,32 @@ public class SqlQuery
 
     /**
      * Getter for the String corresponding to Sql Query String created
+     *
      * @return String corresponding to Sql Query created
      */
     public String getQuery()
     {
         //Codes_SRS_SQL_QUERY_25_006: [ The method shall return the sql query string built ]
         return query.toString();
+    }
+
+    /**
+     * From clause for Query
+     */
+    public enum FromType
+    {
+        DEVICES("devices"), MODULES("devices.modules"), JOBS("devices.jobs");
+
+        private final String type;
+
+        FromType(String type)
+        {
+            this.type = type;
+        }
+
+        public String getValue()
+        {
+            return type;
+        }
     }
 }

@@ -145,7 +145,7 @@ public class AuthenticationMechanismTest
     }
 
     //Tests_SRS_AUTHENTICATION_MECHANISM_34_012: [This constructor shall throw an IllegalArgumentException if the provided symmetricKey is null.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIllegalArgumentExceptionForNullSymmetricKey()
     {
         //arrange
@@ -156,7 +156,7 @@ public class AuthenticationMechanismTest
     }
 
     //Tests_SRS_AUTHENTICATION_MECHANISM_34_013: [If the provided symmetricKey is null, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setSymmetricKeyThrowsForNullSymmetricKey()
     {
         //arrange
@@ -167,7 +167,7 @@ public class AuthenticationMechanismTest
     }
 
     //Tests_SRS_AUTHENTICATION_MECHANISM_34_014: [If the provided type is null, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setAuthenticationTypeThrowsForNullType()
     {
         //arrange

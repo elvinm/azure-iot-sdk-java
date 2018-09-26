@@ -9,16 +9,13 @@ package com.microsoft.azure.sdk.iot.provisioning.device.internal.task;
 
 public enum ProvisioningStatus
 {
-    UNASSIGNED("unassigned"),
-    ASSIGNING("assigning"),
-    ASSIGNED("assigned"),
-    FAILED("failed"),
-    DISABLED("disabled");
+    UNASSIGNED("unassigned"), ASSIGNING("assigning"), ASSIGNED("assigned"), FAILED("failed"), DISABLED("disabled");
 
     private String status;
 
     /**
      * Constructor to create an enum
+     *
      * @param status status for which enum is to be created
      */
     ProvisioningStatus(String status)
@@ -29,6 +26,7 @@ public enum ProvisioningStatus
 
     /**
      * returns the enum corresponding to the provided status
+     *
      * @param status the status for which enum is requested
      * @return enum for the status if defined and {@code null} otherwise.
      */

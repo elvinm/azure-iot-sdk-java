@@ -86,7 +86,7 @@ public class JobPropertiesTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_JOB_PROPERTIES_34_004: [If the provided jobId is null, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void cannotSetJobIdToNull()
     {
         new JobProperties().setJobId(null);
@@ -99,6 +99,6 @@ public class JobPropertiesTest
 
     private JobProperties jobPropertiesConstructorWithParser(JobPropertiesParser parser)
     {
-        return Deencapsulation.newInstance(JobProperties.class, new Class[] { JobPropertiesParser.class }, parser);
+        return Deencapsulation.newInstance(JobProperties.class, new Class[]{JobPropertiesParser.class}, parser);
     }
 }

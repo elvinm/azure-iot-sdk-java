@@ -16,18 +16,22 @@ import java.util.Map;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/** Unit tests for IotHubRejectUri. */
+/**
+ * Unit tests for IotHubRejectUri.
+ */
 public class IotHubRejectUriTest
 {
-    /** The e-tag will be interpolated where the '%s' is placed. */
+    /**
+     * The e-tag will be interpolated where the '%s' is placed.
+     */
     protected static String REJECT_PATH_FORMAT = "/messages/devicebound/%s";
 
-    @Mocked IotHubUri mockIotHubUri;
+    @Mocked
+    IotHubUri mockIotHubUri;
 
     // Tests_SRS_IOTHUBREJECTURI_11_001: [The constructor returns a URI with the format "[iotHubHostname]/devices/[deviceId]/messages/devicebound/[eTag]??reject=true&api-version=2016-02-03" (the query parameters can be in any order).]
     @Test
-    public void constructorConstructsIotHubUriCorrectly()
-            throws URISyntaxException
+    public void constructorConstructsIotHubUriCorrectly() throws URISyntaxException
     {
         final String iotHubHostname = "test.iothub";
         final String deviceId = "test-deviceid";
@@ -39,8 +43,7 @@ public class IotHubRejectUriTest
         new Verifications()
         {
             {
-                new IotHubUri(iotHubHostname, deviceId, rejectPath,
-                        (Map<String, String>) any, null);
+                new IotHubUri(iotHubHostname, deviceId, rejectPath, (Map<String, String>) any, null);
             }
         };
     }
@@ -60,8 +63,7 @@ public class IotHubRejectUriTest
                 result = uriStr;
             }
         };
-        IotHubRejectUri rejectUri =
-                new IotHubRejectUri(iotHubHostname, deviceId, eTag, null);
+        IotHubRejectUri rejectUri = new IotHubRejectUri(iotHubHostname, deviceId, eTag, null);
 
         String testUriStr = rejectUri.toString();
 
@@ -84,8 +86,7 @@ public class IotHubRejectUriTest
                 result = hostname;
             }
         };
-        IotHubRejectUri rejectUri =
-                new IotHubRejectUri(iotHubHostname, deviceId, eTag, null);
+        IotHubRejectUri rejectUri = new IotHubRejectUri(iotHubHostname, deviceId, eTag, null);
 
         String testHostname = rejectUri.getHostname();
 
@@ -108,8 +109,7 @@ public class IotHubRejectUriTest
                 result = path;
             }
         };
-        IotHubRejectUri rejectUri =
-                new IotHubRejectUri(iotHubHostname, deviceId, eTag, null);
+        IotHubRejectUri rejectUri = new IotHubRejectUri(iotHubHostname, deviceId, eTag, null);
 
         String testPath = rejectUri.getPath();
 

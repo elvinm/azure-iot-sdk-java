@@ -16,6 +16,7 @@ public class AmqpReactor
 
     /**
      * Amqp Reactor Constructor
+     *
      * @param reactor Proton Reactor object
      */
     public AmqpReactor(Reactor reactor)
@@ -25,6 +26,7 @@ public class AmqpReactor
 
     /**
      * Main run function to pump Proton messages
+     *
      * @throws HandlerException If Protonj failed.
      */
     public void run() throws HandlerException
@@ -32,7 +34,9 @@ public class AmqpReactor
         this.reactor.setTimeout(REACTOR_TIMEOUT);
         this.reactor.start();
 
-        while(this.reactor.process()){}
+        while (this.reactor.process())
+        {
+        }
         this.reactor.stop();
         this.reactor.process();
         this.reactor.free();

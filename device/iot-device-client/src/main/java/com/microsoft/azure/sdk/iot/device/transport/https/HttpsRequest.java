@@ -28,10 +28,10 @@ public class HttpsRequest
      * Constructor. Takes a URL as an argument and returns an HTTPS request that
      * is ready to be sent.
      *
-     * @param url the URL for the request.
-     * @param method the HTTPS request method (i.e. GET).
-     * @param body the request body. Must be an array of size 0 if the request
-     * method is GET or DELETE.
+     * @param url             the URL for the request.
+     * @param method          the HTTPS request method (i.e. GET).
+     * @param body            the request body. Must be an array of size 0 if the request
+     *                        method is GET or DELETE.
      * @param userAgentString the user agent string to attach to all http communications
      */
     public HttpsRequest(URL url, HttpsMethod method, byte[] body, String userAgentString)
@@ -64,13 +64,17 @@ public class HttpsRequest
 
     }
 
+    @SuppressWarnings("unused")
+    protected HttpsRequest()
+    {
+    }
+
     /**
      * Executes the HTTPS request.
      *
      * @return an HTTPS response.
-     *
      * @throws TransportException if the connection could not be established, or the
-     * input/output streams could not be accessed.
+     *                            input/output streams could not be accessed.
      */
     public HttpsResponse send() throws TransportException
     {
@@ -122,7 +126,6 @@ public class HttpsRequest
      *
      * @param field the header field name.
      * @param value the header field value.
-     *
      * @return itself, for fluent setting.
      */
     public HttpsRequest setHeaderField(String field, String value)
@@ -148,7 +151,6 @@ public class HttpsRequest
      * before the server sends data back.
      *
      * @param timeout the read timeout.
-     *
      * @return itself, for fluent setting.
      */
     public HttpsRequest setReadTimeoutMillis(int timeout)
@@ -160,6 +162,7 @@ public class HttpsRequest
 
     /**
      * Sets this object's SSL context
+     *
      * @param sslContext the value to set this object's SSL context too
      * @return itself, for fluent setting.
      * @throws IllegalArgumentException if sslContext is null
@@ -216,10 +219,5 @@ public class HttpsRequest
 
         //Codes_SRS_HTTPSCONNECTION_34_030: [The function shall return all the request headers in the format "<key>: <value1>; <value2>\r\n <key>: <value1>\r\n...".]
         return headerString;
-    }
-
-    @SuppressWarnings("unused")
-    protected HttpsRequest()
-    {
     }
 }

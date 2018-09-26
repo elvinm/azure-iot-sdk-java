@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package tests.unit.com.microsoft.azure.sdk.iot.service.devicetwin;
 
@@ -29,19 +29,19 @@ public class QueryCollectionResponseTest
     QueryResponseParser mockQueryResponseParser;
 
     //Tests_SRS_QUERY_COLLECTION_RESPONSE_34_001: [If the provided jsonString is null or empty, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullJson()
     {
         //act
-        Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[] {String.class, String.class}, null, "some continuation token");
+        Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[]{String.class, String.class}, null, "some continuation token");
     }
 
     //Tests_SRS_QUERY_COLLECTION_RESPONSE_34_001: [If the provided jsonString is null or empty, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForEmptyJson()
     {
         //act
-        Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[] {String.class, String.class}, "", "some continuation token");
+        Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[]{String.class, String.class}, "", "some continuation token");
     }
 
     //Tests_SRS_QUERY_COLLECTION_RESPONSE_34_002: [This constructor shall parse the provided jsonString using the QueryResponseParser class into a Collection and save it.]
@@ -62,7 +62,7 @@ public class QueryCollectionResponseTest
         };
 
         //act
-        QueryCollectionResponse actualResponse = Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[] {String.class, String.class}, expectedJson, expectedToken);
+        QueryCollectionResponse actualResponse = Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[]{String.class, String.class}, expectedJson, expectedToken);
 
         //assert
         Collection actualCollection = Deencapsulation.getField(actualResponse, "responseElementsCollection");
@@ -84,7 +84,7 @@ public class QueryCollectionResponseTest
         expectedList.add("asdfasdf");
 
         //act
-        QueryCollectionResponse actualResponse = Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[] {Collection.class, String.class}, expectedList, expectedToken);
+        QueryCollectionResponse actualResponse = Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[]{Collection.class, String.class}, expectedList, expectedToken);
 
         //assert
         Collection actualCollection = Deencapsulation.getField(actualResponse, "responseElementsCollection");
@@ -95,14 +95,14 @@ public class QueryCollectionResponseTest
     }
 
     //Tests_SRS_QUERY_COLLECTION_RESPONSE_34_007: [If the provided Collection is null, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithCollectionThrowsForNullCollection()
     {
         //arrange
         String expectedToken = "some valid token";
 
         //act
-        Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[] {Collection.class, String.class}, null, expectedToken);
+        Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[]{Collection.class, String.class}, null, expectedToken);
     }
 
     //Tests_SRS_QUERY_COLLECTION_RESPONSE_34_005: [This function shall return the saved continuation token.]
@@ -113,7 +113,7 @@ public class QueryCollectionResponseTest
         String expectedContinuationToken = "some token";
         ArrayList<String> expectedList = new ArrayList<>();
         expectedList.add("asdf");
-        QueryCollectionResponse actualResponse = Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[] {Collection.class, String.class}, expectedList, expectedContinuationToken);
+        QueryCollectionResponse actualResponse = Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[]{Collection.class, String.class}, expectedList, expectedContinuationToken);
 
         //act
         String actualContinuationToken = actualResponse.getContinuationToken();
@@ -129,7 +129,7 @@ public class QueryCollectionResponseTest
         //arrange
         ArrayList<String> expectedList = new ArrayList<>();
         expectedList.add("asdf");
-        QueryCollectionResponse actualResponse = Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[] {Collection.class, String.class}, expectedList, "any token");
+        QueryCollectionResponse actualResponse = Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[]{Collection.class, String.class}, expectedList, "any token");
 
         //act
         Collection actualCollection = actualResponse.getCollection();

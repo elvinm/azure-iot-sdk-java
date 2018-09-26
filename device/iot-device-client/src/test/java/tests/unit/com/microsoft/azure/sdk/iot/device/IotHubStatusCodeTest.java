@@ -9,7 +9,9 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/** Unit tests for IotHubStatusCode. */
+/**
+ * Unit tests for IotHubStatusCode.
+ */
 public class IotHubStatusCodeTest
 {
     // Tests_SRS_IOTHUBSTATUSCODE_11_001: [The function shall convert the given HTTPS status code to the corresponding IoT Hub status code.]
@@ -17,8 +19,7 @@ public class IotHubStatusCodeTest
     public void getIotHubStatusCodeMapsOkCorrectly()
     {
         final int httpsStatus = 200;
-        IotHubStatusCode testStatus =
-                IotHubStatusCode.getIotHubStatusCode(httpsStatus);
+        IotHubStatusCode testStatus = IotHubStatusCode.getIotHubStatusCode(httpsStatus);
 
         final IotHubStatusCode expectedStatus = IotHubStatusCode.OK;
         assertThat(testStatus, is(expectedStatus));
@@ -29,8 +30,7 @@ public class IotHubStatusCodeTest
     public void getIotHubStatusCodeMapsOkEmptyCorrectly()
     {
         final int httpsStatus = 204;
-        IotHubStatusCode testStatus =
-                IotHubStatusCode.getIotHubStatusCode(httpsStatus);
+        IotHubStatusCode testStatus = IotHubStatusCode.getIotHubStatusCode(httpsStatus);
 
         final IotHubStatusCode expectedStatus = IotHubStatusCode.OK_EMPTY;
         assertThat(testStatus, is(expectedStatus));
@@ -41,8 +41,7 @@ public class IotHubStatusCodeTest
     public void getIotHubStatusCodeMapsBadFormatCorrectly()
     {
         final int httpsStatus = 400;
-        IotHubStatusCode testStatus =
-                IotHubStatusCode.getIotHubStatusCode(httpsStatus);
+        IotHubStatusCode testStatus = IotHubStatusCode.getIotHubStatusCode(httpsStatus);
 
         final IotHubStatusCode expectedStatus = IotHubStatusCode.BAD_FORMAT;
         assertThat(testStatus, is(expectedStatus));
@@ -53,8 +52,7 @@ public class IotHubStatusCodeTest
     public void getIotHubStatusCodeMapsUnauthorizedCorrectly()
     {
         final int httpsStatus = 401;
-        IotHubStatusCode testStatus =
-                IotHubStatusCode.getIotHubStatusCode(httpsStatus);
+        IotHubStatusCode testStatus = IotHubStatusCode.getIotHubStatusCode(httpsStatus);
 
         final IotHubStatusCode expectedStatus = IotHubStatusCode.UNAUTHORIZED;
         assertThat(testStatus, is(expectedStatus));
@@ -65,11 +63,9 @@ public class IotHubStatusCodeTest
     public void getIotHubStatusCodeMapsTooManyDevicesCorrectly()
     {
         final int httpsStatus = 403;
-        IotHubStatusCode testStatus =
-                IotHubStatusCode.getIotHubStatusCode(httpsStatus);
+        IotHubStatusCode testStatus = IotHubStatusCode.getIotHubStatusCode(httpsStatus);
 
-        final IotHubStatusCode expectedStatus =
-                IotHubStatusCode.TOO_MANY_DEVICES;
+        final IotHubStatusCode expectedStatus = IotHubStatusCode.TOO_MANY_DEVICES;
         assertThat(testStatus, is(expectedStatus));
     }
 
@@ -78,11 +74,9 @@ public class IotHubStatusCodeTest
     public void getIotHubStatusCodeMapsHubOrDeviceNotFoundCorrectly()
     {
         final int httpsStatus = 404;
-        IotHubStatusCode testStatus =
-                IotHubStatusCode.getIotHubStatusCode(httpsStatus);
+        IotHubStatusCode testStatus = IotHubStatusCode.getIotHubStatusCode(httpsStatus);
 
-        final IotHubStatusCode expectedStatus =
-                IotHubStatusCode.HUB_OR_DEVICE_ID_NOT_FOUND;
+        final IotHubStatusCode expectedStatus = IotHubStatusCode.HUB_OR_DEVICE_ID_NOT_FOUND;
         assertThat(testStatus, is(expectedStatus));
     }
 
@@ -91,11 +85,9 @@ public class IotHubStatusCodeTest
     public void getIotHubStatusCodeMapsPreconditionFailedCorrectly()
     {
         final int httpsStatus = 412;
-        IotHubStatusCode testStatus =
-                IotHubStatusCode.getIotHubStatusCode(httpsStatus);
+        IotHubStatusCode testStatus = IotHubStatusCode.getIotHubStatusCode(httpsStatus);
 
-        final IotHubStatusCode expectedStatus =
-                IotHubStatusCode.PRECONDITION_FAILED;
+        final IotHubStatusCode expectedStatus = IotHubStatusCode.PRECONDITION_FAILED;
         assertThat(testStatus, is(expectedStatus));
     }
 
@@ -104,8 +96,7 @@ public class IotHubStatusCodeTest
     public void getIotHubStatusCodeMapsThrottledCorrectly()
     {
         final int httpsStatus = 429;
-        IotHubStatusCode testStatus =
-                IotHubStatusCode.getIotHubStatusCode(httpsStatus);
+        IotHubStatusCode testStatus = IotHubStatusCode.getIotHubStatusCode(httpsStatus);
 
         final IotHubStatusCode expectedStatus = IotHubStatusCode.THROTTLED;
         assertThat(testStatus, is(expectedStatus));
@@ -116,11 +107,9 @@ public class IotHubStatusCodeTest
     public void getIotHubStatusCodeMapsInternalServerErrorCorrectly()
     {
         final int httpsStatus = 500;
-        IotHubStatusCode testStatus =
-                IotHubStatusCode.getIotHubStatusCode(httpsStatus);
+        IotHubStatusCode testStatus = IotHubStatusCode.getIotHubStatusCode(httpsStatus);
 
-        final IotHubStatusCode expectedStatus =
-                IotHubStatusCode.INTERNAL_SERVER_ERROR;
+        final IotHubStatusCode expectedStatus = IotHubStatusCode.INTERNAL_SERVER_ERROR;
         assertThat(testStatus, is(expectedStatus));
     }
 
@@ -129,8 +118,7 @@ public class IotHubStatusCodeTest
     public void getIotHubStatusCodeMapsServerBusyCorrectly()
     {
         final int httpsStatus = 503;
-        IotHubStatusCode testStatus =
-                IotHubStatusCode.getIotHubStatusCode(httpsStatus);
+        IotHubStatusCode testStatus = IotHubStatusCode.getIotHubStatusCode(httpsStatus);
 
         final IotHubStatusCode expectedStatus = IotHubStatusCode.SERVER_BUSY;
         assertThat(testStatus, is(expectedStatus));
@@ -142,8 +130,7 @@ public class IotHubStatusCodeTest
     {
         final int httpsStatus = -1;
 
-        IotHubStatusCode testStatus =
-                IotHubStatusCode.getIotHubStatusCode(httpsStatus);
+        IotHubStatusCode testStatus = IotHubStatusCode.getIotHubStatusCode(httpsStatus);
 
         final IotHubStatusCode expectedStatus = IotHubStatusCode.ERROR;
         assertThat(testStatus, is(expectedStatus));

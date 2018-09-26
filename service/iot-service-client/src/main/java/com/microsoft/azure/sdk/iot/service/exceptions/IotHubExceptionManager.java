@@ -19,31 +19,19 @@ public class IotHubExceptionManager
      * Verify Http response using response status
      *
      * @param httpResponse Http response object to verify
-     * @throws IotHubBadFormatException This exception is thrown if the response status equal 400
-     * @throws IotHubUnathorizedException This exception is thrown if the response status equal 401
-     * @throws IotHubTooManyDevicesException This exception is thrown if the response status equal 403
-     * @throws IotHubNotFoundException This exception is thrown if the response status equal 404
-     * @throws IotHubPreconditionFailedException This exception is thrown if the response status equal 412
-     * @throws IotHubTooManyRequestsException This exception is thrown if the response status equal 429
+     * @throws IotHubBadFormatException           This exception is thrown if the response status equal 400
+     * @throws IotHubUnathorizedException         This exception is thrown if the response status equal 401
+     * @throws IotHubTooManyDevicesException      This exception is thrown if the response status equal 403
+     * @throws IotHubNotFoundException            This exception is thrown if the response status equal 404
+     * @throws IotHubPreconditionFailedException  This exception is thrown if the response status equal 412
+     * @throws IotHubTooManyRequestsException     This exception is thrown if the response status equal 429
      * @throws IotHubInternalServerErrorException This exception is thrown if the response status equal 500
-     * @throws IotHubBadGatewayException This exception is thrown if the response status equal 502
-     * @throws IotHubServerBusyException This exception is thrown if the response status equal 503
-     * @throws IotHubGatewayTimeoutException This exception is thrown if the response status equal 504
-     * @throws IotHubException This exception is thrown if the response status none of them above and greater then 300
+     * @throws IotHubBadGatewayException          This exception is thrown if the response status equal 502
+     * @throws IotHubServerBusyException          This exception is thrown if the response status equal 503
+     * @throws IotHubGatewayTimeoutException      This exception is thrown if the response status equal 504
+     * @throws IotHubException                    This exception is thrown if the response status none of them above and greater then 300
      */
-    public static void httpResponseVerification(HttpResponse httpResponse)
-            throws 
-            IotHubBadFormatException, 
-            IotHubUnathorizedException, 
-            IotHubTooManyDevicesException,
-            IotHubPreconditionFailedException,
-            IotHubTooManyRequestsException,
-            IotHubInternalServerErrorException,
-            IotHubServerBusyException,
-            IotHubBadGatewayException,
-            IotHubNotFoundException,
-            IotHubGatewayTimeoutException,
-            IotHubException
+    public static void httpResponseVerification(HttpResponse httpResponse) throws IotHubBadFormatException, IotHubUnathorizedException, IotHubTooManyDevicesException, IotHubPreconditionFailedException, IotHubTooManyRequestsException, IotHubInternalServerErrorException, IotHubServerBusyException, IotHubBadGatewayException, IotHubNotFoundException, IotHubGatewayTimeoutException, IotHubException
     {
         int responseStatus = httpResponse.getStatus();
 
@@ -103,7 +91,7 @@ public class IotHubExceptionManager
         // Codes_SRS_SERVICE_SDK_JAVA_IOTHUBEXCEPTIONMANAGER_12_011: [The function shall throw IotHubException if the Http response status none of them above and greater than 300 copying the error Http reason to the exception]
         else if (responseStatus > 300)
         {
-            if(errorMessage.isEmpty())
+            if (errorMessage.isEmpty())
             {
                 throw new IotHubException("Unknown error reason");
             }

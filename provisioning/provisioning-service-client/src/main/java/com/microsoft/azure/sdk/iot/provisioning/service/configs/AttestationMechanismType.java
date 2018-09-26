@@ -13,11 +13,9 @@ import com.google.gson.annotations.SerializedName;
 enum AttestationMechanismType
 {
     @SerializedName("none") // There is no valid scenario for `NONE` Attestation Mechanism Type.
-    NONE,
+            NONE,
 
-    @SerializedName("tpm")
-    TPM,
+    @SerializedName("tpm") TPM,
 
-    @SerializedName("x509")
-    X509,
+    @SerializedName("x509") X509,
 }

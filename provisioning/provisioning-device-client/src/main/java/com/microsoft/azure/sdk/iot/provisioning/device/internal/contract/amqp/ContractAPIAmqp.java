@@ -25,6 +25,7 @@ public class ContractAPIAmqp extends ProvisioningDeviceClientContract
 
     /**
      * This constructor creates an instance of DpsAPIAmqps class and initializes member variables
+     *
      * @param provisioningDeviceClientConfig Config used for provisioning Cannot be {@code null}.
      * @throws ProvisioningDeviceClientException is thrown when any of the input parameters are invalid
      */
@@ -56,6 +57,7 @@ public class ContractAPIAmqp extends ProvisioningDeviceClientContract
 
     /**
      * Indicates need to open AMQP connection
+     *
      * @param requestData Data used for the connection initialization
      * @throws ProvisioningDeviceConnectionException is thrown when any of the input parameters are invalid
      */
@@ -92,12 +94,13 @@ public class ContractAPIAmqp extends ProvisioningDeviceClientContract
 
     /**
      * Requests hub to provide a device key to begin authentication over AMQP (Only for TPM)
-     * @param requestData A non {@code null} value for the RequestData to be used
-     * @param responseCallback A non {@code null} value for the callback
+     *
+     * @param requestData                  A non {@code null} value for the RequestData to be used
+     * @param responseCallback             A non {@code null} value for the callback
      * @param authorizationCallbackContext An object for context. Can be {@code null}
-     * @throws ProvisioningDeviceClientException If any of the parameters are invalid ({@code null} or empty)
+     * @throws ProvisioningDeviceClientException    If any of the parameters are invalid ({@code null} or empty)
      * @throws ProvisioningDeviceTransportException If any of the API calls to transport fail
-     * @throws ProvisioningDeviceHubException If hub responds back with an invalid status
+     * @throws ProvisioningDeviceHubException       If hub responds back with an invalid status
      */
     public synchronized void requestNonceForTPM(RequestData requestData, ResponseCallback responseCallback, Object authorizationCallbackContext) throws ProvisioningDeviceClientException
     {
@@ -136,12 +139,13 @@ public class ContractAPIAmqp extends ProvisioningDeviceClientContract
 
     /**
      * Requests hub to authenticate this connection and start the registration process over AMQP
-     * @param requestData A non {@code null} value with all the required request data
+     *
+     * @param requestData      A non {@code null} value with all the required request data
      * @param responseCallback A non {@code null} value for the callback
-     * @param callbackContext An object for context. Can be {@code null}
-     * @throws ProvisioningDeviceClientException If any of the parameters are invalid ({@code null} or empty)
+     * @param callbackContext  An object for context. Can be {@code null}
+     * @throws ProvisioningDeviceClientException    If any of the parameters are invalid ({@code null} or empty)
      * @throws ProvisioningDeviceTransportException If any of the API calls to transport fail
-     * @throws ProvisioningDeviceHubException If hub responds back with an invalid status
+     * @throws ProvisioningDeviceHubException       If hub responds back with an invalid status
      */
     public synchronized void authenticateWithProvisioningService(RequestData requestData, ResponseCallback responseCallback, Object callbackContext) throws ProvisioningDeviceClientException
     {
@@ -169,12 +173,13 @@ public class ContractAPIAmqp extends ProvisioningDeviceClientContract
 
     /**
      * Gets the registration status over AMQP
-     * @param requestData A non {@code null} value with all the request data
+     *
+     * @param requestData      A non {@code null} value with all the request data
      * @param responseCallback A non {@code null} value for the callback
-     * @param callbackContext An object for context. Can be {@code null}
-     * @throws ProvisioningDeviceClientException If any of the parameters are invalid ({@code null} or empty)
+     * @param callbackContext  An object for context. Can be {@code null}
+     * @throws ProvisioningDeviceClientException    If any of the parameters are invalid ({@code null} or empty)
      * @throws ProvisioningDeviceTransportException If any of the API calls to transport fail
-     * @throws ProvisioningDeviceHubException If hub responds back with an invalid status
+     * @throws ProvisioningDeviceHubException       If hub responds back with an invalid status
      */
     public synchronized void getRegistrationStatus(RequestData requestData, ResponseCallback responseCallback, Object callbackContext) throws ProvisioningDeviceClientException
     {
@@ -214,6 +219,7 @@ public class ContractAPIAmqp extends ProvisioningDeviceClientContract
 
     /**
      * Indicates to close the connection
+     *
      * @throws ProvisioningDeviceConnectionException If close could not succeed
      */
     public synchronized void close() throws ProvisioningDeviceConnectionException

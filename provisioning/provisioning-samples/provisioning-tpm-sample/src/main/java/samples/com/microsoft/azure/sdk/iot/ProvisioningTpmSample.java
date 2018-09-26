@@ -30,39 +30,6 @@ public class ProvisioningTpmSample
     //private static final ProvisioningDeviceClientTransportProtocol PROVISIONING_DEVICE_CLIENT_TRANSPORT_PROTOCOL = ProvisioningDeviceClientTransportProtocol.AMQPS_WS;
     private static final int MAX_TIME_TO_WAIT_FOR_REGISTRATION = 10000; // in milli seconds
 
-    static class ProvisioningStatus
-    {
-        ProvisioningDeviceClientRegistrationResult provisioningDeviceClientRegistrationInfoClient = new ProvisioningDeviceClientRegistrationResult();
-        Exception exception;
-    }
-
-    static class ProvisioningDeviceClientRegistrationCallbackImpl implements ProvisioningDeviceClientRegistrationCallback
-    {
-        @Override
-        public void run(ProvisioningDeviceClientRegistrationResult provisioningDeviceClientRegistrationResult, Exception exception, Object context)
-        {
-            if (context instanceof ProvisioningStatus)
-            {
-                ProvisioningStatus status = (ProvisioningStatus) context;
-                status.provisioningDeviceClientRegistrationInfoClient = provisioningDeviceClientRegistrationResult;
-                status.exception = exception;
-            }
-            else
-            {
-                System.out.println("Received unknown context");
-            }
-        }
-    }
-
-    private static class IotHubEventCallbackImpl implements IotHubEventCallback
-    {
-        @Override
-        public void execute(IotHubStatusCode responseStatus, Object callbackContext)
-        {
-            System.out.println("Message received! Response status: " + responseStatus);
-        }
-    }
-
     public static void main(String[] args) throws Exception
     {
         System.out.println("Starting...");
@@ -76,8 +43,7 @@ public class ProvisioningTpmSample
             securityClientTPMEmulator = new SecurityProviderTPMEmulator();
             System.out.println("Endorsement Key : \n" + new String(Base64.encodeBase64Local(securityClientTPMEmulator.getEndorsementKey())));
             System.out.println("Registration Id : \n" + securityClientTPMEmulator.getRegistrationId());
-            System.out.println("Please visit Azure Portal (https://portal.azure.com/) and create a TPM Individual Enrollment with the information above i.e EndorsementKey and RegistrationId \n" +
-                                       "Press enter when you are ready to run registration after enrolling with the service");
+            System.out.println("Please visit Azure Portal (https://portal.azure.com/) and create a TPM Individual Enrollment with the information above i.e EndorsementKey and RegistrationId \n" + "Press enter when you are ready to run registration after enrolling with the service");
             scanner.nextLine();
         }
         catch (SecurityProviderException e)
@@ -95,9 +61,7 @@ public class ProvisioningTpmSample
             provisioningDeviceClient.registerDevice(new ProvisioningDeviceClientRegistrationCallbackImpl(), provisioningStatus);
             while (provisioningStatus.provisioningDeviceClientRegistrationInfoClient.getProvisioningDeviceClientStatus() != ProvisioningDeviceClientStatus.PROVISIONING_DEVICE_STATUS_ASSIGNED)
             {
-                if (provisioningStatus.provisioningDeviceClientRegistrationInfoClient.getProvisioningDeviceClientStatus() == ProvisioningDeviceClientStatus.PROVISIONING_DEVICE_STATUS_ERROR ||
-                        provisioningStatus.provisioningDeviceClientRegistrationInfoClient.getProvisioningDeviceClientStatus() == ProvisioningDeviceClientStatus.PROVISIONING_DEVICE_STATUS_DISABLED ||
-                        provisioningStatus.provisioningDeviceClientRegistrationInfoClient.getProvisioningDeviceClientStatus() == ProvisioningDeviceClientStatus.PROVISIONING_DEVICE_STATUS_FAILED)
+                if (provisioningStatus.provisioningDeviceClientRegistrationInfoClient.getProvisioningDeviceClientStatus() == ProvisioningDeviceClientStatus.PROVISIONING_DEVICE_STATUS_ERROR || provisioningStatus.provisioningDeviceClientRegistrationInfoClient.getProvisioningDeviceClientStatus() == ProvisioningDeviceClientStatus.PROVISIONING_DEVICE_STATUS_DISABLED || provisioningStatus.provisioningDeviceClientRegistrationInfoClient.getProvisioningDeviceClientStatus() == ProvisioningDeviceClientStatus.PROVISIONING_DEVICE_STATUS_FAILED)
                 {
                     provisioningStatus.exception.printStackTrace();
                     System.out.println("Registration error, bailing out");
@@ -119,7 +83,7 @@ public class ProvisioningTpmSample
                 {
                     deviceClient = DeviceClient.createFromSecurityProvider(iotHubUri, deviceId, securityClientTPMEmulator, IotHubClientProtocol.MQTT);
                     deviceClient.open();
-                    Message messageToSendFromDeviceToHub =  new Message("Whatever message you would like to send");
+                    Message messageToSendFromDeviceToHub = new Message("Whatever message you would like to send");
 
                     System.out.println("Sending message from device to IoT Hub...");
                     deviceClient.sendEventAsync(messageToSendFromDeviceToHub, new IotHubEventCallbackImpl(), null);
@@ -156,5 +120,38 @@ public class ProvisioningTpmSample
         }
 
         System.out.println("Shutting down...");
+    }
+
+    static class ProvisioningStatus
+    {
+        ProvisioningDeviceClientRegistrationResult provisioningDeviceClientRegistrationInfoClient = new ProvisioningDeviceClientRegistrationResult();
+        Exception exception;
+    }
+
+    static class ProvisioningDeviceClientRegistrationCallbackImpl implements ProvisioningDeviceClientRegistrationCallback
+    {
+        @Override
+        public void run(ProvisioningDeviceClientRegistrationResult provisioningDeviceClientRegistrationResult, Exception exception, Object context)
+        {
+            if (context instanceof ProvisioningStatus)
+            {
+                ProvisioningStatus status = (ProvisioningStatus) context;
+                status.provisioningDeviceClientRegistrationInfoClient = provisioningDeviceClientRegistrationResult;
+                status.exception = exception;
+            }
+            else
+            {
+                System.out.println("Received unknown context");
+            }
+        }
+    }
+
+    private static class IotHubEventCallbackImpl implements IotHubEventCallback
+    {
+        @Override
+        public void execute(IotHubStatusCode responseStatus, Object callbackContext)
+        {
+            System.out.println("Message received! Response status: " + responseStatus);
+        }
     }
 }

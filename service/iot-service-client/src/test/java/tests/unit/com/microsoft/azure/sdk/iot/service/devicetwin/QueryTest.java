@@ -86,7 +86,7 @@ public class QueryTest
         assertNull(Deencapsulation.getField(testQuery, "queryResponse"));
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithSQLQueryThrowsOnNullQuery() throws IllegalArgumentException
     {
         //arrange
@@ -96,7 +96,7 @@ public class QueryTest
         Query testQuery = Deencapsulation.newInstance(Query.class, String.class, DEFAULT_PAGE_SIZE, DEFAULT_QUERY_TYPE);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithSQLQueryThrowsOnEmptyQuery() throws IllegalArgumentException
     {
         //arrange
@@ -107,7 +107,7 @@ public class QueryTest
     }
 
     //Tests_SRS_QUERY_25_002: [If the query is null or empty or is not a valid sql query (containing select and from), the constructor shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithSQLQueryThrowsOnInvalidQuery() throws IllegalArgumentException
     {
         //arrange
@@ -118,7 +118,7 @@ public class QueryTest
     }
 
     //Tests_SRS_QUERY_25_003: [If the pagesize is zero or negative the constructor shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithSQLQueryThrowsNegativePageSize() throws IllegalArgumentException
     {
         //arrange
@@ -129,7 +129,7 @@ public class QueryTest
 
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithSQLQueryThrowsZeroPageSize() throws IllegalArgumentException
     {
         //arrange
@@ -141,7 +141,7 @@ public class QueryTest
     }
 
     //Tests_SRS_QUERY_25_004: [If the QueryType is null or unknown then the constructor shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithSQLQueryThrowsOnUnknownQueryType() throws IllegalArgumentException
     {
         //arrange
@@ -151,7 +151,7 @@ public class QueryTest
         Query testQuery = Deencapsulation.newInstance(Query.class, sqlQuery, DEFAULT_PAGE_SIZE, QueryType.UNKNOWN);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithSQLQueryThrowsOnNullQueryType() throws IllegalArgumentException
     {
         //arrange
@@ -186,7 +186,7 @@ public class QueryTest
     }
 
     //Tests_SRS_QUERY_25_003: [If the pagesize is zero or negative the constructor shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithOutSQLQueryThrowsNegativePageSize() throws IllegalArgumentException
     {
         //act
@@ -194,7 +194,7 @@ public class QueryTest
 
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithOutSQLQueryThrowsZeroPageSize() throws IllegalArgumentException
     {
         //act
@@ -203,17 +203,17 @@ public class QueryTest
     }
 
     //Tests_SRS_QUERY_25_004: [If the QueryType is null or unknown then the constructor shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithOutSQLQueryThrowsOnUnknownQueryType() throws IllegalArgumentException
     {
         //act
         Query testQuery = Deencapsulation.newInstance(Query.class, DEFAULT_PAGE_SIZE, QueryType.UNKNOWN);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithOutSQLQueryThrowsOnNullQueryType() throws IllegalArgumentException
     {
-           //act
+        //act
         Query testQuery = Deencapsulation.newInstance(Query.class, DEFAULT_PAGE_SIZE, null);
     }
 
@@ -287,7 +287,7 @@ public class QueryTest
     }
 
     //Tests_SRS_QUERY_25_006: [If the pagesize is zero or negative the constructor shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void continueQueryThrowsOnZeroPageSize() throws IOException, IotHubException
     {
         //arrange
@@ -303,7 +303,7 @@ public class QueryTest
         Deencapsulation.invoke(testQuery, "continueQuery", testToken, testPageSize);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void continueQueryThrowsOnNegativePageSize() throws IOException, IotHubException
     {
         //arrange
@@ -340,7 +340,7 @@ public class QueryTest
         };
 
         //act
-        Deencapsulation.invoke(testQuery, "sendQueryRequest",  mockIotHubConnectionString, mockUrl, mockHttpMethod, (long)0);
+        Deencapsulation.invoke(testQuery, "sendQueryRequest", mockIotHubConnectionString, mockUrl, mockHttpMethod, (long) 0);
 
         //assert
         new Verifications()
@@ -381,7 +381,7 @@ public class QueryTest
         };
 
         //act
-        Deencapsulation.invoke(testQuery, "sendQueryRequest",  mockIotHubConnectionString, mockUrl, mockHttpMethod, (long)0);
+        Deencapsulation.invoke(testQuery, "sendQueryRequest", mockIotHubConnectionString, mockUrl, mockHttpMethod, (long) 0);
 
         //assert
         new Verifications()
@@ -424,7 +424,7 @@ public class QueryTest
         };
 
         //act
-        Deencapsulation.invoke(testQuery, "sendQueryRequest",  mockIotHubConnectionString, mockUrl, mockHttpMethod, (long)0);
+        Deencapsulation.invoke(testQuery, "sendQueryRequest", mockIotHubConnectionString, mockUrl, mockHttpMethod, (long) 0);
         Deencapsulation.invoke(testQuery, "continueQuery", testToken, newPageSize);
 
         //assert
@@ -466,7 +466,7 @@ public class QueryTest
         };
 
         //act
-        Deencapsulation.invoke(testQuery, "sendQueryRequest",  mockIotHubConnectionString, mockUrl, mockHttpMethod, (long)0);
+        Deencapsulation.invoke(testQuery, "sendQueryRequest", mockIotHubConnectionString, mockUrl, mockHttpMethod, (long) 0);
         Deencapsulation.invoke(testQuery, "continueQuery", String.class);
 
         //assert
@@ -488,7 +488,7 @@ public class QueryTest
         assertEquals(DEFAULT_QUERY_TYPE, Deencapsulation.getField(testQuery, "responseQueryType"));
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void sendQueryRequestThrowsWhenResponseThrows() throws IotHubException, IOException
     {
 
@@ -596,7 +596,7 @@ public class QueryTest
     }
 
     //Tests_SRS_QUERY_25_012: [If the response type is Unknown or not found then this method shall throw IOException.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void sendQueryRequestThrowsIfItemNotFound() throws IotHubException, IOException
     {
         //arrange
@@ -617,7 +617,7 @@ public class QueryTest
     }
 
     //Tests_SRS_QUERY_25_012: [If the response type is Unknown or not found then this method shall throw IOException.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void sendQueryRequestThrowsIfTypeUnknown() throws IotHubException, IOException
     {
         //arrange
@@ -639,7 +639,7 @@ public class QueryTest
     }
 
     //Tests_SRS_QUERY_25_011: [If the request type and response does not match then the method shall throw IOException.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void sendQueryRequestThrowsIfRequestAndResponseTypeDoesNotMatch() throws IotHubException, IOException
     {
         //arrange
@@ -661,7 +661,7 @@ public class QueryTest
     }
 
     //Tests_SRS_QUERY_25_019: [This method shall throw IllegalArgumentException if any of the parameters are null or empty.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void sendQueryRequestThrowsOnNullConnectionString() throws IotHubException, IOException
     {
         //arrange
@@ -684,7 +684,7 @@ public class QueryTest
         testQuery.sendQueryRequest(null, mockUrl, mockHttpMethod, (long) 0);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void sendQueryRequestThrowsOnNullURL() throws IotHubException, IOException
     {
         //arrange
@@ -707,7 +707,7 @@ public class QueryTest
         testQuery.sendQueryRequest(mockIotHubConnectionString, null, mockHttpMethod, (long) 0);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void sendQueryRequestThrowsOnNullHttpMethod() throws IotHubException, IOException
     {
         //arrange
@@ -901,7 +901,7 @@ public class QueryTest
     }
 
     //Tests_SRS_QUERY_25_022: [The method shall check if any further elements are available by calling hasNext and if none is available then it shall throw NoSuchElementException.]
-    @Test (expected = NoSuchElementException.class)
+    @Test(expected = NoSuchElementException.class)
     public void nextThrowsIfNextDoesNotExists() throws IotHubException, IOException
     {
         //arrange

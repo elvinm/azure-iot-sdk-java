@@ -17,7 +17,7 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-*/
+ */
 
 package com.microsoft.azure.sdk.iot.deps.ws.impl;
 
@@ -829,81 +829,81 @@ public class WebSocketHandlerImplTest
         assertTrue(Arrays.equals(expected, actual));
     }
 
-//    @Test
-//    public void testWrapBuffer_large_payload_max()
-//    {
-//        WebSocketHandlerImpl webSocketHandler = new WebSocketHandlerImpl();
-//        WebSocketHandlerImpl spyWebSocketHandler = spy(webSocketHandler);
-//
-//        int payloadLength = WebSocketHeader.PAYLOAD_LARGE_MAX / 16; // Limited by memory
-//        int messageLength = payloadLength + WebSocketHeader.MAX_HEADER_LENGTH_MASKED;
-//
-//        byte[] maskingKey = new byte[]{0x01, 0x02, 0x03, 0x04};
-//
-//        byte[] data = new byte[payloadLength];
-//        Random random = new SecureRandom();
-//        //random.nextBytes(data);
-//
-//        ByteBuffer srcBuffer = ByteBuffer.allocate(messageLength);
-//        ByteBuffer dstBuffer = ByteBuffer.allocate(messageLength);
-//        srcBuffer.put(data);
-//        srcBuffer.flip();
-//
-//        int expectedHeaderSize = WebSocketHeader.MAX_HEADER_LENGTH_MASKED;
-//        byte[] expected = new byte[dstBuffer.capacity()];
-//        expected[0] = (byte) (WebSocketHeader.FINBIT_MASK | WebSocketHeader.OPCODE_BINARY);
-//        expected[1] = (byte) (WebSocketHeader.MASKBIT_MASK | WebSocketHeader.PAYLOAD_EXTENDED_64);
-//
-//        expected[2] = (byte) (payloadLength >>> 56);
-//        expected[3] = (byte) (payloadLength >>> 48);
-//        expected[4] = (byte) (payloadLength >>> 40);
-//        expected[5] = (byte) (payloadLength >>> 32);
-//        expected[6] = (byte) (payloadLength >>> 24);
-//        expected[7] = (byte) (payloadLength >>> 16);
-//        expected[8] = (byte) (payloadLength >>> 8);
-//        expected[9] = (byte) (payloadLength);
-//
-//        expected[10] = maskingKey[0];
-//        expected[11] = maskingKey[1];
-//        expected[12] = maskingKey[2];
-//        expected[13] = maskingKey[3];
-//
-//        for (int i = 0; i < srcBuffer.limit(); i++)
-//        {
-//            byte nextByte = srcBuffer.get();
-//            nextByte ^= maskingKey[i % 4];
-//            expected[i + WebSocketHeader.MAX_HEADER_LENGTH_MASKED] = nextByte;
-//        }
-//        srcBuffer.flip();
-//
-//        doReturn(maskingKey).when(spyWebSocketHandler).createRandomMaskingKey();
-//
-//        spyWebSocketHandler.wrapBuffer(srcBuffer, dstBuffer);
-//        dstBuffer.flip();
-//
-//        byte[] actual = dstBuffer.array();
-//
-//        assertEquals("invalid content length", srcBuffer.limit() + expectedHeaderSize, dstBuffer.limit());
-//
-//        assertEquals("first byte mismatch", expected[0], actual[0]);
-//        assertEquals("second byte mismatch", expected[1], actual[1]);
-//
-//        assertEquals("payload length byte mismatch 1", expected[2], actual[2]);
-//        assertEquals("payload length byte mismatch 2", expected[3], actual[3]);
-//        assertEquals("payload length byte mismatch 3", expected[4], actual[4]);
-//        assertEquals("payload length byte mismatch 4", expected[5], actual[5]);
-//        assertEquals("payload length byte mismatch 5", expected[6], actual[6]);
-//        assertEquals("payload length byte mismatch 6", expected[7], actual[7]);
-//        assertEquals("payload length byte mismatch 7", expected[8], actual[8]);
-//        assertEquals("payload length byte mismatch 8", expected[9], actual[9]);
-//
-//        assertEquals("masking key mismatch 1", maskingKey[0], actual[10]);
-//        assertEquals("masking key mismatch 2", maskingKey[1], actual[11]);
-//        assertEquals("masking key mismatch 3", maskingKey[2], actual[12]);
-//        assertEquals("masking key mismatch 4", maskingKey[3], actual[13]);
-//
-//        assertTrue(Arrays.equals(expected, actual));
-//    }
+    //    @Test
+    //    public void testWrapBuffer_large_payload_max()
+    //    {
+    //        WebSocketHandlerImpl webSocketHandler = new WebSocketHandlerImpl();
+    //        WebSocketHandlerImpl spyWebSocketHandler = spy(webSocketHandler);
+    //
+    //        int payloadLength = WebSocketHeader.PAYLOAD_LARGE_MAX / 16; // Limited by memory
+    //        int messageLength = payloadLength + WebSocketHeader.MAX_HEADER_LENGTH_MASKED;
+    //
+    //        byte[] maskingKey = new byte[]{0x01, 0x02, 0x03, 0x04};
+    //
+    //        byte[] data = new byte[payloadLength];
+    //        Random random = new SecureRandom();
+    //        //random.nextBytes(data);
+    //
+    //        ByteBuffer srcBuffer = ByteBuffer.allocate(messageLength);
+    //        ByteBuffer dstBuffer = ByteBuffer.allocate(messageLength);
+    //        srcBuffer.put(data);
+    //        srcBuffer.flip();
+    //
+    //        int expectedHeaderSize = WebSocketHeader.MAX_HEADER_LENGTH_MASKED;
+    //        byte[] expected = new byte[dstBuffer.capacity()];
+    //        expected[0] = (byte) (WebSocketHeader.FINBIT_MASK | WebSocketHeader.OPCODE_BINARY);
+    //        expected[1] = (byte) (WebSocketHeader.MASKBIT_MASK | WebSocketHeader.PAYLOAD_EXTENDED_64);
+    //
+    //        expected[2] = (byte) (payloadLength >>> 56);
+    //        expected[3] = (byte) (payloadLength >>> 48);
+    //        expected[4] = (byte) (payloadLength >>> 40);
+    //        expected[5] = (byte) (payloadLength >>> 32);
+    //        expected[6] = (byte) (payloadLength >>> 24);
+    //        expected[7] = (byte) (payloadLength >>> 16);
+    //        expected[8] = (byte) (payloadLength >>> 8);
+    //        expected[9] = (byte) (payloadLength);
+    //
+    //        expected[10] = maskingKey[0];
+    //        expected[11] = maskingKey[1];
+    //        expected[12] = maskingKey[2];
+    //        expected[13] = maskingKey[3];
+    //
+    //        for (int i = 0; i < srcBuffer.limit(); i++)
+    //        {
+    //            byte nextByte = srcBuffer.get();
+    //            nextByte ^= maskingKey[i % 4];
+    //            expected[i + WebSocketHeader.MAX_HEADER_LENGTH_MASKED] = nextByte;
+    //        }
+    //        srcBuffer.flip();
+    //
+    //        doReturn(maskingKey).when(spyWebSocketHandler).createRandomMaskingKey();
+    //
+    //        spyWebSocketHandler.wrapBuffer(srcBuffer, dstBuffer);
+    //        dstBuffer.flip();
+    //
+    //        byte[] actual = dstBuffer.array();
+    //
+    //        assertEquals("invalid content length", srcBuffer.limit() + expectedHeaderSize, dstBuffer.limit());
+    //
+    //        assertEquals("first byte mismatch", expected[0], actual[0]);
+    //        assertEquals("second byte mismatch", expected[1], actual[1]);
+    //
+    //        assertEquals("payload length byte mismatch 1", expected[2], actual[2]);
+    //        assertEquals("payload length byte mismatch 2", expected[3], actual[3]);
+    //        assertEquals("payload length byte mismatch 3", expected[4], actual[4]);
+    //        assertEquals("payload length byte mismatch 4", expected[5], actual[5]);
+    //        assertEquals("payload length byte mismatch 5", expected[6], actual[6]);
+    //        assertEquals("payload length byte mismatch 6", expected[7], actual[7]);
+    //        assertEquals("payload length byte mismatch 7", expected[8], actual[8]);
+    //        assertEquals("payload length byte mismatch 8", expected[9], actual[9]);
+    //
+    //        assertEquals("masking key mismatch 1", maskingKey[0], actual[10]);
+    //        assertEquals("masking key mismatch 2", maskingKey[1], actual[11]);
+    //        assertEquals("masking key mismatch 3", maskingKey[2], actual[12]);
+    //        assertEquals("masking key mismatch 4", maskingKey[3], actual[13]);
+    //
+    //        assertTrue(Arrays.equals(expected, actual));
+    //    }
 
     @Test(expected = IllegalArgumentException.class)
     public void testWrapBuffer_src_buffer_null()
@@ -1232,18 +1232,7 @@ public class WebSocketHandlerImplTest
         WebSocketHandlerImpl webSocketHandler = new WebSocketHandlerImpl();
         WebSocketHandlerImpl spyWebSocketHandler = spy(webSocketHandler);
 
-        byte[] data = {
-                0b00001111,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-        };
+        byte[] data = {0b00001111, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
         ByteBuffer srcBuffer = ByteBuffer.wrap(data);
 
@@ -1331,26 +1320,20 @@ public class WebSocketHandlerImplTest
     public void testCalculateHeaderSize_small_payload()
     {
         WebSocketHandlerImpl webSocketHandler = new WebSocketHandlerImpl();
-        assertEquals(webSocketHandler.calculateHeaderSize(
-                WebSocketHeader.PAYLOAD_SHORT_MAX),
-                WebSocketHeader.MIN_HEADER_LENGTH_MASKED);
+        assertEquals(webSocketHandler.calculateHeaderSize(WebSocketHeader.PAYLOAD_SHORT_MAX), WebSocketHeader.MIN_HEADER_LENGTH_MASKED);
     }
 
     @Test
     public void testCalculateHeaderSize_medium_payload()
     {
         WebSocketHandlerImpl webSocketHandler = new WebSocketHandlerImpl();
-        assertEquals(webSocketHandler.calculateHeaderSize(
-                WebSocketHeader.PAYLOAD_MEDIUM_MAX),
-                WebSocketHeader.MED_HEADER_LENGTH_MASKED);
+        assertEquals(webSocketHandler.calculateHeaderSize(WebSocketHeader.PAYLOAD_MEDIUM_MAX), WebSocketHeader.MED_HEADER_LENGTH_MASKED);
     }
 
     @Test
     public void testCalculateHeaderSize_large_payload()
     {
         WebSocketHandlerImpl webSocketHandler = new WebSocketHandlerImpl();
-        assertEquals(webSocketHandler.calculateHeaderSize(
-                WebSocketHeader.PAYLOAD_LARGE_MAX),
-                WebSocketHeader.MAX_HEADER_LENGTH_MASKED);
+        assertEquals(webSocketHandler.calculateHeaderSize(WebSocketHeader.PAYLOAD_LARGE_MAX), WebSocketHeader.MAX_HEADER_LENGTH_MASKED);
     }
 }

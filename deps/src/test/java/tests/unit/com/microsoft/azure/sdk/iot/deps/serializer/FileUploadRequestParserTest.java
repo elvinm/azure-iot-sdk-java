@@ -41,7 +41,7 @@ public class FileUploadRequestParserTest
     }
 
     /* Tests_SRS_FILE_UPLOAD_REQUEST_21_003: [If the provided blob name is null, empty, or not valid, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_null_name_failed()
     {
         // act
@@ -49,7 +49,7 @@ public class FileUploadRequestParserTest
     }
 
     /* Tests_SRS_FILE_UPLOAD_REQUEST_21_003: [If the provided blob name is null, empty, or not valid, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_empty_name_failed()
     {
         // act
@@ -57,7 +57,7 @@ public class FileUploadRequestParserTest
     }
 
     /* Tests_SRS_FILE_UPLOAD_REQUEST_21_003: [If the provided blob name is null, empty, or not valid, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_invalid_name_failed()
     {
         // act

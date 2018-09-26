@@ -56,16 +56,16 @@ public class AmqpFileUploadNotificationReceivedHandler extends BaseHandler
     /**
      * Constructor to set up connection parameters and initialize
      * handshaker and flow controller for transport
-     * @param hostName The address string of the service (example: AAA.BBB.CCC)
-     * @param userName The username string to use SASL authentication (example: user@sas.service)
-     * @param sasToken The SAS token string
+     *
+     * @param hostName                  The address string of the service (example: AAA.BBB.CCC)
+     * @param userName                  The username string to use SASL authentication (example: user@sas.service)
+     * @param sasToken                  The SAS token string
      * @param amqpFeedbackReceivedEvent callback to delegate the received message to the user API
      */
     AmqpFileUploadNotificationReceivedHandler(String hostName, String userName, String sasToken, IotHubServiceClientProtocol iotHubServiceClientProtocol, AmqpFeedbackReceivedEvent amqpFeedbackReceivedEvent)
     {
         // Codes_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_25_001: [The constructor shall copy all input parameters to private member variables for event processing]
-        if (hostName == null || userName == null || sasToken == null || iotHubServiceClientProtocol == null || amqpFeedbackReceivedEvent == null ||
-                hostName.isEmpty() || userName.isEmpty() || sasToken.isEmpty())
+        if (hostName == null || userName == null || sasToken == null || iotHubServiceClientProtocol == null || amqpFeedbackReceivedEvent == null || hostName.isEmpty() || userName.isEmpty() || sasToken.isEmpty())
         {
             //Codes_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_25_021: [** The constructor shall throw IllegalArgumentException if any of the parameters are null or empty **]
             throw new IllegalArgumentException("Input parameters cannot be null or empty");
@@ -97,6 +97,7 @@ public class AmqpFileUploadNotificationReceivedHandler extends BaseHandler
 
     /**
      * Create Proton SslDomain object from Address using the given Ssl mode
+     *
      * @param mode Proton enum value of requested Ssl mode
      * @return The created Ssl domain
      */
@@ -110,13 +111,14 @@ public class AmqpFileUploadNotificationReceivedHandler extends BaseHandler
 
     /**
      * Event handler for the on delivery event
+     *
      * @param event The proton event object
      */
     @Override
     public void onDelivery(Event event)
     {
         // Codes_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_25_004: [The event handler shall get the Link, Receiver and Delivery (Proton) objects from the event]
-        Receiver recv = (Receiver)event.getLink();
+        Receiver recv = (Receiver) event.getLink();
         Delivery delivery = recv.current();
 
         if (delivery.isReadable() && !delivery.isPartial() && delivery.getLink().getName().equalsIgnoreCase(FILE_NOTIFICATION_RECEIVE_TAG))
@@ -130,11 +132,11 @@ public class AmqpFileUploadNotificationReceivedHandler extends BaseHandler
             // Codes_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_25_006: [The event handler shall create a Message (Proton) object from the decoded buffer]
             org.apache.qpid.proton.message.Message msg = Proton.message();
             msg.decode(buffer, 0, read);
-          
+
             // Codes_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_25_007: [The event handler shall settle the Delivery with the Accepted outcome]
             delivery.disposition(Accepted.getInstance());
             delivery.settle();
-          
+
             // Codes_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_25_008: [The event handler shall close the Session and Connection (Proton)]
             recv.getSession().close();
             recv.getSession().getConnection().close();
@@ -164,7 +166,7 @@ public class AmqpFileUploadNotificationReceivedHandler extends BaseHandler
                 // Codes_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_25_020: [** The event handler shall not initialize WebSocket if the protocol is AMQP **]
                 WebSocketImpl webSocket = new WebSocketImpl();
                 webSocket.configure(this.webSocketHostName, WEBSOCKET_PATH, 0, WEBSOCKET_SUB_PROTOCOL, null, null);
-                ((TransportInternal)transport).addTransportLayer(webSocket);
+                ((TransportInternal) transport).addTransportLayer(webSocket);
             }
             Sasl sasl = transport.sasl();
             sasl.plain(this.userName, this.sasToken);
@@ -246,8 +248,9 @@ public class AmqpFileUploadNotificationReceivedHandler extends BaseHandler
 
     /**
      * If an exception was encountered while opening the AMQP connection, this function shall throw that saved exception
+     *
      * @throws IOException if an exception was encountered while openinging the AMQP connection. The encountered
-     * exception will be the inner exception
+     *                     exception will be the inner exception
      */
     void receiveComplete() throws IOException
     {

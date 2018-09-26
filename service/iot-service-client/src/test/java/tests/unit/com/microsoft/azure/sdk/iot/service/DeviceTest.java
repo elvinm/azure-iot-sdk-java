@@ -35,7 +35,7 @@ public class DeviceTest
     // deviceId, Etag, Status, StatusReason, StatusUpdatedTime, ConnectionState, CloudToDeviceMessageCount
     // ConnectionStateUpdatedTime, LastActivityTime, symmetricKey, thumbprint, authentication]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void device_get_all_properties()
     {
         // Arrange
@@ -75,7 +75,7 @@ public class DeviceTest
 
         cap.setIotEdge(true);
         device.setCapabilities(cap);
-        assertEquals((Boolean)true, device.getCapabilities().isIotEdge());
+        assertEquals((Boolean) true, device.getCapabilities().isIotEdge());
 
         device.setForceUpdate(true);
         device.setForceUpdate(null);
@@ -83,7 +83,7 @@ public class DeviceTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_DEVICE_12_002: [The function shall throw IllegalArgumentException if the input string is empty or null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createFromId_input_null()
     {
         // Arrange
@@ -95,7 +95,7 @@ public class DeviceTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_DEVICE_12_002: [The constructor shall throw IllegalArgumentException if the input string is empty or null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createFromId_input_empty()
     {
         // Arrange
@@ -107,7 +107,7 @@ public class DeviceTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_DEVICE_34_009: [The function shall throw IllegalArgumentException if the provided deviceId or authenticationType is empty or null.]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createDeviceThrowsIllegalArgumentExceptionWhenGivenNullDeviceId()
     {
         // Arrange
@@ -119,7 +119,7 @@ public class DeviceTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_DEVICE_34_009: [The function shall throw IllegalArgumentException if the provided deviceId or authenticationType is empty or null.]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createDeviceThrowsIllegalArgumentExceptionWhenGivenNullAuthenticationType()
     {
         // Act
@@ -136,8 +136,7 @@ public class DeviceTest
         new Expectations()
         {
             {
-                Deencapsulation.newInstance(Device.class, new Class[]{String.class, DeviceStatus.class, SymmetricKey.class},
-                        deviceId, null, null);
+                Deencapsulation.newInstance(Device.class, new Class[]{String.class, DeviceStatus.class, SymmetricKey.class}, deviceId, null, null);
             }
         };
 
@@ -160,8 +159,7 @@ public class DeviceTest
         String offsetTimeDefault = "0001-01-01T00:00:00-00:00";
 
         // Act
-        Device device = Deencapsulation.newInstance(Device.class, new Class[]{String.class, DeviceStatus.class, SymmetricKey.class},
-                deviceId, null, null);
+        Device device = Deencapsulation.newInstance(Device.class, new Class[]{String.class, DeviceStatus.class, SymmetricKey.class}, deviceId, null, null);
 
         // Assert
         assertEquals(deviceId, device.getDeviceId());
@@ -188,8 +186,7 @@ public class DeviceTest
         SymmetricKey expectedSymmetricKey = new SymmetricKey();
 
         // Act
-        Device device = Deencapsulation.newInstance(Device.class, new Class[]{String.class, DeviceStatus.class, SymmetricKey.class},
-                deviceId, expectedDeviceStatus, expectedSymmetricKey);
+        Device device = Deencapsulation.newInstance(Device.class, new Class[]{String.class, DeviceStatus.class, SymmetricKey.class}, deviceId, expectedDeviceStatus, expectedSymmetricKey);
 
         // Assert
         assertEquals(deviceId, device.getDeviceId());
@@ -208,12 +205,11 @@ public class DeviceTest
         String offsetTimeDefault = "0001-01-01T00:00:00-00:00";
 
         // Act
-        Device device = Deencapsulation.newInstance(Device.class, new Class[]{String.class, AuthenticationType.class},
-                deviceId, AuthenticationType.SAS);
+        Device device = Deencapsulation.newInstance(Device.class, new Class[]{String.class, AuthenticationType.class}, deviceId, AuthenticationType.SAS);
 
         // Assert
         assertEquals(deviceId, device.getDeviceId());
-        assertNotNull( device.getSymmetricKey());
+        assertNotNull(device.getSymmetricKey());
         assertEquals("", device.getGenerationId());
         assertEquals("", device.geteTag());
         assertEquals(DeviceStatus.Enabled, device.getStatus());
@@ -370,16 +366,18 @@ public class DeviceTest
 
     /**
      * Use reflection to call the Device constructor that takes a DeviceParser object as its only argument
+     *
      * @param parser the parser to pass into the constructor
      * @return the created Device instance
      */
     private Device reflectivelyInvokeDeviceParserConstructor(DeviceParser parser)
     {
-        return Deencapsulation.newInstance(Device.class, new Class[] { DeviceParser.class }, parser);
+        return Deencapsulation.newInstance(Device.class, new Class[]{DeviceParser.class}, parser);
     }
 
     /**
      * Uses reflection to invoke the Device method "toDeviceParser()"
+     *
      * @param device the device to invoke this method on
      * @return DeviceParser instance result of the invocation
      */

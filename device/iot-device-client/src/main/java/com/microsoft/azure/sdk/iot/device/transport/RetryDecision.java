@@ -19,7 +19,7 @@ public class RetryDecision
      * Constructor.
      *
      * @param shouldRetry the max number of retries allowed in the policies.
-     * @param duration the min interval between each retry in milliseconds.
+     * @param duration    the min interval between each retry in milliseconds.
      */
     public RetryDecision(boolean shouldRetry, long duration)
     {
@@ -30,6 +30,7 @@ public class RetryDecision
 
     /**
      * Getter for the getRetryDecision
+     *
      * @return true if the operation should be retried; otherwise false
      */
     public boolean shouldRetry()
@@ -40,6 +41,7 @@ public class RetryDecision
 
     /**
      * Getter for the duration
+     *
      * @return the Duration which represents the interval to wait until the next retry..
      */
     public long getDuration()

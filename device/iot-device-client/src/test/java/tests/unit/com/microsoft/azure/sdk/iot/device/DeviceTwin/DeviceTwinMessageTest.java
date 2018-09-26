@@ -14,14 +14,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 /* Unit tests for IotHubTransportMessage
-* 100% methods covered
-* 100% lines covered
-*/
+ * 100% methods covered
+ * 100% lines covered
+ */
 public class DeviceTwinMessageTest
 {
 
     /*
-    **Tests_SRS_DEVICETWINMESSAGE_25_001: [**The constructor shall save the message body by calling super with the body as parameter.**]**
+     **Tests_SRS_DEVICETWINMESSAGE_25_001: [**The constructor shall save the message body by calling super with the body as parameter.**]**
      */
     @Test
     public void constructorSetsRequiredPrivateMembers()
@@ -45,9 +45,9 @@ public class DeviceTwinMessageTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINMESSAGE_25_002: [**If the message body is null, the constructor shall throw an IllegalArgumentException thrown by base constructor.**]**
+     **Tests_SRS_DEVICETWINMESSAGE_25_002: [**If the message body is null, the constructor shall throw an IllegalArgumentException thrown by base constructor.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfDataIsNULL()
     {
         IotHubTransportMessage msg = new IotHubTransportMessage(null, MessageType.DEVICE_TWIN);
@@ -79,7 +79,7 @@ public class DeviceTwinMessageTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINMESSAGE_25_003: [**The function shall set the version.**]**
+     **Tests_SRS_DEVICETWINMESSAGE_25_003: [**The function shall set the version.**]**
      */
     @Test
     public void setVersionSetsCorrectVersion()
@@ -89,14 +89,14 @@ public class DeviceTwinMessageTest
         IotHubTransportMessage msg = new IotHubTransportMessage(actualData, MessageType.DEVICE_TWIN);
 
         //act
-       msg.setVersion("12");
+        msg.setVersion("12");
 
         //assert
         assertEquals(msg.getVersion(), "12");
     }
 
     /*
-    **Tests_SRS_DEVICETWINMESSAGE_25_004: [**The function shall return the value of the version either set by the setter or the default (null) if unset so far.**]**
+     **Tests_SRS_DEVICETWINMESSAGE_25_004: [**The function shall return the value of the version either set by the setter or the default (null) if unset so far.**]**
      */
     @Test
     public void getVersionRetrievesVersion()
@@ -115,7 +115,7 @@ public class DeviceTwinMessageTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINMESSAGE_25_005: [**The function shall save the request id.**]**
+     **Tests_SRS_DEVICETWINMESSAGE_25_005: [**The function shall save the request id.**]**
      */
     @Test
     public void setRequestIdSets()
@@ -133,7 +133,7 @@ public class DeviceTwinMessageTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINMESSAGE_25_006: [**The function shall return the value of the request id either set by the setter or the default (null) if unset so far.**]**
+     **Tests_SRS_DEVICETWINMESSAGE_25_006: [**The function shall return the value of the request id either set by the setter or the default (null) if unset so far.**]**
      */
     @Test
     public void getRequestIdGets()
@@ -152,7 +152,7 @@ public class DeviceTwinMessageTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINMESSAGE_25_007: [**The function shall save the status.**]**
+     **Tests_SRS_DEVICETWINMESSAGE_25_007: [**The function shall save the status.**]**
      */
     @Test
     public void setStatusIdSets()
@@ -169,7 +169,7 @@ public class DeviceTwinMessageTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINMESSAGE_25_008: [**The function shall return the value of the status either set by the setter or the default (null) if unset so far.**]**
+     **Tests_SRS_DEVICETWINMESSAGE_25_008: [**The function shall return the value of the status either set by the setter or the default (null) if unset so far.**]**
      */
     @Test
     public void getStatusGets()
@@ -187,7 +187,7 @@ public class DeviceTwinMessageTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINMESSAGE_25_009: [**The function shall save the device twin operation type.**]**
+     **Tests_SRS_DEVICETWINMESSAGE_25_009: [**The function shall save the device twin operation type.**]**
      */
     @Test
     public void setTwinOpSets()
@@ -205,7 +205,7 @@ public class DeviceTwinMessageTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINMESSAGE_25_010: [**The function shall return the operation type either set by the setter or the default (DEVICE_OPERATION_UNKNOWN) if unset so far.**]**
+     **Tests_SRS_DEVICETWINMESSAGE_25_010: [**The function shall return the operation type either set by the setter or the default (DEVICE_OPERATION_UNKNOWN) if unset so far.**]**
      */
     @Test
     public void getTwinOpGets()

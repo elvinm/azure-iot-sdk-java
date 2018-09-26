@@ -8,29 +8,29 @@ import com.microsoft.azure.sdk.iot.provisioning.service.Tools;
 
 /**
  * Representation of a single Device Provisioning Service query response with a JSON deserializer.
- *
+ * <p>
  * <p> It is the result of any query for the provisioning service. This class will parse the result and
- *     return it in a best format possible. For the known formats in {@link QueryResultType}, you can
- *     just cast the items. In case of <b>unknown</b> type, the items will contain a list of {@code Strings}
- *     and you shall parse it by your own.
- *
+ * return it in a best format possible. For the known formats in {@link QueryResultType}, you can
+ * just cast the items. In case of <b>unknown</b> type, the items will contain a list of {@code Strings}
+ * and you shall parse it by your own.
+ * <p>
  * <p> The provisioning service query result is composed by 2 system properties and a body. This class exposes
- *     it with 3 getters, {@link #getType()}, {@link #getContinuationToken()}, and {@link #getItems()}.
- *
+ * it with 3 getters, {@link #getType()}, {@link #getContinuationToken()}, and {@link #getItems()}.
+ * <p>
  * <p> The system properties are:
  * <dl>
- *     <dt><b>type:</b>
- *     <dd>Identify the type of the content in the body. You can use it to cast the objects
- *         in the items list. See {@link QueryResultType} for the possible types and classes
- *         to cast.
- *     <dt><b>continuationToken:</b>
- *     <dd>Contains the token the uniquely identify the next page of information. The
- *         service will return the next page of this query when you send a new query with
- *         this token,
+ * <dt><b>type:</b>
+ * <dd>Identify the type of the content in the body. You can use it to cast the objects
+ * in the items list. See {@link QueryResultType} for the possible types and classes
+ * to cast.
+ * <dt><b>continuationToken:</b>
+ * <dd>Contains the token the uniquely identify the next page of information. The
+ * service will return the next page of this query when you send a new query with
+ * this token,
  * </dl>
- *
+ * <p>
  * <p> And the body is a JSON list of the specific <b>type</b>. For instance, if the system
- *     property type is IndividualEnrollment, the body will look like:
+ * property type is IndividualEnrollment, the body will look like:
  * <pre>
  * {@code
  * [
@@ -68,23 +68,21 @@ public class QueryResult
 {
     // the query type
     private transient static final String TYPE_TAG = "type";
-    private QueryResultType type;
-
     // the list of items in the query result
     private transient static final String ITEMS_TAG = "items";
-    private Object[] items;
-
     // the continuation token for the query
     private transient static final String CONTINUATION_TOKEN_TAG = "continuationToken";
+    private QueryResultType type;
+    private Object[] items;
     private String continuationToken;
 
     /**
      * CONSTRUCTOR
-     *
+     * <p>
      * <p> This constructor creates an instance of the QueryResult.
      *
-     * @param type the {@code String} with type of the content in the body. It cannot be {@code null}
-     * @param body the {@code String} with the body in a JSON list format. It cannot be {@code null}, or empty, if the type is different than `unknown`.
+     * @param type              the {@code String} with type of the content in the body. It cannot be {@code null}
+     * @param body              the {@code String} with the body in a JSON list format. It cannot be {@code null}, or empty, if the type is different than `unknown`.
      * @param continuationToken the {@code String} with the continuation token. It can be {@code null}.
      * @throws IllegalArgumentException If one of the provided parameters is invalid.
      */
@@ -95,13 +93,13 @@ public class QueryResult
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
 
         /* SRS_QUERY_RESULT_21_002: [The constructor shall throw IllegalArgumentException if the provided body is null or empty and the type is not `unknown`.] */
-        if((queryResultType != QueryResultType.UNKNOWN) && Tools.isNullOrEmpty(body))
+        if ((queryResultType != QueryResultType.UNKNOWN) && Tools.isNullOrEmpty(body))
         {
             throw new IllegalArgumentException("body cannot be null or empty");
         }
 
         /* SRS_QUERY_RESULT_21_003: [The constructor shall throw JsonSyntaxException if the JSON is invalid.] */
-        switch(queryResultType)
+        switch (queryResultType)
         {
             case ENROLLMENT:
                 /* SRS_QUERY_RESULT_21_004: [If the type is `enrollment`, the constructor shall parse the body as IndividualEnrollment[].] */
@@ -116,7 +114,7 @@ public class QueryResult
                 this.items = gson.fromJson(body, DeviceRegistrationState[].class);
                 break;
             default:
-                if(body == null)
+                if (body == null)
                 {
                     /* SRS_QUERY_RESULT_21_007: [If the type is `unknown`, and the body is null, the constructor shall set `items` as null.] */
                     this.items = null;
@@ -149,6 +147,19 @@ public class QueryResult
         /* SRS_QUERY_RESULT_21_011: [The constructor shall store the provided parameters `type` and `continuationToken`.] */
         this.type = queryResultType;
         this.continuationToken = continuationToken;
+    }
+
+    /**
+     * Empty constructor
+     * <p>
+     * <p>
+     * Used only by the tools that will deserialize this class.
+     * </p>
+     */
+    @SuppressWarnings("unused")
+    protected QueryResult()
+    {
+        /* SRS_QUERY_RESULT_21_016: [The EnrollmentGroup shall provide an empty constructor to make GSON happy.] */
     }
 
     /**
@@ -187,9 +198,9 @@ public class QueryResult
 
     /**
      * Creates a pretty print JSON with the content of this class and subclasses.
-     *
+     * <p>
      * <p>The result of this function is <b>not</b> a valid JSON for the provisioning service, it is just
-     *    to provide a way to print its content.
+     * to provide a way to print its content.
      *
      * @return The {@code String} with the pretty print JSON.
      */
@@ -199,18 +210,5 @@ public class QueryResult
         /* SRS_QUERY_RESULT_21_015: [The toString shall return a String with the information in this class in a pretty print JSON.] */
         Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
         return gson.toJson(this);
-    }
-
-    /**
-     * Empty constructor
-     *
-     * <p>
-     *     Used only by the tools that will deserialize this class.
-     * </p>
-     */
-    @SuppressWarnings("unused")
-    protected QueryResult()
-    {
-        /* SRS_QUERY_RESULT_21_016: [The EnrollmentGroup shall provide an empty constructor to make GSON happy.] */
     }
 }

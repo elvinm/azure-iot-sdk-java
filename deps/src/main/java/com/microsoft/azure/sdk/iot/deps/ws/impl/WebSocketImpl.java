@@ -21,29 +21,24 @@ import static org.apache.qpid.proton.engine.impl.ByteBufferUtils.pourAll;
 
 public class WebSocketImpl implements WebSocket, TransportLayer
 {
+    private final ByteBuffer _inputBuffer;
+    private final ByteBuffer _outputBuffer;
+    protected Boolean _isWebSocketEnabled = false;
     private int _maxFrameSize = (4 * 1024) + (16 * WebSocketHeader.MED_HEADER_LENGTH_MASKED);
     private boolean _tail_closed = false;
-    private final ByteBuffer _inputBuffer;
     private boolean _head_closed = false;
-    private final ByteBuffer _outputBuffer;
     private ByteBuffer _pingBuffer;
     private ByteBuffer _wsInputBuffer;
     private ByteBuffer _temp;
-
     private int _underlyingOutputSize = 0;
     private int _webSocketHeaderSize = 0;
-
     private WebSocketHandler _webSocketHandler;
     private WebSocketState _state = WebSocketState.PN_WS_NOT_STARTED;
-
     private String _host = "";
     private String _path = "";
     private int _port = 0;
     private String _protocol = "";
     private Map<String, String> _additionalHeaders = null;
-
-    protected Boolean _isWebSocketEnabled = false;
-
     private WebSocketHandler.WebSocketMessageType _lastType;
     private long _lastLength;
     private long _bytesRead = 0;
@@ -168,13 +163,7 @@ public class WebSocketImpl implements WebSocket, TransportLayer
     public String toString()
     {
         StringBuilder builder = new StringBuilder();
-        builder.append(
-                "WebSocketImpl [isWebSocketEnabled=").append(_isWebSocketEnabled)
-                .append(", state=").append(_state)
-                .append(", protocol=").append(_protocol)
-                .append(", host=").append(_host)
-                .append(", path=").append(_path)
-                .append(", port=").append(_port);
+        builder.append("WebSocketImpl [isWebSocketEnabled=").append(_isWebSocketEnabled).append(", state=").append(_state).append(", protocol=").append(_protocol).append(", host=").append(_host).append(", path=").append(_path).append(", port=").append(_port);
 
         if ((_additionalHeaders != null) && (!_additionalHeaders.isEmpty()))
         {
@@ -215,6 +204,7 @@ public class WebSocketImpl implements WebSocket, TransportLayer
 
     private class WebSocketTransportWrapper implements TransportWrapper
     {
+        public final char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         private final TransportInput _underlyingInput;
         private final TransportOutput _underlyingOutput;
         private final ByteBuffer _head;
@@ -234,7 +224,7 @@ public class WebSocketImpl implements WebSocket, TransportLayer
 
         private boolean sendToUnderlyingInput()
         {
-            boolean _readComplete =  false;
+            boolean _readComplete = false;
             switch (_lastType)
             {
                 case WEB_SOCKET_MESSAGE_TYPE_UNKNOWN:
@@ -300,7 +290,8 @@ public class WebSocketImpl implements WebSocket, TransportLayer
                     if (_inputBuffer.remaining() > 0)
                     {
                         boolean _readComplete = false;
-                        while(!_readComplete) {
+                        while (!_readComplete)
+                        {
                             switch (_frameReadState)
                             {
                                 //State 1: Init_Read
@@ -336,7 +327,7 @@ public class WebSocketImpl implements WebSocket, TransportLayer
                                     _frameReadState = _lastType == WEB_SOCKET_MESSAGE_TYPE_HEADER_CHUNK ? WebSocketFrameReadState.CHUNK_READ : WebSocketFrameReadState.CONTINUED_FRAME_READ;
                                     _readComplete = _frameReadState == WebSocketFrameReadState.CHUNK_READ || _temp.position() == _temp.limit();
 
-                                    if(_frameReadState == WebSocketFrameReadState.CONTINUED_FRAME_READ)
+                                    if (_frameReadState == WebSocketFrameReadState.CONTINUED_FRAME_READ)
                                     {
                                         _temp.compact();
                                     }
@@ -356,12 +347,12 @@ public class WebSocketImpl implements WebSocket, TransportLayer
                                     _temp.flip();
 
                                     final byte[] data;
-                                    if(_temp.remaining() >= _lastLength-_bytesRead)
+                                    if (_temp.remaining() >= _lastLength - _bytesRead)
                                     {
-                                        data = new byte[(int)(_lastLength-_bytesRead)];
-                                        _temp.get(data, 0, (int)(_lastLength-_bytesRead));
+                                        data = new byte[(int) (_lastLength - _bytesRead)];
+                                        _temp.get(data, 0, (int) (_lastLength - _bytesRead));
                                         _wsInputBuffer.put(data);
-                                        _bytesRead += _lastLength-_bytesRead;
+                                        _bytesRead += _lastLength - _bytesRead;
                                     }
                                     //Otherwise the remaining bytes is < the rest that we need
                                     else
@@ -685,14 +676,13 @@ public class WebSocketImpl implements WebSocket, TransportLayer
             _underlyingOutput.close_head();
         }
 
-        public final char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-
         private String convertToHex(byte[] bb)
         {
             final int lgt = bb.length;
 
-            final char[] out = new char[5*lgt];
-            for( int i=0,j=0; i<lgt; i++ ){
+            final char[] out = new char[5 * lgt];
+            for (int i = 0, j = 0; i < lgt; i++)
+            {
                 out[j++] = '0';
                 out[j++] = 'x';
                 out[j++] = HEX_DIGITS[(0xF0 & bb[i]) >>> 4];
@@ -714,7 +704,7 @@ public class WebSocketImpl implements WebSocket, TransportLayer
         {
             StringBuilder sb = new StringBuilder();
 
-            for(byte b : bb)
+            for (byte b : bb)
             {
                 sb.append(String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0'));
                 sb.append('|');

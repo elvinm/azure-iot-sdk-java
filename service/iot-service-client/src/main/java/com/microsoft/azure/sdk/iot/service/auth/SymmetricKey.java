@@ -44,6 +44,7 @@ public class SymmetricKey
 
     /**
      * Getter for primary key
+     *
      * @return Primary key part of the symmetric key
      */
     public String getPrimaryKey()
@@ -67,6 +68,7 @@ public class SymmetricKey
 
     /**
      * Getter for secondary key
+     *
      * @return Secondary key part of the symmetric key
      */
     public String getSecondaryKey()
@@ -90,6 +92,7 @@ public class SymmetricKey
 
     /**
      * Validate the length of the key
+     *
      * @param key The key to validate
      * @throws IllegalArgumentException if the key has an invalid length
      */
@@ -110,8 +113,7 @@ public class SymmetricKey
         if (other instanceof SymmetricKey)
         {
             SymmetricKey otherSymmetricKey = (SymmetricKey) other;
-            return (Tools.areEqual(this.getPrimaryKey(), otherSymmetricKey.getPrimaryKey())
-                    && Tools.areEqual(this.getSecondaryKey(), otherSymmetricKey.getSecondaryKey()));
+            return (Tools.areEqual(this.getPrimaryKey(), otherSymmetricKey.getPrimaryKey()) && Tools.areEqual(this.getSecondaryKey(), otherSymmetricKey.getSecondaryKey()));
         }
 
         return false;

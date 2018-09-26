@@ -23,12 +23,10 @@ public class FileUploadSimpleSample
     /**
      * Upload a single file to blobs using IoT Hub.
      *
-     * @param args
-     * args[0] = IoT Hub connection string
-     * args[1] = File to upload
+     * @param args args[0] = IoT Hub connection string
+     *             args[1] = File to upload
      */
-    public static void main(String[] args)
-            throws IOException, URISyntaxException
+    public static void main(String[] args) throws IOException, URISyntaxException
     {
         String connString = null;
         String fullFileName = null;
@@ -44,12 +42,7 @@ public class FileUploadSimpleSample
         }
         else
         {
-            System.out.format(
-                    "Expected the following argument but received: %d.\n"
-                            + "The program should be called with the following args: \n"
-                            + "[Device connection string] - String containing Hostname, Device Id & Device Key in the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n"
-                            + "[File to upload] - String containing the full path for the file to upload.\n",
-                    args.length);
+            System.out.format("Expected the following argument but received: %d.\n" + "The program should be called with the following args: \n" + "[Device connection string] - String containing Hostname, Device Id & Device Key in the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n" + "[File to upload] - String containing the full path for the file to upload.\n", args.length);
             return;
         }
 
@@ -58,8 +51,7 @@ public class FileUploadSimpleSample
         IotHubClientProtocol protocol = IotHubClientProtocol.MQTT;
 
         System.out.println("Successfully read input parameters.");
-        System.out.format("Using communication protocol %s.\n",
-                protocol.name());
+        System.out.format("Using communication protocol %s.\n", protocol.name());
 
         DeviceClient client = new DeviceClient(connString, protocol);
 
@@ -69,7 +61,7 @@ public class FileUploadSimpleSample
         {
 
             File file = new File(fullFileName);
-            if(file.isDirectory())
+            if (file.isDirectory())
             {
                 throw new IllegalArgumentException(fullFileName + " is a directory, please provide a single file name, or use the FileUploadSample to upload directories.");
             }
@@ -84,7 +76,7 @@ public class FileUploadSimpleSample
         }
         catch (Exception e)
         {
-            System.out.println("On exception, shutting down \n" + " Cause: " + e.getCause() + " \nERROR: " +  e.getMessage());
+            System.out.println("On exception, shutting down \n" + " Cause: " + e.getCause() + " \nERROR: " + e.getMessage());
             System.out.println("Shutting down...");
             client.closeNow();
         }

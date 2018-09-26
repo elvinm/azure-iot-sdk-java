@@ -34,48 +34,6 @@ import static junit.framework.TestCase.*;
 
 public class HttpsHsmClientTest
 {
-    @Mocked
-    SignResponse mockedSignResponse;
-
-    @Mocked
-    SignRequest mockedSignRequest;
-
-    @Mocked
-    HttpsConnection mockedHttpsConnection;
-
-    @Mocked
-    HttpsRequest mockedHttpsRequest;
-
-    @Mocked
-    HttpsResponse mockedHttpsResponse;
-
-    @Mocked
-    ErrorResponse mockedErrorResponse;
-
-    @Mocked
-    URL mockedURL;
-
-    @Mocked
-    HttpsRequestResponseSerializer mockedHttpsRequestResponseSerializer;
-
-    @Mocked
-    UnixSocketAddress mockedUnixSocketAddress;
-
-    @Mocked
-    UnixSocketChannel mockedUnixSocketChannel;
-
-    @Mocked
-    Channels mockedChannels;
-
-    @Mocked
-    OutputStream mockedOutputStream;
-
-    @Mocked
-    TrustBundleResponse mockedTrustBundleResponse;
-
-    @Mocked
-    URLStreamHandlerFactory mockedURLStreamHandlerFactory;
-
     private static final String expectedBaseUrl = "some.base.url";
     private static final String expectedApiVersion = "1.2.3";
     private static final String expectedName = "someModuleName";
@@ -83,8 +41,34 @@ public class HttpsHsmClientTest
     private static final String expectedSchemeHttps = "Https";
     private static final String expectedSchemeHttp = "Http";
     private static final String expectedSchemeUnix = "Unix";
-
-
+    @Mocked
+    SignResponse mockedSignResponse;
+    @Mocked
+    SignRequest mockedSignRequest;
+    @Mocked
+    HttpsConnection mockedHttpsConnection;
+    @Mocked
+    HttpsRequest mockedHttpsRequest;
+    @Mocked
+    HttpsResponse mockedHttpsResponse;
+    @Mocked
+    ErrorResponse mockedErrorResponse;
+    @Mocked
+    URL mockedURL;
+    @Mocked
+    HttpsRequestResponseSerializer mockedHttpsRequestResponseSerializer;
+    @Mocked
+    UnixSocketAddress mockedUnixSocketAddress;
+    @Mocked
+    UnixSocketChannel mockedUnixSocketChannel;
+    @Mocked
+    Channels mockedChannels;
+    @Mocked
+    OutputStream mockedOutputStream;
+    @Mocked
+    TrustBundleResponse mockedTrustBundleResponse;
+    @Mocked
+    URLStreamHandlerFactory mockedURLStreamHandlerFactory;
 
     // Tests_SRS_HSMHTTPCLIENT_34_001: [This constructor shall save the provided baseUrl.]
     @Test
@@ -334,7 +318,7 @@ public class HttpsHsmClientTest
     }
 
     // Tests_SRS_HSMHTTPCLIENT_34_007: [If the provided api version is null or empty, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getTrustBundleThrowsForNullApiVersion(final @Mocked URI mockedURI) throws URISyntaxException, TransportException, IOException, HsmException
     {
         //arrange
@@ -453,7 +437,7 @@ public class HttpsHsmClientTest
         }
         catch (HsmException e)
         {
-            assertTrue(e.getMessage().contains(""+expectedStatusCode));
+            assertTrue(e.getMessage().contains("" + expectedStatusCode));
             assertTrue(e.getMessage().contains(expectedErrorMessage));
             correctExceptionEncountered = true;
         }

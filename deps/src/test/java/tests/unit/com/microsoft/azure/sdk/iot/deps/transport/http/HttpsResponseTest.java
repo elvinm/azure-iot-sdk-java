@@ -19,8 +19,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 
-/** Unit tests for HttpResponse.
- * Coverage - 77% Method, 75% Line */
+/**
+ * Unit tests for HttpResponse.
+ * Coverage - 77% Method, 75% Line
+ */
 @RunWith(JMockit.class)
 public class HttpsResponseTest
 {
@@ -31,7 +33,7 @@ public class HttpsResponseTest
     {
         // Arrange
         final int status = 200;
-        final byte[] body = { 1 };
+        final byte[] body = {1};
         final Map<String, List<String>> headerFields = new HashMap<>();
         final byte[] errorReason = {};
         final int expectedStatus = status;
@@ -49,7 +51,7 @@ public class HttpsResponseTest
     {
         // Arrange
         final int status = 200;
-        final byte[] body = { 1, 2, 3, 4 };
+        final byte[] body = {1, 2, 3, 4};
         final Map<String, List<String>> headerFields = new HashMap<>();
         byte[] errorReason = {};
         final byte[] expectedBody = body;
@@ -69,7 +71,7 @@ public class HttpsResponseTest
     {
         // Arrange
         final int status = 200;
-        final byte[] body = { 1 };
+        final byte[] body = {1};
         final byte[] errorReason = {};
         final Map<String, List<String>> headerFields = new HashMap<>();
         final String field = "test-field";
@@ -93,7 +95,7 @@ public class HttpsResponseTest
     {
         // Arrange
         final int status = 200;
-        final byte[] body = { 1 };
+        final byte[] body = {1};
         final byte[] errorReason = {};
         final Map<String, List<String>> headerFields = new HashMap<>();
         final String field = "test-field";
@@ -119,7 +121,7 @@ public class HttpsResponseTest
     {
         // Arrange
         final int status = 200;
-        final byte[] body = { 1 };
+        final byte[] body = {1};
         final byte[] errorReason = {};
         final Map<String, List<String>> headerFields = new HashMap<>();
         final String field = "test-field";
@@ -135,9 +137,9 @@ public class HttpsResponseTest
     {
         // Arrange
         final int status = 200;
-        final byte[] body = { 1 };
+        final byte[] body = {1};
         final Map<String, List<String>> headerFields = new HashMap<>();
-        final byte[] errorReason = { 2, 3, 4, 5 };
+        final byte[] errorReason = {2, 3, 4, 5};
         final byte[] expectedErrorReason = errorReason;
         // Act
         HttpResponse response = new HttpResponse(status, body, headerFields, errorReason);

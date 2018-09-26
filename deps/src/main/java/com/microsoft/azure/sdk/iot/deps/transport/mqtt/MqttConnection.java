@@ -16,33 +16,29 @@ import static com.microsoft.azure.sdk.iot.deps.transport.mqtt.MqttMessage.retrie
 
 public class MqttConnection implements MqttCallback
 {
+    static final int MAX_WAIT_TIME = 1000;
+    // paho mqtt only supports 10 messages in flight at the same time
+    static final int MAX_IN_FLIGHT_COUNT = 10;
     private static final String WS_SSL_URL_FORMAT = "wss://%s:443";
     private static final String SSL_URL_FORMAT = "ssl://%s:8883";
-
-    private MqttAsyncClient mqttAsyncClient = null;
-    private MqttConnectOptions connectionOptions = null;
-
     //mqtt connection options
     private static final int KEEP_ALIVE_INTERVAL = 230;
     private static final int MQTT_VERSION = 4;
     private static final boolean SET_CLEAN_SESSION = false;
-    static final int MAX_WAIT_TIME = 1000;
-
-    private MqttListener mqttListener;
-
     private final ObjectLock openLock = new ObjectLock();
-
-    // paho mqtt only supports 10 messages in flight at the same time
-    static final int MAX_IN_FLIGHT_COUNT = 10;
+    private MqttAsyncClient mqttAsyncClient = null;
+    private MqttConnectOptions connectionOptions = null;
+    private MqttListener mqttListener;
 
     /**
      * Constructor to create MqttAsync Client with Paho
-     * @param hostname Uri to connect to
-     * @param clientId Client Id to connect to
-     * @param userName Username
-     * @param password password
-     * @param sslContext SSLContext for the connection
-     * @param listener Mqtt listener
+     *
+     * @param hostname      Uri to connect to
+     * @param clientId      Client Id to connect to
+     * @param userName      Username
+     * @param password      password
+     * @param sslContext    SSLContext for the connection
+     * @param listener      Mqtt listener
      * @param useWebSockets true to use Mqtt over web sockets
      * @throws IOException is thrown if any of the parameters are null or empty or client cannot be instantiated
      */
@@ -88,6 +84,7 @@ public class MqttConnection implements MqttCallback
 
     /**
      * Return whether the MQTT broker is connected to the endpoint
+     *
      * @return true if connected using Mqtt
      */
     public boolean isMqttConnected()
@@ -107,7 +104,7 @@ public class MqttConnection implements MqttCallback
     /**
      * Generates the connection options for the mqtt broker connection.
      *
-     * @param userName the user name for the mqtt broker connection.
+     * @param userName     the user name for the mqtt broker connection.
      * @param userPassword the user password for the mqtt broker connection.
      */
     private void updateConnectionOptions(String userName, String userPassword, SSLContext sslContext)
@@ -126,6 +123,7 @@ public class MqttConnection implements MqttCallback
 
     /**
      * Connects to the MQTT broker
+     *
      * @throws IOException if there is a Mqtt exception.
      */
     public synchronized void connect() throws IOException
@@ -150,6 +148,7 @@ public class MqttConnection implements MqttCallback
 
     /**
      * Disconnects from the MQTT broker
+     *
      * @throws IOException if there is a Mqtt exception.
      */
     public synchronized void disconnect() throws IOException
@@ -170,8 +169,9 @@ public class MqttConnection implements MqttCallback
 
     /**
      * Sends a PUBLISH message to the MQTT broker
-     * @param topic The topic of the message
-     * @param qos The QOS of the message
+     *
+     * @param topic   The topic of the message
+     * @param qos     The QOS of the message
      * @param message The message to be sent
      * @throws IOException if there is a Mqtt exception.
      */
@@ -193,6 +193,7 @@ public class MqttConnection implements MqttCallback
 
     /**
      * Sends a PUBLISH message to the MQTT broker
+     *
      * @param message The message to be sent
      * @throws IOException if there is a Mqtt exception.
      */
@@ -220,8 +221,9 @@ public class MqttConnection implements MqttCallback
 
     /**
      * Send the SUBSCRIBE message to the MQTT broker
+     *
      * @param topic The topic of the message
-     * @param qos The QOS of the message
+     * @param qos   The QOS of the message
      * @throws IOException if there is a Mqtt exception.
      */
     public synchronized void subscribe(String topic, MqttQos qos) throws IOException
@@ -244,6 +246,7 @@ public class MqttConnection implements MqttCallback
 
     /**
      * Send the UNSUBSCRIBE message to the MQTT broker
+     *
      * @param topic Name of the Topic to unsubscribe.
      * @throws IOException if there is a Mqtt exception.
      */
@@ -262,8 +265,9 @@ public class MqttConnection implements MqttCallback
 
     /**
      * Event fired when the message arrived on the MQTT broker.
-     * @param topic the topic on which message arrived.
-     * @param mqttMessage  the message arrived on the Mqtt broker.
+     *
+     * @param topic       the topic on which message arrived.
+     * @param mqttMessage the message arrived on the Mqtt broker.
      */
     @Override
     public synchronized void messageArrived(String topic, org.eclipse.paho.client.mqttv3.MqttMessage mqttMessage)
@@ -273,6 +277,7 @@ public class MqttConnection implements MqttCallback
 
     /**
      * Event fired when the message arrived on the MQTT broker.
+     *
      * @param iMqttDeliveryToken the MqttDeliveryToken for which the message was successfully sent.
      */
     @Override
@@ -282,6 +287,7 @@ public class MqttConnection implements MqttCallback
 
     /**
      * Event fired when the connection is lost on the MQTT broker
+     *
      * @param throwable the disconnection reason.
      */
     @Override

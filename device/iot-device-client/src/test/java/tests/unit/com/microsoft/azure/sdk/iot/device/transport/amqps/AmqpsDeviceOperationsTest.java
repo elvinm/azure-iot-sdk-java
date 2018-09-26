@@ -30,10 +30,10 @@ import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.*;
 
 /**
-*  Unit tests for AmqpsDeviceOperations
-* 100% methods covered
-* 89% lines covered
-*/
+ * Unit tests for AmqpsDeviceOperations
+ * 100% methods covered
+ * 89% lines covered
+ */
 public class AmqpsDeviceOperationsTest
 {
     @Mocked
@@ -76,12 +76,12 @@ public class AmqpsDeviceOperationsTest
     ProductInfo mockedProductInfo;
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_001: [**The constructor shall initialize amqpProperties with device client identifier and version.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_002: [**The constructor shall initialize sender and receiver tags with UUID string.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_003: [**The constructor shall initialize sender and receiver endpoint path members to empty string.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_004: [**The constructor shall initialize sender and receiver link address members to empty string.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_005: [**The constructor shall initialize sender and receiver link objects to null.**]**
-    */
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_001: [**The constructor shall initialize amqpProperties with device client identifier and version.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_002: [**The constructor shall initialize sender and receiver tags with UUID string.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_003: [**The constructor shall initialize sender and receiver endpoint path members to empty string.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_004: [**The constructor shall initialize sender and receiver link address members to empty string.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_005: [**The constructor shall initialize sender and receiver link objects to null.**]**
+     */
     @Test
     public void constructorInitializesAllMembers(@Mocked final UUID mockUUID)
     {
@@ -135,7 +135,7 @@ public class AmqpsDeviceOperationsTest
     }
 
     //Tests_SRS_AMQPSDEVICEOPERATIONS_34_048: [If the provided deviceClientConfig is null, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullConfig()
     {
         //arrange
@@ -146,7 +146,7 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_032: [**The class has static members for version identifier and api version keys.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_032: [**The class has static members for version identifier and api version keys.**]**
      */
     @Test
     public void apiVersionAndVersionIdFieldsValues()
@@ -165,9 +165,9 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_006: [**The function shall throw IllegalArgumentException if the session argument is null.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_006: [**The function shall throw IllegalArgumentException if the session argument is null.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void openLinksThrowsIllegalArgumentException() throws IllegalArgumentException
     {
         //arrange
@@ -178,9 +178,9 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_007: [**The function shall create receiver link with the receiverlinkTag member value.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_008: [**The function shall create sender link with the senderlinkTag member value.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_044: [**The function shall set the link's state to OPENING.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_007: [**The function shall create receiver link with the receiverlinkTag member value.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_008: [**The function shall create sender link with the senderlinkTag member value.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_044: [**The function shall set the link's state to OPENING.**]**
      */
     @Test
     public void openLinksCreatesReceiverAndSenderLinksWithTag()
@@ -257,7 +257,7 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Test_SRS_AMQPSDEVICEOPERATIONS_12_009: [**The function shall set both receiver and sender link properties to the amqpProperties member value.**]**
+     **Test_SRS_AMQPSDEVICEOPERATIONS_12_009: [**The function shall set both receiver and sender link properties to the amqpProperties member value.**]**
      */
     @Test
     public void openLinksSetsAmqpsProperties()
@@ -284,7 +284,7 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_010: [**The function shall open both receiver and sender link.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_010: [**The function shall open both receiver and sender link.**]**
      */
     @Test
     public void openLinksOpensLinks()
@@ -310,9 +310,9 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_011: [**If the sender link is not null the function shall closeNow it and sets it to null.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_012: [**If the receiver link is not null the function shall closeNow it and sets it to null.**]**
-    */
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_011: [**If the sender link is not null the function shall closeNow it and sets it to null.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_012: [**If the receiver link is not null the function shall closeNow it and sets it to null.**]**
+     */
     @Test
     public void closeLinksClosesLinks()
     {
@@ -344,9 +344,9 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_013: [**The function shall throw IllegalArgumentException if the link argument is null.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_013: [**The function shall throw IllegalArgumentException if the link argument is null.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void initLinkThrowsIllegalArgumentException()
     {
         //arrange
@@ -357,9 +357,9 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_014: [**If the link is the sender link, the function shall create a new Target (Proton) object using the sender link address member variable.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_015: [**If the link is the sender link, the function shall set its target to the created Target (Proton) object.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_016: [**If the link is the sender link, the function shall set the SenderSettleMode to UNSETTLED.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_014: [**If the link is the sender link, the function shall create a new Target (Proton) object using the sender link address member variable.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_015: [**If the link is the sender link, the function shall set its target to the created Target (Proton) object.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_016: [**If the link is the sender link, the function shall set the SenderSettleMode to UNSETTLED.**]**
      */
     @Test
     public void initLinkSetsSenderLink()
@@ -367,7 +367,7 @@ public class AmqpsDeviceOperationsTest
         //arrange
         final AmqpsDeviceOperations amqpsDeviceOperations = Deencapsulation.newInstance(AmqpsDeviceOperations.class, mockDeviceClientConfig, "", "", "", "", "", "");
         final String senderLinkTag = "senderLinkTag";
-        Deencapsulation.setField(amqpsDeviceOperations, "senderLinkTag",senderLinkTag);
+        Deencapsulation.setField(amqpsDeviceOperations, "senderLinkTag", senderLinkTag);
         final String senderLinkAddress = "senderLinkAddress";
         Deencapsulation.setField(amqpsDeviceOperations, "senderLinkAddress", senderLinkAddress);
         Deencapsulation.setField(amqpsDeviceOperations, "amqpsSendLinkState", AmqpsDeviceOperationLinkState.OPENING);
@@ -400,8 +400,8 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_017: [**If the link is the receiver link, the function shall create a new Source (Proton) object using the receiver link address member variable.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_018: [**If the link is the receiver link, the function shall set its source to the created Source (Proton) object.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_017: [**If the link is the receiver link, the function shall create a new Source (Proton) object using the receiver link address member variable.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_018: [**If the link is the receiver link, the function shall set its source to the created Source (Proton) object.**]**
      */
     @Test
     public void initLinkSetsReceiverLink()
@@ -445,7 +445,7 @@ public class AmqpsDeviceOperationsTest
         //arrange
         final AmqpsDeviceOperations amqpsDeviceOperations = Deencapsulation.newInstance(AmqpsDeviceOperations.class, mockDeviceClientConfig, "", "", "", "", "", "");
         final String senderLinkTag = "senderLinkTag";
-        Deencapsulation.setField(amqpsDeviceOperations, "senderLinkTag",senderLinkTag);
+        Deencapsulation.setField(amqpsDeviceOperations, "senderLinkTag", senderLinkTag);
         final String receiverLinkTag = "receiverLinkTag";
         Deencapsulation.setField(amqpsDeviceOperations, "receiverLinkTag", receiverLinkTag);
         final String senderLinkAddress = "senderLinkAddress";
@@ -481,15 +481,16 @@ public class AmqpsDeviceOperationsTest
                 mockLink.setTarget(mockTarget);
                 times = 0;
                 mockLink.setSenderSettleMode(SenderSettleMode.UNSETTLED);
-                times = 0;            }
+                times = 0;
+            }
         };
     }
 
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_019: [**The function shall throw IllegalStateException if the sender link is not initialized.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_019: [**The function shall throw IllegalStateException if the sender link is not initialized.**]**
      */
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void sendMessageAndGetDeliveryHashThrowsIllegalStateExceptionIfSenderLinkNull()
     {
         //arrange
@@ -505,7 +506,7 @@ public class AmqpsDeviceOperationsTest
     }
 
     // Tests_SRS_AMQPSDEVICEOPERATIONS_12_020: [The function shall throw IllegalArgumentException if the deliveryTag length is zero.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void sendMessageAndGetDeliveryHashThrowsIllegalArgumentExceptionIfDeliveryTagNull()
     {
         //arrange
@@ -521,12 +522,12 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_021: [**The function shall create a Delivery object using the sender link and the deliveryTag.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_022: [**The function shall try to send the message data using the sender link with the offset and length argument.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_023: [**The function shall advance the sender link.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_024: [**The function shall set the delivery hash to the value returned by the sender link.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_026: [**The function shall return with the delivery hash.**]**
-    */
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_021: [**The function shall create a Delivery object using the sender link and the deliveryTag.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_022: [**The function shall try to send the message data using the sender link with the offset and length argument.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_023: [**The function shall advance the sender link.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_024: [**The function shall set the delivery hash to the value returned by the sender link.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_026: [**The function shall return with the delivery hash.**]**
+     */
     @Test
     public void sendMessageAndGetDeliveryHashSendSuccessful()
     {
@@ -570,8 +571,8 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_025: [**If proton failed sending the function shall advance the sender link, release the delivery object and sets the delivery hash to -1.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_026: [**The function shall return with the delivery hash.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_025: [**If proton failed sending the function shall advance the sender link, release the delivery object and sets the delivery hash to -1.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_026: [**The function shall return with the delivery hash.**]**
      */
     @Test
     public void sendMessageAndGetDeliveryHashSendFails()
@@ -613,9 +614,9 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_036: [**The function shall throw IllegalArgumentException if the linkName is empty.**]**
-    */
-    @Test (expected = IllegalArgumentException.class)
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_036: [**The function shall throw IllegalArgumentException if the linkName is empty.**]**
+     */
+    @Test(expected = IllegalArgumentException.class)
     public void getMessageFromReceiverLinkThrowIfLinkNameEmpty()
     {
         //arrange
@@ -626,8 +627,8 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_043: [The function shall return null if the linkName does not match with the receiverLink tag.]
-    */
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_043: [The function shall return null if the linkName does not match with the receiverLink tag.]
+     */
     @Test
     public void getMessageFromReceiverLinkReturnsNullIfLinkNotOwned()
     {
@@ -660,9 +661,9 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_037: [**The function shall create a Delivery object from the link.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_033: [**The function shall try to read the full message from the delivery object and if it fails return null.**]**
-    */
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_037: [**The function shall create a Delivery object from the link.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_033: [**The function shall try to read the full message from the delivery object and if it fails return null.**]**
+     */
     @Test
     public void getMessageFromReceiverLinkReturnsNullIfNotReadable()
     {
@@ -703,9 +704,9 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_037: [**The function shall create a Delivery object from the link.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_033: [**The function shall try to read the full message from the delivery object and if it fails return null.**]**
-    */
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_037: [**The function shall create a Delivery object from the link.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_033: [**The function shall try to read the full message from the delivery object and if it fails return null.**]**
+     */
     @Test
     public void getMessageFromReceiverLinkReturnsNullIfPartial()
     {
@@ -748,10 +749,10 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_034: [**The function shall read the full message into a buffer.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_035: [**The function shall advance the receiver link.**]**
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_038: [**The function shall create a Proton message from the received buffer and return with it.**]**
-    */
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_034: [**The function shall read the full message into a buffer.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_035: [**The function shall advance the receiver link.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_038: [**The function shall create a Proton message from the received buffer and return with it.**]**
+     */
     @Test
     public void getMessageFromReceiverLinkSuccess()
     {
@@ -840,8 +841,8 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Test_SRS_AMQPSDEVICEOPERATIONS_12_039: [**The prototype function shall return null.**]**
-    */
+     **Test_SRS_AMQPSDEVICEOPERATIONS_12_039: [**The prototype function shall return null.**]**
+     */
     @Test
     public void convertFromProton()
     {
@@ -856,8 +857,8 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Test_SRS_AMQPSDEVICEOPERATIONS_12_040: [**The prototype function shall return null.**]**
-    */
+     **Test_SRS_AMQPSDEVICEOPERATIONS_12_040: [**The prototype function shall return null.**]**
+     */
     @Test
     public void convertToProton()
     {
@@ -872,7 +873,7 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_027: [**The getter shall return with the value of the amqpProperties.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_027: [**The getter shall return with the value of the amqpProperties.**]**
      */
     @Test
     public void getAmqpPropertiesReturnsAmqpsProperties()
@@ -889,7 +890,7 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_028: [**The getter shall return with the value of the sender link tag.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_028: [**The getter shall return with the value of the sender link tag.**]**
      */
     @Test
     public void getSenderLinkTagReturnsSenderLinkTag()
@@ -907,7 +908,7 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_029: [**The getter shall return with the value of the receiver link tag.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_029: [**The getter shall return with the value of the receiver link tag.**]**
      */
     @Test
     public void getReceiverLinkTagReturnsReceiverLinkTag()
@@ -924,7 +925,7 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_030: [**The getter shall return with the value of the sender link address.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_030: [**The getter shall return with the value of the sender link address.**]**
      */
     @Test
     public void getSenderLinkAddressReturnsSenderLinkAddress()
@@ -941,7 +942,7 @@ public class AmqpsDeviceOperationsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEOPERATIONS_12_031: [**The getter shall return with the value of the receiver link address.**]**
+     **Tests_SRS_AMQPSDEVICEOPERATIONS_12_031: [**The getter shall return with the value of the receiver link address.**]**
      */
     @Test
     public void getReceiverLinkAddressReturnsReceiverLinkAddress()
@@ -962,11 +963,7 @@ public class AmqpsDeviceOperationsTest
     //Tests_SRS_AMQPSDEVICEOPERATION_34_017: [The function shall copy the user properties to Proton message application properties excluding the reserved property names.]
     //Tests_SRS_AMQPSDEVICEOPERATION_34_051: [This function shall set the message's saved outputname in the application properties of the new proton message.]
     @Test
-    public void convertToProtonSuccess(
-            @Mocked final Message mockMessage,
-            @Mocked final MessageImpl mockProtonMessage,
-            @Mocked final Proton mockProton
-    )
+    public void convertToProtonSuccess(@Mocked final Message mockMessage, @Mocked final MessageImpl mockProtonMessage, @Mocked final Proton mockProton)
     {
         //arrange
         final String correlationId = "1234";
@@ -975,11 +972,7 @@ public class AmqpsDeviceOperationsTest
         final String contentEncoding = "some content encoding";
         final String connectionDeviceId = "some connection device id";
         final String connectionModuleId = "some connection module id";
-        final MessageProperty[] iotHubMessageProperties = new MessageProperty[]
-                {
-                        new MessageProperty("key1", "value1"),
-                        new MessageProperty("key2", "value2")
-                };
+        final MessageProperty[] iotHubMessageProperties = new MessageProperty[]{new MessageProperty("key1", "value1"), new MessageProperty("key2", "value2")};
         final Map<String, Object> userProperties = new HashMap<>(2);
         userProperties.put(iotHubMessageProperties[0].getName(), iotHubMessageProperties[0].getValue());
         userProperties.put(iotHubMessageProperties[1].getName(), iotHubMessageProperties[1].getValue());
@@ -1027,10 +1020,7 @@ public class AmqpsDeviceOperationsTest
 
     // Tests_SRS_AMQPSDEVICEOPERATION_34_025: [The function shall create a new empty buffer for message body if the proton message body is null.]
     @Test
-    public void convertFromProtonEmptyBodySuccess(
-            @Mocked final AmqpsMessage mockAmqpsMessage,
-            @Mocked final DeviceClientConfig mockDeviceClientConfig
-    )
+    public void convertFromProtonEmptyBodySuccess(@Mocked final AmqpsMessage mockAmqpsMessage, @Mocked final DeviceClientConfig mockDeviceClientConfig)
     {
         //arrange
         String deviceId = "deviceId";
@@ -1069,15 +1059,7 @@ public class AmqpsDeviceOperationsTest
     //Tests_SRS_AMQPSDEVICEOPERATION_34_053: [If the amqp message contains an application property for the connection device id, this function shall assign its value to the IotHub message's connection device id.]
     //Tests_SRS_AMQPSDEVICEOPERATION_34_054: [If the amqp message contains an application property for the connection module id, this function shall assign its value to the IotHub message's connection module id.]
     @Test
-    public void convertFromProtonSuccessWithBody(
-            @Mocked final MessageImpl mockProtonMessage,
-            @Mocked final Properties properties,
-            @Mocked final MessageCallback mockMessageCallback,
-            @Mocked final AmqpsMessage mockAmqpsMessage,
-            @Mocked final Data mockData,
-            @Mocked final Symbol mockSymbol,
-            @Mocked final Symbol mockSymbol2
-    )
+    public void convertFromProtonSuccessWithBody(@Mocked final MessageImpl mockProtonMessage, @Mocked final Properties properties, @Mocked final MessageCallback mockMessageCallback, @Mocked final AmqpsMessage mockAmqpsMessage, @Mocked final Data mockData, @Mocked final Symbol mockSymbol, @Mocked final Symbol mockSymbol2)
     {
         //arrange
         final String correlationId = "1234";

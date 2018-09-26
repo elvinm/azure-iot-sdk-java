@@ -30,21 +30,16 @@ public class NoRetryTest
         this.lastException = lastException;
     }
 
+    @Parameterized.Parameters
+    public static Collection inputs()
+    {
+        return Arrays.asList(new Object[][]{{0, null}, {1, null}, {-1, null}, {1, new TransportException()},});
+    }
+
     @Before
     public void initialize()
     {
         retryNoRetry = new NoRetry();
-    }
-
-    @Parameterized.Parameters
-    public static Collection inputs()
-    {
-        return Arrays.asList(new Object[][] {
-                {0, null},
-                {1, null},
-                {-1, null},
-                {1, new TransportException()},
-        });
     }
 
     // Tests_SRS_NORETRY_28_001: [The function shall return the false and 0 as the RetryDecision despite on inputs.]

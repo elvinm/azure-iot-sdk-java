@@ -11,7 +11,5 @@ package com.microsoft.azure.sdk.iot.service.auth;
  */
 public enum AuthenticationType
 {
-    SAS,
-    SELF_SIGNED,
-    CERTIFICATE_AUTHORITY;
+    SAS, SELF_SIGNED, CERTIFICATE_AUTHORITY;
 }

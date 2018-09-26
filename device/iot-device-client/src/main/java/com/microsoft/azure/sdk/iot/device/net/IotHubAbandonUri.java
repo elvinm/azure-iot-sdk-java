@@ -13,10 +13,11 @@ public final class IotHubAbandonUri
      * The path to be appended to an IoT Hub URI. The %s will be replaced by the
      * message etag.
      */
-    private static final String ABANDON_PATH_FORMAT =
-            "/messages/devicebound/%s/abandon";
+    private static final String ABANDON_PATH_FORMAT = "/messages/devicebound/%s/abandon";
 
-    /** The underlying IoT Hub URI. */
+    /**
+     * The underlying IoT Hub URI.
+     */
     private final IotHubUri uri;
 
     /**
@@ -24,15 +25,20 @@ public final class IotHubAbandonUri
      * message as being abandoned. The URI does not include a protocol.
      *
      * @param iotHubHostname the IoT Hub name.
-     * @param deviceId the device ID.
-     * @param eTag the message e-tag.
-     * @param moduleId the module id, or null if not communicating as a module
+     * @param deviceId       the device ID.
+     * @param eTag           the message e-tag.
+     * @param moduleId       the module id, or null if not communicating as a module
      */
     public IotHubAbandonUri(String iotHubHostname, String deviceId, String eTag, String moduleId)
     {
         // Codes_SRS_IOTHUBABANDONURI_11_001: [The constructor returns a URI with the format "[iotHubHostname]/devices/[deviceId]/messages/devicebound/[eTag]/abandon?api-version=2016-02-03".]
         String abandonPath = String.format(ABANDON_PATH_FORMAT, eTag);
         this.uri = new IotHubUri(iotHubHostname, deviceId, abandonPath, moduleId);
+    }
+
+    protected IotHubAbandonUri()
+    {
+        this.uri = null;
     }
 
     /**
@@ -67,10 +73,5 @@ public final class IotHubAbandonUri
     {
         // Codes_SRS_IOTHUBABANDONURI_11_004: [The function shall return a URI with the format '/devices/[deviceId]/messages/devicebound/[eTag]/abandon'.]
         return this.uri.getPath();
-    }
-
-    protected IotHubAbandonUri()
-    {
-        this.uri = null;
     }
 }

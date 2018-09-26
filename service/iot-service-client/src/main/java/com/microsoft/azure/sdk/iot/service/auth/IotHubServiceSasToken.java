@@ -13,13 +13,11 @@ import javax.crypto.spec.SecretKeySpec;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-/** 
- * Grants device access to an IoT Hub for the specified amount of time. 
+/**
+ * Grants device access to an IoT Hub for the specified amount of time.
  */
 public final class IotHubServiceSasToken
 {
-    long TOKEN_VALID_SECS = 365*24*60*60;
-
     /**
      * The SAS token format. The parameters to be interpolated are, in order:
      * the signature
@@ -29,7 +27,6 @@ public final class IotHubServiceSasToken
      * Example: {@code SharedAccessSignature sr=IOTHUBURI&sig=SIGNATURE&se=EXPIRY&skn=SHAREDACCESSKEYNAME}
      */
     public static final String TOKEN_FORMAT = "SharedAccessSignature sr=%s&sig=%s&se=%s&skn=%s";
-
     /* The URI for a connection to an IoT Hub */
     protected final String resourceUri;
     /* The value of the SharedAccessKey */
@@ -40,6 +37,7 @@ public final class IotHubServiceSasToken
     protected final String keyName;
     /* The SAS token that grants access. */
     protected final String token;
+    long TOKEN_VALID_SECS = 365 * 24 * 60 * 60;
 
     /**
      * Constructor. Generates a SAS token that grants access to an IoT Hub for
@@ -63,7 +61,7 @@ public final class IotHubServiceSasToken
         this.keyValue = iotHubConnectionString.getSharedAccessKey();
         this.keyName = iotHubConnectionString.getSharedAccessKeyName();
         this.expiryTime = buildExpiresOn();
-        this.token =  buildToken();
+        this.token = buildToken();
     }
 
     /**
@@ -94,14 +92,14 @@ public final class IotHubServiceSasToken
             // Compute the hmac on input data bytes
             byte[] rawHmac = mac.doFinal(toSign.getBytes("UTF-8"));
             // Convert raw bytes to Hex
-            String signature = URLEncoder.encode(
-                    Base64.encodeBase64StringLocal(rawHmac), "UTF-8");
+            String signature = URLEncoder.encode(Base64.encodeBase64StringLocal(rawHmac), "UTF-8");
 
             // Codes_SRS_SERVICE_SDK_JAVA_IOTHUBSERVICESASTOKEN_12_006: [The constructor shall concatenate the target uri, the signature, the expiry time and the key name using the format: "SharedAccessSignature sr=%s&sig=%s&se=%s&skn=%s"]
             String token = String.format(TOKEN_FORMAT, targetUri, signature, this.expiryTime, this.keyName);
 
             return token;
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             // Codes_SRS_SERVICE_SDK_JAVA_IOTHUBSERVICESASTOKEN_12_007: [The constructor shall throw Exception if building the token failed]
             throw new RuntimeException(e);

@@ -13,13 +13,13 @@ import java.util.Map;
 
 /**
  * Representation of a single Twin metadata for the Device Provisioning Service.
- *
+ * <p>
  * <p> The metadata is a set of pairs lastUpdated/lastUpdatedVersion for each
- *     property and sub-property in the Twin. It is optionally provided by
- *     the provisioning service and the clients can only ready it.
- *     
+ * property and sub-property in the Twin. It is optionally provided by
+ * the provisioning service and the clients can only ready it.
+ * <p>
  * <p> This class store the Date and Version for each entity in the {@link TwinCollection}.
- *
+ * <p>
  * <p> For instance, the following is a valid TwinCollection with its metadata.
  * <pre>
  * {@code
@@ -50,24 +50,23 @@ public class TwinMetadata
 {
     // the entity last updated date and time in the TwinCollection
     static final String LAST_UPDATE_TAG = "$lastUpdated";
-    private Date lastUpdated;
-
     // the entity last updated version in the TwinCollection
     static final String LAST_UPDATE_VERSION_TAG = "$lastUpdatedVersion";
+    private Date lastUpdated;
     private Integer lastUpdatedVersion;
 
     /**
      * CONSTRUCTOR
-     *
+     * <p>
      * <p> This private constructor will receive and store the metadata parameters.
      *
-     * @param lastUpdated the {@code String} with the date and time UTC of the last update on the entity. It can be {@code null}, empty or invalid.
+     * @param lastUpdated        the {@code String} with the date and time UTC of the last update on the entity. It can be {@code null}, empty or invalid.
      * @param lastUpdatedVersion the {@code Integer} with the version of the last update on the entity. It can be {@code null}.
      * @throws IllegalArgumentException If no valid parameter was provide and the class will be empty, or if the DateTime is invalid.
      */
     TwinMetadata(String lastUpdated, Integer lastUpdatedVersion)
     {
-        if(!Tools.isNullOrEmpty(lastUpdated))
+        if (!Tools.isNullOrEmpty(lastUpdated))
         {
             /* SRS_TWIN_METADATA_21_001: [The constructor shall parse the provided `lastUpdated` String to the Date and store it as the TwinMetadata lastUpdated.] */
             /* SRS_TWIN_METADATA_21_002: [The constructor shall throw IllegalArgumentException if it cannot convert the provided `lastUpdated` String to Date.] */
@@ -77,7 +76,7 @@ public class TwinMetadata
         /* SRS_TWIN_METADATA_21_003: [The constructor shall store the provided lastUpdatedVersion as is.] */
         this.lastUpdatedVersion = lastUpdatedVersion;
 
-        if((this.lastUpdatedVersion == null) && (this.lastUpdated == null))
+        if ((this.lastUpdatedVersion == null) && (this.lastUpdated == null))
         {
             throw new IllegalArgumentException("no valid data to create a TwinMetadata.");
         }
@@ -85,17 +84,17 @@ public class TwinMetadata
 
     /**
      * Metadata extractor
-     *
+     * <p>
      * <p> This internal method will try to find $lastUpdated and $lastUpdatedVersion at the first
-     *     level of the provided Map (Object), and create a new instance of the TwinMetadata with
-     *     this information.
-     *
+     * level of the provided Map (Object), and create a new instance of the TwinMetadata with
+     * this information.
+     * <p>
      * <p> Once the provide Object can or cannot be a Map, and, if it is a Map, it can or cannot
-     *     contains a valid metadata, this method contains the label <b>try</b>, which means that
-     *     it can return a valid TwinMetadata or {@code null}.
-     *
+     * contains a valid metadata, this method contains the label <b>try</b>, which means that
+     * it can return a valid TwinMetadata or {@code null}.
+     * <p>
      * <p> For instance, for the follow Map, this method will create a TwinMetadata with
-     *     {@code lastUpdated = 2015-09-21T02:07:44.238Z} and {@code lastUpdatedVersion = 3}
+     * {@code lastUpdated = 2015-09-21T02:07:44.238Z} and {@code lastUpdatedVersion = 3}
      * <pre>
      * {@code
      * "$lastUpdated":"2015-09-21T02:07:44.238Z",
@@ -112,13 +111,13 @@ public class TwinMetadata
      *
      * @param metadata the {@code Object} that may contains the metadata.
      * @return A valid TwinMetadata instance it the provided metadata {@code Object} is a Map with
-     *         data and version metadata, or {@code null} for the other cases.
+     * data and version metadata, or {@code null} for the other cases.
      * @throws IllegalArgumentException If no valid parameter was provide and the class will be empty, or if the DateTime is invalid.
      */
     static TwinMetadata tryExtractFromMap(Object metadata)
     {
         /* SRS_TWIN_METADATA_21_004: [The tryExtractFromMap shall return null if the provided metadata is not a Map.] */
-        if(!(metadata instanceof Map))
+        if (!(metadata instanceof Map))
         {
             return null;
         }
@@ -127,23 +126,23 @@ public class TwinMetadata
         /* SRS_TWIN_METADATA_21_006: [The tryExtractFromMap shall throw IllegalArgumentException if it cannot convert the provided `lastUpdated` String to Date or the version in a Number.] */
         String lastUpdated = null;
         Integer lastUpdatedVersion = null;
-        for(Map.Entry<? extends String, Object> entry: ((Map<? extends String, Object>)metadata).entrySet())
+        for (Map.Entry<? extends String, Object> entry : ((Map<? extends String, Object>) metadata).entrySet())
         {
             String key = entry.getKey();
-            if(key.equals(LAST_UPDATE_TAG))
+            if (key.equals(LAST_UPDATE_TAG))
             {
-                lastUpdated = (String)entry.getValue();
+                lastUpdated = (String) entry.getValue();
             }
-            else if(key.equals(LAST_UPDATE_VERSION_TAG))
+            else if (key.equals(LAST_UPDATE_VERSION_TAG))
             {
-                if(!(entry.getValue() instanceof Number))
+                if (!(entry.getValue() instanceof Number))
                 {
                     throw new IllegalArgumentException("Version in the metadata shall be a number");
                 }
-                lastUpdatedVersion = ((Number)entry.getValue()).intValue();
+                lastUpdatedVersion = ((Number) entry.getValue()).intValue();
             }
         }
-        if((lastUpdatedVersion != null) || !Tools.isNullOrEmpty(lastUpdated))
+        if ((lastUpdatedVersion != null) || !Tools.isNullOrEmpty(lastUpdated))
         {
             return new TwinMetadata(lastUpdated, lastUpdatedVersion);
         }
@@ -174,26 +173,26 @@ public class TwinMetadata
 
     /**
      * Serializer
-     *
      * <p>
-     *     Creates a {@code JsonElement}, which the content represents
-     *     the information in this class in a JSON format.
-     *
-     *     This is useful if the caller will integrate this JSON with JSON from
-     *     other classes to generate a consolidated JSON.
+     * <p>
+     * Creates a {@code JsonElement}, which the content represents
+     * the information in this class in a JSON format.
+     * <p>
+     * This is useful if the caller will integrate this JSON with JSON from
+     * other classes to generate a consolidated JSON.
      * </p>
-
+     *
      * @return The {@code JsonElement} with the content of this class.
      */
     JsonElement toJsonElement()
     {
         /* SRS_TWIN_METADATA_21_009: [The toJsonElement shall return a JsonElement with the information in this class in a JSON format.] */
         JsonObject jsonObject = new JsonObject();
-        if(this.lastUpdated != null)
+        if (this.lastUpdated != null)
         {
             jsonObject.addProperty(LAST_UPDATE_TAG, ParserUtility.dateTimeUtcToString(this.lastUpdated));
         }
-        if(this.lastUpdatedVersion != null)
+        if (this.lastUpdatedVersion != null)
         {
             jsonObject.addProperty(LAST_UPDATE_VERSION_TAG, this.lastUpdatedVersion);
         }

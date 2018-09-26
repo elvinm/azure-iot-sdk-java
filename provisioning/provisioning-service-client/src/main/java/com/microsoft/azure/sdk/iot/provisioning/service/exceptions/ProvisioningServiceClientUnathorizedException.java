@@ -7,9 +7,9 @@ package com.microsoft.azure.sdk.iot.provisioning.service.exceptions;
 
 /**
  * Create unauthorized exception
- *
+ * <p>
  * <p> The authorization token cannot be validated; for example, it is expired or does not apply to the
- *     request’s URI. This error code is also returned to devices as part of the TPM attestation flow.
+ * request’s URI. This error code is also returned to devices as part of the TPM attestation flow.
  * <p> HTTP status code 401
  */
 public class ProvisioningServiceClientUnathorizedException extends ProvisioningServiceClientBadUsageException

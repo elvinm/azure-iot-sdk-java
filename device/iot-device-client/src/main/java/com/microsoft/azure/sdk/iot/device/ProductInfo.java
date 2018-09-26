@@ -34,6 +34,7 @@ public class ProductInfo
 
     /**
      * Sets the extra text to be included in the user agent string
+     *
      * @param extra the extra text to be included in the user agent string
      */
     public void setExtra(String extra)

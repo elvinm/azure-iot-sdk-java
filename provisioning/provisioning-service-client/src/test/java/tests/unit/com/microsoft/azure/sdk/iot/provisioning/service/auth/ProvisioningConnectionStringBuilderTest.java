@@ -27,18 +27,18 @@ public class ProvisioningConnectionStringBuilderTest
     private static final String SHARED_ACCESS_SIGNATURE_PROPERTY_NAME = "SharedAccessSignature";
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_001: [The function shall throw IllegalArgumentException if the input string is empty or null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createConnectionStringThrowsOnNullConnectionString() throws Exception
     {
         // arrange
         String connectionString = null;
-        
+
         // act
         ProvisioningConnectionStringBuilder.createConnectionString(connectionString);
     }
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_001: [The function shall throw IllegalArgumentException if the input string is empty or null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createConnectionStringThrowsOnEmpyConnectionString() throws Exception
     {
         // arrange
@@ -59,7 +59,7 @@ public class ProvisioningConnectionStringBuilderTest
         String policyName = "SharedAccessKey";
         String sharedAccessKey = "1234567890abcdefghijklmnopqrstvwxyz=";
         String connectionString = "HostName=" + deviceProvisioningServiceName + "." + iotHubHostName + ";SharedAccessKeyName=" + sharedAccessKeyName + ";" + policyName + "=" + sharedAccessKey;
-        String userString = sharedAccessKeyName +  "@SAS.root." + deviceProvisioningServiceName;
+        String userString = sharedAccessKeyName + "@SAS.root." + deviceProvisioningServiceName;
 
         // act
         ProvisioningConnectionString provisioningConnectionString = ProvisioningConnectionStringBuilder.createConnectionString(connectionString);
@@ -74,33 +74,29 @@ public class ProvisioningConnectionStringBuilderTest
     }
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_003: [The function shall throw IllegalArgumentException if the input string is empty or null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createConnectionStringThrowsOnNullHostName() throws Exception
     {
         // arrange
-        AuthenticationMethod authenticationMethod = Deencapsulation.newInstance(
-                "com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey",
-                "myPolicy", "<key>");
+        AuthenticationMethod authenticationMethod = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", "myPolicy", "<key>");
 
         // act
         ProvisioningConnectionStringBuilder.createConnectionString(null, authenticationMethod);
     }
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_003: [The function shall throw IllegalArgumentException if the input string is empty or null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createConnectionStringThrowsOnEmptyHostName() throws Exception
     {
         // arrange
-        AuthenticationMethod authenticationMethod = Deencapsulation.newInstance(
-                "com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey",
-                "myPolicy", "<key>");
+        AuthenticationMethod authenticationMethod = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", "myPolicy", "<key>");
 
         // act
         ProvisioningConnectionStringBuilder.createConnectionString("", authenticationMethod);
     }
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_004: [The function shall throw IllegalArgumentException if the input authenticationMethod is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createConnectionStringThrowsOnNullAuthenticationMethod() throws Exception
     {
         // arrange
@@ -115,9 +111,7 @@ public class ProvisioningConnectionStringBuilderTest
     public void createConnectionStringWithPolicyKeySucceeded() throws Exception
     {
         // arrange
-        AuthenticationMethod auth = Deencapsulation.newInstance(
-                "com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey",
-                "myPolicy", "<key>");
+        AuthenticationMethod auth = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", "myPolicy", "<key>");
 
         // act
         ProvisioningConnectionString provisioningConnectionString = ProvisioningConnectionStringBuilder.createConnectionString("hostname", auth);
@@ -132,9 +126,7 @@ public class ProvisioningConnectionStringBuilderTest
     public void createConnectionStringWithPolicyTokenSucceeded() throws Exception
     {
         // arrange
-        AuthenticationMethod auth = Deencapsulation.newInstance(
-                "com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyToken",
-                "myPolicy", "<token>");
+        AuthenticationMethod auth = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyToken", "myPolicy", "<token>");
 
         // act
         ProvisioningConnectionString provisioningConnectionString = ProvisioningConnectionStringBuilder.createConnectionString("hostname", auth);
@@ -145,7 +137,7 @@ public class ProvisioningConnectionStringBuilderTest
     }
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_006: [The function shall throw IllegalArgumentException if the input string is empty or null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void parserThrowsOnNullConnectionString() throws Exception
     {
         // arrange
@@ -162,7 +154,7 @@ public class ProvisioningConnectionStringBuilderTest
     }
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_006: [The function shall throw IllegalArgumentException if the input string is empty or null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void parserThrowsOnEmptyConnectionString() throws Exception
     {
         // arrange
@@ -175,11 +167,11 @@ public class ProvisioningConnectionStringBuilderTest
         ProvisioningConnectionString provisioningConnectionString = ProvisioningConnectionStringBuilder.createConnectionString(connectionString);
 
         // act
-        Deencapsulation.invoke(provisioningConnectionString, "parse", "" , provisioningConnectionString);
+        Deencapsulation.invoke(provisioningConnectionString, "parse", "", provisioningConnectionString);
     }
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_007: [The function shall throw IllegalArgumentException if the input target itoHubConnectionString is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void parserThrowsOnNullProvisioningConnectionString() throws Exception
     {
         // arrange
@@ -196,7 +188,7 @@ public class ProvisioningConnectionStringBuilderTest
     }
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_008: [The function shall throw exception if tokenizing or parsing failed.] */
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void parserThrowsOnInvalidHostName() throws Exception
     {
         // arrange
@@ -212,7 +204,7 @@ public class ProvisioningConnectionStringBuilderTest
     }
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_008: [The function shall throw exception if tokenizing or parsing failed.] */
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void parserThrowsOnKeyMissing() throws Exception
     {
         // arrange
@@ -223,7 +215,7 @@ public class ProvisioningConnectionStringBuilderTest
     }
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_008: [The function shall throw exception if tokenizing or parsing failed.] */
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void parserThrowsOnMissingDeviceProvisioningServiceName() throws Exception
     {
         // arrange
@@ -250,7 +242,7 @@ public class ProvisioningConnectionStringBuilderTest
         String policyName = "SharedAccessKey";
         String sharedAccessKey = "1234567890abcdefghijklmnopqrstvwxyz=";
         String connectionString = "HostName=" + hostName + ";SharedAccessKeyName=" + sharedAccessKeyName + ";" + policyName + "=" + sharedAccessKey;
-        String userString = sharedAccessKeyName +  "@SAS.root." + deviceProvisioningServiceName;
+        String userString = sharedAccessKeyName + "@SAS.root." + deviceProvisioningServiceName;
 
         // act
         ProvisioningConnectionString provisioningConnectionString = ProvisioningConnectionStringBuilder.createConnectionString(connectionString);
@@ -275,7 +267,7 @@ public class ProvisioningConnectionStringBuilderTest
         String policyName = "SharedAccessKey";
         String sharedAccessKey = "1234567890abcdefghijklmnopqrstvwxyz=";
         String connectionString = "HostName=" + deviceProvisioningServiceName + "." + iotHubHostName + ";SharedAccessKeyName=" + sharedAccessKeyName + ";" + policyName + "=" + sharedAccessKey;
-        String userString = sharedAccessKeyName +  "@SAS.root." + deviceProvisioningServiceName;
+        String userString = sharedAccessKeyName + "@SAS.root." + deviceProvisioningServiceName;
         ProvisioningConnectionString provisioningConnectionString = ProvisioningConnectionStringBuilder.createConnectionString(connectionString);
 
         // act
@@ -374,7 +366,7 @@ public class ProvisioningConnectionStringBuilderTest
         String policyName = "SharedAccessKey";
         String sharedAccessKey = "1234567890abcdefghijklmnopqrstvwxyz=";
         String connectionString = "HostName=" + deviceProvisioningServiceName + "." + iotHubHostName + ";SharedAccessKeyName=" + sharedAccessKeyName + ";" + policyName + "=" + sharedAccessKey;
-        String userString = sharedAccessKeyName +  "@SAS.root." + deviceProvisioningServiceName;
+        String userString = sharedAccessKeyName + "@SAS.root." + deviceProvisioningServiceName;
         ProvisioningConnectionString provisioningConnectionString = ProvisioningConnectionStringBuilder.createConnectionString(connectionString);
         String expected = deviceProvisioningServiceName;
 
@@ -396,7 +388,7 @@ public class ProvisioningConnectionStringBuilderTest
         String policyName = "SharedAccessKey";
         String sharedAccessKey = "1234567890abcdefghijklmnopqrstvwxyz=";
         String connectionString = "HostName=" + deviceProvisioningServiceName + "." + iotHubHostName + ";SharedAccessKeyName=" + sharedAccessKeyName + ";" + policyName + "=" + sharedAccessKey;
-        String userString = sharedAccessKeyName +  "@SAS.root." + deviceProvisioningServiceName;
+        String userString = sharedAccessKeyName + "@SAS.root." + deviceProvisioningServiceName;
         ProvisioningConnectionString provisioningConnectionString = ProvisioningConnectionStringBuilder.createConnectionString(connectionString);
         String expected = deviceProvisioningServiceName;
 
@@ -428,7 +420,7 @@ public class ProvisioningConnectionStringBuilderTest
     }
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_015: [The function shall throw IllegalArgumentException if the sharedAccessKeyName of the input itoHubConnectionString is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateThrowsOnEmptySharedAccessKeyName() throws Exception
     {
         // arrange
@@ -444,7 +436,7 @@ public class ProvisioningConnectionStringBuilderTest
     }
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_016: [The function shall throw IllegalArgumentException if either of the sharedAccessKey or the sharedAccessSignature of the input itoHubConnectionString is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateThrowsOnEmptySharedAccessKeyAndSignature() throws Exception
     {
         // arrange
@@ -506,7 +498,7 @@ public class ProvisioningConnectionStringBuilderTest
     }
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_019: [The function shall throw IllegalArgumentException if the value did not match with the pattern.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateFormatThrowsIfNotMatch() throws Exception
     {
         // arrange
@@ -611,8 +603,7 @@ public class ProvisioningConnectionStringBuilderTest
         ProvisioningConnectionString provisioningConnectionString = ProvisioningConnectionStringBuilder.createConnectionString(connectionString);
         String newPolicyName = "XXX";
         String newPolicyKey = "YYY";
-        AuthenticationMethod auth = Deencapsulation.newInstance(
-                "com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", newPolicyName, newPolicyKey);
+        AuthenticationMethod auth = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", newPolicyName, newPolicyKey);
         new Expectations()
         {
             {

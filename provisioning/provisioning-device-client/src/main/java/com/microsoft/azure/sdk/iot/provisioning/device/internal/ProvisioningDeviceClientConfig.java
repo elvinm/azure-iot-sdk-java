@@ -6,6 +6,7 @@
  */
 
 package com.microsoft.azure.sdk.iot.provisioning.device.internal;
+
 import com.microsoft.azure.sdk.iot.provisioning.device.ProvisioningDeviceClientRegistrationCallback;
 import com.microsoft.azure.sdk.iot.provisioning.device.ProvisioningDeviceClientTransportProtocol;
 import com.microsoft.azure.sdk.iot.provisioning.security.SecurityProvider;
@@ -23,7 +24,8 @@ public final class ProvisioningDeviceClientConfig
 
     /**
      * Setter for the Registration Callback.
-     * @param registrationCallback  Registration Callback to be triggered.
+     *
+     * @param registrationCallback        Registration Callback to be triggered.
      * @param registrationCallbackContext Registration Callback Context to be passed.
      */
     public void setRegistrationCallback(ProvisioningDeviceClientRegistrationCallback registrationCallback, Object registrationCallbackContext)
@@ -35,6 +37,7 @@ public final class ProvisioningDeviceClientConfig
 
     /**
      * Setter for the Registration Callback.
+     *
      * @return Registration Callback set by the user.
      */
     public ProvisioningDeviceClientRegistrationCallback getRegistrationCallback()
@@ -45,6 +48,7 @@ public final class ProvisioningDeviceClientConfig
 
     /**
      * Getter for the Context
+     *
      * @return returns the context set by the user.
      */
     public Object getRegistrationCallbackContext()
@@ -55,6 +59,7 @@ public final class ProvisioningDeviceClientConfig
 
     /**
      * Getter for the Provisioning Service Global Endpoint.
+     *
      * @return returns the end point.
      */
     public String getProvisioningServiceGlobalEndpoint()
@@ -65,6 +70,7 @@ public final class ProvisioningDeviceClientConfig
 
     /**
      * Setter for the Provisioning Service Global Endpoint.
+     *
      * @param provisioningServiceGlobalEndpoint The end point to be set.
      */
     public void setProvisioningServiceGlobalEndpoint(String provisioningServiceGlobalEndpoint)
@@ -75,6 +81,7 @@ public final class ProvisioningDeviceClientConfig
 
     /**
      * Getter for the Scope Id.
+     *
      * @return returns the scope Id.
      */
     public String getIdScope()
@@ -85,6 +92,7 @@ public final class ProvisioningDeviceClientConfig
 
     /**
      * Setter for the Scope Id.
+     *
      * @param idScope Scope to be set.
      */
     public void setIdScope(String idScope)
@@ -95,6 +103,7 @@ public final class ProvisioningDeviceClientConfig
 
     /**
      * Getter for the protocol.
+     *
      * @return The protocol set by the user.
      */
     public ProvisioningDeviceClientTransportProtocol getProtocol()
@@ -105,6 +114,7 @@ public final class ProvisioningDeviceClientConfig
 
     /**
      * Setter for the protocol.
+     *
      * @param protocol protocol set by the user.
      */
     public void setProtocol(ProvisioningDeviceClientTransportProtocol protocol)
@@ -115,6 +125,7 @@ public final class ProvisioningDeviceClientConfig
 
     /**
      * Getter for the Security Provider.
+     *
      * @return security provider set by the user
      */
     public SecurityProvider getSecurityProvider()
@@ -125,6 +136,7 @@ public final class ProvisioningDeviceClientConfig
 
     /**
      * Setter for the Security provider.
+     *
      * @param securityProvider security provider to be set.
      */
     public void setSecurityProvider(SecurityProvider securityProvider)
@@ -134,20 +146,22 @@ public final class ProvisioningDeviceClientConfig
     }
 
     /**
-     * Setter for Using Web Sockets
-     * @param useWebSocket flag to determine to use web sockets
-     */
-    public void setUseWebSockets(boolean useWebSocket)
-    {
-        this.useWebSockets = useWebSocket;
-    }
-
-    /**
      * Getter for Using Web Sockets
+     *
      * @return flag to determine to use web sockets
      */
     public boolean getUseWebSockets()
     {
         return this.useWebSockets;
+    }
+
+    /**
+     * Setter for Using Web Sockets
+     *
+     * @param useWebSocket flag to determine to use web sockets
+     */
+    public void setUseWebSockets(boolean useWebSocket)
+    {
+        this.useWebSockets = useWebSocket;
     }
 }

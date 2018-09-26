@@ -14,6 +14,7 @@ public class IotHubBadGatewayException extends IotHubException
     {
         this(null);
     }
+
     public IotHubBadGatewayException(String message)
     {
         super("Bad gateway!" + (((message == null) || message.isEmpty()) ? "" : " " + message));

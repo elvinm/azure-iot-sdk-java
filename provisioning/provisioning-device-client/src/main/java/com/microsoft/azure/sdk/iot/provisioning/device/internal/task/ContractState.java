@@ -9,6 +9,5 @@ package com.microsoft.azure.sdk.iot.provisioning.device.internal.task;
 
 public enum ContractState
 {
-    DPS_REGISTRATION_RECEIVED,
-    DPS_REGISTRATION_UNKNOWN
+    DPS_REGISTRATION_RECEIVED, DPS_REGISTRATION_UNKNOWN
 }

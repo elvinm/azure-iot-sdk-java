@@ -15,6 +15,9 @@ import java.util.ArrayList;
 public class FeedbackBatch
 {
     private Instant enqueuedTimeUtc;
+    private String userId;
+    private String lockToken;
+    private ArrayList<FeedbackRecord> records;
 
     public Instant getEnqueuedTimeUtc()
     {
@@ -26,8 +29,6 @@ public class FeedbackBatch
         this.enqueuedTimeUtc = enqueuedTimeUtc;
     }
 
-    private String userId;
-
     public String getUserId()
     {
         return userId;
@@ -38,8 +39,6 @@ public class FeedbackBatch
         this.userId = userId;
     }
 
-    private String lockToken;
-
     public String getLockToken()
     {
         return lockToken;
@@ -49,8 +48,6 @@ public class FeedbackBatch
     {
         this.lockToken = lockToken;
     }
-
-    private ArrayList<FeedbackRecord> records;
 
     public ArrayList<FeedbackRecord> getRecords()
     {

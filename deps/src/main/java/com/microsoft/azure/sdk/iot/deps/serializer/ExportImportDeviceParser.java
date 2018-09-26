@@ -12,51 +12,34 @@ import com.microsoft.azure.sdk.iot.deps.twin.TwinCollection;
 public class ExportImportDeviceParser
 {
     private static final String ID_NAME = "id";
+    private static final String E_TAG_NAME = "eTag";
+    private static final String IMPORT_MODE_NAME = "importMode";
+    private static final String STATUS_NAME = "status";
+    private static final String STATUS_REASON_NAME = "statusReason";
+    private static final String AUTHENTICATION_NAME = "authentication";
+    private static final String TAGS_NAME = "tags";
+    private transient static Gson gson = new Gson();
     @Expose(serialize = true, deserialize = true)
     @SerializedName(ID_NAME)
     private String id;
-
-    private static final String E_TAG_NAME = "eTag";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(E_TAG_NAME)
     private String eTag;
-
-    private static final String IMPORT_MODE_NAME = "importMode";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(IMPORT_MODE_NAME)
     private String importMode;
-
-    private static final String STATUS_NAME = "status";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(STATUS_NAME)
     private String status;
-
-    private static final String STATUS_REASON_NAME = "statusReason";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(STATUS_REASON_NAME)
     private String statusReason;
-
-    private static final String AUTHENTICATION_NAME = "authentication";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(AUTHENTICATION_NAME)
     private AuthenticationParser authentication;
-    
-    private static final String TAGS_NAME = "tags";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(TAGS_NAME)
     private TwinCollection tags;
-
-    private transient static Gson gson = new Gson();
-
-    /**
-     * Converts this into json and returns it
-     * @return the json representation of this
-     */
-    public String toJson()
-    {
-        //Codes_SRS_EXPORTIMPORTDEVICE_PARSER_34_001: [The parser shall save the ExportImportDeviceParser's authentication type to the returned json representation]
-        return gson.toJson(this);
-    }
 
     /**
      * Empty constructor: Used only to keep GSON happy.
@@ -67,6 +50,7 @@ public class ExportImportDeviceParser
 
     /**
      * Constructor for an ExportImportDeviceParser that is built using the provided json
+     *
      * @param json the json string to build the ExportImportDeviceParser out of
      */
     public ExportImportDeviceParser(String json)
@@ -112,6 +96,17 @@ public class ExportImportDeviceParser
     }
 
     /**
+     * Converts this into json and returns it
+     *
+     * @return the json representation of this
+     */
+    public String toJson()
+    {
+        //Codes_SRS_EXPORTIMPORTDEVICE_PARSER_34_001: [The parser shall save the ExportImportDeviceParser's authentication type to the returned json representation]
+        return gson.toJson(this);
+    }
+
+    /**
      * Getter for id
      *
      * @return The value of id
@@ -124,6 +119,7 @@ public class ExportImportDeviceParser
 
     /**
      * Setter for id
+     *
      * @param id the value to set id to
      * @throws IllegalArgumentException if id is null
      */
@@ -151,39 +147,6 @@ public class ExportImportDeviceParser
     }
 
     /**
-     * Getter for importMode
-     *
-     * @return The value of importMode
-     */
-    public String getImportMode()
-    {
-        //Codes_SRS_EXPORTIMPORTDEVICE_PARSER_34_017: [This method shall return the value of this object's importMode.]
-        return importMode;
-    }
-
-    /**
-     * Getter for status
-     *
-     * @return The value of status
-     */
-    public String getStatus()
-    {
-        //Codes_SRS_EXPORTIMPORTDEVICE_PARSER_34_019: [This method shall return the value of this object's status.]
-        return status;
-    }
-
-    /**
-     * Getter for statusReason
-     *
-     * @return The value of statusReason
-     */
-    public String getStatusReason()
-    {
-        //Codes_SRS_EXPORTIMPORTDEVICE_PARSER_34_021: [This method shall return the value of this object's statusReason.]
-        return statusReason;
-    }
-
-    /**
      * Setter for eTag
      *
      * @param eTag the value to set eTag to
@@ -192,6 +155,17 @@ public class ExportImportDeviceParser
     {
         //Codes_SRS_EXPORTIMPORTDEVICE_PARSER_34_014: [This method shall set the value of this object's eTag equal to the provided value.]
         this.eTag = eTag;
+    }
+
+    /**
+     * Getter for importMode
+     *
+     * @return The value of importMode
+     */
+    public String getImportMode()
+    {
+        //Codes_SRS_EXPORTIMPORTDEVICE_PARSER_34_017: [This method shall return the value of this object's importMode.]
+        return importMode;
     }
 
     /**
@@ -206,6 +180,17 @@ public class ExportImportDeviceParser
     }
 
     /**
+     * Getter for status
+     *
+     * @return The value of status
+     */
+    public String getStatus()
+    {
+        //Codes_SRS_EXPORTIMPORTDEVICE_PARSER_34_019: [This method shall return the value of this object's status.]
+        return status;
+    }
+
+    /**
      * Setter for Status
      *
      * @param status the value to set Status to
@@ -214,6 +199,17 @@ public class ExportImportDeviceParser
     {
         //Codes_SRS_EXPORTIMPORTDEVICE_PARSER_34_018: [This method shall set the value of this object's status equal to the provided value.]
         this.status = status;
+    }
+
+    /**
+     * Getter for statusReason
+     *
+     * @return The value of statusReason
+     */
+    public String getStatusReason()
+    {
+        //Codes_SRS_EXPORTIMPORTDEVICE_PARSER_34_021: [This method shall return the value of this object's statusReason.]
+        return statusReason;
     }
 
     /**
@@ -255,17 +251,17 @@ public class ExportImportDeviceParser
         this.authentication = authentication;
     }
 
-	/**
-	 * @return the tags
-	 */
-	public TwinCollection getTags() {
-		return tags;
-	}
+    /**
+     * @return the tags
+     */
+    public TwinCollection getTags() {
+        return tags;
+    }
 
-	/**
-	 * @param tags the tags to set
-	 */
-	public void setTags(TwinCollection tags) {
-		this.tags = tags;
-	}
+    /**
+     * @param tags the tags to set
+     */
+    public void setTags(TwinCollection tags) {
+        this.tags = tags;
+    }
 }

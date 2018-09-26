@@ -28,31 +28,31 @@ public class ParserUtilityTest
     public void validateStringUTF8Succeed() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateStringUTF8", "test-string1#");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateStringUTF8", "test-string1#");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_002: [The validateStringUTF8 shall throw IllegalArgumentException if the provided string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateStringUTF8NullThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateStringUTF8", new Class[]{String.class}, null);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateStringUTF8", new Class[]{String.class}, null);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_002: [The validateStringUTF8 shall throw IllegalArgumentException if the provided string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateStringUTF8EmptyThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateStringUTF8", "");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateStringUTF8", "");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_003: [The validateStringUTF8 shall throw IllegalArgumentException if the provided string contains at least one not UTF-8 character.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateStringUTF8InvalidThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateStringUTF8", "\u1234test-string1#");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateStringUTF8", "\u1234test-string1#");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_004: [The validateBlobName shall do nothing if the string is valid.] */
@@ -60,35 +60,35 @@ public class ParserUtilityTest
     public void validateBlobNameSucceed() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateBlobName", "test-device1/image.jpg");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateBlobName", "test-device1/image.jpg");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_005: [The validateBlobName shall throw IllegalArgumentException if the provided blob name is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateBlobNameNullThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateBlobName", new Class[]{String.class}, null);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateBlobName", new Class[]{String.class}, null);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_005: [The validateBlobName shall throw IllegalArgumentException if the provided blob name is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateBlobNameEmptyThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateBlobName", "");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateBlobName", "");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_006: [The validateBlobName shall throw IllegalArgumentException if the provided blob name contains at least one not UTF-8 character.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateBlobNameInvalidUtf8Throws() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateBlobName", "\u1234test-string1/image.jpg");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateBlobName", "\u1234test-string1/image.jpg");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_007: [The validateBlobName shall throw IllegalArgumentException if the provided blob name contains more than 1024 characters.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateBlobNameInvalidBigNameThrows() throws ClassNotFoundException
     {
         // arrange
@@ -96,18 +96,18 @@ public class ParserUtilityTest
         String directory = "directory/";
 
         // create a blob name bigger than 1024 characters.
-        for (int i = 0; i < (2000/directory.length()); i++)
+        for (int i = 0; i < (2000 / directory.length()); i++)
         {
             bigBlobName.append(directory);
         }
         bigBlobName.append("image.jpg");
 
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateBlobName", bigBlobName.toString());
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateBlobName", bigBlobName.toString());
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_008: [The validateBlobName shall throw IllegalArgumentException if the provided blob name contains more than 254 path segments.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateBlobNameInvalidInvalidPathThrows() throws ClassNotFoundException
     {
         // arrange
@@ -122,7 +122,7 @@ public class ParserUtilityTest
         bigBlobName.append("image.jpg");
 
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateBlobName", bigBlobName.toString());
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateBlobName", bigBlobName.toString());
     }
 
     //Tests_SRS_PARSER_UTILITY_25_031: [The validateQuery shall do nothing if the string is valid.]
@@ -133,62 +133,62 @@ public class ParserUtilityTest
         final String testQuery = "select * from abc";
 
         //act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateQuery", testQuery);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateQuery", testQuery);
     }
 
     //Tests_SRS_PARSER_UTILITY_25_032: [The validateQuery shall throw IllegalArgumentException is the provided query is null or empty.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateQueryInvalidateEmptyThrows() throws ClassNotFoundException
     {
         //arrange
         final String testQuery = "";
 
         //act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateQuery", testQuery);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateQuery", testQuery);
     }
 
     //Tests_SRS_PARSER_UTILITY_25_032: [The validateQuery shall throw IllegalArgumentException is the provided query is null or empty.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateQueryInvalidateNullThrows() throws ClassNotFoundException
     {
         //arrange
         final String testQuery = null;
 
         //act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateQuery", new Class[]{String.class}, testQuery);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateQuery", new Class[]{String.class}, testQuery);
     }
 
     //Tests_SRS_PARSER_UTILITY_25_033: [The validateQuery shall throw IllegalArgumentException is the provided query contains non UTF-8 character.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateQueryInvalidateUTFThrows() throws ClassNotFoundException
     {
         //arrange
         final String testQuery = "select * from \u1234";
 
         //act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateQuery", testQuery);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateQuery", testQuery);
     }
 
     //Tests_SRS_PARSER_UTILITY_25_034: [The validateQuery shall throw IllegalArgumentException is the provided query does not contain SELECT and FROM.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateQueryInvalidateFormat1Throws() throws ClassNotFoundException
     {
         //arrange
         final String testQuery = "select *";
 
         //act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateQuery", testQuery);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateQuery", testQuery);
     }
 
     //Tests_SRS_PARSER_UTILITY_25_034: [The validateQuery shall throw IllegalArgumentException is the provided query does not contain SELECT and FROM.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateQueryInvalidateFormat2Throws() throws ClassNotFoundException
     {
         //arrange
         final String testQuery = "from abc";
 
         //act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateQuery", testQuery);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateQuery", testQuery);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_009: [The validateInteger shall do nothing if the object is valid.] */
@@ -196,7 +196,7 @@ public class ParserUtilityTest
     public void validateObjectIntegerSucceed() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateObject", 1234);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateObject", 1234);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_009: [The validateBoolean shall do nothing if the object is valid.] */
@@ -204,47 +204,47 @@ public class ParserUtilityTest
     public void validateObjectBooleanSucceed() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateObject", true);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateObject", true);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_010: [The validateInteger shall throw IllegalArgumentException if the provided object is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateIntegerNullThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateObject", new Class[]{Object.class} ,(String)null);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateObject", new Class[]{Object.class}, (String) null);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_044: [The validateHostName shall throw IllegalArgumentException if the provided string is not a valid host name.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateHostNameThrowsOnNullHostName() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateHostName", new Class[]{String.class} , null);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateHostName", new Class[]{String.class}, null);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_044: [The validateHostName shall throw IllegalArgumentException if the provided string is not a valid host name.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateHostNameThrowsOnEmptyHostName() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateHostName", new Class[]{String.class} , "");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateHostName", new Class[]{String.class}, "");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_044: [The validateHostName shall throw IllegalArgumentException if the provided string is not a valid host name.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateHostNameThrowsOnInvalidHostName() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateHostName", new Class[]{String.class} , "\u1234a.b.c");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateHostName", new Class[]{String.class}, "\u1234a.b.c");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_044: [The validateHostName shall throw IllegalArgumentException if the provided string is not a valid host name.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateHostNameThrowsOnIncompleteHostName() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateHostName", new Class[]{String.class} , "hostName");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateHostName", new Class[]{String.class}, "hostName");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_045: [The validateHostName shall do nothing if the string is a valid host name.] */
@@ -252,7 +252,7 @@ public class ParserUtilityTest
     public void validateHostNameSucceeded() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateHostName", new Class[]{String.class} , "hostName.azure-devices.net");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateHostName", new Class[]{String.class}, "hostName.azure-devices.net");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_013: [The validateKey shall do nothing if the string is a valid key.] */
@@ -261,7 +261,7 @@ public class ParserUtilityTest
     public void validateKeyNoMetadataSucceed() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateKey", "test-key", false);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateKey", "test-key", false);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_013: [The validateKey shall do nothing if the string is a valid key.] */
@@ -270,32 +270,31 @@ public class ParserUtilityTest
     public void validateKeyMetadataSucceed() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateKey", "$test-key", true);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateKey", "$test-key", true);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_014: [The validateKey shall throw IllegalArgumentException if the provided string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateKeyNullKeyThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateKey",
-                new Class[]{String.class, Boolean.class}, (String)null, false);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateKey", new Class[]{String.class, Boolean.class}, (String) null, false);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_014: [The validateKey shall throw IllegalArgumentException if the provided string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateKeyEmptyKeyThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateKey", "", false);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateKey", "", false);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_015: [The validateKey shall throw IllegalArgumentException if the provided string contains at least one not UTF-8 character.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateKeyInvalidKeyThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateKey", "\u1234-test-key", false);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateKey", "\u1234-test-key", false);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_016: [The validateKey shall throw IllegalArgumentException if the provided string contains more than 128 characters.] */
@@ -303,56 +302,50 @@ public class ParserUtilityTest
     public void validateKeyEdgeSizeSucceed() throws ClassNotFoundException
     {
         // arrange
-        String key = "1234567890123456789012345678901234567890" +
-                "1234567890123456789012345678901234567890" +
-                "1234567890123456789012345678901234567890" +
-                "12345678";
+        String key = "1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890" + "12345678";
 
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateKey", key, false);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateKey", key, false);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_016: [The validateKey shall throw IllegalArgumentException if the provided string contains more than 128 characters.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateKeyInvalidBigKeyThrows() throws ClassNotFoundException
     {
         // arrange
-        String key = "1234567890123456789012345678901234567890" +
-                "1234567890123456789012345678901234567890" +
-                "1234567890123456789012345678901234567890" +
-                "123456789";
+        String key = "1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890" + "123456789";
 
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateKey", key, false);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateKey", key, false);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_017: [The validateKey shall throw IllegalArgumentException if the provided string contains an illegal character (`$`,`.`, space).] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateKeyInvalidDotThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateKey", "test.key", false);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateKey", "test.key", false);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_017: [The validateKey shall throw IllegalArgumentException if the provided string contains an illegal character (`$`,`.`, space).] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateKeyInvalidSpaceThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateKey", "test key", false);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateKey", "test key", false);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_017: [The validateKey shall throw IllegalArgumentException if the provided string contains an illegal character (`$`,`.`, space).] */
     /* Tests_SRS_PARSER_UTILITY_21_019: [If `isMetadata` is `false`, the validateKey shall not accept the character `$` as valid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateKeyNoDollarInvalidDollarThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateKey", "$test-key", false);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateKey", "$test-key", false);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_046: [The validateMap shall throws IllegalArgumentException if the maxLevel is `0` or negative.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateMapThrowsOnZeroMaxLevel() throws ClassNotFoundException
     {
         // act
@@ -360,7 +353,7 @@ public class ParserUtilityTest
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_046: [The validateMap shall throws IllegalArgumentException if the maxLevel is `0` or negative.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateMapThrowsOnNegativeMaxLevel() throws ClassNotFoundException
     {
         // act
@@ -414,7 +407,7 @@ public class ParserUtilityTest
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_049: [The validateMap shall throws IllegalArgumentException if any key in the map is null, empty, contains more than 128 characters, or illegal characters (`$`,`.`, space).] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateMapThrowsOnNullKey() throws ClassNotFoundException
     {
         // arrange
@@ -430,7 +423,7 @@ public class ParserUtilityTest
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_049: [The validateMap shall throws IllegalArgumentException if any key in the map is null, empty, contains more than 128 characters, or illegal characters (`$`,`.`, space).] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateMapThrowsOnEmptyKey() throws ClassNotFoundException
     {
         // arrange
@@ -446,14 +439,11 @@ public class ParserUtilityTest
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_049: [The validateMap shall throws IllegalArgumentException if any key in the map is null, empty, contains more than 128 characters, or illegal characters (`$`,`.`, space).] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateMapThrowsOnMoreThan128CharKey() throws ClassNotFoundException
     {
         // arrange
-        final String bigKey = "1234567890123456789012345678901234567890" +
-                "1234567890123456789012345678901234567890" +
-                "1234567890123456789012345678901234567890" +
-                "123456789";
+        final String bigKey = "1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890" + "123456789";
         final Map<String, Object> mapSample = new HashMap<String, Object>()
         {
             {
@@ -466,7 +456,7 @@ public class ParserUtilityTest
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_049: [The validateMap shall throws IllegalArgumentException if any key in the map is null, empty, contains more than 128 characters, or illegal characters (`$`,`.`, space).] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateMapThrowsOnInvalidKey() throws ClassNotFoundException
     {
         // arrange
@@ -498,14 +488,14 @@ public class ParserUtilityTest
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_051: [The validateMap shall throws IllegalArgumentException if any value contains illegal type (array or invalid class).] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateMapThrowsOnArrayValue() throws ClassNotFoundException
     {
         // arrange
         final Map<String, Object> mapSample = new HashMap<String, Object>()
         {
             {
-                put("key", new int[]{1,2});
+                put("key", new int[]{1, 2});
             }
         };
 
@@ -514,14 +504,15 @@ public class ParserUtilityTest
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_051: [The validateMap shall throws IllegalArgumentException if any value contains illegal type (array or invalid class).] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateMapThrowsOnInvalidClassValue() throws ClassNotFoundException
     {
         // arrange
         final class localClass
         {
             int a;
-        };
+        }
+        ;
         final Map<String, Object> mapSample = new HashMap<String, Object>()
         {
             {
@@ -534,7 +525,7 @@ public class ParserUtilityTest
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_052: [The validateMap shall throws IllegalArgumentException if the provided map contains more than maxLevel levels.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateMapThrowsOnBiggerThanMaxLevel() throws ClassNotFoundException
     {
         // arrange
@@ -577,7 +568,7 @@ public class ParserUtilityTest
     public void getDateTimeUtcSucceed() throws ClassNotFoundException
     {
         // act
-        Date date = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"getDateTimeUtc", "2016-06-01T21:22:43");
+        Date date = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "getDateTimeUtc", "2016-06-01T21:22:43");
 
         // assert
         assertEquals(1464816163000L, date.getTime());
@@ -588,7 +579,7 @@ public class ParserUtilityTest
     public void getDateTimeUtcBigMillisecondsSucceed() throws ClassNotFoundException
     {
         // act
-        Date date = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"getDateTimeUtc", "2016-06-01T21:22:43");
+        Date date = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "getDateTimeUtc", "2016-06-01T21:22:43");
 
         // assert
         assertEquals(1464816163000L, date.getTime());
@@ -599,7 +590,7 @@ public class ParserUtilityTest
     public void getDateTimeUtcShortMillisecondsSucceed() throws ClassNotFoundException
     {
         // act
-        Date date = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"getDateTimeUtc", "2016-06-01T21:22:43");
+        Date date = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "getDateTimeUtc", "2016-06-01T21:22:43");
 
         // assert
         assertEquals(1464816163000L, date.getTime());
@@ -610,7 +601,7 @@ public class ParserUtilityTest
     public void getDateTimeUtcShort2MillisecondsSucceed() throws ClassNotFoundException
     {
         // act
-        Date date = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"getDateTimeUtc", "2016-06-01T21:22:43");
+        Date date = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "getDateTimeUtc", "2016-06-01T21:22:43");
 
         // assert
         assertEquals(1464816163000L, date.getTime());
@@ -621,42 +612,42 @@ public class ParserUtilityTest
     public void getDateTimeUtcEmptyMillisecondsSucceed() throws ClassNotFoundException
     {
         // act
-        Date date = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"getDateTimeUtc", "2016-06-01T21:22:43");
+        Date date = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "getDateTimeUtc", "2016-06-01T21:22:43");
 
         // assert
         assertEquals(1464816163000L, date.getTime());
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_022: [If the provide string is null, empty or contains an invalid data format, the getDateTimeUtc shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getDateTimeUtcNullThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"getDateTimeUtc", new Class[]{String.class}, null);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "getDateTimeUtc", new Class[]{String.class}, null);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_022: [If the provide string is null, empty or contains an invalid data format, the getDateTimeUtc shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getDateTimeUtcEmptyThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"getDateTimeUtc", "");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "getDateTimeUtc", "");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_022: [If the provide string is null, empty or contains an invalid data format, the getDateTimeUtc shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getDateTimeUtcInvalidTextThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"getDateTimeUtc", "This is not a data and time");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "getDateTimeUtc", "This is not a data and time");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_022: [If the provide string is null, empty or contains an invalid data format, the getDateTimeUtc shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getDateTimeUtcInvalidDate() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"getDateTimeUtc", "2016-5-6-01T21:22:43");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "getDateTimeUtc", "2016-5-6-01T21:22:43");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_023: [The stringToDateTimeOffset shall parse the provide string using `UTC` timezone.] */
@@ -665,50 +656,50 @@ public class ParserUtilityTest
     public void stringToDateTimeOffsetSucceed() throws ClassNotFoundException
     {
         // act
-        Date date = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"stringToDateTimeOffset", "2016-06-01T21:22:41+00:00");
+        Date date = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "stringToDateTimeOffset", "2016-06-01T21:22:41+00:00");
 
         // assert
         assertEquals(1464816161000L, date.getTime());
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_025: [If the provide string is null, empty or contains an invalid data format, the stringToDateTimeOffset shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void stringToDateTimeOffsetNullThrows() throws ClassNotFoundException
     {
         // act0
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"stringToDateTimeOffset", new Class[]{String.class}, null);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "stringToDateTimeOffset", new Class[]{String.class}, null);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_025: [If the provide string is null, empty or contains an invalid data format, the stringToDateTimeOffset shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void stringToDateTimeOffsetEmptyThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"stringToDateTimeOffset", "");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "stringToDateTimeOffset", "");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_025: [If the provide string is null, empty or contains an invalid data format, the stringToDateTimeOffset shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void stringToDateTimeOffsetInvalidTextThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"stringToDateTimeOffset", "This is not a data and time");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "stringToDateTimeOffset", "This is not a data and time");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_025: [If the provide string is null, empty or contains an invalid data format, the stringToDateTimeOffset shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void stringToDateTimeOffsetWrongFormatThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"stringToDateTimeOffset", "2016-06-01T21:22:43");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "stringToDateTimeOffset", "2016-06-01T21:22:43");
     }
 
     /* Codes_SRS_PARSER_UTILITY_21_053: [The dateTimeUtcToString shall throws IllegalArgumentException if the provided Date is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void dateTimeUtcToStringThrowsOnNullDate() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"dateTimeUtcToString", new Class[]{Date.class}, (Date)null);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "dateTimeUtcToString", new Class[]{Date.class}, (Date) null);
     }
 
     /* Codes_SRS_PARSER_UTILITY_21_054: [The dateTimeUtcToString shall serialize the provide Date using `UTC` timezone.] */
@@ -719,7 +710,7 @@ public class ParserUtilityTest
         Date date = new Date(1464816163123L);
 
         // act
-        String result = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"dateTimeUtcToString", new Class[]{Date.class}, date);
+        String result = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "dateTimeUtcToString", new Class[]{Date.class}, date);
 
         // assert
         assertEquals("2016-06-01T21:22:43.123Z", result);
@@ -731,31 +722,31 @@ public class ParserUtilityTest
     public void validateIdMetadataSucceed() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateId", "$test-key");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateId", "$test-key");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_026: [The validateId shall throw IllegalArgumentException if the provided string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateIdNullKeyThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateId", new Class[]{String.class}, (String)null);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateId", new Class[]{String.class}, (String) null);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_026: [The validateId shall throw IllegalArgumentException if the provided string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateIdEmptyKeyThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateId", "");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateId", "");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_027: [The validateId shall throw IllegalArgumentException if the provided string contains at least one not UTF-8 character.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateIdInvalidKeyThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateId", "\u1234-test-key");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateId", "\u1234-test-key");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_028: [The validateId shall throw IllegalArgumentException if the provided string contains more than 128 characters.] */
@@ -763,35 +754,29 @@ public class ParserUtilityTest
     public void validateIdEdgeSizeSucceed() throws ClassNotFoundException
     {
         // arrange
-        String id = "1234567890123456789012345678901234567890" +
-                "1234567890123456789012345678901234567890" +
-                "1234567890123456789012345678901234567890" +
-                "12345678";
+        String id = "1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890" + "12345678";
 
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateId", id);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateId", id);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_028: [The validateId shall throw IllegalArgumentException if the provided string contains more than 128 characters.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateIdInvalidBigKeyThrows() throws ClassNotFoundException
     {
         // arrange
-        String id = "1234567890123456789012345678901234567890" +
-                "1234567890123456789012345678901234567890" +
-                "1234567890123456789012345678901234567890" +
-                "123456789";
+        String id = "1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890" + "123456789";
 
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateId", id);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateId", id);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_029: [The validateId shall throw IllegalArgumentException if the provided string contains an illegal character.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void validateIdInvalidDotThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateId", "test&key");
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateId", "test&key");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_029: [The validateId shall throw IllegalArgumentException if the provided string contains an illegal character.] */
@@ -802,7 +787,7 @@ public class ParserUtilityTest
         String id = "-:.+%_#*?!(),=@;$\'";
 
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"validateId", id);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateId", id);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_035: [The mapToJsonElement shall serialize the provided map into a JsonElement.] */
@@ -820,7 +805,7 @@ public class ParserUtilityTest
         };
 
         // act
-        JsonElement json = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"mapToJsonElement", map);
+        JsonElement json = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "mapToJsonElement", map);
 
         // assert
         Helpers.assertJson(json.toString(), "{\"key1\":\"value1\",\"key2\":10,\"key3\":true}");
@@ -841,7 +826,7 @@ public class ParserUtilityTest
         };
 
         // act
-        JsonElement json = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"mapToJsonElement", map);
+        JsonElement json = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "mapToJsonElement", map);
 
         // assert
         Helpers.assertJson(json.toString(), "{\"key1\":\"value1\",\"key2\":null,\"key3\":\"value3\"}");
@@ -871,7 +856,7 @@ public class ParserUtilityTest
         };
 
         // act
-        JsonElement json = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"mapToJsonElement", map);
+        JsonElement json = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "mapToJsonElement", map);
 
         // assert
         Helpers.assertJson(json.toString(), "{\"key1\":\"value1\",\"key2\":{\"ikey1\":\"value1\",\"ikey2\":10,\"ikey3\":false},\"key3\":\"value3\"}");
@@ -883,38 +868,51 @@ public class ParserUtilityTest
     {
         // arrange
         Map<String, Object> map = new HashMap<>();
-        map.put("tag1", new HashMap<String, Object>(){{ put("Key1", "value1"); put("Key2", 1234); put("Key3", "value3"); }});
-        map.put("tag2", new HashMap<String, Object>(){{ put("Key1", "value1"); put("Key2", "value5"); put("Key4", false); }});
-        map.put("one",
-                new HashMap<String, Object>(){{ put("two",
-                        new HashMap<String, Object>(){{ put("three",
-                                new HashMap<String, Object>(){{ put("four",
-                                        new HashMap<String, Object>(){{ put("five",
-                                                new HashMap<String, Object>(){{ put("tagKey", "value");
-                                                }});
-                                        }});
-                                }});
+        map.put("tag1", new HashMap<String, Object>()
+        {{
+            put("Key1", "value1");
+            put("Key2", 1234);
+            put("Key3", "value3");
+        }});
+        map.put("tag2", new HashMap<String, Object>()
+        {{
+            put("Key1", "value1");
+            put("Key2", "value5");
+            put("Key4", false);
+        }});
+        map.put("one", new HashMap<String, Object>()
+        {{
+            put("two", new HashMap<String, Object>()
+            {{
+                put("three", new HashMap<String, Object>()
+                {{
+                    put("four", new HashMap<String, Object>()
+                    {{
+                        put("five", new HashMap<String, Object>()
+                        {{
+                            put("tagKey", "value");
                         }});
+                    }});
                 }});
+            }});
+        }});
 
         // act
-        JsonElement json = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"mapToJsonElement", map);
+        JsonElement json = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "mapToJsonElement", map);
 
         // assert
-        Helpers.assertJson(json.toString(), "{\"tag1\":{\"Key2\":1234,\"Key1\":\"value1\",\"Key3\":\"value3\"}," +
-                "\"one\":{\"two\":{\"three\":{\"four\":{\"five\":{\"tagKey\":\"value\"}}}}}," +
-                "\"tag2\":{\"Key2\":\"value5\",\"Key1\":\"value1\",\"Key4\":false}}");
+        Helpers.assertJson(json.toString(), "{\"tag1\":{\"Key2\":1234,\"Key1\":\"value1\",\"Key3\":\"value3\"}," + "\"one\":{\"two\":{\"three\":{\"four\":{\"five\":{\"tagKey\":\"value\"}}}}}," + "\"tag2\":{\"Key2\":\"value5\",\"Key1\":\"value1\",\"Key4\":false}}");
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_039: [If the map is null, the mapToJsonElement shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void mapToJsonElementNullMapSucceed() throws ClassNotFoundException
     {
         // arrange
         Map<String, Object> map = null;
 
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"mapToJsonElement", new Class[]{Map.class}, map);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "mapToJsonElement", new Class[]{Map.class}, map);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_038: [If the map is empty or null, the mapToJsonElement shall return a empty JsonElement.] */
@@ -925,14 +923,14 @@ public class ParserUtilityTest
         Map<String, Object> map = new HashMap<>();
 
         // act
-        JsonElement json = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"),"mapToJsonElement", map);
+        JsonElement json = Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "mapToJsonElement", map);
 
         // assert
         Helpers.assertJson(json.toString(), "{}");
     }
 
     //Tests_SRS_PARSER_UTILITY_21_042: [If the provided date is null, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getSimpleDateStringFromDateGivenNullDateThrows()
     {
         //act

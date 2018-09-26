@@ -15,12 +15,12 @@ import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-/** 
+/**
  * Grants device access to an Provisioning for the specified amount of time.
  */
 public final class ProvisioningSasToken
 {
-    private static final long TOKEN_VALID_SECS = 365*24*60*60;
+    private static final long TOKEN_VALID_SECS = 365 * 24 * 60 * 60;
     private static final long ONE_SECOND_IN_MILLISECONDS = 1000;
 
     /**
@@ -67,7 +67,7 @@ public final class ProvisioningSasToken
         this.keyValue = provisioningConnectionString.getSharedAccessKey();
         this.keyName = provisioningConnectionString.getSharedAccessKeyName();
         this.expiryTime = buildExpiresOn();
-        this.token =  buildToken();
+        this.token = buildToken();
     }
 
     /**
@@ -98,8 +98,7 @@ public final class ProvisioningSasToken
             // Compute the hmac on input data bytes
             byte[] rawHmac = mac.doFinal(toSign.getBytes("UTF-8"));
             // Convert raw bytes to Hex
-            String signature = URLEncoder.encode(
-                    Base64.encodeBase64StringLocal(rawHmac), "UTF-8");
+            String signature = URLEncoder.encode(Base64.encodeBase64StringLocal(rawHmac), "UTF-8");
 
             // Codes_SRS_PROVISIONING_SERVICE_SASTOKEN_12_006: [The constructor shall concatenate the target uri, the signature, the expiry time and the key name using the format: "SharedAccessSignature sr=%s&sig=%s&se=%s&skn=%s"]
             return String.format(TOKEN_FORMAT, targetUri, signature, this.expiryTime, this.keyName);

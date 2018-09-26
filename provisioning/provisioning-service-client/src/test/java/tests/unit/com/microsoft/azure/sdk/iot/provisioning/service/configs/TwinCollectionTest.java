@@ -45,58 +45,9 @@ public class TwinCollectionTest
         }
     };
 
-    private static final String JSON_SAMPLE =
-            "    {  \n" +
-            "      \"Brand\":\"NiceCar\",\n" +
-            "      \"MaxSpeed\":{  \n" +
-            "        \"Value\":500,\n" +
-            "        \"NewValue\":300,\n" +
-            "        \"Inner1\":{" +
-            "          \"Inner2\":\"FinalInnerValue\"" +
-            "        }\n" +
-            "      }\n" +
-            "    }\n";
+    private static final String JSON_SAMPLE = "    {  \n" + "      \"Brand\":\"NiceCar\",\n" + "      \"MaxSpeed\":{  \n" + "        \"Value\":500,\n" + "        \"NewValue\":300,\n" + "        \"Inner1\":{" + "          \"Inner2\":\"FinalInnerValue\"" + "        }\n" + "      }\n" + "    }\n";
 
-    private static final String JSON_FULL_SAMPLE =
-        "    {  \n" +
-        "      \"Brand\":\"NiceCar\",\n" +
-        "      \"MaxSpeed\":{  \n" +
-        "        \"Value\":500,\n" +
-        "        \"NewValue\":300,\n" +
-        "        \"Inner1\":{" +
-        "          \"Inner2\":\"FinalInnerValue\"" +
-        "        }\n" +
-        "      },\n" +
-        "      \"$metadata\":{  \n" +
-        "        \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-        "        \"$lastUpdatedVersion\":1,\n" +
-        "        \"Brand\":{" +
-        "          \"$lastUpdated\":\"2017-08-09T02:07:44.238Z\",\n" +
-        "          \"$lastUpdatedVersion\":2" +
-        "        },\n" +
-        "        \"MaxSpeed\":{  \n" +
-        "          \"$lastUpdated\":\"2017-10-21T02:07:44.238Z\",\n" +
-        "          \"$lastUpdatedVersion\":3,\n" +
-        "          \"Value\":{  \n" +
-        "            \"$lastUpdated\":\"2017-11-21T02:07:44.238Z\",\n" +
-        "            \"$lastUpdatedVersion\":4\n" +
-        "          },\n" +
-        "          \"NewValue\":{  \n" +
-        "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-        "            \"$lastUpdatedVersion\":5\n" +
-        "          },\n" +
-        "          \"Inner1\":{  \n" +
-        "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-        "            \"$lastUpdatedVersion\":6,\n" +
-        "            \"Inner2\":{  \n" +
-        "              \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-        "              \"$lastUpdatedVersion\":7\n" +
-        "            }\n" +
-        "          }\n" +
-        "        }\n" +
-        "      },\n" +
-        "      \"$version\":" + VERSION + "\n" +
-        "    }\n";
+    private static final String JSON_FULL_SAMPLE = "    {  \n" + "      \"Brand\":\"NiceCar\",\n" + "      \"MaxSpeed\":{  \n" + "        \"Value\":500,\n" + "        \"NewValue\":300,\n" + "        \"Inner1\":{" + "          \"Inner2\":\"FinalInnerValue\"" + "        }\n" + "      },\n" + "      \"$metadata\":{  \n" + "        \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "        \"$lastUpdatedVersion\":1,\n" + "        \"Brand\":{" + "          \"$lastUpdated\":\"2017-08-09T02:07:44.238Z\",\n" + "          \"$lastUpdatedVersion\":2" + "        },\n" + "        \"MaxSpeed\":{  \n" + "          \"$lastUpdated\":\"2017-10-21T02:07:44.238Z\",\n" + "          \"$lastUpdatedVersion\":3,\n" + "          \"Value\":{  \n" + "            \"$lastUpdated\":\"2017-11-21T02:07:44.238Z\",\n" + "            \"$lastUpdatedVersion\":4\n" + "          },\n" + "          \"NewValue\":{  \n" + "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "            \"$lastUpdatedVersion\":5\n" + "          },\n" + "          \"Inner1\":{  \n" + "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "            \"$lastUpdatedVersion\":6,\n" + "            \"Inner2\":{  \n" + "              \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "              \"$lastUpdatedVersion\":7\n" + "            }\n" + "          }\n" + "        }\n" + "      },\n" + "      \"$version\":" + VERSION + "\n" + "    }\n";
 
     /* SRS_TWIN_COLLECTION_21_001: [The constructor shall create a new instance of the super class.] */
     @Test
@@ -145,6 +96,7 @@ public class TwinCollectionTest
         final class MockedTwinCollection extends TwinCollection
         {
             private Map<? extends String, ?> mockedMap;
+
             private MockedTwinCollection(Map<? extends String, Object> map)
             {
                 super(map);
@@ -165,7 +117,7 @@ public class TwinCollectionTest
     }
 
     /* SRS_TWIN_COLLECTION_21_004: [The putAll shall throw IllegalArgumentException if the provided Map is null, empty or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void putAllThrowsOnNull()
     {
         // arrange
@@ -178,7 +130,7 @@ public class TwinCollectionTest
     }
 
     /* SRS_TWIN_COLLECTION_21_004: [The putAll shall throw IllegalArgumentException if the provided Map is null, empty or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void putAllThrowsOnEmptyMap()
     {
         // arrange
@@ -191,7 +143,7 @@ public class TwinCollectionTest
     }
 
     /* SRS_TWIN_COLLECTION_21_004: [The putAll shall throw IllegalArgumentException if the provided Map is null, empty or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void putAllThrowsOnIllegal6InnerMaps()
     {
         // arrange
@@ -294,7 +246,7 @@ public class TwinCollectionTest
         TwinCollection twinCollection = new TwinCollection(rawMap);
 
         // act
-        String lastBrand = (String)twinCollection.put(VALID_KEY_NAME, "NewNiceCar");
+        String lastBrand = (String) twinCollection.put(VALID_KEY_NAME, "NewNiceCar");
 
         // assert
         assertEquals(VALID_VALUE_NAME, lastBrand);
@@ -367,7 +319,7 @@ public class TwinCollectionTest
     }
 
     /* SRS_TWIN_COLLECTION_21_009: [The put shall throw IllegalArgumentException if the final collection contains more that 5 levels.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void putThrowsOn6InnerMaps()
     {
         // arrange
@@ -414,7 +366,7 @@ public class TwinCollectionTest
     }
 
     /* SRS_TWIN_COLLECTION_21_010: [The put shall throw IllegalArgumentException if the provided key is null, empty, or invalid, or if the value is invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void putThrowsOnKeyNull()
     {
         // arrange
@@ -427,7 +379,7 @@ public class TwinCollectionTest
     }
 
     /* SRS_TWIN_COLLECTION_21_010: [The put shall throw IllegalArgumentException if the provided key is null, empty, or invalid, or if the value is invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void putThrowsOnKeyEmpty()
     {
         // arrange
@@ -440,7 +392,7 @@ public class TwinCollectionTest
     }
 
     /* SRS_TWIN_COLLECTION_21_010: [The put shall throw IllegalArgumentException if the provided key is null, empty, or invalid, or if the value is invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void putThrowsOnKeyInvalid()
     {
         // arrange
@@ -453,20 +405,20 @@ public class TwinCollectionTest
     }
 
     /* SRS_TWIN_COLLECTION_21_010: [The put shall throw IllegalArgumentException if the provided key is null, empty, or invalid, or if the value is invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void putThrowsOnValueInvalidArray()
     {
         // arrange
         TwinCollection twinCollection = new TwinCollection();
 
         // act
-        twinCollection.put(VALID_KEY_NAME, new int[]{1,2,3});
+        twinCollection.put(VALID_KEY_NAME, new int[]{1, 2, 3});
 
         // assert
     }
 
     /* SRS_TWIN_COLLECTION_21_010: [The put shall throw IllegalArgumentException if the provided key is null, empty, or invalid, or if the value is invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void putThrowsOnValueInvalidType()
     {
         // arrange
@@ -508,11 +460,11 @@ public class TwinCollectionTest
         TwinCollection twinCollection = Deencapsulation.invoke(TwinCollection.class, "createFromRawCollection", rawMap);
 
         // assert
-        assertEquals(Deencapsulation.getField(twinCollection, "version") ,VERSION);
+        assertEquals(Deencapsulation.getField(twinCollection, "version"), VERSION);
     }
 
     /* SRS_TWIN_COLLECTION_21_013: [The constructor shall throw IllegalArgumentException if the entity contains the key `$version` and its value is not a integer.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor2LevelsWithInvalidVersionFailed()
     {
         // arrange
@@ -541,21 +493,21 @@ public class TwinCollectionTest
 
         // act(getters) - assert
         assertEquals(VERSION, twinCollection.getVersion());
-        assertEquals(1L, (long)twinCollection.getTwinMetadata().getLastUpdatedVersion());
+        assertEquals(1L, (long) twinCollection.getTwinMetadata().getLastUpdatedVersion());
 
         assertEquals(VALID_VALUE_NAME, twinCollection.get(VALID_KEY_NAME));
         Helpers.assertDateWithError(twinCollection.getTwinMetadata(VALID_KEY_NAME).getLastUpdated(), "2017-08-09T02:07:44.238Z");
-        assertEquals(2L, (long)twinCollection.getTwinMetadata(VALID_KEY_NAME).getLastUpdatedVersion());
+        assertEquals(2L, (long) twinCollection.getTwinMetadata(VALID_KEY_NAME).getLastUpdatedVersion());
 
         Helpers.assertDateWithError(twinCollection.getTwinMetadata("MaxSpeed").getLastUpdated(), "2017-10-21T02:07:44.238Z");
-        assertEquals(3L, (long)twinCollection.getTwinMetadata("MaxSpeed").getLastUpdatedVersion());
+        assertEquals(3L, (long) twinCollection.getTwinMetadata("MaxSpeed").getLastUpdatedVersion());
         TwinCollection innerMaxSpeed = (TwinCollection) twinCollection.get("MaxSpeed");
 
-        assertEquals(3L, (long)innerMaxSpeed.getTwinMetadata().getLastUpdatedVersion());
+        assertEquals(3L, (long) innerMaxSpeed.getTwinMetadata().getLastUpdatedVersion());
 
         assertEquals(500.0, innerMaxSpeed.get("Value"));
         Helpers.assertDateWithError(innerMaxSpeed.getTwinMetadata("Value").getLastUpdated(), "2017-11-21T02:07:44.238Z");
-        assertEquals(4L, (long)innerMaxSpeed.getTwinMetadata("Value").getLastUpdatedVersion());
+        assertEquals(4L, (long) innerMaxSpeed.getTwinMetadata("Value").getLastUpdatedVersion());
     }
 
     /* SRS_TWIN_COLLECTION_21_014: [If the entity contains the key `$metadata`, the constructor shall create a TwinMetadata with the value of this entity.] */
@@ -563,17 +515,7 @@ public class TwinCollectionTest
     public void constructorTwinCollectionWithoutBaseMetadataSucceed()
     {
         // arrange
-        final String inconsistentJson =
-                "    {  \n" +
-                "      \"Brand\":\"NiceCar\",\n" +
-                "      \"$metadata\":{  \n" +
-                "        \"Brand\":{" +
-                "          \"$lastUpdated\":\"2017-08-09T02:07:44.238Z\",\n" +
-                "          \"$lastUpdatedVersion\":2" +
-                "        }\n" +
-                "      },\n" +
-                "      \"$version\":" + VERSION + "\n" +
-                "    }\n";
+        final String inconsistentJson = "    {  \n" + "      \"Brand\":\"NiceCar\",\n" + "      \"$metadata\":{  \n" + "        \"Brand\":{" + "          \"$lastUpdated\":\"2017-08-09T02:07:44.238Z\",\n" + "          \"$lastUpdatedVersion\":2" + "        }\n" + "      },\n" + "      \"$version\":" + VERSION + "\n" + "    }\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         TwinCollection rawMap = gson.fromJson(inconsistentJson, TwinCollection.class);
 
@@ -586,54 +528,15 @@ public class TwinCollectionTest
 
         assertEquals(VALID_VALUE_NAME, twinCollection.get(VALID_KEY_NAME));
         Helpers.assertDateWithError(twinCollection.getTwinMetadata(VALID_KEY_NAME).getLastUpdated(), "2017-08-09T02:07:44.238Z");
-        assertEquals(2L, (long)twinCollection.getTwinMetadata(VALID_KEY_NAME).getLastUpdatedVersion());
+        assertEquals(2L, (long) twinCollection.getTwinMetadata(VALID_KEY_NAME).getLastUpdatedVersion());
     }
 
     /* SRS_TWIN_COLLECTION_21_024: [The constructor shall throw IllegalArgumentException if the metadata is inconsistent with the TwinCollection.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorInconsistentMetadataFailed()
     {
         // arrange
-        final String inconsistentJson =
-                "    {  \n" +
-                "      \"Brand\":\"NiceCar\",\n" +
-                "      \"MaxSpeed\":{  \n" +
-                "        \"Value\":500,\n" +
-                "        \"NewValue\":300,\n" +
-                "        \"Inner1\":{" +
-                "          \"Inner2\":\"FinalInnerValue\"" +
-                "        }\n" +
-                "      },\n" +
-                "      \"$metadata\":{  \n" +
-                "        \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-                "        \"$lastUpdatedVersion\":1,\n" +
-                "        \"Brand\":{" +
-                "          \"$lastUpdated\":\"2017-08-09T02:07:44.238Z\",\n" +
-                "          \"$lastUpdatedVersion\":2" +
-                "        },\n" +
-                "        \"MaxSpeed\":{  \n" +
-                "          \"$lastUpdated\":\"2017-10-21T02:07:44.238Z\",\n" +
-                "          \"$lastUpdatedVersion\":3,\n" +
-                "          \"Value\":{  \n" +
-                "            \"$lastUpdated\":\"2017-11-21T02:07:44.238Z\",\n" +
-                "            \"$lastUpdatedVersion\":4\n" +
-                "          },\n" +
-                "          \"WrongEntity\":{  \n" +
-                "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-                "            \"$lastUpdatedVersion\":5\n" +
-                "          },\n" +
-                "          \"Inner1\":{  \n" +
-                "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-                "            \"$lastUpdatedVersion\":6,\n" +
-                "            \"Inner2\":{  \n" +
-                "              \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-                "              \"$lastUpdatedVersion\":7\n" +
-                "            }\n" +
-                "          }\n" +
-                "        }\n" +
-                "      },\n" +
-                "      \"$version\":" + VERSION + "\n" +
-                "    }\n";
+        final String inconsistentJson = "    {  \n" + "      \"Brand\":\"NiceCar\",\n" + "      \"MaxSpeed\":{  \n" + "        \"Value\":500,\n" + "        \"NewValue\":300,\n" + "        \"Inner1\":{" + "          \"Inner2\":\"FinalInnerValue\"" + "        }\n" + "      },\n" + "      \"$metadata\":{  \n" + "        \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "        \"$lastUpdatedVersion\":1,\n" + "        \"Brand\":{" + "          \"$lastUpdated\":\"2017-08-09T02:07:44.238Z\",\n" + "          \"$lastUpdatedVersion\":2" + "        },\n" + "        \"MaxSpeed\":{  \n" + "          \"$lastUpdated\":\"2017-10-21T02:07:44.238Z\",\n" + "          \"$lastUpdatedVersion\":3,\n" + "          \"Value\":{  \n" + "            \"$lastUpdated\":\"2017-11-21T02:07:44.238Z\",\n" + "            \"$lastUpdatedVersion\":4\n" + "          },\n" + "          \"WrongEntity\":{  \n" + "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "            \"$lastUpdatedVersion\":5\n" + "          },\n" + "          \"Inner1\":{  \n" + "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "            \"$lastUpdatedVersion\":6,\n" + "            \"Inner2\":{  \n" + "              \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "              \"$lastUpdatedVersion\":7\n" + "            }\n" + "          }\n" + "        }\n" + "      },\n" + "      \"$version\":" + VERSION + "\n" + "    }\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         TwinCollection rawMap = gson.fromJson(inconsistentJson, TwinCollection.class);
 
@@ -644,7 +547,7 @@ public class TwinCollectionTest
     }
 
     /* SRS_TWIN_COLLECTION_21_015: [The constructor shall throw IllegalArgumentException if the Twin collection contains more than 5 levels.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnMoreThan5Levels()
     {
         // arrange

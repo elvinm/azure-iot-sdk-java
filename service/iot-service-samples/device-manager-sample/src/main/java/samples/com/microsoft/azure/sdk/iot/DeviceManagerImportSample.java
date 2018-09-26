@@ -71,11 +71,10 @@ public class DeviceManagerImportSample
         JobProperties importJob = registryManager.importDevices(containerSasUri, containerSasUri);
 
         // Waiting for the import job to complete
-        while(true)
+        while (true)
         {
             importJob = registryManager.getJob(importJob.getJobId());
-            if (importJob.getStatus() == JobProperties.JobStatus.COMPLETED
-                    || importJob.getStatus() == JobProperties.JobStatus.FAILED)
+            if (importJob.getStatus() == JobProperties.JobStatus.COMPLETED || importJob.getStatus() == JobProperties.JobStatus.FAILED)
             {
                 break;
             }
@@ -93,7 +92,7 @@ public class DeviceManagerImportSample
         }
 
         //Cleaning up the blob
-        for(ListBlobItem blobItem : container.listBlobs())
+        for (ListBlobItem blobItem : container.listBlobs())
         {
             if (blobItem instanceof CloudBlob)
             {

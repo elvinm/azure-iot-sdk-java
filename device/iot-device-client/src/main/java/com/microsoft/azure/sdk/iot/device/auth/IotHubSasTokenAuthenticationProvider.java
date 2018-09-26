@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package com.microsoft.azure.sdk.iot.device.auth;
 
@@ -12,6 +12,9 @@ import java.nio.charset.StandardCharsets;
 
 public abstract class IotHubSasTokenAuthenticationProvider extends IotHubAuthenticationProvider
 {
+    protected static final long MILLISECONDS_PER_SECOND = 1000L;
+    protected static final long MINIMUM_EXPIRATION_TIME_OFFSET = 1L;
+    protected static final String ENCODING_FORMAT_NAME = StandardCharsets.UTF_8.displayName();
     /**
      * The number of seconds after which the generated SAS token for a message
      * will become invalid. We also use the expiry time, which is computed as
@@ -19,21 +22,11 @@ public abstract class IotHubSasTokenAuthenticationProvider extends IotHubAuthent
      * SAS token.
      */
     protected long tokenValidSecs = 3600;
-
     /**
      * The percentage of a sas token's life that will happen before it should be renewed. Between 1 and 100
      */
     protected int timeBufferPercentage = 85;
-
-    protected static final long MILLISECONDS_PER_SECOND = 1000L;
-    protected static final long MINIMUM_EXPIRATION_TIME_OFFSET = 1L;
-
-    protected static final String ENCODING_FORMAT_NAME = StandardCharsets.UTF_8.displayName();
-
     protected IotHubSasToken sasToken;
-
-    public abstract boolean canRefreshToken();
-    public abstract String getRenewedSasToken() throws IOException, TransportException;
 
     public IotHubSasTokenAuthenticationProvider(String hostname, String gatewayHostname, String deviceId, String moduleId)
     {
@@ -58,16 +51,9 @@ public abstract class IotHubSasTokenAuthenticationProvider extends IotHubAuthent
         this.timeBufferPercentage = timeBufferPercentage;
     }
 
-    public void setTokenValidSecs(long tokenValidSecs)
-    {
-        if (tokenValidSecs < 1)
-        {
-            throw new IllegalArgumentException("tokens must live for more than 1 second");
-        }
+    public abstract boolean canRefreshToken();
 
-        //Codes_SRS_IOTHUBSASTOKENAUTHENTICATION_34_012: [This function shall save the provided tokenValidSecs as the number of seconds that created sas tokens are valid for.]
-        this.tokenValidSecs = tokenValidSecs;
-    }
+    public abstract String getRenewedSasToken() throws IOException, TransportException;
 
     public boolean isRenewalNecessary()
     {
@@ -101,6 +87,17 @@ public abstract class IotHubSasTokenAuthenticationProvider extends IotHubAuthent
     public long getTokenValidSecs()
     {
         return this.tokenValidSecs;
+    }
+
+    public void setTokenValidSecs(long tokenValidSecs)
+    {
+        if (tokenValidSecs < 1)
+        {
+            throw new IllegalArgumentException("tokens must live for more than 1 second");
+        }
+
+        //Codes_SRS_IOTHUBSASTOKENAUTHENTICATION_34_012: [This function shall save the provided tokenValidSecs as the number of seconds that created sas tokens are valid for.]
+        this.tokenValidSecs = tokenValidSecs;
     }
 
     long getExpiryTimeInSeconds()

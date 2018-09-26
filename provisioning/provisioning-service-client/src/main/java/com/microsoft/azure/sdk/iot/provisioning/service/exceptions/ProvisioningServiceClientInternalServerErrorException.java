@@ -7,7 +7,7 @@ package com.microsoft.azure.sdk.iot.provisioning.service.exceptions;
 
 /**
  * Create internal server error exception
- *
+ * <p>
  * <p> An internal error occurred.
  * <p> HTTP status code 500.
  */

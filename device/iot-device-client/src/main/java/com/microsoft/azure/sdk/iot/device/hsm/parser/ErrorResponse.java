@@ -19,18 +19,19 @@ public class ErrorResponse
     @SerializedName(MESSAGE_NAME)
     private String message;
 
-    public static ErrorResponse fromJson(String json)
-    {
-        return new GsonBuilder().create().fromJson(json, ErrorResponse.class);
-    }
-
     public ErrorResponse()
     {
         //empty constructor for gson
     }
 
+    public static ErrorResponse fromJson(String json)
+    {
+        return new GsonBuilder().create().fromJson(json, ErrorResponse.class);
+    }
+
     /**
      * Get the message
+     *
      * @return the message
      */
     public String getMessage()

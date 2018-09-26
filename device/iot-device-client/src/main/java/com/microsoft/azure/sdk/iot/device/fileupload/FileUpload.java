@@ -22,24 +22,23 @@ import java.util.concurrent.ScheduledExecutorService;
 public final class FileUpload
 {
     private static final int MAX_UPLOAD_PARALLEL = 10;
-
-    private HttpsTransportManager httpsTransportManager;
     private static CustomLogger logger;
+    private static Queue<FileUploadInProgress> fileUploadInProgressesSet;
+    private HttpsTransportManager httpsTransportManager;
     private ScheduledExecutorService taskScheduler;
     private FileUploadStatusCallBack fileUploadStatusCallBack;
-    private static Queue<FileUploadInProgress> fileUploadInProgressesSet;
 
     /**
      * CONSTRUCTOR
      *
      * @param config is the set of device client configurations.
      * @throws IllegalArgumentException if one of the parameters is null.
-     * @throws IOException if cannot create the artifacts to control the file upload.
+     * @throws IOException              if cannot create the artifacts to control the file upload.
      */
     public FileUpload(DeviceClientConfig config) throws IllegalArgumentException, IOException
     {
         /* Codes_SRS_FILEUPLOAD_21_001: [If the provided `config` is null, the constructor shall throw IllegalArgumentException.] */
-        if(config == null)
+        if (config == null)
         {
             throw new IllegalArgumentException("config is null");
         }
@@ -77,44 +76,41 @@ public final class FileUpload
      * When it is completed, the background thread will trigger the
      * callback with the upload status.
      *
-     * @param blobName is the name of the file in the container.
-     * @param inputStream is the input stream.
-     * @param streamLength is the stream length.
-     * @param statusCallback is the callback to notify that the upload is completed (with status).
+     * @param blobName              is the name of the file in the container.
+     * @param inputStream           is the input stream.
+     * @param streamLength          is the stream length.
+     * @param statusCallback        is the callback to notify that the upload is completed (with status).
      * @param statusCallbackContext is the context of the callback, allowing multiple uploads in parallel.
      * @throws IllegalArgumentException if one of the parameters is invalid.
-     *              blobName is {@code null} or empty,
-     *              inputStream is {@code null} or not available,
-     *              streamLength is negative,
-     *              statusCallback is {@code null}
-     * @throws IOException if an I/O error occurs in the inputStream.
+     *                                  blobName is {@code null} or empty,
+     *                                  inputStream is {@code null} or not available,
+     *                                  streamLength is negative,
+     *                                  statusCallback is {@code null}
+     * @throws IOException              if an I/O error occurs in the inputStream.
      */
-    public synchronized void uploadToBlobAsync(
-            String blobName, InputStream inputStream, long streamLength,
-            IotHubEventCallback statusCallback, Object statusCallbackContext)
-            throws IllegalArgumentException, IOException
+    public synchronized void uploadToBlobAsync(String blobName, InputStream inputStream, long streamLength, IotHubEventCallback statusCallback, Object statusCallbackContext) throws IllegalArgumentException, IOException
     {
         /* Codes_SRS_FILEUPLOAD_21_005: [If the `blobName` is null or empty, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-        if((blobName == null) || blobName.isEmpty())
+        if ((blobName == null) || blobName.isEmpty())
         {
             throw new IllegalArgumentException("blobName is null or empty");
         }
 
         /* Codes_SRS_FILEUPLOAD_21_006: [If the `inputStream` is null or not available, the uploadToBlobAsync shall throw IllegalArgumentException.] */
         /* Codes_SRS_FILEUPLOAD_21_011: [If the `inputStream` failed to do I/O, the uploadToBlobAsync shall throw IOException, threw by the InputStream class.] */
-        if((inputStream == null))
+        if ((inputStream == null))
         {
             throw new IllegalArgumentException("inputStream is null");
         }
 
         /* Codes_SRS_FILEUPLOAD_21_007: [If the `streamLength` is negative, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-        if(streamLength < 0)
+        if (streamLength < 0)
         {
             throw new IllegalArgumentException("streamLength is negative");
         }
 
         /* Codes_SRS_FILEUPLOAD_21_008: [If the `userCallback` is null, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-        if(statusCallback == null)
+        if (statusCallback == null)
         {
             throw new IllegalArgumentException("statusCallback is null");
         }
@@ -131,13 +127,33 @@ public final class FileUpload
         newUpload.setTask(taskScheduler.submit(fileUploadTask));
     }
 
+    /**
+     * Close the file upload cancelling all existing uploads and shutting down the thread pool.
+     *
+     * @throws IOException if an I/O error occurs in the inputStream.
+     */
+    public void closeNow() throws IOException
+    {
+        /* Codes_SRS_FILEUPLOAD_21_017: [The closeNow shall shutdown the thread pool by calling `shutdownNow`.] */
+        taskScheduler.shutdownNow();
+
+        /* Codes_SRS_FILEUPLOAD_21_018: [If there is pending file uploads, the closeNow shall cancel the upload, and call the `statusCallback` reporting ERROR.] */
+        for (FileUploadInProgress uploadInProgress : fileUploadInProgressesSet)
+        {
+            if (uploadInProgress.isCancelled())
+            {
+                uploadInProgress.triggerCallback(IotHubStatusCode.ERROR);
+            }
+        }
+    }
+
     private final class FileUploadStatusCallBack implements IotHubEventCallback
     {
         @Override
         public synchronized void execute(IotHubStatusCode status, Object context)
         {
             /* Codes_SRS_FILEUPLOAD_21_019: [The FileUploadStatusCallBack shall implements the `IotHubEventCallback` as result of the FileUploadTask.] */
-            if(context instanceof FileUploadInProgress)
+            if (context instanceof FileUploadInProgress)
             {
                 FileUploadInProgress uploadInProgress = (FileUploadInProgress) context;
                 /* Codes_SRS_FILEUPLOAD_21_020: [The FileUploadStatusCallBack shall call the `statusCallback` reporting the received status.] */
@@ -157,26 +173,6 @@ public final class FileUpload
             {
                 /* Codes_SRS_FILEUPLOAD_21_022: [If the received context is not type of `FileUploadInProgress`, the FileUploadStatusCallBack shall log a error and ignore the message.] */
                 logger.LogError("FileUploadStatusCallBack received callback for unknown FileUpload");
-            }
-        }
-    }
-
-    /**
-     * Close the file upload cancelling all existing uploads and shutting down the thread pool.
-     *
-     * @throws IOException if an I/O error occurs in the inputStream.
-     */
-    public void closeNow() throws IOException
-    {
-        /* Codes_SRS_FILEUPLOAD_21_017: [The closeNow shall shutdown the thread pool by calling `shutdownNow`.] */
-        taskScheduler.shutdownNow();
-
-        /* Codes_SRS_FILEUPLOAD_21_018: [If there is pending file uploads, the closeNow shall cancel the upload, and call the `statusCallback` reporting ERROR.] */
-        for (FileUploadInProgress uploadInProgress : fileUploadInProgressesSet)
-        {
-            if(uploadInProgress.isCancelled())
-            {
-                uploadInProgress.triggerCallback(IotHubStatusCode.ERROR);
             }
         }
     }

@@ -22,18 +22,26 @@ public class IotHubSasTokenHsmAuthenticationProvider extends IotHubSasTokenWithR
     SignatureProvider signatureProvider;
     String generationId;
 
+    private IotHubSasTokenHsmAuthenticationProvider(String hostname, String gatewayHostName, String deviceId, String moduleId, String generationId, String sharedAccessToken, SignatureProvider signatureProvider, int suggestedTimeToLiveSeconds, int timeBufferPercentage)
+    {
+        super(hostname, gatewayHostName, deviceId, moduleId, sharedAccessToken, suggestedTimeToLiveSeconds, timeBufferPercentage);
+        this.signatureProvider = signatureProvider;
+        this.generationId = generationId;
+    }
+
     /**
      * Constructor for a IotHubSasTokenHsmAuthenticationProvider instance
-     * @param signatureProvider the signature provider to be used when generating sas tokens
-     * @param deviceId the id of the device the module belongs to
-     * @param moduleId the id of the module to be authenticated for
-     * @param hostname the hostname of the iothub to be authenticated for. May be null if gatewayHostname is not
-     * @param gatewayHostname the gatewayHostname of the edge hub to be authenticated for. May be null if hostname is not
-     * @param generationId the generation id
+     *
+     * @param signatureProvider          the signature provider to be used when generating sas tokens
+     * @param deviceId                   the id of the device the module belongs to
+     * @param moduleId                   the id of the module to be authenticated for
+     * @param hostname                   the hostname of the iothub to be authenticated for. May be null if gatewayHostname is not
+     * @param gatewayHostname            the gatewayHostname of the edge hub to be authenticated for. May be null if hostname is not
+     * @param generationId               the generation id
      * @param suggestedTimeToLiveSeconds the time for the generated sas tokens to live for
-     * @param timeBufferPercentage the percent of the life a sas token will live before attempting to be renewed. (100 means don't renew until end of life)
+     * @param timeBufferPercentage       the percent of the life a sas token will live before attempting to be renewed. (100 means don't renew until end of life)
      * @return the created IotHubSasTokenHsmAuthenticationProvider instance
-     * @throws IOException If the Hsm unit cannot be reached
+     * @throws IOException        If the Hsm unit cannot be reached
      * @throws TransportException If the Hsm unit cannot be reached
      */
     public static IotHubSasTokenHsmAuthenticationProvider create(SignatureProvider signatureProvider, String deviceId, String moduleId, String hostname, String gatewayHostname, String generationId, int suggestedTimeToLiveSeconds, int timeBufferPercentage) throws IOException, TransportException
@@ -47,26 +55,6 @@ public class IotHubSasTokenHsmAuthenticationProvider extends IotHubSasTokenWithR
         // Codes_SRS_MODULEAUTHENTICATIONWITHHSM_34_001: [This function shall construct a sas token from the provided arguments and then return a IotHubSasTokenHsmAuthenticationProvider instance that uses that sas token.]
         IotHubSasToken sasToken = createNewSasToken(hostname, gatewayHostname, deviceId, moduleId, generationId, signatureProvider, suggestedTimeToLiveSeconds);
         return new IotHubSasTokenHsmAuthenticationProvider(hostname, gatewayHostname, deviceId, moduleId, generationId, sasToken.getSasToken(), signatureProvider, suggestedTimeToLiveSeconds, timeBufferPercentage);
-    }
-
-    /**
-     * Renew the saved sas token using the HSM unit
-     * @throws IOException If the Hsm unit cannot be reached
-     * @throws TransportException If the Hsm unit cannot be reached
-     */
-    public void refreshSasToken() throws IOException, TransportException
-    {
-        // Codes_SRS_MODULEAUTHENTICATIONWITHHSM_34_005: [This function shall create a new sas token and save it locally.]
-        this.sasToken = createNewSasToken(this.hostname, this.gatewayHostname, this.deviceId, this.moduleId, this.generationId, this.signatureProvider, this.tokenValidSecs);
-    }
-
-    /**
-     * Returns true as the Hsm can always refresh the token
-     * @return true
-     */
-    public boolean canRefreshToken()
-    {
-        return true;
     }
 
     static IotHubSasToken createNewSasToken(String hostname, String gatewayHostName, String deviceId, String moduleId, String generationId, SignatureProvider signatureProvider, long suggestedTimeToLive) throws IOException, TransportException
@@ -92,10 +80,25 @@ public class IotHubSasTokenHsmAuthenticationProvider extends IotHubSasTokenWithR
         }
     }
 
-    private IotHubSasTokenHsmAuthenticationProvider(String hostname, String gatewayHostName, String deviceId, String moduleId, String generationId, String sharedAccessToken, SignatureProvider signatureProvider, int suggestedTimeToLiveSeconds, int timeBufferPercentage)
+    /**
+     * Renew the saved sas token using the HSM unit
+     *
+     * @throws IOException        If the Hsm unit cannot be reached
+     * @throws TransportException If the Hsm unit cannot be reached
+     */
+    public void refreshSasToken() throws IOException, TransportException
     {
-        super(hostname, gatewayHostName, deviceId, moduleId, sharedAccessToken, suggestedTimeToLiveSeconds, timeBufferPercentage);
-        this.signatureProvider = signatureProvider;
-        this.generationId = generationId;
+        // Codes_SRS_MODULEAUTHENTICATIONWITHHSM_34_005: [This function shall create a new sas token and save it locally.]
+        this.sasToken = createNewSasToken(this.hostname, this.gatewayHostname, this.deviceId, this.moduleId, this.generationId, this.signatureProvider, this.tokenValidSecs);
+    }
+
+    /**
+     * Returns true as the Hsm can always refresh the token
+     *
+     * @return true
+     */
+    public boolean canRefreshToken()
+    {
+        return true;
     }
 }

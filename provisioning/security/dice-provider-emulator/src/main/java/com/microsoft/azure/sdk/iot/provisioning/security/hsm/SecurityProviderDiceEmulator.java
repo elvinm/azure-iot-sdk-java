@@ -18,24 +18,12 @@ import java.util.LinkedList;
 
 public class SecurityProviderDiceEmulator extends SecurityProviderX509
 {
+    // read this data from DICE HW after boot
+    private static final byte[] FWID = {0x11, 0x12, 0x13, 0x14, 0x05, 0x06, 0x07, 0x08, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
+    private static final byte[] SEED = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
     private final String commonNameAlias;
     private final String commonNameSigner;
     private final String commonNameRoot;
-
-    // read this data from DICE HW after boot
-    private static final byte[] FWID = {
-                                            0x11, 0x12, 0x13, 0x14, 0x05, 0x06, 0x07, 0x08,
-                                            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-                                            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-                                            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08
-                                        };
-    private static final byte[] SEED = {
-                                            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-                                            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-                                            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-                                            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08
-                                        };
-
     private RIoT.DeviceAuthBundle diceBundle;
 
     /**
@@ -49,18 +37,15 @@ public class SecurityProviderDiceEmulator extends SecurityProviderX509
         this.commonNameRoot = "microsoftriotcoreroot";
 
         //SRS_SecurityClientDiceEmulator_25_002: [ Constructor shall create a diceBundle by calling CreateDeviceAuthBundle ]
-        this.diceBundle = RIoT.CreateDeviceAuthBundle(
-                SEED,
-                FWID,
-                false,
-                commonNameRoot, commonNameSigner, commonNameAlias);
+        this.diceBundle = RIoT.CreateDeviceAuthBundle(SEED, FWID, false, commonNameRoot, commonNameSigner, commonNameAlias);
     }
 
     /**
      * Constructor to build DICE certs from the simulator
-     * @param commonNameAlias A string value for the common name of alias cert. Cannot be {@code null} or empty
+     *
+     * @param commonNameAlias  A string value for the common name of alias cert. Cannot be {@code null} or empty
      * @param commonNameSigner A string value for the common name of signer cert. Cannot be {@code null} or empty
-     * @param commonNameRoot A string value for the common name of root cert. cannot be {@code null} or empty
+     * @param commonNameRoot   A string value for the common name of root cert. cannot be {@code null} or empty
      * @throws SecurityProviderException This exception is thrown if any of the input values are invalid
      */
     public SecurityProviderDiceEmulator(String commonNameAlias, String commonNameSigner, String commonNameRoot) throws SecurityProviderException
@@ -91,15 +76,12 @@ public class SecurityProviderDiceEmulator extends SecurityProviderX509
         this.commonNameSigner = commonNameSigner;
         this.commonNameRoot = commonNameRoot;
 
-        this.diceBundle = RIoT.CreateDeviceAuthBundle(
-                SEED,
-                FWID,
-                false,
-                this.commonNameRoot, this.commonNameSigner, this.commonNameAlias);
+        this.diceBundle = RIoT.CreateDeviceAuthBundle(SEED, FWID, false, this.commonNameRoot, this.commonNameSigner, this.commonNameAlias);
     }
 
     /**
      * Getter for the common name
+     *
      * @return The common name for the root cert
      */
     @Override
@@ -111,6 +93,7 @@ public class SecurityProviderDiceEmulator extends SecurityProviderX509
 
     /**
      * Getter for the Alias certificate
+     *
      * @return Alias certificate
      */
     @Override
@@ -122,6 +105,7 @@ public class SecurityProviderDiceEmulator extends SecurityProviderX509
 
     /**
      * Getter for Alias key
+     *
      * @return Alias private key
      */
     @Override
@@ -142,6 +126,7 @@ public class SecurityProviderDiceEmulator extends SecurityProviderX509
 
     /**
      * Getter for the Alias cert in PEM format
+     *
      * @return Alias cert in PEM format
      */
     public String getAliasCertPem()
@@ -152,6 +137,7 @@ public class SecurityProviderDiceEmulator extends SecurityProviderX509
 
     /**
      * Getter for the Alias cert in PEM format
+     *
      * @return Alias cert in PEM format
      */
     public String getAliasCertPrivateKeyPem()
@@ -162,6 +148,7 @@ public class SecurityProviderDiceEmulator extends SecurityProviderX509
 
     /**
      * Getter for the Signer cert in PEM format
+     *
      * @return Signer cert in PEM format
      */
     public String getSignerCertPem()
@@ -172,6 +159,7 @@ public class SecurityProviderDiceEmulator extends SecurityProviderX509
 
     /**
      * Getter for the Root cert in PEM format
+     *
      * @return Root cert in PEM format
      */
     public String getRootCertPem()
@@ -182,6 +170,7 @@ public class SecurityProviderDiceEmulator extends SecurityProviderX509
 
     /**
      * Generates leaf certificate with the unique id as common name
+     *
      * @param uniqueId Unique ID to be used in common name. Cannot be {@code null} or empty
      * @return A PEM formatted leaf cert with unique ID as common name
      */
@@ -195,11 +184,7 @@ public class SecurityProviderDiceEmulator extends SecurityProviderX509
         //SRS_SecurityClientDiceEmulator_25_012: [ This method shall return Leaf certificate generated by DICE with unique ID as common Name in PEM Format ]
         RIoT.CreateLeafCert(this.diceBundle, uniqueId);
 
-        RIoT.DeviceAuthBundle diceBundleVerifier = RIoT.CreateDeviceAuthBundle(
-                SEED,
-                FWID,
-                false,
-                this.commonNameRoot, uniqueId, this.commonNameAlias);
+        RIoT.DeviceAuthBundle diceBundleVerifier = RIoT.CreateDeviceAuthBundle(SEED, FWID, false, this.commonNameRoot, uniqueId, this.commonNameAlias);
 
         return this.diceBundle.LeafCertPem;
     }

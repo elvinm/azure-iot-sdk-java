@@ -20,7 +20,7 @@ public class AmqpsDeviceAuthenticationCBSTokenRenewalTaskTest
     AmqpsSessionDeviceOperation mockAmqpsSessionDeviceOperation;
 
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONCBSTOKENRENEWALTASK_12_001: [The constructor shall throw IllegalArgumentException if the amqpsSessionDeviceOperation parameter is null.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfDeviceClientIsNull() throws IllegalArgumentException
     {
         // act

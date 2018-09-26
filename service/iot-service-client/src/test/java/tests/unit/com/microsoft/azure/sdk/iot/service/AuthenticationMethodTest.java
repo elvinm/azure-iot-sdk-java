@@ -27,8 +27,7 @@ public class AuthenticationMethodTest
         String policyName = "SharedAccessKey";
         String sharedAccessKey = "1234567890abcdefghijklmnopqrstvwxyz=";
         // Act
-        ServiceAuthenticationWithSharedAccessPolicyKey serviceAuthenticationWithSharedAccessPolicyKey =
-                new ServiceAuthenticationWithSharedAccessPolicyKey(policyName, sharedAccessKey);
+        ServiceAuthenticationWithSharedAccessPolicyKey serviceAuthenticationWithSharedAccessPolicyKey = new ServiceAuthenticationWithSharedAccessPolicyKey(policyName, sharedAccessKey);
         // Assert
         assertEquals("PolicyName mismatch!", policyName, serviceAuthenticationWithSharedAccessPolicyKey.getPolicyName());
         assertEquals("SharedAccessKey mismatch!", sharedAccessKey, serviceAuthenticationWithSharedAccessPolicyKey.getKey());
@@ -45,8 +44,7 @@ public class AuthenticationMethodTest
         String policyName = "SharedAccessKey";
         String sharedAccessToken = "1234567890abcdefghijklmnopqrstvwxyz=";
         // Act
-        ServiceAuthenticationWithSharedAccessPolicyToken serviceAuthenticationWithSharedAccessPolicyToken =
-                new ServiceAuthenticationWithSharedAccessPolicyToken(policyName, sharedAccessToken);
+        ServiceAuthenticationWithSharedAccessPolicyToken serviceAuthenticationWithSharedAccessPolicyToken = new ServiceAuthenticationWithSharedAccessPolicyToken(policyName, sharedAccessToken);
         // Assert
         assertEquals("PolicyName mismatch!", policyName, serviceAuthenticationWithSharedAccessPolicyToken.getPolicyName());
         assertEquals("SharedAccessToken mismatch!", sharedAccessToken, serviceAuthenticationWithSharedAccessPolicyToken.getToken());

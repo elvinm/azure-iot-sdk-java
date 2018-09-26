@@ -7,7 +7,7 @@ package com.microsoft.azure.sdk.iot.provisioning.service.exceptions;
 
 /**
  * Create precondition failed exception
- *
+ * <p>
  * <p> The ETag in the request does not match the ETag of the existing resource, as per RFC7232.
  * <p> HTTP status code 412.
  */

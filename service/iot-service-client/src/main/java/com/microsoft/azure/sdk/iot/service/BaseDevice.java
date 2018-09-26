@@ -18,16 +18,58 @@ public class BaseDevice
 {
     protected final String UTC_TIME_DEFAULT = "0001-01-01T00:00:00";
     protected final String OFFSET_TIME_DEFAULT = "0001-01-01T00:00:00-00:00";
+    /**
+     * Device name
+     * A case-sensitive string (up to 128 char long)
+     * of ASCII 7-bit alphanumeric chars
+     * + {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.
+     */
+    protected String deviceId;
+    /**
+     * Device generation Id
+     */
+    protected String generationId;
+
+    // Codes_SRS_SERVICE_SDK_JAVA_BASEDEVICE_12_001: [The Device class shall have the following properties: deviceId, Etag,
+    // SymmetricKey, ConnectionState, ConnectionStateUpdatedTime, LastActivityTime, symmetricKey, thumbprint, authentication]
+    /**
+     * A string representing a weak ETAG version
+     * of this JSON description. This is a hash.
+     */
+    protected String eTag;
+    /**
+     * Status of the device:
+     * {"connected" | "disconnected"}
+     */
+    protected DeviceConnectionState connectionState;
+    /**
+     * Datetime of last time the connection state was updated.
+     */
+    protected String connectionStateUpdatedTime;
+    /**
+     * Datetime of last time the device authenticated, received, or sent a message.
+     */
+    protected String lastActivityTime;
+    /**
+     * Number of messages received by the device
+     */
+    protected long cloudToDeviceMessageCount;
+    /*
+     * Specifies whether this device uses a key for authentication, an X509 certificate, or something else
+     */ AuthenticationMechanism authentication;
+    /**
+     * Flip-flop helper for sending a forced update
+     */
+    private Boolean forceUpdate;
 
     /**
      * Create an BaseDevice instance using the given device name
      *
-     * @param deviceId Name of the device (used as device id)
+     * @param deviceId     Name of the device (used as device id)
      * @param symmetricKey - Device key. If parameter is null, then the key will be auto generated.
      * @throws IllegalArgumentException if deviceId is null
      */
-    protected BaseDevice(String deviceId, SymmetricKey symmetricKey)
-            throws IllegalArgumentException
+    protected BaseDevice(String deviceId, SymmetricKey symmetricKey) throws IllegalArgumentException
     {
         // Codes_SRS_SERVICE_SDK_JAVA_BASEDEVICE_12_004: [The constructor shall throw IllegalArgumentException
         // if the input string is empty or null]
@@ -57,7 +99,7 @@ public class BaseDevice
     /**
      * Create an BaseDevice instance using the given device name with the given authenticationType
      *
-     * @param deviceId Name of the device (used as device id)
+     * @param deviceId           Name of the device (used as device id)
      * @param authenticationType - The type of authentication used by this device.
      */
     protected BaseDevice(String deviceId, AuthenticationType authenticationType)
@@ -82,15 +124,85 @@ public class BaseDevice
         this.deviceId = deviceId;
     }
 
-    // Codes_SRS_SERVICE_SDK_JAVA_BASEDEVICE_12_001: [The Device class shall have the following properties: deviceId, Etag,
-    // SymmetricKey, ConnectionState, ConnectionStateUpdatedTime, LastActivityTime, symmetricKey, thumbprint, authentication]
     /**
-     * Device name
-     * A case-sensitive string (up to 128 char long)
-     * of ASCII 7-bit alphanumeric chars
-     * + {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.
+     * Retrieves information from the provided parser and saves it to this. All information on this will be overwritten.
+     *
+     * @param parser the parser to read from
+     * @throws IllegalArgumentException if the provided parser is missing the authentication field, or the deviceId field. It also shall
+     *                                  be thrown if the authentication object in the parser uses SAS authentication and is missing one of the symmetric key fields,
+     *                                  or if it uses SelfSigned authentication and is missing one of the thumbprint fields.
      */
-    protected String deviceId;
+    BaseDevice(DeviceParser parser) throws IllegalArgumentException
+    {
+        if (parser.getAuthenticationParser() == null || parser.getAuthenticationParser().getType() == null)
+        {
+            //Codes_SRS_SERVICE_SDK_JAVA_BASEDEVICE_34_015: [If the provided parser is missing a value for its authentication or its device Id, an IllegalArgumentException shall be thrown.]
+            throw new IllegalArgumentException("deviceParser must have an authentication type assigned");
+        }
+
+        if (parser.getDeviceId() == null)
+        {
+            //Codes_SRS_SERVICE_SDK_JAVA_BASEDEVICE_34_015: [If the provided parser is missing a value for its authentication or its device Id, an IllegalArgumentException shall be thrown.]
+            throw new IllegalArgumentException("deviceParser must have a deviceId assigned");
+        }
+
+        //Codes_SRS_SERVICE_SDK_JAVA_BASEDEVICE_34_014: [This constructor shall create a new Device object using the values within the provided parser.]
+        AuthenticationType authenticationType = AuthenticationType.valueOf(parser.getAuthenticationParser().getType().toString());
+
+        this.deviceId = parser.getDeviceId();
+        this.authentication = new AuthenticationMechanism(authenticationType);
+
+        this.cloudToDeviceMessageCount = parser.getCloudToDeviceMessageCount();
+        this.deviceId = parser.getDeviceId();
+        this.eTag = parser.geteTag();
+        this.generationId = parser.getGenerationId();
+
+        if (parser.getConnectionStateUpdatedTime() != null)
+        {
+            this.connectionStateUpdatedTime = ParserUtility.getDateStringFromDate(parser.getConnectionStateUpdatedTime());
+        }
+
+        if (parser.getLastActivityTime() != null)
+        {
+            this.lastActivityTime = ParserUtility.getDateStringFromDate(parser.getLastActivityTime());
+        }
+
+        if (parser.getConnectionState() != null)
+        {
+            this.connectionState = DeviceConnectionState.valueOf(parser.getConnectionState());
+        }
+
+        this.authentication = new AuthenticationMechanism(authenticationType);
+        if (authenticationType == AuthenticationType.CERTIFICATE_AUTHORITY)
+        {
+            //do nothing
+        }
+        else if (authenticationType == AuthenticationType.SELF_SIGNED)
+        {
+            if (parser.getAuthenticationParser().getThumbprint() != null && parser.getAuthenticationParser().getThumbprint().getPrimaryThumbprint() != null && parser.getAuthenticationParser().getThumbprint().getSecondaryThumbprint() != null)
+            {
+                this.setThumbprint(parser.getAuthenticationParser().getThumbprint().getPrimaryThumbprint(), parser.getAuthenticationParser().getThumbprint().getSecondaryThumbprint());
+            }
+            else
+            {
+                //Codes_SRS_SERVICE_SDK_JAVA_BASEDEVICE_34_017: [If the provided parser uses SELF_SIGNED authentication and is missing one or both thumbprint, an IllegalArgumentException shall be thrown.]
+                throw new IllegalArgumentException("AuthenticationParser object in the provided DeviceParser object is missing one or more thumbprint values");
+            }
+        }
+        else if (authenticationType == AuthenticationType.SAS)
+        {
+            if (parser.getAuthenticationParser().getSymmetricKey() != null && parser.getAuthenticationParser().getSymmetricKey().getPrimaryKey() != null && parser.getAuthenticationParser().getSymmetricKey().getSecondaryKey() != null)
+            {
+                this.getSymmetricKey().setPrimaryKey(parser.getAuthenticationParser().getSymmetricKey().getPrimaryKey());
+                this.getSymmetricKey().setSecondaryKey(parser.getAuthenticationParser().getSymmetricKey().getSecondaryKey());
+            }
+            else
+            {
+                //Codes_SRS_SERVICE_SDK_JAVA_BASEDEVICE_34_016: [If the provided parser uses SAS authentication and is missing one or both symmetric keys, an IllegalArgumentException shall be thrown.]
+                throw new IllegalArgumentException("AuthenticationParser object in the provided DeviceParser object is missing one or more symmetric keys");
+            }
+        }
+    }
 
     /**
      * Getter for device name
@@ -103,12 +215,8 @@ public class BaseDevice
     }
 
     /**
-     * Device generation Id
-     */
-    protected String generationId;
-
-    /**
      * Getter for GenerationId
+     *
      * @return The generationId string
      */
     public String getGenerationId()
@@ -118,6 +226,7 @@ public class BaseDevice
 
     /**
      * Getter for SymmetricKey object
+     *
      * @return The symmetricKey object
      */
     public SymmetricKey getSymmetricKey()
@@ -136,7 +245,7 @@ public class BaseDevice
      * @param symmetricKey symmetricKey to be set
      * @throws IllegalArgumentException if the provided symmetric key is null
      */
-    public void setSymmetricKey(SymmetricKey symmetricKey) throws  IllegalArgumentException
+    public void setSymmetricKey(SymmetricKey symmetricKey) throws IllegalArgumentException
     {
         if (symmetricKey == null)
         {
@@ -185,7 +294,8 @@ public class BaseDevice
 
     /**
      * Setter for X509 thumbprint
-     * @param primaryThumbprint the primary thumbprint to set
+     *
+     * @param primaryThumbprint   the primary thumbprint to set
      * @param secondaryThumbprint the secondary thumbprint to set
      * @throws IllegalArgumentException if primaryThumbprint or secondaryThumbprint is null or empty
      */
@@ -236,12 +346,6 @@ public class BaseDevice
     }
 
     /**
-     * A string representing a weak ETAG version
-     * of this JSON description. This is a hash.
-     */
-    protected String eTag;
-
-    /**
      * Getter for eTag
      *
      * @return The eTag string
@@ -250,12 +354,6 @@ public class BaseDevice
     {
         return eTag;
     }
-
-     /**
-     * Status of the device:
-     * {"connected" | "disconnected"}
-     */
-    protected DeviceConnectionState connectionState;
 
     /**
      * Getter for connection state
@@ -268,11 +366,6 @@ public class BaseDevice
     }
 
     /**
-     * Datetime of last time the connection state was updated.
-     */
-    protected String connectionStateUpdatedTime;
-
-    /**
      * Getter for connection state updated time
      *
      * @return The string containing the time when the connectionState parameter was updated
@@ -281,11 +374,6 @@ public class BaseDevice
     {
         return connectionStateUpdatedTime;
     }
-
-    /**
-     * Datetime of last time the device authenticated, received, or sent a message.
-     */
-    protected String lastActivityTime;
 
     /**
      * Getter for last activity time
@@ -298,11 +386,6 @@ public class BaseDevice
     }
 
     /**
-     * Number of messages received by the device
-     */
-    protected long cloudToDeviceMessageCount;
-
-    /**
      * Getter for cloud to device message count
      *
      * @return The string containing the time when the cloudToDeviceMessageCount parameter was updated
@@ -311,11 +394,6 @@ public class BaseDevice
     {
         return cloudToDeviceMessageCount;
     }
-
-    /**
-     * Flip-flop helper for sending a forced update
-     */
-    private Boolean forceUpdate;
 
     /**
      * Setter for force update boolean
@@ -333,13 +411,9 @@ public class BaseDevice
         this.forceUpdate = forceUpdate;
     }
 
-    /*
-     * Specifies whether this device uses a key for authentication, an X509 certificate, or something else
-     */
-    AuthenticationMechanism authentication;
-
     /**
      * Getter for the authentication type of this device
+     *
      * @return the authentication type
      */
     public AuthenticationType getAuthenticationType()
@@ -354,6 +428,7 @@ public class BaseDevice
 
     /**
      * Converts this into a DeviceParser object. To serialize a Device object, it must first be converted to a DeviceParser object.
+     *
      * @return the DeviceParser object that can be serialized.
      */
     DeviceParser toDeviceParser()
@@ -387,9 +462,7 @@ public class BaseDevice
         }
         else if (this.authentication.getAuthenticationType() == AuthenticationType.SAS)
         {
-            if (this.authentication.getSymmetricKey() == null
-                    || Tools.isNullOrEmpty(this.authentication.getSymmetricKey().getPrimaryKey())
-                    || Tools.isNullOrEmpty(this.authentication.getSymmetricKey().getSecondaryKey()))
+            if (this.authentication.getSymmetricKey() == null || Tools.isNullOrEmpty(this.authentication.getSymmetricKey().getPrimaryKey()) || Tools.isNullOrEmpty(this.authentication.getSymmetricKey().getSecondaryKey()))
             {
                 //Codes_SRS_SERVICE_SDK_JAVA_BASEDEVICE_34_019: [If this device uses sas authentication, but does not have a primary and secondary symmetric key saved, an IllegalStateException shall be thrown.]
                 throw new IllegalStateException("Device object using SAS authentication needs to have both primary and secondary keys");
@@ -398,90 +471,7 @@ public class BaseDevice
             deviceParser.getAuthenticationParser().setSymmetricKey(new SymmetricKeyParser(this.getPrimaryKey(), this.getSecondaryKey()));
         }
 
-        return  deviceParser;
-    }
-
-    /**
-     * Retrieves information from the provided parser and saves it to this. All information on this will be overwritten.
-     * @param parser the parser to read from
-     * @throws IllegalArgumentException if the provided parser is missing the authentication field, or the deviceId field. It also shall
-     * be thrown if the authentication object in the parser uses SAS authentication and is missing one of the symmetric key fields,
-     * or if it uses SelfSigned authentication and is missing one of the thumbprint fields.
-     */
-    BaseDevice(DeviceParser parser) throws IllegalArgumentException
-    {
-        if (parser.getAuthenticationParser() == null || parser.getAuthenticationParser().getType() == null)
-        {
-            //Codes_SRS_SERVICE_SDK_JAVA_BASEDEVICE_34_015: [If the provided parser is missing a value for its authentication or its device Id, an IllegalArgumentException shall be thrown.]
-            throw new IllegalArgumentException("deviceParser must have an authentication type assigned");
-        }
-
-        if (parser.getDeviceId() == null)
-        {
-            //Codes_SRS_SERVICE_SDK_JAVA_BASEDEVICE_34_015: [If the provided parser is missing a value for its authentication or its device Id, an IllegalArgumentException shall be thrown.]
-            throw new IllegalArgumentException("deviceParser must have a deviceId assigned");
-        }
-
-        //Codes_SRS_SERVICE_SDK_JAVA_BASEDEVICE_34_014: [This constructor shall create a new Device object using the values within the provided parser.]
-        AuthenticationType authenticationType = AuthenticationType.valueOf(parser.getAuthenticationParser().getType().toString());
-
-        this.deviceId = parser.getDeviceId();
-        this.authentication = new AuthenticationMechanism(authenticationType);
-
-        this.cloudToDeviceMessageCount = parser.getCloudToDeviceMessageCount();
-        this.deviceId = parser.getDeviceId();
-        this.eTag = parser.geteTag();
-        this.generationId = parser.getGenerationId();
-
-        if (parser.getConnectionStateUpdatedTime() != null)
-        {
-            this.connectionStateUpdatedTime = ParserUtility.getDateStringFromDate(parser.getConnectionStateUpdatedTime());
-        }
-
-        if (parser.getLastActivityTime() != null)
-        {
-            this.lastActivityTime = ParserUtility.getDateStringFromDate(parser.getLastActivityTime());
-        }
-
-        if (parser.getConnectionState() != null)
-        {
-            this.connectionState = DeviceConnectionState.valueOf(parser.getConnectionState());
-        }
-
-        this.authentication = new AuthenticationMechanism(authenticationType);
-        if (authenticationType == AuthenticationType.CERTIFICATE_AUTHORITY)
-        {
-            //do nothing
-        }
-        else if (authenticationType == AuthenticationType.SELF_SIGNED)
-        {
-            if (parser.getAuthenticationParser().getThumbprint() != null
-                    && parser.getAuthenticationParser().getThumbprint().getPrimaryThumbprint() != null
-                    && parser.getAuthenticationParser().getThumbprint().getSecondaryThumbprint() != null)
-            {
-                this.setThumbprint(parser.getAuthenticationParser().getThumbprint().getPrimaryThumbprint(), parser.getAuthenticationParser().getThumbprint().getSecondaryThumbprint());
-            }
-            else
-            {
-                //Codes_SRS_SERVICE_SDK_JAVA_BASEDEVICE_34_017: [If the provided parser uses SELF_SIGNED authentication and is missing one or both thumbprint, an IllegalArgumentException shall be thrown.]
-                throw new IllegalArgumentException("AuthenticationParser object in the provided DeviceParser object is missing one or more thumbprint values");
-            }
-        }
-        else if (authenticationType == AuthenticationType.SAS)
-        {
-            if (parser.getAuthenticationParser().getSymmetricKey() != null
-                    && parser.getAuthenticationParser().getSymmetricKey().getPrimaryKey() != null
-                    && parser.getAuthenticationParser().getSymmetricKey().getSecondaryKey() != null)
-            {
-                this.getSymmetricKey().setPrimaryKey(parser.getAuthenticationParser().getSymmetricKey().getPrimaryKey());
-                this.getSymmetricKey().setSecondaryKey(parser.getAuthenticationParser().getSymmetricKey().getSecondaryKey());
-            }
-            else
-            {
-                //Codes_SRS_SERVICE_SDK_JAVA_BASEDEVICE_34_016: [If the provided parser uses SAS authentication and is missing one or both symmetric keys, an IllegalArgumentException shall be thrown.]
-                throw new IllegalArgumentException("AuthenticationParser object in the provided DeviceParser object is missing one or more symmetric keys");
-            }
-        }
+        return deviceParser;
     }
 
     /*

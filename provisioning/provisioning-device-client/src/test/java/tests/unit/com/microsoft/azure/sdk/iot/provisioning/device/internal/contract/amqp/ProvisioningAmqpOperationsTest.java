@@ -109,7 +109,7 @@ public class ProvisioningAmqpOperationsTest
     }
 
     // SRS_ProvisioningAmqpOperations_07_002: [The constructor shall throw ProvisioningDeviceClientException if either scopeId and hostName are null or empty.]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void constructorThrowsOnNullScopeId() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -121,7 +121,7 @@ public class ProvisioningAmqpOperationsTest
     }
 
     // SRS_ProvisioningAmqpOperations_07_002: [The constructor shall throw ProvisioningDeviceClientException if either scopeId and hostName are null or empty.]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void constructorThrowsOnNullHostName() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -153,7 +153,7 @@ public class ProvisioningAmqpOperationsTest
         new NonStrictExpectations()
         {
             {
-                mockedAmqpConnection.setListener((AmqpListener)any);
+                mockedAmqpConnection.setListener((AmqpListener) any);
                 mockedAmqpConnection.open();
             }
         };
@@ -175,7 +175,7 @@ public class ProvisioningAmqpOperationsTest
     }
 
     // SRS_ProvisioningAmqpOperations_07_004: [open shall throw ProvisioningDeviceClientException if either registrationId or sslContext are null or empty.]
-    @Test (expected = ProvisioningDeviceConnectionException.class)
+    @Test(expected = ProvisioningDeviceConnectionException.class)
     public void openThrowsOnNullRegistrationId() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -188,7 +188,7 @@ public class ProvisioningAmqpOperationsTest
     }
 
     // SRS_ProvisioningAmqpOperations_07_004: [open shall throw ProvisioningDeviceClientException if either registrationId or sslContext are null or empty.]
-    @Test (expected = ProvisioningDeviceConnectionException.class)
+    @Test(expected = ProvisioningDeviceConnectionException.class)
     public void openThrowsOnEmptyRegistrationId() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -201,7 +201,7 @@ public class ProvisioningAmqpOperationsTest
     }
 
     // SRS_ProvisioningAmqpOperations_07_004: [open shall throw ProvisioningDeviceClientException if either registrationId or sslContext are null or empty.]
-    @Test (expected = ProvisioningDeviceConnectionException.class)
+    @Test(expected = ProvisioningDeviceConnectionException.class)
     public void openThrowsOnNullSSLContext() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -214,7 +214,7 @@ public class ProvisioningAmqpOperationsTest
     }
 
     // SRS_ProvisioningAmqpOperations_07_004: [open shall throw ProvisioningDeviceClientException if either registrationId or sslContext are null or empty.]
-    @Test (expected = ProvisioningDeviceConnectionException.class)
+    @Test(expected = ProvisioningDeviceConnectionException.class)
     public void openThrowsOnOpenFailure() throws ProvisioningDeviceClientException, IOException
     {
         //arrange
@@ -223,7 +223,7 @@ public class ProvisioningAmqpOperationsTest
         new NonStrictExpectations()
         {
             {
-                mockedAmqpConnection.setListener((AmqpListener)any);
+                mockedAmqpConnection.setListener((AmqpListener) any);
                 mockedAmqpConnection.open();
                 result = new Exception();
             }
@@ -243,7 +243,7 @@ public class ProvisioningAmqpOperationsTest
         new NonStrictExpectations()
         {
             {
-                mockedAmqpConnection.setListener((AmqpListener)any);
+                mockedAmqpConnection.setListener((AmqpListener) any);
                 mockedAmqpConnection.open();
             }
         };
@@ -261,7 +261,7 @@ public class ProvisioningAmqpOperationsTest
         };
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void closeThrowsIoException() throws ProvisioningDeviceClientException, IOException
     {
         //arrange
@@ -269,7 +269,7 @@ public class ProvisioningAmqpOperationsTest
         new NonStrictExpectations()
         {
             {
-                mockedAmqpConnection.setListener((AmqpListener)any);
+                mockedAmqpConnection.setListener((AmqpListener) any);
                 mockedAmqpConnection.open();
             }
         };
@@ -278,7 +278,7 @@ public class ProvisioningAmqpOperationsTest
         new NonStrictExpectations()
         {
             {
-                mockedAmqpConnection.setListener((AmqpListener)any);
+                mockedAmqpConnection.setListener((AmqpListener) any);
                 mockedAmqpConnection.close();
                 result = new IOException();
             }
@@ -300,7 +300,7 @@ public class ProvisioningAmqpOperationsTest
         new NonStrictExpectations()
         {
             {
-                mockedAmqpConnection.setListener((AmqpListener)any);
+                mockedAmqpConnection.setListener((AmqpListener) any);
                 mockedAmqpConnection.open();
             }
         };
@@ -320,7 +320,7 @@ public class ProvisioningAmqpOperationsTest
     }
 
     // SRS_ProvisioningAmqpOperations_07_015: [sendStatusMessage shall throw ProvisioningDeviceClientException if either operationId or responseCallback are null or empty.]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void sendStatusThrowsOnOperationIdNull() throws ProvisioningDeviceClientException, IOException, InterruptedException
     {
         //arrange
@@ -333,7 +333,7 @@ public class ProvisioningAmqpOperationsTest
     }
 
     // SRS_ProvisioningAmqpOperations_07_015: [sendStatusMessage shall throw ProvisioningDeviceClientException if either operationId or responseCallback are null or empty.]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void sendStatusThrowsOnOperationIdEmpty() throws ProvisioningDeviceClientException, IOException, InterruptedException
     {
         //arrange
@@ -346,7 +346,7 @@ public class ProvisioningAmqpOperationsTest
     }
 
     // SRS_ProvisioningAmqpOperations_07_015: [sendStatusMessage shall throw ProvisioningDeviceClientException if either operationId or responseCallback are null or empty.]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void sendStatusThrowsOnResponseCallbackNull() throws ProvisioningDeviceClientException, IOException, InterruptedException
     {
         //arrange
@@ -368,7 +368,7 @@ public class ProvisioningAmqpOperationsTest
         new NonStrictExpectations()
         {
             {
-                mockedAmqpConnection.setListener((AmqpListener)any);
+                mockedAmqpConnection.setListener((AmqpListener) any);
                 mockedAmqpConnection.open();
             }
         };
@@ -383,7 +383,7 @@ public class ProvisioningAmqpOperationsTest
     }
 
     // SRS_ProvisioningAmqpOperations_07_018: [This method shall throw ProvisioningDeviceClientException if any failure is encountered.]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void sendStatusMessageThrowsOnWaitLock() throws Exception
     {
         //arrange
@@ -391,7 +391,7 @@ public class ProvisioningAmqpOperationsTest
         new NonStrictExpectations()
         {
             {
-                mockedAmqpConnection.setListener((AmqpListener)any);
+                mockedAmqpConnection.setListener((AmqpListener) any);
                 mockedAmqpConnection.open();
             }
         };
@@ -417,7 +417,7 @@ public class ProvisioningAmqpOperationsTest
     }
 
     // SRS_ProvisioningAmqpOperations_07_018: [This method shall throw ProvisioningDeviceClientException if any failure is encountered.]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void sendStatusMessageThrowsOnSendAmqpMessage() throws ProvisioningDeviceClientException, IOException, InterruptedException
     {
         //arrange
@@ -446,7 +446,7 @@ public class ProvisioningAmqpOperationsTest
     }
 
     // SRS_ProvisioningAmqpOperations_07_009: [sendRegisterMessage shall throw ProvisioningDeviceClientException if either responseCallback is null.]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void sendRegisterMessageThrowsOnResponseCallbackNull() throws ProvisioningDeviceClientException, IOException, InterruptedException
     {
         //arrange
@@ -459,7 +459,7 @@ public class ProvisioningAmqpOperationsTest
     }
 
     // SRS_ProvisioningAmqpOperations_07_012: [This method shall throw ProvisioningDeviceClientException if any failure is encountered.]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void sendRegisterMessageThrowsInterrruptedException() throws Exception
     {
         //arrange
@@ -467,7 +467,7 @@ public class ProvisioningAmqpOperationsTest
         new NonStrictExpectations()
         {
             {
-                mockedAmqpConnection.setListener((AmqpListener)any);
+                mockedAmqpConnection.setListener((AmqpListener) any);
                 mockedAmqpConnection.open();
             }
         };
@@ -499,7 +499,7 @@ public class ProvisioningAmqpOperationsTest
         new NonStrictExpectations()
         {
             {
-                mockedAmqpConnection.setListener((AmqpListener)any);
+                mockedAmqpConnection.setListener((AmqpListener) any);
                 mockedAmqpConnection.open();
                 mockedAmqpConnection.isConnected();
                 result = true;

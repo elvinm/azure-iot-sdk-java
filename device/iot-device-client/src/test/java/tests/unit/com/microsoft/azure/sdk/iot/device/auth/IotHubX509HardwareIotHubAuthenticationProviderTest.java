@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package tests.unit.com.microsoft.azure.sdk.iot.device.auth;
 
@@ -29,15 +29,18 @@ import static org.junit.Assert.assertEquals;
  */
 public class IotHubX509HardwareIotHubAuthenticationProviderTest
 {
-    @Mocked SecurityProviderX509 mockSecurityProviderX509;
-    @Mocked SecurityProvider mockSecurityProvider;
-    @Mocked IotHubSSLContext mockIotHubSSLContext;
-    @Mocked SSLContext mockSSLContext;
-
     private static final String hostname = "hostname";
     private static final String gatewayHostname = "gateway";
     private static final String deviceId = "deviceId";
     private static final String moduleId = "moduleId";
+    @Mocked
+    SecurityProviderX509 mockSecurityProviderX509;
+    @Mocked
+    SecurityProvider mockSecurityProvider;
+    @Mocked
+    IotHubSSLContext mockIotHubSSLContext;
+    @Mocked
+    SSLContext mockSSLContext;
 
     //Tests_SRS_IOTHUBX509HARDWAREAUTHENTICATION_34_001: [This function shall save the provided security provider.]
     @Test
@@ -52,7 +55,7 @@ public class IotHubX509HardwareIotHubAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBX509HARDWAREAUTHENTICATION_34_002: [If the provided security provider is not an instance of SecurityProviderX509, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForInvalidSecurityProviderInstance()
     {
         //act
@@ -71,7 +74,7 @@ public class IotHubX509HardwareIotHubAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBX509AUTHENTICATION_34_033: [If this object was created using a constructor that takes an SSLContext, this function shall throw an UnsupportedOperationException.]
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void cannotSetNewDefaultCertIfConstructedWithSSLContext()
     {
         //arrange
@@ -82,7 +85,7 @@ public class IotHubX509HardwareIotHubAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBX509HARDWAREAUTHENTICATION_34_004: [If the security provider throws a SecurityProviderException while generating an SSLContext, this function shall throw an IOException.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void getSSLContextThrowsIOExceptionIfExceptionEncountered() throws SecurityProviderException, IOException, TransportException
     {
         //arrange
@@ -117,7 +120,7 @@ public class IotHubX509HardwareIotHubAuthenticationProviderTest
                 mockSecurityProviderX509.getSSLContext();
                 result = mockSSLContext;
 
-                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] { SSLContext.class }, mockSSLContext);
+                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{SSLContext.class}, mockSSLContext);
                 result = mockIotHubSSLContext;
 
                 Deencapsulation.invoke(mockIotHubSSLContext, "getSSLContext");
@@ -133,7 +136,7 @@ public class IotHubX509HardwareIotHubAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBX509HARDWAREAUTHENTICATION_34_006: [This function shall throw an UnsupportedOperationException.]
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void setPathToCertificateThrows()
     {
         //arrange
@@ -144,7 +147,7 @@ public class IotHubX509HardwareIotHubAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBX509HARDWAREAUTHENTICATION_34_007: [This function shall throw an UnsupportedOperationException.]
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void setCertificateThrows()
     {
         //arrange

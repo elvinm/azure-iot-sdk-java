@@ -21,116 +21,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class ModuleTwinSample
 {
-    private static String SAMPLE_USAGE = "The program should be called with the following args: \n"
-            + "1. [Device connection string] - String containing Hostname, Device Id, Module Id & Device Key in one of the following formats: HostName=<iothub_host_name>;deviceId=<device_id>;SharedAccessKey=<device_key>;moduleId=<module_id>\n"
-            + "2. (mqtt | amqps | amqps_ws | mqtt_ws)\n";
-
+    private static final int MAX_EVENTS_TO_REPORT = 5;
+    private static String SAMPLE_USAGE = "The program should be called with the following args: \n" + "1. [Device connection string] - String containing Hostname, Device Id, Module Id & Device Key in one of the following formats: HostName=<iothub_host_name>;deviceId=<device_id>;SharedAccessKey=<device_key>;moduleId=<module_id>\n" + "2. (mqtt | amqps | amqps_ws | mqtt_ws)\n";
     private static String SAMPLE_USAGE_WITH_WRONG_ARGS = "Expected 2 or 3 arguments but received: %d.\n" + SAMPLE_USAGE;
     private static String SAMPLE_USAGE_WITH_INVALID_PROTOCOL = "Expected argument 2 to be one of 'mqtt', 'https', 'amqps' or 'amqps_ws' but received %s\n" + SAMPLE_USAGE;
-
-    private enum LIGHTS{ ON, OFF, DISABLED }
-    private enum CAMERA{ DETECTED_BURGLAR, SAFELY_WORKING }
-    private static final int MAX_EVENTS_TO_REPORT = 5;
-
     private static AtomicBoolean Succeed = new AtomicBoolean(false);
-
-    protected static class DeviceTwinStatusCallBack implements IotHubEventCallback
-    {
-        @Override
-        public void execute(IotHubStatusCode status, Object context)
-        {
-            if((status == IotHubStatusCode.OK) || (status == IotHubStatusCode.OK_EMPTY))
-            {
-                Succeed.set(true);
-            }
-            else
-            {
-                Succeed.set(false);
-            }
-            System.out.println("IoT Hub responded to device twin operation with status " + status.name());
-        }
-    }
-
-    /*
-     * If you don't care about version, you can use the PropertyCallBack.
-     */
-    protected static class onHomeTempChange implements TwinPropertyCallBack
-    {
-        @Override
-        public void TwinPropertyCallBack(Property property, Object context)
-        {
-            System.out.println(
-                    "onHomeTempChange change " + property.getKey() +
-                            " to " + property.getValue() +
-                            ", Properties version:" + property.getVersion());
-        }
-    }
-
-    protected static class onCameraActivity implements TwinPropertyCallBack
-    {
-        @Override
-        public void TwinPropertyCallBack(Property property, Object context)
-        {
-            System.out.println(
-                    "onCameraActivity change " + property.getKey() +
-                            " to " + property.getValue() +
-                            ", Properties version:" + property.getVersion());
-        }
-    }
-
-    protected static class onProperty implements TwinPropertyCallBack
-    {
-        @Override
-        public void TwinPropertyCallBack(Property property, Object context)
-        {
-            System.out.println(
-                    "onProperty callback for " + (property.getIsReported()?"reported": "desired") +
-                            " property " + property.getKey() +
-                            " to " + property.getValue() +
-                            ", Properties version:" + property.getVersion());
-        }
-    }
-
-    protected static class IotHubConnectionStatusChangeCallbackLogger implements IotHubConnectionStatusChangeCallback
-    {
-        @Override
-        public void execute(IotHubConnectionStatus status, IotHubConnectionStatusChangeReason statusChangeReason, Throwable throwable, Object callbackContext)
-        {
-            System.out.println();
-            System.out.println("CONNECTION STATUS UPDATE: " + status);
-            System.out.println("CONNECTION STATUS REASON: " + statusChangeReason);
-            System.out.println("CONNECTION STATUS THROWABLE: " + (throwable == null ? "null" : throwable.getMessage()));
-            System.out.println();
-
-            if (throwable != null)
-            {
-                throwable.printStackTrace();
-            }
-
-            if (status == IotHubConnectionStatus.DISCONNECTED)
-            {
-                //connection was lost, and is not being re-established. Look at provided exception for
-                // how to resolve this issue. Cannot send messages until this issue is resolved, and you manually
-                // re-open the device client
-            }
-            else if (status == IotHubConnectionStatus.DISCONNECTED_RETRYING)
-            {
-                //connection was lost, but is being re-established. Can still send messages, but they won't
-                // be sent until the connection is re-established
-            }
-            else if (status == IotHubConnectionStatus.CONNECTED)
-            {
-                //Connection was successfully re-established. Can send messages.
-            }
-        }
-    }
 
     /**
      * Reports properties to IotHub, receives desired property notifications from IotHub. Default protocol is to use
      * use MQTT transport.
      *
-     * @param args 
-     * args[0] = IoT Hub connection string
+     * @param args args[0] = IoT Hub connection string
      */
     public static void main(String[] args) throws IOException, URISyntaxException, ModuleClientException
     {
@@ -178,8 +79,7 @@ public class ModuleTwinSample
         }
 
         System.out.println("Successfully read input parameters.");
-        System.out.format("Using communication protocol %s.\n",
-                protocol.name());
+        System.out.format("Using communication protocol %s.\n", protocol.name());
 
         ModuleClient client = new ModuleClient(connString, protocol);
         System.out.println("Successfully created an IoT Hub client.");
@@ -198,8 +98,7 @@ public class ModuleTwinSample
             do
             {
                 Thread.sleep(1000);
-            }
-            while(!Succeed.get());
+            } while (!Succeed.get());
 
 
             System.out.println("Subscribe to Desired properties on device Twin...");
@@ -228,20 +127,29 @@ public class ModuleTwinSample
             };
             client.sendReportedProperties(reportProperties);
 
-            for(int i = 0; i < MAX_EVENTS_TO_REPORT; i++)
+            for (int i = 0; i < MAX_EVENTS_TO_REPORT; i++)
             {
 
                 if (Math.random() % MAX_EVENTS_TO_REPORT == 3)
                 {
-                    client.sendReportedProperties(new HashSet<Property>() {{ add(new Property("HomeSecurityCamera", CAMERA.DETECTED_BURGLAR)); }});
+                    client.sendReportedProperties(new HashSet<Property>()
+                    {{
+                        add(new Property("HomeSecurityCamera", CAMERA.DETECTED_BURGLAR));
+                    }});
                 }
                 else
                 {
-                    client.sendReportedProperties(new HashSet<Property>() {{ add(new Property("HomeSecurityCamera", CAMERA.SAFELY_WORKING)); }});
+                    client.sendReportedProperties(new HashSet<Property>()
+                    {{
+                        add(new Property("HomeSecurityCamera", CAMERA.SAFELY_WORKING));
+                    }});
                 }
-                if(i == MAX_EVENTS_TO_REPORT-1)
+                if (i == MAX_EVENTS_TO_REPORT - 1)
                 {
-                    client.sendReportedProperties(new HashSet<Property>() {{ add(new Property("BedroomRoomLights", null)); }});
+                    client.sendReportedProperties(new HashSet<Property>()
+                    {{
+                        add(new Property("BedroomRoomLights", null));
+                    }});
                 }
                 System.out.println("Updating reported properties..");
             }
@@ -250,7 +158,7 @@ public class ModuleTwinSample
         }
         catch (Exception e)
         {
-            System.out.println("On exception, shutting down \n" + " Cause: " + e.getCause() + " \n" +  e.getMessage());
+            System.out.println("On exception, shutting down \n" + " Cause: " + e.getCause() + " \n" + e.getMessage());
             client.closeNow();
             System.out.println("Shutting down...");
         }
@@ -263,5 +171,96 @@ public class ModuleTwinSample
         client.closeNow();
 
         System.out.println("Shutting down...");
+    }
+
+    private enum LIGHTS
+    {
+        ON, OFF, DISABLED
+    }
+
+    private enum CAMERA
+    {
+        DETECTED_BURGLAR, SAFELY_WORKING
+    }
+
+    protected static class DeviceTwinStatusCallBack implements IotHubEventCallback
+    {
+        @Override
+        public void execute(IotHubStatusCode status, Object context)
+        {
+            if ((status == IotHubStatusCode.OK) || (status == IotHubStatusCode.OK_EMPTY))
+            {
+                Succeed.set(true);
+            }
+            else
+            {
+                Succeed.set(false);
+            }
+            System.out.println("IoT Hub responded to device twin operation with status " + status.name());
+        }
+    }
+
+    /*
+     * If you don't care about version, you can use the PropertyCallBack.
+     */
+    protected static class onHomeTempChange implements TwinPropertyCallBack
+    {
+        @Override
+        public void TwinPropertyCallBack(Property property, Object context)
+        {
+            System.out.println("onHomeTempChange change " + property.getKey() + " to " + property.getValue() + ", Properties version:" + property.getVersion());
+        }
+    }
+
+    protected static class onCameraActivity implements TwinPropertyCallBack
+    {
+        @Override
+        public void TwinPropertyCallBack(Property property, Object context)
+        {
+            System.out.println("onCameraActivity change " + property.getKey() + " to " + property.getValue() + ", Properties version:" + property.getVersion());
+        }
+    }
+
+    protected static class onProperty implements TwinPropertyCallBack
+    {
+        @Override
+        public void TwinPropertyCallBack(Property property, Object context)
+        {
+            System.out.println("onProperty callback for " + (property.getIsReported() ? "reported" : "desired") + " property " + property.getKey() + " to " + property.getValue() + ", Properties version:" + property.getVersion());
+        }
+    }
+
+    protected static class IotHubConnectionStatusChangeCallbackLogger implements IotHubConnectionStatusChangeCallback
+    {
+        @Override
+        public void execute(IotHubConnectionStatus status, IotHubConnectionStatusChangeReason statusChangeReason, Throwable throwable, Object callbackContext)
+        {
+            System.out.println();
+            System.out.println("CONNECTION STATUS UPDATE: " + status);
+            System.out.println("CONNECTION STATUS REASON: " + statusChangeReason);
+            System.out.println("CONNECTION STATUS THROWABLE: " + (throwable == null ? "null" : throwable.getMessage()));
+            System.out.println();
+
+            if (throwable != null)
+            {
+                throwable.printStackTrace();
+            }
+
+            if (status == IotHubConnectionStatus.DISCONNECTED)
+            {
+                //connection was lost, and is not being re-established. Look at provided exception for
+                // how to resolve this issue. Cannot send messages until this issue is resolved, and you manually
+                // re-open the device client
+            }
+            else if (status == IotHubConnectionStatus.DISCONNECTED_RETRYING)
+            {
+                //connection was lost, but is being re-established. Can still send messages, but they won't
+                // be sent until the connection is re-established
+            }
+            else if (status == IotHubConnectionStatus.CONNECTED)
+            {
+                //Connection was successfully re-established. Can send messages.
+            }
+        }
     }
 }

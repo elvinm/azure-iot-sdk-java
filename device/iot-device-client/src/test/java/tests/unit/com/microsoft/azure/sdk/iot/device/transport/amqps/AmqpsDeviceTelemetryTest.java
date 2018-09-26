@@ -26,10 +26,10 @@ import java.util.UUID;
 import static org.junit.Assert.*;
 
 /**
-*  Unit tests for AmqpsDeviceTelemetryTest
-* 100% methods covered
-* 98% lines covered
-*/
+ * Unit tests for AmqpsDeviceTelemetryTest
+ * 100% methods covered
+ * 98% lines covered
+ */
 public class AmqpsDeviceTelemetryTest
 {
     final String deviceId = "test-deviceId";
@@ -56,15 +56,13 @@ public class AmqpsDeviceTelemetryTest
     ProductInfo mockedProductInfo;
 
     /*
-    **Tests_SRS_AMQPSDEVICETELEMETRY_12_002: [**The constructor shall set the sender and receiver endpoint path to IoTHub specific values.**]**
-    **Tests_SRS_AMQPSDEVICETELEMETRY_12_003: [**The constructor shall concatenate a sender specific prefix to the sender link tag's current value.**]**
-    **Tests_SRS_AMQPSDEVICETELEMETRY_12_004: [**The constructor shall concatenate a receiver specific prefix to the receiver link tag's current value.**]**
-    **Tests_SRS_AMQPSDEVICETELEMETRY_12_005: [**The constructor shall insert the given deviceId argument to the sender and receiver link address.**]**
-    */
+     **Tests_SRS_AMQPSDEVICETELEMETRY_12_002: [**The constructor shall set the sender and receiver endpoint path to IoTHub specific values.**]**
+     **Tests_SRS_AMQPSDEVICETELEMETRY_12_003: [**The constructor shall concatenate a sender specific prefix to the sender link tag's current value.**]**
+     **Tests_SRS_AMQPSDEVICETELEMETRY_12_004: [**The constructor shall concatenate a receiver specific prefix to the receiver link tag's current value.**]**
+     **Tests_SRS_AMQPSDEVICETELEMETRY_12_005: [**The constructor shall insert the given deviceId argument to the sender and receiver link address.**]**
+     */
     @Test
-    public void constructorInitializesAllMembers(
-            @Mocked final UUID mockUUID
-    )
+    public void constructorInitializesAllMembers(@Mocked final UUID mockUUID)
     {
         // arrange
         final String uuidStr = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
@@ -113,9 +111,7 @@ public class AmqpsDeviceTelemetryTest
     // Tests_SRS_AMQPSDEVICETELEMETRY_34_036: [If a moduleId is present, the constructor shall insert the given deviceId and moduleId argument to the sender and receiver link address.]
     // Tests_SRS_AMQPSDEVICETELEMETRY_34_037: [If a moduleId is present, the constructor shall add correlation ID key and <deviceId>/<moduleId> value to the amqpProperties.]
     @Test
-    public void constructorInitializesAllMembersWithModuleId(
-            @Mocked final UUID mockUUID
-    )
+    public void constructorInitializesAllMembersWithModuleId(@Mocked final UUID mockUUID)
     {
         // arrange
         final String deviceId = "deviceId";
@@ -257,8 +253,8 @@ public class AmqpsDeviceTelemetryTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICETELEMETRY_12_006: [**The function shall return an AmqpsSendReturnValue object with false and -1 if the message type is not telemetry.**]**
-    */
+     **Tests_SRS_AMQPSDEVICETELEMETRY_12_006: [**The function shall return an AmqpsSendReturnValue object with false and -1 if the message type is not telemetry.**]**
+     */
     @Test
     public void sendMessageAndGetDeliveryHashReturnsFalseIfMessageTypeIsNotDeviceTelemetry() throws IOException
     {
@@ -281,8 +277,8 @@ public class AmqpsDeviceTelemetryTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICETELEMETRY_12_007: [**The function shall call the ssuper function with the arguments and return with it's return value.**]**
-    */
+     **Tests_SRS_AMQPSDEVICETELEMETRY_12_007: [**The function shall call the ssuper function with the arguments and return with it's return value.**]**
+     */
     @Test
     public void sendMessageAndGetDeliveryHashReturnsWithSuperResult() throws IOException
     {
@@ -296,8 +292,8 @@ public class AmqpsDeviceTelemetryTest
 
         //act
         AmqpsSendReturnValue amqpsSendReturnValue = Deencapsulation.invoke(amqpsDeviceTelemetry, "sendMessageAndGetDeliveryHash", MessageType.DEVICE_TELEMETRY, msgData, offset, length, deliveryTag);
-            boolean deliverySuccessful = Deencapsulation.invoke(amqpsSendReturnValue, "isDeliverySuccessful");
-            int deliveryHash = Deencapsulation.invoke(amqpsSendReturnValue, "getDeliveryHash");
+        boolean deliverySuccessful = Deencapsulation.invoke(amqpsSendReturnValue, "isDeliverySuccessful");
+        int deliveryHash = Deencapsulation.invoke(amqpsSendReturnValue, "getDeliveryHash");
 
         //assert
         assertTrue(deliverySuccessful);
@@ -305,12 +301,10 @@ public class AmqpsDeviceTelemetryTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICETELEMETRY_12_008: [**The function shall return null if the Proton message type is not null or DeviceTelelemtry.**]**
-    */
+     **Tests_SRS_AMQPSDEVICETELEMETRY_12_008: [**The function shall return null if the Proton message type is not null or DeviceTelelemtry.**]**
+     */
     @Test
-    public void convertFromProtonReturnsNullIfNotDeviceTelemetry(
-            @Mocked final  AmqpsMessage mockAmqpsMessage
-    )
+    public void convertFromProtonReturnsNullIfNotDeviceTelemetry(@Mocked final AmqpsMessage mockAmqpsMessage)
     {
         //arrange
         AmqpsDeviceTelemetry amqpsDeviceTelemetry = Deencapsulation.newInstance(AmqpsDeviceTelemetry.class, mockDeviceClientConfig);
@@ -331,14 +325,10 @@ public class AmqpsDeviceTelemetryTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICETELEMETRY_12_014: [**The function shall return null if the Proton message type is not null or DeviceTelelemtry.**]**
-    */
+     **Tests_SRS_AMQPSDEVICETELEMETRY_12_014: [**The function shall return null if the Proton message type is not null or DeviceTelelemtry.**]**
+     */
     @Test
-    public void convertToProtonReturnsNullIfNotDeviceTelemetry(
-            @Mocked final Message mockMessage,
-            @Mocked final Properties properties,
-            @Mocked final  AmqpsMessage mockAmqpsMessage
-    )
+    public void convertToProtonReturnsNullIfNotDeviceTelemetry(@Mocked final Message mockMessage, @Mocked final Properties properties, @Mocked final AmqpsMessage mockAmqpsMessage)
     {
         //arrange
         AmqpsDeviceTelemetry amqpsDeviceTelemetry = Deencapsulation.newInstance(AmqpsDeviceTelemetry.class, mockDeviceClientConfig);
@@ -361,7 +351,6 @@ public class AmqpsDeviceTelemetryTest
         //assert
         assertNull(amqpsConvertToProtonReturnValue);
     }
-
 
 
     // Codes_SRS_AMQPSDEVICETELEMETRY_12_020: [The function shall call the super function.]

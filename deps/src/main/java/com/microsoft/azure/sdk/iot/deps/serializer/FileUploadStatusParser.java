@@ -11,31 +11,28 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Representation of the status of a single file for the File Upload, with a Json serializer.
  * Ex of JSON format:
- *  {
- *      "correlationId": "{correlation ID received from the initial request}",
- *      "isSuccess": bool,
- *      "statusCode": XXX,
- *      "statusDescription": "Description of status"
- *  }
+ * {
+ * "correlationId": "{correlation ID received from the initial request}",
+ * "isSuccess": bool,
+ * "statusCode": XXX,
+ * "statusDescription": "Description of status"
+ * }
  */
 public class FileUploadStatusParser
 {
     private static final String CORRELATION_ID_TAG = "correlationId";
+    private static final String IS_SUCCESS_TAG = "isSuccess";
+    private static final String STATUS_CODE_TAG = "statusCode";
+    private static final String STATUS_DESCRIPTION_TAG = "statusDescription";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(CORRELATION_ID_TAG)
     private String correlationId = null;
-
-    private static final String IS_SUCCESS_TAG = "isSuccess";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(IS_SUCCESS_TAG)
     private Boolean isSuccess = null;
-
-    private static final String STATUS_CODE_TAG = "statusCode";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(STATUS_CODE_TAG)
     private Integer statusCode = null;
-
-    private static final String STATUS_DESCRIPTION_TAG = "statusDescription";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(STATUS_DESCRIPTION_TAG)
     private String statusDescription = null;
@@ -44,14 +41,13 @@ public class FileUploadStatusParser
      * CONSTRUCTOR
      * Create an instance of the FileUploadStatusParser for a single file in Azure Storage.
      *
-     * @param correlationId is an unique file identification.
-     * @param isSuccess is a Boolean representing whether the file was uploaded successfully.
-     * @param statusCode is the status for the upload of the file to storage.
+     * @param correlationId     is an unique file identification.
+     * @param isSuccess         is a Boolean representing whether the file was uploaded successfully.
+     * @param statusCode        is the status for the upload of the file to storage.
      * @param statusDescription is the description of the status code.
      * @throws IllegalArgumentException if one of the parameters is null, empty, or not valid.
      */
-    public FileUploadStatusParser(String correlationId, Boolean isSuccess, Integer statusCode, String statusDescription)
-            throws IllegalArgumentException
+    public FileUploadStatusParser(String correlationId, Boolean isSuccess, Integer statusCode, String statusDescription) throws IllegalArgumentException
     {
         /* Codes_SRS_FILE_UPLOAD_STATUS_21_001: [The constructor shall create an instance of the FileUploadStatusParser.] */
         /* Codes_SRS_FILE_UPLOAD_STATUS_21_002: [The constructor shall set the `correlationId`, `isSuccess`, `statusCode`, and `statusDescription` in the new class with the provided parameters.] */
@@ -61,10 +57,18 @@ public class FileUploadStatusParser
     }
 
     /**
+     * Empty constructor: Used only to keep GSON happy.
+     */
+    @SuppressWarnings("unused")
+    protected FileUploadStatusParser()
+    {
+    }
+
+    /**
      * Update the status information in the collection, and return the new json.
      *
-     * @param isSuccess is a Boolean representing whether the file was uploaded successfully.
-     * @param statusCode is the status for the upload of the file to storage.
+     * @param isSuccess         is a Boolean representing whether the file was uploaded successfully.
+     * @param statusCode        is the status for the upload of the file to storage.
      * @param statusDescription is the description of the status code.
      * @throws IllegalArgumentException if one of the parameters is null, empty, or not valid.
      */
@@ -97,13 +101,5 @@ public class FileUploadStatusParser
     {
         ParserUtility.validateStringUTF8(correlationId);
         this.correlationId = correlationId;
-    }
-
-    /**
-     * Empty constructor: Used only to keep GSON happy.
-     */
-    @SuppressWarnings("unused")
-    protected FileUploadStatusParser()
-    {
     }
 }

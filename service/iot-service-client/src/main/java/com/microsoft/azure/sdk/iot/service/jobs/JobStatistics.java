@@ -28,14 +28,14 @@ public class JobStatistics
 
     /**
      * CONSTRUCTOR
-     * 
+     *
      * @param jobsStatisticsParser is the result of a deserialization for json with jobs statistics
      * @throws IllegalArgumentException is the provided jobsStatisticsParser is {@code null}
      */
     JobStatistics(JobsStatisticsParser jobsStatisticsParser) throws IllegalArgumentException
     {
         /* Codes_SRS_JOBSTATISTICS_21_001: [The constructor shall throw IllegalArgumentException if the input jobsStatisticsParser is null.] */
-        if(jobsStatisticsParser == null)
+        if (jobsStatisticsParser == null)
         {
             throw new IllegalArgumentException("null jobsStatisticsParser");
         }
@@ -50,6 +50,7 @@ public class JobStatistics
 
     /**
      * Getter for device counter
+     *
      * @return the number of devices in the job
      */
     public int getDeviceCount()
@@ -60,6 +61,7 @@ public class JobStatistics
 
     /**
      * Getter for the failed counter
+     *
      * @return the number of failed jobs
      */
     public int getFailedCount()
@@ -70,6 +72,7 @@ public class JobStatistics
 
     /**
      * Getter for succeeded counter
+     *
      * @return number of succeeded jobs
      */
     public int getSucceededCount()
@@ -80,6 +83,7 @@ public class JobStatistics
 
     /**
      * Getter for running counter
+     *
      * @return the number of running jobs
      */
     public int getRunningCount()
@@ -90,6 +94,7 @@ public class JobStatistics
 
     /**
      * Getter for pending counter
+     *
      * @return the number of pending jobs
      */
     public int getPendingCount()

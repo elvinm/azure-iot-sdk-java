@@ -5,8 +5,9 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 
-public class WrapperApiImpl implements WrapperApi  {
-    private WrapperGlue _wrapperGlue= new WrapperGlue();
+public class WrapperApiImpl implements WrapperApi
+{
+    private WrapperGlue _wrapperGlue = new WrapperGlue();
 
     @Override
     public void wrapperCleanupPut(Handler<AsyncResult<Void>> handler)

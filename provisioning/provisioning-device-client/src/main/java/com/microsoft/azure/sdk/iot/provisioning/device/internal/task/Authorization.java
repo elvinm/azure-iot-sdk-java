@@ -26,6 +26,7 @@ public class Authorization
 
     /**
      * Getter for SSLContext
+     *
      * @return returns the saved value of SSLContext
      */
     SSLContext getSslContext()
@@ -36,6 +37,7 @@ public class Authorization
 
     /**
      * Sets the value of SSLContext
+     *
      * @param sslContext Input SSLContext
      */
     void setSslContext(SSLContext sslContext)
@@ -46,6 +48,7 @@ public class Authorization
 
     /**
      * Getter for SasToken
+     *
      * @return returns the saved value of SasToken
      */
     String getSasToken()
@@ -56,6 +59,7 @@ public class Authorization
 
     /**
      * Sets the value of SasToken
+     *
      * @param sasToken Input SasToken
      */
     void setSasToken(String sasToken)

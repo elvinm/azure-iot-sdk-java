@@ -26,7 +26,8 @@ public class ServiceGlue
         try
         {
             client = DeviceMethod.createFromConnectionString(connectionString);
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             handler.handle(Future.failedFuture(e));
         }
@@ -102,7 +103,8 @@ public class ServiceGlue
             catch (IotHubException e)
             {
                 handler.handle(Future.failedFuture(e));
-            } catch (IOException e)
+            }
+            catch (IOException e)
             {
                 e.printStackTrace();
             }

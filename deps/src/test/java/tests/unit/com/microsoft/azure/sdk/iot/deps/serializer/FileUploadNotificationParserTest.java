@@ -34,46 +34,163 @@ public class FileUploadNotificationParserTest
     private static final String INVALID_DATETIME_UTC = "\u12342016-6-1T4:22:43.7996883";
     private static final Long VALID_BLOB_SIZE_IN_BYTES = 1234L;
     private static final Long INVALID_BLOB_SIZE_IN_BYTES = -1234L;
+    private static final TestParameters[] tests = new TestParameters[]{new TestParameters()
+    {{
+        deviceId = null;
+        blobUri = VALID_BLOB_UTI;
+        blobName = VALID_BLOB_NAME;
+        lastUpdatedTime = VALID_LAST_UPDATE_TIME;
+        enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC;
+        blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+    }}, new TestParameters()
+    {{
+        deviceId = "";
+        blobUri = VALID_BLOB_UTI;
+        blobName = VALID_BLOB_NAME;
+        lastUpdatedTime = VALID_LAST_UPDATE_TIME;
+        enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC;
+        blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+    }}, new TestParameters()
+    {{
+        deviceId = INVALID_DEVICEID;
+        blobUri = VALID_BLOB_UTI;
+        blobName = VALID_BLOB_NAME;
+        lastUpdatedTime = VALID_LAST_UPDATE_TIME;
+        enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC;
+        blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+    }},
 
-    private static class TestParameters
-    {
-        String deviceId;
-        String blobUri;
-        String blobName;
-        String lastUpdatedTime;
-        String enqueuedTimeUtc;
-        Long blobSizeInBytes;
-    }
-    private static final TestParameters[] tests = new TestParameters[]
-    {
-            new TestParameters(){{ deviceId = null; blobUri = VALID_BLOB_UTI; blobName = VALID_BLOB_NAME; lastUpdatedTime = VALID_LAST_UPDATE_TIME; enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
-            new TestParameters(){{ deviceId = ""; blobUri = VALID_BLOB_UTI; blobName = VALID_BLOB_NAME; lastUpdatedTime = VALID_LAST_UPDATE_TIME; enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
-            new TestParameters(){{ deviceId = INVALID_DEVICEID; blobUri = VALID_BLOB_UTI; blobName = VALID_BLOB_NAME; lastUpdatedTime = VALID_LAST_UPDATE_TIME; enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
+            new TestParameters()
+            {{
+                deviceId = VALID_DEVICEID;
+                blobUri = null;
+                blobName = VALID_BLOB_NAME;
+                lastUpdatedTime = VALID_LAST_UPDATE_TIME;
+                enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC;
+                blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+            }}, new TestParameters()
+    {{
+        deviceId = VALID_DEVICEID;
+        blobUri = "";
+        blobName = VALID_BLOB_NAME;
+        lastUpdatedTime = VALID_LAST_UPDATE_TIME;
+        enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC;
+        blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+    }}, new TestParameters()
+    {{
+        deviceId = VALID_DEVICEID;
+        blobUri = INVALID_BLOB_URI;
+        blobName = VALID_BLOB_NAME;
+        lastUpdatedTime = VALID_LAST_UPDATE_TIME;
+        enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC;
+        blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+    }},
 
-            new TestParameters(){{ deviceId = VALID_DEVICEID; blobUri = null; blobName = VALID_BLOB_NAME; lastUpdatedTime = VALID_LAST_UPDATE_TIME; enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
-            new TestParameters(){{ deviceId = VALID_DEVICEID; blobUri = ""; blobName = VALID_BLOB_NAME; lastUpdatedTime = VALID_LAST_UPDATE_TIME; enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
-            new TestParameters(){{ deviceId = VALID_DEVICEID; blobUri = INVALID_BLOB_URI; blobName = VALID_BLOB_NAME; lastUpdatedTime = VALID_LAST_UPDATE_TIME; enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
+            new TestParameters()
+            {{
+                deviceId = VALID_DEVICEID;
+                blobUri = VALID_BLOB_UTI;
+                blobName = null;
+                lastUpdatedTime = VALID_LAST_UPDATE_TIME;
+                enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC;
+                blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+            }}, new TestParameters()
+    {{
+        deviceId = VALID_DEVICEID;
+        blobUri = VALID_BLOB_UTI;
+        blobName = "";
+        lastUpdatedTime = VALID_LAST_UPDATE_TIME;
+        enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC;
+        blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+    }}, new TestParameters()
+    {{
+        deviceId = VALID_DEVICEID;
+        blobUri = VALID_BLOB_UTI;
+        blobName = INVALID_BLOB_NAME;
+        lastUpdatedTime = VALID_LAST_UPDATE_TIME;
+        enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC;
+        blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+    }},
 
-            new TestParameters(){{ deviceId = VALID_DEVICEID; blobUri = VALID_BLOB_UTI; blobName = null; lastUpdatedTime = VALID_LAST_UPDATE_TIME; enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
-            new TestParameters(){{ deviceId = VALID_DEVICEID; blobUri = VALID_BLOB_UTI; blobName = ""; lastUpdatedTime = VALID_LAST_UPDATE_TIME; enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
-            new TestParameters(){{ deviceId = VALID_DEVICEID; blobUri = VALID_BLOB_UTI; blobName = INVALID_BLOB_NAME; lastUpdatedTime = VALID_LAST_UPDATE_TIME; enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
+            new TestParameters()
+            {{
+                deviceId = VALID_DEVICEID;
+                blobUri = VALID_BLOB_UTI;
+                blobName = VALID_BLOB_NAME;
+                lastUpdatedTime = null;
+                enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC;
+                blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+            }}, new TestParameters()
+    {{
+        deviceId = VALID_DEVICEID;
+        blobUri = VALID_BLOB_UTI;
+        blobName = VALID_BLOB_NAME;
+        lastUpdatedTime = "";
+        enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC;
+        blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+    }}, new TestParameters()
+    {{
+        deviceId = VALID_DEVICEID;
+        blobUri = VALID_BLOB_UTI;
+        blobName = VALID_BLOB_NAME;
+        lastUpdatedTime = INVALID_LAST_UPDATE_TIME;
+        enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC;
+        blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+    }}, new TestParameters()
+    {{
+        deviceId = VALID_DEVICEID;
+        blobUri = VALID_BLOB_UTI;
+        blobName = VALID_BLOB_NAME;
+        lastUpdatedTime = INVALID_DATETIME_OFFSET;
+        enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC;
+        blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+    }},
 
-            new TestParameters(){{ deviceId = VALID_DEVICEID; blobUri = VALID_BLOB_UTI; blobName = VALID_BLOB_NAME; lastUpdatedTime = null; enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
-            new TestParameters(){{ deviceId = VALID_DEVICEID; blobUri = VALID_BLOB_UTI; blobName = VALID_BLOB_NAME; lastUpdatedTime = ""; enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
-            new TestParameters(){{ deviceId = VALID_DEVICEID; blobUri = VALID_BLOB_UTI; blobName = VALID_BLOB_NAME; lastUpdatedTime = INVALID_LAST_UPDATE_TIME; enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
-            new TestParameters(){{ deviceId = VALID_DEVICEID; blobUri = VALID_BLOB_UTI; blobName = VALID_BLOB_NAME; lastUpdatedTime = INVALID_DATETIME_OFFSET; enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
+            new TestParameters()
+            {{
+                deviceId = VALID_DEVICEID;
+                blobUri = VALID_BLOB_UTI;
+                blobName = VALID_BLOB_NAME;
+                lastUpdatedTime = VALID_LAST_UPDATE_TIME;
+                enqueuedTimeUtc = null;
+                blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+            }}, new TestParameters()
+    {{
+        deviceId = VALID_DEVICEID;
+        blobUri = VALID_BLOB_UTI;
+        blobName = VALID_BLOB_NAME;
+        lastUpdatedTime = VALID_LAST_UPDATE_TIME;
+        enqueuedTimeUtc = "";
+        blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+    }}, new TestParameters()
+    {{
+        deviceId = VALID_DEVICEID;
+        blobUri = VALID_BLOB_UTI;
+        blobName = VALID_BLOB_NAME;
+        lastUpdatedTime = VALID_LAST_UPDATE_TIME;
+        enqueuedTimeUtc = INVALID_ENQUEUED_TIME_UTC;
+        blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+    }}, new TestParameters()
+    {{
+        deviceId = VALID_DEVICEID;
+        blobUri = VALID_BLOB_UTI;
+        blobName = VALID_BLOB_NAME;
+        lastUpdatedTime = VALID_LAST_UPDATE_TIME;
+        enqueuedTimeUtc = INVALID_DATETIME_UTC;
+        blobSizeInBytes = VALID_BLOB_SIZE_IN_BYTES;
+    }},
 
-            new TestParameters(){{ deviceId = VALID_DEVICEID; blobUri = VALID_BLOB_UTI; blobName = VALID_BLOB_NAME; lastUpdatedTime = VALID_LAST_UPDATE_TIME; enqueuedTimeUtc = null; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
-            new TestParameters(){{ deviceId = VALID_DEVICEID; blobUri = VALID_BLOB_UTI; blobName = VALID_BLOB_NAME; lastUpdatedTime = VALID_LAST_UPDATE_TIME; enqueuedTimeUtc = ""; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
-            new TestParameters(){{ deviceId = VALID_DEVICEID; blobUri = VALID_BLOB_UTI; blobName = VALID_BLOB_NAME; lastUpdatedTime = VALID_LAST_UPDATE_TIME; enqueuedTimeUtc = INVALID_ENQUEUED_TIME_UTC; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
-            new TestParameters(){{ deviceId = VALID_DEVICEID; blobUri = VALID_BLOB_UTI; blobName = VALID_BLOB_NAME; lastUpdatedTime = VALID_LAST_UPDATE_TIME; enqueuedTimeUtc = INVALID_DATETIME_UTC; blobSizeInBytes=VALID_BLOB_SIZE_IN_BYTES; }},
+            new TestParameters()
+            {{
+                deviceId = VALID_DEVICEID;
+                blobUri = VALID_BLOB_UTI;
+                blobName = VALID_BLOB_NAME;
+                lastUpdatedTime = VALID_LAST_UPDATE_TIME;
+                enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC;
+                blobSizeInBytes = INVALID_BLOB_SIZE_IN_BYTES;
+            }},};
 
-            new TestParameters(){{ deviceId = VALID_DEVICEID; blobUri = VALID_BLOB_UTI; blobName = VALID_BLOB_NAME; lastUpdatedTime = VALID_LAST_UPDATE_TIME; enqueuedTimeUtc = VALID_ENQUEUED_TIME_UTC; blobSizeInBytes=INVALID_BLOB_SIZE_IN_BYTES; }},
-    };
-
-    private static void assertFileUploadNotification(FileUploadNotificationParser fileUploadNotificationParser,
-                                                     String expectedDeviceId, String expectedBlobUri, String expectedBlobName,
-                                                     String expectedLastUpdatedTime, String expectedEnqueuedTimeUtc, long expectedBlobSizeInBytes)
+    private static void assertFileUploadNotification(FileUploadNotificationParser fileUploadNotificationParser, String expectedDeviceId, String expectedBlobUri, String expectedBlobName, String expectedLastUpdatedTime, String expectedEnqueuedTimeUtc, long expectedBlobSizeInBytes)
     {
         assertNotNull(fileUploadNotificationParser);
 
@@ -94,14 +211,7 @@ public class FileUploadNotificationParserTest
 
     private static String createJson(String deviceId, String blobUri, String blobName, String lastUpdatedTime, String enqueuedTimeUtc, Long blobSizeInBytes)
     {
-        return "{\n" +
-                "    \"deviceId\": " + (deviceId == null ? "null" : "\"" + deviceId + "\"") + ",\n" +
-                "    \"blobUri\": " + (blobUri == null ? "null" : "\"" + blobUri + "\"") + ",\n" +
-                "    \"blobName\": " + (blobName == null ? "null" : "\"" + blobName + "\"") + ",\n" +
-                "    \"lastUpdatedTime\": " + (lastUpdatedTime == null ? "null" : "\"" + lastUpdatedTime + "\"") + ",\n" +
-                "    \"blobSizeInBytes\": " + blobSizeInBytes + ",\n" +
-                "    \"enqueuedTimeUtc\": " + (enqueuedTimeUtc == null ? "null" : "\"" + enqueuedTimeUtc + "\"") + "\n" +
-                "}";
+        return "{\n" + "    \"deviceId\": " + (deviceId == null ? "null" : "\"" + deviceId + "\"") + ",\n" + "    \"blobUri\": " + (blobUri == null ? "null" : "\"" + blobUri + "\"") + ",\n" + "    \"blobName\": " + (blobName == null ? "null" : "\"" + blobName + "\"") + ",\n" + "    \"lastUpdatedTime\": " + (lastUpdatedTime == null ? "null" : "\"" + lastUpdatedTime + "\"") + ",\n" + "    \"blobSizeInBytes\": " + blobSizeInBytes + ",\n" + "    \"enqueuedTimeUtc\": " + (enqueuedTimeUtc == null ? "null" : "\"" + enqueuedTimeUtc + "\"") + "\n" + "}";
     }
 
     /* Tests_SRS_FILE_UPLOAD_NOTIFICATION_21_001: [The constructor shall create an instance of the FileUploadNotification.] */
@@ -125,25 +235,13 @@ public class FileUploadNotificationParserTest
     public void constructor_json_realCase_succeed()
     {
         // arrange
-        String validJson = "{" +
-                "\"deviceId\":\"test-device1\"," +
-                "\"blobUri\":\"https://storageaccount.blob.core.windows.net/storage-accout-storageaccount/storageaccount-test/hello_world.txt\"," +
-                "\"blobName\":\"storageaccount-test/hello_world.txt\"," +
-                "\"lastUpdatedTime\":\"2017-05-01T23:29:11+00:00\"," +
-                "\"blobSizeInBytes\":45," +
-                "\"enqueuedTimeUtc\":\"2017-05-01T23:29:13.5700695Z\"}";
+        String validJson = "{" + "\"deviceId\":\"test-device1\"," + "\"blobUri\":\"https://storageaccount.blob.core.windows.net/storage-accout-storageaccount/storageaccount-test/hello_world.txt\"," + "\"blobName\":\"storageaccount-test/hello_world.txt\"," + "\"lastUpdatedTime\":\"2017-05-01T23:29:11+00:00\"," + "\"blobSizeInBytes\":45," + "\"enqueuedTimeUtc\":\"2017-05-01T23:29:13.5700695Z\"}";
 
         // act
         FileUploadNotificationParser fileUploadNotificationParser = new FileUploadNotificationParser(validJson);
 
         // assert
-        assertFileUploadNotification(fileUploadNotificationParser,
-                "test-device1",
-                "https://storageaccount.blob.core.windows.net/storage-accout-storageaccount/storageaccount-test/hello_world.txt",
-                "storageaccount-test/hello_world.txt",
-                "2017-05-01T23:29:11+00:00",
-                "2017-05-01T23:29:13.5700695Z",
-                45);
+        assertFileUploadNotification(fileUploadNotificationParser, "test-device1", "https://storageaccount.blob.core.windows.net/storage-accout-storageaccount/storageaccount-test/hello_world.txt", "storageaccount-test/hello_world.txt", "2017-05-01T23:29:11+00:00", "2017-05-01T23:29:13.5700695Z", 45);
     }
 
     /* Tests_SRS_FILE_UPLOAD_NOTIFICATION_21_002: [The constructor shall parse the provided json and initialize `correlationId`, `hostName`, `containerName`, `blobName`, and `sasToken` using the information in the json.] */
@@ -151,14 +249,7 @@ public class FileUploadNotificationParserTest
     public void constructor_specialCase_string_null_succeed()
     {
         // arrange
-        String validJson = "{\n" +
-                "    \"deviceId\": \"null\",\n" +
-                "    \"blobUri\": \"" + VALID_BLOB_UTI + "\",\n" +
-                "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" +
-                "    \"lastUpdatedTime\": \"" + VALID_LAST_UPDATE_TIME + "\",\n" +
-                "    \"blobSizeInBytes\": " + VALID_BLOB_SIZE_IN_BYTES + ",\n" +
-                "    \"enqueuedTimeUtc\": \"" + VALID_ENQUEUED_TIME_UTC + "\"\n" +
-                "}";
+        String validJson = "{\n" + "    \"deviceId\": \"null\",\n" + "    \"blobUri\": \"" + VALID_BLOB_UTI + "\",\n" + "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" + "    \"lastUpdatedTime\": \"" + VALID_LAST_UPDATE_TIME + "\",\n" + "    \"blobSizeInBytes\": " + VALID_BLOB_SIZE_IN_BYTES + ",\n" + "    \"enqueuedTimeUtc\": \"" + VALID_ENQUEUED_TIME_UTC + "\"\n" + "}";
 
         // act
         FileUploadNotificationParser fileUploadNotificationParser = new FileUploadNotificationParser(validJson);
@@ -172,13 +263,7 @@ public class FileUploadNotificationParserTest
     public void constructor_specialCase_blobSizeInBytes_notExists_succeed()
     {
         // arrange
-        String validJson = "{\n" +
-                "    \"deviceId\": \"null\",\n" +
-                "    \"blobUri\": \"" + VALID_BLOB_UTI + "\",\n" +
-                "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" +
-                "    \"lastUpdatedTime\": \"" + VALID_LAST_UPDATE_TIME + "\",\n" +
-                "    \"enqueuedTimeUtc\": \"" + VALID_ENQUEUED_TIME_UTC + "\"\n" +
-                "}";
+        String validJson = "{\n" + "    \"deviceId\": \"null\",\n" + "    \"blobUri\": \"" + VALID_BLOB_UTI + "\",\n" + "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" + "    \"lastUpdatedTime\": \"" + VALID_LAST_UPDATE_TIME + "\",\n" + "    \"enqueuedTimeUtc\": \"" + VALID_ENQUEUED_TIME_UTC + "\"\n" + "}";
 
         // act
         FileUploadNotificationParser fileUploadNotificationParser = new FileUploadNotificationParser(validJson);
@@ -188,7 +273,7 @@ public class FileUploadNotificationParserTest
     }
 
     /* Tests_SRS_FILE_UPLOAD_NOTIFICATION_21_003: [If the provided json is null, empty, or not valid, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_null_json_failed()
     {
         // act
@@ -196,7 +281,7 @@ public class FileUploadNotificationParserTest
     }
 
     /* Tests_SRS_FILE_UPLOAD_NOTIFICATION_21_003: [If the provided json is null, empty, or not valid, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_empty_json_failed()
     {
         // act
@@ -204,7 +289,7 @@ public class FileUploadNotificationParserTest
     }
 
     /* Tests_SRS_FILE_UPLOAD_NOTIFICATION_21_003: [If the provided json is null, empty, or not valid, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_invalid_json_failed()
     {
         // act
@@ -216,7 +301,7 @@ public class FileUploadNotificationParserTest
     public void constructor_json_failed()
     {
         int counter = -1;
-        for (TestParameters test:tests)
+        for (TestParameters test : tests)
         {
             // arrange
             counter++;
@@ -238,90 +323,59 @@ public class FileUploadNotificationParserTest
     }
 
     /* Tests_SRS_FILE_UPLOAD_NOTIFICATION_21_005: [If the provided json do not contains one of the keys `deviceId`, `blobUri`, `blobName`, `lastUpdatedTime`, and `enqueuedTimeUtc`, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_json_missing_deviceId_failed()
     {
         // arrange
-        String validJson = "{\n" +
-                "    \"blobUri\": \"" + VALID_BLOB_UTI + "\",\n" +
-                "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" +
-                "    \"lastUpdatedTime\": \"" + VALID_LAST_UPDATE_TIME + "\",\n" +
-                "    \"blobSizeInBytes\": " + VALID_BLOB_SIZE_IN_BYTES + ",\n" +
-                "    \"enqueuedTimeUtc\": \"" + VALID_ENQUEUED_TIME_UTC + "\"\n" +
-                "}";
+        String validJson = "{\n" + "    \"blobUri\": \"" + VALID_BLOB_UTI + "\",\n" + "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" + "    \"lastUpdatedTime\": \"" + VALID_LAST_UPDATE_TIME + "\",\n" + "    \"blobSizeInBytes\": " + VALID_BLOB_SIZE_IN_BYTES + ",\n" + "    \"enqueuedTimeUtc\": \"" + VALID_ENQUEUED_TIME_UTC + "\"\n" + "}";
 
         // act
         new FileUploadNotificationParser(validJson);
     }
 
     /* Tests_SRS_FILE_UPLOAD_NOTIFICATION_21_005: [If the provided json do not contains one of the keys `deviceId`, `blobUri`, `blobName`, `lastUpdatedTime`, and `enqueuedTimeUtc`, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_json_missing_BlobUri_failed()
     {
         // arrange
-        String validJson = "{\n" +
-                "    \"deviceId\": \"" + VALID_DEVICEID + "\",\n" +
-                "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" +
-                "    \"lastUpdatedTime\": \"" + VALID_LAST_UPDATE_TIME + "\",\n" +
-                "    \"blobSizeInBytes\": " + VALID_BLOB_SIZE_IN_BYTES + ",\n" +
-                "    \"enqueuedTimeUtc\": \"" + VALID_ENQUEUED_TIME_UTC + "\"\n" +
-                "}";
+        String validJson = "{\n" + "    \"deviceId\": \"" + VALID_DEVICEID + "\",\n" + "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" + "    \"lastUpdatedTime\": \"" + VALID_LAST_UPDATE_TIME + "\",\n" + "    \"blobSizeInBytes\": " + VALID_BLOB_SIZE_IN_BYTES + ",\n" + "    \"enqueuedTimeUtc\": \"" + VALID_ENQUEUED_TIME_UTC + "\"\n" + "}";
 
         // act
         new FileUploadNotificationParser(validJson);
     }
 
     /* Tests_SRS_FILE_UPLOAD_NOTIFICATION_21_005: [If the provided json do not contains one of the keys `deviceId`, `blobUri`, `blobName`, `lastUpdatedTime`, and `enqueuedTimeUtc`, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_json_missing_BlobName_failed()
     {
         // arrange
-        String validJson = "{\n" +
-                "    \"deviceId\": \"" + VALID_DEVICEID + "\",\n" +
-                "    \"blobUri\": \"" + VALID_BLOB_UTI + "\",\n" +
-                "    \"lastUpdatedTime\": \"" + VALID_LAST_UPDATE_TIME + "\",\n" +
-                "    \"blobSizeInBytes\": " + VALID_BLOB_SIZE_IN_BYTES + ",\n" +
-                "    \"enqueuedTimeUtc\": \"" + VALID_ENQUEUED_TIME_UTC + "\"\n" +
-                "}";
+        String validJson = "{\n" + "    \"deviceId\": \"" + VALID_DEVICEID + "\",\n" + "    \"blobUri\": \"" + VALID_BLOB_UTI + "\",\n" + "    \"lastUpdatedTime\": \"" + VALID_LAST_UPDATE_TIME + "\",\n" + "    \"blobSizeInBytes\": " + VALID_BLOB_SIZE_IN_BYTES + ",\n" + "    \"enqueuedTimeUtc\": \"" + VALID_ENQUEUED_TIME_UTC + "\"\n" + "}";
 
         // act
         new FileUploadNotificationParser(validJson);
     }
 
     /* Tests_SRS_FILE_UPLOAD_NOTIFICATION_21_005: [If the provided json do not contains one of the keys `deviceId`, `blobUri`, `blobName`, `lastUpdatedTime`, and `enqueuedTimeUtc`, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_json_missing_lastUpdateTime_failed()
     {
         // arrange
-        String validJson = "{\n" +
-                "    \"deviceId\": \"" + VALID_DEVICEID + "\",\n" +
-                "    \"blobUri\": \"" + VALID_BLOB_UTI + "\",\n" +
-                "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" +
-                "    \"blobSizeInBytes\": " + VALID_BLOB_SIZE_IN_BYTES + ",\n" +
-                "    \"enqueuedTimeUtc\": \"" + VALID_ENQUEUED_TIME_UTC + "\"\n" +
-                "}";
+        String validJson = "{\n" + "    \"deviceId\": \"" + VALID_DEVICEID + "\",\n" + "    \"blobUri\": \"" + VALID_BLOB_UTI + "\",\n" + "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" + "    \"blobSizeInBytes\": " + VALID_BLOB_SIZE_IN_BYTES + ",\n" + "    \"enqueuedTimeUtc\": \"" + VALID_ENQUEUED_TIME_UTC + "\"\n" + "}";
 
         // act
         new FileUploadNotificationParser(validJson);
     }
 
     /* Tests_SRS_FILE_UPLOAD_NOTIFICATION_21_005: [If the provided json do not contains one of the keys `deviceId`, `blobUri`, `blobName`, `lastUpdatedTime`, and `enqueuedTimeUtc`, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_json_missing_enqueuedTimeUtc_failed()
     {
         // arrange
-        String validJson = "{\n" +
-                "    \"deviceId\": \"" + VALID_DEVICEID + "\",\n" +
-                "    \"blobUri\": \"" + VALID_BLOB_UTI + "\",\n" +
-                "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" +
-                "    \"lastUpdatedTime\": \"" + VALID_LAST_UPDATE_TIME + "\",\n" +
-                "    \"blobSizeInBytes\": " + VALID_BLOB_SIZE_IN_BYTES + "\n" +
-                "}";
+        String validJson = "{\n" + "    \"deviceId\": \"" + VALID_DEVICEID + "\",\n" + "    \"blobUri\": \"" + VALID_BLOB_UTI + "\",\n" + "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" + "    \"lastUpdatedTime\": \"" + VALID_LAST_UPDATE_TIME + "\",\n" + "    \"blobSizeInBytes\": " + VALID_BLOB_SIZE_IN_BYTES + "\n" + "}";
 
         // act
         new FileUploadNotificationParser(validJson);
     }
-
 
     /* Tests_SRS_FILE_UPLOAD_NOTIFICATION_21_006: [The getDeviceId shall return the string stored in `deviceId`.] */
     /* Tests_SRS_FILE_UPLOAD_NOTIFICATION_21_007: [The getBlobUri shall return the string stored in `blobUri`.] */
@@ -346,6 +400,16 @@ public class FileUploadNotificationParserTest
         assertEquals(expectedLastUpdatedTime, fileUploadNotificationParser.getLastUpdatedTime());
         assertEquals(expectedEnqueuedTimeUtc, fileUploadNotificationParser.getEnqueuedTimeUtc());
         assertEquals(VALID_BLOB_SIZE_IN_BYTES, fileUploadNotificationParser.getBlobSizeInBytesTag());
+    }
+
+    private static class TestParameters
+    {
+        String deviceId;
+        String blobUri;
+        String blobName;
+        String lastUpdatedTime;
+        String enqueuedTimeUtc;
+        Long blobSizeInBytes;
     }
 
 }

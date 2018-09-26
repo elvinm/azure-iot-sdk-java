@@ -121,7 +121,7 @@ public class JobPropertiesParserTest
     }
 
     //Tests_SRS_JOB_PROPERTIES_PARSER_34_007: [If the provided json is null or empty, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullJson()
     {
         //act
@@ -129,7 +129,7 @@ public class JobPropertiesParserTest
     }
 
     //Tests_SRS_JOB_PROPERTIES_PARSER_34_007: [If the provided json is null or empty, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForEmptyJson()
     {
         //act
@@ -137,7 +137,7 @@ public class JobPropertiesParserTest
     }
 
     //Tests_SRS_JOB_PROPERTIES_PARSER_34_008: [If the provided json cannot be parsed into a JobPropertiesParser object, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForInvalidJson()
     {
         //act
@@ -145,7 +145,7 @@ public class JobPropertiesParserTest
     }
 
     //Tests_SRS_JOB_PROPERTIES_PARSER_34_005: [If the provided jobId is null, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void jobIdCannotBeSetToNull()
     {
         //arrange
@@ -156,43 +156,22 @@ public class JobPropertiesParserTest
     }
 
     //Tests_SRS_JOB_PROPERTIES_PARSER_34_009: [If the provided json is missing the field for jobId, or if its value is null or empty, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorJsonMissingJobIdInJsonThrowsIllegalArgumentException()
     {
         //arrange
-        String json = "{\n" +
-                "  \"startTimeUtc\": \"Dec 31, 1969 4:00:00 PM\",\n" +
-                "  \"endTimeUtc\": \"Dec 31, 1969 4:00:00 PM\",\n" +
-                "  \"type\": \"type\",\n" +
-                "  \"status\": \"status\",\n" +
-                "  \"progress\": 0,\n" +
-                "  \"inputBlobContainerUri\": \"inputContainerUri\",\n" +
-                "  \"outputBlobContainerUri\": \"outputContainerUri\",\n" +
-                "  \"excludeKeysInExport\": false,\n" +
-                "  \"failureReason\": \"failureReason\"\n" +
-                "}";
+        String json = "{\n" + "  \"startTimeUtc\": \"Dec 31, 1969 4:00:00 PM\",\n" + "  \"endTimeUtc\": \"Dec 31, 1969 4:00:00 PM\",\n" + "  \"type\": \"type\",\n" + "  \"status\": \"status\",\n" + "  \"progress\": 0,\n" + "  \"inputBlobContainerUri\": \"inputContainerUri\",\n" + "  \"outputBlobContainerUri\": \"outputContainerUri\",\n" + "  \"excludeKeysInExport\": false,\n" + "  \"failureReason\": \"failureReason\"\n" + "}";
 
         //act
         new JobPropertiesParser(json);
     }
 
     //Tests_SRS_JOB_PROPERTIES_PARSER_34_009: [If the provided json is missing the field for jobId, or if its value is null or empty, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorJsonWithJobIdMissingValueInJsonThrowsIllegalArgumentException()
     {
         //arrange
-        String json = "{\n" +
-                "  \"jobId\": \"\",\n" +
-                "  \"startTimeUtc\": \"Dec 31, 1969 4:00:00 PM\",\n" +
-                "  \"endTimeUtc\": \"Dec 31, 1969 4:00:00 PM\",\n" +
-                "  \"type\": \"type\",\n" +
-                "  \"status\": \"status\",\n" +
-                "  \"progress\": 0,\n" +
-                "  \"inputBlobContainerUri\": \"inputContainerUri\",\n" +
-                "  \"outputBlobContainerUri\": \"outputContainerUri\",\n" +
-                "  \"excludeKeysInExport\": false,\n" +
-                "  \"failureReason\": \"failureReason\"\n" +
-                "}";
+        String json = "{\n" + "  \"jobId\": \"\",\n" + "  \"startTimeUtc\": \"Dec 31, 1969 4:00:00 PM\",\n" + "  \"endTimeUtc\": \"Dec 31, 1969 4:00:00 PM\",\n" + "  \"type\": \"type\",\n" + "  \"status\": \"status\",\n" + "  \"progress\": 0,\n" + "  \"inputBlobContainerUri\": \"inputContainerUri\",\n" + "  \"outputBlobContainerUri\": \"outputContainerUri\",\n" + "  \"excludeKeysInExport\": false,\n" + "  \"failureReason\": \"failureReason\"\n" + "}";
 
         //act
         new JobPropertiesParser(json);

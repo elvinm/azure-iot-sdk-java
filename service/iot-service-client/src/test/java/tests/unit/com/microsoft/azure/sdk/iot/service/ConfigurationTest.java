@@ -102,7 +102,10 @@ public class ConfigurationTest
         String expectedCreatedTimeUtc = "2001-09-09T09:09:09";
         String expectedTargetCondition = "*";
         Integer expectedPriority = 100;
-        HashMap<String, String> expectedLabels = new HashMap<String, String>(){{put("label1","val1");}};
+        HashMap<String, String> expectedLabels = new HashMap<String, String>()
+        {{
+            put("label1", "val1");
+        }};
 
         Configuration config = Deencapsulation.newInstance(Configuration.class, expectedConfigId);
         Deencapsulation.setField(config, "schemaVersion", expectedSchemaVersion);

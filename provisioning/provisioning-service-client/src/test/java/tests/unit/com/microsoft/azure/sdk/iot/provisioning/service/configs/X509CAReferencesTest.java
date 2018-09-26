@@ -19,22 +19,22 @@ public class X509CAReferencesTest
     private static final String CA_REFERENCE_STRING = "validCAReference";
 
     /* SRS_X509_CAREFERENCE_21_001: [The constructor shall throw IllegalArgumentException if the primary CA reference is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnPrimaryNull()
     {
         // arrange
         // act
-        Deencapsulation.newInstance(X509CAReferences.class, new Class[] {String.class, String.class},null, null);
+        Deencapsulation.newInstance(X509CAReferences.class, new Class[]{String.class, String.class}, null, null);
         // assert
     }
 
     /* SRS_X509_CAREFERENCE_21_001: [The constructor shall throw IllegalArgumentException if the primary CA reference is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnPrimaryNullWitValidSecondary()
     {
         // arrange
         // act
-        Deencapsulation.newInstance(X509CAReferences.class, new Class[] {String.class, String.class},null, CA_REFERENCE_STRING);
+        Deencapsulation.newInstance(X509CAReferences.class, new Class[]{String.class, String.class}, null, CA_REFERENCE_STRING);
         // assert
     }
 
@@ -44,7 +44,7 @@ public class X509CAReferencesTest
     {
         // arrange
         // act
-        X509CAReferences x509CAReferences = Deencapsulation.newInstance(X509CAReferences.class, new Class[] {String.class, String.class},CA_REFERENCE_STRING, null);
+        X509CAReferences x509CAReferences = Deencapsulation.newInstance(X509CAReferences.class, new Class[]{String.class, String.class}, CA_REFERENCE_STRING, null);
 
         // assert
         assertEquals(CA_REFERENCE_STRING, Deencapsulation.getField(x509CAReferences, "primary"));
@@ -57,7 +57,7 @@ public class X509CAReferencesTest
     {
         // arrange
         // act
-        X509CAReferences x509CAReferences = Deencapsulation.newInstance(X509CAReferences.class, new Class[] {String.class, String.class},CA_REFERENCE_STRING, CA_REFERENCE_STRING);
+        X509CAReferences x509CAReferences = Deencapsulation.newInstance(X509CAReferences.class, new Class[]{String.class, String.class}, CA_REFERENCE_STRING, CA_REFERENCE_STRING);
 
         // assert
         assertEquals(CA_REFERENCE_STRING, Deencapsulation.getField(x509CAReferences, "primary"));
@@ -65,7 +65,7 @@ public class X509CAReferencesTest
     }
 
     /* SRS_X509_CAREFERENCE_21_003: [The constructor shall throw IllegalArgumentException if the provide X509CAReferences is null or if its primary certificate is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorCopyThrowsOnX509CAReferencesNull()
     {
         // arrange
@@ -76,7 +76,7 @@ public class X509CAReferencesTest
     }
 
     /* SRS_X509_CAREFERENCE_21_003: [The constructor shall throw IllegalArgumentException if the provide X509CAReferences is null or if its primary certificate is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorCopyThrowsOnPrimaryNull()
     {
         // arrange
@@ -93,7 +93,7 @@ public class X509CAReferencesTest
     public void constructorCopySucceedOnValidPrimaryAndSecondary()
     {
         // arrange
-        X509CAReferences x509CAReferencesOld = Deencapsulation.newInstance(X509CAReferences.class, new Class[] {String.class, String.class},CA_REFERENCE_STRING, CA_REFERENCE_STRING);
+        X509CAReferences x509CAReferencesOld = Deencapsulation.newInstance(X509CAReferences.class, new Class[]{String.class, String.class}, CA_REFERENCE_STRING, CA_REFERENCE_STRING);
 
         // act
         X509CAReferences x509CAReferences = new X509CAReferences(x509CAReferencesOld);
@@ -109,7 +109,7 @@ public class X509CAReferencesTest
     public void gettersSucceed()
     {
         // arrange
-        X509CAReferences x509CAReferences = Deencapsulation.newInstance(X509CAReferences.class, new Class[] {String.class, String.class},CA_REFERENCE_STRING, CA_REFERENCE_STRING);
+        X509CAReferences x509CAReferences = Deencapsulation.newInstance(X509CAReferences.class, new Class[]{String.class, String.class}, CA_REFERENCE_STRING, CA_REFERENCE_STRING);
 
         // act - assert
         assertEquals(CA_REFERENCE_STRING, x509CAReferences.getPrimary());

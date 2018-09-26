@@ -29,7 +29,9 @@ import java.util.Map;
  */
 public class HttpConnection
 {
-    /** The underlying HTTPS connection. */
+    /**
+     * The underlying HTTPS connection.
+     */
     protected final HttpsURLConnection connection;
 
     /**
@@ -42,10 +44,9 @@ public class HttpConnection
     /**
      * Constructor. Opens a connection to the given URL.
      *
-     * @param url The URL for the HTTPS connection.
+     * @param url    The URL for the HTTPS connection.
      * @param method The HTTPS method (i.e. GET).
-     *
-     * @throws IOException  This exception is thrown if the connection was unable to be opened.
+     * @throws IOException This exception is thrown if the connection was unable to be opened.
      */
     public HttpConnection(URL url, HttpMethod method) throws IOException
     {
@@ -53,10 +54,7 @@ public class HttpConnection
         String protocol = url.getProtocol();
         if (!protocol.equalsIgnoreCase("HTTPS"))
         {
-            String errMsg = String.format("Expected URL that uses iotHubServiceClientProtocol "
-                            + "HTTPS but received one that uses "
-                            + "iotHubServiceClientProtocol '%s'.\n",
-                    protocol);
+            String errMsg = String.format("Expected URL that uses iotHubServiceClientProtocol " + "HTTPS but received one that uses " + "iotHubServiceClientProtocol '%s'.\n", protocol);
             throw new IllegalArgumentException(errMsg);
         }
 
@@ -72,6 +70,39 @@ public class HttpConnection
         }
         this.connection.setRequestMethod(method.name());
         this.body = new byte[0];
+    }
+
+    protected HttpConnection()
+    {
+        this.connection = null;
+    }
+
+    /**
+     * Reads the input stream until the stream is empty.
+     *
+     * @param stream The input stream.
+     * @return The content of the input stream.
+     * @throws IOException This exception thrown if the input stream could not be read from.
+     */
+    protected static byte[] readInputStream(InputStream stream) throws IOException
+    {
+        ArrayList<Byte> byteBuffer = new ArrayList<>();
+        int nextByte = -1;
+        // read(byte[]) reads the byte into the buffer and returns the number
+        // of bytes read, or -1 if the end of the stream has been reached.
+        while ((nextByte = stream.read()) > -1)
+        {
+            byteBuffer.add((byte) nextByte);
+        }
+
+        int bufferSize = byteBuffer.size();
+        byte[] byteArray = new byte[bufferSize];
+        for (int i = 0; i < bufferSize; ++i)
+        {
+            byteArray[i] = byteBuffer.get(i);
+        }
+
+        return byteArray;
     }
 
     private void setUnsupportedMethod(HttpMethod method) throws IOException
@@ -90,7 +121,7 @@ public class HttpConnection
      * Sends the request to the URL given in the constructor.
      *
      * @throws IOException This exception thrown if the connection could not be established,
-     * or the server responded with a bad status code.
+     *                     or the server responded with a bad status code.
      */
     public void connect() throws IOException
     {
@@ -109,11 +140,10 @@ public class HttpConnection
      * Sets the request method (i.e. POST).
      *
      * @param method The request method.
-     *
      * @throws IllegalArgumentException This exception thrown if the request currently
-     * has a non-empty body and the new method is not a POST or a PUT. This is because Java's
-     * HttpsURLConnection silently converts the HTTPS method to POST or PUT if a
-     * body is written to the request.
+     *                                  has a non-empty body and the new method is not a POST or a PUT. This is because Java's
+     *                                  HttpsURLConnection silently converts the HTTPS method to POST or PUT if a
+     *                                  body is written to the request.
      */
     public void setRequestMethod(HttpMethod method)
     {
@@ -122,9 +152,7 @@ public class HttpConnection
         {
             if (this.body.length > 0)
             {
-                throw new IllegalArgumentException(
-                        "Cannot change the request method from POST "
-                        + "or PUT when the request body is non-empty.");
+                throw new IllegalArgumentException("Cannot change the request method from POST " + "or PUT when the request body is non-empty.");
             }
         }
 
@@ -151,7 +179,6 @@ public class HttpConnection
         this.connection.setRequestProperty(field, value);
     }
 
-
     /**
      * Sets the read timeout in milliseconds. The read timeout is the number of
      * milliseconds after the server receives a request and before the server
@@ -169,24 +196,20 @@ public class HttpConnection
      * Saves the body to be sent with the request.
      *
      * @param body The request body.
-     *
      * @throws IllegalArgumentException if the request does not currently use
-     * method POST or PUT and the body is non-empty. This is because Java's
-     * HttpsURLConnection silently converts the HTTPS method to POST or PUT if a
-     * body is written to the request.
+     *                                  method POST or PUT and the body is non-empty. This is because Java's
+     *                                  HttpsURLConnection silently converts the HTTPS method to POST or PUT if a
+     *                                  body is written to the request.
      */
     public void writeOutput(byte[] body)
     {
         // Codes_SRS_HTTPCONNECTION_25_013: [The function shall throw an IllegalArgumentException if the request does not currently use method POST or PUT and the body is non-empty.]
-        HttpMethod method = HttpMethod.valueOf(
-                this.connection.getRequestMethod());
+        HttpMethod method = HttpMethod.valueOf(this.connection.getRequestMethod());
         if (method != HttpMethod.POST && method != HttpMethod.PUT)
         {
             if (body.length > 0)
             {
-                throw new IllegalArgumentException(
-                        "Cannot write a body to a request that "
-                        + "is not a POST or a PUT request.");
+                throw new IllegalArgumentException("Cannot write a body to a request that " + "is not a POST or a PUT request.");
             }
         }
         else
@@ -200,9 +223,8 @@ public class HttpConnection
      * Reads from the input stream (response stream) and returns the response.
      *
      * @return The response body.
-     *
      * @throws IOException This exception thrown if the input stream could not be
-     * accessed, for example if the server could not be reached.
+     *                     accessed, for example if the server could not be reached.
      */
     public byte[] readInput() throws IOException
     {
@@ -220,9 +242,8 @@ public class HttpConnection
      * Reads from the error stream and returns the error reason.
      *
      * @return The error reason.
-     *
      * @throws IOException This exception thrown if the input stream could not be
-     * accessed, for example if the server could not be reached.
+     *                     accessed, for example if the server could not be reached.
      */
     public byte[] readError() throws IOException
     {
@@ -246,7 +267,6 @@ public class HttpConnection
      * Returns the response status code.
      *
      * @return The response status code.
-     *
      * @throws IOException This exception thrown if no response was received.
      */
     public int getResponseStatus() throws IOException
@@ -262,7 +282,6 @@ public class HttpConnection
      * name.
      *
      * @return the response headers.
-     *
      * @throws IOException This exception thrown if no response was received.
      */
     public Map<String, List<String>> getResponseHeaders() throws IOException
@@ -270,37 +289,6 @@ public class HttpConnection
         // Codes_SRS_HTTPCONNECTION_25_022: [The function shall return a mapping of header field names to the values associated with the header field name.]
         // Codes_SRS_HTTPCONNECTION_25_023: [The function shall throw an IOException if no response was received.]
         return this.connection.getHeaderFields();
-    }
-
-    /**
-     * Reads the input stream until the stream is empty.
-     *
-     * @param stream The input stream.
-     *
-     * @return The content of the input stream.
-     *
-     * @throws IOException This exception thrown if the input stream could not be read from.
-     */
-    protected static byte[] readInputStream(InputStream stream)
-            throws IOException
-    {
-        ArrayList<Byte> byteBuffer = new ArrayList<>();
-        int nextByte = -1;
-        // read(byte[]) reads the byte into the buffer and returns the number
-        // of bytes read, or -1 if the end of the stream has been reached.
-        while ((nextByte = stream.read()) > -1)
-        {
-            byteBuffer.add((byte) nextByte);
-        }
-
-        int bufferSize = byteBuffer.size();
-        byte[] byteArray = new byte[bufferSize];
-        for (int i = 0; i < bufferSize; ++i)
-        {
-            byteArray[i] = byteBuffer.get(i);
-        }
-
-        return byteArray;
     }
 
     void setSSLContext(SSLContext sslContext) throws IllegalArgumentException
@@ -312,10 +300,5 @@ public class HttpConnection
         }
         //Codes_SRS_HTTPSCONNECTION_25_024: [**The function shall set the the SSL context with the given value.**]**
         this.connection.setSSLSocketFactory(sslContext.getSocketFactory());
-    }
-
-    protected HttpConnection()
-    {
-        this.connection = null;
     }
 }

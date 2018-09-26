@@ -17,25 +17,25 @@ public class ConfigurationContent
         this.deviceContent = new HashMap<>();
     }
 
+    public Map<String, Map<String, Object>> getModulesContent()
+    {
+        return modulesContent;
+    }
+
     // Codes_SRS_SERVICE_SDK_JAVA_CONFIGURATION_CONTENT_28_002: [The ConfigurationContent class shall have the following properties: modulesContent and deviceContent
     public void setModulesContent(Map<String, Map<String, Object>> modulesContent)
     {
         this.modulesContent = modulesContent;
     }
 
-    public Map<String, Map<String, Object>> getModulesContent()
+    public Map<String, Object> getDeviceContent()
     {
-        return modulesContent;
+        return deviceContent;
     }
 
     public void setDeviceContent(Map<String, Object> deviceContent)
     {
         this.deviceContent = deviceContent;
-    }
-
-    public Map<String, Object> getDeviceContent()
-    {
-        return deviceContent;
     }
 
     public ConfigurationContentParser toConfigurationContentParser()

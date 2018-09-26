@@ -7,7 +7,7 @@ package com.microsoft.azure.sdk.iot.provisioning.service.exceptions;
 
 /**
  * Super class for the Device Provisioning Service exceptions on the Service Client.
- *
+ * <p>
  * <pre>
  * {@code
  * ProvisioningServiceClientException

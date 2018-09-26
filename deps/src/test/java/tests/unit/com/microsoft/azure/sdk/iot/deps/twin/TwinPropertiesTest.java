@@ -30,89 +30,21 @@ public class TwinPropertiesTest
             put("prop3", "val3");
         }
     };
-    private final static String JSON_ONLY_DESIRED_PROPERTIES =
-            "{" +
-                "\"desired\":{" +
-                    "\"prop1\":\"val1\"," +
-                    "\"prop2\":\"val2\"," +
-                    "\"prop3\":\"val3\"" +
-                "}" +
-            "}";
+    private final static String JSON_ONLY_DESIRED_PROPERTIES = "{" + "\"desired\":{" + "\"prop1\":\"val1\"," + "\"prop2\":\"val2\"," + "\"prop3\":\"val3\"" + "}" + "}";
 
-    private final static String JSON_ONLY_REPORTED_PROPERTIES =
-            "{" +
-                "\"reported\":{" +
-                    "\"prop1\":\"val1\"," +
-                    "\"prop2\":\"val2\"," +
-                    "\"prop3\":\"val3\"" +
-                "}" +
-            "}";
+    private final static String JSON_ONLY_REPORTED_PROPERTIES = "{" + "\"reported\":{" + "\"prop1\":\"val1\"," + "\"prop2\":\"val2\"," + "\"prop3\":\"val3\"" + "}" + "}";
 
-    private final static String JSON_ONLY_PROPERTIES =
-            "{" +
-                "\"desired\":{" +
-                    "\"prop1\":\"val1\"," +
-                    "\"prop2\":\"val2\"," +
-                    "\"prop3\":\"val3\"" +
-                "}," +
-                "\"reported\":{" +
-                    "\"prop1\":\"val1\"," +
-                    "\"prop2\":\"val2\"," +
-                    "\"prop3\":\"val3\"" +
-                "}" +
-            "}";
+    private final static String JSON_ONLY_PROPERTIES = "{" + "\"desired\":{" + "\"prop1\":\"val1\"," + "\"prop2\":\"val2\"," + "\"prop3\":\"val3\"" + "}," + "\"reported\":{" + "\"prop1\":\"val1\"," + "\"prop2\":\"val2\"," + "\"prop3\":\"val3\"" + "}" + "}";
 
-    private static final String JSON_FULL_SAMPLE =
-            "    {  \n" +
-            "      \"Brand\":\"NiceCar\",\n" +
-            "      \"MaxSpeed\":{  \n" +
-            "        \"Value\":500,\n" +
-            "        \"NewValue\":300,\n" +
-            "        \"Inner1\":{" +
-            "          \"Inner2\":\"FinalInnerValue\"" +
-            "        }\n" +
-            "      },\n" +
-            "      \"$metadata\":{  \n" +
-            "        \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-            "        \"$lastUpdatedVersion\":1,\n" +
-            "        \"Brand\":{" +
-            "          \"$lastUpdated\":\"2017-08-09T02:07:44.238Z\",\n" +
-            "          \"$lastUpdatedVersion\":2" +
-            "        },\n" +
-            "        \"MaxSpeed\":{  \n" +
-            "          \"$lastUpdated\":\"2017-10-21T02:07:44.238Z\",\n" +
-            "          \"$lastUpdatedVersion\":3,\n" +
-            "          \"Value\":{  \n" +
-            "            \"$lastUpdated\":\"2017-11-21T02:07:44.238Z\",\n" +
-            "            \"$lastUpdatedVersion\":4\n" +
-            "          },\n" +
-            "          \"NewValue\":{  \n" +
-            "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-            "            \"$lastUpdatedVersion\":5\n" +
-            "          },\n" +
-            "          \"Inner1\":{  \n" +
-            "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-            "            \"$lastUpdatedVersion\":6,\n" +
-            "            \"Inner2\":{  \n" +
-            "              \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-            "              \"$lastUpdatedVersion\":7\n" +
-            "            }\n" +
-            "          }\n" +
-            "        }\n" +
-            "      },\n" +
-            "      \"$version\":" + VERSION + "\n" +
-            "    }\n";
+    private static final String JSON_FULL_SAMPLE = "    {  \n" + "      \"Brand\":\"NiceCar\",\n" + "      \"MaxSpeed\":{  \n" + "        \"Value\":500,\n" + "        \"NewValue\":300,\n" + "        \"Inner1\":{" + "          \"Inner2\":\"FinalInnerValue\"" + "        }\n" + "      },\n" + "      \"$metadata\":{  \n" + "        \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "        \"$lastUpdatedVersion\":1,\n" + "        \"Brand\":{" + "          \"$lastUpdated\":\"2017-08-09T02:07:44.238Z\",\n" + "          \"$lastUpdatedVersion\":2" + "        },\n" + "        \"MaxSpeed\":{  \n" + "          \"$lastUpdated\":\"2017-10-21T02:07:44.238Z\",\n" + "          \"$lastUpdatedVersion\":3,\n" + "          \"Value\":{  \n" + "            \"$lastUpdated\":\"2017-11-21T02:07:44.238Z\",\n" + "            \"$lastUpdatedVersion\":4\n" + "          },\n" + "          \"NewValue\":{  \n" + "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "            \"$lastUpdatedVersion\":5\n" + "          },\n" + "          \"Inner1\":{  \n" + "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "            \"$lastUpdatedVersion\":6,\n" + "            \"Inner2\":{  \n" + "              \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "              \"$lastUpdatedVersion\":7\n" + "            }\n" + "          }\n" + "        }\n" + "      },\n" + "      \"$version\":" + VERSION + "\n" + "    }\n";
 
     /* SRS_TWIN_PROPERTIES_21_001: [The constructor shall throw IllegalArgumentException if the provided desired and reported properties is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullDesiredProperty()
     {
         // arrange
         // act
-        Deencapsulation.newInstance(
-                TwinProperties.class,
-                new Class[]{TwinCollection.class, TwinCollection.class},
-                (TwinCollection)null, (TwinCollection)null);
+        Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, (TwinCollection) null, (TwinCollection) null);
 
         // assert
     }
@@ -123,7 +55,7 @@ public class TwinPropertiesTest
     {
         // arrange
         // act
-        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, PROPERTIES, (TwinCollection)null);
+        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, PROPERTIES, (TwinCollection) null);
 
         // assert
         assertEquals(PROPERTIES, Deencapsulation.getField(twinProperties, "desired"));
@@ -136,7 +68,7 @@ public class TwinPropertiesTest
     {
         // arrange
         // act
-        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, (TwinCollection)null, PROPERTIES);
+        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, (TwinCollection) null, PROPERTIES);
 
         // assert
         assertEquals(PROPERTIES, Deencapsulation.getField(twinProperties, "reported"));
@@ -175,7 +107,7 @@ public class TwinPropertiesTest
     public void toJsonElementReturnsDesiredJsonElement()
     {
         // arrange
-        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, PROPERTIES, (TwinCollection)null);
+        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, PROPERTIES, (TwinCollection) null);
 
         // act
         JsonElement jsonElement = Deencapsulation.invoke(twinProperties, "toJsonElement");
@@ -189,7 +121,7 @@ public class TwinPropertiesTest
     public void toJsonElementReturnsReportedJsonElement()
     {
         // arrange
-        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, (TwinCollection)null, PROPERTIES);
+        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, (TwinCollection) null, PROPERTIES);
 
         // act
         JsonElement jsonElement = Deencapsulation.invoke(twinProperties, "toJsonElement");
@@ -237,7 +169,7 @@ public class TwinPropertiesTest
         // arrange
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         TwinCollection rawMap = gson.fromJson(JSON_FULL_SAMPLE, TwinCollection.class);
-        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, rawMap, (TwinCollection)null);
+        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, rawMap, (TwinCollection) null);
         String expectedJson = "{\"desired\":" + JSON_FULL_SAMPLE + "}";
 
         // act
@@ -254,7 +186,7 @@ public class TwinPropertiesTest
         // arrange
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         TwinCollection rawMap = gson.fromJson(JSON_FULL_SAMPLE, TwinCollection.class);
-        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, (TwinCollection)null, rawMap);
+        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, (TwinCollection) null, rawMap);
         String expectedJson = "{\"reported\":" + JSON_FULL_SAMPLE + "}";
 
         // act
@@ -288,8 +220,8 @@ public class TwinPropertiesTest
         TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, PROPERTIES, PROPERTIES);
 
         // act - assert
-        Helpers.assertMap((TwinCollection)Deencapsulation.invoke(twinProperties, "getDesired"), PROPERTIES);
-        Helpers.assertMap((TwinCollection)Deencapsulation.invoke(twinProperties, "getReported"), PROPERTIES);
+        Helpers.assertMap((TwinCollection) Deencapsulation.invoke(twinProperties, "getDesired"), PROPERTIES);
+        Helpers.assertMap((TwinCollection) Deencapsulation.invoke(twinProperties, "getReported"), PROPERTIES);
     }
 
     /* SRS_TWIN_PROPERTIES_21_009: [The getDesired shall return a TwinCollection with the stored desired property.] */
@@ -301,8 +233,8 @@ public class TwinPropertiesTest
         TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class);
 
         // act - assert
-        assertNull((TwinCollection)Deencapsulation.invoke(twinProperties, "getDesired"));
-        assertNull((TwinCollection)Deencapsulation.invoke(twinProperties, "getReported"));
+        assertNull((TwinCollection) Deencapsulation.invoke(twinProperties, "getDesired"));
+        assertNull((TwinCollection) Deencapsulation.invoke(twinProperties, "getReported"));
     }
 
     /* SRS_TWIN_PROPERTIES_21_011: [The toString shall return a String with the information in this class in a pretty print JSON.] */

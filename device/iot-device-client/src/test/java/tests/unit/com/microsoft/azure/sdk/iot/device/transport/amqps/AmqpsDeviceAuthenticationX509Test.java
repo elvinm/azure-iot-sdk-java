@@ -47,7 +47,7 @@ public class AmqpsDeviceAuthenticationX509Test
     private final String OPERATION_VALUE = "put-token";
     private final String TYPE_VALUE = "servicebus.windows.net:sastoken";
 
-    private final String DEVICES_PATH =  "/devices/";
+    private final String DEVICES_PATH = "/devices/";
 
     @Mocked
     DeviceClientConfig mockDeviceClientConfig;
@@ -139,7 +139,7 @@ public class AmqpsDeviceAuthenticationX509Test
     }
 
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONX509_12_001: [The constructor shall throw IllegalArgumentException if the  deviceClientConfig parameter is null.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullConfig()
     {
         new AmqpsDeviceAuthenticationX509(null);
@@ -167,9 +167,7 @@ public class AmqpsDeviceAuthenticationX509Test
         AmqpsDeviceAuthenticationX509 auth = new AmqpsDeviceAuthenticationX509(mockDeviceClientConfig);
 
         //act
-        AmqpsSendReturnValue result = Deencapsulation.invoke(auth, "sendMessageAndGetDeliveryHash",
-                new Class[]{MessageType.class, byte[].class, int.class, int.class, byte[].class},
-                null, null, 0, 0, null);
+        AmqpsSendReturnValue result = Deencapsulation.invoke(auth, "sendMessageAndGetDeliveryHash", new Class[]{MessageType.class, byte[].class, int.class, int.class, byte[].class}, null, null, 0, 0, null);
 
         //assert
         assertNull(result);
@@ -183,16 +181,14 @@ public class AmqpsDeviceAuthenticationX509Test
         AmqpsDeviceAuthenticationX509 auth = new AmqpsDeviceAuthenticationX509(mockDeviceClientConfig);
 
         //act
-        AmqpsSendReturnValue result = Deencapsulation.invoke(auth, "getMessageFromReceiverLink",
-                new Class[]{String.class},
-                "");
+        AmqpsSendReturnValue result = Deencapsulation.invoke(auth, "getMessageFromReceiverLink", new Class[]{String.class}, "");
 
         //assert
         assertNull(result);
     }
 
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONX509_12_006: [The function shall throw IllegalArgumentException if any of the input parameter is null.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setSSLContextThrowsForNullTransport()
     {
         //arrange
@@ -243,7 +239,7 @@ public class AmqpsDeviceAuthenticationX509Test
         final AmqpsDeviceAuthenticationX509 auth = new AmqpsDeviceAuthenticationX509(mockDeviceClientConfig);
 
         //act
-        boolean result = Deencapsulation.invoke(auth, "isLinkFound", new Class[] {String.class}, "");
+        boolean result = Deencapsulation.invoke(auth, "isLinkFound", new Class[]{String.class}, "");
 
         //assert
         assertTrue(result);

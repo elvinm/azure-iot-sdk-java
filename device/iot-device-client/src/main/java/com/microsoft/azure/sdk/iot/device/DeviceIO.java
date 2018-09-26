@@ -68,41 +68,31 @@ import java.util.concurrent.TimeUnit;
  */
 public final class DeviceIO
 {
-    /** The state of the IoT Hub client's connection with the IoT Hub. */
-    protected enum IotHubClientState
-    {
-        OPEN, CLOSED
-    }
-
     private long sendPeriodInMilliseconds;
     private long receivePeriodInMilliseconds;
-
     private CustomLogger logger;
     private IotHubTransport transport;
     private DeviceClientConfig config;
     private IotHubSendTask sendTask = null;
     private IotHubReceiveTask receiveTask = null;
     private IotHubClientProtocol protocol = null;
-
     private ScheduledExecutorService taskScheduler;
     private IotHubClientState state;
-
     private List<DeviceClientConfig> deviceClientConfigs = new LinkedList<>();
 
     /**
      * Constructor that takes a connection string as an argument.
      *
-     * @param config the connection configuration.
-     * @param sendPeriodInMilliseconds the period of time that iot hub will try to send messages in milliseconds.
+     * @param config                      the connection configuration.
+     * @param sendPeriodInMilliseconds    the period of time that iot hub will try to send messages in milliseconds.
      * @param receivePeriodInMilliseconds the period of time that iot hub will try to receive messages in milliseconds.
-     *
      * @throws IllegalArgumentException if any of {@code config} or
-     * {@code protocol} are {@code null}.
+     *                                  {@code protocol} are {@code null}.
      */
     DeviceIO(DeviceClientConfig config, long sendPeriodInMilliseconds, long receivePeriodInMilliseconds)
     {
         /* Codes_SRS_DEVICE_IO_21_002: [If the `config` is null, the constructor shall throw an IllegalArgumentException.] */
-        if(config == null)
+        if (config == null)
         {
             throw new IllegalArgumentException("Config cannot be null.");
         }
@@ -171,6 +161,7 @@ public final class DeviceIO
 
     /**
      * Adds a device client config to the saved list. Each device client config will be used in multiplexing
+     *
      * @param config the config tied to the device client to multiplex with
      */
     void addClient(DeviceClientConfig config)
@@ -197,11 +188,9 @@ public final class DeviceIO
         // scheduling the next one, so executions of a given task
         // will never overlap.
         /* Codes_SRS_DEVICE_IO_21_013: [The open shall schedule send tasks to run every SEND_PERIOD_MILLIS milliseconds.] */
-        this.taskScheduler.scheduleAtFixedRate(this.sendTask, 0,
-                sendPeriodInMilliseconds, TimeUnit.MILLISECONDS);
+        this.taskScheduler.scheduleAtFixedRate(this.sendTask, 0, sendPeriodInMilliseconds, TimeUnit.MILLISECONDS);
         /* Codes_SRS_DEVICE_IO_21_014: [The open shall schedule receive tasks to run every receivePeriodInMilliseconds milliseconds.] */
-        this.taskScheduler.scheduleAtFixedRate(this.receiveTask, 0,
-                receivePeriodInMilliseconds, TimeUnit.MILLISECONDS);
+        this.taskScheduler.scheduleAtFixedRate(this.receiveTask, 0, receivePeriodInMilliseconds, TimeUnit.MILLISECONDS);
 
         /* Codes_SRS_DEVICE_IO_21_016: [The open shall set the `state` as `CONNECTED`.] */
         this.state = IotHubClientState.OPEN;
@@ -211,7 +200,7 @@ public final class DeviceIO
      * Completes all current outstanding requests and closes the IoT Hub client.
      * Must be called to terminate the background thread that is sending data to
      * IoT Hub. After {@code close()} is called, the IoT Hub client is no longer
-     *  usable. If the client is already closed, the function shall do nothing.
+     * usable. If the client is already closed, the function shall do nothing.
      *
      * @throws IOException if the connection to an IoT Hub cannot be closed.
      */
@@ -243,7 +232,7 @@ public final class DeviceIO
      * Completes all current outstanding requests and closes the IoT Hub client.
      * Must be called to terminate the background thread that is sending data to
      * IoT Hub. After {@code close()} is called, the IoT Hub client is no longer
-     *  usable. If the client is already closed, the function shall do nothing.
+     * usable. If the client is already closed, the function shall do nothing.
      *
      * @throws IOException if the connection to an IoT Hub cannot be closed.
      */
@@ -256,27 +245,21 @@ public final class DeviceIO
     /**
      * Asynchronously sends an event message to the IoT Hub.
      *
-     * @param message the message to be sent.
-     * @param callback the callback to be invoked when a response is received.
-     * Can be {@code null}.
+     * @param message         the message to be sent.
+     * @param callback        the callback to be invoked when a response is received.
+     *                        Can be {@code null}.
      * @param callbackContext a context to be passed to the callback. Can be
-     * {@code null} if no callback is provided.
-     * @param deviceId the id of the device sending the message
-     *
+     *                        {@code null} if no callback is provided.
+     * @param deviceId        the id of the device sending the message
      * @throws IllegalArgumentException if the message provided is {@code null}.
-     * @throws IllegalStateException if the client has not been opened yet or is already closed.
+     * @throws IllegalStateException    if the client has not been opened yet or is already closed.
      */
-    public synchronized void sendEventAsync(Message message,
-                               IotHubEventCallback callback,
-                               Object callbackContext,
-                               String deviceId)
+    public synchronized void sendEventAsync(Message message, IotHubEventCallback callback, Object callbackContext, String deviceId)
     {
         /* Codes_SRS_DEVICE_IO_21_024: [If the client is closed, the sendEventAsync shall throw an IllegalStateException.] */
         if (this.state == IotHubClientState.CLOSED)
         {
-            throw new IllegalStateException(
-                    "Cannot send event from "
-                            + "an IoT Hub client that is closed.");
+            throw new IllegalStateException("Cannot send event from " + "an IoT Hub client that is closed.");
         }
 
         /* Codes_SRS_DEVICE_IO_21_023: [If the message given is null, the sendEventAsync shall throw an IllegalArgumentException.] */
@@ -311,13 +294,13 @@ public final class DeviceIO
      * Setter for the receive period in milliseconds.
      *
      * @param newIntervalInMilliseconds is the new interval in milliseconds.
-     * @throws IOException if the task schedule exist but there is no receive task function to call.
+     * @throws IOException              if the task schedule exist but there is no receive task function to call.
      * @throws IllegalArgumentException if the provided interval is invalid (zero or negative).
      */
     public void setReceivePeriodInMilliseconds(long newIntervalInMilliseconds) throws IOException
     {
         /* Codes_SRS_DEVICE_IO_21_030: [If the the provided interval is zero or negative, the setReceivePeriodInMilliseconds shall throw IllegalArgumentException.] */
-        if(newIntervalInMilliseconds <= 0L)
+        if (newIntervalInMilliseconds <= 0L)
         {
             throw new IllegalArgumentException("receive interval can not be zero or negative");
         }
@@ -326,16 +309,15 @@ public final class DeviceIO
         this.receivePeriodInMilliseconds = newIntervalInMilliseconds;
 
         /* Codes_SRS_DEVICE_IO_21_028: [If the task scheduler already exists, the setReceivePeriodInMilliseconds shall change the `scheduleAtFixedRate` for the receiveTask to the new value.] */
-        if(this.taskScheduler != null)
+        if (this.taskScheduler != null)
         {
             /* Codes_SRS_DEVICE_IO_21_029: [If the `receiveTask` is null, the setReceivePeriodInMilliseconds shall throw IOException.] */
-            if(this.receiveTask == null)
+            if (this.receiveTask == null)
             {
                 throw new IOException("transport receive task not set");
             }
 
-            this.taskScheduler.scheduleAtFixedRate(this.receiveTask, 0,
-                    this.receivePeriodInMilliseconds, TimeUnit.MILLISECONDS);
+            this.taskScheduler.scheduleAtFixedRate(this.receiveTask, 0, this.receivePeriodInMilliseconds, TimeUnit.MILLISECONDS);
         }
     }
 
@@ -354,13 +336,13 @@ public final class DeviceIO
      * Setter for the send period in milliseconds.
      *
      * @param newIntervalInMilliseconds is the new interval in milliseconds.
-     * @throws IOException if the task schedule exist but there is no send task function to call.
+     * @throws IOException              if the task schedule exist but there is no send task function to call.
      * @throws IllegalArgumentException if the provided interval is invalid (zero or negative).
      */
     public void setSendPeriodInMilliseconds(long newIntervalInMilliseconds) throws IOException
     {
         /* Codes_SRS_DEVICE_IO_21_036: [If the the provided interval is zero or negative, the setSendPeriodInMilliseconds shall throw IllegalArgumentException.] */
-        if(newIntervalInMilliseconds <= 0L)
+        if (newIntervalInMilliseconds <= 0L)
         {
             throw new IllegalArgumentException("send interval can not be zero or negative");
         }
@@ -369,16 +351,15 @@ public final class DeviceIO
         this.sendPeriodInMilliseconds = newIntervalInMilliseconds;
 
         /* Codes_SRS_DEVICE_IO_21_034: [If the task scheduler already exists, the setSendPeriodInMilliseconds shall change the `scheduleAtFixedRate` for the sendTask to the new value.] */
-        if(this.taskScheduler != null)
+        if (this.taskScheduler != null)
         {
             /* Codes_SRS_DEVICE_IO_21_035: [If the `sendTask` is null, the setSendPeriodInMilliseconds shall throw IOException.] */
-            if(this.sendTask == null)
+            if (this.sendTask == null)
             {
                 throw new IOException("transport send task not set");
             }
 
-            this.taskScheduler.scheduleAtFixedRate(this.sendTask, 0,
-                    this.sendPeriodInMilliseconds, TimeUnit.MILLISECONDS);
+            this.taskScheduler.scheduleAtFixedRate(this.sendTask, 0, this.sendPeriodInMilliseconds, TimeUnit.MILLISECONDS);
         }
     }
 
@@ -406,6 +387,7 @@ public final class DeviceIO
 
     /**
      * Getter for the transport empty queue.
+     *
      * @return a boolean true if the transport queue is empty, or false if there is messages to send.
      */
     public boolean isEmpty()
@@ -417,9 +399,9 @@ public final class DeviceIO
     /**
      * Registers a callback with the configured transport to be executed whenever the connection to the device is lost or established.
      *
-     * @param callback the callback to be called.
+     * @param callback        the callback to be called.
      * @param callbackContext a context to be passed to the callback. Can be
-     * {@code null} if no callback is provided.
+     *                        {@code null} if no callback is provided.
      */
     public void registerConnectionStateCallback(IotHubConnectionStateCallback callback, Object callbackContext)
     {
@@ -431,5 +413,13 @@ public final class DeviceIO
     {
         //Codes_SRS_DEVICE_IO_34_020: [This function shall register the callback with the transport.]
         this.transport.registerConnectionStatusChangeCallback(statusChangeCallback, callbackContext);
+    }
+
+    /**
+     * The state of the IoT Hub client's connection with the IoT Hub.
+     */
+    protected enum IotHubClientState
+    {
+        OPEN, CLOSED
     }
 }

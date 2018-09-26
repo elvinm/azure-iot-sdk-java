@@ -42,14 +42,14 @@ public class SqlQueryTest
     }
 
     //Tests_SRS_SQL_QUERY_25_001: [ The constructor shall throw IllegalArgumentException if either input string selection or fromType is null or empty ]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createQueryNoSelectThrows() throws IOException
     {
         //act
         SqlQuery sqlQueryTest = SqlQuery.createSqlQuery(null, SqlQuery.FromType.DEVICES, null, null);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createQueryNoFROMThrows() throws IOException
     {
         //act

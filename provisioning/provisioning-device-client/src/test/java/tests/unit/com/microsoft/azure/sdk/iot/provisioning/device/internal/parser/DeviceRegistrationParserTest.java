@@ -34,14 +34,14 @@ public class DeviceRegistrationParserTest
     }
 
     //SRS_DeviceRegistration_25_001: [ The constructor shall throw IllegalArgumentException if Registration Id is null or empty. ]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithoutTPMOnNullRegistrationIdThrows() throws Exception
     {
         DeviceRegistrationParser deviceRegistrationParser = new DeviceRegistrationParser(null);
     }
 
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithoutTPMOnEmptyRegistrationIdThrows() throws Exception
     {
         DeviceRegistrationParser deviceRegistrationParser = new DeviceRegistrationParser("");
@@ -55,11 +55,7 @@ public class DeviceRegistrationParserTest
         final String regID = "testID";
         final String eKey = "testEndorsementKey";
         final String sRKey = "testStorageRootKey";
-        final String expectedJson = "{\"registrationId\":\"testID\"," +
-                "\"tpm\":{" +
-                    "\"endorsementKey\":\"testEndorsementKey\"," +
-                    "\"storageRootKey\":\"testStorageRootKey\"" +
-                "}}";
+        final String expectedJson = "{\"registrationId\":\"testID\"," + "\"tpm\":{" + "\"endorsementKey\":\"testEndorsementKey\"," + "\"storageRootKey\":\"testStorageRootKey\"" + "}}";
 
         DeviceRegistrationParser deviceRegistrationParser = new DeviceRegistrationParser(regID, eKey, sRKey);
         assertNotNull(deviceRegistrationParser.toJson());
@@ -67,7 +63,7 @@ public class DeviceRegistrationParserTest
     }
 
     //SRS_DeviceRegistration_25_003: [ The constructor shall throw IllegalArgumentException if Registration Id is null or empty. ]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithTPMOnNullRegistrationIdThrows() throws Exception
     {
         final String eKey = "testEndorsementKey";
@@ -75,7 +71,7 @@ public class DeviceRegistrationParserTest
         DeviceRegistrationParser deviceRegistrationParser = new DeviceRegistrationParser(null, eKey, sRKey);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithTPMOnEmptyRegistrationIdThrows() throws Exception
     {
         final String eKey = "testEndorsementKey";
@@ -84,7 +80,7 @@ public class DeviceRegistrationParserTest
     }
 
     //SRS_DeviceRegistration_25_004: [ The constructor shall throw IllegalArgumentException if EndorsementKey is null or empty. ]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithTPMOnNullEkThrows() throws Exception
     {
         final String eKey = "testEndorsementKey";
@@ -92,7 +88,7 @@ public class DeviceRegistrationParserTest
         DeviceRegistrationParser deviceRegistrationParser = new DeviceRegistrationParser(TEST_REGISTRATION_ID, null, sRKey);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithTPMOnEmptyEkThrows() throws Exception
     {
         final String eKey = "testEndorsementKey";

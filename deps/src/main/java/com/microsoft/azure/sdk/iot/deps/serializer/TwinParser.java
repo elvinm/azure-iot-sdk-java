@@ -11,34 +11,31 @@ import java.util.Map;
 
 /**
  * TwinParser Representation including the twin collection and Json serializer and deserializer.
+ *
  * @deprecated As of release 0.4.0, replaced by {@link com.microsoft.azure.sdk.iot.deps.twin.TwinState}
  */
 @Deprecated
 public class TwinParser
 {
 
-    private TwinChangedCallback onDesiredCallback = null;
-    private TwinChangedCallback onReportedCallback = null;
-    private static TwinChangedCallback onTagsCallback = null;
-
     private static final String TAGS_TAG = "tags";
     private static final String PROPERTIES_TAG = "properties";
     private static final String DESIRED_TAG = "desired";
     private static final String REPORTED_TAG = "reported";
-
     private static final int MAX_MAP_LEVEL = 5;
-
+    private static TwinChangedCallback onTagsCallback = null;
     protected TwinTags tags = null;
     protected TwinProperties properties = new TwinProperties();
     protected RegisterManagerParser manager = new RegisterManagerParser();
+    private TwinChangedCallback onDesiredCallback = null;
+    private TwinChangedCallback onReportedCallback = null;
 
     /**
      * CONSTRUCTOR
      * Create a TwinParser instance with default values.
-     *      set OnDesiredCallback as null
-     *      set OnReportedCallback as null
-     *      set Tags as null
-     *
+     * set OnDesiredCallback as null
+     * set OnReportedCallback as null
+     * set Tags as null
      */
     public TwinParser()
     {
@@ -51,8 +48,8 @@ public class TwinParser
     /**
      * CONSTRUCTOR
      * Create a TwinParser instance with default values.
-     *      set OnReportedCallback as null
-     *      set Tags as null
+     * set OnReportedCallback as null
+     * set Tags as null
      *
      * @param onDesiredCallback - Callback function to report changes on the `Desired` collection.
      */
@@ -70,9 +67,9 @@ public class TwinParser
     /**
      * CONSTRUCTOR
      * Create a TwinParser instance with default values.
-     *      set Tags as null
+     * set Tags as null
      *
-     * @param onDesiredCallback - Callback function to report changes on the `Desired` collection.
+     * @param onDesiredCallback  - Callback function to report changes on the `Desired` collection.
      * @param onReportedCallback - Callback function to report changes on the `Reported` collection.
      */
     public TwinParser(TwinChangedCallback onDesiredCallback, TwinChangedCallback onReportedCallback)
@@ -156,7 +153,7 @@ public class TwinParser
         JsonObject twinJson = gson.toJsonTree(manager).getAsJsonObject();
 
         /* Codes_SRS_TWINPARSER_21_018: [The toJsonElement shall not include null fields.] */
-        if(tags != null)
+        if (tags != null)
         {
             /* Codes_SRS_TWINPARSER_21_085: [If `tags` is enable, the toJsonElement shall include the tags in the json even if it has no content.] */
             twinJson.add(TAGS_TAG, tags.toJsonElement());
@@ -172,12 +169,11 @@ public class TwinParser
 
     /**
      * Enable tags in the Twin collection and in the Json.
-     *
      */
     public void enableTags()
     {
         /* Codes_SRS_TWINPARSER_21_161: [It tags is already enabled, the enableTags shall not do anything.] */
-        if(this.tags == null)
+        if (this.tags == null)
         {
             /* Codes_SRS_TWINPARSER_21_019: [The enableTags shall enable tags in the twin collection.] */
             this.tags = new TwinTags();
@@ -186,7 +182,6 @@ public class TwinParser
 
     /**
      * Enable metadata report in the Json.
-     *
      */
     public void enableMetadata()
     {
@@ -199,17 +194,14 @@ public class TwinParser
      * Update properties and tags information in the collection, and return a string with a json that contains a
      * sub-collection of added properties, properties with new value, added tags, and tags with new values.
      *
-     * @param desiredPropertyMap - Map of `desired` property to change the collection.
+     * @param desiredPropertyMap  - Map of `desired` property to change the collection.
      * @param reportedPropertyMap - Map of `reported` property to change the collection.
-     * @param tagsMap - Map of `tags` to change the collection.
+     * @param tagsMap             - Map of `tags` to change the collection.
      * @return Json with added or changed properties and tags
      * @throws IllegalArgumentException This exception is thrown if the properties or tags in the maps do not fits the requirements.
-     * @throws IOException This exception is thrown if tags the is not enabled.
+     * @throws IOException              This exception is thrown if tags the is not enabled.
      */
-    public String updateTwin(Map<String, Object> desiredPropertyMap,
-                             Map<String, Object> reportedPropertyMap,
-                             Map<String, Object> tagsMap)
-            throws IllegalArgumentException, IOException
+    public String updateTwin(Map<String, Object> desiredPropertyMap, Map<String, Object> reportedPropertyMap, Map<String, Object> tagsMap) throws IllegalArgumentException, IOException
     {
         JsonObject jsonProperty = new JsonObject();
         JsonObject jsonTwin;
@@ -223,12 +215,12 @@ public class TwinParser
         jsonTwin = gson.toJsonTree(manager).getAsJsonObject();
 
         /* Codes_SRS_TWINPARSER_21_075: [If Tags is not enable and `tagsMap` is not null, the updateTwin shall throw IOException.] */
-        if((tags == null) && (tagsMap != null))
+        if ((tags == null) && (tagsMap != null))
         {
             throw new IOException("Update not enabled Tags");
         }
 
-        if((desiredPropertyMap == null) && (reportedPropertyMap == null) && (tagsMap == null))
+        if ((desiredPropertyMap == null) && (reportedPropertyMap == null) && (tagsMap == null))
         {
             /* Codes_SRS_TWINPARSER_21_160: [If all of the provided map is null, the updateTwin shall not change the collection and throw IllegalArgumentException.] */
             throw new IllegalArgumentException("Null maps");
@@ -242,7 +234,7 @@ public class TwinParser
         /* Codes_SRS_TWINPARSER_21_081: [If any `key` already exists, the updateTwin shall replace the existed value by the new one.] */
         /* Codes_SRS_TWINPARSER_21_082: [If any `value` is null, the updateTwin shall delete it from the collection and report on Json.] */
         JsonElement jsonDesiredProperty = innerUpdateDesiredProperty(desiredPropertyMap);
-        if(jsonDesiredProperty != null)
+        if (jsonDesiredProperty != null)
         {
             jsonProperty.add(DESIRED_TAG, jsonDesiredProperty);
         }
@@ -259,17 +251,17 @@ public class TwinParser
         /* Codes_SRS_TWINPARSER_21_081: [If any `key` already exists, the updateTwin shall replace the existed value by the new one.] */
         /* Codes_SRS_TWINPARSER_21_082: [If any `value` is null, the updateTwin shall delete it from the collection and report on Json.] */
         JsonElement jsonReportedProperty = innerUpdateReportedProperty(reportedPropertyMap);
-        if(jsonReportedProperty != null)
+        if (jsonReportedProperty != null)
         {
             jsonProperty.add(REPORTED_TAG, jsonReportedProperty);
         }
         else
         {
-            jsonProperty.add(REPORTED_TAG,  new JsonObject());
+            jsonProperty.add(REPORTED_TAG, new JsonObject());
         }
 
         JsonElement jsonTags = null;
-        if(tags != null)
+        if (tags != null)
         {
             /* Codes_SRS_TWINPARSER_21_116: [The updateTwin shall add all provided properties and tags to the collection.] */
             /* Codes_SRS_TWINPARSER_21_118: [If one of the provided map is null, the updateTwin shall not change that part of the collection.] */
@@ -278,7 +270,7 @@ public class TwinParser
             /* Codes_SRS_TWINPARSER_21_128: [If one of the provided map is empty, the updateTwin shall not change its the collection.] */
             /* Codes_SRS_TWINPARSER_21_081: [If any `key` already exists, the updateTwin shall replace the existed value by the new one.] */
             /* Codes_SRS_TWINPARSER_21_082: [If any `value` is null, the updateTwin shall delete it from the collection and report on Json.] */
-            if(tagsMap == null)
+            if (tagsMap == null)
             {
                 jsonTwin.add(TAGS_TAG, new JsonObject());
             }
@@ -296,7 +288,7 @@ public class TwinParser
             }
         }
 
-        if((jsonDesiredProperty!=null) || (jsonReportedProperty!=null) || (jsonTags!=null))
+        if ((jsonDesiredProperty != null) || (jsonReportedProperty != null) || (jsonTags != null))
         {
             jsonTwin.add(PROPERTIES_TAG, jsonProperty);
         }
@@ -321,14 +313,14 @@ public class TwinParser
      */
     public String updateDesiredProperty(Map<String, Object> propertyMap) throws IllegalArgumentException
     {
-        if(propertyMap == null)
+        if (propertyMap == null)
         {
             /* Codes_SRS_TWINPARSER_21_023: [If the provided `property` map is null, the updateDesiredProperty shall not change the collection and throw IllegalArgumentException.] */
             throw new IllegalArgumentException("Null desired property map.");
         }
 
         JsonElement jsonElement = innerUpdateDesiredProperty(propertyMap);
-        if(jsonElement == null)
+        if (jsonElement == null)
         {
             /* Codes_SRS_TWINPARSER_21_024: [If no Desired property changed its value, the updateDesiredProperty shall return null.] */
             /* Codes_SRS_TWINPARSER_21_063: [If the provided `property` map is empty, the updateDesiredProperty shall not change the collection and return null.] */
@@ -341,7 +333,7 @@ public class TwinParser
     {
         JsonElement updatedElements;
 
-        if(propertyMap != null)
+        if (propertyMap != null)
         {
             /* Codes_SRS_TWINPARSER_21_073: [If the map is invalid, the updateDesiredProperty shall throw IllegalArgumentException.] */
             validateMap(propertyMap);
@@ -372,14 +364,14 @@ public class TwinParser
      */
     public String updateReportedProperty(Map<String, Object> propertyMap) throws IllegalArgumentException
     {
-        if(propertyMap == null)
+        if (propertyMap == null)
         {
             /* Codes_SRS_TWINPARSER_21_027: [If the provided `property` map is null, the updateReportedProperty shall not change the collection and throw IllegalArgumentException.] */
             throw new IllegalArgumentException("Null reported property map.");
         }
 
         JsonElement jsonElement = innerUpdateReportedProperty(propertyMap);
-        if(jsonElement == null)
+        if (jsonElement == null)
         {
             /* Codes_SRS_TWINPARSER_21_028: [If no Reported property changed its value, the updateReportedProperty shall return null.] */
             return null;
@@ -391,7 +383,7 @@ public class TwinParser
     {
         JsonElement updatedElements;
 
-        if(propertyMap != null)
+        if (propertyMap != null)
         {
             /* Codes_SRS_TWINPARSER_21_079: [If the map is invalid, the updateReportedProperty shall throw IllegalArgumentException.] */
             validateMap(propertyMap);
@@ -411,7 +403,7 @@ public class TwinParser
 
         return updatedElements;
     }
-    
+
     /**
      * Update the `tags` information in the collection, and return a string with a json that contains a
      * sub-collection of added tags, or tags with new value.
@@ -419,12 +411,12 @@ public class TwinParser
      * @param tagsMap - Map of `tags` to change the collection.
      * @return Json with added or changed tags
      * @throws IllegalArgumentException This exception is thrown if the tags in the map do not fits the requirements.
-     * @throws IOException This exception is thrown if tags the is not enabled.
+     * @throws IOException              This exception is thrown if tags the is not enabled.
      */
     public String updateTags(Map<String, Object> tagsMap) throws IllegalArgumentException, IOException
     {
         JsonElement jsonElement = innerUpdateTags(tagsMap);
-        if(jsonElement == null)
+        if (jsonElement == null)
         {
             /* Codes_SRS_TWINPARSER_21_109: [If the provided `tagsMap` is empty, the updateTags shall not change the collection and return null.] */
             /* Codes_SRS_TWINPARSER_21_104: [The updateTags shall return a string with json representing the tags with changes.] */
@@ -437,13 +429,13 @@ public class TwinParser
     {
         JsonElement updatedElements;
 
-        if(tags == null)
+        if (tags == null)
         {
             /* Codes_SRS_TWINPARSER_21_111: [If Tags is not enable, the updateTags shall throw IOException.] */
             throw new IOException("Update not enabled Tags");
         }
 
-        if(tagsMap != null)
+        if (tagsMap != null)
         {
             /* Codes_SRS_TWINPARSER_21_110: [If the map is invalid, the updateTags shall throw IllegalArgumentException.] */
             validateMap(tagsMap);
@@ -477,7 +469,7 @@ public class TwinParser
     {
         String json;
 
-        if(propertyMap != null)
+        if (propertyMap != null)
         {
             /* Codes_SRS_TWINPARSER_21_125: [If the map is invalid, the resetDesiredProperty shall not change the collection and throw IllegalArgumentException.] */
             validateMap(propertyMap);
@@ -519,7 +511,7 @@ public class TwinParser
     {
         String json;
 
-        if(propertyMap != null)
+        if (propertyMap != null)
         {
             /* Codes_SRS_TWINPARSER_21_135: [If the map is invalid, the resetReportedProperty shall not change the collection and throw IllegalArgumentException.] */
             validateMap(propertyMap);
@@ -556,19 +548,19 @@ public class TwinParser
      * @param tagsMap - Map of `tags` to change the collection.
      * @return Json with added tags
      * @throws IllegalArgumentException This exception is thrown if the tags in the map do not fits the requirements.
-     * @throws IOException This exception is thrown if tags the is not enabled.
+     * @throws IOException              This exception is thrown if tags the is not enabled.
      */
     public String resetTags(Map<String, Object> tagsMap) throws IllegalArgumentException, IOException
     {
         String json;
 
-        if(tags == null)
+        if (tags == null)
         {
             /* Codes_SRS_TWINPARSER_21_146: [If Tags is not enable, the resetTags shall throw IOException.] */
-             throw new IOException("Update not enabled Tags");
+            throw new IOException("Update not enabled Tags");
         }
 
-        if(tagsMap != null)
+        if (tagsMap != null)
         {
             /* Codes_SRS_TWINPARSER_21_145: [If the map is invalid, the resetTags shall not change the collection and throw IllegalArgumentException.] */
             validateMap(tagsMap);
@@ -609,7 +601,7 @@ public class TwinParser
     public void updateTwin(String json) throws IllegalArgumentException
     {
         /* Codes_SRS_TWINPARSER_21_072: [If the provided json is null, the updateTwin shall not change the collection, not call the OnDesiredCallback or the OnReportedCallback, and throws IllegalArgumentException.] */
-        if(json == null)
+        if (json == null)
         {
             throw new IllegalArgumentException("Null json");
         }
@@ -618,7 +610,7 @@ public class TwinParser
         validateJson(json);
 
         /* Codes_SRS_TWINPARSER_21_071: [If the provided json is empty, the updateTwin shall not change the collection and not call the OnDesiredCallback or the OnReportedCallback.] */
-        if(!json.isEmpty())
+        if (!json.isEmpty())
         {
             Gson gson = new GsonBuilder().disableInnerClassSerialization().disableHtmlEscaping().create();
             Map<String, Object> jsonTree;
@@ -671,7 +663,7 @@ public class TwinParser
                 }
                 else if (entry.getKey().equals(TAGS_TAG))
                 {
-                    if(tags != null)
+                    if (tags != null)
                     {
                         tags.update((Map<String, Object>) entry.getValue(), onTagsCallback);
                     }
@@ -691,13 +683,13 @@ public class TwinParser
     public void updateDesiredProperty(String json) throws IllegalArgumentException
     {
         /* Codes_SRS_TWINPARSER_21_066: [If the provided json is null, the updateDesiredProperty shall not change the collection, not call the OnDesiredCallback, and throws IllegalArgumentException.] */
-        if(json == null)
+        if (json == null)
         {
             throw new IllegalArgumentException("Null json");
         }
 
         /* Codes_SRS_TWINPARSER_21_065: [If the provided json is empty, the updateDesiredProperty shall not change the collection and not call the OnDesiredCallback.] */
-        if(!json.isEmpty())
+        if (!json.isEmpty())
         {
             /* Codes_SRS_TWINPARSER_21_029: [The updateDesiredProperty shall update the Desired property using the information provided in the json.] */
             /* Codes_SRS_TWINPARSER_21_030: [The updateDesiredProperty shall generate a map with all pairs key value that had its content changed.] */
@@ -727,13 +719,13 @@ public class TwinParser
     public void updateReportedProperty(String json) throws IllegalArgumentException
     {
         /* Codes_SRS_TWINPARSER_21_068: [If the provided json is null, the updateReportedProperty shall not change the collection, not call the OnReportedCallback, and throws IllegalArgumentException.] */
-        if(json == null)
+        if (json == null)
         {
             throw new IllegalArgumentException("Null json");
         }
 
         /* Codes_SRS_TWINPARSER_21_067: [If the provided json is empty, the updateReportedProperty shall not change the collection and not call the OnReportedCallback.] */
-        if(!json.isEmpty())
+        if (!json.isEmpty())
         {
             /* Codes_SRS_TWINPARSER_21_034: [The updateReportedProperty shall update the Reported property using the information provided in the json.] */
             /* Codes_SRS_TWINPARSER_21_035: [The updateReportedProperty shall generate a map with all pairs key value that had its content changed.] */
@@ -757,8 +749,8 @@ public class TwinParser
      * Update the device manager information in the collection, and return a string with a json that contains a
      * the new device manager description, including new and old values.
      *
-     * @param deviceId - Device name
-     * @param status - Device status("enabled", "disabled")
+     * @param deviceId     - Device name
+     * @param status       - Device status("enabled", "disabled")
      * @param statusReason - A 128 char long string storing the reason of suspension (for status="disabled").
      * @return Json with the manager description. Null if nothing change.
      * @throws IllegalArgumentException This exception is thrown if there are any inconsistent in the provided description.
@@ -770,18 +762,18 @@ public class TwinParser
         manager.validateDeviceManager(deviceId, status, statusReason);
 
         /* Codes_SRS_TWINPARSER_21_162: [The updateDeviceManager shall replace the `status` by the provided one.] */
-        if(manager.setStatus(status, statusReason))
+        if (manager.setStatus(status, statusReason))
         {
             change = true;
         }
 
         /* Codes_SRS_TWINPARSER_21_159: [The updateDeviceManager shall replace the `deviceId` by the provided one.] */
-        if(manager.setDeviceId(deviceId))
+        if (manager.setDeviceId(deviceId))
         {
             change = true;
         }
 
-        if(!change)
+        if (!change)
         {
             /* Codes_SRS_TWINPARSER_21_167: [If nothing change in the management collection, The updateDeviceManager shall return null.] */
             return null;
@@ -843,14 +835,14 @@ public class TwinParser
      */
     public Map<String, Object> getTagsMap() throws IOException
     {
-        if(this.tags == null)
+        if (this.tags == null)
         {
             /* Codes_SRS_TWINPARSER_21_074: [If Tags is not enable, the getTagsMap shall throw IOException.] */
-             throw new IOException("Update not enabled Tags");
+            throw new IOException("Update not enabled Tags");
         }
 
         /* Codes_SRS_TWINPARSER_21_052: [The getTagsMap shall return a map with all tags in the collection.] */
-         return this.tags.getMap();
+        return this.tags.getMap();
     }
 
     /**
@@ -871,9 +863,9 @@ public class TwinParser
      * Setter for device name
      *
      * @param deviceId device id
-     * A case-sensitive string (up to 128 char long)
-     * of ASCII 7-bit alphanumeric chars
-     * + {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}
+     *                 A case-sensitive string (up to 128 char long)
+     *                 of ASCII 7-bit alphanumeric chars
+     *                 + {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}
      * @throws IllegalArgumentException if the provided device Id is not valid.
      */
     public void setDeviceId(String deviceId) throws IllegalArgumentException
@@ -908,21 +900,10 @@ public class TwinParser
     }
 
     /**
-     * Getter for Twin version
-     *
-     * @return A Integer representing a twin tags and properties version in the JSON. It can be {@code null}
-     */
-    public Integer getVersion()
-    {
-        /* Codes_SRS_TWINPARSER_21_173: [The `getVersion` shall return the Integer representing a twin version.] */
-        return this.manager.version;
-    }
-
-    /**
      * Setter for ETag.
      *
      * @param eTag is a string representing a weak ETAG version
-     * of this JSON description. This is a hash.
+     *             of this JSON description. This is a hash.
      * @throws IllegalArgumentException if the provided eTag Id is not valid.
      */
     public void setETag(String eTag) throws IllegalArgumentException
@@ -931,6 +912,17 @@ public class TwinParser
         ParserUtility.validateStringUTF8(eTag);
         /* Codes_SRS_TWINPARSER_21_170: [The `setETag` shall set the ETag in the twin collection.] */
         this.manager.eTag = eTag;
+    }
+
+    /**
+     * Getter for Twin version
+     *
+     * @return A Integer representing a twin tags and properties version in the JSON. It can be {@code null}
+     */
+    public Integer getVersion()
+    {
+        /* Codes_SRS_TWINPARSER_21_173: [The `getVersion` shall return the Integer representing a twin version.] */
+        return this.manager.version;
     }
 
     /**
@@ -1015,7 +1007,7 @@ public class TwinParser
             throw new IllegalArgumentException("Malformed Json: " + e);
         }
 
-        if(map != null)
+        if (map != null)
         {
             boolean propertiesLevel = false;
             boolean containsTagsOrProperties = false;
@@ -1042,7 +1034,7 @@ public class TwinParser
                 }
                 else if (entry.getKey().equals(TAGS_TAG))
                 {
-                    if(tags != null)
+                    if (tags != null)
                     {
                         tags.validate((Map<String, Object>) entry.getValue());
                     }
@@ -1050,7 +1042,7 @@ public class TwinParser
                     containsTagsOrProperties = true;
                 }
             }
-            if(!containsTagsOrProperties)
+            if (!containsTagsOrProperties)
             {
                 throw new IllegalArgumentException("Json do not contains twin information");
             }
@@ -1059,7 +1051,7 @@ public class TwinParser
 
     private void validateMap(Map<String, Object> map) throws IllegalArgumentException
     {
-        if(map != null)
+        if (map != null)
         {
             validateMap(map, 0, MAX_MAP_LEVEL, false);
         }
@@ -1067,9 +1059,9 @@ public class TwinParser
 
     private void validateMap(Map<String, Object> map, int level, int maxLevel, boolean allowDollar) throws IllegalArgumentException
     {
-        level ++;
-        
-        for(Map.Entry<String, Object> entry : map.entrySet())
+        level++;
+
+        for (Map.Entry<String, Object> entry : map.entrySet())
         {
             String key = entry.getKey();
             Object value = entry.getValue();
@@ -1079,18 +1071,18 @@ public class TwinParser
             /* Codes_SRS_TWINPARSER_21_154: [A valid `key` shall be less than 128 characters long.] */
             /* Codes_SRS_TWINPARSER_21_155: [A valid `key` shall not have an illegal character (`$`,`.`, space).] */
             ParserUtility.validateKey(key, allowDollar);
-            
+
             /* Codes_SRS_TWINPARSER_21_156: [A valid `value` shall contains types of boolean, number, string, or object.] */
-            if((value != null) && ((value.getClass().isArray()) || (value.getClass().isLocalClass())))
+            if ((value != null) && ((value.getClass().isArray()) || (value.getClass().isLocalClass())))
             {
                 throw new IllegalArgumentException("Malformed Json: illegal value type");
             }
 
             /* Codes_SRS_TWINPARSER_21_157: [A valid `value` can contains sub-maps.] */
-            if((value != null) && (value instanceof Map))
+            if ((value != null) && (value instanceof Map))
             {
                 /* Codes_TWIN_21_158: [A valid `value` shall contains less than 5 levels of sub-maps.] */
-                if(level <= maxLevel)
+                if (level <= maxLevel)
                 {
                     validateMap((Map<String, Object>) value, level, maxLevel, allowDollar);
                 }

@@ -66,7 +66,7 @@ public class X509ThumbprintParserTest
     }
 
     //Tests_SRS_X509ThumbprintParser_34_002: [If the provided primaryThumbprint value is null, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testSetPrimaryThumbprintNullThrows()
     {
         //act
@@ -74,7 +74,7 @@ public class X509ThumbprintParserTest
     }
 
     //Tests_SRS_X509ThumbprintParser_34_005: [If the provided secondaryThumbprint value is null, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testSetSecondaryThumbprintNullThrows()
     {
         //act
@@ -101,7 +101,7 @@ public class X509ThumbprintParserTest
     }
 
     //Tests_SRS_X509ThumbprintParser_34_010: [If the provided json is null or empty or cannot be parsed into an X509Thumbprint object, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullJson()
     {
         //act
@@ -109,7 +109,7 @@ public class X509ThumbprintParserTest
     }
 
     //Tests_SRS_X509ThumbprintParser_34_010: [If the provided json is null or empty or cannot be parsed into an X509Thumbprint object, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForEmptyJson()
     {
         //act
@@ -117,7 +117,7 @@ public class X509ThumbprintParserTest
     }
 
     //Tests_SRS_X509ThumbprintParser_34_010: [If the provided json is null or empty or cannot be parsed into an X509Thumbprint object, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForInvalidJson()
     {
         //act

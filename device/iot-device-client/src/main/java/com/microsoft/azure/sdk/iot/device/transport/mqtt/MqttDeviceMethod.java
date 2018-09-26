@@ -15,25 +15,22 @@ import java.util.Map;
 
 public class MqttDeviceMethod extends Mqtt
 {
-    private String subscribeTopic;
-    private String responseTopic;
     private final Map<String, DeviceOperations> requestMap = new HashMap<>();
-    private boolean isStarted = false;
     private final CustomLogger logger = new CustomLogger(this.getClass());
-
     private final String POUND = "#";
     private final String BACKSLASH = "/";
     private final String QUESTION = "?";
-
     private final String METHOD = "$iothub/methods/";
     private final String POST = METHOD + "POST";
     private final String RES = METHOD + "res";
     private final String REQ_ID = QUESTION + "$rid=";
-
     //Placement for $iothub/methods/POST/{method name}/?$rid={request id}
     private final int POST_TOKEN = 2;
     private final int METHOD_TOKEN = 3;
     private final int REQID_TOKEN = 4;
+    private String subscribeTopic;
+    private String responseTopic;
+    private boolean isStarted = false;
 
     public MqttDeviceMethod(MqttConnection mqttConnection, String connectionId) throws TransportException
     {
@@ -68,7 +65,7 @@ public class MqttDeviceMethod extends Mqtt
      * Sends the provided device method message over the mqtt connection
      *
      * @param message the message to send
-     * @throws TransportException if any exception is encountered while sending the message
+     * @throws TransportException       if any exception is encountered while sending the message
      * @throws IllegalArgumentException if the provided message is null or has a null body
      */
     public void send(final IotHubTransportMessage message) throws TransportException, IllegalArgumentException
@@ -79,7 +76,7 @@ public class MqttDeviceMethod extends Mqtt
             throw new IllegalArgumentException("Message cannot be null");
         }
 
-        if(!isStarted)
+        if (!isStarted)
         {
             //Codes_SRS_MqttDeviceMethod_25_018: [send method shall throw an TransportException if device method has not been started yet.]
             throwMethodsTransportException("Start device method before using send");
@@ -122,11 +119,7 @@ public class MqttDeviceMethod extends Mqtt
                     throwMethodsTransportException("Sending a response for the method that was never invoked");
                 }
 
-                String topic = this.responseTopic + BACKSLASH +
-                        message.getStatus() +
-                        BACKSLASH +
-                        REQ_ID +
-                        message.getRequestId();
+                String topic = this.responseTopic + BACKSLASH + message.getStatus() + BACKSLASH + REQ_ID + message.getRequestId();
 
                 //Codes_SRS_MqttDeviceMethod_25_022: [send method shall build the publish topic of the format mentioned in spec ($iothub/methods/res/{status}/?$rid={request id}) and publish if the operation is of type DEVICE_OPERATION_METHOD_SEND_RESPONSE.]
                 this.publish(topic, message);

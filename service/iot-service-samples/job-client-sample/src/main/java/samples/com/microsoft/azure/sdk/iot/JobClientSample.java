@@ -83,7 +83,7 @@ public class JobClientSample
         JobClient jobClient = JobClient.createFromConnectionString(iotHubConnectionString);
         System.out.println("JobClient created with success");
         System.out.println();
-        return  jobClient;
+        return jobClient;
     }
 
     private static void monitorJob(JobClient jobClient, String jobId) throws IOException, IotHubException, InterruptedException
@@ -92,7 +92,7 @@ public class JobClientSample
         JobResult jobResult = jobClient.getJob(jobId);
         System.out.println("First get response");
         System.out.println(jobResult);
-        while(jobResult.getJobStatus() != JobStatus.completed)
+        while (jobResult.getJobStatus() != JobStatus.completed)
         {
             Thread.sleep(1000);
             jobResult = jobClient.getJob(jobId);
@@ -130,7 +130,7 @@ public class JobClientSample
 
         System.out.println("Schedule method job " + jobIdMethod + " for device " + deviceId + "...");
         JobResult jobResultMethod = jobClient.scheduleDeviceMethod(jobIdMethod, queryCondition, methodName, responseTimeout, connectTimeout, payload, startTimeUtc, maxExecutionTimeInSeconds);
-        if(jobResultMethod == null)
+        if (jobResultMethod == null)
         {
             throw new IOException("Schedule method Job returns null");
         }
@@ -149,8 +149,8 @@ public class JobClientSample
         updateTwin.setTags(tags);
 
         System.out.println("Schedule twin job " + jobIdTwin + " for device " + deviceId + "...");
-        JobResult jobResult = jobClient.scheduleUpdateTwin(jobIdTwin, queryCondition, updateTwin, startTimeUtc , maxExecutionTimeInSeconds);
-        if(jobResult == null)
+        JobResult jobResult = jobClient.scheduleUpdateTwin(jobIdTwin, queryCondition, updateTwin, startTimeUtc, maxExecutionTimeInSeconds);
+        if (jobResult == null)
         {
             throw new IOException("Schedule Twin Job returns null");
         }

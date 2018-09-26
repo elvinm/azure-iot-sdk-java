@@ -54,11 +54,11 @@ public class ProvisioningDeviceClientContractTest
         ProvisioningDeviceClientContract clientContract = ProvisioningDeviceClientContract.createProvisioningContract(mockedProvisioningDeviceClientConfig);
 
         //assert
-        assertTrue(clientContract instanceof  ContractAPIHttp);
+        assertTrue(clientContract instanceof ContractAPIHttp);
 
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void createContractThrowsIfLowerLayerThrowsHttp() throws Exception
     {
         //arrange

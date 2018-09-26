@@ -13,104 +13,66 @@ import java.util.Date;
 public class DeviceParser
 {
     private static final String E_TAG_NAME = "etag";
+    private static final String DEVICE_ID_NAME = "deviceId";
+    private static final String MODULE_ID_NAME = "moduleId";
+    private static final String GENERATION_ID_NAME = "generationId";
+    private static final String STATUS_NAME = "status";
+    private static final String STATUS_REASON = "statusReason";
+    private static final String STATUS_UPDATED_TIME_NAME = "statusUpdatedTime";
+    private static final String CONNECTION_STATE_NAME = "connectionState";
+    private static final String CONNECTION_STATE_UPDATED_TIME_NAME = "connectionStateUpdatedTime";
+    private static final String LAST_ACTIVITY_TIME_NAME = "lastActivityTime";
+    private static final String CLOUD_TO_MESSAGE_COUNT_NAME = "cloudToDeviceMessageCount";
+    private static final String AUTHENTICATION_NAME = "authentication";
+    private static final String MANAGED_BY = "managedBy";
+    private static final String CAPABILITIES_NAME = "capabilities";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(E_TAG_NAME)
     private String eTag;
-
-    private static final String DEVICE_ID_NAME = "deviceId";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(DEVICE_ID_NAME)
     private String deviceId;
-
-    private static final String MODULE_ID_NAME = "moduleId";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(MODULE_ID_NAME)
     private String moduleId;
-
-    private static final String GENERATION_ID_NAME = "generationId";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(GENERATION_ID_NAME)
     private String generationId;
-
-    private static final String STATUS_NAME = "status";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(STATUS_NAME)
     private String status;
-
-    private static final String STATUS_REASON = "statusReason";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(STATUS_REASON)
     private String statusReason;
-
-    private static final String STATUS_UPDATED_TIME_NAME = "statusUpdatedTime";
     @Expose(serialize = true, deserialize = false)
     @SerializedName(STATUS_UPDATED_TIME_NAME)
     private String statusUpdatedTimeString;
     private transient Date statusUpdatedTime;
-
-    private static final String CONNECTION_STATE_NAME = "connectionState";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(CONNECTION_STATE_NAME)
     private String connectionState;
-
-    private static final String CONNECTION_STATE_UPDATED_TIME_NAME = "connectionStateUpdatedTime";
     @Expose(serialize = true, deserialize = false)
     @SerializedName(CONNECTION_STATE_UPDATED_TIME_NAME)
     private String connectionStateUpdatedTimeString;
     private transient Date connectionStateUpdatedTime;
-
-    private static final String LAST_ACTIVITY_TIME_NAME = "lastActivityTime";
     @Expose(serialize = true, deserialize = false)
     @SerializedName(LAST_ACTIVITY_TIME_NAME)
     private String lastActivityTimeString;
     private transient Date lastActivityTime;
-
-    private static final String CLOUD_TO_MESSAGE_COUNT_NAME = "cloudToDeviceMessageCount";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(CLOUD_TO_MESSAGE_COUNT_NAME)
     private long cloudToDeviceMessageCount;
-
-    private static final String AUTHENTICATION_NAME = "authentication";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(AUTHENTICATION_NAME)
     private AuthenticationParser authenticationParser;
-
-    private static final String MANAGED_BY = "managedBy";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(MANAGED_BY)
     private String managedBy;
-
-    private static final String CAPABILITIES_NAME = "capabilities";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(CAPABILITIES_NAME)
     private DeviceCapabilitiesParser capabilities;
 
     private transient Gson gson = new Gson();
-
-    /**
-     * Converts this into json format and returns it
-     * @return the json representation of this
-     */
-    public String toJson()
-    {
-        if (this.statusUpdatedTime != null)
-        {
-            this.statusUpdatedTimeString = ParserUtility.getDateStringFromDate(this.statusUpdatedTime);
-        }
-
-        if (this.connectionStateUpdatedTime != null)
-        {
-            this.connectionStateUpdatedTimeString = ParserUtility.getDateStringFromDate(this.connectionStateUpdatedTime);
-        }
-
-        if (this.lastActivityTime != null)
-        {
-            this.lastActivityTimeString = ParserUtility.getDateStringFromDate(this.lastActivityTime);
-        }
-
-        //Codes_SRS_DEVICE_PARSER_34_001: [This method shall return a json representation of this.]
-        return gson.toJson(this);
-    }
 
     /**
      * Empty constructor
@@ -121,6 +83,7 @@ public class DeviceParser
 
     /**
      * Constructor for a DeviceParser object that is built from the provided json.
+     *
      * @param json the json to build the object from
      * @throws IllegalArgumentException if the provided json is null, empty, or not the expected format
      */
@@ -190,6 +153,32 @@ public class DeviceParser
     }
 
     /**
+     * Converts this into json format and returns it
+     *
+     * @return the json representation of this
+     */
+    public String toJson()
+    {
+        if (this.statusUpdatedTime != null)
+        {
+            this.statusUpdatedTimeString = ParserUtility.getDateStringFromDate(this.statusUpdatedTime);
+        }
+
+        if (this.connectionStateUpdatedTime != null)
+        {
+            this.connectionStateUpdatedTimeString = ParserUtility.getDateStringFromDate(this.connectionStateUpdatedTime);
+        }
+
+        if (this.lastActivityTime != null)
+        {
+            this.lastActivityTimeString = ParserUtility.getDateStringFromDate(this.lastActivityTime);
+        }
+
+        //Codes_SRS_DEVICE_PARSER_34_001: [This method shall return a json representation of this.]
+        return gson.toJson(this);
+    }
+
+    /**
      * Getter for moduleId
      *
      * @return The value of moduleId
@@ -202,6 +191,7 @@ public class DeviceParser
 
     /**
      * Setter for moduleId
+     *
      * @param moduleId the value to set moduleId to
      * @throws IllegalArgumentException if moduleId is null
      */
@@ -230,6 +220,7 @@ public class DeviceParser
 
     /**
      * Setter for DeviceId
+     *
      * @param deviceId the value to set deviceId to
      * @throws IllegalArgumentException if deviceId is null
      */
@@ -259,6 +250,7 @@ public class DeviceParser
 
     /**
      * Setter for AuthenticationParser
+     *
      * @param authenticationParser the value to set authenticationParser to
      * @throws IllegalArgumentException if authenticationParser is null
      */
@@ -287,6 +279,7 @@ public class DeviceParser
 
     /**
      * Setter for eTag
+     *
      * @param eTag the value to set eTag to
      */
     public void seteTag(String eTag)
@@ -308,6 +301,7 @@ public class DeviceParser
 
     /**
      * Setter for GenerationId
+     *
      * @param generationId the value to set generationId to
      */
     public void setGenerationId(String generationId)
@@ -329,6 +323,7 @@ public class DeviceParser
 
     /**
      * Setter for Status
+     *
      * @param status the value to set status to
      */
     public void setStatus(String status)
@@ -350,6 +345,7 @@ public class DeviceParser
 
     /**
      * Setter for StatusReason
+     *
      * @param statusReason the value to set statusReason to
      */
     public void setStatusReason(String statusReason)
@@ -508,6 +504,7 @@ public class DeviceParser
 
     /**
      * Setter for ManagedBy
+     *
      * @param managedBy the value to set managedBy to
      */
     public void setManagedBy(String managedBy)
@@ -529,6 +526,7 @@ public class DeviceParser
 
     /**
      * Setter for capabilities
+     *
      * @param capabilities the value to set capabilities to
      */
     public void setCapabilities(DeviceCapabilitiesParser capabilities)

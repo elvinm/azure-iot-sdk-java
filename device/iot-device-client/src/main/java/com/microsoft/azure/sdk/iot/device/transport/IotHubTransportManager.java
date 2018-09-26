@@ -44,7 +44,7 @@ public interface IotHubTransportManager
      * Synchronously send a message to the IoT Hub. And return the response
      * with the status and message.
      *
-     * @param message is the message to send.
+     * @param message           is the message to send.
      * @param additionalHeaders any extra headers to include
      * @return the response from IoT Hub, including status and message.
      * @throws IOException if an error occurs in sending a message.
@@ -57,6 +57,6 @@ public interface IotHubTransportManager
      * @return the received message. If there is no new message, it will return null.
      * @throws IOException if an error occurs in receiving a message.
      */
-    Message receive()  throws IOException;
+    Message receive() throws IOException;
 
 }

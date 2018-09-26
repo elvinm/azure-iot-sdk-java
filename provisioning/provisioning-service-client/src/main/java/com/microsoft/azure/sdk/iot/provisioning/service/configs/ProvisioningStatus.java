@@ -12,9 +12,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public enum ProvisioningStatus
 {
-    @SerializedName("enabled")
-    ENABLED,
+    @SerializedName("enabled") ENABLED,
 
-    @SerializedName("disabled")
-    DISABLED,
+    @SerializedName("disabled") DISABLED,
 }

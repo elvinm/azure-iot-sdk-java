@@ -178,7 +178,7 @@ public class IotHubTransportPacketTest
     }
 
     // Tests_SRS_IOTHUBTRANSPORTPACKET_34_011: [If message is null, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullMessage()
     {
         //act
@@ -186,7 +186,7 @@ public class IotHubTransportPacketTest
     }
 
     // Tests_SRS_IOTHUBTRANSPORTPACKET_34_010: [If startTimeMillis is 0 or negative, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForZeroMillisecondsStartTime()
     {
         //act
@@ -194,7 +194,7 @@ public class IotHubTransportPacketTest
     }
 
     // Tests_SRS_IOTHUBTRANSPORTPACKET_34_010: [If startTimeMillis is 0 or negative, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNegativeMillisecondsStartTime()
     {
         //act

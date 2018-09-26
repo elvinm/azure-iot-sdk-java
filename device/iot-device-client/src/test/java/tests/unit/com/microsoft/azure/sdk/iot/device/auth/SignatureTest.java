@@ -13,10 +13,13 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/** Unit tests for Signature. */
+/**
+ * Unit tests for Signature.
+ */
 public class SignatureTest
 {
-    @Mocked SignatureHelper mockSigHelper;
+    @Mocked
+    SignatureHelper mockSigHelper;
 
     // Tests_SRS_SIGNATURE_11_001: [The signature shall be computed from a composition of functions as such: convertSignatureHexDigitsToLowercase(encodeSignatureWebSafe(encodeSignatureUtf8(encodeSignatureBase64(encryptSignatureHmacSha256(buildRawSignature(scope, expiryTime)))))).]
     @Test
@@ -32,8 +35,7 @@ public class SignatureTest
         {
             {
                 SignatureHelper.buildRawSignature(anyString, anyLong);
-                SignatureHelper
-                        .encryptSignatureHmacSha256((byte[]) any, (byte[]) any);
+                SignatureHelper.encryptSignatureHmacSha256((byte[]) any, (byte[]) any);
                 SignatureHelper.encodeSignatureBase64((byte[]) any);
                 SignatureHelper.encodeSignatureUtf8((byte[]) any);
                 SignatureHelper.encodeSignatureWebSafe(anyString);
@@ -56,8 +58,7 @@ public class SignatureTest
         {
             {
                 SignatureHelper.decodeDeviceKeyBase64(anyString);
-                SignatureHelper
-                        .encryptSignatureHmacSha256((byte[]) any, (byte[]) any);
+                SignatureHelper.encryptSignatureHmacSha256((byte[]) any, (byte[]) any);
                 SignatureHelper.encodeSignatureBase64((byte[]) any);
                 SignatureHelper.encodeSignatureUtf8((byte[]) any);
                 SignatureHelper.encodeSignatureWebSafe(anyString);
@@ -77,14 +78,12 @@ public class SignatureTest
         {
             {
                 // this should be the last step of the signature computation.
-                SignatureHelper
-                        .encodeSignatureWebSafe(anyString);
+                SignatureHelper.encodeSignatureWebSafe(anyString);
                 result = sigStr;
             }
         };
 
-        Signature sig =
-                new Signature(resourceUri, expiryTime, deviceKey);
+        Signature sig = new Signature(resourceUri, expiryTime, deviceKey);
         String testSigStr = sig.toString();
 
         final String expectedSigStr = sigStr;

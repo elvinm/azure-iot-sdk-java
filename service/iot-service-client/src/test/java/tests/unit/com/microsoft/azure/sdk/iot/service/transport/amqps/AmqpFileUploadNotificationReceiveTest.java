@@ -28,17 +28,25 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-/** Unit tests for AmqpFileUploadNotificationReceive */
+/**
+ * Unit tests for AmqpFileUploadNotificationReceive
+ */
 @RunWith(JMockit.class)
 public class AmqpFileUploadNotificationReceiveTest
 {
-    @Mocked Proton proton;
-    @Mocked Reactor reactor;
-    @Mocked Event event;
-    @Mocked Connection connection;
-    @Mocked Message message;
-    @Mocked FileUploadNotificationParser mockNotificationParser;
-    
+    @Mocked
+    Proton proton;
+    @Mocked
+    Reactor reactor;
+    @Mocked
+    Event event;
+    @Mocked
+    Connection connection;
+    @Mocked
+    Message message;
+    @Mocked
+    FileUploadNotificationParser mockNotificationParser;
+
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVE_25_001: [The constructor shall copy all input parameters to private member variables for event processing]
     @Test
     public void amqpFileUploadNotificationReceiveInitOk()
@@ -113,7 +121,7 @@ public class AmqpFileUploadNotificationReceiveTest
                 reactor.stop();
                 reactor.process();
                 reactor.free();
-        
+
             }
         };
         // Act
@@ -151,7 +159,7 @@ public class AmqpFileUploadNotificationReceiveTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVE_25_008: [The function shall throw IOException if the send handler object is not initialized]
     // Assert
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void receiveExceptionThrow() throws IOException, InterruptedException
     {
         // Arrange

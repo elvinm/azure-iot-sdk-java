@@ -13,8 +13,8 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.annotations.SerializedName;
 
 /**
- *  Class for the representation of TpmRegistration
- *  https://docs.microsoft.com/en-us/rest/api/iot-dps/RuntimeRegistration/RegisterDevice#definitions_tpmregistrationresult
+ * Class for the representation of TpmRegistration
+ * https://docs.microsoft.com/en-us/rest/api/iot-dps/RuntimeRegistration/RegisterDevice#definitions_tpmregistrationresult
  */
 public class TpmRegistrationResultParser
 {
@@ -28,24 +28,15 @@ public class TpmRegistrationResultParser
     }
 
     /**
-     * Getter for the Authentication Key
-     * @return Getter for the Authentication Key
-     */
-    public String getAuthenticationKey()
-    {
-        //SRS_TpmRegistrationResultParser_25_001: [ This method returns the authentication key. ]
-        return authenticationKey;
-    }
-
-    /**
      * Creates the object TpmRegistrationResultParser if JSON Input is provided
+     *
      * @param json JSON input to be parsed
      * @return TpmRegistrationResultParser object
      * @throws IllegalArgumentException If JSON could not be parsed.
      */
     static public TpmRegistrationResultParser createFromJson(String json) throws IllegalArgumentException
     {
-        if((json == null) || json.isEmpty())
+        if ((json == null) || json.isEmpty())
         {
             //SRS_TpmRegistrationResultParser_25_002: [ The constructor shall throw IllegalArgumentException if the provided Json is null or empty. ]
             throw new IllegalArgumentException("JSON is null or empty");
@@ -66,5 +57,16 @@ public class TpmRegistrationResultParser
         }
 
         return tpmRegistrationResultParserParser;
+    }
+
+    /**
+     * Getter for the Authentication Key
+     *
+     * @return Getter for the Authentication Key
+     */
+    public String getAuthenticationKey()
+    {
+        //SRS_TpmRegistrationResultParser_25_001: [ This method returns the authentication key. ]
+        return authenticationKey;
     }
 }

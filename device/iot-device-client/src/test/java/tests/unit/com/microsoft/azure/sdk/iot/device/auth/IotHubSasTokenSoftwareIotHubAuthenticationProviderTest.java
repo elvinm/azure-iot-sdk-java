@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package tests.unit.com.microsoft.azure.sdk.iot.device.auth;
 
@@ -40,9 +40,12 @@ public class IotHubSasTokenSoftwareIotHubAuthenticationProviderTest
     private static long expectedExpiryTime = 3601;
     private static long expectedBufferPercent = 20;
 
-    @Mocked IotHubSasToken mockSasToken;
-    @Mocked IotHubSSLContext mockIotHubSSLContext;
-    @Mocked SSLContext mockSSLContext;
+    @Mocked
+    IotHubSasToken mockSasToken;
+    @Mocked
+    IotHubSSLContext mockIotHubSSLContext;
+    @Mocked
+    SSLContext mockSSLContext;
 
     //Tests_SRS_IOTHUBSASTOKENSOFTWAREAUTHENTICATION_34_002: [This constructor shall save the provided hostname, device id, module id, deviceKey, and sharedAccessToken.]
     @Test
@@ -52,7 +55,7 @@ public class IotHubSasTokenSoftwareIotHubAuthenticationProviderTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(IotHubSasToken.class, new Class[] {String.class, String.class, String.class, String.class, String.class, long.class}, anyString, anyString, anyString, anyString, anyString, anyLong);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, anyString, anyString, anyString, anyString, anyString, anyLong);
                 result = mockSasToken;
 
                 mockSasToken.toString();
@@ -85,7 +88,7 @@ public class IotHubSasTokenSoftwareIotHubAuthenticationProviderTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(IotHubSasToken.class, new Class[] {String.class, String.class, String.class, String.class, String.class, long.class}, anyString, anyString, anyString, anyString, anyString, anyLong);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, anyString, anyString, anyString, anyString, anyString, anyLong);
                 result = mockSasToken;
 
                 mockSasToken.toString();
@@ -120,13 +123,13 @@ public class IotHubSasTokenSoftwareIotHubAuthenticationProviderTest
             {
                 System.currentTimeMillis();
                 result = 0;
-                Deencapsulation.newInstance(IotHubSasToken.class, new Class[] {String.class, String.class, String.class, String.class, String.class, long.class}, expectedHostname, expectedDeviceId, expectedDeviceKey, null, expectedModuleId, expectedExpiryTime);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, expectedHostname, expectedDeviceId, expectedDeviceKey, null, expectedModuleId, expectedExpiryTime);
                 result = mockSasToken;
                 Deencapsulation.invoke(mockSasToken, "isExpired");
                 result = true;
                 System.currentTimeMillis();
                 result = 0;
-                Deencapsulation.newInstance(IotHubSasToken.class, new Class[] {String.class, String.class, String.class, String.class, String.class, long.class}, expectedHostname, expectedDeviceId, expectedDeviceKey, null, expectedModuleId, expectedExpiryTime);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, expectedHostname, expectedDeviceId, expectedDeviceKey, null, expectedModuleId, expectedExpiryTime);
                 result = mockSasToken;
             }
         };
@@ -140,7 +143,7 @@ public class IotHubSasTokenSoftwareIotHubAuthenticationProviderTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(IotHubSasToken.class, new Class[] {String.class, String.class, String.class, String.class, String.class, long.class}, expectedHostname, expectedDeviceId, expectedDeviceKey, null, expectedModuleId, expectedExpiryTime);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, expectedHostname, expectedDeviceId, expectedDeviceKey, null, expectedModuleId, expectedExpiryTime);
                 times = 1;
             }
         };
@@ -154,7 +157,7 @@ public class IotHubSasTokenSoftwareIotHubAuthenticationProviderTest
         new Expectations()
         {
             {
-                Deencapsulation.newInstance(IotHubSasToken.class, new Class[] {String.class, String.class, String.class, String.class, String.class, long.class}, anyString, anyString, anyString, anyString, anyString, anyLong);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, anyString, anyString, anyString, anyString, anyString, anyLong);
                 result = mockSasToken;
                 mockSasToken.toString();
                 result = "some token";
@@ -202,7 +205,7 @@ public class IotHubSasTokenSoftwareIotHubAuthenticationProviderTest
         new StrictExpectations()
         {
             {
-                Deencapsulation.newInstance(IotHubSasToken.class, new Class[] {String.class, String.class, String.class, String.class, String.class, long.class}, anyString, anyString, anyString, anyString, anyString, anyLong);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, anyString, anyString, anyString, anyString, anyString, anyLong);
                 result = mockSasToken;
                 Deencapsulation.invoke(mockSasToken, "isExpired");
                 result = true;

@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 public class QuerySpecificationBuilderTest
 {
     /* SRS_QUERY_SPECIFICATION_BUILDER_21_001: [The constructor shall throw IllegalArgumentException if the provided `selection` is null, empty, or `fromType` is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullSelection()
     {
         // arrange
@@ -29,7 +29,7 @@ public class QuerySpecificationBuilderTest
     }
 
     /* SRS_QUERY_SPECIFICATION_BUILDER_21_001: [The constructor shall throw IllegalArgumentException if the provided `selection` is null, empty, or `fromType` is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptySelection()
     {
         // arrange
@@ -40,7 +40,7 @@ public class QuerySpecificationBuilderTest
     }
 
     /* SRS_QUERY_SPECIFICATION_BUILDER_21_001: [The constructor shall throw IllegalArgumentException if the provided `selection` is null, empty, or `fromType` is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullFromType()
     {
         // arrange

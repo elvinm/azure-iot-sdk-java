@@ -23,9 +23,10 @@ import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
-/** Unit tests for HttpsBatchMessage.
- *  Coverage 100% method, 100% line
- * */
+/**
+ * Unit tests for HttpsBatchMessage.
+ * Coverage 100% method, 100% line
+ */
 
 public class HttpsBatchMessageTest
 {
@@ -48,8 +49,7 @@ public class HttpsBatchMessageTest
     // Tests_SRS_HTTPSBATCHMESSAGE_11_002: [The function shall add the message as a JSON object appended to the current JSON array.]
     // Tests_SRS_HTTPSBATCHMESSAGE_11_003: [The JSON object shall have the field "body" set to the raw message  encoded in Base64.]
     @Test
-    public void addMessageEncodesBodyCorrectly(
-            @Mocked final HttpsSingleMessage mockMsg) throws IotHubSizeExceededException
+    public void addMessageEncodesBodyCorrectly(@Mocked final HttpsSingleMessage mockMsg) throws IotHubSizeExceededException
     {
         final String msgBody = "test-msg-body";
         new NonStrictExpectations()
@@ -62,8 +62,7 @@ public class HttpsBatchMessageTest
 
         HttpsBatchMessage batchMsg = new HttpsBatchMessage();
         batchMsg.addMessage(mockMsg);
-        String testBatchBody =
-                new String(batchMsg.getBody(), UTF8).replaceAll("\\s", "");
+        String testBatchBody = new String(batchMsg.getBody(), UTF8).replaceAll("\\s", "");
 
         final String expectedMsgBody = Base64.encodeBase64StringLocal(msgBody.getBytes());
         assertThat(testBatchBody, containsString(expectedMsgBody));
@@ -71,8 +70,7 @@ public class HttpsBatchMessageTest
 
     // Tests_SRS_HTTPSBATCHMESSAGE_11_004: [The JSON object shall have the field "base64Encoded" set to true and always encode the body for a batch message.]
     @Test
-    public void addMessageSetsBase64Correctly(
-            @Mocked final HttpsSingleMessage mockMsg) throws IotHubSizeExceededException
+    public void addMessageSetsBase64Correctly(@Mocked final HttpsSingleMessage mockMsg) throws IotHubSizeExceededException
     {
         final String msgBody = "test-msg-body";
         new NonStrictExpectations()
@@ -85,11 +83,9 @@ public class HttpsBatchMessageTest
 
         HttpsBatchMessage batchMsg = new HttpsBatchMessage();
         batchMsg.addMessage(mockMsg);
-        String testBatchBody =
-                new String(batchMsg.getBody(), UTF8).replaceAll("\\s", "");
+        String testBatchBody = new String(batchMsg.getBody(), UTF8).replaceAll("\\s", "");
 
-        final String expectedMsgBase64 =
-                "\"base64Encoded\":" + Boolean.toString(true);
+        final String expectedMsgBase64 = "\"base64Encoded\":" + Boolean.toString(true);
         assertThat(testBatchBody, containsString(expectedMsgBase64));
     }
 
@@ -101,7 +97,7 @@ public class HttpsBatchMessageTest
         final String propertiesKeyword = "properties";
         final String msgBody = "test-msg-body";
         final boolean isBase64Encoded = false;
-        final MessageProperty[] properties = { };
+        final MessageProperty[] properties = {};
 
         new NonStrictExpectations()
         {
@@ -117,22 +113,19 @@ public class HttpsBatchMessageTest
 
         HttpsBatchMessage batchMsg = new HttpsBatchMessage();
         batchMsg.addMessage(mockMsg);
-        String testBatchBody =
-                new String(batchMsg.getBody(), UTF8).replaceAll("\\s", "");
+        String testBatchBody = new String(batchMsg.getBody(), UTF8).replaceAll("\\s", "");
 
         assertFalse(testBatchBody.contains(propertiesKeyword));
     }
 
     // Tests_SRS_HTTPSBATCHMESSAGE_11_005: [The JSON object shall have the field "properties" set to a JSON object which has a key-value pair for each message property, where the key is the HTTPS property name and the value is the property value.]
     @Test
-    public void addMessageSetsPropertiesCorrectly(
-            @Mocked final HttpsSingleMessage mockMsg,
-            @Mocked final MessageProperty mockProperty) throws IotHubSizeExceededException
+    public void addMessageSetsPropertiesCorrectly(@Mocked final HttpsSingleMessage mockMsg, @Mocked final MessageProperty mockProperty) throws IotHubSizeExceededException
     {
         final String msgBody = "test-msg-body";
         final String propertyHttpsName = "test-property-name";
         final String propertyValue = "test-property-value";
-        final MessageProperty[] properties = { mockProperty };
+        final MessageProperty[] properties = {mockProperty};
 
         new NonStrictExpectations()
         {
@@ -150,21 +143,15 @@ public class HttpsBatchMessageTest
 
         HttpsBatchMessage batchMsg = new HttpsBatchMessage();
         batchMsg.addMessage(mockMsg);
-        String testBatchBody =
-                new String(batchMsg.getBody(), UTF8).replaceAll("\\s", "");
+        String testBatchBody = new String(batchMsg.getBody(), UTF8).replaceAll("\\s", "");
 
-        final String expectedMsgProperties =
-                "\"properties\":{\""
-                        + propertyHttpsName + "\":\"" + propertyValue
-                        + "\"}";
+        final String expectedMsgProperties = "\"properties\":{\"" + propertyHttpsName + "\":\"" + propertyValue + "\"}";
         assertThat(testBatchBody, containsString(expectedMsgProperties));
     }
 
     // Tests_SRS_HTTPSBATCHMESSAGE_11_005: [The JSON object shall have the field "properties" set to a JSON object which has a key-value pair for each message property, where the key is the HTTPS property name and the value is the property value.]
     @Test
-    public void addMessageSetsPropertiesCorrectlyWhenThereAreSystemProperties(
-            @Mocked final HttpsSingleMessage mockMsg,
-            @Mocked final MessageProperty mockProperty) throws IotHubSizeExceededException
+    public void addMessageSetsPropertiesCorrectlyWhenThereAreSystemProperties(@Mocked final HttpsSingleMessage mockMsg, @Mocked final MessageProperty mockProperty) throws IotHubSizeExceededException
     {
         final String msgBody = "test-msg-body";
         final boolean isBase64Encoded = false;
@@ -175,7 +162,7 @@ public class HttpsBatchMessageTest
         final String messageIdName = "messageid";
         final String messageIdValue = "5678";
 
-        final MessageProperty[] properties = { mockProperty };
+        final MessageProperty[] properties = {mockProperty};
         final Map<String, String> systemProperties = new HashMap<>();
         systemProperties.put(correlationIdName, correlationIdValue);
         systemProperties.put(messageIdName, messageIdValue);
@@ -200,8 +187,7 @@ public class HttpsBatchMessageTest
 
         HttpsBatchMessage batchMsg = new HttpsBatchMessage();
         batchMsg.addMessage(mockMsg);
-        String testBatchBody =
-                new String(batchMsg.getBody(), UTF8).replaceAll("\\s", "");
+        String testBatchBody = new String(batchMsg.getBody(), UTF8).replaceAll("\\s", "");
 
         final String expectedApplicationPropertyString = propertyHttpsName + "\":\"" + propertyValue;
         final String expectedCorrelationIdString = correlationIdName + "\":\"" + correlationIdValue;
@@ -214,8 +200,7 @@ public class HttpsBatchMessageTest
 
     // Tests_SRS_HTTPSBATCHMESSAGE_11_009: [If the function throws a IotHubSizeExceededException, the batched message shall remain as if the message was never added.]
     @Test
-    public void addMessageRejectsOverflowingMessageAndPreservesOldBatchState(
-            @Mocked final HttpsSingleMessage mockMsg) throws IotHubSizeExceededException
+    public void addMessageRejectsOverflowingMessageAndPreservesOldBatchState(@Mocked final HttpsSingleMessage mockMsg) throws IotHubSizeExceededException
     {
         final int msgBodySize = SERVICEBOUND_MESSAGE_MAX_SIZE_BYTES / 2 + 1;
         final byte[] msgBodyBytes = new byte[msgBodySize];
@@ -236,8 +221,7 @@ public class HttpsBatchMessageTest
         catch (IotHubSizeExceededException e)
         {
             final int expectedTwoMsgBodySize = 2 * msgBodySize;
-            assertThat(batchMsg.getBody().length,
-                    is(lessThan(expectedTwoMsgBodySize)));
+            assertThat(batchMsg.getBody().length, is(lessThan(expectedTwoMsgBodySize)));
         }
     }
 
@@ -248,8 +232,7 @@ public class HttpsBatchMessageTest
         HttpsBatchMessage batchMsg = new HttpsBatchMessage();
         String testContentType = batchMsg.getContentType();
 
-        final String expectedContentType =
-                "application/vnd.microsoft.iothub.json";
+        final String expectedContentType = "application/vnd.microsoft.iothub.json";
         assertThat(testContentType, is(expectedContentType));
     }
 
@@ -260,8 +243,7 @@ public class HttpsBatchMessageTest
         HttpsBatchMessage batchMsg = new HttpsBatchMessage();
         MessageProperty[] testProperties = batchMsg.getProperties();
 
-        MessageProperty[] expectedProperties =
-                new MessageProperty[0];
+        MessageProperty[] expectedProperties = new MessageProperty[0];
         assertThat(testProperties, is(expectedProperties));
     }
 
@@ -288,8 +270,7 @@ public class HttpsBatchMessageTest
 
     // Tests_SRS_HTTPSBATCHMESSAGE_11_010: [The function shall return the number of messages currently in the batch.]
     @Test
-    public void numMessagesIncrementedCorrectly(
-            @Mocked final HttpsSingleMessage mockMsg) throws IotHubSizeExceededException
+    public void numMessagesIncrementedCorrectly(@Mocked final HttpsSingleMessage mockMsg) throws IotHubSizeExceededException
     {
         final String msgBody = "test-msg-body";
         new NonStrictExpectations()

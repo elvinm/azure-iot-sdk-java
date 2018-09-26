@@ -7,11 +7,11 @@ import com.microsoft.azure.sdk.iot.provisioning.service.Tools;
 
 /**
  * This is a helper to create a new instance of the {@link QuerySpecification}.
- *
+ * <p>
  * <p> This helper will create a query forcing the correct sql format. It expects the <B>SELECT</B> and <B>FROM</B>,
- *     but optionally accepts <b>WHERE</b> and <B>GROUP BY</B>. As a result, it will return a {@link QuerySpecification}
- *     object, accepted by the provisioning service.
- *
+ * but optionally accepts <b>WHERE</b> and <B>GROUP BY</B>. As a result, it will return a {@link QuerySpecification}
+ * object, accepted by the provisioning service.
+ * <p>
  * <p> <b>Sample:</b>
  * <p> The follow line will create a {@link QuerySpecification}.
  * <pre>
@@ -28,7 +28,6 @@ import com.microsoft.azure.sdk.iot.provisioning.service.Tools;
  * }
  * }
  * </pre>
- *
  *
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iot-dps/deviceenrollment">Device Enrollment</a>
  * @see <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language">Query Language</a>
@@ -47,34 +46,12 @@ public class QuerySpecificationBuilder
     private String groupBy;
 
     /**
-     * From clause for Query
-     */
-    public enum FromType
-    {
-        ENROLLMENTS("enrollments"),
-        ENROLLMENT_GROUPS("enrollmentGroups"),
-        DEVICE_REGISTRATIONS("deviceRegistrations");
-
-        private final String type;
-
-        FromType(String type)
-        {
-            this.type = type;
-        }
-
-        public String getValue()
-        {
-            return this.type;
-        }
-    }
-
-    /**
      * CONSTRUCTOR
-     *
+     * <p>
      * <p> Creates a new instance of the builder, receiving the mandatory parameters.
      *
      * @param selection the {@code String} with the mandatory SELECT clause. It cannot be {@code null} or empty.
-     * @param fromType the {@link FromType} with the mandatory FROM clause. It cannot be {@code null}.
+     * @param fromType  the {@link FromType} with the mandatory FROM clause. It cannot be {@code null}.
      * @throws IllegalArgumentException if one of the provided clauses is invalid.
      */
     public QuerySpecificationBuilder(String selection, FromType fromType)
@@ -105,6 +82,7 @@ public class QuerySpecificationBuilder
 
     /**
      * Setter for the `groupBy` clause.
+     *
      * @param groupBy the {@code String} with the new clause `group by`. It can be {@code null} or empty.
      * @return The same instance of the {@code QuerySpecificationBuilder}.
      */
@@ -124,30 +102,42 @@ public class QuerySpecificationBuilder
     {
         /* SRS_QUERY_SPECIFICATION_BUILDER_21_005: [The createSqlQuery shall create a String with the `selection` and `fromType` clause using the sql format.] */
         StringBuilder query = new StringBuilder();
-        query.append(SELECT)
-                .append(selection)
-                .append(SPACE)
-                .append(FROM)
-                .append(fromType.getValue());
+        query.append(SELECT).append(selection).append(SPACE).append(FROM).append(fromType.getValue());
 
 
         /* SRS_QUERY_SPECIFICATION_BUILDER_21_006: [If the `where` is not null or empty, the createSqlQuery shall add the clause `where` with its value in the sql query.] */
         if (where != null && where.length() > 0)
         {
-            query.append(SPACE)
-                    .append(WHERE)
-                    .append(where);
+            query.append(SPACE).append(WHERE).append(where);
         }
 
         /* SRS_QUERY_SPECIFICATION_BUILDER_21_007: [If the `groupBy` is not null or empty, the createSqlQuery shall add the clause `group by` with its value in the sql query.] */
         if (this.groupBy != null && this.groupBy.length() > 0)
         {
-            query.append(SPACE)
-                    .append(GROUP_BY)
-                    .append(this.groupBy);
+            query.append(SPACE).append(GROUP_BY).append(this.groupBy);
         }
 
         /* SRS_QUERY_SPECIFICATION_BUILDER_21_008: [The createSqlQuery shall create a new instance of the QuerySpecification with the String built with the provided clauses.] */
         return new QuerySpecification(query.toString());
+    }
+
+    /**
+     * From clause for Query
+     */
+    public enum FromType
+    {
+        ENROLLMENTS("enrollments"), ENROLLMENT_GROUPS("enrollmentGroups"), DEVICE_REGISTRATIONS("deviceRegistrations");
+
+        private final String type;
+
+        FromType(String type)
+        {
+            this.type = type;
+        }
+
+        public String getValue()
+        {
+            return this.type;
+        }
     }
 }

@@ -14,7 +14,9 @@ import com.microsoft.azure.sdk.iot.service.exceptions.IotHubException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-/** Manages device on IotHub - CRUD operations */
+/**
+ * Manages device on IotHub - CRUD operations
+ */
 public class DeviceManagerX509Sample
 {
     //x509 authenticated devices are either self signed or certificate authority signed. Use this boolean to choose which kind to use in this sample
@@ -22,6 +24,7 @@ public class DeviceManagerX509Sample
 
     /**
      * A simple sample for doing CRUD operations involving X509 authenticated devices
+     *
      * @param args
      * @throws IOException
      * @throws URISyntaxException

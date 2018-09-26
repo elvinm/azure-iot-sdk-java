@@ -31,9 +31,10 @@ public class HttpHsmSignatureProvider implements SignatureProvider
 
     /**
      * Constructor for an HttpHsmSignatureProvider but using the non-default api version
+     *
      * @param providerUri the uri for the signing provider
-     * @param apiVersion the api version to call
-     * @throws URISyntaxException if the provided uri cannot be parsed
+     * @param apiVersion  the api version to call
+     * @throws URISyntaxException       if the provided uri cannot be parsed
      * @throws NoSuchAlgorithmException if the default sign request algorithm cannot be used
      */
     public HttpHsmSignatureProvider(String providerUri, String apiVersion) throws URISyntaxException, NoSuchAlgorithmException
@@ -59,11 +60,12 @@ public class HttpHsmSignatureProvider implements SignatureProvider
 
     /**
      * Sign the provided data using the provided key name
-     * @param keyName the key used for signing
-     * @param data the data to be signed
+     *
+     * @param keyName      the key used for signing
+     * @param data         the data to be signed
      * @param generationId the generation id
      * @return the signed data
-     * @throws IOException If the http client cannot reach the signing party
+     * @throws IOException        If the http client cannot reach the signing party
      * @throws TransportException If the http client cannot reach the signing party
      * @throws URISyntaxException If the url for the signing party cannot be parsed
      */

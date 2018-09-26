@@ -13,18 +13,15 @@ import java.util.Map;
 public class ProvisioningErrorParser
 {
     private static final String ERROR_CODE = "errorCode";
+    private static final String TRACKING_ID = "trackingId";
+    private static final String MESSAGE = "message";
+    private static final String INFO = "info";
     @SerializedName(ERROR_CODE)
     private int errorCode;
-
-    private static final String TRACKING_ID = "trackingId";
     @SerializedName(TRACKING_ID)
     private String trackingId;
-
-    private static final String MESSAGE = "message";
     @SerializedName(MESSAGE)
     private String message;
-
-    private static final String INFO = "info";
     @SerializedName(INFO)
     private Map<String, String> info;
 
@@ -41,6 +38,7 @@ public class ProvisioningErrorParser
 
     /**
      * Creates a descriptive error message based on the json that constructed this object
+     *
      * @return the error message to throw
      */
     public String getExceptionMessage()

@@ -55,14 +55,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
 
     //Default Page Size for Query
     private static final Integer PAGE_SIZE = 2;
-
-    protected static String iotHubConnectionString = "";
     private static final int INTERTEST_GUARDIAN_DELAY_MILLISECONDS = 2000;
-
-    protected static String publicKeyCert;
-    protected static String privateKey;
-    protected static String x509Thumbprint;
-
     // Constants used in for Testing
     private static final String PROPERTY_KEY = "Key";
     private static final String PROPERTY_KEY_QUERY = "KeyQuery";
@@ -72,228 +65,28 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
     private static final String TAG_KEY = "Tag_Key";
     private static final String TAG_VALUE = "Tag_Value";
     private static final String TAG_VALUE_UPDATE = "Tag_Value_Update";
-
+    private static final long ERROR_INJECTION_WAIT_TIMEOUT = 1 * 60 * 1000; // 1 minute
+    private static final long ERROR_INJECTION_EXECUTION_TIMEOUT = 2 * 60 * 1000; // 2 minute
+    //How many milliseconds between retry
+    private static final Integer RETRY_MILLISECONDS = 100;
+    // How much to wait until a message makes it to the server, in milliseconds
+    private static final Integer SEND_TIMEOUT_MILLISECONDS = 60000;
+    protected static String iotHubConnectionString = "";
+    protected static String publicKeyCert;
+    protected static String privateKey;
+    protected static String x509Thumbprint;
     // States of SDK
     private static RegistryManager registryManager;
     private static InternalClient internalClient;
     private static RawTwinQuery scRawTwinQueryClient;
     private static DeviceTwin sCDeviceTwin;
     private static DeviceState deviceUnderTest = null;
-
     private static DeviceState[] devicesUnderTest;
-
     private DeviceTwinCommon.DeviceTwinITRunner testInstance;
-    private static final long ERROR_INJECTION_WAIT_TIMEOUT = 1 * 60 * 1000; // 1 minute
-    private static final long ERROR_INJECTION_EXECUTION_TIMEOUT = 2 * 60 * 1000; // 2 minute
 
-    //How many milliseconds between retry
-    private static final Integer RETRY_MILLISECONDS = 100;
-
-    // How much to wait until a message makes it to the server, in milliseconds
-    private static final Integer SEND_TIMEOUT_MILLISECONDS = 60000;
-
-    private enum STATUS
+    public DeviceTwinCommon(String deviceId, String moduleId, IotHubClientProtocol protocol, AuthenticationType authenticationType, String clientType)
     {
-        SUCCESS, FAILURE
-    }
-
-    protected class DeviceTwinStatusCallBack implements IotHubEventCallback
-    {
-        public void execute(IotHubStatusCode status, Object context)
-        {
-            DeviceState state = (DeviceState) context;
-
-            //On failure, Don't update status any further
-            if ((status == OK || status == OK_EMPTY) && state.deviceTwinStatus != STATUS.FAILURE)
-            {
-                state.deviceTwinStatus = STATUS.SUCCESS;
-            }
-            else
-            {
-                state.deviceTwinStatus = STATUS.FAILURE;
-            }
-        }
-    }
-
-    class DeviceState
-    {
-        com.microsoft.azure.sdk.iot.service.Device sCDeviceForRegistryManager;
-        com.microsoft.azure.sdk.iot.service.Module sCModuleForRegistryManager;
-        DeviceTwinDevice sCDeviceForTwin;
-        DeviceExtension dCDeviceForTwin;
-        OnProperty dCOnProperty = new OnProperty();
-        STATUS deviceTwinStatus;
-    }
-
-    class PropertyState
-    {
-        boolean callBackTriggered;
-        Property property;
-        Object propertyNewValue;
-        Integer propertyNewVersion;
-    }
-
-    class OnProperty implements TwinPropertyCallBack
-    {
-        @Override
-        public void TwinPropertyCallBack(Property property,  Object context)
-        {
-            PropertyState propertyState = (PropertyState) context;
-            if (property.getKey().equals(propertyState.property.getKey()))
-            {
-                propertyState.callBackTriggered = true;
-                propertyState.propertyNewValue = property.getValue();
-                propertyState.propertyNewVersion = property.getVersion();
-            }
-        }
-    }
-
-    class DeviceExtension extends Device
-    {
-        List<PropertyState> propertyStateList = new LinkedList<>();
-
-        @Override
-        public void PropertyCall(String propertyKey, Object propertyValue, Object context)
-        {
-            PropertyState propertyState = (PropertyState) context;
-            if (propertyKey.equals(propertyState.property.getKey()))
-            {
-                propertyState.callBackTriggered = true;
-                propertyState.propertyNewValue = propertyValue;
-            }
-        }
-
-        synchronized void createNewReportedProperties(int maximumPropertiesToCreate)
-        {
-            for (int i = 0; i < maximumPropertiesToCreate; i++)
-            {
-                UUID randomUUID = UUID.randomUUID();
-                this.setReportedProp(new Property(PROPERTY_KEY + randomUUID, PROPERTY_VALUE + randomUUID));
-            }
-        }
-
-        synchronized void updateAllExistingReportedProperties()
-        {
-            Set<Property> reportedProp = this.getReportedProp();
-
-            for (Property p : reportedProp)
-            {
-                UUID randomUUID = UUID.randomUUID();
-                p.setValue(PROPERTY_VALUE_UPDATE + randomUUID);
-            }
-        }
-
-        synchronized void updateExistingReportedProperty(int index)
-        {
-            Set<Property> reportedProp = this.getReportedProp();
-            int i = 0;
-            for (Property p : reportedProp)
-            {
-                if (i == index)
-                {
-                    UUID randomUUID = UUID.randomUUID();
-                    p.setValue(PROPERTY_VALUE_UPDATE + randomUUID);
-                    break;
-                }
-                i++;
-            }
-        }
-    }
-
-    private void addMultipleDevices(int numberOfDevices) throws IOException, InterruptedException, IotHubException, NoSuchAlgorithmException, URISyntaxException, ModuleClientException
-    {
-        devicesUnderTest = new DeviceState[numberOfDevices];
-
-        for (int i = 0; i < numberOfDevices; i++)
-        {
-            devicesUnderTest[i] = new DeviceState();
-            String id = "java-device-twin-e2e-test-" + this.testInstance.protocol.toString() + UUID.randomUUID().toString();
-            devicesUnderTest[i].sCDeviceForRegistryManager = com.microsoft.azure.sdk.iot.service.Device.createFromId(id, null, null);
-            devicesUnderTest[i].sCModuleForRegistryManager = com.microsoft.azure.sdk.iot.service.Module.createFromId(id, "module", null);
-            devicesUnderTest[i].sCDeviceForRegistryManager = registryManager.addDevice(devicesUnderTest[i].sCDeviceForRegistryManager);
-            devicesUnderTest[i].sCModuleForRegistryManager = registryManager.addModule(devicesUnderTest[i].sCModuleForRegistryManager);
-            Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-            setUpTwin(devicesUnderTest[i]);
-        }
-    }
-
-    private void removeMultipleDevices(int numberOfDevices) throws IOException, IotHubException, InterruptedException
-    {
-        for (int i = 0; i < numberOfDevices; i++)
-        {
-            tearDownTwin(devicesUnderTest[i]);
-            registryManager.removeDevice(devicesUnderTest[i].sCDeviceForRegistryManager.getDeviceId());
-            Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        }
-    }
-
-    private void setUpTwin(DeviceState deviceState) throws IOException, URISyntaxException, IotHubException, InterruptedException, ModuleClientException
-    {
-        // set up twin on DeviceClient
-        if (internalClient == null)
-        {
-            deviceState.dCDeviceForTwin = new DeviceExtension();
-            if (this.testInstance.authenticationType == SAS)
-            {
-                if (this.testInstance.moduleId == null)
-                {
-                    internalClient = new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceState.sCDeviceForRegistryManager),
-                            this.testInstance.protocol);
-                }
-                else
-                {
-                    internalClient = new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, deviceState.sCDeviceForRegistryManager) + ";ModuleId=" + this.testInstance.moduleId,
-                            this.testInstance.protocol);
-                }
-            }
-            else if (this.testInstance.authenticationType == SELF_SIGNED)
-            {
-                if (this.testInstance.moduleId == null)
-                {
-                    internalClient = new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceUnderTest.sCDeviceForRegistryManager),
-                            this.testInstance.protocol,
-                            publicKeyCert,
-                            false,
-                            privateKey,
-                            false);
-                }
-                else
-                {
-                    internalClient = new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, deviceState.sCDeviceForRegistryManager) + ";ModuleId=" + this.testInstance.moduleId,
-                            this.testInstance.protocol,
-                            publicKeyCert,
-                            false,
-                            privateKey,
-                            false);
-                }
-            }
-            IotHubServicesCommon.openClientWithRetry(internalClient);
-            if (internalClient instanceof DeviceClient)
-            {
-                ((DeviceClient) internalClient).startDeviceTwin(new DeviceTwinStatusCallBack(), deviceState, deviceState.dCDeviceForTwin, deviceState);
-            }
-            else
-            {
-                ((ModuleClient) internalClient).startTwin(new DeviceTwinStatusCallBack(), deviceState, deviceState.dCDeviceForTwin, deviceState);
-            }
-            deviceState.deviceTwinStatus = STATUS.SUCCESS;
-        }
-
-        // set up twin on ServiceClient
-        if (sCDeviceTwin != null)
-        {
-            if (testInstance.moduleId == null)
-            {
-                deviceState.sCDeviceForTwin = new DeviceTwinDevice(deviceState.sCDeviceForRegistryManager.getDeviceId());
-            }
-            else
-            {
-                deviceState.sCDeviceForTwin = new DeviceTwinDevice(deviceState.sCDeviceForRegistryManager.getDeviceId(), deviceState.sCModuleForRegistryManager.getId());
-            }
-
-            sCDeviceTwin.getTwin(deviceState.sCDeviceForTwin);
-            Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        }
+        this.testInstance = new DeviceTwinCommon.DeviceTwinITRunner(deviceId, moduleId, protocol, authenticationType, clientType);
     }
 
     private static void tearDownTwin(DeviceState deviceState) throws IOException
@@ -333,46 +126,111 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         String moduleIdMqtt = "java-device-client-e2e-test-mqtt-module".concat("-" + uuid);
         String moduleIdMqttWs = "java-device-client-e2e-test-mqttws-module".concat("-" + uuid);
 
-        return Arrays.asList(
-            new Object[][]
-                {
-                    //sas token, device client
-                    {deviceIdAmqps, null, AMQPS, SAS, "DeviceClient"},
-                    {deviceIdAmqpsWs, null, AMQPS_WS, SAS, "DeviceClient"},
-                    {deviceIdMqtt, null, MQTT, SAS, "DeviceClient"},
-                    {deviceIdMqttWs,  null, MQTT_WS, SAS, "DeviceClient"},
+        return Arrays.asList(new Object[][]{
+                //sas token, device client
+                {deviceIdAmqps, null, AMQPS, SAS, "DeviceClient"}, {deviceIdAmqpsWs, null, AMQPS_WS, SAS, "DeviceClient"}, {deviceIdMqtt, null, MQTT, SAS, "DeviceClient"}, {deviceIdMqttWs, null, MQTT_WS, SAS, "DeviceClient"},
 
-                    //x509, device client
-                    {deviceIdAmqpsX509, null, AMQPS, SELF_SIGNED, "DeviceClient"},
-                    {deviceIdMqttX509, null, MQTT, SELF_SIGNED, "DeviceClient"},
+                //x509, device client
+                {deviceIdAmqpsX509, null, AMQPS, SELF_SIGNED, "DeviceClient"}, {deviceIdMqttX509, null, MQTT, SELF_SIGNED, "DeviceClient"},
 
-                    //sas token, module client
-                    {deviceIdAmqps, moduleIdAmqps, AMQPS, SAS, "ModuleClient"},
-                    {deviceIdAmqpsWs, moduleIdAmqpsWs, AMQPS_WS, SAS, "ModuleClient"},
-                    {deviceIdMqtt, moduleIdMqtt, MQTT, SAS, "ModuleClient"},
-                    {deviceIdMqttWs,  moduleIdMqttWs, MQTT_WS, SAS, "ModuleClient"}
-               }
-        );
+                //sas token, module client
+                {deviceIdAmqps, moduleIdAmqps, AMQPS, SAS, "ModuleClient"}, {deviceIdAmqpsWs, moduleIdAmqpsWs, AMQPS_WS, SAS, "ModuleClient"}, {deviceIdMqtt, moduleIdMqtt, MQTT, SAS, "ModuleClient"}, {deviceIdMqttWs, moduleIdMqttWs, MQTT_WS, SAS, "ModuleClient"}});
     }
 
-    public DeviceTwinCommon(String deviceId, String moduleId, IotHubClientProtocol protocol, AuthenticationType authenticationType, String clientType)
+    @AfterClass
+    public static void tearDown() throws IOException, IotHubException
     {
-        this.testInstance = new DeviceTwinCommon.DeviceTwinITRunner(deviceId, moduleId, protocol, authenticationType, clientType);
-    }
-
-    private class DeviceTwinITRunner
-    {
-        private String deviceId;
-        private IotHubClientProtocol protocol;
-        private AuthenticationType authenticationType;
-        private String moduleId;
-
-        public DeviceTwinITRunner(String deviceId, String moduleId, IotHubClientProtocol protocol, AuthenticationType authenticationType, String clientType)
+        if (registryManager != null)
         {
-            this.deviceId = deviceId;
-            this.protocol = protocol;
-            this.authenticationType = authenticationType;
-            this.moduleId = moduleId;
+            registryManager.close();
+        }
+
+        registryManager = null;
+        sCDeviceTwin = null;
+        internalClient = null;
+    }
+
+    private void addMultipleDevices(int numberOfDevices) throws IOException, InterruptedException, IotHubException, NoSuchAlgorithmException, URISyntaxException, ModuleClientException
+    {
+        devicesUnderTest = new DeviceState[numberOfDevices];
+
+        for (int i = 0; i < numberOfDevices; i++)
+        {
+            devicesUnderTest[i] = new DeviceState();
+            String id = "java-device-twin-e2e-test-" + this.testInstance.protocol.toString() + UUID.randomUUID().toString();
+            devicesUnderTest[i].sCDeviceForRegistryManager = com.microsoft.azure.sdk.iot.service.Device.createFromId(id, null, null);
+            devicesUnderTest[i].sCModuleForRegistryManager = com.microsoft.azure.sdk.iot.service.Module.createFromId(id, "module", null);
+            devicesUnderTest[i].sCDeviceForRegistryManager = registryManager.addDevice(devicesUnderTest[i].sCDeviceForRegistryManager);
+            devicesUnderTest[i].sCModuleForRegistryManager = registryManager.addModule(devicesUnderTest[i].sCModuleForRegistryManager);
+            Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
+            setUpTwin(devicesUnderTest[i]);
+        }
+    }
+
+    private void removeMultipleDevices(int numberOfDevices) throws IOException, IotHubException, InterruptedException
+    {
+        for (int i = 0; i < numberOfDevices; i++)
+        {
+            tearDownTwin(devicesUnderTest[i]);
+            registryManager.removeDevice(devicesUnderTest[i].sCDeviceForRegistryManager.getDeviceId());
+            Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
+        }
+    }
+
+    private void setUpTwin(DeviceState deviceState) throws IOException, URISyntaxException, IotHubException, InterruptedException, ModuleClientException
+    {
+        // set up twin on DeviceClient
+        if (internalClient == null)
+        {
+            deviceState.dCDeviceForTwin = new DeviceExtension();
+            if (this.testInstance.authenticationType == SAS)
+            {
+                if (this.testInstance.moduleId == null)
+                {
+                    internalClient = new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceState.sCDeviceForRegistryManager), this.testInstance.protocol);
+                }
+                else
+                {
+                    internalClient = new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, deviceState.sCDeviceForRegistryManager) + ";ModuleId=" + this.testInstance.moduleId, this.testInstance.protocol);
+                }
+            }
+            else if (this.testInstance.authenticationType == SELF_SIGNED)
+            {
+                if (this.testInstance.moduleId == null)
+                {
+                    internalClient = new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceUnderTest.sCDeviceForRegistryManager), this.testInstance.protocol, publicKeyCert, false, privateKey, false);
+                }
+                else
+                {
+                    internalClient = new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, deviceState.sCDeviceForRegistryManager) + ";ModuleId=" + this.testInstance.moduleId, this.testInstance.protocol, publicKeyCert, false, privateKey, false);
+                }
+            }
+            IotHubServicesCommon.openClientWithRetry(internalClient);
+            if (internalClient instanceof DeviceClient)
+            {
+                ((DeviceClient) internalClient).startDeviceTwin(new DeviceTwinStatusCallBack(), deviceState, deviceState.dCDeviceForTwin, deviceState);
+            }
+            else
+            {
+                ((ModuleClient) internalClient).startTwin(new DeviceTwinStatusCallBack(), deviceState, deviceState.dCDeviceForTwin, deviceState);
+            }
+            deviceState.deviceTwinStatus = STATUS.SUCCESS;
+        }
+
+        // set up twin on ServiceClient
+        if (sCDeviceTwin != null)
+        {
+            if (testInstance.moduleId == null)
+            {
+                deviceState.sCDeviceForTwin = new DeviceTwinDevice(deviceState.sCDeviceForRegistryManager.getDeviceId());
+            }
+            else
+            {
+                deviceState.sCDeviceForTwin = new DeviceTwinDevice(deviceState.sCDeviceForRegistryManager.getDeviceId(), deviceState.sCModuleForRegistryManager.getId());
+            }
+
+            sCDeviceTwin.getTwin(deviceState.sCDeviceForTwin);
+            Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
         }
     }
 
@@ -419,19 +277,6 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         {
             throw new RuntimeException(e);
         }
-    }
-
-    @AfterClass
-    public static void tearDown() throws IOException, IotHubException
-    {
-        if (registryManager != null)
-        {
-            registryManager.close();
-        }
-
-        registryManager = null;
-        sCDeviceTwin = null;
-        internalClient = null;
     }
 
     private int readReportedProperties(DeviceState deviceState, String startsWithKey, String startsWithValue) throws IOException, IotHubException, InterruptedException
@@ -709,7 +554,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         for (PropertyState propertyState : deviceUnderTest.dCDeviceForTwin.propertyStateList)
         {
             assertTrue("Callback was not triggered for one or more properties", propertyState.callBackTriggered);
-            assertNotEquals("Version was not set in the callback", (int)propertyState.propertyNewVersion, -1);
+            assertNotEquals("Version was not set in the callback", (int) propertyState.propertyNewVersion, -1);
             assertTrue(((String) propertyState.propertyNewValue).startsWith(PROPERTY_VALUE_UPDATE));
             assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
         }
@@ -748,11 +593,11 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         // act
         if (internalClient instanceof DeviceClient)
         {
-            ((DeviceClient)internalClient).getDeviceTwin();
+            ((DeviceClient) internalClient).getDeviceTwin();
         }
         else
         {
-            ((ModuleClient)internalClient).getTwin();
+            ((ModuleClient) internalClient).getTwin();
         }
 
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
@@ -762,7 +607,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         for (PropertyState propertyState : deviceUnderTest.dCDeviceForTwin.propertyStateList)
         {
             assertTrue("Callback was not triggered for one or more properties", propertyState.callBackTriggered);
-            assertNotEquals("Version was not set in the callback", (int)propertyState.propertyNewVersion, -1);
+            assertNotEquals("Version was not set in the callback", (int) propertyState.propertyNewVersion, -1);
             assertTrue(((String) propertyState.propertyNewValue).startsWith(PROPERTY_VALUE_UPDATE));
             assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
         }
@@ -1265,7 +1110,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         removeMultipleDevices(MAX_DEVICES);
     }
 
-    @Test (timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
+    @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
     public void testQueryTwinWithContinuationToken() throws IOException, InterruptedException, IotHubException, NoSuchAlgorithmException, URISyntaxException, ModuleClientException
     {
         addMultipleDevices(PAGE_SIZE + 1);
@@ -1476,25 +1321,19 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
     public void sendReportedPropertiesRecoveredFromTcpConnectionDrop() throws Exception
     {
-        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.tcpConnectionDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.tcpConnectionDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
     public void subscribeToDesiredPropertiesRecoveredFromTcpConnectionDrop() throws Exception
     {
-        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.tcpConnectionDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.tcpConnectionDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
     public void getDeviceTwinRecoveredFromTcpConnectionDrop() throws Exception
     {
-        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.tcpConnectionDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.tcpConnectionDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1505,9 +1344,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsConnectionDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsConnectionDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1518,9 +1355,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsConnectionDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsConnectionDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1531,9 +1366,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsConnectionDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsConnectionDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1544,9 +1377,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsSessionDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsSessionDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1557,9 +1388,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsSessionDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsSessionDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1570,9 +1399,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsSessionDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsSessionDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1589,9 +1416,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsCBSReqLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsCBSReqLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1608,9 +1433,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsCBSReqLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsCBSReqLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1627,9 +1450,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsCBSReqLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsCBSReqLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1646,9 +1467,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsCBSRespLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsCBSRespLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1665,9 +1484,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsCBSRespLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsCBSRespLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1684,9 +1501,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsCBSRespLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsCBSRespLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1697,9 +1512,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsD2CTelemetryLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsD2CTelemetryLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1710,9 +1523,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsD2CTelemetryLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsD2CTelemetryLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1723,9 +1534,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsD2CTelemetryLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsD2CTelemetryLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1743,9 +1552,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsC2DLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsC2DLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1763,9 +1570,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsC2DLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsC2DLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1784,9 +1589,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         }
 
 
-        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsC2DLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsC2DLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1804,9 +1607,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsTwinReqLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsTwinReqLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1824,9 +1625,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsTwinReqLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsTwinReqLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1844,9 +1643,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsTwinReqLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsTwinReqLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1864,9 +1661,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsTwinRespLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsTwinRespLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1884,9 +1679,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsTwinRespLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsTwinRespLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1904,9 +1697,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsTwinRespLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsTwinRespLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1924,9 +1715,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsMethodReqLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsMethodReqLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1944,9 +1733,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsMethodReqLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsMethodReqLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1964,9 +1751,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsMethodReqLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsMethodReqLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -1984,9 +1769,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsMethodRespLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSendReportedPropertiesFlow(ErrorInjectionHelper.amqpsMethodRespLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -2004,9 +1787,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsMethodRespLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionSubscribeToDesiredPropertiesFlow(ErrorInjectionHelper.amqpsMethodRespLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -2024,9 +1805,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsMethodRespLinkDropErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsMethodRespLinkDropErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -2037,9 +1816,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsGracefulShutdownErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.amqpsGracefulShutdownErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
@@ -2050,9 +1827,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.mqttGracefulShutdownErrorInjectionMessage(
-                ErrorInjectionHelper.DefaultDelayInSec,
-                ErrorInjectionHelper.DefaultDurationInSec));
+        this.errorInjectionGetDeviceTwinFlow(ErrorInjectionHelper.mqttGracefulShutdownErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.DefaultDurationInSec));
     }
 
     private void setDesiredProperties(String queryProperty, String queryPropertyValue, int numberOfDevices) throws IOException, IotHubException
@@ -2092,11 +1867,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         // Act
         errorInjectionMessage.setExpiryTime(100);
         MessageAndResult errorInjectionMsgAndRet = new MessageAndResult(errorInjectionMessage, null);
-        IotHubServicesCommon.sendMessageAndWaitForResponse(internalClient,
-                errorInjectionMsgAndRet,
-                RETRY_MILLISECONDS,
-                SEND_TIMEOUT_MILLISECONDS,
-                this.testInstance.protocol);
+        IotHubServicesCommon.sendMessageAndWaitForResponse(internalClient, errorInjectionMsgAndRet, RETRY_MILLISECONDS, SEND_TIMEOUT_MILLISECONDS, this.testInstance.protocol);
 
         // Assert
         IotHubServicesCommon.waitForStabilizedConnection(actualStatusUpdates, ERROR_INJECTION_WAIT_TIMEOUT);
@@ -2108,7 +1879,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         assertEquals(STATUS.SUCCESS, deviceUnderTest.deviceTwinStatus);
         // verify if they are received by SC
         int actualReportedPropFound = readReportedProperties(deviceUnderTest, PROPERTY_KEY, PROPERTY_VALUE);
-        assertEquals(2 , actualReportedPropFound);
+        assertEquals(2, actualReportedPropFound);
     }
 
     private void errorInjectionSubscribeToDesiredPropertiesFlow(Message errorInjectionMessage) throws Exception
@@ -2121,11 +1892,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         // Act
         errorInjectionMessage.setExpiryTime(100);
         MessageAndResult errorInjectionMsgAndRet = new MessageAndResult(errorInjectionMessage, null);
-        IotHubServicesCommon.sendMessageAndWaitForResponse(internalClient,
-                errorInjectionMsgAndRet,
-                RETRY_MILLISECONDS,
-                SEND_TIMEOUT_MILLISECONDS,
-                this.testInstance.protocol);
+        IotHubServicesCommon.sendMessageAndWaitForResponse(internalClient, errorInjectionMsgAndRet, RETRY_MILLISECONDS, SEND_TIMEOUT_MILLISECONDS, this.testInstance.protocol);
 
         // Assert
         IotHubServicesCommon.waitForStabilizedConnection(actualStatusUpdates, ERROR_INJECTION_WAIT_TIMEOUT);
@@ -2155,11 +1922,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         // Act
         errorInjectionMessage.setExpiryTime(100);
         MessageAndResult errorInjectionMsgAndRet = new MessageAndResult(errorInjectionMessage, null);
-        IotHubServicesCommon.sendMessageAndWaitForResponse(internalClient,
-                errorInjectionMsgAndRet,
-                RETRY_MILLISECONDS,
-                SEND_TIMEOUT_MILLISECONDS,
-                this.testInstance.protocol);
+        IotHubServicesCommon.sendMessageAndWaitForResponse(internalClient, errorInjectionMsgAndRet, RETRY_MILLISECONDS, SEND_TIMEOUT_MILLISECONDS, this.testInstance.protocol);
 
         // Assert
         IotHubServicesCommon.waitForStabilizedConnection(actualStatusUpdates, ERROR_INJECTION_WAIT_TIMEOUT);
@@ -2171,11 +1934,11 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
 
         if (internalClient instanceof DeviceClient)
         {
-            ((DeviceClient)internalClient).getDeviceTwin();
+            ((DeviceClient) internalClient).getDeviceTwin();
         }
         else
         {
-            ((ModuleClient)internalClient).getTwin();
+            ((ModuleClient) internalClient).getTwin();
         }
 
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
@@ -2184,9 +1947,133 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         for (PropertyState propertyState : deviceUnderTest.dCDeviceForTwin.propertyStateList)
         {
             assertTrue("Callback was not triggered for one or more properties", propertyState.callBackTriggered);
-            assertNotEquals("Version was not set in the callback", (int)propertyState.propertyNewVersion, -1);
+            assertNotEquals("Version was not set in the callback", (int) propertyState.propertyNewVersion, -1);
             assertTrue(((String) propertyState.propertyNewValue).startsWith(PROPERTY_VALUE_UPDATE));
             assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+        }
+    }
+
+    private enum STATUS
+    {
+        SUCCESS, FAILURE
+    }
+
+    protected class DeviceTwinStatusCallBack implements IotHubEventCallback
+    {
+        public void execute(IotHubStatusCode status, Object context)
+        {
+            DeviceState state = (DeviceState) context;
+
+            //On failure, Don't update status any further
+            if ((status == OK || status == OK_EMPTY) && state.deviceTwinStatus != STATUS.FAILURE)
+            {
+                state.deviceTwinStatus = STATUS.SUCCESS;
+            }
+            else
+            {
+                state.deviceTwinStatus = STATUS.FAILURE;
+            }
+        }
+    }
+
+    class DeviceState
+    {
+        com.microsoft.azure.sdk.iot.service.Device sCDeviceForRegistryManager;
+        com.microsoft.azure.sdk.iot.service.Module sCModuleForRegistryManager;
+        DeviceTwinDevice sCDeviceForTwin;
+        DeviceExtension dCDeviceForTwin;
+        OnProperty dCOnProperty = new OnProperty();
+        STATUS deviceTwinStatus;
+    }
+
+    class PropertyState
+    {
+        boolean callBackTriggered;
+        Property property;
+        Object propertyNewValue;
+        Integer propertyNewVersion;
+    }
+
+    class OnProperty implements TwinPropertyCallBack
+    {
+        @Override
+        public void TwinPropertyCallBack(Property property, Object context)
+        {
+            PropertyState propertyState = (PropertyState) context;
+            if (property.getKey().equals(propertyState.property.getKey()))
+            {
+                propertyState.callBackTriggered = true;
+                propertyState.propertyNewValue = property.getValue();
+                propertyState.propertyNewVersion = property.getVersion();
+            }
+        }
+    }
+
+    class DeviceExtension extends Device
+    {
+        List<PropertyState> propertyStateList = new LinkedList<>();
+
+        @Override
+        public void PropertyCall(String propertyKey, Object propertyValue, Object context)
+        {
+            PropertyState propertyState = (PropertyState) context;
+            if (propertyKey.equals(propertyState.property.getKey()))
+            {
+                propertyState.callBackTriggered = true;
+                propertyState.propertyNewValue = propertyValue;
+            }
+        }
+
+        synchronized void createNewReportedProperties(int maximumPropertiesToCreate)
+        {
+            for (int i = 0; i < maximumPropertiesToCreate; i++)
+            {
+                UUID randomUUID = UUID.randomUUID();
+                this.setReportedProp(new Property(PROPERTY_KEY + randomUUID, PROPERTY_VALUE + randomUUID));
+            }
+        }
+
+        synchronized void updateAllExistingReportedProperties()
+        {
+            Set<Property> reportedProp = this.getReportedProp();
+
+            for (Property p : reportedProp)
+            {
+                UUID randomUUID = UUID.randomUUID();
+                p.setValue(PROPERTY_VALUE_UPDATE + randomUUID);
+            }
+        }
+
+        synchronized void updateExistingReportedProperty(int index)
+        {
+            Set<Property> reportedProp = this.getReportedProp();
+            int i = 0;
+            for (Property p : reportedProp)
+            {
+                if (i == index)
+                {
+                    UUID randomUUID = UUID.randomUUID();
+                    p.setValue(PROPERTY_VALUE_UPDATE + randomUUID);
+                    break;
+                }
+                i++;
+            }
+        }
+    }
+
+    private class DeviceTwinITRunner
+    {
+        private String deviceId;
+        private IotHubClientProtocol protocol;
+        private AuthenticationType authenticationType;
+        private String moduleId;
+
+        public DeviceTwinITRunner(String deviceId, String moduleId, IotHubClientProtocol protocol, AuthenticationType authenticationType, String clientType)
+        {
+            this.deviceId = deviceId;
+            this.protocol = protocol;
+            this.authenticationType = authenticationType;
+            this.moduleId = moduleId;
         }
     }
 }

@@ -11,19 +11,19 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-/** Integration tests for Signature. */
+/**
+ * Integration tests for Signature.
+ */
 public class SignatureIT
 {
     @Test
     public void signatureIsCorrect()
     {
-        String resourceUri =
-                "sdktesthub.private.azure-devices-int.net/devices/test8";
+        String resourceUri = "sdktesthub.private.azure-devices-int.net/devices/test8";
         String deviceKey = Base64.encodeBase64StringLocal("someKey".getBytes());
         long expiryTime = 1462333672;
 
-        String testSig =
-                new Signature(resourceUri, expiryTime, deviceKey).toString();
+        String testSig = new Signature(resourceUri, expiryTime, deviceKey).toString();
 
         String sigEncoded = new String(Base64.encodeBase64Local(testSig.getBytes()));
 

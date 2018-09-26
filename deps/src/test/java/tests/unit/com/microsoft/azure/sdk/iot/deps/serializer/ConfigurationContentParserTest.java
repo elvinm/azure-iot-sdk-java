@@ -36,8 +36,7 @@ public class ConfigurationContentParserTest
     public void constructorFromJson()
     {
         //arrange
-        String json = "{\"modulesContent\":{\"properties\":{\"c\":\"abc\",\"d\":\"def\"}}, " +
-                "\"deviceContent\":{\"properties.desired.settings1\": {\"c\":3,\"d\":4}}}";
+        String json = "{\"modulesContent\":{\"properties\":{\"c\":\"abc\",\"d\":\"def\"}}, " + "\"deviceContent\":{\"properties.desired.settings1\": {\"c\":3,\"d\":4}}}";
 
         //act
         ConfigurationContentParser parser = new ConfigurationContentParser(json);
@@ -47,14 +46,14 @@ public class ConfigurationContentParserTest
         Map<String, Object> moduleContentMap = parser.getModulesContent().get("properties");
         assertEquals("abc", moduleContentMap.get("c"));
         assertEquals("def", moduleContentMap.get("d"));
-        Map<String, Object> deviceContentMap = ((Map<String,Object>)(parser.getDeviceContent().get("properties.desired.settings1")));
-        assertEquals((double)3, deviceContentMap.get("c"));
-        assertEquals((double)4, deviceContentMap.get("d"));
+        Map<String, Object> deviceContentMap = ((Map<String, Object>) (parser.getDeviceContent().get("properties.desired.settings1")));
+        assertEquals((double) 3, deviceContentMap.get("c"));
+        assertEquals((double) 4, deviceContentMap.get("d"));
     }
 
     //Tests_SRS_CONFIGURATION_CONTENT_PARSER_28_003: [If the provided json cannot be parsed into a ConfigurationContentParser
     // object, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForInvalidJson()
     {
         //arrange
@@ -72,10 +71,22 @@ public class ConfigurationContentParserTest
     public void gettersAndSetters()
     {
         //arrange
-        Map<String, Map<String, Object>> mc = new HashMap<String, Map<String, Object>>() {{put("mproperty",
-                new HashMap<String, Object>(){{put("abc", "123"); put("cde", "456");}});}};
-        Map<String, Object> dc = new HashMap<String, Object>(){{put("dproperty",
-                new HashMap<String, Integer>(){{put("c", 3);put("d", 4);}});}};
+        Map<String, Map<String, Object>> mc = new HashMap<String, Map<String, Object>>()
+        {{
+            put("mproperty", new HashMap<String, Object>()
+            {{
+                put("abc", "123");
+                put("cde", "456");
+            }});
+        }};
+        Map<String, Object> dc = new HashMap<String, Object>()
+        {{
+            put("dproperty", new HashMap<String, Integer>()
+            {{
+                put("c", 3);
+                put("d", 4);
+            }});
+        }};
         ConfigurationContentParser parser = new ConfigurationContentParser();
 
         //act
@@ -86,7 +97,7 @@ public class ConfigurationContentParserTest
         Map<String, Object> moduleContentMap = (parser.getModulesContent().get("mproperty"));
         assertEquals("123", moduleContentMap.get("abc"));
         assertEquals("456", moduleContentMap.get("cde"));
-        Map<String, Object> deviceContentMap = ((Map<String,Object>)(parser.getDeviceContent().get("dproperty")));
+        Map<String, Object> deviceContentMap = ((Map<String, Object>) (parser.getDeviceContent().get("dproperty")));
         assertEquals(3, deviceContentMap.get("c"));
         assertEquals(4, deviceContentMap.get("d"));
     }
@@ -96,10 +107,22 @@ public class ConfigurationContentParserTest
     public void toJsonNoModulesContent()
     {
         //arrange
-        HashMap<String, HashMap<String, Object>> mc = new HashMap<String, HashMap<String, Object>>(){{put("mproperty",
-                new HashMap<String, Object>(){{put("abc", "123"); put("cde", "456");}});}};
-        HashMap<String, Object> dc = new HashMap<String, Object>(){{put("dproperty",
-                new HashMap<String, Integer>(){{put("c", 3);put("d", 4);}});}};
+        HashMap<String, HashMap<String, Object>> mc = new HashMap<String, HashMap<String, Object>>()
+        {{
+            put("mproperty", new HashMap<String, Object>()
+            {{
+                put("abc", "123");
+                put("cde", "456");
+            }});
+        }};
+        HashMap<String, Object> dc = new HashMap<String, Object>()
+        {{
+            put("dproperty", new HashMap<String, Integer>()
+            {{
+                put("c", 3);
+                put("d", 4);
+            }});
+        }};
         ConfigurationContentParser parser = new ConfigurationContentParser();
         String modulesContent = "modulesContent";
         String deviceContent = "deviceContent";
@@ -118,10 +141,22 @@ public class ConfigurationContentParserTest
     public void toJsonNoDeviceContent()
     {
         //arrange
-        Map<String, Map<String, Object>> mc = new HashMap<String, Map<String, Object>>(){{put("mproperty",
-                new HashMap<String, Object>(){{put("abc", "123"); put("cde", "456");}});}};
-        Map<String, Object> dc = new HashMap<String, Object>(){{put("dproperty",
-                new HashMap<String, Integer>(){{put("c", 3);put("d", 4);}});}};
+        Map<String, Map<String, Object>> mc = new HashMap<String, Map<String, Object>>()
+        {{
+            put("mproperty", new HashMap<String, Object>()
+            {{
+                put("abc", "123");
+                put("cde", "456");
+            }});
+        }};
+        Map<String, Object> dc = new HashMap<String, Object>()
+        {{
+            put("dproperty", new HashMap<String, Integer>()
+            {{
+                put("c", 3);
+                put("d", 4);
+            }});
+        }};
         ConfigurationContentParser parser = new ConfigurationContentParser();
         String modulesContent = "modulesContent";
         String deviceContent = "deviceContent";

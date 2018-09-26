@@ -35,42 +35,6 @@ import static junit.framework.TestCase.fail;
 
 public class SendMessagesCommon extends MethodNameLoggingIntegrationTest
 {
-    //Huw much sequential connections each device will open and close in the multithreaded test.
-    private static final Integer NUM_CONNECTIONS_PER_DEVICE = 5;
-
-    //How much devices the multithreaded test will create in parallel.
-    private static final Integer MAX_DEVICE_PARALLEL = 3;
-
-    //How many keys each message will cary.
-    private static final Integer NUM_KEYS_PER_MESSAGE = 3;
-
-    // How much to wait until a message makes it to the server, in milliseconds
-    private static final Integer SEND_TIMEOUT_MILLISECONDS = 60000;
-
-    //How many milliseconds between retry
-    private static final Integer RETRY_MILLISECONDS = 100;
-
-    protected static String iotHubConnectionString = "";
-    private static final int INTERTEST_GUARDIAN_DELAY_MILLISECONDS = 2000;
-    protected static String publicKeyCert;
-    protected static String privateKey;
-    protected static String x509Thumbprint;
-
-    private static String hostName;
-
-    private static Device device;
-    private static Device deviceX509;
-
-    private static Module module;
-    private static Module moduleX509;
-
-    private static Device[] deviceListAmqps = new Device[MAX_DEVICE_PARALLEL];
-
-    //Some tests below involve creating a short-lived sas token to test how expired tokens are handled
-    private static final long SECONDS_FOR_SAS_TOKEN_TO_LIVE = 3;
-    private static final long MILLISECONDS_TO_WAIT_FOR_TOKEN_TO_EXPIRE = 5000;
-    private static final long SECONDS_FOR_SAS_TOKEN_TO_LIVE_BEFORE_RENEWAL = 1;
-
     //The messages to be sent in these tests. Some contain error injection messages surrounded by normal messages
     protected static final List<MessageAndResult> NORMAL_MESSAGES_TO_SEND = new ArrayList<>();
     protected static final List<MessageAndResult> TCP_CONNECTION_DROP_MESSAGES_TO_SEND = new ArrayList<>();
@@ -86,15 +50,36 @@ public class SendMessagesCommon extends MethodNameLoggingIntegrationTest
     protected static final List<MessageAndResult> AMQP_TWIN_RESP_LINK_DROP_MESSAGES_TO_SEND = new ArrayList<>();
     protected static final List<MessageAndResult> AMQP_GRACEFUL_SHUTDOWN_MESSAGES_TO_SEND = new ArrayList<>();
     protected static final List<MessageAndResult> MQTT_GRACEFUL_SHUTDOWN_MESSAGES_TO_SEND = new ArrayList<>();
-
-    protected SendMessagesITRunner testInstance;
-
+    //Huw much sequential connections each device will open and close in the multithreaded test.
+    private static final Integer NUM_CONNECTIONS_PER_DEVICE = 5;
+    //How much devices the multithreaded test will create in parallel.
+    private static final Integer MAX_DEVICE_PARALLEL = 3;
+    //How many keys each message will cary.
+    private static final Integer NUM_KEYS_PER_MESSAGE = 3;
+    // How much to wait until a message makes it to the server, in milliseconds
+    private static final Integer SEND_TIMEOUT_MILLISECONDS = 60000;
+    //How many milliseconds between retry
+    private static final Integer RETRY_MILLISECONDS = 100;
+    private static final int INTERTEST_GUARDIAN_DELAY_MILLISECONDS = 2000;
+    //Some tests below involve creating a short-lived sas token to test how expired tokens are handled
+    private static final long SECONDS_FOR_SAS_TOKEN_TO_LIVE = 3;
+    private static final long MILLISECONDS_TO_WAIT_FOR_TOKEN_TO_EXPIRE = 5000;
+    private static final long SECONDS_FOR_SAS_TOKEN_TO_LIVE_BEFORE_RENEWAL = 1;
     //How much messages each device will send to the hub for each connection.
     private static final Integer NUM_MESSAGES_PER_CONNECTION = 6;
-
     private static final AtomicBoolean succeed = new AtomicBoolean();
-
+    protected static String iotHubConnectionString = "";
+    protected static String publicKeyCert;
+    protected static String privateKey;
+    protected static String x509Thumbprint;
+    private static String hostName;
+    private static Device device;
+    private static Device deviceX509;
+    private static Module module;
+    private static Module moduleX509;
+    private static Device[] deviceListAmqps = new Device[MAX_DEVICE_PARALLEL];
     private static RegistryManager registryManager;
+    protected SendMessagesITRunner testInstance;
 
     public SendMessagesCommon(InternalClient client, IotHubClientProtocol protocol, Device device, AuthenticationType authenticationType, String clientType)
     {
@@ -136,152 +121,20 @@ public class SendMessagesCommon extends MethodNameLoggingIntegrationTest
 
         hostName = IotHubConnectionStringBuilder.createConnectionString(iotHubConnectionString).getHostName();
 
-        List inputs = Arrays.asList(
-                new Object[][]
-                        {
-                                //sas token device client
-                                {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), HTTPS), HTTPS, device, SAS, "DeviceClient"},
-                                {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), MQTT), MQTT, device, SAS, "DeviceClient"},
-                                {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), MQTT_WS), MQTT_WS, device, SAS, "DeviceClient"},
-                                {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), AMQPS), AMQPS, device, SAS, "DeviceClient"},
-                                {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), AMQPS_WS), AMQPS_WS, device, SAS, "DeviceClient"},
+        List inputs = Arrays.asList(new Object[][]{
+                //sas token device client
+                {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), HTTPS), HTTPS, device, SAS, "DeviceClient"}, {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), MQTT), MQTT, device, SAS, "DeviceClient"}, {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), MQTT_WS), MQTT_WS, device, SAS, "DeviceClient"}, {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), AMQPS), AMQPS, device, SAS, "DeviceClient"}, {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), AMQPS_WS), AMQPS_WS, device, SAS, "DeviceClient"},
 
-                                //x509 device client
-                                {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509), HTTPS, publicKeyCert, false, privateKey, false), HTTPS, deviceX509, SELF_SIGNED, "DeviceClient"},
-                                {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509), MQTT, publicKeyCert, false, privateKey, false), MQTT, deviceX509, SELF_SIGNED, "DeviceClient"},
-                                {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509), AMQPS, publicKeyCert, false, privateKey, false), AMQPS, deviceX509, SELF_SIGNED, "DeviceClient"},
+                //x509 device client
+                {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509), HTTPS, publicKeyCert, false, privateKey, false), HTTPS, deviceX509, SELF_SIGNED, "DeviceClient"}, {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509), MQTT, publicKeyCert, false, privateKey, false), MQTT, deviceX509, SELF_SIGNED, "DeviceClient"}, {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509), AMQPS, publicKeyCert, false, privateKey, false), AMQPS, deviceX509, SELF_SIGNED, "DeviceClient"},
 
-                                //sas token module client
-                                {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), MQTT), MQTT, device, SAS, "ModuleClient"},
-                                {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), MQTT_WS), MQTT_WS, device, SAS, "ModuleClient"},
-                                {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), AMQPS), AMQPS, device, SAS, "ModuleClient"},
-                                {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), AMQPS_WS), AMQPS_WS, device, SAS, "ModuleClient"},
+                //sas token module client
+                {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), MQTT), MQTT, device, SAS, "ModuleClient"}, {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), MQTT_WS), MQTT_WS, device, SAS, "ModuleClient"}, {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), AMQPS), AMQPS, device, SAS, "ModuleClient"}, {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), AMQPS_WS), AMQPS_WS, device, SAS, "ModuleClient"},
 
-                                //x509 module client
-                                {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509, moduleX509), MQTT, publicKeyCert, false, privateKey, false), MQTT, device, SELF_SIGNED, "ModuleClient"},
-                                {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509, moduleX509), AMQPS, publicKeyCert, false, privateKey, false), AMQPS, device, SELF_SIGNED, "ModuleClient"}
-                        }
-        );
+                //x509 module client
+                {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509, moduleX509), MQTT, publicKeyCert, false, privateKey, false), MQTT, device, SELF_SIGNED, "ModuleClient"}, {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509, moduleX509), AMQPS, publicKeyCert, false, privateKey, false), AMQPS, device, SELF_SIGNED, "ModuleClient"}});
 
         return inputs;
-    }
-
-    private class SendMessagesITRunner
-    {
-        private InternalClient client;
-        private IotHubClientProtocol protocol;
-        private Device device;
-        private AuthenticationType authenticationType;
-        private String clientType;
-
-        public SendMessagesITRunner(InternalClient client, IotHubClientProtocol protocol, Device device, AuthenticationType authenticationType, String clientType)
-        {
-            this.client = client;
-            this.protocol = protocol;
-            this.device = device;
-            this.authenticationType = authenticationType;
-            this.clientType = clientType;
-        }
-    }
-
-    protected static class testDevice implements Runnable
-    {
-        private DeviceClient client;
-        private String messageString;
-        private String connString;
-
-        private IotHubClientProtocol protocol;
-        private Integer numMessagesPerConnection;
-        private Integer numConnectionsPerDevice;
-        private Integer sendTimeout;
-        private Integer numKeys;
-        private CountDownLatch latch;
-
-        @Override
-        public void run()
-        {
-            for (int i = 0; i < this.numConnectionsPerDevice; i++)
-            {
-                try
-                {
-                    this.openConnection();
-                    this.sendMessages();
-                    this.closeConnection();
-                } catch (Exception e)
-                {
-                    succeed.set(false);
-                }
-            }
-            latch.countDown();
-        }
-
-        public testDevice(Device deviceAmqps, IotHubClientProtocol protocol,
-                          Integer numConnectionsPerDevice, Integer numMessagesPerConnection,
-                          Integer numKeys, Integer sendTimeout, CountDownLatch latch)
-        {
-            this.protocol = protocol;
-            this.numConnectionsPerDevice = numConnectionsPerDevice;
-            this.numMessagesPerConnection = numMessagesPerConnection;
-            this.sendTimeout = sendTimeout;
-            this.numKeys = numKeys;
-            this.latch = latch;
-
-            succeed.set(true);
-
-            this.connString = DeviceConnectionString.get(iotHubConnectionString, deviceAmqps);
-
-            messageString = "Java client " + deviceAmqps.getDeviceId() + " test e2e message over AMQP protocol";
-        }
-
-        private void openConnection() throws IOException, URISyntaxException
-        {
-            client = new DeviceClient(connString, protocol);
-            IotHubServicesCommon.openClientWithRetry(client);
-        }
-
-        public void sendMessages()
-        {
-            for (int i = 0; i < numMessagesPerConnection; ++i)
-            {
-                try
-                {
-                    Message msgSend = new Message(messageString);
-                    msgSend.setProperty("messageCount", Integer.toString(i));
-                    for (int j = 0; j < numKeys; j++)
-                    {
-                        msgSend.setProperty("key"+j, "value"+j);
-                    }
-
-                    Success messageSent = new Success();
-                    EventCallback callback = new EventCallback(IotHubStatusCode.OK_EMPTY);
-                    client.sendEventAsync(msgSend, callback, messageSent);
-
-                    long startTime = System.currentTimeMillis();
-                    while(!messageSent.wasCallbackFired())
-                    {
-                        Thread.sleep(RETRY_MILLISECONDS);
-                        if (System.currentTimeMillis() - startTime > sendTimeout)
-                        {
-                            fail("Timed out waiting for event callback");
-                        }
-                    }
-
-                    if (messageSent.getCallbackStatusCode() != IotHubStatusCode.OK_EMPTY)
-                    {
-                        Assert.fail("Sending message over AMQPS protocol failed: expected OK_EMPTY but received " + messageSent.getCallbackStatusCode());
-                    }
-                }
-                catch (Exception e)
-                {
-                    Assert.fail("Sending message over AMQPS protocol throws " + e);
-                }
-            }
-        }
-
-        public void closeConnection() throws IOException
-        {
-            client.closeNow();
-        }
     }
 
     /**
@@ -411,24 +264,16 @@ public class SendMessagesCommon extends MethodNameLoggingIntegrationTest
         List<Thread> threads = new ArrayList<>(deviceListAmqps.length);
         CountDownLatch cdl = new CountDownLatch(deviceListAmqps.length);
 
-        for(Device deviceAmqps: deviceListAmqps)
+        for (Device deviceAmqps : deviceListAmqps)
         {
-            Thread thread = new Thread(
-                    new testDevice(
-                            deviceAmqps,
-                            AMQPS,
-                            NUM_CONNECTIONS_PER_DEVICE,
-                            NUM_MESSAGES_PER_CONNECTION,
-                            NUM_KEYS_PER_MESSAGE,
-                            SEND_TIMEOUT_MILLISECONDS,
-                            cdl));
+            Thread thread = new Thread(new testDevice(deviceAmqps, AMQPS, NUM_CONNECTIONS_PER_DEVICE, NUM_MESSAGES_PER_CONNECTION, NUM_KEYS_PER_MESSAGE, SEND_TIMEOUT_MILLISECONDS, cdl));
             thread.start();
             threads.add(thread);
         }
 
         cdl.await(1, TimeUnit.MINUTES);
 
-        if(!succeed.get())
+        if (!succeed.get())
         {
             Assert.fail("Sending message over AMQP protocol in parallel failed");
         }
@@ -457,7 +302,7 @@ public class SendMessagesCommon extends MethodNameLoggingIntegrationTest
             testInstance.client.sendEventAsync(new Message("some message body"), callback, messageSent);
 
             long startTime = System.currentTimeMillis();
-            while(!messageSent.wasCallbackFired())
+            while (!messageSent.wasCallbackFired())
             {
                 Thread.sleep(RETRY_MILLISECONDS);
                 if (System.currentTimeMillis() - startTime > SEND_TIMEOUT_MILLISECONDS)
@@ -688,10 +533,7 @@ public class SendMessagesCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        errorInjectionTestFlowNoDisconnect(
-                ErrorInjectionHelper.throttledConnectionErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.Duration10Sec),
-                IotHubStatusCode.OK_EMPTY,
-                false);
+        errorInjectionTestFlowNoDisconnect(ErrorInjectionHelper.throttledConnectionErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.Duration10Sec), IotHubStatusCode.OK_EMPTY, false);
 
     }
 
@@ -704,10 +546,7 @@ public class SendMessagesCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        errorInjectionTestFlowNoDisconnect(
-                ErrorInjectionHelper.throttledConnectionErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.Duration10Sec),
-                IotHubStatusCode.THROTTLED,
-                true);
+        errorInjectionTestFlowNoDisconnect(ErrorInjectionHelper.throttledConnectionErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.Duration10Sec), IotHubStatusCode.THROTTLED, true);
 
     }
 
@@ -720,10 +559,7 @@ public class SendMessagesCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        errorInjectionTestFlowNoDisconnect(
-                ErrorInjectionHelper.authErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.Duration10Sec),
-                IotHubStatusCode.ERROR,
-                false);
+        errorInjectionTestFlowNoDisconnect(ErrorInjectionHelper.authErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.Duration10Sec), IotHubStatusCode.ERROR, false);
     }
 
     @Test
@@ -735,10 +571,7 @@ public class SendMessagesCommon extends MethodNameLoggingIntegrationTest
             return;
         }
 
-        errorInjectionTestFlowNoDisconnect(
-                ErrorInjectionHelper.quotaExceededErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.Duration10Sec),
-                IotHubStatusCode.ERROR,
-                false);
+        errorInjectionTestFlowNoDisconnect(ErrorInjectionHelper.quotaExceededErrorInjectionMessage(ErrorInjectionHelper.DefaultDelayInSec, ErrorInjectionHelper.Duration10Sec), IotHubStatusCode.ERROR, false);
     }
 
     @Test
@@ -815,26 +648,133 @@ public class SendMessagesCommon extends MethodNameLoggingIntegrationTest
         IotHubServicesCommon.openClientWithRetry(dc);
 
         // Act
-        MessageAndResult errorInjectionMsgAndRet = new MessageAndResult(errorInjectionMessage,null);
-        IotHubServicesCommon.sendMessageAndWaitForResponse(
-                dc,
-                errorInjectionMsgAndRet,
-                RETRY_MILLISECONDS,
-                SEND_TIMEOUT_MILLISECONDS,
-                this.testInstance.protocol);
+        MessageAndResult errorInjectionMsgAndRet = new MessageAndResult(errorInjectionMessage, null);
+        IotHubServicesCommon.sendMessageAndWaitForResponse(dc, errorInjectionMsgAndRet, RETRY_MILLISECONDS, SEND_TIMEOUT_MILLISECONDS, this.testInstance.protocol);
 
         // time for the error injection to take effect on the service side
         Thread.sleep(2000);
 
         MessageAndResult normalMessageAndExpectedResult = new MessageAndResult(new Message("test message"), expectedStatus);
-        IotHubServicesCommon.sendMessageAndWaitForResponse(
-                dc,
-                normalMessageAndExpectedResult,
-                RETRY_MILLISECONDS,
-                SEND_TIMEOUT_MILLISECONDS,
-                this.testInstance.protocol);
+        IotHubServicesCommon.sendMessageAndWaitForResponse(dc, normalMessageAndExpectedResult, RETRY_MILLISECONDS, SEND_TIMEOUT_MILLISECONDS, this.testInstance.protocol);
 
         //cleanup
         registryManager.removeDevice(target.getDeviceId());
+    }
+
+    protected static class testDevice implements Runnable
+    {
+        private DeviceClient client;
+        private String messageString;
+        private String connString;
+
+        private IotHubClientProtocol protocol;
+        private Integer numMessagesPerConnection;
+        private Integer numConnectionsPerDevice;
+        private Integer sendTimeout;
+        private Integer numKeys;
+        private CountDownLatch latch;
+
+        public testDevice(Device deviceAmqps, IotHubClientProtocol protocol, Integer numConnectionsPerDevice, Integer numMessagesPerConnection, Integer numKeys, Integer sendTimeout, CountDownLatch latch)
+        {
+            this.protocol = protocol;
+            this.numConnectionsPerDevice = numConnectionsPerDevice;
+            this.numMessagesPerConnection = numMessagesPerConnection;
+            this.sendTimeout = sendTimeout;
+            this.numKeys = numKeys;
+            this.latch = latch;
+
+            succeed.set(true);
+
+            this.connString = DeviceConnectionString.get(iotHubConnectionString, deviceAmqps);
+
+            messageString = "Java client " + deviceAmqps.getDeviceId() + " test e2e message over AMQP protocol";
+        }
+
+        @Override
+        public void run()
+        {
+            for (int i = 0; i < this.numConnectionsPerDevice; i++)
+            {
+                try
+                {
+                    this.openConnection();
+                    this.sendMessages();
+                    this.closeConnection();
+                }
+                catch (Exception e)
+                {
+                    succeed.set(false);
+                }
+            }
+            latch.countDown();
+        }
+
+        private void openConnection() throws IOException, URISyntaxException
+        {
+            client = new DeviceClient(connString, protocol);
+            IotHubServicesCommon.openClientWithRetry(client);
+        }
+
+        public void sendMessages()
+        {
+            for (int i = 0; i < numMessagesPerConnection; ++i)
+            {
+                try
+                {
+                    Message msgSend = new Message(messageString);
+                    msgSend.setProperty("messageCount", Integer.toString(i));
+                    for (int j = 0; j < numKeys; j++)
+                    {
+                        msgSend.setProperty("key" + j, "value" + j);
+                    }
+
+                    Success messageSent = new Success();
+                    EventCallback callback = new EventCallback(IotHubStatusCode.OK_EMPTY);
+                    client.sendEventAsync(msgSend, callback, messageSent);
+
+                    long startTime = System.currentTimeMillis();
+                    while (!messageSent.wasCallbackFired())
+                    {
+                        Thread.sleep(RETRY_MILLISECONDS);
+                        if (System.currentTimeMillis() - startTime > sendTimeout)
+                        {
+                            fail("Timed out waiting for event callback");
+                        }
+                    }
+
+                    if (messageSent.getCallbackStatusCode() != IotHubStatusCode.OK_EMPTY)
+                    {
+                        Assert.fail("Sending message over AMQPS protocol failed: expected OK_EMPTY but received " + messageSent.getCallbackStatusCode());
+                    }
+                }
+                catch (Exception e)
+                {
+                    Assert.fail("Sending message over AMQPS protocol throws " + e);
+                }
+            }
+        }
+
+        public void closeConnection() throws IOException
+        {
+            client.closeNow();
+        }
+    }
+
+    private class SendMessagesITRunner
+    {
+        private InternalClient client;
+        private IotHubClientProtocol protocol;
+        private Device device;
+        private AuthenticationType authenticationType;
+        private String clientType;
+
+        public SendMessagesITRunner(InternalClient client, IotHubClientProtocol protocol, Device device, AuthenticationType authenticationType, String clientType)
+        {
+            this.client = client;
+            this.protocol = protocol;
+            this.device = device;
+            this.authenticationType = authenticationType;
+            this.clientType = clientType;
+        }
     }
 }

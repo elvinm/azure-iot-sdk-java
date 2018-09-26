@@ -29,25 +29,20 @@ import static junit.framework.TestCase.assertEquals;
 
 public class HttpHsmSignatureProviderTest
 {
-    @Mocked
-    Mac mockedMac;
-
-    @Mocked
-    HttpsHsmClient mockedHttpsHsmClient;
-
-    @Mocked
-    SignRequest mockedSignRequest;
-
-    @Mocked
-    SignResponse mockedSignResponse;
-
-    @Mocked
-    Base64 mockedBase64;
-
     private static final String expectedProviderUri = "someProviderUri";
     private static final String expectedApiVersion = "1.1.1";
     private static final String expectedGenId = "gen1";
     private static final String defaultApiVersion = Deencapsulation.getField(ModuleClient.class, "DEFAULT_API_VERSION");
+    @Mocked
+    Mac mockedMac;
+    @Mocked
+    HttpsHsmClient mockedHttpsHsmClient;
+    @Mocked
+    SignRequest mockedSignRequest;
+    @Mocked
+    SignResponse mockedSignResponse;
+    @Mocked
+    Base64 mockedBase64;
 
     // Codes_SRS_HTTPHSMSIGNATUREPROVIDER_34_001: [This constructor shall call the overloaded constructor with the default api version.]
     // Codes_SRS_HTTPHSMSIGNATUREPROVIDER_34_002: [This constructor shall create a new HttpsHsmClient with the provided providerUri.]
@@ -87,7 +82,7 @@ public class HttpHsmSignatureProviderTest
     }
 
     // Codes_SRS_HTTPHSMSIGNATUREPROVIDER_34_004: [If the providerUri is null or empty, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfProviderUriNullOrEmpty() throws NoSuchAlgorithmException, URISyntaxException
     {
         //act
@@ -95,7 +90,7 @@ public class HttpHsmSignatureProviderTest
     }
 
     // Codes_SRS_HTTPHSMSIGNATUREPROVIDER_34_005: [If the apiVersion is null or empty, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfApiVersionNullOrEmpty() throws NoSuchAlgorithmException, URISyntaxException
     {
         //act
@@ -152,7 +147,7 @@ public class HttpHsmSignatureProviderTest
 
 
     // Codes_SRS_HTTPHSMSIGNATUREPROVIDER_34_007: [If the provided data is null or empty, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void signThrowsForNullData() throws NoSuchAlgorithmException, TransportException, IOException, URISyntaxException, HsmException
     {
         //arrange

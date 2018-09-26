@@ -43,10 +43,9 @@ import static org.junit.Assert.assertTrue;
  */
 public class JobClientTest
 {
-    private static String VALID_SQL_QUERY = null;
     private static final JobType JOB_TYPE_DEFAULT = JobType.scheduleDeviceMethod;
     private static final JobStatus JOB_STATUS_DEFAULT = JobStatus.completed;
-
+    private static String VALID_SQL_QUERY = null;
     @Mocked
     IotHubConnectionStringBuilder mockedConnectionStringBuilder;
 
@@ -81,8 +80,7 @@ public class JobClientTest
     @Before
     public void setUp() throws IOException
     {
-        VALID_SQL_QUERY = SqlQuery.createSqlQuery("*",
-                                                  SqlQuery.FromType.JOBS, null, null).getQuery();
+        VALID_SQL_QUERY = SqlQuery.createSqlQuery("*", SqlQuery.FromType.JOBS, null, null).getQuery();
     }
 
     /* Tests_SRS_JOBCLIENT_21_002: [The constructor shall create an IotHubConnectionStringBuilder object from the given connection string.] */
@@ -101,7 +99,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_001: [The constructor shall throw IllegalArgumentException if the input string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullCS() throws IOException
     {
         //arrange
@@ -112,7 +110,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_001: [The constructor shall throw IllegalArgumentException if the input string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyCS() throws IOException
     {
         //arrange
@@ -123,7 +121,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_001: [The constructor shall throw IllegalArgumentException if the input string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnInvalidCS() throws IOException
     {
         //arrange
@@ -173,7 +171,7 @@ public class JobClientTest
                 mockedDeviceTwinDevice.getReportedProperties();
                 result = null;
 
-                new TwinState((TwinCollection)any, null, null);
+                new TwinState((TwinCollection) any, null, null);
                 result = mockedTwinState;
 
                 mockedDeviceTwinDevice.getDeviceId();
@@ -191,10 +189,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -248,7 +246,7 @@ public class JobClientTest
                 mockedDeviceTwinDevice.getReportedProperties();
                 result = null;
 
-                new TwinState((TwinCollection)any, null, null);
+                new TwinState((TwinCollection) any, null, null);
                 result = mockedTwinState;
 
                 mockedDeviceTwinDevice.getDeviceId();
@@ -266,10 +264,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -327,7 +325,7 @@ public class JobClientTest
                 mockedDeviceTwinDevice.getReportedProperties();
                 result = testResponse;
 
-                new TwinState((TwinCollection)any, (TwinCollection)any, (TwinCollection)any);
+                new TwinState((TwinCollection) any, (TwinCollection) any, (TwinCollection) any);
                 result = mockedTwinState;
 
                 mockedDeviceTwinDevice.getDeviceId();
@@ -345,10 +343,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -371,7 +369,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_005: [If the JobId is null, empty, or invalid, the scheduleUpdateTwin shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleUpdateThrowsOnNullJobId() throws IOException, IotHubException
     {
         //arrange
@@ -396,7 +394,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_005: [If the JobId is null, empty, or invalid, the scheduleUpdateTwin shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleUpdateThrowsOnEmptyJobId() throws IOException, IotHubException
     {
         //arrange
@@ -421,7 +419,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_005: [If the JobId is null, empty, or invalid, the scheduleUpdateTwin shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleUpdateThrowsOnInvalidJobId() throws IOException, IotHubException
     {
         //arrange
@@ -451,7 +449,7 @@ public class JobClientTest
                 mockedDeviceTwinDevice.getReportedProperties();
                 result = null;
 
-                new TwinState((TwinCollection)any, null, null);
+                new TwinState((TwinCollection) any, null, null);
                 result = mockedTwinState;
 
                 mockedDeviceTwinDevice.getDeviceId();
@@ -485,7 +483,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_006: [If the updateTwin is null, the scheduleUpdateTwin shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleUpdateThrowsOnNullUpdateTwin() throws IOException, IotHubException
     {
         //arrange
@@ -510,7 +508,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_007: [If the startTimeUtc is null, the scheduleUpdateTwin shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleUpdateThrowsOnNullStartTimeUtc() throws IOException, IotHubException
     {
         //arrange
@@ -535,7 +533,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_008: [If the maxExecutionTimeInSeconds is negative, the scheduleUpdateTwin shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleUpdateThrowsOnNullMaxExecutionTimeInSeconds() throws IOException, IotHubException
     {
         //arrange
@@ -591,7 +589,7 @@ public class JobClientTest
                 mockedDeviceTwinDevice.getReportedProperties();
                 result = null;
 
-                new TwinState((TwinCollection)any, null, null);
+                new TwinState((TwinCollection) any, null, null);
                 result = mockedTwinState;
 
                 mockedDeviceTwinDevice.getDeviceId();
@@ -609,10 +607,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -664,7 +662,7 @@ public class JobClientTest
                 mockedDeviceTwinDevice.getReportedProperties();
                 result = null;
 
-                new TwinState((TwinCollection)any, null, null);
+                new TwinState((TwinCollection) any, null, null);
                 result = mockedTwinState;
 
                 mockedDeviceTwinDevice.getDeviceId();
@@ -682,10 +680,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -699,7 +697,7 @@ public class JobClientTest
         new Verifications()
         {
             {
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String) any, 0);
                 times = 1;
             }
         };
@@ -707,7 +705,7 @@ public class JobClientTest
 
     /* Tests_SRS_JOBCLIENT_21_011: [If the scheduleUpdateTwin failed to send a PUT request, it shall throw IOException.] */
     /* Tests_SRS_JOBCLIENT_21_012: [If the scheduleUpdateTwin failed to verify the iothub response, it shall throw IotHubException.] */
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void scheduleUpdateTwinThrowsOnSendPUT() throws IOException, IotHubException
     {
         //arrange
@@ -738,7 +736,7 @@ public class JobClientTest
                 mockedDeviceTwinDevice.getReportedProperties();
                 result = null;
 
-                new TwinState((TwinCollection)any, null, null);
+                new TwinState((TwinCollection) any, null, null);
                 result = mockedTwinState;
 
                 mockedDeviceTwinDevice.getDeviceId();
@@ -756,7 +754,7 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String) any, 0);
                 result = new IOException();
             }
         };
@@ -799,7 +797,7 @@ public class JobClientTest
                 mockedDeviceTwinDevice.getReportedProperties();
                 result = null;
 
-                new TwinState((TwinCollection)any, null, null);
+                new TwinState((TwinCollection) any, null, null);
                 result = mockedTwinState;
 
                 mockedDeviceTwinDevice.getDeviceId();
@@ -817,10 +815,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -835,14 +833,14 @@ public class JobClientTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 times = 1;
             }
         };
     }
 
     /* Tests_SRS_JOBCLIENT_21_014: [If the JobId is null, empty, or invalid, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowsOnNullJobId() throws IOException, IotHubException
     {
         //arrange
@@ -868,7 +866,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_014: [If the JobId is null, empty, or invalid, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowsOnEmptyJobId() throws IOException, IotHubException
     {
         //arrange
@@ -894,7 +892,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_014: [If the JobId is null, empty, or invalid, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowsOnInvalidJobId() throws IOException, IotHubException
     {
         //arrange
@@ -942,7 +940,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_015: [If the methodName is null or empty, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowsOnNullMethodName() throws IOException, IotHubException
     {
         //arrange
@@ -969,7 +967,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_015: [If the methodName is null or empty, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowsOnEmptyMethodName() throws IOException, IotHubException
     {
         //arrange
@@ -995,7 +993,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_015: [If the methodName is null or empty, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowsOnInvalidMethodName() throws IOException, IotHubException
     {
         //arrange
@@ -1029,7 +1027,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_016: [If the startTimeUtc is null, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowsOnNullStartTimeUtc() throws IOException, IotHubException
     {
         //arrange
@@ -1055,7 +1053,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_017: [If the maxExecutionTimeInSeconds is negative, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowsOnNegativeMaxExecutionTimeInSeconds() throws IOException, IotHubException
     {
         //arrange
@@ -1112,10 +1110,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -1131,7 +1129,7 @@ public class JobClientTest
             {
                 new MethodParser(methodName, null, null, payload);
                 times = 1;
-                new JobsParser(jobId, (MethodParser)any, queryCondition, startTimeUtc, maxExecutionTimeInSeconds);
+                new JobsParser(jobId, (MethodParser) any, queryCondition, startTimeUtc, maxExecutionTimeInSeconds);
                 times = 1;
                 mockedJobsParser.toJson();
                 times = 1;
@@ -1171,10 +1169,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -1226,10 +1224,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -1243,7 +1241,7 @@ public class JobClientTest
         new Verifications()
         {
             {
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String) any, 0);
                 times = 1;
             }
         };
@@ -1251,7 +1249,7 @@ public class JobClientTest
 
     /* Tests_SRS_JOBCLIENT_21_021: [If the scheduleDeviceMethod failed to send a PUT request, it shall throw IOException.] */
     /* Tests_SRS_JOBCLIENT_21_022: [If the scheduleDeviceMethod failed to verify the iothub response, it shall throw IotHubException.] */
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void scheduleDeviceMethodThrowsOnSendPUT() throws IOException, IotHubException
     {
         //arrange
@@ -1282,7 +1280,7 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String) any, 0);
                 result = new IOException();
             }
         };
@@ -1325,10 +1323,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.PUT, json.getBytes(), (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -1343,7 +1341,7 @@ public class JobClientTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 times = 1;
             }
         };
@@ -1351,7 +1349,7 @@ public class JobClientTest
 
 
     /* Tests_SRS_JOBCLIENT_21_024: [If the JobId is null, empty, or invalid, the getJob shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getJobThrowsOnNullJobId() throws IOException, IotHubException
     {
         //arrange
@@ -1372,7 +1370,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_024: [If the JobId is null, empty, or invalid, the getJob shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getJobThrowsOnEmptyJobId() throws IOException, IotHubException
     {
         //arrange
@@ -1393,7 +1391,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_024: [If the JobId is null, empty, or invalid, the getJob shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getJobThrowsOnInvalidJobId() throws IOException, IotHubException
     {
         //arrange
@@ -1440,10 +1438,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.GET, new byte[]{}, (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.GET, new byte[]{}, (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -1486,10 +1484,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.GET, new byte[]{}, (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.GET, new byte[]{}, (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -1509,7 +1507,7 @@ public class JobClientTest
         new Verifications()
         {
             {
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.GET, new byte[]{}, (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.GET, new byte[]{}, (String) any, 0);
                 times = 1;
             }
         };
@@ -1517,7 +1515,7 @@ public class JobClientTest
 
     /* Tests_SRS_JOBCLIENT_21_027: [If the getJob failed to send a GET request, it shall throw IOException.] */
     /* Tests_SRS_JOBCLIENT_21_028: [If the getJob failed to verify the iothub response, it shall throw IotHubException.] */
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void getJobThrowsOnSendGET() throws IOException, IotHubException
     {
         //arrange
@@ -1533,7 +1531,7 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.GET, new byte[]{}, (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.GET, new byte[]{}, (String) any, 0);
                 result = new IOException();
             }
         };
@@ -1567,10 +1565,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobs(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.GET, new byte[]{}, (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.GET, new byte[]{}, (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -1591,14 +1589,14 @@ public class JobClientTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 times = 1;
             }
         };
     }
 
     /* Tests_SRS_JOBCLIENT_21_030: [If the JobId is null, empty, or invalid, the cancelJob shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void cancelJobThrowsOnNullJobId() throws IOException, IotHubException
     {
         //arrange
@@ -1619,7 +1617,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_030: [If the JobId is null, empty, or invalid, the cancelJob shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void cancelJobThrowsOnEmptyJobId() throws IOException, IotHubException
     {
         //arrange
@@ -1640,7 +1638,7 @@ public class JobClientTest
     }
 
     /* Tests_SRS_JOBCLIENT_21_030: [If the JobId is null, empty, or invalid, the cancelJob shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void cancelJobThrowsOnInvalidJobId() throws IOException, IotHubException
     {
         //arrange
@@ -1687,10 +1685,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobsCancel(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.POST, new byte[]{}, (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.POST, new byte[]{}, (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -1733,10 +1731,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobsCancel(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.POST, new byte[]{}, (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.POST, new byte[]{}, (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -1756,7 +1754,7 @@ public class JobClientTest
         new Verifications()
         {
             {
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.POST, (byte[])any, (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.POST, (byte[]) any, (String) any, 0);
                 times = 1;
             }
         };
@@ -1764,7 +1762,7 @@ public class JobClientTest
 
     /* Tests_SRS_JOBCLIENT_21_033: [If the cancelJob failed to send a POST request, it shall throw IOException.] */
     /* Tests_SRS_JOBCLIENT_21_034: [If the cancelJob failed to verify the iothub response, it shall throw IotHubException.] */
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void cancelJobThrowsOnSendPOST() throws IOException, IotHubException
     {
         //arrange
@@ -1780,7 +1778,7 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobsCancel(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.POST, (byte[])any, (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.POST, (byte[]) any, (String) any, 0);
                 result = new IOException();
             }
         };
@@ -1814,10 +1812,10 @@ public class JobClientTest
                 mockedIotHubConnectionString.getUrlJobsCancel(jobId);
                 result = mockedURL;
 
-                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.POST, new byte[]{}, (String)any, 0);
+                DeviceOperations.request(mockedIotHubConnectionString, mockedURL, HttpMethod.POST, new byte[]{}, (String) any, 0);
                 result = mockedHttpResponse;
 
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -1838,7 +1836,7 @@ public class JobClientTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 times = 1;
             }
         };
@@ -1856,7 +1854,7 @@ public class JobClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
+                Deencapsulation.newInstance(Query.class, new Class[]{String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
                 result = mockedQuery;
             }
         };
@@ -1868,16 +1866,16 @@ public class JobClientTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
+                Deencapsulation.newInstance(Query.class, new Class[]{String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
                 times = 1;
-                Deencapsulation.invoke(mockedQuery, "sendQueryRequest", new Class[] {IotHubConnectionString.class, URL.class, HttpMethod.class, Long.class}, any, any, HttpMethod.POST, any);
+                Deencapsulation.invoke(mockedQuery, "sendQueryRequest", new Class[]{IotHubConnectionString.class, URL.class, HttpMethod.class, Long.class}, any, any, HttpMethod.POST, any);
                 times = 1;
             }
         };
     }
 
     //Tests_SRS_JOBCLIENT_25_036: [If the sqlQuery is null, empty, or invalid, the queryDeviceJob shall throw IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void queryDeviceJobThrowsOnNullQuery(@Mocked Query mockedQuery) throws IotHubException, IOException
     {
         //arrange
@@ -1888,7 +1886,7 @@ public class JobClientTest
         testJobClient.queryDeviceJob(null);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void queryDeviceJobThrowsOnEmptyQuery() throws IotHubException, IOException
     {
         //arrange
@@ -1900,7 +1898,7 @@ public class JobClientTest
     }
 
     //Tests_SRS_JOBCLIENT_25_037: [If the pageSize is null, zero or negative, the queryDeviceJob shall throw IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void queryDeviceJobThrowsOnNegativePageSize() throws IotHubException, IOException
     {
         //arrange
@@ -1911,7 +1909,7 @@ public class JobClientTest
         testJobClient.queryDeviceJob(VALID_SQL_QUERY, -1);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void queryDeviceJobThrowsOnZeroPageSize() throws IotHubException, IOException
     {
         //arrange
@@ -1922,7 +1920,7 @@ public class JobClientTest
         testJobClient.queryDeviceJob(VALID_SQL_QUERY, 0);
     }
 
-    @Test (expected = IotHubException.class)
+    @Test(expected = IotHubException.class)
     public void queryDeviceJobThrowsOnNewQueryThrows(@Mocked Query mockedQuery) throws IotHubException, IOException
     {
         //arrange
@@ -1932,9 +1930,9 @@ public class JobClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
+                Deencapsulation.newInstance(Query.class, new Class[]{String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
                 result = mockedQuery;
-                Deencapsulation.invoke(mockedQuery, "sendQueryRequest", new Class[] {IotHubConnectionString.class, URL.class, HttpMethod.class, Long.class}, any, any, HttpMethod.POST, any);
+                Deencapsulation.invoke(mockedQuery, "sendQueryRequest", new Class[]{IotHubConnectionString.class, URL.class, HttpMethod.class, Long.class}, any, any, HttpMethod.POST, any);
                 result = new IotHubException();
             }
         };
@@ -1957,7 +1955,7 @@ public class JobClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {Integer.class, QueryType.class}, anyInt, QueryType.JOB_RESPONSE);
+                Deencapsulation.newInstance(Query.class, new Class[]{Integer.class, QueryType.class}, anyInt, QueryType.JOB_RESPONSE);
                 result = mockedQuery;
             }
         };
@@ -1969,9 +1967,9 @@ public class JobClientTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {Integer.class, QueryType.class}, anyInt, QueryType.JOB_RESPONSE);
+                Deencapsulation.newInstance(Query.class, new Class[]{Integer.class, QueryType.class}, anyInt, QueryType.JOB_RESPONSE);
                 times = 1;
-                Deencapsulation.invoke(mockedQuery, "sendQueryRequest", new Class[] {IotHubConnectionString.class, URL.class, HttpMethod.class, Long.class}, any, any, HttpMethod.GET, any);
+                Deencapsulation.invoke(mockedQuery, "sendQueryRequest", new Class[]{IotHubConnectionString.class, URL.class, HttpMethod.class, Long.class}, any, any, HttpMethod.GET, any);
                 times = 1;
             }
         };
@@ -1987,7 +1985,7 @@ public class JobClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {Integer.class, QueryType.class}, anyInt, QueryType.JOB_RESPONSE);
+                Deencapsulation.newInstance(Query.class, new Class[]{Integer.class, QueryType.class}, anyInt, QueryType.JOB_RESPONSE);
                 result = mockedQuery;
             }
         };
@@ -1999,16 +1997,16 @@ public class JobClientTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {Integer.class, QueryType.class}, anyInt, QueryType.JOB_RESPONSE);
+                Deencapsulation.newInstance(Query.class, new Class[]{Integer.class, QueryType.class}, anyInt, QueryType.JOB_RESPONSE);
                 times = 1;
-                Deencapsulation.invoke(mockedQuery, "sendQueryRequest", new Class[] {IotHubConnectionString.class, URL.class, HttpMethod.class, Long.class}, any, any, HttpMethod.GET, any);
+                Deencapsulation.invoke(mockedQuery, "sendQueryRequest", new Class[]{IotHubConnectionString.class, URL.class, HttpMethod.class, Long.class}, any, any, HttpMethod.GET, any);
                 times = 1;
             }
         };
     }
 
     //Tests_SRS_JOBCLIENT_25_042: [If the pageSize is null, zero or negative, the queryJobResponse shall throw IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void queryJobResponseThrowsOnNegativePageSize() throws IotHubException, IOException
     {
         //arrange
@@ -2019,7 +2017,7 @@ public class JobClientTest
         testJobClient.queryJobResponse(JOB_TYPE_DEFAULT, JOB_STATUS_DEFAULT, -1);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void queryJobResponseThrowsOnZeroPageSize() throws IotHubException, IOException
     {
         //arrange
@@ -2030,7 +2028,7 @@ public class JobClientTest
         testJobClient.queryJobResponse(JOB_TYPE_DEFAULT, JOB_STATUS_DEFAULT, 0);
     }
 
-    @Test (expected = IotHubException.class)
+    @Test(expected = IotHubException.class)
     public void queryJobResponseThrowsOnNewQueryThrows(@Mocked Query mockedQuery) throws IotHubException, IOException
     {
         //arrange
@@ -2040,9 +2038,9 @@ public class JobClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {Integer.class, QueryType.class}, anyInt, QueryType.JOB_RESPONSE);
+                Deencapsulation.newInstance(Query.class, new Class[]{Integer.class, QueryType.class}, anyInt, QueryType.JOB_RESPONSE);
                 result = mockedQuery;
-                Deencapsulation.invoke(mockedQuery, "sendQueryRequest", new Class[] {IotHubConnectionString.class, URL.class, HttpMethod.class, Long.class}, any, any, HttpMethod.GET, any);
+                Deencapsulation.invoke(mockedQuery, "sendQueryRequest", new Class[]{IotHubConnectionString.class, URL.class, HttpMethod.class, Long.class}, any, any, HttpMethod.GET, any);
                 result = new IotHubException();
             }
         };
@@ -2062,7 +2060,7 @@ public class JobClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
+                Deencapsulation.newInstance(Query.class, new Class[]{String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
                 result = mockedQuery;
                 Deencapsulation.invoke(mockedQuery, "hasNext");
                 result = true;
@@ -2078,7 +2076,7 @@ public class JobClientTest
         new Verifications()
         {
             {
-                Deencapsulation.invoke(mockedQuery, "sendQueryRequest", new Class[] {IotHubConnectionString.class, URL.class, HttpMethod.class, Long.class}, any, any, HttpMethod.POST, any);
+                Deencapsulation.invoke(mockedQuery, "sendQueryRequest", new Class[]{IotHubConnectionString.class, URL.class, HttpMethod.class, Long.class}, any, any, HttpMethod.POST, any);
                 times = 1;
             }
         };
@@ -2087,7 +2085,7 @@ public class JobClientTest
     }
 
     //Tests_SRS_JOBCLIENT_25_046: [If the input query is null, empty, or invalid, the hasNextJob shall throw IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void hasNextThrowsOnNullQuery(@Mocked Query mockedQuery) throws IotHubException, IOException
     {
         //arrange
@@ -2097,7 +2095,7 @@ public class JobClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
+                Deencapsulation.newInstance(Query.class, new Class[]{String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
                 result = mockedQuery;
             }
         };
@@ -2108,7 +2106,7 @@ public class JobClientTest
         boolean result = testJobClient.hasNextJob(null);
     }
 
-    @Test (expected = IotHubException.class)
+    @Test(expected = IotHubException.class)
     public void hasNextThrowsIfQueryHasNextThrows(@Mocked Query mockedQuery) throws IotHubException, IOException
     {
         //arrange
@@ -2118,7 +2116,7 @@ public class JobClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
+                Deencapsulation.newInstance(Query.class, new Class[]{String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
                 result = mockedQuery;
                 Deencapsulation.invoke(mockedQuery, "hasNext");
                 result = new IotHubException();
@@ -2145,13 +2143,13 @@ public class JobClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
+                Deencapsulation.newInstance(Query.class, new Class[]{String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
                 result = mockedQuery;
                 Deencapsulation.invoke(mockedQuery, "hasNext");
                 result = true;
                 Deencapsulation.invoke(mockedQuery, "next");
                 result = expectedString;
-                Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, (byte[])any);
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, (byte[]) any);
                 result = mockedJobResult;
             }
         };
@@ -2165,16 +2163,16 @@ public class JobClientTest
         new Verifications()
         {
             {
-                Deencapsulation.invoke(mockedQuery, "sendQueryRequest", new Class[] {IotHubConnectionString.class, URL.class, HttpMethod.class, Long.class}, any, any, HttpMethod.POST, any);
+                Deencapsulation.invoke(mockedQuery, "sendQueryRequest", new Class[]{IotHubConnectionString.class, URL.class, HttpMethod.class, Long.class}, any, any, HttpMethod.POST, any);
                 times = 1;
-                Deencapsulation.newInstance(JobResult.class, new Class [] {byte[].class}, expectedString.getBytes());
+                Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, expectedString.getBytes());
                 times = 1;
             }
         };
     }
 
     //Tests_SRS_JOBCLIENT_25_048: [If the input query is null, empty, or invalid, the getNextJob shall throw IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void nextThrowsOnNullQuery(@Mocked Query mockedQuery) throws IotHubException, IOException
     {
         //arrange
@@ -2184,7 +2182,7 @@ public class JobClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
+                Deencapsulation.newInstance(Query.class, new Class[]{String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
                 result = mockedQuery;
             }
         };
@@ -2195,7 +2193,7 @@ public class JobClientTest
         testJobClient.getNextJob(null);
     }
 
-    @Test (expected = IotHubException.class)
+    @Test(expected = IotHubException.class)
     public void nextThrowsOnQueryNextThrows(@Mocked Query mockedQuery) throws IotHubException, IOException
     {
         //arrange
@@ -2205,7 +2203,7 @@ public class JobClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
+                Deencapsulation.newInstance(Query.class, new Class[]{String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
                 result = mockedQuery;
                 Deencapsulation.invoke(mockedQuery, "next");
                 result = new IotHubException();
@@ -2218,7 +2216,7 @@ public class JobClientTest
         testJobClient.getNextJob(testQuery);
     }
 
-    @Test (expected = NoSuchElementException.class)
+    @Test(expected = NoSuchElementException.class)
     public void nextThrowsIfNoNewElements(@Mocked Query mockedQuery) throws IotHubException, IOException
     {
         //arrange
@@ -2228,7 +2226,7 @@ public class JobClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
+                Deencapsulation.newInstance(Query.class, new Class[]{String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
                 result = mockedQuery;
                 Deencapsulation.invoke(mockedQuery, "hasNext");
                 result = false;
@@ -2244,7 +2242,7 @@ public class JobClientTest
     }
 
     //Tests_SRS_JOBCLIENT_25_050: [getNextJob shall throw IOException if next Job Result exist and is not a string.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void nextThrowsIfNonStringRetrieved(@Mocked Query mockedQuery) throws IotHubException, IOException
     {
         //arrange
@@ -2254,7 +2252,7 @@ public class JobClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[] {String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
+                Deencapsulation.newInstance(Query.class, new Class[]{String.class, Integer.class, QueryType.class}, anyString, anyInt, QueryType.DEVICE_JOB);
                 result = mockedQuery;
                 Deencapsulation.invoke(mockedQuery, "hasNext");
                 result = true;

@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 public class ProvisioningServiceSasTokenTest
 {
     // Tests_SRS_PROVISIONING_SERVICE_SASTOKEN_12_001: [The constructor shall throw IllegalArgumentException if the input object is null]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullConnectionString() throws IllegalArgumentException
     {
         // Arrange
@@ -64,11 +64,12 @@ public class ProvisioningServiceSasTokenTest
             System system;
             SecretKeySpec secretKeySpec;
             Mac mac;
+
             {
-                urlEncoder.encode(hostName.toLowerCase(),String.valueOf(StandardCharsets.UTF_8));
+                urlEncoder.encode(hostName.toLowerCase(), String.valueOf(StandardCharsets.UTF_8));
                 system.currentTimeMillis();
                 Base64.decodeBase64Local(sharedAccessKey.getBytes(charset));
-                byte[] body = { 1 };
+                byte[] body = {1};
                 secretKeySpec = new SecretKeySpec(body, cryptoProvider);
                 mac.getInstance(cryptoProvider);
             }
@@ -106,7 +107,7 @@ public class ProvisioningServiceSasTokenTest
     }
 
     // Tests_SRS_PROVISIONING_SERVICE_SASTOKEN_12_007: [The constructor shall throw Exception if building the token failed]
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void constructorThrowsOnBuildToken() throws Exception
     {
         // Arrange

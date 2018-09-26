@@ -1,10 +1,10 @@
  /*
- *  Copyright (c) Microsoft. All rights reserved.
- *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
- */
+  *  Copyright (c) Microsoft. All rights reserved.
+  *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+  */
 
-package tests.unit.com.microsoft.azure.sdk.iot.provisioning.security.hsm;
+ package tests.unit.com.microsoft.azure.sdk.iot.provisioning.security.hsm;
 
-public class SecurityClientDiceTest
-{
-}
+ public class SecurityClientDiceTest
+ {
+ }

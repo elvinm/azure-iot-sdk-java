@@ -31,10 +31,7 @@ public class ServiceAuthenticationWithSharedAccessPolicyKeyTest
         final String key = "validKey";
 
         // act
-        Object authenticationMethodResult = Deencapsulation.newInstance(
-                "com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey",
-                new Class[] {String.class, String.class},
-                policyName, key);
+        Object authenticationMethodResult = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", new Class[]{String.class, String.class}, policyName, key);
 
         // assert
         assertEquals(policyName, Deencapsulation.getField(authenticationMethodResult, "policyName"));
@@ -42,7 +39,7 @@ public class ServiceAuthenticationWithSharedAccessPolicyKeyTest
     }
 
     /* Tests_SRS_SERVICE_AUTHENTICATION_WITH_SHARED_ACCESS_POLICY_KEY_21_002: [If the provided policyName is null or empty, the constructor shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullPolicyName()
     {
         // arrange
@@ -50,16 +47,13 @@ public class ServiceAuthenticationWithSharedAccessPolicyKeyTest
         final String key = "validKey";
 
         // act
-        Object authenticationMethodResult = Deencapsulation.newInstance(
-                "com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey",
-                new Class[] {String.class, String.class},
-                policyName, key);
+        Object authenticationMethodResult = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", new Class[]{String.class, String.class}, policyName, key);
 
         // assert
     }
 
     /* Tests_SRS_SERVICE_AUTHENTICATION_WITH_SHARED_ACCESS_POLICY_KEY_21_002: [If the provided policyName is null or empty, the constructor shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyPolicyName()
     {
         // arrange
@@ -67,16 +61,13 @@ public class ServiceAuthenticationWithSharedAccessPolicyKeyTest
         final String key = "validKey";
 
         // act
-        Object authenticationMethodResult = Deencapsulation.newInstance(
-                "com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey",
-                new Class[] {String.class, String.class},
-                policyName, key);
+        Object authenticationMethodResult = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", new Class[]{String.class, String.class}, policyName, key);
 
         // assert
     }
 
     /* Tests_SRS_SERVICE_AUTHENTICATION_WITH_SHARED_ACCESS_POLICY_KEY_21_003: [If the provided key is null or empty, the constructor shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullKey()
     {
         // arrange
@@ -84,16 +75,13 @@ public class ServiceAuthenticationWithSharedAccessPolicyKeyTest
         final String key = null;
 
         // act
-        Object authenticationMethodResult = Deencapsulation.newInstance(
-                "com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey",
-                new Class[] {String.class, String.class},
-                policyName, key);
+        Object authenticationMethodResult = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", new Class[]{String.class, String.class}, policyName, key);
 
         // assert
     }
 
     /* Tests_SRS_SERVICE_AUTHENTICATION_WITH_SHARED_ACCESS_POLICY_KEY_21_003: [If the provided key is null or empty, the constructor shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyKey()
     {
         // arrange
@@ -101,33 +89,23 @@ public class ServiceAuthenticationWithSharedAccessPolicyKeyTest
         final String key = "";
 
         // act
-        Object authenticationMethodResult = Deencapsulation.newInstance(
-                "com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey",
-                new Class[] {String.class, String.class},
-                policyName, key);
+        Object authenticationMethodResult = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", new Class[]{String.class, String.class}, policyName, key);
 
         // assert
     }
 
     /* Tests_SRS_SERVICE_AUTHENTICATION_WITH_SHARED_ACCESS_POLICY_KEY_21_004: [If the provided provisioningConnectionString is null, the populateWithAuthenticationProperties shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void populateThrowsOnNullConnectionString()
     {
         // arrange
         final String policyName = "validPolicyName";
         final String key = "validKey";
         final ProvisioningConnectionString provisioningConnectionString = null;
-        Object authenticationMethodResult = Deencapsulation.newInstance(
-                "com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey",
-                new Class[] {String.class, String.class},
-                policyName, key);
+        Object authenticationMethodResult = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", new Class[]{String.class, String.class}, policyName, key);
 
         // act
-        Deencapsulation.invoke(
-                authenticationMethodResult,
-                "populateWithAuthenticationProperties",
-                new Class[]{ProvisioningConnectionString.class},
-                provisioningConnectionString);
+        Deencapsulation.invoke(authenticationMethodResult, "populateWithAuthenticationProperties", new Class[]{ProvisioningConnectionString.class}, provisioningConnectionString);
 
         // assert
     }
@@ -140,17 +118,10 @@ public class ServiceAuthenticationWithSharedAccessPolicyKeyTest
         final String policyName = "validPolicyName";
         final String key = "validKey";
         final ProvisioningConnectionString provisioningConnectionString = mockedProvisioningConnectionString;
-        Object authenticationMethodResult = Deencapsulation.newInstance(
-                "com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey",
-                new Class[] {String.class, String.class},
-                policyName, key);
+        Object authenticationMethodResult = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", new Class[]{String.class, String.class}, policyName, key);
 
         // act
-        Deencapsulation.invoke(
-                authenticationMethodResult,
-                "populateWithAuthenticationProperties",
-                new Class[]{ProvisioningConnectionString.class},
-                provisioningConnectionString);
+        Deencapsulation.invoke(authenticationMethodResult, "populateWithAuthenticationProperties", new Class[]{ProvisioningConnectionString.class}, provisioningConnectionString);
 
         // assert
         new Verifications()
@@ -172,23 +143,16 @@ public class ServiceAuthenticationWithSharedAccessPolicyKeyTest
         final String policyName = "validPolicyName";
         final String key = "validKey";
         final ProvisioningConnectionString provisioningConnectionString = mockedProvisioningConnectionString;
-        Object authenticationMethodResult = Deencapsulation.newInstance(
-                "com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey",
-                new Class[] {String.class, String.class},
-                policyName, key);
+        Object authenticationMethodResult = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", new Class[]{String.class, String.class}, policyName, key);
 
         // act
-        Deencapsulation.invoke(
-                authenticationMethodResult,
-                "populateWithAuthenticationProperties",
-                new Class[]{ProvisioningConnectionString.class},
-                provisioningConnectionString);
+        Deencapsulation.invoke(authenticationMethodResult, "populateWithAuthenticationProperties", new Class[]{ProvisioningConnectionString.class}, provisioningConnectionString);
 
         // assert
         new Verifications()
         {
             {
-                Deencapsulation.invoke(mockedProvisioningConnectionString, "setSharedAccessSignature", new Class[]{String.class}, (String)null);
+                Deencapsulation.invoke(mockedProvisioningConnectionString, "setSharedAccessSignature", new Class[]{String.class}, (String) null);
                 times = 1;
             }
         };
@@ -202,17 +166,10 @@ public class ServiceAuthenticationWithSharedAccessPolicyKeyTest
         final String policyName = "validPolicyName";
         final String key = "validKey";
         final ProvisioningConnectionString provisioningConnectionString = mockedProvisioningConnectionString;
-        Object authenticationMethodResult = Deencapsulation.newInstance(
-                "com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey",
-                new Class[] {String.class, String.class},
-                policyName, key);
+        Object authenticationMethodResult = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", new Class[]{String.class, String.class}, policyName, key);
 
         // act
-        ProvisioningConnectionString resultConnectionString = Deencapsulation.invoke(
-                authenticationMethodResult,
-                "populateWithAuthenticationProperties",
-                new Class[]{ProvisioningConnectionString.class},
-                provisioningConnectionString);
+        ProvisioningConnectionString resultConnectionString = Deencapsulation.invoke(authenticationMethodResult, "populateWithAuthenticationProperties", new Class[]{ProvisioningConnectionString.class}, provisioningConnectionString);
 
         // assert
         assertEquals(mockedProvisioningConnectionString, resultConnectionString);

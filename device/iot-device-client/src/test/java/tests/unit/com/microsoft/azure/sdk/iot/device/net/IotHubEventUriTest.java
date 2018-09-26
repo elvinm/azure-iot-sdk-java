@@ -15,17 +15,19 @@ import java.net.URISyntaxException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/** Unit tests for IotHubEventUri. */
+/**
+ * Unit tests for IotHubEventUri.
+ */
 public class IotHubEventUriTest
 {
     protected static String EVENT_PATH = "/messages/events";
 
-    @Mocked IotHubUri mockIotHubUri;
+    @Mocked
+    IotHubUri mockIotHubUri;
 
     // Tests_SRS_IOTHUBEVENTURI_11_001: [The constructor returns a URI with the format "[iotHubHostname]/devices/[deviceId]/messages/events?api-version=2016-02-03".]
     @Test
-    public void constructorConstructsIotHubUriCorrectly()
-            throws URISyntaxException
+    public void constructorConstructsIotHubUriCorrectly() throws URISyntaxException
     {
         final String iotHubHostname = "test.iothub";
         final String deviceId = "test-deviceid";
@@ -54,8 +56,7 @@ public class IotHubEventUriTest
                 result = uriStr;
             }
         };
-        IotHubEventUri eventUri =
-                new IotHubEventUri(iotHubHostname, deviceId, "");
+        IotHubEventUri eventUri = new IotHubEventUri(iotHubHostname, deviceId, "");
 
         String testUriStr = eventUri.toString();
 
@@ -77,8 +78,7 @@ public class IotHubEventUriTest
                 result = hostname;
             }
         };
-        IotHubEventUri eventUri =
-                new IotHubEventUri(iotHubHostname, deviceId, "");
+        IotHubEventUri eventUri = new IotHubEventUri(iotHubHostname, deviceId, "");
 
         String testHostname = eventUri.getHostname();
 
@@ -100,8 +100,7 @@ public class IotHubEventUriTest
                 result = path;
             }
         };
-        IotHubEventUri eventUri =
-                new IotHubEventUri(iotHubHostname, deviceId, "");
+        IotHubEventUri eventUri = new IotHubEventUri(iotHubHostname, deviceId, "");
 
         String testPath = eventUri.getPath();
 

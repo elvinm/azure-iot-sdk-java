@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
  * Unit tests for Job
  * 100% methods, 100% lines covered
  */
-public class JobTest 
+public class JobTest
 {
     @Mocked
     JobClient mockedJobClient;
@@ -34,9 +34,9 @@ public class JobTest
 
     @Mocked
     DeviceTwinDevice mockedDeviceTwinDevice;
-    
+
     /* Tests_SRS_JOB_21_001: [The constructor shall throw IllegalArgumentException if the input string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor1ThrowOnNullConnectionString()
     {
         // arrange
@@ -47,7 +47,7 @@ public class JobTest
     }
 
     /* Tests_SRS_JOB_21_001: [The constructor shall throw IllegalArgumentException if the input string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor1ThrowOnEmptyConnectionString()
     {
         // arrange
@@ -58,7 +58,7 @@ public class JobTest
     }
 
     /* Tests_SRS_JOB_21_001: [The constructor shall throw IllegalArgumentException if the input string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor2ThrowOnNullConnectionString()
     {
         // arrange
@@ -70,7 +70,7 @@ public class JobTest
     }
 
     /* Tests_SRS_JOB_21_001: [The constructor shall throw IllegalArgumentException if the input string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor2ThrowOnEmptyConnectionString()
     {
         // arrange
@@ -155,7 +155,7 @@ public class JobTest
     }
 
     /* Tests_SRS_JOB_21_005: [The constructor shall throw IOException if it failed to create a new instance of the JobClient. Threw by the JobClient constructor.] */
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void constructor1ThrowOnJobClientCreation() throws IOException
     {
         // arrange
@@ -175,7 +175,7 @@ public class JobTest
     }
 
     /* Tests_SRS_JOB_21_005: [The constructor shall throw IOException if it failed to create a new instance of the JobClient. Threw by the JobClient constructor.] */
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void constructor2ThrowOnJobClientCreation() throws IOException
     {
         // arrange
@@ -196,7 +196,7 @@ public class JobTest
     }
 
     /* Tests_SRS_JOB_21_006: [If the updateTwin is null, the scheduleUpdateTwin shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleUpdateTwinThrowOnNullDeviceTwinDevice() throws IOException
     {
         // arrange
@@ -208,13 +208,11 @@ public class JobTest
         Job job = Deencapsulation.newInstance(Job.class, new Class[]{String.class}, connectionString);
 
         // act
-        Deencapsulation.invoke(job, "scheduleUpdateTwin",
-                new Class[]{String.class, DeviceTwinDevice.class, Date.class, Long.class},
-                queryCondition, deviceTwin, now, maxExecutionTimeInSeconds);
+        Deencapsulation.invoke(job, "scheduleUpdateTwin", new Class[]{String.class, DeviceTwinDevice.class, Date.class, Long.class}, queryCondition, deviceTwin, now, maxExecutionTimeInSeconds);
     }
 
     /* Tests_SRS_JOB_21_007: [If the startTimeUtc is null, the scheduleUpdateTwin shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleUpdateTwinThrowOnNullStartTimeUTC() throws IOException
     {
         // arrange
@@ -226,13 +224,11 @@ public class JobTest
         Job job = Deencapsulation.newInstance(Job.class, new Class[]{String.class}, connectionString);
 
         // act
-        Deencapsulation.invoke(job, "scheduleUpdateTwin",
-                new Class[]{String.class, DeviceTwinDevice.class, Date.class, Long.class},
-                queryCondition, deviceTwin, now, maxExecutionTimeInSeconds);
+        Deencapsulation.invoke(job, "scheduleUpdateTwin", new Class[]{String.class, DeviceTwinDevice.class, Date.class, Long.class}, queryCondition, deviceTwin, now, maxExecutionTimeInSeconds);
     }
 
     /* Tests_SRS_JOB_21_008: [If the maxExecutionTimeInSeconds is negative, the scheduleUpdateTwin shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleUpdateTwinThrowOnInvalidMaxExecutionTimeInSeconds() throws IOException
     {
         // arrange
@@ -244,9 +240,7 @@ public class JobTest
         Job job = Deencapsulation.newInstance(Job.class, new Class[]{String.class}, connectionString);
 
         // act
-        Deencapsulation.invoke(job, "scheduleUpdateTwin",
-                new Class[]{String.class, DeviceTwinDevice.class, Date.class, Long.class},
-                queryCondition, deviceTwin, now, maxExecutionTimeInSeconds);
+        Deencapsulation.invoke(job, "scheduleUpdateTwin", new Class[]{String.class, DeviceTwinDevice.class, Date.class, Long.class}, queryCondition, deviceTwin, now, maxExecutionTimeInSeconds);
     }
 
     /* Tests_SRS_JOB_21_009: [The scheduleUpdateTwin shall invoke the scheduleUpdateTwin in the JobClient class with the received parameters.] */
@@ -266,7 +260,7 @@ public class JobTest
             {
                 JobClient.createFromConnectionString(connectionString);
                 result = mockedJobClient;
-                mockedJobClient.scheduleUpdateTwin((String)any, queryCondition,deviceTwin, now, maxExecutionTimeInSeconds);
+                mockedJobClient.scheduleUpdateTwin((String) any, queryCondition, deviceTwin, now, maxExecutionTimeInSeconds);
                 result = mockedJobResult;
                 times = 1;
                 mockedJobResult.getJobStatus();
@@ -277,13 +271,11 @@ public class JobTest
         Job job = Deencapsulation.newInstance(Job.class, new Class[]{String.class}, connectionString);
 
         // act
-        Deencapsulation.invoke(job, "scheduleUpdateTwin",
-                new Class[]{String.class, DeviceTwinDevice.class, Date.class, Long.class},
-                queryCondition, deviceTwin, now, maxExecutionTimeInSeconds);
+        Deencapsulation.invoke(job, "scheduleUpdateTwin", new Class[]{String.class, DeviceTwinDevice.class, Date.class, Long.class}, queryCondition, deviceTwin, now, maxExecutionTimeInSeconds);
     }
 
     /* Tests_SRS_JOB_21_010: [If scheduleUpdateTwin failed, the scheduleUpdateTwin shall throws IotHubException. Threw by the scheduleUpdateTwin.] */
-    @Test (expected = IotHubException.class)
+    @Test(expected = IotHubException.class)
     public void scheduleUpdateTwinThrowOnScheduleUpdateTwin() throws IOException, IotHubException
     {
         // arrange
@@ -299,7 +291,7 @@ public class JobTest
             {
                 JobClient.createFromConnectionString(connectionString);
                 result = mockedJobClient;
-                mockedJobClient.scheduleUpdateTwin((String)any, queryCondition,deviceTwin, now, maxExecutionTimeInSeconds);
+                mockedJobClient.scheduleUpdateTwin((String) any, queryCondition, deviceTwin, now, maxExecutionTimeInSeconds);
                 result = new IotHubException();
                 times = 1;
             }
@@ -308,13 +300,11 @@ public class JobTest
         Job job = Deencapsulation.newInstance(Job.class, new Class[]{String.class}, connectionString);
 
         // act
-        Deencapsulation.invoke(job, "scheduleUpdateTwin",
-                new Class[]{String.class, DeviceTwinDevice.class, Date.class, Long.class},
-                queryCondition, deviceTwin, now, maxExecutionTimeInSeconds);
+        Deencapsulation.invoke(job, "scheduleUpdateTwin", new Class[]{String.class, DeviceTwinDevice.class, Date.class, Long.class}, queryCondition, deviceTwin, now, maxExecutionTimeInSeconds);
     }
 
     /* Tests_SRS_JOB_21_011: [If the Iothub reported fail as result of the scheduleUpdateTwin, the scheduleUpdateTwin shall throws IotHubException.] */
-    @Test (expected = IotHubException.class)
+    @Test(expected = IotHubException.class)
     public void scheduleUpdateTwinThrowOnJobClientFail() throws IOException, IotHubException
     {
         // arrange
@@ -330,7 +320,7 @@ public class JobTest
             {
                 JobClient.createFromConnectionString(connectionString);
                 result = mockedJobClient;
-                mockedJobClient.scheduleUpdateTwin((String)any, queryCondition,deviceTwin, now, maxExecutionTimeInSeconds);
+                mockedJobClient.scheduleUpdateTwin((String) any, queryCondition, deviceTwin, now, maxExecutionTimeInSeconds);
                 result = mockedJobResult;
                 mockedJobResult.getJobStatus();
                 result = JobStatus.failed;
@@ -341,13 +331,11 @@ public class JobTest
         Job job = Deencapsulation.newInstance(Job.class, new Class[]{String.class}, connectionString);
 
         // act
-        Deencapsulation.invoke(job, "scheduleUpdateTwin",
-                new Class[]{String.class, DeviceTwinDevice.class, Date.class, Long.class},
-                queryCondition, deviceTwin, now, maxExecutionTimeInSeconds);
+        Deencapsulation.invoke(job, "scheduleUpdateTwin", new Class[]{String.class, DeviceTwinDevice.class, Date.class, Long.class}, queryCondition, deviceTwin, now, maxExecutionTimeInSeconds);
     }
 
     /* Tests_SRS_JOB_21_012: [If the methodName is null or empty, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowOnNullMethodName() throws IOException
     {
         // arrange
@@ -360,13 +348,11 @@ public class JobTest
         Job job = Deencapsulation.newInstance(Job.class, new Class[]{String.class}, connectionString);
 
         // act
-        Deencapsulation.invoke(job, "scheduleDeviceMethod",
-                new Class[]{String.class, String.class, Long.class, Long.class, Object.class, Date.class, Long.class},
-                queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
+        Deencapsulation.invoke(job, "scheduleDeviceMethod", new Class[]{String.class, String.class, Long.class, Long.class, Object.class, Date.class, Long.class}, queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
     }
 
     /* Tests_SRS_JOB_21_012: [If the methodName is null or empty, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowOnEmptyMethodName() throws IOException
     {
         // arrange
@@ -379,13 +365,11 @@ public class JobTest
         Job job = Deencapsulation.newInstance(Job.class, new Class[]{String.class}, connectionString);
 
         // act
-        Deencapsulation.invoke(job, "scheduleDeviceMethod",
-                new Class[]{String.class, String.class, Long.class, Long.class, Object.class, Date.class, Long.class},
-                queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
+        Deencapsulation.invoke(job, "scheduleDeviceMethod", new Class[]{String.class, String.class, Long.class, Long.class, Object.class, Date.class, Long.class}, queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
     }
 
     /* Tests_SRS_JOB_21_013: [If the startTimeUtc is null, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowOnNullStartTimeUtc() throws IOException
     {
         // arrange
@@ -398,13 +382,11 @@ public class JobTest
         Job job = Deencapsulation.newInstance(Job.class, new Class[]{String.class}, connectionString);
 
         // act
-        Deencapsulation.invoke(job, "scheduleDeviceMethod",
-                new Class[]{String.class, String.class, Long.class, Long.class, Object.class, Date.class, Long.class},
-                queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
+        Deencapsulation.invoke(job, "scheduleDeviceMethod", new Class[]{String.class, String.class, Long.class, Long.class, Object.class, Date.class, Long.class}, queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
     }
 
     /* Tests_SRS_JOB_21_014: [If the maxExecutionTimeInSeconds is negative, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowOnInvalidMaxExecutionTimeInSeconds() throws IOException
     {
         // arrange
@@ -417,9 +399,7 @@ public class JobTest
         Job job = Deencapsulation.newInstance(Job.class, new Class[]{String.class}, connectionString);
 
         // act
-        Deencapsulation.invoke(job, "scheduleDeviceMethod",
-                new Class[]{String.class, String.class, Long.class, Long.class, Object.class, Date.class, Long.class},
-                queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
+        Deencapsulation.invoke(job, "scheduleDeviceMethod", new Class[]{String.class, String.class, Long.class, Long.class, Object.class, Date.class, Long.class}, queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
     }
 
     /* Tests_SRS_JOB_21_015: [The scheduleDeviceMethod shall invoke the scheduleDeviceMethod in the JobClient class with the received parameters.] */
@@ -440,7 +420,7 @@ public class JobTest
             {
                 JobClient.createFromConnectionString(connectionString);
                 result = mockedJobClient;
-                mockedJobClient.scheduleDeviceMethod((String)any, queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
+                mockedJobClient.scheduleDeviceMethod((String) any, queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
                 result = mockedJobResult;
                 times = 1;
                 mockedJobResult.getJobStatus();
@@ -451,13 +431,11 @@ public class JobTest
         Job job = Deencapsulation.newInstance(Job.class, new Class[]{String.class}, connectionString);
 
         // act
-        Deencapsulation.invoke(job, "scheduleDeviceMethod",
-                new Class[]{String.class, String.class, Long.class, Long.class, Object.class, Date.class, Long.class},
-                queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
+        Deencapsulation.invoke(job, "scheduleDeviceMethod", new Class[]{String.class, String.class, Long.class, Long.class, Object.class, Date.class, Long.class}, queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
     }
 
     /* Tests_SRS_JOB_21_016: [If scheduleDeviceMethod failed, the scheduleDeviceMethod shall throws IotHubException. Threw by the scheduleUpdateTwin.] */
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void scheduleDeviceMethodThrowOnInvokeJobClient() throws IOException, IotHubException
     {
         // arrange
@@ -474,7 +452,7 @@ public class JobTest
             {
                 JobClient.createFromConnectionString(connectionString);
                 result = mockedJobClient;
-                mockedJobClient.scheduleDeviceMethod((String)any, queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
+                mockedJobClient.scheduleDeviceMethod((String) any, queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
                 result = new IOException();
                 times = 1;
             }
@@ -483,13 +461,11 @@ public class JobTest
         Job job = Deencapsulation.newInstance(Job.class, new Class[]{String.class}, connectionString);
 
         // act
-        Deencapsulation.invoke(job, "scheduleDeviceMethod",
-                new Class[]{String.class, String.class, Long.class, Long.class, Object.class, Date.class, Long.class},
-                queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
+        Deencapsulation.invoke(job, "scheduleDeviceMethod", new Class[]{String.class, String.class, Long.class, Long.class, Object.class, Date.class, Long.class}, queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
     }
 
     /* Tests_SRS_JOB_21_017: [If the Iothub reported fail as result of the scheduleDeviceMethod, the scheduleDeviceMethod shall throws IotHubException.] */
-    @Test (expected = IotHubException.class)
+    @Test(expected = IotHubException.class)
     public void scheduleDeviceMethodThrowOnInvokeJobClientFail() throws IOException, IotHubException
     {
         // arrange
@@ -506,7 +482,7 @@ public class JobTest
             {
                 JobClient.createFromConnectionString(connectionString);
                 result = mockedJobClient;
-                mockedJobClient.scheduleDeviceMethod((String)any, queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
+                mockedJobClient.scheduleDeviceMethod((String) any, queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
                 result = mockedJobResult;
                 mockedJobResult.getJobStatus();
                 result = JobStatus.failed;
@@ -516,9 +492,7 @@ public class JobTest
         Job job = Deencapsulation.newInstance(Job.class, new Class[]{String.class}, connectionString);
 
         // act
-        Deencapsulation.invoke(job, "scheduleDeviceMethod",
-                new Class[]{String.class, String.class, Long.class, Long.class, Object.class, Date.class, Long.class},
-                queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
+        Deencapsulation.invoke(job, "scheduleDeviceMethod", new Class[]{String.class, String.class, Long.class, Long.class, Object.class, Date.class, Long.class}, queryCondition, methodName, null, null, payload, now, maxExecutionTimeInSeconds);
     }
 
     /* Tests_SRS_JOB_21_018: [The get shall invoke getJob on JobClient with the current jobId and return its result.] */
@@ -534,7 +508,7 @@ public class JobTest
             {
                 JobClient.createFromConnectionString(connectionString);
                 result = mockedJobClient;
-                mockedJobClient.getJob((String)any);
+                mockedJobClient.getJob((String) any);
                 result = mockedJobResult;
                 times = 1;
             }
@@ -550,7 +524,7 @@ public class JobTest
     }
 
     /* Tests_SRS_JOB_21_019: [If getJob failed, the get shall throws IOException. Threw by the getJob.] */
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void getThrowOnInvokeJobClient() throws IOException, IotHubException
     {
         // arrange
@@ -562,7 +536,7 @@ public class JobTest
             {
                 JobClient.createFromConnectionString(connectionString);
                 result = mockedJobClient;
-                mockedJobClient.getJob((String)any);
+                mockedJobClient.getJob((String) any);
                 result = new IOException();
                 times = 1;
             }
@@ -587,7 +561,7 @@ public class JobTest
             {
                 JobClient.createFromConnectionString(connectionString);
                 result = mockedJobClient;
-                mockedJobClient.cancelJob((String)any);
+                mockedJobClient.cancelJob((String) any);
                 result = mockedJobResult;
                 times = 1;
             }
@@ -603,7 +577,7 @@ public class JobTest
     }
 
     /* Tests_SRS_JOB_21_021: [If cancelJob failed, the cancel shall throws IOException. Threw by the cancelJob.] */
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void cancelThrowOnInvokeJobClient() throws IOException, IotHubException
     {
         // arrange
@@ -615,7 +589,7 @@ public class JobTest
             {
                 JobClient.createFromConnectionString(connectionString);
                 result = mockedJobClient;
-                mockedJobClient.cancelJob((String)any);
+                mockedJobClient.cancelJob((String) any);
                 result = new IOException();
                 times = 1;
             }

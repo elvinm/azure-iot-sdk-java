@@ -20,28 +20,20 @@ import java.util.concurrent.TimeUnit;
 
 public class AmqpsSessionDeviceOperation
 {
-    private final DeviceClientConfig deviceClientConfig;
-
-    private AmqpsDeviceAuthenticationState amqpsAuthenticatorState = AmqpsDeviceAuthenticationState.UNKNOWN;
-    private final AmqpsDeviceAuthentication amqpsDeviceAuthentication;
-
-    private ArrayList<AmqpsDeviceOperations> amqpsDeviceOperationsList = new ArrayList<>();;
-
-    private long nextTag = 0;
-
-    private Integer openLock = new Integer(1);
-
-    private long tokenRenewalPeriodInMilliseconds = 4000; //4 seconds;
-
-    private ScheduledExecutorService taskSchedulerTokenRenewal;
-    private AmqpsDeviceAuthenticationCBSTokenRenewalTask tokenRenewalTask = null;
-
-    private static final int MAX_WAIT_TO_AUTHENTICATE = 10*1000;
+    private static final int MAX_WAIT_TO_AUTHENTICATE = 10 * 1000;
     private static final double PERCENTAGE_FACTOR = 0.75;
     private static final int SEC_IN_MILLISEC = 1000;
-
+    private final DeviceClientConfig deviceClientConfig;
+    ;
+    private final AmqpsDeviceAuthentication amqpsDeviceAuthentication;
     private final CountDownLatch authenticationLatch = new CountDownLatch(1);
-
+    private AmqpsDeviceAuthenticationState amqpsAuthenticatorState = AmqpsDeviceAuthenticationState.UNKNOWN;
+    private ArrayList<AmqpsDeviceOperations> amqpsDeviceOperationsList = new ArrayList<>();
+    private long nextTag = 0;
+    private Integer openLock = new Integer(1);
+    private long tokenRenewalPeriodInMilliseconds = 4000; //4 seconds;
+    private ScheduledExecutorService taskSchedulerTokenRenewal;
+    private AmqpsDeviceAuthenticationCBSTokenRenewalTask tokenRenewalTask = null;
     private List<UUID> cbsCorrelationIdList = Collections.synchronizedList(new ArrayList<UUID>());
 
     private CustomLogger logger;
@@ -49,7 +41,7 @@ public class AmqpsSessionDeviceOperation
     /**
      * Create logical device entity to handle all operation.
      *
-     * @param deviceClientConfig the configuration of teh device.
+     * @param deviceClientConfig        the configuration of teh device.
      * @param amqpsDeviceAuthentication the authentication object associated with the device.
      * @throws IllegalArgumentException if deviceClientConfig or amqpsDeviceAuthentication is null
      */
@@ -163,8 +155,7 @@ public class AmqpsSessionDeviceOperation
     {
         logger.LogDebug("Entered in method %s", logger.getMethodName());
 
-        if ((this.deviceClientConfig.getAuthenticationType() == DeviceClientConfig.AuthType.SAS_TOKEN) &&
-                (this.amqpsAuthenticatorState == AmqpsDeviceAuthenticationState.AUTHENTICATED))
+        if ((this.deviceClientConfig.getAuthenticationType() == DeviceClientConfig.AuthType.SAS_TOKEN) && (this.amqpsAuthenticatorState == AmqpsDeviceAuthenticationState.AUTHENTICATED))
         {
             if (this.deviceClientConfig.getSasTokenAuthentication().isRenewalNecessary())
             {
@@ -214,7 +205,6 @@ public class AmqpsSessionDeviceOperation
     }
 
     /**
-     *
      * @param session the Proton session to open the links on.
      * @throws TransportException throw if Proton operation throws.
      */
@@ -261,7 +251,7 @@ public class AmqpsSessionDeviceOperation
      * Delegate the link initialization call to device operation objects.
      *
      * @param link the link ti initialize.
-     * @throws TransportException throw if Proton operation throws.
+     * @throws TransportException       throw if Proton operation throws.
      * @throws IllegalArgumentException throw if the link parameter is null.
      */
     void initLink(Link link) throws TransportException, IllegalArgumentException
@@ -289,12 +279,12 @@ public class AmqpsSessionDeviceOperation
      * Loop through the device operation list and find the sender
      * object by message type and deviceId (connection string).
      *
-     * @param message the message to send.
+     * @param message     the message to send.
      * @param messageType the message type to find the sender.
-     * @param deviceId the deviceId of the message
-     * @throws IllegalStateException if sender link has not been initialized
-     * @throws IllegalArgumentException if deliveryTag's length is 0
+     * @param deviceId    the deviceId of the message
      * @return Integer
+     * @throws IllegalStateException    if sender link has not been initialized
+     * @throws IllegalArgumentException if deliveryTag's length is 0
      */
     Integer sendMessage(org.apache.qpid.proton.message.Message message, MessageType messageType, String deviceId) throws IllegalStateException, IllegalArgumentException
     {
@@ -341,17 +331,17 @@ public class AmqpsSessionDeviceOperation
 
     /**
      * Delegate the send call to device operation objects.
-     * Loop through the device operation list and find the sender 
-     * object by message type. 
+     * Loop through the device operation list and find the sender
+     * object by message type.
      *
      * @param messageType the message type to identify the sender.
-     * @param msgData the binary content of the message.
-     * @param offset the start index to read the binary.
-     * @param length the length of the binary to read.
+     * @param msgData     the binary content of the message.
+     * @param offset      the start index to read the binary.
+     * @param length      the length of the binary to read.
      * @param deliveryTag the message delivery tag.
-     * @throws IllegalStateException if sender link has not been initialized
-     * @throws IllegalArgumentException if deliveryTag's length is 0
      * @return Integer
+     * @throws IllegalStateException    if sender link has not been initialized
+     * @throws IllegalArgumentException if deliveryTag's length is 0
      */
     private Integer sendMessageAndGetDeliveryHash(MessageType messageType, byte[] msgData, int offset, int length, byte[] deliveryTag) throws IllegalStateException, IllegalArgumentException
     {
@@ -372,14 +362,14 @@ public class AmqpsSessionDeviceOperation
 
     /**
      * Delegate the onDelivery call to device operation objects.
-     * Loop through the device operation list and find the receiver 
-     * object by link name. 
+     * Loop through the device operation list and find the receiver
+     * object by link name.
      *
      * @param linkName the link name to identify the receiver.
+     * @return AmqpsMessage if the receiver found the received
+     * message, otherwise null.
      * @throws IllegalArgumentException if linkName argument is empty
-     * @throws TransportException if Proton throws
-     * @return AmqpsMessage if the receiver found the received 
-     *         message, otherwise null.
+     * @throws TransportException       if Proton throws
      */
     synchronized AmqpsMessage getMessageFromReceiverLink(String linkName) throws IllegalArgumentException, TransportException
     {
@@ -435,10 +425,9 @@ public class AmqpsSessionDeviceOperation
     }
 
     /**
-     * Find the link by link name in the managed device operations. 
+     * Find the link by link name in the managed device operations.
      *
      * @param linkName the name to find.
-     *
      * @return Boolean true if found, false otherwise.
      */
     Boolean isLinkFound(String linkName)
@@ -458,13 +447,13 @@ public class AmqpsSessionDeviceOperation
     }
 
     /**
-     * Convert from IoTHub message to Proton using operation 
-     * specific converter. 
+     * Convert from IoTHub message to Proton using operation
+     * specific converter.
      *
      * @param message the message to convert.
+     * @return AmqpsConvertToProtonReturnValue the result of the
+     * conversion containing the Proton message.
      * @throws TransportException if conversion fails.
-     * @return AmqpsConvertToProtonReturnValue the result of the 
-     *         conversion containing the Proton message.
      */
     AmqpsConvertToProtonReturnValue convertToProton(Message message) throws TransportException
     {
@@ -487,15 +476,15 @@ public class AmqpsSessionDeviceOperation
     }
 
     /**
-     * Convert from IoTHub message to Proton using operation 
-     * specific converter. 
+     * Convert from IoTHub message to Proton using operation
+     * specific converter.
      *
-     * @param amqpsMessage the message to convert.
-     * @param deviceClientConfig the device client configuration to 
+     * @param amqpsMessage       the message to convert.
+     * @param deviceClientConfig the device client configuration to
      *                           identify the converter..
+     * @return AmqpsConvertToProtonReturnValue the result of the
+     * conversion containing the Proton message.
      * @throws TransportException if conversion fails
-     * @return AmqpsConvertToProtonReturnValue the result of the 
-     *         conversion containing the Proton message.
      */
     AmqpsConvertFromProtonReturnValue convertFromProton(AmqpsMessage amqpsMessage, DeviceClientConfig deviceClientConfig) throws TransportException
     {
@@ -541,7 +530,7 @@ public class AmqpsSessionDeviceOperation
      */
     private void shutDownScheduler()
     {
-        if (this.taskSchedulerTokenRenewal  != null)
+        if (this.taskSchedulerTokenRenewal != null)
         {
             taskSchedulerTokenRenewal.shutdown(); // Disable new tasks from being submitted
             try
@@ -582,6 +571,6 @@ public class AmqpsSessionDeviceOperation
             throw new IllegalArgumentException("validInSecs cannot be less than 0.");
         }
 
-        return (long)(validInSecs * PERCENTAGE_FACTOR * SEC_IN_MILLISEC);
+        return (long) (validInSecs * PERCENTAGE_FACTOR * SEC_IN_MILLISEC);
     }
 }

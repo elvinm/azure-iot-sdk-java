@@ -19,19 +19,19 @@ public class Property
         {
 
             /*
-            **Codes_SRS_Property_25_002: [**If the key is null or empty, the constructor shall throw an IllegalArgumentException.**]
+             **Codes_SRS_Property_25_002: [**If the key is null or empty, the constructor shall throw an IllegalArgumentException.**]
              */
             throw new IllegalArgumentException("Key cannot be null or empty");
         }
         if (key.contains(" ") || key.contains("$") || key.contains("."))
         {
             /*
-            **Codes_SRS_Property_25_006: [**If the key contains illegal unicode control characters i.e ' ', '.', '$', the constructor shall throw an IllegalArgumentException.**]**
+             **Codes_SRS_Property_25_006: [**If the key contains illegal unicode control characters i.e ' ', '.', '$', the constructor shall throw an IllegalArgumentException.**]**
              */
             throw new IllegalArgumentException("Key cannot contain illegal unicode control characters '.', '$', ' '");
         }
         /*
-        **Codes_SRS_Property_25_001: [**The constructor shall save the key and value representing this property.**]**
+         **Codes_SRS_Property_25_001: [**The constructor shall save the key and value representing this property.**]**
          */
         this.property = new Pair<>(key, value);
     }
@@ -52,15 +52,15 @@ public class Property
     public String getKey()
     {
         /*
-        **Codes_SRS_Property_25_003: [**The function shall return the value of the key corresponding to this property.**]**
-        */
+         **Codes_SRS_Property_25_003: [**The function shall return the value of the key corresponding to this property.**]**
+         */
         return this.property.getKey();
     }
 
     public Object getValue()
     {
         /*
-        **Codes_SRS_Property_25_004: [**The function shall return the value for this property.**]**
+         **Codes_SRS_Property_25_004: [**The function shall return the value for this property.**]**
          */
         return this.property.getValue();
     }
@@ -68,7 +68,7 @@ public class Property
     public void setValue(Object newValue)
     {
         /*
-        **Codes_SRS_Property_25_005: [**The function shall overwrite the new value for old.**]**
+         **Codes_SRS_Property_25_005: [**The function shall overwrite the new value for old.**]**
          */
         this.property.setValue(newValue);
     }

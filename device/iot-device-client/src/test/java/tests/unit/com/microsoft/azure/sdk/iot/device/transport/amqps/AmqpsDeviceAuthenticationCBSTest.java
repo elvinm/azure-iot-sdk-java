@@ -45,7 +45,7 @@ public class AmqpsDeviceAuthenticationCBSTest
     private final String OPERATION_VALUE = "put-token";
     private final String TYPE_VALUE = "servicebus.windows.net:sastoken";
 
-    private final String DEVICES_PATH =  "/devices/";
+    private final String DEVICES_PATH = "/devices/";
 
     @Mocked
     DeviceClientConfig mockDeviceClientConfig;
@@ -181,7 +181,7 @@ public class AmqpsDeviceAuthenticationCBSTest
                 result = mockMessageImpl;
                 mockMessageImpl.encode(bytes, anyInt, anyInt);
                 result = new BufferOverflowException();
-                mockMessageImpl.encode((byte[])any, anyInt, anyInt);
+                mockMessageImpl.encode((byte[]) any, anyInt, anyInt);
                 mockQueue.isEmpty();
                 result = true;
             }
@@ -469,7 +469,7 @@ public class AmqpsDeviceAuthenticationCBSTest
                 times = 1;
                 mockSasl.setMechanisms("ANONYMOUS");
                 times = 1;
-                mockTransport.ssl((SslDomain)any);
+                mockTransport.ssl((SslDomain) any);
                 times = 1;
             }
         };
@@ -541,7 +541,6 @@ public class AmqpsDeviceAuthenticationCBSTest
             }
         };
     }
-
 
 
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONCBS_12_020: [The function shall return true and set the sendLinkState to OPENED if the senderLinkTag is equal to the given linkName.]

@@ -7,10 +7,10 @@ package com.microsoft.azure.sdk.iot.provisioning.service.exceptions;
 
 /**
  * This is the subset of the Device Provisioning Service exceptions for the exceptions related a temporary service issue.
- *
+ * <p>
  * <p> The provisioning service will response a http request with one of the transient exception if
- *     the rest API was properly called, but the service is not able to execute that action at that
- *     time. These are the exceptions that a retry can help to fix the issue.
+ * the rest API was properly called, but the service is not able to execute that action at that
+ * time. These are the exceptions that a retry can help to fix the issue.
  * <p> HTTP status code 500 to 599.
  */
 public class ProvisioningServiceClientTransientException extends ProvisioningServiceClientServiceException

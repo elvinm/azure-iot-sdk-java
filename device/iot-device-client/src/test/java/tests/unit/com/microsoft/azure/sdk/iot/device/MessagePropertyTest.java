@@ -43,10 +43,10 @@ public class MessagePropertyTest
 
         final String expectedValue = value;
         assertThat(testValue, is(expectedValue));
-		
+
     }
 
-	 @Test
+    @Test
     public void constructorSavesPropertyValueSlash()
     {
         final String name = "topic";
@@ -58,13 +58,13 @@ public class MessagePropertyTest
         final String expectedValue = value;
         assertThat(testValue, is(expectedValue));
     }
-    
+
     @Test
     public void constructorSavesPropertyValueTab()
     {
         final String name = "names";
-        final String value = "First Name"+"\t"+"\t"+"Last Name";
-        
+        final String value = "First Name" + "\t" + "\t" + "Last Name";
+
         MessageProperty property = new MessageProperty(name, value);
         String testValue = property.getValue();
 
@@ -76,7 +76,7 @@ public class MessagePropertyTest
     @Test(expected = IllegalArgumentException.class)
     public void constructorRejectsInvalidPropertyName()
     {
-        final String invalidName = "Price in £"; 
+        final String invalidName = "Price in £";
         final String value = "test-value";
 
         new MessageProperty(invalidName, value);
@@ -137,8 +137,7 @@ public class MessagePropertyTest
         final String name = "test-name";
         final String value = "test-value";
 
-        boolean testIsValidAppProperty =
-                MessageProperty.isValidAppProperty(name, value);
+        boolean testIsValidAppProperty = MessageProperty.isValidAppProperty(name, value);
 
         final boolean expectedIsValidAppProperty = true;
         assertThat(testIsValidAppProperty, is(expectedIsValidAppProperty));
@@ -151,8 +150,7 @@ public class MessagePropertyTest
         final String name = "test-name";
         final String illegalValue = "परीक्षण"; // Unicode is not supported in MessageProperty value
 
-        boolean testIsValidAppProperty =
-                MessageProperty.isValidAppProperty(name, illegalValue);
+        boolean testIsValidAppProperty = MessageProperty.isValidAppProperty(name, illegalValue);
 
         final boolean expectedIsValidAppProperty = false;
         assertThat(testIsValidAppProperty, is(expectedIsValidAppProperty));
@@ -165,8 +163,7 @@ public class MessagePropertyTest
         final String reservedName = "iothub-to";
         final String value = "test-value";
 
-        boolean testIsValidAppProperty =
-                MessageProperty.isValidAppProperty(reservedName, value);
+        boolean testIsValidAppProperty = MessageProperty.isValidAppProperty(reservedName, value);
 
         final boolean expectedIsValidAppProperty = false;
         assertThat(testIsValidAppProperty, is(expectedIsValidAppProperty));

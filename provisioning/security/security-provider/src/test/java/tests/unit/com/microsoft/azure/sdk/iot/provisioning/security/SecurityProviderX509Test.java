@@ -64,6 +64,171 @@ public class SecurityProviderX509Test
     @Mocked
     X509KeyManager mockedX509KeyManager;
 
+    //SRS_SecurityClientX509_25_001: [ This method shall retrieve the commonName of the client certificate and return as registration Id. ]
+    @Test
+    public void getRegistrationIdSucceeds() throws SecurityProviderException
+    {
+
+        //arrange
+        Collection<X509Certificate> certificates = new LinkedList<>();
+        certificates.add(mockedX509Certificate);
+        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, mockedX509Certificate, mockedKey, certificates);
+
+        assertEquals(TEST_COMMON_NAME, securityClientX509Test.getRegistrationId());
+    }
+
+    //SRS_SecurityClientX509_25_002: [ This method shall generate the SSL context. ]
+    //SRS_SecurityClientX509_25_007: [ This method shall use random UUID as a password for keystore. ]
+    //SRS_SecurityClientX509_25_008: [ This method shall create a TLSv1.2 instance. ]
+    //SRS_SecurityClientX509_25_009: [ This method shall retrieve the keystore loaded with trusted certs. ]
+    //SRS_SecurityClientX509_25_010: [ This method shall load all the provided X509 certs (leaf with both public certificate and private key,
+    // intermediate certificates(if any) to the Key store. ]
+    //SRS_SecurityClientX509_25_011: [ This method shall initialize the ssl context with X509KeyManager and X509TrustManager for the keystore. ]
+    //SRS_SecurityClientX509_25_012: [ This method shall return the ssl context created as above to the caller. ]
+    //SRS_SecurityClient_25_001: [ This method shall retrieve the default instance of keystore using default algorithm type. ]
+    //SRS_SecurityClient_25_002: [ This method shall retrieve the default CertificateFactory instance. ]
+    //SRS_SecurityClient_25_003: [ This method shall load all the trusted certificates to the keystore. ]
+    @Test
+    public void getSslContextSucceeds() throws SecurityProviderException, KeyManagementException, KeyStoreException
+    {
+        //arrange
+        Collection<X509Certificate> certificates = new LinkedList<>();
+        certificates.add(mockedX509Certificate);
+
+        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, mockedX509Certificate, mockedKey, certificates);
+        new NonStrictExpectations()
+        {
+            {
+                mockedKeyManagerFactory.getKeyManagers();
+                result = mockedX509KeyManager;
+                mockedTrustManagerFactory.getTrustManagers();
+                result = mockedX509TrustManager;
+            }
+        };
+
+        //act
+        securityClientX509Test.getSSLContext();
+
+        //assert
+        new Verifications()
+        {
+            {
+                mockedKeyStore.setKeyEntry(anyString, mockedKey, (char[]) any, (X509Certificate[]) any);
+                times = 1;
+                mockedSslContext.init((KeyManager[]) any, (TrustManager[]) any, (SecureRandom) any);
+                times = 1;
+            }
+        };
+    }
+
+    //SRS_SecurityClientX509_25_006: [ This method shall throw IllegalArgumentException if input parameters are null. ]
+    @Test(expected = IllegalArgumentException.class)
+    public void getSslContextThrowsOnNullLeaf() throws SecurityProviderException, KeyManagementException, KeyStoreException
+    {
+        //arrange
+        Collection<X509Certificate> certificates = new LinkedList<>();
+        certificates.add(mockedX509Certificate);
+
+        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, null, mockedKey, certificates);
+
+        //act
+        securityClientX509Test.getSSLContext();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getSslContextThrowsOnNullPrivateKey() throws SecurityProviderException, KeyManagementException, KeyStoreException
+    {
+        //arrange
+        Collection<X509Certificate> certificates = new LinkedList<>();
+        certificates.add(mockedX509Certificate);
+
+        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, mockedX509Certificate, null, certificates);
+
+        //act
+        securityClientX509Test.getSSLContext();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getSslContextThrowsOnNullIntermediates() throws SecurityProviderException, KeyManagementException, KeyStoreException
+    {
+        //arrange
+        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, mockedX509Certificate, mockedKey, null);
+
+        //act
+        securityClientX509Test.getSSLContext();
+
+    }
+
+    //SRS_SecurityClientX509_25_005: [ This method shall throw SecurityProviderException if X509 Key Manager is not found. ]
+    @Test(expected = SecurityProviderException.class)
+    public void getSslContextThrowsIfX509KeyManagerNotFound() throws SecurityProviderException, KeyManagementException, KeyStoreException
+    {
+
+        //arrange
+        Collection<X509Certificate> certificates = new LinkedList<>();
+        certificates.add(mockedX509Certificate);
+
+        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, mockedX509Certificate, mockedKey, certificates);
+        new NonStrictExpectations()
+        {
+            {
+                mockedKeyManagerFactory.getKeyManagers();
+                result = mockedKeyManager; // not necessarily X509
+            }
+        };
+
+        //act
+        securityClientX509Test.getSSLContext();
+    }
+
+    //SRS_SecurityClientX509_25_004: [ This method shall throw SecurityProviderException if X509 Trust Manager is not found. ]
+    @Test(expected = SecurityProviderException.class)
+    public void getSslContextThrowsIfX509TrustManagerNotFound() throws SecurityProviderException, KeyManagementException, KeyStoreException
+    {
+        //arrange
+        Collection<X509Certificate> certificates = new LinkedList<>();
+        certificates.add(mockedX509Certificate);
+
+        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, mockedX509Certificate, mockedKey, certificates);
+        new NonStrictExpectations()
+        {
+            {
+                mockedKeyManagerFactory.getKeyManagers();
+                result = mockedX509KeyManager;
+                mockedTrustManagerFactory.getTrustManagers();
+                result = mockedTrustManager; // not necessarily X509
+            }
+        };
+
+        //act
+        securityClientX509Test.getSSLContext();
+    }
+
+    //SRS_SecurityClientX509_25_003: [ This method shall throw SecurityProviderException chained with the exception thrown from underlying API calls to SSL library. ]
+    @Test(expected = SecurityProviderException.class)
+    public void getSslContextThrowsIfAnyOfTheUnderlyingAPIFails() throws SecurityProviderException, KeyManagementException, KeyStoreException
+    {
+        //arrange
+        Collection<X509Certificate> certificates = new LinkedList<>();
+        certificates.add(mockedX509Certificate);
+
+        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, mockedX509Certificate, mockedKey, certificates);
+        new NonStrictExpectations()
+        {
+            {
+                mockedKeyManagerFactory.getKeyManagers();
+                result = mockedX509KeyManager;
+                mockedTrustManagerFactory.getTrustManagers();
+                result = mockedX509TrustManager;
+                mockedSslContext.init((KeyManager[]) any, (TrustManager[]) any, (SecureRandom) any);
+                result = new KeyManagementException();
+            }
+        };
+
+        //act
+        securityClientX509Test.getSSLContext();
+    }
+
     class SecurityProviderX509TestImpl extends SecurityProviderX509
     {
         private String cn;
@@ -114,171 +279,5 @@ public class SecurityProviderX509Test
         {
             return super.getSSLContext();
         }
-    }
-
-    //SRS_SecurityClientX509_25_001: [ This method shall retrieve the commonName of the client certificate and return as registration Id. ]
-    @Test
-    public void getRegistrationIdSucceeds() throws SecurityProviderException
-    {
-
-        //arrange
-        Collection<X509Certificate> certificates = new LinkedList<>();
-        certificates.add(mockedX509Certificate);
-        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, mockedX509Certificate, mockedKey, certificates);
-
-        assertEquals(TEST_COMMON_NAME, securityClientX509Test.getRegistrationId());
-    }
-
-    //SRS_SecurityClientX509_25_002: [ This method shall generate the SSL context. ]
-    //SRS_SecurityClientX509_25_007: [ This method shall use random UUID as a password for keystore. ]
-    //SRS_SecurityClientX509_25_008: [ This method shall create a TLSv1.2 instance. ]
-    //SRS_SecurityClientX509_25_009: [ This method shall retrieve the keystore loaded with trusted certs. ]
-    //SRS_SecurityClientX509_25_010: [ This method shall load all the provided X509 certs (leaf with both public certificate and private key,
-    // intermediate certificates(if any) to the Key store. ]
-    //SRS_SecurityClientX509_25_011: [ This method shall initialize the ssl context with X509KeyManager and X509TrustManager for the keystore. ]
-    //SRS_SecurityClientX509_25_012: [ This method shall return the ssl context created as above to the caller. ]
-    //SRS_SecurityClient_25_001: [ This method shall retrieve the default instance of keystore using default algorithm type. ]
-    //SRS_SecurityClient_25_002: [ This method shall retrieve the default CertificateFactory instance. ]
-    //SRS_SecurityClient_25_003: [ This method shall load all the trusted certificates to the keystore. ]
-    @Test
-    public void getSslContextSucceeds() throws SecurityProviderException, KeyManagementException, KeyStoreException
-    {
-        //arrange
-        Collection<X509Certificate> certificates = new LinkedList<>();
-        certificates.add(mockedX509Certificate);
-
-        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, mockedX509Certificate, mockedKey, certificates);
-        new NonStrictExpectations()
-        {
-            {
-                mockedKeyManagerFactory.getKeyManagers();
-                result = mockedX509KeyManager;
-                mockedTrustManagerFactory.getTrustManagers();
-                result = mockedX509TrustManager;
-            }
-        };
-
-        //act
-        securityClientX509Test.getSSLContext();
-
-        //assert
-        new Verifications()
-        {
-            {
-                mockedKeyStore.setKeyEntry(anyString, mockedKey,  (char[]) any, (X509Certificate[]) any );
-                times = 1;
-                mockedSslContext.init((KeyManager[]) any, (TrustManager[]) any, (SecureRandom) any);
-                times = 1;
-            }
-        };
-    }
-
-    //SRS_SecurityClientX509_25_006: [ This method shall throw IllegalArgumentException if input parameters are null. ]
-    @Test (expected = IllegalArgumentException.class)
-    public void getSslContextThrowsOnNullLeaf() throws SecurityProviderException, KeyManagementException, KeyStoreException
-    {
-        //arrange
-        Collection<X509Certificate> certificates = new LinkedList<>();
-        certificates.add(mockedX509Certificate);
-
-        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, null, mockedKey, certificates);
-
-        //act
-        securityClientX509Test.getSSLContext();
-    }
-
-
-    @Test (expected = IllegalArgumentException.class)
-    public void getSslContextThrowsOnNullPrivateKey() throws SecurityProviderException, KeyManagementException, KeyStoreException
-    {
-        //arrange
-        Collection<X509Certificate> certificates = new LinkedList<>();
-        certificates.add(mockedX509Certificate);
-
-        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, mockedX509Certificate, null, certificates);
-
-        //act
-        securityClientX509Test.getSSLContext();
-    }
-
-    @Test (expected = IllegalArgumentException.class)
-    public void getSslContextThrowsOnNullIntermediates() throws SecurityProviderException, KeyManagementException, KeyStoreException
-    {
-        //arrange
-        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, mockedX509Certificate, mockedKey, null);
-
-        //act
-        securityClientX509Test.getSSLContext();
-
-    }
-
-    //SRS_SecurityClientX509_25_005: [ This method shall throw SecurityProviderException if X509 Key Manager is not found. ]
-    @Test (expected = SecurityProviderException.class)
-    public void getSslContextThrowsIfX509KeyManagerNotFound() throws SecurityProviderException, KeyManagementException, KeyStoreException
-    {
-
-        //arrange
-        Collection<X509Certificate> certificates = new LinkedList<>();
-        certificates.add(mockedX509Certificate);
-
-        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, mockedX509Certificate, mockedKey, certificates);
-        new NonStrictExpectations()
-        {
-            {
-                mockedKeyManagerFactory.getKeyManagers();
-                result = mockedKeyManager; // not necessarily X509
-            }
-        };
-
-        //act
-        securityClientX509Test.getSSLContext();
-    }
-
-    //SRS_SecurityClientX509_25_004: [ This method shall throw SecurityProviderException if X509 Trust Manager is not found. ]
-    @Test (expected = SecurityProviderException.class)
-    public void getSslContextThrowsIfX509TrustManagerNotFound() throws SecurityProviderException, KeyManagementException, KeyStoreException
-    {
-        //arrange
-        Collection<X509Certificate> certificates = new LinkedList<>();
-        certificates.add(mockedX509Certificate);
-
-        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, mockedX509Certificate, mockedKey, certificates);
-        new NonStrictExpectations()
-        {
-            {
-                mockedKeyManagerFactory.getKeyManagers();
-                result = mockedX509KeyManager;
-                mockedTrustManagerFactory.getTrustManagers();
-                result = mockedTrustManager; // not necessarily X509
-            }
-        };
-
-        //act
-        securityClientX509Test.getSSLContext();
-    }
-
-    //SRS_SecurityClientX509_25_003: [ This method shall throw SecurityProviderException chained with the exception thrown from underlying API calls to SSL library. ]
-    @Test (expected = SecurityProviderException.class)
-    public void getSslContextThrowsIfAnyOfTheUnderlyingAPIFails() throws SecurityProviderException, KeyManagementException, KeyStoreException
-    {
-        //arrange
-        Collection<X509Certificate> certificates = new LinkedList<>();
-        certificates.add(mockedX509Certificate);
-
-        SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, mockedX509Certificate, mockedKey, certificates);
-        new NonStrictExpectations()
-        {
-            {
-                mockedKeyManagerFactory.getKeyManagers();
-                result = mockedX509KeyManager;
-                mockedTrustManagerFactory.getTrustManagers();
-                result = mockedX509TrustManager;
-                mockedSslContext.init((KeyManager[]) any, (TrustManager[]) any, (SecureRandom) any);
-                result = new KeyManagementException();
-            }
-        };
-
-        //act
-        securityClientX509Test.getSSLContext();
     }
 }

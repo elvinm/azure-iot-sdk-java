@@ -41,7 +41,7 @@ public class UrlPathBuilderTest
     }
 
     //SRS_UrlPathBuilder_25_002: [ Constructor throw IllegalArgumentException if scope id is null or empty.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithScopeOnlyThrowsOnNullScope() throws IllegalArgumentException
     {
         //act
@@ -49,7 +49,7 @@ public class UrlPathBuilderTest
 
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithScopeOnlyThrowsOnEmptyScope() throws IllegalArgumentException
     {
         //act
@@ -69,7 +69,7 @@ public class UrlPathBuilderTest
     }
 
     //SRS_UrlPathBuilder_25_003: [ The constructor shall throw IllegalArgumentException if the scope id or hostName string is empty or null or if protocol is null.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithNullHostNameThrows() throws IllegalArgumentException
     {
         //arrange
@@ -79,7 +79,7 @@ public class UrlPathBuilderTest
         //assert
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithEmptyHostNameThrows() throws IllegalArgumentException
     {
         //arrange
@@ -89,7 +89,7 @@ public class UrlPathBuilderTest
         //assert
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithNullScopeThrows() throws IllegalArgumentException
     {
         //arrange
@@ -99,7 +99,7 @@ public class UrlPathBuilderTest
         //assert
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithEmptyScopeThrows() throws IllegalArgumentException
     {
         //arrange
@@ -109,7 +109,7 @@ public class UrlPathBuilderTest
         //assert
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithNullProtocolThrows() throws IllegalArgumentException
     {
         //arrange
@@ -125,7 +125,7 @@ public class UrlPathBuilderTest
     {
         //arrange
         //https://testHostName/testScope/registrations/testRegistrationId/register?api-version=2017-08-31-preview
-        final String expectedUrl = "https://"+ TEST_HOST_NAME + "/" + TEST_SCOPE + "/registrations/" + TEST_REGISTRATION_ID + "/register?api-version=" + SERVICE_API_VERSION;
+        final String expectedUrl = "https://" + TEST_HOST_NAME + "/" + TEST_SCOPE + "/registrations/" + TEST_REGISTRATION_ID + "/register?api-version=" + SERVICE_API_VERSION;
         UrlPathBuilder urlPathBuilder = new UrlPathBuilder(TEST_HOST_NAME, TEST_SCOPE, ProvisioningDeviceClientTransportProtocol.HTTPS);
         //act
         String generateRequestUrl = urlPathBuilder.generateRegisterUrl(TEST_REGISTRATION_ID);
@@ -134,7 +134,7 @@ public class UrlPathBuilderTest
     }
 
     //SRS_UrlPathBuilder_25_007: [ This method shall throw IllegalArgumentException if the registration id is null or empty. ]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void generateRegisterUrlHttpThrowsOnNullRegID() throws IOException
     {
         //arrange
@@ -144,7 +144,7 @@ public class UrlPathBuilderTest
 
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void generateRegisterUrlHttpThrowsOnEmptyRegID() throws IOException
     {
         //arrange
@@ -159,7 +159,7 @@ public class UrlPathBuilderTest
     {
         //arrange
         //https://testHostName/testScope/registrations/testRegistrationId/operations/testOperationId?api-version=2017-08-31-preview
-        final String expectedUrl = "https://"+ TEST_HOST_NAME + "/" + TEST_SCOPE + "/registrations/" + TEST_REGISTRATION_ID + "/operations/" + TEST_OPERATION_ID + "?api-version=" + SERVICE_API_VERSION;
+        final String expectedUrl = "https://" + TEST_HOST_NAME + "/" + TEST_SCOPE + "/registrations/" + TEST_REGISTRATION_ID + "/operations/" + TEST_OPERATION_ID + "?api-version=" + SERVICE_API_VERSION;
 
         UrlPathBuilder urlPathBuilder = new UrlPathBuilder(TEST_HOST_NAME, TEST_SCOPE, ProvisioningDeviceClientTransportProtocol.HTTPS);
         //act
@@ -169,7 +169,7 @@ public class UrlPathBuilderTest
     }
 
     //SRS_UrlPathBuilder_25_009: [ This method shall throw IllegalArgumentException if the registration id or operation id is null or empty. ]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void generateRequestUrlHttpThrowsOnNullRegID() throws IOException
     {
         //arrange
@@ -179,7 +179,7 @@ public class UrlPathBuilderTest
         //assert
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void generateRequestUrlHttpThrowsOnEmptyRegID() throws IOException
     {
         //arrange
@@ -189,7 +189,7 @@ public class UrlPathBuilderTest
 
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void generateRequestUrlHttpThrowsOnNullOpID() throws IOException
     {
         //arrange
@@ -198,7 +198,7 @@ public class UrlPathBuilderTest
         urlPathBuilder.generateRequestUrl(TEST_REGISTRATION_ID, null);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void generateRequestUrlHttpThrowsOnEmptyOpID() throws IOException
     {
         //arrange
@@ -222,7 +222,7 @@ public class UrlPathBuilderTest
     }
 
     //SRS_UrlPathBuilder_25_005: [ This method shall throw IllegalArgumentException if the registration id is null or empty. ]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void generateSasTokenUrlThrowsOnNullRegID() throws IOException
     {
         //arrange
@@ -231,7 +231,7 @@ public class UrlPathBuilderTest
         urlPathBuilder.generateSasTokenUrl(null);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void generateSasTokenUrlThrowsOnEmptyRegID() throws IOException
     {
         //arrange

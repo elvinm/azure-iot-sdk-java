@@ -18,26 +18,11 @@ import static org.junit.Assert.assertEquals;
  */
 public class RegisterManagerTest
 {
-    private final static String REGISTER_MANAGER_SAMPLE =
-            "{" +
-            "\"deviceId\":\"validDeviceId\"," +
-            "\"moduleId\":\"validModuleId\"," +
-            "\"generationId\":\"validGenerationId\"," +
-            "\"version\":3," +
-            "\"status\":\"enabled\"," +
-            "\"statusReason\":\"validStatusReason\"," +
-            "\"statusUpdatedTime\":\"2016-06-01T21:22:41+00:00\"," +
-            "\"connectionState\":\"disconnected\"," +
-            "\"connectionStateUpdatedTime\":\"2016-06-01T21:22:41+00:00\"," +
-            "\"lastActivityTime\":\"xxx\"," +
-            "\"capabilities\": {\n" +
-            "  \"iotEdge\": true },\n" +
-            "\"etag\":\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"" +
-            "}";
+    private final static String REGISTER_MANAGER_SAMPLE = "{" + "\"deviceId\":\"validDeviceId\"," + "\"moduleId\":\"validModuleId\"," + "\"generationId\":\"validGenerationId\"," + "\"version\":3," + "\"status\":\"enabled\"," + "\"statusReason\":\"validStatusReason\"," + "\"statusUpdatedTime\":\"2016-06-01T21:22:41+00:00\"," + "\"connectionState\":\"disconnected\"," + "\"connectionStateUpdatedTime\":\"2016-06-01T21:22:41+00:00\"," + "\"lastActivityTime\":\"xxx\"," + "\"capabilities\": {\n" + "  \"iotEdge\": true },\n" + "\"etag\":\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"" + "}";
 
 
     /* Tests_SRS_REGISTER_MANAGER_21_001: [The setDeviceId shall throw IllegalArgumentException if the provided deviceId do not fits the criteria.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setDeviceIdThrowsOnNullDeviceId()
     {
         // arrange
@@ -64,7 +49,7 @@ public class RegisterManagerTest
     }
 
     /* Tests_SRS_REGISTER_MANAGER_28_001: [The setModuleId shall throw IllegalArgumentException if the provided moduleId do not fits the criteria.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setModuleIdThrowsOnNullModuleId()
     {
         // arrange
@@ -118,7 +103,7 @@ public class RegisterManagerTest
         // act - assert
         assertEquals("validDeviceId", result.getDeviceId());
         assertEquals("validModuleId", result.getModuleId());
-        assertEquals(3, (int)result.getVersion());
+        assertEquals(3, (int) result.getVersion());
         assertEquals("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", result.getETag());
         assertEquals(true, result.getCapabilities().isIotEdge());
     }

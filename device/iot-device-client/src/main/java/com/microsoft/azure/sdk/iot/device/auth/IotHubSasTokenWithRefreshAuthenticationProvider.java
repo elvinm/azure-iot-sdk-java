@@ -18,13 +18,14 @@ public abstract class IotHubSasTokenWithRefreshAuthenticationProvider extends Io
 {
     /**
      * Constructor for IotHubSasTokenWithRefreshAuthenticationProvider
-     * @param hostname the hostname
-     * @param gatewayHostName the gateway hostname
-     * @param deviceId the device id
-     * @param moduleId the module id
-     * @param sharedAccessToken the shared access token
+     *
+     * @param hostname                   the hostname
+     * @param gatewayHostName            the gateway hostname
+     * @param deviceId                   the device id
+     * @param moduleId                   the module id
+     * @param sharedAccessToken          the shared access token
      * @param suggestedTimeToLiveSeconds the time to live for generated tokens
-     * @param timeBufferPercentage the percent of a sas token's life to live before renewing
+     * @param timeBufferPercentage       the percent of a sas token's life to live before renewing
      */
     protected IotHubSasTokenWithRefreshAuthenticationProvider(String hostname, String gatewayHostName, String deviceId, String moduleId, String sharedAccessToken, int suggestedTimeToLiveSeconds, int timeBufferPercentage)
     {
@@ -34,6 +35,7 @@ public abstract class IotHubSasTokenWithRefreshAuthenticationProvider extends Io
 
     /**
      * Constructs the audience string to be used in a sas token
+     *
      * @param hostname the hostname
      * @param deviceId the device id
      * @param moduleId the module id
@@ -56,6 +58,7 @@ public abstract class IotHubSasTokenWithRefreshAuthenticationProvider extends Io
 
     /**
      * Returns false as instances of this class will always be able to renew their own sas token
+     *
      * @return false
      */
     @Override
@@ -67,15 +70,17 @@ public abstract class IotHubSasTokenWithRefreshAuthenticationProvider extends Io
 
     /**
      * Renew the saved sas token
-     * @throws IOException If an IOException is encountered while refreshing the sas token
+     *
+     * @throws IOException        If an IOException is encountered while refreshing the sas token
      * @throws TransportException If a TransportException is encountered while refreshing the sas token
      */
     public abstract void refreshSasToken() throws IOException, TransportException;
 
     /**
      * Check if sas token should be renewed at all, and then renew it if necessary
+     *
      * @return the renewed token, or the old token if it did not need to be renewed
-     * @throws IOException If an IOException is encountered while refreshing the sas token
+     * @throws IOException        If an IOException is encountered while refreshing the sas token
      * @throws TransportException If a TransportException is encountered while refreshing the sas token
      */
     @Override

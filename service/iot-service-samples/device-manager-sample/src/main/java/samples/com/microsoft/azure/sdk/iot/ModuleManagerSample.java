@@ -13,11 +13,14 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
-/** Manages module on IotHub - CRUD operations */
+/**
+ * Manages module on IotHub - CRUD operations
+ */
 public class ModuleManagerSample
 {
     /**
      * A simple sample for doing CRUD operations
+     *
      * @param args
      * @throws IOException
      * @throws URISyntaxException

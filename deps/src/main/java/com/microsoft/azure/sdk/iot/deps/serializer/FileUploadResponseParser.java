@@ -12,37 +12,33 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Representation of a single container for the File Upload response with a Json deserializer.
  * Ex of JSON format:
- *  {
- *      "correlationId": "somecorrelationid",
- *      "hostname": "contoso.azure-devices.net",
- *      "containerName": "testcontainer",
- *      "blobName": "test-device1/image.jpg",
- *      "sasToken": "1234asdfSAStoken"
- *  }
+ * {
+ * "correlationId": "somecorrelationid",
+ * "hostname": "contoso.azure-devices.net",
+ * "containerName": "testcontainer",
+ * "blobName": "test-device1/image.jpg",
+ * "sasToken": "1234asdfSAStoken"
+ * }
  */
 public class FileUploadResponseParser
 {
     private static final String CORRELATION_ID_TAG = "correlationId";
+    private static final String HOST_NAME_TAG = "hostName";
+    private static final String CONTAINER_NAME_TAG = "containerName";
+    private static final String BLOB_NAME_TAG = "blobName";
+    private static final String SAS_TOKEN_TAG = "sasToken";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(CORRELATION_ID_TAG)
     private String correlationId = null;
-
-    private static final String HOST_NAME_TAG = "hostName";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(HOST_NAME_TAG)
     private String hostName = null;
-
-    private static final String CONTAINER_NAME_TAG = "containerName";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(CONTAINER_NAME_TAG)
     private String containerName = null;
-
-    private static final String BLOB_NAME_TAG = "blobName";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(BLOB_NAME_TAG)
     private String blobName = null;
-
-    private static final String SAS_TOKEN_TAG = "sasToken";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(SAS_TOKEN_TAG)
     private String sasToken = null;
@@ -85,6 +81,14 @@ public class FileUploadResponseParser
         this.correlationId = newFileUploadResponseParser.correlationId;
         this.blobName = newFileUploadResponseParser.blobName;
         this.sasToken = newFileUploadResponseParser.sasToken;
+    }
+
+    /**
+     * Empty constructor: Used only to keep GSON happy.
+     */
+    @SuppressWarnings("unused")
+    FileUploadResponseParser()
+    {
     }
 
     /**
@@ -140,13 +144,5 @@ public class FileUploadResponseParser
     {
         /* Codes_SRS_FILE_UPLOAD_RESPONSE_21_009: [The getSasToken shall return the string stored in `sasToken`.] */
         return this.sasToken;
-    }
-
-    /**
-     * Empty constructor: Used only to keep GSON happy.
-     */
-    @SuppressWarnings("unused")
-    FileUploadResponseParser()
-    {
     }
 }

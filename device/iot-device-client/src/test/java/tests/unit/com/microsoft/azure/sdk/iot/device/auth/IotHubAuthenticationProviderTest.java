@@ -22,24 +22,14 @@ import static junit.framework.TestCase.assertTrue;
 
 public class IotHubAuthenticationProviderTest
 {
-    @Mocked
-    IotHubSSLContext mockedIotHubSSLContext;
-
-    @Mocked
-    SSLContext mockedSSLContext;
-    
     private static String expectedHostname = "hostname";
     private static String expectedGatewayHostname = "gatewayhostname";
     private static String expectedDeviceId = "deviceId";
     private static String expectedModuleId = "moduleId";
-    
-    private class IotHubAuthenticationProviderMock extends IotHubAuthenticationProvider
-    {
-        public IotHubAuthenticationProviderMock(String hostname, String gatewayHostname, String deviceId, String moduleId)
-        {
-            super(hostname, gatewayHostname, deviceId, moduleId);
-        }
-    }
+    @Mocked
+    IotHubSSLContext mockedIotHubSSLContext;
+    @Mocked
+    SSLContext mockedSSLContext;
 
     // Tests_SRS_AUTHENTICATIONPROVIDER_34_001: [The constructor shall save the provided hostname, gatewayhostname, deviceid and moduleid.]
     @Test
@@ -47,7 +37,7 @@ public class IotHubAuthenticationProviderTest
     {
         //act
         IotHubAuthenticationProvider iotHubAuthenticationProvider = new IotHubAuthenticationProviderMock(expectedHostname, expectedGatewayHostname, expectedDeviceId, expectedModuleId);
-        
+
         //assert
         assertEquals(expectedHostname, Deencapsulation.getField(iotHubAuthenticationProvider, "hostname"));
         assertEquals(expectedGatewayHostname, Deencapsulation.getField(iotHubAuthenticationProvider, "gatewayHostname"));
@@ -89,7 +79,7 @@ public class IotHubAuthenticationProviderTest
     }
 
     // Tests_SRS_AUTHENTICATIONPROVIDER_34_006: [If the provided hostname is null, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullHostname()
     {
         //act
@@ -97,7 +87,7 @@ public class IotHubAuthenticationProviderTest
     }
 
     // Tests_SRS_AUTHENTICATIONPROVIDER_34_007: [If the provided device id is null, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullDeviceId()
     {
         //act
@@ -106,7 +96,7 @@ public class IotHubAuthenticationProviderTest
 
     //Codes_SRS_AUTHENTICATIONPROVIDER_34_012: [If a CertificateException, NoSuchAlgorithmException, KeyManagementException, or KeyStoreException is thrown during this function, this function shall throw an IOException.]
     //Codes_SRS_AUTHENTICATIONPROVIDER_34_010: [If this object's ssl context has not been generated yet or if it needs to be re-generated, this function shall regenerate the ssl context.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void getSSLContextWrapsExceptions() throws IOException
     {
         //arrange
@@ -203,7 +193,7 @@ public class IotHubAuthenticationProviderTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {String.class, boolean.class}, expectedCert, false);
+                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{String.class, boolean.class}, expectedCert, false);
                 times = 1;
             }
         };
@@ -225,12 +215,12 @@ public class IotHubAuthenticationProviderTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {String.class, boolean.class}, expectedCertPath, true);
+                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{String.class, boolean.class}, expectedCertPath, true);
                 times = 1;
             }
         };
     }
-    
+
     // Tests_SRS_AUTHENTICATIONPROVIDER_34_021: [If this has no saved iotHubTrustedCert or path, This function shall create and save a new default IotHubSSLContext object.]
     @Test
     public void generateSSLContextGeneratesDefaultIotHubSSLContext()
@@ -249,5 +239,13 @@ public class IotHubAuthenticationProviderTest
                 times = 1;
             }
         };
+    }
+
+    private class IotHubAuthenticationProviderMock extends IotHubAuthenticationProvider
+    {
+        public IotHubAuthenticationProviderMock(String hostname, String gatewayHostname, String deviceId, String moduleId)
+        {
+            super(hostname, gatewayHostname, deviceId, moduleId);
+        }
     }
 }

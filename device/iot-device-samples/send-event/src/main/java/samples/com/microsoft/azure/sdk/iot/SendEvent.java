@@ -12,87 +12,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/** Sends a number of event messages to an IoT Hub. */
+/**
+ * Sends a number of event messages to an IoT Hub.
+ */
 public class SendEvent
 {
-    private  static final int D2C_MESSAGE_TIMEOUT = 2000; // 2 seconds
-    private  static List failedMessageListOnClose = new ArrayList(); // List of messages that failed on close
-
-    protected static class EventCallback implements IotHubEventCallback
-    {
-        public void execute(IotHubStatusCode status, Object context)
-        {
-            Message msg = (Message) context;
-
-            System.out.println("IoT Hub responded to message "+ msg.getMessageId()  + " with status " + status.name());
-
-            if (status==IotHubStatusCode.MESSAGE_CANCELLED_ONCLOSE)
-            {
-                failedMessageListOnClose.add(msg.getMessageId());
-            }
-        }
-    }
-
-    protected static class IotHubConnectionStatusChangeCallbackLogger implements IotHubConnectionStatusChangeCallback
-    {
-        @Override
-        public void execute(IotHubConnectionStatus status, IotHubConnectionStatusChangeReason statusChangeReason, Throwable throwable, Object callbackContext)
-        {
-            System.out.println();
-            System.out.println("CONNECTION STATUS UPDATE: " + status);
-            System.out.println("CONNECTION STATUS REASON: " + statusChangeReason);
-            System.out.println("CONNECTION STATUS THROWABLE: " + (throwable == null ? "null" : throwable.getMessage()));
-            System.out.println();
-
-            if (throwable != null)
-            {
-                throwable.printStackTrace();
-            }
-
-            if (status == IotHubConnectionStatus.DISCONNECTED)
-            {
-                //connection was lost, and is not being re-established. Look at provided exception for
-                // how to resolve this issue. Cannot send messages until this issue is resolved, and you manually
-                // re-open the device client
-            }
-            else if (status == IotHubConnectionStatus.DISCONNECTED_RETRYING)
-            {
-                //connection was lost, but is being re-established. Can still send messages, but they won't
-                // be sent until the connection is re-established
-            }
-            else if (status == IotHubConnectionStatus.CONNECTED)
-            {
-                //Connection was successfully re-established. Can send messages.
-            }
-        }
-    }
+    private static final int D2C_MESSAGE_TIMEOUT = 2000; // 2 seconds
+    private static List failedMessageListOnClose = new ArrayList(); // List of messages that failed on close
 
     /**
-     * Sends a number of messages to an IoT Hub. Default protocol is to 
+     * Sends a number of messages to an IoT Hub. Default protocol is to
      * use MQTT transport.
      *
-     * @param args
-     * args[0] = IoT Hub connection string
-     * args[1] = number of requests to send
-     * args[2] = protocol (optional, one of 'mqtt' or 'amqps' or 'https' or 'amqps_ws')
-     * args[3] = path to certificate to enable one-way authentication over ssl for amqps (optional, default shall be used if unspecified).
+     * @param args args[0] = IoT Hub connection string
+     *             args[1] = number of requests to send
+     *             args[2] = protocol (optional, one of 'mqtt' or 'amqps' or 'https' or 'amqps_ws')
+     *             args[3] = path to certificate to enable one-way authentication over ssl for amqps (optional, default shall be used if unspecified).
      */
-    public static void main(String[] args)
-            throws IOException, URISyntaxException
+    public static void main(String[] args) throws IOException, URISyntaxException
     {
         System.out.println("Starting...");
         System.out.println("Beginning setup.");
 
         if (args.length <= 1 || args.length >= 5)
         {
-            System.out.format(
-                    "Expected 2 or 3 arguments but received: %d.\n"
-                            + "The program should be called with the following args: \n"
-                            + "1. [Device connection string] - String containing Hostname, Device Id & Device Key in one of the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n"
-                            + "2. [number of requests to send]\n"
-                            + "3. (mqtt | https | amqps | amqps_ws | mqtt_ws)\n"
-                            + "4. (optional) path to certificate to enable one-way authentication over ssl for amqps \n",
-                    args.length);
+            System.out.format("Expected 2 or 3 arguments but received: %d.\n" + "The program should be called with the following args: \n" + "1. [Device connection string] - String containing Hostname, Device Id & Device Key in one of the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n" + "2. [number of requests to send]\n" + "3. (mqtt | https | amqps | amqps_ws | mqtt_ws)\n" + "4. (optional) path to certificate to enable one-way authentication over ssl for amqps \n", args.length);
             return;
         }
 
@@ -105,9 +49,7 @@ public class SendEvent
         }
         catch (NumberFormatException e)
         {
-            System.out.format(
-                    "Could not parse the number of requests to send. "
-                            + "Expected an int but received:\n%s.\n", args[1]);
+            System.out.format("Could not parse the number of requests to send. " + "Expected an int but received:\n%s.\n", args[1]);
             return;
         }
         IotHubClientProtocol protocol;
@@ -140,14 +82,7 @@ public class SendEvent
             }
             else
             {
-                System.out.format(
-                        "Expected argument 2 to be one of 'mqtt', 'https', 'amqps' or 'amqps_ws' but received %s\n"
-                                + "The program should be called with the following args: \n"
-                                + "1. [Device connection string] - String containing Hostname, Device Id & Device Key in one of the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n"
-                                + "2. [number of requests to send]\n"
-                                + "3. (mqtt | https | amqps | amqps_ws | mqtt_ws)\n"
-                                + "4. (optional) path to certificate to enable one-way authentication over ssl for amqps \n",
-                        protocolStr);
+                System.out.format("Expected argument 2 to be one of 'mqtt', 'https', 'amqps' or 'amqps_ws' but received %s\n" + "The program should be called with the following args: \n" + "1. [Device connection string] - String containing Hostname, Device Id & Device Key in one of the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n" + "2. [number of requests to send]\n" + "3. (mqtt | https | amqps | amqps_ws | mqtt_ws)\n" + "4. (optional) path to certificate to enable one-way authentication over ssl for amqps \n", protocolStr);
                 return;
             }
 
@@ -166,9 +101,9 @@ public class SendEvent
         System.out.format("Using communication protocol %s.\n", protocol.name());
 
         DeviceClient client = new DeviceClient(connString, protocol);
-        if (pathToCertificate != null )
+        if (pathToCertificate != null)
         {
-            client.setOption("SetCertificatePath", pathToCertificate );
+            client.setOption("SetCertificatePath", pathToCertificate);
         }
 
         System.out.println("Successfully created an IoT Hub client.");
@@ -194,7 +129,7 @@ public class SendEvent
             temperature = 20 + Math.random() * 10;
             humidity = 30 + Math.random() * 20;
 
-            String msgStr = "{\"deviceId\":\"" + deviceId +"\",\"messageId\":" + i + ",\"temperature\":"+ temperature +",\"humidity\":"+ humidity +"}";
+            String msgStr = "{\"deviceId\":\"" + deviceId + "\",\"messageId\":" + i + ",\"temperature\":" + temperature + ",\"humidity\":" + humidity + "}";
 
             try
             {
@@ -238,5 +173,54 @@ public class SendEvent
         }
 
         System.out.println("Shutting down...");
+    }
+
+    protected static class EventCallback implements IotHubEventCallback
+    {
+        public void execute(IotHubStatusCode status, Object context)
+        {
+            Message msg = (Message) context;
+
+            System.out.println("IoT Hub responded to message " + msg.getMessageId() + " with status " + status.name());
+
+            if (status == IotHubStatusCode.MESSAGE_CANCELLED_ONCLOSE)
+            {
+                failedMessageListOnClose.add(msg.getMessageId());
+            }
+        }
+    }
+
+    protected static class IotHubConnectionStatusChangeCallbackLogger implements IotHubConnectionStatusChangeCallback
+    {
+        @Override
+        public void execute(IotHubConnectionStatus status, IotHubConnectionStatusChangeReason statusChangeReason, Throwable throwable, Object callbackContext)
+        {
+            System.out.println();
+            System.out.println("CONNECTION STATUS UPDATE: " + status);
+            System.out.println("CONNECTION STATUS REASON: " + statusChangeReason);
+            System.out.println("CONNECTION STATUS THROWABLE: " + (throwable == null ? "null" : throwable.getMessage()));
+            System.out.println();
+
+            if (throwable != null)
+            {
+                throwable.printStackTrace();
+            }
+
+            if (status == IotHubConnectionStatus.DISCONNECTED)
+            {
+                //connection was lost, and is not being re-established. Look at provided exception for
+                // how to resolve this issue. Cannot send messages until this issue is resolved, and you manually
+                // re-open the device client
+            }
+            else if (status == IotHubConnectionStatus.DISCONNECTED_RETRYING)
+            {
+                //connection was lost, but is being re-established. Can still send messages, but they won't
+                // be sent until the connection is re-established
+            }
+            else if (status == IotHubConnectionStatus.CONNECTED)
+            {
+                //Connection was successfully re-established. Can send messages.
+            }
+        }
     }
 }

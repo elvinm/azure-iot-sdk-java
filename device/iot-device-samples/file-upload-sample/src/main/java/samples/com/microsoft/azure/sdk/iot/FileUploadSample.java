@@ -23,23 +23,13 @@ public class FileUploadSample
 {
     private static List<String> fileNameList = new ArrayList<>();
 
-    protected static class FileUploadStatusCallBack implements IotHubEventCallback
-    {
-        public void execute(IotHubStatusCode status, Object context)
-        {
-            System.out.println("IoT Hub responded to file upload for " + fileNameList.get((int)context) + " operation with status " + status.name());
-        }
-    }
-
     /**
      * Upload file or directories to blobs using IoT Hub.
      *
-     * @param args 
-     * args[0] = IoT Hub connection string
-     * args[1] = File or directory to upload
+     * @param args args[0] = IoT Hub connection string
+     *             args[1] = File or directory to upload
      */
-    public static void main(String[] args)
-            throws IOException, URISyntaxException
+    public static void main(String[] args) throws IOException, URISyntaxException
     {
         String connString = null;
         String fullFileName = null;
@@ -55,12 +45,7 @@ public class FileUploadSample
         }
         else
         {
-            System.out.format(
-                    "Expected the following argument but received: %d.\n"
-                            + "The program should be called with the following args: \n"
-                            + "[Device connection string] - String containing Hostname, Device Id & Device Key in the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n"
-                            + "[File or Directory to upload] - String containing the full path for the file or directory to upload.\n",
-                    args.length);
+            System.out.format("Expected the following argument but received: %d.\n" + "The program should be called with the following args: \n" + "[Device connection string] - String containing Hostname, Device Id & Device Key in the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n" + "[File or Directory to upload] - String containing the full path for the file or directory to upload.\n", args.length);
             return;
         }
 
@@ -69,13 +54,12 @@ public class FileUploadSample
         IotHubClientProtocol protocol = IotHubClientProtocol.MQTT;
 
         System.out.println("Successfully read input parameters.");
-        System.out.format("Using communication protocol %s.\n",
-                protocol.name());
+        System.out.format("Using communication protocol %s.\n", protocol.name());
 
         DeviceClient client = new DeviceClient(connString, protocol);
 
         System.out.println("Successfully created an IoT Hub client.");
-        
+
         try
         {
 
@@ -87,7 +71,7 @@ public class FileUploadSample
         }
         catch (Exception e)
         {
-            System.out.println("On exception, shutting down \n" + " Cause: " + e.getCause() + " \nERROR: " +  e.getMessage());
+            System.out.println("On exception, shutting down \n" + " Cause: " + e.getCause() + " \nERROR: " + e.getMessage());
             System.out.println("Shutting down...");
             client.closeNow();
         }
@@ -103,7 +87,7 @@ public class FileUploadSample
     private static void uploadFileOrDirectory(DeviceClient client, String fullFileName) throws FileNotFoundException, IOException
     {
         File file = new File(fullFileName);
-        if(file.isDirectory())
+        if (file.isDirectory())
         {
             uploadFileOrDirectoryRecursive(client, file.getPath(), "");
         }
@@ -118,12 +102,12 @@ public class FileUploadSample
         String[] fileNameList = null;
 
         File file = new File(baseDirectory, relativePath);
-        if(file.isDirectory())
+        if (file.isDirectory())
         {
             fileNameList = file.list();
-            if(fileNameList != null)
+            if (fileNameList != null)
             {
-                for (String fileNameInDirectory:fileNameList)
+                for (String fileNameInDirectory : fileNameList)
                 {
                     File newDir = new File(relativePath, fileNameInDirectory);
                     uploadFileOrDirectoryRecursive(client, baseDirectory, newDir.toString());
@@ -142,7 +126,7 @@ public class FileUploadSample
         InputStream inputStream = new FileInputStream(file);
         long streamLength = file.length();
 
-        if(relativeFileName.startsWith("\\"))
+        if (relativeFileName.startsWith("\\"))
         {
             relativeFileName = relativeFileName.substring(1);
         }
@@ -150,5 +134,13 @@ public class FileUploadSample
         int index = fileNameList.size();
         fileNameList.add(relativeFileName);
         client.uploadToBlobAsync(relativeFileName, inputStream, streamLength, new FileUploadStatusCallBack(), index);
+    }
+
+    protected static class FileUploadStatusCallBack implements IotHubEventCallback
+    {
+        public void execute(IotHubStatusCode status, Object context)
+        {
+            System.out.println("IoT Hub responded to file upload for " + fileNameList.get((int) context) + " operation with status " + status.name());
+        }
     }
 }

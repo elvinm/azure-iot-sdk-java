@@ -16,17 +16,18 @@ public class SignResponse
     @SerializedName(DIGEST_NAME)
     public String digest;
 
-    public String getDigest()
-    {
-        // Codes_SRS_HTTPHSMSIGNRESPONSE_34_001: [This function shall return the saved digest.]
-        return this.digest;
-    }
-
     //empty constructor for Gson to use
-    public SignResponse() { }
+    public SignResponse() {
+    }
 
     public static SignResponse fromJson(String json)
     {
         return new GsonBuilder().create().fromJson(json, SignResponse.class);
+    }
+
+    public String getDigest()
+    {
+        // Codes_SRS_HTTPHSMSIGNRESPONSE_34_001: [This function shall return the saved digest.]
+        return this.digest;
     }
 }

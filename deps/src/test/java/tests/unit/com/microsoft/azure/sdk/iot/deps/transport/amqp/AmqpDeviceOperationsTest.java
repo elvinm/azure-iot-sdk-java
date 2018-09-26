@@ -22,8 +22,10 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.Map;
 
-/** Unit tests for AmqpConnection.
- * Coverage : 100% method, 100% line */
+/**
+ * Unit tests for AmqpConnection.
+ * Coverage : 100% method, 100% line
+ */
 @RunWith(JMockit.class)
 public class AmqpDeviceOperationsTest
 {
@@ -134,10 +136,10 @@ public class AmqpDeviceOperationsTest
                 mockedDelivery.pending();
                 result = 10;
 
-                mockedReceiverLink.recv((byte[])any, 0, anyInt);
+                mockedReceiverLink.recv((byte[]) any, 0, anyInt);
                 mockedReceiverLink.advance();
 
-                mockedAmqpMessage.decode((byte[])any, 0, anyInt);
+                mockedAmqpMessage.decode((byte[]) any, 0, anyInt);
             }
         };
 
@@ -168,10 +170,10 @@ public class AmqpDeviceOperationsTest
                 mockedDelivery.pending();
                 result = 10;
 
-                mockedReceiverLink.recv((byte[])any, 0, anyInt);
+                mockedReceiverLink.recv((byte[]) any, 0, anyInt);
                 mockedReceiverLink.advance();
 
-                mockedAmqpMessage.decode((byte[])any, 0, anyInt);
+                mockedAmqpMessage.decode((byte[]) any, 0, anyInt);
             }
         };
 
@@ -194,13 +196,13 @@ public class AmqpDeviceOperationsTest
                 mockedSession.receiver(anyString);
                 result = mockedReceiverLink;
 
-                mockedReceiverLink.setProperties((Map< Symbol, Object>)any);
+                mockedReceiverLink.setProperties((Map<Symbol, Object>) any);
                 mockedReceiverLink.open();
 
                 mockedSession.sender(anyString);
                 result = mockedSenderLink;
 
-                mockedSenderLink.setProperties((Map< Symbol, Object>)any);
+                mockedSenderLink.setProperties((Map<Symbol, Object>) any);
                 mockedSenderLink.open();
             }
         };
@@ -211,7 +213,7 @@ public class AmqpDeviceOperationsTest
         //assert
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void openLinksThrowsOnSessionNull() throws IOException, IllegalArgumentException
     {
         // Arrange
@@ -229,7 +231,7 @@ public class AmqpDeviceOperationsTest
         //assert
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void openLinksThrowsOnSessionReceiver() throws IOException, IllegalArgumentException
     {
         // Arrange
@@ -275,7 +277,7 @@ public class AmqpDeviceOperationsTest
         Assert.assertTrue(result);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void initLinkThrowOnLinkNull() throws IOException, IllegalArgumentException
     {
         // Arrange
@@ -341,7 +343,7 @@ public class AmqpDeviceOperationsTest
         //assert
     }
 
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void initLinkThrowsOnGetName() throws IOException, IllegalArgumentException
     {
         // Arrange
@@ -372,7 +374,7 @@ public class AmqpDeviceOperationsTest
         new NonStrictExpectations()
         {
             {
-                mockedSenderLink.delivery((byte[])any);
+                mockedSenderLink.delivery((byte[]) any);
             }
         };
 

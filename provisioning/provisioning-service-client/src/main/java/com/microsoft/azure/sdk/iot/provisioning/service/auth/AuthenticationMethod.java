@@ -5,10 +5,9 @@
 
 package com.microsoft.azure.sdk.iot.provisioning.service.auth;
 
-/** 
- * Class used to abstract the different 
+/**
+ * Class used to abstract the different
  * authentication methods used to use Provisioning SDK.
- * 
  */
 public abstract class AuthenticationMethod
 {
@@ -30,10 +29,10 @@ public abstract class AuthenticationMethod
     /**
      * Abstract helper function to populate {@code IotHubConnectionString} class with
      * proper authentication properties
-     * 
-     * @param provisioningConnectionString  The {@link ProvisioningConnectionString} that is
-     *                                       to be populated with the authentication
-     *                                       properties.
+     *
+     * @param provisioningConnectionString The {@link ProvisioningConnectionString} that is
+     *                                     to be populated with the authentication
+     *                                     properties.
      * @return An instance of {@link ProvisioningConnectionString} populated with the
      * the authentication properties.
      */

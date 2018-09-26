@@ -19,14 +19,12 @@ import com.google.gson.annotations.SerializedName;
 public class RegistrationOperationStatusParser
 {
     private static final String OPERATION_ID = "operationId";
+    private static final String STATUS = "status";
+    private static final String REGISTRATION_STATE = "registrationState";
     @SerializedName(OPERATION_ID)
     private String operationId;
-
-    private static final String STATUS = "status";
     @SerializedName(STATUS)
     private String status;
-
-    private static final String REGISTRATION_STATE = "registrationState";
     @SerializedName(REGISTRATION_STATE)
     private DeviceRegistrationResultParser registrationState;
 
@@ -45,7 +43,7 @@ public class RegistrationOperationStatusParser
      */
     public static RegistrationOperationStatusParser createFromJson(String json) throws IllegalArgumentException
     {
-        if((json == null) || json.isEmpty())
+        if ((json == null) || json.isEmpty())
         {
             //SRS_RegistrationOperationStatusParser_25_001: [ This method shall throw IllegalArgumentException if provided Json is null or empty. ]
             throw new IllegalArgumentException("JSON cannot be null or empty");
@@ -85,8 +83,7 @@ public class RegistrationOperationStatusParser
                 throw new IllegalArgumentException("Status cannot be null in the result");
             }
 
-            if (registrationOperationStatusParser.registrationState.getX509() != null &&
-                    registrationOperationStatusParser.registrationState.getX509().getCertificateInfo() != null )
+            if (registrationOperationStatusParser.registrationState.getX509() != null && registrationOperationStatusParser.registrationState.getX509().getCertificateInfo() != null)
             {
                 X509RegistrationResultParser.X509CertificateInfo X509CertificateInfo = registrationOperationStatusParser.registrationState.getX509().getCertificateInfo();
                 if (X509CertificateInfo.getIssuerName() == null)
@@ -136,8 +133,7 @@ public class RegistrationOperationStatusParser
                 }
             }
 
-            if (registrationOperationStatusParser.registrationState.getX509() != null &&
-                    registrationOperationStatusParser.registrationState.getX509().getSigningCertificateInfo() != null )
+            if (registrationOperationStatusParser.registrationState.getX509() != null && registrationOperationStatusParser.registrationState.getX509().getSigningCertificateInfo() != null)
             {
 
                 X509RegistrationResultParser.X509CertificateInfo X509CertificateInfo = registrationOperationStatusParser.registrationState.getX509().getSigningCertificateInfo();
@@ -193,6 +189,7 @@ public class RegistrationOperationStatusParser
 
     /**
      * Getter for the Operation Id
+     *
      * @return Operation Id. Cannot be {@code null}
      */
     public String getOperationId()
@@ -203,6 +200,7 @@ public class RegistrationOperationStatusParser
 
     /**
      * Getter for the Status
+     *
      * @return Status retrieved after parsing. Cannot be {@code null}
      */
     public String getStatus()

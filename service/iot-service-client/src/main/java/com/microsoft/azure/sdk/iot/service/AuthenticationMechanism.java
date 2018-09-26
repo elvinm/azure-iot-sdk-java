@@ -22,20 +22,22 @@ public class AuthenticationMechanism
     }
 
     /**
-     * Getter for symmetric key.
-     * @return The symmetric key.
-     */
-    public SymmetricKey getSymmetricKey()
-    {
-        return this.SymmetricKey;
-    }
-
-    /**
      * Constructor for initialization.
+     *
      * @param symmetricKey symmetricKey used for Auth
      */
     public AuthenticationMechanism(SymmetricKey symmetricKey)
     {
         this.SymmetricKey = symmetricKey;
+    }
+
+    /**
+     * Getter for symmetric key.
+     *
+     * @return The symmetric key.
+     */
+    public SymmetricKey getSymmetricKey()
+    {
+        return this.SymmetricKey;
     }
 }

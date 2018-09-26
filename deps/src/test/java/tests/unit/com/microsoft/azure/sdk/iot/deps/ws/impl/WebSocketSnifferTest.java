@@ -17,7 +17,7 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-*/
+ */
 package com.microsoft.azure.sdk.iot.deps.ws.impl;
 
 import com.microsoft.azure.sdk.iot.deps.ws.WebSocketHeader;

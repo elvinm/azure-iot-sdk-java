@@ -12,7 +12,9 @@ import java.nio.charset.StandardCharsets;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
-/** Unit tests for SignatureHelper. */
+/**
+ * Unit tests for SignatureHelper.
+ */
 public class SignatureHelperTest
 {
     protected static Charset UTF8 = StandardCharsets.UTF_8;
@@ -25,8 +27,7 @@ public class SignatureHelperTest
         final String resourceUri = "test-resource-uri";
         final long expiryTime = 101L;
 
-        byte[] testRawSig =
-                SignatureHelper.buildRawSignature(resourceUri, expiryTime);
+        byte[] testRawSig = SignatureHelper.buildRawSignature(resourceUri, expiryTime);
 
         final byte[] expectedRawSig = "test-resource-uri\n101".getBytes(UTF8);
         assertThat(testRawSig, is(expectedRawSig));
@@ -38,11 +39,9 @@ public class SignatureHelperTest
     {
         final String deviceKey = "Zm9vYmFy";
 
-        byte[] testDecodedDeviceKey =
-                SignatureHelper.decodeDeviceKeyBase64(deviceKey);
+        byte[] testDecodedDeviceKey = SignatureHelper.decodeDeviceKeyBase64(deviceKey);
 
-        final byte[] expectedDecodedDeviceKey =
-                { 0x66, 0x6F, 0x6F, 0x62, 0x61, 0x72 };
+        final byte[] expectedDecodedDeviceKey = {0x66, 0x6F, 0x6F, 0x62, 0x61, 0x72};
         assertThat(testDecodedDeviceKey, is(expectedDecodedDeviceKey));
     }
 
@@ -54,15 +53,9 @@ public class SignatureHelperTest
         final byte[] testSig = "what do ya want for nothing?".getBytes(UTF8);
         final byte[] deviceKey = "Jefe".getBytes(UTF8);
 
-        byte[] testEncryptedSig =
-                SignatureHelper.encryptSignatureHmacSha256(testSig, deviceKey);
+        byte[] testEncryptedSig = SignatureHelper.encryptSignatureHmacSha256(testSig, deviceKey);
 
-        final byte[] expectedEncryptedSig =
-                { 0x5b, (byte) 0xdc, (byte) 0xc1, 0x46, (byte) 0xbf, 0x60, 0x75,
-                        0x4e, 0x6a, 0x04, 0x24, 0x26, 0x08, (byte) 0x95, 0x75,
-                        (byte) 0xc7, 0x5a, 0x00, 0x3f, 0x08, (byte) 0x9d, 0x27,
-                        0x39, (byte) 0x83, (byte) 0x9d, (byte) 0xec, 0x58,
-                        (byte) 0xb9, 0x64, (byte) 0xec, 0x38, 0x43 };
+        final byte[] expectedEncryptedSig = {0x5b, (byte) 0xdc, (byte) 0xc1, 0x46, (byte) 0xbf, 0x60, 0x75, 0x4e, 0x6a, 0x04, 0x24, 0x26, 0x08, (byte) 0x95, 0x75, (byte) 0xc7, 0x5a, 0x00, 0x3f, 0x08, (byte) 0x9d, 0x27, 0x39, (byte) 0x83, (byte) 0x9d, (byte) 0xec, 0x58, (byte) 0xb9, 0x64, (byte) 0xec, 0x38, 0x43};
         assertThat(testEncryptedSig, is(expectedEncryptedSig));
     }
 
@@ -72,11 +65,9 @@ public class SignatureHelperTest
     {
         final byte[] sig = "foobar".getBytes(UTF8);
 
-        byte[] testBase64Sig =
-                SignatureHelper.encodeSignatureBase64(sig);
+        byte[] testBase64Sig = SignatureHelper.encodeSignatureBase64(sig);
 
-        final byte[] expectedBase64Sig =
-                { 0x5A, 0x6D, 0x39, 0x76, 0x59, 0x6D, 0x46, 0x79 };
+        final byte[] expectedBase64Sig = {0x5A, 0x6D, 0x39, 0x76, 0x59, 0x6D, 0x46, 0x79};
         assertThat(testBase64Sig, is(expectedBase64Sig));
     }
 
@@ -84,7 +75,7 @@ public class SignatureHelperTest
     @Test
     public void encodeSignatureUsingUtf8()
     {
-        final byte[] sig = { 0x61, 0x62, 0x63 };
+        final byte[] sig = {0x61, 0x62, 0x63};
 
         String testUtf8Sig = SignatureHelper.encodeSignatureUtf8(sig);
 
@@ -102,8 +93,7 @@ public class SignatureHelperTest
 
         final String expectedSigUpperHex = "%C3%BCm%40%3F";
         final String expectedSigLowerHex = "%c3%BCm%40%3f";
-        assertThat(testWebSafeSig, is(anyOf(equalTo(expectedSigUpperHex),
-                equalTo(expectedSigLowerHex))));
+        assertThat(testWebSafeSig, is(anyOf(equalTo(expectedSigUpperHex), equalTo(expectedSigLowerHex))));
     }
 
     // Tests_SRS_SIGNATUREHELPER_11_008: [The function shall replace spaces with '+' signs.]
@@ -112,8 +102,7 @@ public class SignatureHelperTest
     {
         final String sig = "m m";
 
-        String testWebSafeSig =
-                SignatureHelper.encodeSignatureWebSafe(sig);
+        String testWebSafeSig = SignatureHelper.encodeSignatureWebSafe(sig);
 
         final String expectedWebSafeSig = "m+m";
         assertThat(testWebSafeSig, is(expectedWebSafeSig));

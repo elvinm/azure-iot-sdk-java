@@ -21,8 +21,10 @@ import org.junit.runner.RunWith;
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
 
-/** Unit tests for AmqpConnection.
- * Coverage : 100% method, 96% line */
+/**
+ * Unit tests for AmqpConnection.
+ * Coverage : 100% method, 96% line
+ */
 @RunWith(JMockit.class)
 public class MqttConnectionTest
 {
@@ -64,7 +66,7 @@ public class MqttConnectionTest
     @Mocked
     private Throwable mockedThrowable;
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void mqttConnectionConstructorThrowsWhenHostnameNULL() throws IOException, MqttException
     {
         // Arrange
@@ -80,7 +82,7 @@ public class MqttConnectionTest
         //assert
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void mqttConnectionConstructorThrowsWhenHostnameEmpty() throws IOException, MqttException
     {
         // Arrange
@@ -96,7 +98,7 @@ public class MqttConnectionTest
         //assert
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void mqttConnectionConstructorThrowsWhenClientIdNULL() throws IOException, MqttException
     {
         // Arrange
@@ -112,7 +114,7 @@ public class MqttConnectionTest
         //assert
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void mqttConnectionConstructorThrowsWhenClientIdEmpty() throws IOException, MqttException
     {
         // Arrange
@@ -128,7 +130,7 @@ public class MqttConnectionTest
         //assert
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void MqttConnectionConstructorThrowsWhenUsernameNULL() throws IOException, MqttException
     {
         // Arrange
@@ -144,7 +146,7 @@ public class MqttConnectionTest
         //assert
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void mqttConnectionConstructorThrowsWhenUsernameEmpty() throws IOException, MqttException
     {
         // Arrange
@@ -160,7 +162,7 @@ public class MqttConnectionTest
         //assert
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void MqttConnectionConstructorThrowsWhenSslContextNULL() throws IOException, MqttException
     {
         // Arrange
@@ -183,7 +185,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -204,7 +206,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(WEB_SOCKET_URI_NAME, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(WEB_SOCKET_URI_NAME, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -218,14 +220,14 @@ public class MqttConnectionTest
         //assert
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void mqttConnectionConstructorThrowsOnMqttAsyncClient() throws IOException, MqttException
     {
         // Arrange
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(WEB_SOCKET_URI_NAME, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(WEB_SOCKET_URI_NAME, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = new MqttException(0);
             }
         };
@@ -237,7 +239,7 @@ public class MqttConnectionTest
     }
 
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void mqttConnectionConstructorThrowsOnListenerNullFail() throws IOException, MqttException
     {
         // Arrange
@@ -255,7 +257,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -286,7 +288,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
             }
         };
@@ -306,7 +308,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -321,7 +323,7 @@ public class MqttConnectionTest
                 mockedMqttAsyncClient.isConnected();
                 result = false;
 
-                mockedMqttAsyncClient.connect((MqttConnectOptions)any);
+                mockedMqttAsyncClient.connect((MqttConnectOptions) any);
                 result = mockedIMqttToken;
 
                 mockedIMqttToken.waitForCompletion();
@@ -341,7 +343,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -356,7 +358,7 @@ public class MqttConnectionTest
                 mockedMqttAsyncClient.isConnected();
                 result = false;
 
-                mockedMqttAsyncClient.connect((MqttConnectOptions)any);
+                mockedMqttAsyncClient.connect((MqttConnectOptions) any);
                 result = mockedIMqttToken;
 
                 mockedIMqttToken.waitForCompletion();
@@ -369,14 +371,14 @@ public class MqttConnectionTest
         //assert
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void connectThrowsOnConnectFail() throws IOException, MqttException
     {
         // Arrange
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -391,7 +393,7 @@ public class MqttConnectionTest
                 mockedMqttAsyncClient.isConnected();
                 result = false;
 
-                mockedMqttAsyncClient.connect((MqttConnectOptions)any);
+                mockedMqttAsyncClient.connect((MqttConnectOptions) any);
                 result = new MqttException(0);
             }
         };
@@ -409,7 +411,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -437,14 +439,14 @@ public class MqttConnectionTest
         //assert
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void disconnectThrowsOnDisconnect() throws IOException, MqttException
     {
         // Arrange
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -477,7 +479,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -497,7 +499,7 @@ public class MqttConnectionTest
                 mockedMqttAsyncClient.isConnected();
                 result = true;
 
-                mockedMqttAsyncClient.publish(anyString, (org.eclipse.paho.client.mqttv3.MqttMessage)any);
+                mockedMqttAsyncClient.publish(anyString, (org.eclipse.paho.client.mqttv3.MqttMessage) any);
                 result = mockedIMqttDeliveryToken;
 
                 mockedIMqttDeliveryToken.waitForCompletion();
@@ -518,7 +520,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -530,7 +532,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttMessage(TEST_TOPIC, (byte[])any);
+                new MqttMessage(TEST_TOPIC, (byte[]) any);
                 result = mockedMqttMessage;
 
                 mockedMqttMessage.setQos(mockedMqttQos);
@@ -538,7 +540,7 @@ public class MqttConnectionTest
                 mockedMqttAsyncClient.isConnected();
                 result = true;
 
-                mockedMqttAsyncClient.publish(TEST_TOPIC, (org.eclipse.paho.client.mqttv3.MqttMessage)any);
+                mockedMqttAsyncClient.publish(TEST_TOPIC, (org.eclipse.paho.client.mqttv3.MqttMessage) any);
                 result = mockedIMqttDeliveryToken;
 
                 mockedIMqttToken.waitForCompletion();
@@ -560,7 +562,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -575,7 +577,7 @@ public class MqttConnectionTest
                 mockedMqttAsyncClient.isConnected();
                 result = true;
 
-                mockedMqttAsyncClient.publish(anyString, (org.eclipse.paho.client.mqttv3.MqttMessage)any);
+                mockedMqttAsyncClient.publish(anyString, (org.eclipse.paho.client.mqttv3.MqttMessage) any);
                 result = mockedIMqttDeliveryToken;
 
                 mockedIMqttDeliveryToken.waitForCompletion();
@@ -588,14 +590,14 @@ public class MqttConnectionTest
         //assert
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void publishMessageThrowsOnPublishFail() throws IOException, MqttException
     {
         // Arrange
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -610,7 +612,7 @@ public class MqttConnectionTest
                 mockedMqttAsyncClient.isConnected();
                 result = true;
 
-                mockedMqttAsyncClient.publish(anyString, (org.eclipse.paho.client.mqttv3.MqttMessage)any);
+                mockedMqttAsyncClient.publish(anyString, (org.eclipse.paho.client.mqttv3.MqttMessage) any);
                 result = new MqttException(0);
             }
         };
@@ -621,14 +623,14 @@ public class MqttConnectionTest
         //assert
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void publishMessageThrowsOnNoConnectedFail() throws IOException, MqttException
     {
         // Arrange
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -651,14 +653,14 @@ public class MqttConnectionTest
         //assert
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void publishMessageThrowsOnMessageNullFail() throws IOException, MqttException
     {
         // Arrange
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -688,7 +690,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -716,14 +718,14 @@ public class MqttConnectionTest
         //assert
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void subscribeThrowsOnSubscribeFail() throws IOException, MqttException
     {
         // Arrange
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -749,14 +751,14 @@ public class MqttConnectionTest
         //assert
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void subscribeThrowsOnNotConnectedFail() throws IOException, MqttException
     {
         // Arrange
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -786,7 +788,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -811,14 +813,14 @@ public class MqttConnectionTest
         //assert
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void unsubscribeThrowsOnSubscribeFail() throws IOException, MqttException
     {
         // Arrange
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -848,7 +850,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -860,7 +862,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                mockedMqttListener.messageReceived((MqttMessage)any);
+                mockedMqttListener.messageReceived((MqttMessage) any);
             }
         };
 
@@ -877,7 +879,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();
@@ -905,7 +907,7 @@ public class MqttConnectionTest
         new NonStrictExpectations()
         {
             {
-                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence)any);
+                new MqttAsyncClient(anyString, TEST_CLIENT_ID, (MemoryPersistence) any);
                 result = mockedMqttAsyncClient;
 
                 new MqttConnectOptions();

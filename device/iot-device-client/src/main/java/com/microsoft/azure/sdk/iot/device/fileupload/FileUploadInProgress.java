@@ -21,14 +21,14 @@ public final class FileUploadInProgress
     /**
      * CONSTRUCTOR
      *
-     * @param statusCallback is the callback to notify that the upload is completed (with status).
+     * @param statusCallback        is the callback to notify that the upload is completed (with status).
      * @param statusCallbackContext is the context of the callback, allowing multiple uploads in parallel.
      * @throws IllegalArgumentException if the stratusCallback is null.
      */
     FileUploadInProgress(IotHubEventCallback statusCallback, Object statusCallbackContext) throws IllegalArgumentException
     {
         /* Codes_SRS_FILEUPLOADINPROGRESS_21_002: [If the `statusCallback` is null, the constructor shall throws IllegalArgumentException.] */
-        if(statusCallback == null)
+        if (statusCallback == null)
         {
             throw new IllegalArgumentException("status callback is null");
         }
@@ -47,7 +47,7 @@ public final class FileUploadInProgress
     void setTask(Future task) throws IllegalArgumentException
     {
         /* Codes_SRS_FILEUPLOADINPROGRESS_21_004: [If the `task` is null, the setTask shall throws IllegalArgumentException.] */
-        if(task == null)
+        if (task == null)
         {
             throw new IllegalArgumentException("future task is null");
         }
@@ -69,14 +69,14 @@ public final class FileUploadInProgress
 
     /**
      * Getter for the task cancellation.
-     * 
+     *
      * @return boolean true if the Future task was cancelled or false if it is not.
      * @throws IOException is the task is null.
      */
     boolean isCancelled() throws IOException
     {
         /* Codes_SRS_FILEUPLOADINPROGRESS_21_007: [If the `task` is null, the isCancelled shall throws IOException.] */
-        if(task == null)
+        if (task == null)
         {
             throw new IOException("future task is null");
         }

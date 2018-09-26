@@ -155,6 +155,7 @@ public class Message
 
     /**
      * Constructor.
+     *
      * @param stream A stream to provide the body of the new Message instance.
      */
     public Message(ByteArrayInputStream stream)
@@ -164,6 +165,7 @@ public class Message
 
     /**
      * Constructor.
+     *
      * @param body The body of the new Message instance.
      */
     public Message(byte[] body)
@@ -182,6 +184,7 @@ public class Message
 
     /**
      * Constructor.
+     *
      * @param body The body of the new Message instance. It is internally serialized to a byte array using UTF-8 encoding.
      */
     public Message(String body)
@@ -197,11 +200,12 @@ public class Message
         this.setContentType(DEFAULT_IOTHUB_MESSAGE_CHARSET.name());
     }
 
-    
+
     // ----- Public Methods -----
 
     /**
      * The stream content of the body.
+     *
      * @return always returns null.
      */
     public ByteArrayOutputStream getBodyStream()
@@ -211,6 +215,7 @@ public class Message
 
     /**
      * The byte content of the body.
+     *
      * @return A copy of this Message body, as a byte array.
      */
     public byte[] getBytes()
@@ -218,7 +223,8 @@ public class Message
         // Codes_SRS_MESSAGE_11_002: [The function shall return the message body.]
         byte[] bodyClone = null;
 
-        if (this.body != null) {
+        if (this.body != null)
+        {
             bodyClone = Arrays.copyOf(this.body, this.body.length);
         }
 
@@ -227,6 +233,7 @@ public class Message
 
     /**
      * Gets the values of user-defined properties of this Message.
+     *
      * @param name Name of the user-defined property to search for.
      * @return The value of the property if it is set, or null otherwise.
      */
@@ -234,7 +241,7 @@ public class Message
     {
         MessageProperty messageProperty = null;
 
-        for (MessageProperty currentMessageProperty: this.properties)
+        for (MessageProperty currentMessageProperty : this.properties)
         {
             if (currentMessageProperty.hasSameName(name))
             {
@@ -244,7 +251,8 @@ public class Message
         }
 
         // Codes_SRS_MESSAGE_11_034: [If no value associated with the property name is found, the function shall return null.]
-        if (messageProperty == null) {
+        if (messageProperty == null)
+        {
             return null;
         }
 
@@ -254,9 +262,10 @@ public class Message
 
     /**
      * Adds or sets user-defined properties of this Message.
-     * @param name Name of the property to be set.
+     *
+     * @param name  Name of the property to be set.
      * @param value Value of the property to be set.
-     * @exception IllegalArgumentException If any of the arguments provided is null.
+     * @throws IllegalArgumentException If any of the arguments provided is null.
      */
     public void setProperty(String name, String value)
     {
@@ -275,7 +284,7 @@ public class Message
         // Codes_SRS_MESSAGE_11_026: [The function shall set the message property to the given value.]
         MessageProperty messageProperty = null;
 
-        for (MessageProperty currentMessageProperty: this.properties)
+        for (MessageProperty currentMessageProperty : this.properties)
         {
             if (currentMessageProperty.hasSameName(name))
             {
@@ -322,6 +331,7 @@ public class Message
 
     /**
      * Verifies whether the message is expired or not
+     *
      * @return true if the message is expired, false otherwise
      */
     public boolean isExpired()
@@ -353,6 +363,7 @@ public class Message
 
     /**
      * Getter for the messageId property
+     *
      * @return The property value
      */
     public String getMessageId()
@@ -363,6 +374,7 @@ public class Message
 
     /**
      * Setter for the messageId property
+     *
      * @param messageId The string containing the property value
      */
     public void setMessageId(String messageId)
@@ -371,14 +383,9 @@ public class Message
         this.messageId = messageId;
     }
 
-    public void setUserId(String userId)
-    {
-        // Codes_SRS_MESSAGE_34_050: [The function shall set the message's user ID to the provided value.]
-        this.userId = userId;
-    }
-
     /**
      * Getter for the correlationId property
+     *
      * @return The property value
      */
     public String getCorrelationId()
@@ -389,6 +396,7 @@ public class Message
 
     /**
      * Setter for the correlationId property
+     *
      * @param correlationId The string containing the property value
      */
     public void setCorrelationId(String correlationId)
@@ -399,6 +407,7 @@ public class Message
 
     /**
      * Setter for the expiryTime property. This setter uses relative time, not absolute time.
+     *
      * @param timeOut The time out for the message, in milliseconds, from the current time.
      */
     public void setExpiryTime(long timeOut)
@@ -411,6 +420,7 @@ public class Message
 
     /**
      * Setter for the expiryTime property using absolute time
+     *
      * @param absoluteTimeout The time out for the message, in milliseconds.
      */
     public void setAbsoluteExpiryTime(long absoluteTimeout)
@@ -428,6 +438,7 @@ public class Message
 
     /**
      * Getter for the Message type
+     *
      * @return the Message type value
      */
     public MessageType getMessageType()
@@ -436,40 +447,9 @@ public class Message
         return this.messageType;
     }
 
-    public void setConnectionDeviceId(String connectionDeviceId)
-    {
-        // Codes_SRS_MESSAGE_34_051: [The function shall set the message's connection device id to the provided value.]
-        this.connectionDeviceId = connectionDeviceId;
-    }
-
-    public void setConnectionModuleId(String connectionModuleId)
-    {
-        // Codes_SRS_MESSAGE_34_052: [The function shall set the message's connection module id to the provided value.]
-        this.connectionModuleId = connectionModuleId;
-    }
-
-    /**
-     * Set the output channel name to send to. Used in routing for module communications
-     * @param outputName the output channel name to send to
-     */
-    public void setOutputName(String outputName)
-    {
-        // Codes_SRS_MESSAGE_34_053: [The function shall set the message's output name to the provided value.]
-        this.outputName = outputName;
-    }
-
-    /**
-     * Set the input name of the message, used in routing for module communications
-     * @param inputName the input channel the message was received from
-     */
-    public void setInputName(String inputName)
-    {
-        // Codes_SRS_MESSAGE_34_058: [The function shall set the message's input name to the provided value.]
-        this.inputName = inputName;
-    }
-
     /**
      * Setter for the Message type
+     *
      * @param type The enum containing the Message type value
      */
     public void setMessageType(MessageType type)
@@ -480,6 +460,7 @@ public class Message
 
     /**
      * Getter for the To system property
+     *
      * @return the To value
      */
     public String getTo()
@@ -494,16 +475,39 @@ public class Message
         return connectionDeviceId;
     }
 
+    public void setConnectionDeviceId(String connectionDeviceId)
+    {
+        // Codes_SRS_MESSAGE_34_051: [The function shall set the message's connection device id to the provided value.]
+        this.connectionDeviceId = connectionDeviceId;
+    }
+
     public String getConnectionModuleId()
     {
         // Codes_SRS_MESSAGE_34_055: [The function shall return the message's connection module id value.]
         return connectionModuleId;
     }
 
+    public void setConnectionModuleId(String connectionModuleId)
+    {
+        // Codes_SRS_MESSAGE_34_052: [The function shall set the message's connection module id to the provided value.]
+        this.connectionModuleId = connectionModuleId;
+    }
+
     public String getInputName()
     {
         // Codes_SRS_MESSAGE_34_056: [The function shall return the message's input name value.]
         return inputName;
+    }
+
+    /**
+     * Set the input name of the message, used in routing for module communications
+     *
+     * @param inputName the input channel the message was received from
+     */
+    public void setInputName(String inputName)
+    {
+        // Codes_SRS_MESSAGE_34_058: [The function shall set the message's input name to the provided value.]
+        this.inputName = inputName;
     }
 
     public String getOutputName()
@@ -513,7 +517,19 @@ public class Message
     }
 
     /**
+     * Set the output channel name to send to. Used in routing for module communications
+     *
+     * @param outputName the output channel name to send to
+     */
+    public void setOutputName(String outputName)
+    {
+        // Codes_SRS_MESSAGE_34_053: [The function shall set the message's output name to the provided value.]
+        this.outputName = outputName;
+    }
+
+    /**
      * Getter for the delivery acknowledgement system property
+     *
      * @return the delivery acknowledgement value
      */
     public String getDeliveryAcknowledgement()
@@ -524,16 +540,24 @@ public class Message
 
     /**
      * Getter for the User ID system property
+     *
      * @return the User ID value
      */
-    public String getUserId ()
+    public String getUserId()
     {
         // Codes_SRS_MESSAGE_34_037: [The function shall return the message's user ID.]
         return this.userId;
     }
 
+    public void setUserId(String userId)
+    {
+        // Codes_SRS_MESSAGE_34_050: [The function shall set the message's user ID to the provided value.]
+        this.userId = userId;
+    }
+
     /**
      * Getter for the iotHubConnectionString property
+     *
      * @return the iotHubConnectionString value
      */
     public IotHubConnectionString getIotHubConnectionString()
@@ -544,6 +568,7 @@ public class Message
 
     /**
      * Setter for the iotHubConnectionString type
+     *
      * @param iotHubConnectionString The iotHubConnectionString value to set
      */
     public void setIotHubConnectionString(IotHubConnectionString iotHubConnectionString)
@@ -554,6 +579,7 @@ public class Message
 
     /**
      * Return the message's content type. This value is null by default
+     *
      * @return the message's content type
      */
     public String getContentType()
@@ -564,6 +590,7 @@ public class Message
 
     /**
      * Set the content type of this message. Used in message routing.
+     *
      * @param contentType the content type of the message. May be null if you don't want to specify a content type.
      */
     public void setContentType(String contentType)
@@ -574,6 +601,7 @@ public class Message
 
     /**
      * Returns this message's content encoding. This value is null by default
+     *
      * @return the message's content encoding.
      */
     public String getContentEncoding()
@@ -584,6 +612,7 @@ public class Message
 
     /**
      * Set the content encoding of this message. Used in message routing.
+     *
      * @param contentEncoding the content encoding of the message. May be null if you don't want to specify a content encoding.
      */
     public void setContentEncoding(String contentEncoding)

@@ -26,34 +26,16 @@ public class BulkEnrollmentOperationResultTest
     private static final String VALID_REGISTRATION_ID_1 = "8be9cd0e-8934-4991-9cbf-cc3b6c7ac647";
     private static final Integer VALID_ERROR_CODE_1 = 201;
     private static final String VALID_ERROR_STATUS_1 = "this is a valid error status for enrollment 1";
-    private static final String VALID_ERROR_JSON_1 =
-            "      {\n" +
-            "        \"registrationId\": \"" + VALID_REGISTRATION_ID_1 + "\",\n" +
-            "        \"errorCode\": " + VALID_ERROR_CODE_1 + ",\n" +
-            "        \"errorStatus\": \"" + VALID_ERROR_STATUS_1 + "\"\n" +
-            "      }\n";
+    private static final String VALID_ERROR_JSON_1 = "      {\n" + "        \"registrationId\": \"" + VALID_REGISTRATION_ID_1 + "\",\n" + "        \"errorCode\": " + VALID_ERROR_CODE_1 + ",\n" + "        \"errorStatus\": \"" + VALID_ERROR_STATUS_1 + "\"\n" + "      }\n";
 
     private static final String VALID_REGISTRATION_ID_2 = "818B129D-20C4-4E91-8EEA-955776DB4340";
     private static final Integer VALID_ERROR_CODE_2 = 400;
     private static final String VALID_ERROR_STATUS_2 = "this is a valid error status for enrollment 2";
-    private static final String VALID_ERROR_JSON_2 =
-            "      {\n" +
-            "        \"registrationId\": \"" + VALID_REGISTRATION_ID_2 + "\",\n" +
-            "        \"errorCode\": " + VALID_ERROR_CODE_2 + ",\n" +
-            "        \"errorStatus\": \"" + VALID_ERROR_STATUS_2 + "\"\n" +
-            "      }\n";
-    private static final String VALID_JSON =
-            "{\n" +
-            "  \"isSuccessful\":true,\n" +
-            "  \"errors\": \n" +
-            "    [\n" +
-            VALID_ERROR_JSON_1 + ",\n" +
-            VALID_ERROR_JSON_2 + "\n" +
-            "    ]\n" +
-            "}";
+    private static final String VALID_ERROR_JSON_2 = "      {\n" + "        \"registrationId\": \"" + VALID_REGISTRATION_ID_2 + "\",\n" + "        \"errorCode\": " + VALID_ERROR_CODE_2 + ",\n" + "        \"errorStatus\": \"" + VALID_ERROR_STATUS_2 + "\"\n" + "      }\n";
+    private static final String VALID_JSON = "{\n" + "  \"isSuccessful\":true,\n" + "  \"errors\": \n" + "    [\n" + VALID_ERROR_JSON_1 + ",\n" + VALID_ERROR_JSON_2 + "\n" + "    ]\n" + "}";
 
     /* SRS_BULK_OPERATION_RESULT_21_001: [The constructor shall throw IllegalArgumentException if the JSON is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullJson()
     {
         // arrange
@@ -65,7 +47,7 @@ public class BulkEnrollmentOperationResultTest
     }
 
     /* SRS_BULK_OPERATION_RESULT_21_001: [The constructor shall throw IllegalArgumentException if the JSON is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyJson()
     {
         // arrange
@@ -77,7 +59,7 @@ public class BulkEnrollmentOperationResultTest
     }
 
     /* SRS_BULK_OPERATION_RESULT_21_002: [The constructor shall throw JsonSyntaxException if the JSON is invalid.] */
-    @Test (expected = JsonSyntaxException.class)
+    @Test(expected = JsonSyntaxException.class)
     public void constructorThrowsOnInvalidJson()
     {
         // arrange
@@ -89,18 +71,11 @@ public class BulkEnrollmentOperationResultTest
     }
 
     /* SRS_BULK_OPERATION_RESULT_21_004: [The constructor shall throw IllegalArgumentException if the JSON contains invalid error.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnMissingRegistrationId()
     {
         // arrange
-        final String missingSuccessful =
-                "{\n" +
-                        "  \"errors\": \n" +
-                        "    [\n" +
-                        VALID_ERROR_JSON_1 + ",\n" +
-                        VALID_ERROR_JSON_2 + "\n" +
-                        "    ]\n" +
-                        "}";
+        final String missingSuccessful = "{\n" + "  \"errors\": \n" + "    [\n" + VALID_ERROR_JSON_1 + ",\n" + VALID_ERROR_JSON_2 + "\n" + "    ]\n" + "}";
 
         // act
         new BulkEnrollmentOperationResult(missingSuccessful);
@@ -109,9 +84,8 @@ public class BulkEnrollmentOperationResultTest
     }
 
     /* SRS_BULK_OPERATION_RESULT_21_005: [The constructor shall throw IllegalArgumentException if the JSON contains invalid error.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void constructorThrowsOnErrorsWithFail(
-            @Mocked final BulkEnrollmentOperationError mockedBulkEnrollmentOperationError)
+    @Test(expected = IllegalArgumentException.class)
+    public void constructorThrowsOnErrorsWithFail(@Mocked final BulkEnrollmentOperationError mockedBulkEnrollmentOperationError)
     {
         // arrange
         new NonStrictExpectations()
@@ -228,7 +202,7 @@ public class BulkEnrollmentOperationResultTest
         // arrange
 
         // act
-        BulkEnrollmentOperationResult bulkEnrollmentOperationResult =  Deencapsulation.newInstance(BulkEnrollmentOperationResult.class);
+        BulkEnrollmentOperationResult bulkEnrollmentOperationResult = Deencapsulation.newInstance(BulkEnrollmentOperationResult.class);
 
         // assert
         assertNotNull(bulkEnrollmentOperationResult);

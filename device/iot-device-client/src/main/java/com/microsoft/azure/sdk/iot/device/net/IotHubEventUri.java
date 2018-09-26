@@ -3,13 +3,19 @@
 
 package com.microsoft.azure.sdk.iot.device.net;
 
-/** A URI for a device to send event to an IoT Hub. */
+/**
+ * A URI for a device to send event to an IoT Hub.
+ */
 public final class IotHubEventUri
 {
-    /** The path to be appended to an IoT Hub URI. */
+    /**
+     * The path to be appended to an IoT Hub URI.
+     */
     private static final String EVENT_PATH = "/messages/events";
 
-    /** The underlying IoT Hub URI. */
+    /**
+     * The underlying IoT Hub URI.
+     */
     private final IotHubUri uri;
 
     /**
@@ -17,12 +23,18 @@ public final class IotHubEventUri
      * The URI does not include a protocol.
      *
      * @param iotHubHostname the IoT Hub name.
-     * @param deviceId the device ID.
-     * @param moduleId the module ID. May be null
+     * @param deviceId       the device ID.
+     * @param moduleId       the module ID. May be null
      */
     public IotHubEventUri(String iotHubHostname, String deviceId, String moduleId)
     {
         this.uri = new IotHubUri(iotHubHostname, deviceId, EVENT_PATH, moduleId);
+    }
+
+    @SuppressWarnings("unused")
+    protected IotHubEventUri()
+    {
+        this.uri = null;
     }
 
     /**
@@ -57,11 +69,5 @@ public final class IotHubEventUri
     {
         // Codes_SRS_IOTHUBEVENTURI_11_004: [The function shall return a URI with the format '/devices/[deviceId]/messages/events'.]
         return (this.uri != null ? this.uri.getPath() : null);
-    }
-
-    @SuppressWarnings("unused")
-    protected IotHubEventUri()
-    {
-        this.uri = null;
     }
 }

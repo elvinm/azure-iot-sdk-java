@@ -8,12 +8,5 @@ package com.microsoft.azure.sdk.iot.service.jobs;
 public enum JobStatus
 {
     // List of possible IoTHub response status for a job
-    unknown,
-    enqueued,
-    running,
-    completed,
-    failed,
-    cancelled,
-    scheduled,
-    queued
+    unknown, enqueued, running, completed, failed, cancelled, scheduled, queued
 }

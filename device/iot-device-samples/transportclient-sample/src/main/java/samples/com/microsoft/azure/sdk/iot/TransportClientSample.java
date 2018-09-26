@@ -21,102 +21,12 @@ import java.util.Scanner;
 public class TransportClientSample
 {
     private static final int D2C_MESSAGE_TIMEOUT = 2000; // 2 seconds
-    private static List failedMessageListOnClose = new ArrayList(); // List of messages that failed on closeNow
-
     private static final int METHOD_SUCCESS = 200;
     private static final int METHOD_HUNG = 300;
     private static final int METHOD_NOT_FOUND = 404;
     private static final int METHOD_NOT_DEFINED = 404;
-    private enum LIGHTS{ ON, OFF, DISABLED }
-    private enum CAMERA{ DETECTED_BURGLAR, SAFELY_WORKING }
     private static final int MAX_EVENTS_TO_REPORT = 3;
-
-    /** Used as a counter in the message callback. */
-    protected static class Counter
-    {
-        protected int num;
-
-        public Counter(int num)
-        {
-            this.num = num;
-        }
-
-        public int get()
-        {
-            return this.num;
-        }
-
-        public void increment()
-        {
-            this.num++;
-        }
-
-        @Override
-        public String toString()
-        {
-            return Integer.toString(this.num);
-        }
-    }
-
-    protected static class MessageCallback
-            implements com.microsoft.azure.sdk.iot.device.MessageCallback
-    {
-        public IotHubMessageResult execute(Message msg,
-                                           Object context)
-        {
-            Counter counter = (Counter) context;
-            System.out.println(
-                    "Device Client " + msg.getIotHubConnectionString().getDeviceId() + " received message " + counter.toString()
-                            + " with content: " + new String(msg.getBytes(), Message.DEFAULT_IOTHUB_MESSAGE_CHARSET));
-            for (MessageProperty messageProperty : msg.getProperties())
-            {
-                System.out.println(messageProperty.getName() + " : " + messageProperty.getValue());
-            }
-
-            IotHubMessageResult res = IotHubMessageResult.COMPLETE;
-
-            System.out.println(
-                    "Responding to message " + counter.toString()
-                            + " with " + res.name());
-
-            counter.increment();
-
-            return res;
-        }
-    }
-
-    protected static class EventCallback1 implements IotHubEventCallback{
-        public void execute(IotHubStatusCode status, Object context){
-            Message msg = (Message) context;
-            System.out.println("Device Client 1: IoT Hub responded to message "+ msg.getMessageId()  + " with status " + status.name());
-            if (status==IotHubStatusCode.MESSAGE_CANCELLED_ONCLOSE)
-            {
-                failedMessageListOnClose.add(msg.getMessageId());
-            }
-        }
-    }
-
-    protected static class EventCallback2 implements IotHubEventCallback{
-        public void execute(IotHubStatusCode status, Object context){
-            Message msg = (Message) context;
-            System.out.println("Device Client 2: IoT Hub responded to message "+ msg.getMessageId()  + " with status " + status.name());
-            if (status==IotHubStatusCode.MESSAGE_CANCELLED_ONCLOSE)
-            {
-                failedMessageListOnClose.add(msg.getMessageId());
-            }
-        }
-    }
-
-    protected static class EventCallback3 implements IotHubEventCallback{
-        public void execute(IotHubStatusCode status, Object context){
-            Message msg = (Message) context;
-            System.out.println("Device Client 3: IoT Hub responded to message "+ msg.getMessageId()  + " with status " + status.name());
-            if (status==IotHubStatusCode.MESSAGE_CANCELLED_ONCLOSE)
-            {
-                failedMessageListOnClose.add(msg.getMessageId());
-            }
-        }
-    }
+    private static List failedMessageListOnClose = new ArrayList(); // List of messages that failed on closeNow
 
     private static int method_command(Object command)
     {
@@ -132,114 +42,22 @@ public class TransportClientSample
         return METHOD_NOT_DEFINED;
     }
 
-    protected static class DeviceMethodStatusCallBack1 implements IotHubEventCallback
-    {
-        public void execute(IotHubStatusCode status, Object context)
-        {
-            System.out.println("Device Client 1: IoT Hub responded to device method operation with status " + status.name());
-        }
-    }
-
-    protected static class DeviceMethodStatusCallBack2 implements IotHubEventCallback
-    {
-        public void execute(IotHubStatusCode status, Object context)
-        {
-            System.out.println("Device Client 2: IoT Hub responded to device method operation with status " + status.name());
-        }
-    }
-
-    protected static class DeviceMethodStatusCallBack3 implements IotHubEventCallback
-    {
-        public void execute(IotHubStatusCode status, Object context)
-        {
-            System.out.println("Device Client 3: IoT Hub responded to device method operation with status " + status.name());
-        }
-    }
-
-    protected static class SampleDeviceMethodCallback implements com.microsoft.azure.sdk.iot.device.DeviceTwin.DeviceMethodCallback
-    {
-        @Override
-        public DeviceMethodData call(String methodName, Object methodData, Object context)
-        {
-            DeviceMethodData deviceMethodData ;
-            switch (methodName)
-            {
-                case "command" :
-                {
-                    int status = method_command(methodData);
-                    deviceMethodData = new DeviceMethodData(status, "executed " + methodName);
-                    break;
-                }
-                default:
-                {
-                    int status = method_default(methodData);
-                    deviceMethodData = new DeviceMethodData(status, "executed " + methodName);
-                }
-            }
-
-            return deviceMethodData;
-        }
-    }
-
-    protected static class DeviceTwinStatusCallBack implements IotHubEventCallback
-    {
-        public void execute(IotHubStatusCode status, Object context)
-        {
-            System.out.println("IoT Hub responded to device twin operation with status " + status.name());
-        }
-    }
-
-    protected static class onHomeTempChange implements PropertyCallBack
-    {
-        @Override
-        public void PropertyCall(Object propertyKey, Object propertyValue, Object context)
-        {
-            if (propertyValue.equals(80))
-            {
-                System.out.println("Cooling down home, temp changed to " + propertyValue);
-            }
-        }
-
-    }
-
-    protected static class onCameraActivity implements PropertyCallBack
-    {
-        @Override
-        public void PropertyCall(Object propertyKey, Object propertyValue, Object context)
-        {
-            System.out.println(propertyKey + " changed to " + propertyValue);
-            if (propertyValue.equals(CAMERA.DETECTED_BURGLAR))
-            {
-                System.out.println("Triggering alarm, burglar detected");
-            }
-        }
-
-    }
     /**
      * Multiplex devices an IoT Hub using AMQPS / AMQPS_WS
      *
-     * @param args
-     * args[0] = IoT Hub connection string - Device Client 1
-     * args[1] = IoT Hub connection string - Device Client 2
-     * args[2] = IoT Hub connection string - Device Client 3
+     * @param args args[0] = IoT Hub connection string - Device Client 1
+     *             args[1] = IoT Hub connection string - Device Client 2
+     *             args[2] = IoT Hub connection string - Device Client 3
      */
 
-    public static void main(String[] args)
-            throws IOException, URISyntaxException
+    public static void main(String[] args) throws IOException, URISyntaxException
     {
         System.out.println("Starting...");
         System.out.println("Beginning setup.");
 
         if (args.length != 4)
         {
-            System.out.format(
-                    "Expected 3 arguments but received: %d.\n"
-                            + "The program should be called with the following args: \n"
-                            + "1. [Device 1 connection string] - String containing Hostname, Device Id & Device Key in one of the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n"
-                            + "2. [Device 2 connection string] - String containing Hostname, Device Id & Device Key in one of the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n"
-                            + "3. [Device 3 connection string] - String containing Hostname, Device Id & Device Key in one of the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n"
-                            + "4. [Protocol]                   - amqps | amqps_ws\n",
-                    args.length);
+            System.out.format("Expected 3 arguments but received: %d.\n" + "The program should be called with the following args: \n" + "1. [Device 1 connection string] - String containing Hostname, Device Id & Device Key in one of the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n" + "2. [Device 2 connection string] - String containing Hostname, Device Id & Device Key in one of the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n" + "3. [Device 3 connection string] - String containing Hostname, Device Id & Device Key in one of the following formats: HostName=<iothub_host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>\n" + "4. [Protocol]                   - amqps | amqps_ws\n", args.length);
             return;
         }
 
@@ -381,7 +199,7 @@ public class TransportClientSample
         }
         catch (Exception e)
         {
-            System.out.println("On exception, shutting down \n" + " Cause: " + e.getCause() + " \n" +  e.getMessage());
+            System.out.println("On exception, shutting down \n" + " Cause: " + e.getCause() + " \n" + e.getMessage());
             homeKit.clean();
             transportClient.closeNow();
             System.out.println("Shutting down...");
@@ -396,7 +214,7 @@ public class TransportClientSample
             temperature = 20 + Math.random() * 10;
             humidity = 30 + Math.random() * 20;
 
-            String msgStr = "{\"deviceId\":\"" + deviceId + i +"\",\"messageId\":" + i + ",\"temperature\":"+ temperature +",\"humidity\":"+ humidity +"}";
+            String msgStr = "{\"deviceId\":\"" + deviceId + i + "\",\"messageId\":" + i + ",\"temperature\":" + temperature + ",\"humidity\":" + humidity + "}";
 
             try
             {
@@ -406,12 +224,12 @@ public class TransportClientSample
                 msg.setExpiryTime(D2C_MESSAGE_TIMEOUT);
                 msg.setMessageType(MessageType.DEVICE_TELEMETRY);
 
-                if (i%3 == 0)
+                if (i % 3 == 0)
                 {
                     EventCallback1 eventCallback1 = new EventCallback1();
                     client1.sendEventAsync(msg, eventCallback1, msg);
                 }
-                else if (i%3 == 1)
+                else if (i % 3 == 1)
                 {
                     EventCallback2 eventCallback2 = new EventCallback2();
                     client2.sendEventAsync(msg, eventCallback2, msg);
@@ -459,5 +277,185 @@ public class TransportClientSample
         }
 
         System.out.println("Shutting down...");
+    }
+
+    private enum LIGHTS
+    {
+        ON, OFF, DISABLED
+    }
+
+    private enum CAMERA
+    {
+        DETECTED_BURGLAR, SAFELY_WORKING
+    }
+
+    /**
+     * Used as a counter in the message callback.
+     */
+    protected static class Counter
+    {
+        protected int num;
+
+        public Counter(int num)
+        {
+            this.num = num;
+        }
+
+        public int get()
+        {
+            return this.num;
+        }
+
+        public void increment()
+        {
+            this.num++;
+        }
+
+        @Override
+        public String toString()
+        {
+            return Integer.toString(this.num);
+        }
+    }
+
+    protected static class MessageCallback implements com.microsoft.azure.sdk.iot.device.MessageCallback
+    {
+        public IotHubMessageResult execute(Message msg, Object context)
+        {
+            Counter counter = (Counter) context;
+            System.out.println("Device Client " + msg.getIotHubConnectionString().getDeviceId() + " received message " + counter.toString() + " with content: " + new String(msg.getBytes(), Message.DEFAULT_IOTHUB_MESSAGE_CHARSET));
+            for (MessageProperty messageProperty : msg.getProperties())
+            {
+                System.out.println(messageProperty.getName() + " : " + messageProperty.getValue());
+            }
+
+            IotHubMessageResult res = IotHubMessageResult.COMPLETE;
+
+            System.out.println("Responding to message " + counter.toString() + " with " + res.name());
+
+            counter.increment();
+
+            return res;
+        }
+    }
+
+    protected static class EventCallback1 implements IotHubEventCallback
+    {
+        public void execute(IotHubStatusCode status, Object context) {
+            Message msg = (Message) context;
+            System.out.println("Device Client 1: IoT Hub responded to message " + msg.getMessageId() + " with status " + status.name());
+            if (status == IotHubStatusCode.MESSAGE_CANCELLED_ONCLOSE)
+            {
+                failedMessageListOnClose.add(msg.getMessageId());
+            }
+        }
+    }
+
+    protected static class EventCallback2 implements IotHubEventCallback
+    {
+        public void execute(IotHubStatusCode status, Object context) {
+            Message msg = (Message) context;
+            System.out.println("Device Client 2: IoT Hub responded to message " + msg.getMessageId() + " with status " + status.name());
+            if (status == IotHubStatusCode.MESSAGE_CANCELLED_ONCLOSE)
+            {
+                failedMessageListOnClose.add(msg.getMessageId());
+            }
+        }
+    }
+
+    protected static class EventCallback3 implements IotHubEventCallback
+    {
+        public void execute(IotHubStatusCode status, Object context) {
+            Message msg = (Message) context;
+            System.out.println("Device Client 3: IoT Hub responded to message " + msg.getMessageId() + " with status " + status.name());
+            if (status == IotHubStatusCode.MESSAGE_CANCELLED_ONCLOSE)
+            {
+                failedMessageListOnClose.add(msg.getMessageId());
+            }
+        }
+    }
+
+    protected static class DeviceMethodStatusCallBack1 implements IotHubEventCallback
+    {
+        public void execute(IotHubStatusCode status, Object context)
+        {
+            System.out.println("Device Client 1: IoT Hub responded to device method operation with status " + status.name());
+        }
+    }
+
+    protected static class DeviceMethodStatusCallBack2 implements IotHubEventCallback
+    {
+        public void execute(IotHubStatusCode status, Object context)
+        {
+            System.out.println("Device Client 2: IoT Hub responded to device method operation with status " + status.name());
+        }
+    }
+
+    protected static class DeviceMethodStatusCallBack3 implements IotHubEventCallback
+    {
+        public void execute(IotHubStatusCode status, Object context)
+        {
+            System.out.println("Device Client 3: IoT Hub responded to device method operation with status " + status.name());
+        }
+    }
+
+    protected static class SampleDeviceMethodCallback implements com.microsoft.azure.sdk.iot.device.DeviceTwin.DeviceMethodCallback
+    {
+        @Override
+        public DeviceMethodData call(String methodName, Object methodData, Object context)
+        {
+            DeviceMethodData deviceMethodData;
+            switch (methodName)
+            {
+                case "command":
+                {
+                    int status = method_command(methodData);
+                    deviceMethodData = new DeviceMethodData(status, "executed " + methodName);
+                    break;
+                }
+                default:
+                {
+                    int status = method_default(methodData);
+                    deviceMethodData = new DeviceMethodData(status, "executed " + methodName);
+                }
+            }
+
+            return deviceMethodData;
+        }
+    }
+
+    protected static class DeviceTwinStatusCallBack implements IotHubEventCallback
+    {
+        public void execute(IotHubStatusCode status, Object context)
+        {
+            System.out.println("IoT Hub responded to device twin operation with status " + status.name());
+        }
+    }
+
+    protected static class onHomeTempChange implements PropertyCallBack
+    {
+        @Override
+        public void PropertyCall(Object propertyKey, Object propertyValue, Object context)
+        {
+            if (propertyValue.equals(80))
+            {
+                System.out.println("Cooling down home, temp changed to " + propertyValue);
+            }
+        }
+
+    }
+
+    protected static class onCameraActivity implements PropertyCallBack
+    {
+        @Override
+        public void PropertyCall(Object propertyKey, Object propertyValue, Object context)
+        {
+            System.out.println(propertyKey + " changed to " + propertyValue);
+            if (propertyValue.equals(CAMERA.DETECTED_BURGLAR))
+            {
+                System.out.println("Triggering alarm, burglar detected");
+            }
+        }
+
     }
 }

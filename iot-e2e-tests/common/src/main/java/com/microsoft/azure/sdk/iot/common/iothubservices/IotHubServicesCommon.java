@@ -23,7 +23,7 @@ import static junit.framework.TestCase.fail;
  */
 public class IotHubServicesCommon
 {
-    private final static long OPEN_RETRY_TIMEOUT = 3*60*1000; //3 minutes, or about 3 retries if open's keep timing out
+    private final static long OPEN_RETRY_TIMEOUT = 3 * 60 * 1000; //3 minutes, or about 3 retries if open's keep timing out
 
     //if error injection message has not taken effect after 1 minute, the test will timeout
     private final static long ERROR_INJECTION_MESSAGE_EFFECT_TIMEOUT = 1 * 60 * 1000;
@@ -31,13 +31,7 @@ public class IotHubServicesCommon
     /*
      * method to send message over given DeviceClient
      */
-    public static void sendMessages(InternalClient client,
-                                    IotHubClientProtocol protocol,
-                                    List<MessageAndResult> messagesToSend,
-                                    final long RETRY_MILLISECONDS,
-                                    final long SEND_TIMEOUT_MILLISECONDS,
-                                    long interMessageDelay,
-                                    List<IotHubConnectionStatus> statusUpdates) throws IOException, InterruptedException
+    public static void sendMessages(InternalClient client, IotHubClientProtocol protocol, List<MessageAndResult> messagesToSend, final long RETRY_MILLISECONDS, final long SEND_TIMEOUT_MILLISECONDS, long interMessageDelay, List<IotHubConnectionStatus> statusUpdates) throws IOException, InterruptedException
     {
         openClientWithRetry(client);
 
@@ -76,14 +70,7 @@ public class IotHubServicesCommon
         client.closeNow();
     }
 
-    public static void sendMessagesExpectingConnectionStatusChangeUpdate(InternalClient client,
-                                                                         IotHubClientProtocol protocol,
-                                                                         List<MessageAndResult> messagesToSend,
-                                                                         final long RETRY_MILLISECONDS,
-                                                                         final long SEND_TIMEOUT_MILLISECONDS,
-                                                                         final IotHubConnectionStatus expectedStatus,
-                                                                         int interMessageDelay,
-                                                                         AuthenticationType authType) throws IOException, InterruptedException
+    public static void sendMessagesExpectingConnectionStatusChangeUpdate(InternalClient client, IotHubClientProtocol protocol, List<MessageAndResult> messagesToSend, final long RETRY_MILLISECONDS, final long SEND_TIMEOUT_MILLISECONDS, final IotHubConnectionStatus expectedStatus, int interMessageDelay, AuthenticationType authType) throws IOException, InterruptedException
     {
         final List<IotHubConnectionStatus> actualStatusUpdates = new ArrayList<>();
         client.registerConnectionStatusChangeCallback(new IotHubConnectionStatusChangeCallback()
@@ -102,15 +89,10 @@ public class IotHubServicesCommon
     /**
      * Send some messages that wait for callbacks to signify that the SAS token in the client config has expired.
      *
-     * @param client the client to send the messages from
+     * @param client   the client to send the messages from
      * @param protocol the protocol the client is using
      */
-    public static void sendMessagesExpectingSASTokenExpiration(DeviceClient client,
-                                                               String protocol,
-                                                               int numberOfMessages,
-                                                               long retryMilliseconds,
-                                                               long timeoutMilliseconds,
-                                                               AuthenticationType authType)
+    public static void sendMessagesExpectingSASTokenExpiration(DeviceClient client, String protocol, int numberOfMessages, long retryMilliseconds, long timeoutMilliseconds, AuthenticationType authType)
     {
         for (int i = 0; i < numberOfMessages; ++i)
         {
@@ -127,14 +109,12 @@ public class IotHubServicesCommon
                 client.sendEventAsync(messageToSend, messageCallback, messageSent);
 
                 long startTime = System.currentTimeMillis();
-                while(!messageSent.wasCallbackFired() || !statusUpdated.getResult())
+                while (!messageSent.wasCallbackFired() || !statusUpdated.getResult())
                 {
                     Thread.sleep(retryMilliseconds);
                     if (System.currentTimeMillis() - startTime > timeoutMilliseconds)
                     {
-                        fail(protocol + ", " + authType + ": Sending message over " + protocol + " protocol failed: " +
-                                "never received connection status update for SAS_TOKEN_EXPIRED " +
-                                "or never received UNAUTHORIZED message callback");
+                        fail(protocol + ", " + authType + ": Sending message over " + protocol + " protocol failed: " + "never received connection status update for SAS_TOKEN_EXPIRED " + "or never received UNAUTHORIZED message callback");
                     }
                 }
 
@@ -153,11 +133,7 @@ public class IotHubServicesCommon
     /*
      * method to send message over given DeviceClient
      */
-    public static void sendMessagesMultiplex(DeviceClient client,
-                                             IotHubClientProtocol protocol,
-                                             final int NUM_MESSAGES_PER_CONNECTION,
-                                             final long RETRY_MILLISECONDS,
-                                             final long SEND_TIMEOUT_MILLISECONDS)
+    public static void sendMessagesMultiplex(DeviceClient client, IotHubClientProtocol protocol, final int NUM_MESSAGES_PER_CONNECTION, final long RETRY_MILLISECONDS, final long SEND_TIMEOUT_MILLISECONDS)
     {
         String messageString = "Java client e2e test message over " + protocol + " protocol";
         Message msg = new Message(messageString);
@@ -192,11 +168,7 @@ public class IotHubServicesCommon
         }
     }
 
-    public static void sendExpiredMessageExpectingMessageExpiredCallback(InternalClient client,
-                                                                         IotHubClientProtocol protocol,
-                                                                         final long RETRY_MILLISECONDS,
-                                                                         final long SEND_TIMEOUT_MILLISECONDS,
-                                                                         AuthenticationType authType) throws IOException
+    public static void sendExpiredMessageExpectingMessageExpiredCallback(InternalClient client, IotHubClientProtocol protocol, final long RETRY_MILLISECONDS, final long SEND_TIMEOUT_MILLISECONDS, AuthenticationType authType) throws IOException
     {
         try
         {
@@ -231,10 +203,7 @@ public class IotHubServicesCommon
         }
     }
 
-    public static void sendMessagesExpectingUnrecoverableConnectionLossAndTimeout(InternalClient client,
-                                                                                  IotHubClientProtocol protocol,
-                                                                                  Message errorInjectionMessage,
-                                                                                  AuthenticationType authType) throws IOException, InterruptedException
+    public static void sendMessagesExpectingUnrecoverableConnectionLossAndTimeout(InternalClient client, IotHubClientProtocol protocol, Message errorInjectionMessage, AuthenticationType authType) throws IOException, InterruptedException
     {
         final List<IotHubConnectionStatus> statusUpdates = new ArrayList<>();
         client.registerConnectionStatusChangeCallback(new IotHubConnectionStatusChangeCallback()
@@ -395,7 +364,7 @@ public class IotHubServicesCommon
         }
 
         int numOfUpdates = 0;
-        while (numOfUpdates != actualStatusUpdates.size() || actualStatusUpdates.get(actualStatusUpdates.size()-1) != IotHubConnectionStatus.CONNECTED)
+        while (numOfUpdates != actualStatusUpdates.size() || actualStatusUpdates.get(actualStatusUpdates.size() - 1) != IotHubConnectionStatus.CONNECTED)
         {
             numOfUpdates = actualStatusUpdates.size();
             Thread.sleep(6 * 1000);

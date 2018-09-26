@@ -97,7 +97,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_004: [If the provided connection string does not contain a module id, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorRequiresModuleId() throws URISyntaxException, ModuleClientException
     {
         //arrange
@@ -118,7 +118,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_007: [If the provided protocol is not MQTT, AMQPS, MQTT_WS, or AMQPS_WS, this function shall throw an UnsupportedOperationException.]
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void constructorThrowsForHTTP() throws URISyntaxException, ModuleClientException
     {
         //arrange
@@ -139,7 +139,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_006: [This function shall invoke the super constructor.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorCallsSuper() throws URISyntaxException, ModuleClientException
     {
         //arrange
@@ -167,7 +167,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_001: [If the provided outputName is null or empty, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void sendEventAsyncWithOutputThrowsForEmptyOutputName() throws URISyntaxException, ModuleClientException
     {
         //arrange
@@ -179,7 +179,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_001: [If the provided outputName is null or empty, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void sendEventAsyncWithOutputThrowsForNullOutputName() throws URISyntaxException, ModuleClientException
     {
         //arrange
@@ -257,7 +257,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_008: [If the provided protocol is not MQTT, AMQPS, MQTT_WS, or AMQPS_WS, this function shall throw an UnsupportedOperationException.]
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void x509ConstructorThrowsForHTTP() throws URISyntaxException, ModuleClientException
     {
         //arrange
@@ -282,7 +282,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_009: [If the provided connection string does not contain a module id, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void x509ConstructorThrowsForConnectionStringWithoutModuleId() throws URISyntaxException, ModuleClientException
     {
         //arrange
@@ -307,7 +307,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_010: [If the provided callback is null and the provided context is not null, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setMessageCallbackWithInputThrowsForNullCallbackWithoutNullContext() throws URISyntaxException, ModuleClientException
     {
         //arrange
@@ -319,7 +319,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_011: [If the provided inputName is null or empty, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setMessageCallbackWithInputThrowsForNullInputName() throws URISyntaxException, ModuleClientException
     {
         //arrange
@@ -331,7 +331,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_011: [If the provided inputName is null or empty, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setMessageCallbackWithInputThrowsForEmptyInputName() throws URISyntaxException, ModuleClientException
     {
         //arrange
@@ -365,9 +365,9 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_014: [This function shall check for environment variables for edgedUri, deviceId, moduleId,
-            // hostname, authScheme, gatewayHostname, and generationId. If any of these other than gatewayHostname is missing,
-            // this function shall throw a ModuleClientException.]
-    @Test (expected = ModuleClientException.class)
+    // hostname, authScheme, gatewayHostname, and generationId. If any of these other than gatewayHostname is missing,
+    // this function shall throw a ModuleClientException.]
+    @Test(expected = ModuleClientException.class)
     public void createFromEnvironmentChecksForHostname(final @Mocked System mockedSystem) throws ModuleClientException
     {
         //arrange
@@ -403,9 +403,9 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_014: [This function shall check for environment variables for edgedUri, deviceId, moduleId,
-            // hostname, authScheme, gatewayHostname, and generationId. If any of these other than gatewayHostname is missing,
-            // this function shall throw a ModuleClientException.]
-    @Test (expected = ModuleClientException.class)
+    // hostname, authScheme, gatewayHostname, and generationId. If any of these other than gatewayHostname is missing,
+    // this function shall throw a ModuleClientException.]
+    @Test(expected = ModuleClientException.class)
     public void createFromEnvironmentChecksForDeviceId(final @Mocked System mockedSystem) throws ModuleClientException
     {
         //arrange
@@ -441,9 +441,9 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_014: [This function shall check for environment variables for edgedUri, deviceId, moduleId,
-            // hostname, authScheme, gatewayHostname, and generationId. If any of these other than gatewayHostname is missing,
-            // this function shall throw a ModuleClientException.]
-    @Test (expected = ModuleClientException.class)
+    // hostname, authScheme, gatewayHostname, and generationId. If any of these other than gatewayHostname is missing,
+    // this function shall throw a ModuleClientException.]
+    @Test(expected = ModuleClientException.class)
     public void createFromEnvironmentChecksForModuleId(final @Mocked System mockedSystem) throws ModuleClientException
     {
         //arrange
@@ -479,9 +479,9 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_014: [This function shall check for environment variables for edgedUri, deviceId, moduleId,
-            // hostname, authScheme, gatewayHostname, and generationId. If any of these other than gatewayHostname is missing,
-            // this function shall throw a ModuleClientException.]
-    @Test (expected = ModuleClientException.class)
+    // hostname, authScheme, gatewayHostname, and generationId. If any of these other than gatewayHostname is missing,
+    // this function shall throw a ModuleClientException.]
+    @Test(expected = ModuleClientException.class)
     public void createFromEnvironmentChecksForAuthScheme(final @Mocked System mockedSystem) throws ModuleClientException
     {
         //arrange
@@ -517,7 +517,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_030: [If the auth scheme environment variable is not "SasToken", this function shall throw a moduleClientException.]
-    @Test (expected = ModuleClientException.class)
+    @Test(expected = ModuleClientException.class)
     public void createFromEnvironmentChecksForAuthSchemeToBeSasToken(final @Mocked System mockedSystem) throws ModuleClientException
     {
         //arrange
@@ -613,18 +613,16 @@ public class ModuleClientTest
                 IotHubSasTokenHsmAuthenticationProvider.create((SignatureProvider) any, expectedDeviceId, expectedModuleId, expectedHostname, expectedGatewayHostname, anyString, anyInt, anyInt);
                 times = 1;
 
-                Deencapsulation.newInstance(ModuleClient.class,
-                        new Class[] {IotHubAuthenticationProvider.class, IotHubClientProtocol.class, long.class, long.class},
-                        mockedModuleAuthenticationWithHsm, protocol, anyLong, anyLong);
+                Deencapsulation.newInstance(ModuleClient.class, new Class[]{IotHubAuthenticationProvider.class, IotHubClientProtocol.class, long.class, long.class}, mockedModuleAuthenticationWithHsm, protocol, anyLong, anyLong);
                 times = 1;
             }
         };
     }
 
     //Tests_SRS_MODULECLIENT_34_014: [This function shall check for environment variables for edgedUri, deviceId, moduleId,
-            // hostname, authScheme, gatewayHostname, and generationId. If any of these other than gatewayHostname is missing,
-            // this function shall throw a ModuleClientException.]
-    @Test (expected = ModuleClientException.class)
+    // hostname, authScheme, gatewayHostname, and generationId. If any of these other than gatewayHostname is missing,
+    // this function shall throw a ModuleClientException.]
+    @Test(expected = ModuleClientException.class)
     public void createFromEnvironmentChecksForEdgedUri(final @Mocked System mockedSystem) throws ModuleClientException
     {
         //arrange
@@ -662,7 +660,7 @@ public class ModuleClientTest
     //Tests_SRS_MODULECLIENT_34_014: [This function shall check for environment variables for edgedUri, deviceId, moduleId,
     // hostname, authScheme, gatewayHostname, and generationId. If any of these other than gatewayHostname is missing,
     // this function shall throw a ModuleClientException.]
-    @Test (expected = ModuleClientException.class)
+    @Test(expected = ModuleClientException.class)
     public void createFromEnvironmentChecksForGenerationId(final @Mocked System mockedSystem) throws ModuleClientException
     {
         //arrange
@@ -820,7 +818,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_034: [If this function encounters an exception, it shall throw a moduleClientException with that exception nested.]
-    @Test (expected = ModuleClientException.class)
+    @Test(expected = ModuleClientException.class)
     public void invokeMethodOnDeviceWrapsExceptions() throws URISyntaxException, ModuleClientException, IOException, TransportException
     {
         //arrange
@@ -882,7 +880,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_036: [If this function encounters an exception, it shall throw a moduleClientException with that exception nested.]
-    @Test (expected = ModuleClientException.class)
+    @Test(expected = ModuleClientException.class)
     public void invokeMethodOnModuleWrapsExceptions() throws URISyntaxException, ModuleClientException, IOException, TransportException
     {
         //arrange
@@ -907,7 +905,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_037: [If the provided deviceId is null or empty, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void invokeMethodOnDeviceThrowsForNullDeviceId() throws URISyntaxException, ModuleClientException
     {
         //arrange
@@ -919,7 +917,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_037: [If the provided deviceId is null or empty, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void invokeMethodOnDeviceThrowsForEmptyDeviceId() throws URISyntaxException, ModuleClientException
     {
         //arrange
@@ -931,7 +929,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_038: [If the provided deviceId is null or empty, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void invokeMethodOnModuleThrowsForNullDeviceId() throws URISyntaxException, ModuleClientException
     {
         //arrange
@@ -943,7 +941,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_038: [If the provided deviceId is null or empty, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void invokeMethodOnModuleThrowsForEmptyDeviceId() throws URISyntaxException, ModuleClientException
     {
         //arrange
@@ -955,7 +953,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_039: [If the provided deviceId is null or empty, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void invokeMethodOnModuleThrowsForNullModuleId() throws URISyntaxException, ModuleClientException
     {
         //arrange
@@ -967,7 +965,7 @@ public class ModuleClientTest
     }
 
     //Tests_SRS_MODULECLIENT_34_039: [If the provided deviceId is null or empty, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void invokeMethodOnModuleThrowsForEmptyModuleId() throws URISyntaxException, ModuleClientException
     {
         //arrange

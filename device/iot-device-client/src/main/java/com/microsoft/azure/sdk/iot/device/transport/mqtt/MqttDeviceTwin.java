@@ -17,16 +17,12 @@ import java.util.regex.Pattern;
 
 public class MqttDeviceTwin extends Mqtt
 {
-    private String subscribeTopic;
     private final Map<String, DeviceOperations> requestMap = new HashMap<>();
-    private boolean isStarted = false;
     private final CustomLogger logger = new CustomLogger(this.getClass());
-
     private final String BACKSLASH = "/";
     private final String AND = "&";
     private final String QUESTION = "?";
     private final String POUND = "#";
-
     private final String TWIN = "$iothub/twin";
     private final String GET = TWIN + BACKSLASH + "GET";
     private final String RES = TWIN + BACKSLASH + "res";
@@ -36,18 +32,18 @@ public class MqttDeviceTwin extends Mqtt
     private final String REPORTED = "reported";
     private final String REQ_ID = QUESTION + "$rid=";
     private final String VERSION = "$version=";
-
     //Placement in $iothub/twin/res/{status}/?$rid={request id}&$version={new version}
     private final int RES_TOKEN = 2;
     private final int STATUS_TOKEN = 3;
     private final int REQID_TOKEN = 4;
     private final int VERSION_TOKEN = 4;
-
     //Placement for $iothub/twin/PATCH/properties/desired/?$version={new version}
     private final int PATCH_TOKEN = 2;
     private final int PROPERTIES_TOKEN = 3;
     private final int DESIRED_TOKEN = 4;
     private final int PATCH_VERSION_TOKEN = 5;
+    private String subscribeTopic;
+    private boolean isStarted = false;
 
     public MqttDeviceTwin(MqttConnection mqttConnection, String connectionId) throws TransportException
     {
@@ -182,7 +178,7 @@ public class MqttDeviceTwin extends Mqtt
             throw new IllegalArgumentException("Message cannot be null");
         }
 
-        if(!this.isStarted)
+        if (!this.isStarted)
         {
             throw new IllegalStateException("Start device twin before using it");
         }
@@ -201,13 +197,7 @@ public class MqttDeviceTwin extends Mqtt
         {
             // Subscribe to "$iothub/twin/PATCH/properties/desired/#"
             //Codes_SRS_MQTTDEVICETWIN_25_032: [send method shall subscribe to desired properties by calling method subscribe() on topic "$iothub/twin/PATCH/properties/desired/#" specified in spec if the operation is DEVICE_OPERATION_TWIN_SUBSCRIBE_DESIRED_PROPERTIES_REQUEST.]
-            String subscribeTopic = PATCH +
-                    BACKSLASH +
-                    PROPERTIES +
-                    BACKSLASH +
-                    DESIRED +
-                    BACKSLASH +
-                    POUND;
+            String subscribeTopic = PATCH + BACKSLASH + PROPERTIES + BACKSLASH + DESIRED + BACKSLASH + POUND;
 
             //Codes_SRS_MQTTDEVICETWIN_25_032: [send method shall subscribe to desired properties by calling method subscribe() on topic "$iothub/twin/PATCH/properties/desired/#" specified in spec if the operation is DEVICE_OPERATION_TWIN_SUBSCRIBE_DESIRED_PROPERTIES_REQUEST.]
             this.subscribe(subscribeTopic);

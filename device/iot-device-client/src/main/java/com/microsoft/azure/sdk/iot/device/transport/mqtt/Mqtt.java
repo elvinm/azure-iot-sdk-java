@@ -23,31 +23,13 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 abstract public class Mqtt implements MqttCallback
 {
-    private static final int CONNECTION_TIMEOUT = 60 * 1000;
-    private static final int DISCONNECTION_TIMEOUT = 60 * 1000;
-
-    private MqttConnection mqttConnection;
-    private MqttMessageListener messageListener;
-    ConcurrentLinkedQueue<Pair<String, byte[]>> allReceivedMessages;
-    Object mqttLock;
-    Object publishLock;
-
-    private static Map<Integer, Message> unacknowledgedSentMessages = new ConcurrentHashMap<>();
-
-    // SAS token expiration check on retry
-    private boolean userSpecifiedSASTokenExpiredOnRetry = false;
-
     /* Each property is separated by & and all system properties start with an encoded $ (except for iothub-ack) */
     final static char MESSAGE_PROPERTY_SEPARATOR = '&';
+    final static char MESSAGE_PROPERTY_KEY_VALUE_SEPARATOR = '=';
+    private static final int CONNECTION_TIMEOUT = 60 * 1000;
+    private static final int DISCONNECTION_TIMEOUT = 60 * 1000;
     private final static String MESSAGE_SYSTEM_PROPERTY_IDENTIFIER_ENCODED = "%24";
     private final static char MESSAGE_SYSTEM_PROPERTY_IDENTIFIER_DECODED = '$';
-    final static char MESSAGE_PROPERTY_KEY_VALUE_SEPARATOR = '=';
-    private final static int PROPERTY_KEY_INDEX = 0;
-    private final static int PROPERTY_VALUE_INDEX = 1;
-
-    /* The system property keys expected in a message */
-    //This may be common with amqp as well
-    private final static String ABSOLUTE_EXPIRY_TIME = MESSAGE_SYSTEM_PROPERTY_IDENTIFIER_DECODED + ".exp";
     final static String CORRELATION_ID = MESSAGE_SYSTEM_PROPERTY_IDENTIFIER_DECODED + ".cid";
     final static String MESSAGE_ID = MESSAGE_SYSTEM_PROPERTY_IDENTIFIER_DECODED + ".mid";
     final static String TO = MESSAGE_SYSTEM_PROPERTY_IDENTIFIER_DECODED + ".to";
@@ -57,21 +39,32 @@ abstract public class Mqtt implements MqttCallback
     final static String CONNECTION_MODULE_ID = MESSAGE_SYSTEM_PROPERTY_IDENTIFIER_DECODED + ".cmid";
     final static String CONTENT_TYPE = MESSAGE_SYSTEM_PROPERTY_IDENTIFIER_DECODED + ".ct";
     final static String CONTENT_ENCODING = MESSAGE_SYSTEM_PROPERTY_IDENTIFIER_DECODED + ".ce";
-
+    private final static int PROPERTY_KEY_INDEX = 0;
+    private final static int PROPERTY_VALUE_INDEX = 1;
+    /* The system property keys expected in a message */
+    //This may be common with amqp as well
+    private final static String ABSOLUTE_EXPIRY_TIME = MESSAGE_SYSTEM_PROPERTY_IDENTIFIER_DECODED + ".exp";
     private final static String IOTHUB_ACK = "iothub-ack";
-
     private final static String INPUTS_PATH_STRING = "inputs";
     private final static String MODULES_PATH_STRING = "modules";
-
+    private static Map<Integer, Message> unacknowledgedSentMessages = new ConcurrentHashMap<>();
+    ConcurrentLinkedQueue<Pair<String, byte[]>> allReceivedMessages;
+    Object mqttLock;
+    Object publishLock;
+    private MqttConnection mqttConnection;
+    private MqttMessageListener messageListener;
+    // SAS token expiration check on retry
+    private boolean userSpecifiedSASTokenExpiredOnRetry = false;
     private IotHubListener listener;
     private String connectionId;
 
     /**
      * Constructor to instantiate mqtt broker connection.
-     * @param mqttConnection the connection to use
-     * @param listener the listener to be called back upon connection established/lost and upon a message being delivered
+     *
+     * @param mqttConnection  the connection to use
+     * @param listener        the listener to be called back upon connection established/lost and upon a message being delivered
      * @param messageListener the listener to be called back upon a message arriving
-     * @param connectionId the id of the connection
+     * @param connectionId    the id of the connection
      * @throws IllegalArgumentException if the provided mqttConnection is null
      */
     public Mqtt(MqttConnection mqttConnection, IotHubListener listener, MqttMessageListener messageListener, String connectionId) throws IllegalArgumentException
@@ -155,9 +148,9 @@ abstract public class Mqtt implements MqttCallback
      * Method to publish to mqtt broker connection.
      *
      * @param publishTopic the topic to publish on mqtt broker connection.
-     * @param message the message to publish.
+     * @param message      the message to publish.
      * @throws TransportException if sas token has expired, if connection hasn't been established yet, or if Paho throws
-     * for any other reason
+     *                            for any other reason
      */
     protected void publish(String publishTopic, Message message) throws TransportException
     {
@@ -242,7 +235,7 @@ abstract public class Mqtt implements MqttCallback
      * Method to subscribe to mqtt broker connection.
      *
      * @param topic the topic to subscribe on mqtt broker connection.
-     * @throws TransportException if failed to subscribe the mqtt topic.
+     * @throws TransportException       if failed to subscribe the mqtt topic.
      * @throws IllegalArgumentException if topic is null
      */
     protected void subscribe(String topic) throws TransportException
@@ -335,6 +328,7 @@ abstract public class Mqtt implements MqttCallback
 
     /**
      * Event fired when the connection with the MQTT broker is lost.
+     *
      * @param throwable Reason for losing the connection.
      */
     @Override
@@ -359,8 +353,9 @@ abstract public class Mqtt implements MqttCallback
 
     /**
      * Event fired when the message arrived on the MQTT broker.
-     * @param topic the topic on which message arrived.
-     * @param mqttMessage  the message arrived on the Mqtt broker.
+     *
+     * @param topic       the topic on which message arrived.
+     * @param mqttMessage the message arrived on the Mqtt broker.
      */
     @Override
     public void messageArrived(String topic, MqttMessage mqttMessage)
@@ -377,6 +372,7 @@ abstract public class Mqtt implements MqttCallback
 
     /**
      * Event fired when the message arrived on the MQTT broker.
+     *
      * @param iMqttDeliveryToken the MqttDeliveryToken for which the message was successfully sent.
      */
     @Override
@@ -393,9 +389,7 @@ abstract public class Mqtt implements MqttCallback
                     if (deliveredMessage instanceof IotHubTransportMessage)
                     {
                         DeviceOperations deviceOperation = ((IotHubTransportMessage) deliveredMessage).getDeviceOperationType();
-                        if (deviceOperation == DeviceOperations.DEVICE_OPERATION_TWIN_SUBSCRIBE_DESIRED_PROPERTIES_REQUEST
-                                || deviceOperation == DeviceOperations.DEVICE_OPERATION_METHOD_SUBSCRIBE_REQUEST
-                                || deviceOperation == DeviceOperations.DEVICE_OPERATION_TWIN_UNSUBSCRIBE_DESIRED_PROPERTIES_REQUEST)
+                        if (deviceOperation == DeviceOperations.DEVICE_OPERATION_TWIN_SUBSCRIBE_DESIRED_PROPERTIES_REQUEST || deviceOperation == DeviceOperations.DEVICE_OPERATION_METHOD_SUBSCRIBE_REQUEST || deviceOperation == DeviceOperations.DEVICE_OPERATION_TWIN_UNSUBSCRIBE_DESIRED_PROPERTIES_REQUEST)
                         {
                             //Codes_SRS_Mqtt_34_056: [If the acknowledged message is of type
                             // DEVICE_OPERATION_TWIN_SUBSCRIBE_DESIRED_PROPERTIES_REQUEST, DEVICE_OPERATION_METHOD_SUBSCRIBE_REQUEST,
@@ -421,6 +415,7 @@ abstract public class Mqtt implements MqttCallback
     /**
      * Attempts to send ack for the provided message. If the message does not have a saved messageId in this layer,
      * this function shall return false.
+     *
      * @param messageId The message id to send the ack for
      * @return true if the ack is sent successfully or false if the message isn't tied to this mqtt client
      * @throws TransportException if an exception occurs when sending the ack
@@ -433,7 +428,8 @@ abstract public class Mqtt implements MqttCallback
 
     /**
      * Converts the provided data and topic string into an instance of Message
-     * @param data the payload from the topic
+     *
+     * @param data  the payload from the topic
      * @param topic the topic string for this message
      * @return a new instance of Message containing the payload and all the properties in the topic string
      */
@@ -471,11 +467,12 @@ abstract public class Mqtt implements MqttCallback
 
     /**
      * Takes propertiesString and parses it for all the properties it holds and then assigns them to the provided message
+     *
      * @param propertiesString the string to parse containing all the properties
-     * @param message the message to add the parsed properties to
+     * @param message          the message to add the parsed properties to
      * @throws IllegalArgumentException if a property's key and value are not separated by the '=' symbol
-     * @throws IllegalStateException if the property for expiry time is present, but the value cannot be parsed as a Long
-     * */
+     * @throws IllegalStateException    if the property for expiry time is present, but the value cannot be parsed as a Long
+     */
     private void assignPropertiesToMessage(Message message, String propertiesString) throws IllegalStateException, IllegalArgumentException
     {
         //Codes_SRS_Mqtt_34_054: [A message may have 0 to many custom properties]

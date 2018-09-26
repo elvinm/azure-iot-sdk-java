@@ -22,7 +22,9 @@ import java.util.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
-/** Unit tests for HttpsRequest. */
+/**
+ * Unit tests for HttpsRequest.
+ */
 public class HttpsRequestTest
 {
     // Tests_SRS_HTTPSREQUEST_11_001: [The function shall open a connection with the given URL as the endpoint.]
@@ -55,7 +57,7 @@ public class HttpsRequestTest
     public void constructorWritesBodyToConnection(@Mocked final HttpsConnection mockConn, final @Mocked URL mockUrl) throws TransportException
     {
         final HttpsMethod httpsMethod = HttpsMethod.GET;
-        final byte[] body = { 1, 2, 3 };
+        final byte[] body = {1, 2, 3};
         new NonStrictExpectations()
         {
             {
@@ -72,8 +74,7 @@ public class HttpsRequestTest
         new Verifications()
         {
             {
-                new HttpsConnection(mockUrl, (HttpsMethod) any)
-                        .writeOutput(expectedBody);
+                new HttpsConnection(mockUrl, (HttpsMethod) any).writeOutput(expectedBody);
             }
         };
     }
@@ -176,8 +177,7 @@ public class HttpsRequestTest
             }
         };
 
-        HttpsRequest request =
-                new HttpsRequest(mockUrl, expectedMethod, body, "");
+        HttpsRequest request = new HttpsRequest(mockUrl, expectedMethod, body, "");
         request.send();
     }
 
@@ -249,8 +249,7 @@ public class HttpsRequestTest
             }
 
             @Mock
-            public Map<String, List<String>> getResponseHeaders()
-                    throws IOException
+            public Map<String, List<String>> getResponseHeaders() throws IOException
             {
                 return new HashMap<>();
             }
@@ -274,7 +273,7 @@ public class HttpsRequestTest
     public void sendWritesBodyToOutputStream(final @Mocked URL mockUrl) throws TransportException
     {
         final HttpsMethod httpsMethod = HttpsMethod.POST;
-        final byte[] expectedBody = { 1, 2, 3 };
+        final byte[] expectedBody = {1, 2, 3};
         new MockUp<HttpsConnection>()
         {
             byte[] testBody;
@@ -341,8 +340,7 @@ public class HttpsRequestTest
             }
         };
 
-        HttpsRequest request =
-                new HttpsRequest(mockUrl, httpsMethod, expectedBody, "");
+        HttpsRequest request = new HttpsRequest(mockUrl, httpsMethod, expectedBody, "");
         request.send();
     }
 
@@ -363,8 +361,7 @@ public class HttpsRequestTest
             }
         };
 
-        HttpsRequest request =
-                new HttpsRequest(mockUrl, httpsMethod, body, "");
+        HttpsRequest request = new HttpsRequest(mockUrl, httpsMethod, body, "");
         HttpsResponse response = request.send();
         int testStatus = response.getStatus();
 
@@ -378,7 +375,7 @@ public class HttpsRequestTest
     {
         final HttpsMethod httpsMethod = HttpsMethod.GET;
         final byte[] requestBody = new byte[0];
-        final byte[] responseBody = { 1, 2, 3, 0, 4 };
+        final byte[] responseBody = {1, 2, 3, 0, 4};
         new NonStrictExpectations()
         {
             {
@@ -391,8 +388,7 @@ public class HttpsRequestTest
             }
         };
 
-        HttpsRequest request =
-                new HttpsRequest(mockUrl, httpsMethod, requestBody, "");
+        HttpsRequest request = new HttpsRequest(mockUrl, httpsMethod, requestBody, "");
         HttpsResponse response = request.send();
         byte[] testBody = response.getBody();
 
@@ -424,8 +420,7 @@ public class HttpsRequestTest
             }
         };
 
-        HttpsRequest request =
-                new HttpsRequest(mockUrl, httpsMethod, body, "");
+        HttpsRequest request = new HttpsRequest(mockUrl, httpsMethod, body, "");
         HttpsResponse response = request.send();
         String testValues = response.getHeaderField(field);
 
@@ -452,8 +447,7 @@ public class HttpsRequestTest
             }
         };
 
-        HttpsRequest request =
-                new HttpsRequest(mockUrl, httpsMethod, body, "");
+        HttpsRequest request = new HttpsRequest(mockUrl, httpsMethod, body, "");
         request.setHeaderField(field, value);
         request.send();
         new Verifications()
@@ -482,8 +476,7 @@ public class HttpsRequestTest
             }
         };
 
-        HttpsRequest request =
-                new HttpsRequest(mockUrl, httpsMethod, body, "");
+        HttpsRequest request = new HttpsRequest(mockUrl, httpsMethod, body, "");
         request.setReadTimeoutMillis(readTimeout);
 
         final int expectedReadTimeout = readTimeout;
@@ -499,9 +492,7 @@ public class HttpsRequestTest
 
     //Tests_SRS_HTTPSREQUEST_25_016: [The function shall set the SSL context for the IotHub.]
     @Test
-    public void setSSLContextSetsSSLContext(@Mocked final HttpsConnection mockConn,
-                                            @Mocked final SSLContext mockedContext,
-                                            final @Mocked URL mockUrl) throws TransportException
+    public void setSSLContextSetsSSLContext(@Mocked final HttpsConnection mockConn, @Mocked final SSLContext mockedContext, final @Mocked URL mockUrl) throws TransportException
     {
         final HttpsMethod httpsMethod = HttpsMethod.POST;
         final byte[] body = new byte[0];
@@ -513,8 +504,7 @@ public class HttpsRequestTest
             }
         };
 
-        HttpsRequest request =
-                new HttpsRequest(mockUrl, httpsMethod, body, "");
+        HttpsRequest request = new HttpsRequest(mockUrl, httpsMethod, body, "");
         request.setSSLContext(mockedContext);
 
         request.send();
@@ -528,7 +518,7 @@ public class HttpsRequestTest
     }
 
     //Tests_SRS_HTTPSREQUEST_25_015: [The function shall throw IllegalArgumentException if argument is null.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setSSLContextThrowsOnNull(@Mocked final HttpsConnection mockConn, final @Mocked URL mockUrl) throws TransportException
     {
         final HttpsMethod httpsMethod = HttpsMethod.POST;
@@ -541,8 +531,7 @@ public class HttpsRequestTest
             }
         };
 
-        HttpsRequest request =
-                new HttpsRequest(mockUrl, httpsMethod, body, "");
+        HttpsRequest request = new HttpsRequest(mockUrl, httpsMethod, body, "");
         request.setSSLContext(null);
     }
 
@@ -599,6 +588,6 @@ public class HttpsRequestTest
         assertEquals(url, Deencapsulation.getField(request, "url"));
         assertEquals(method, Deencapsulation.getField(request, "method"));
         assertTrue(Arrays.equals(body, (byte[]) Deencapsulation.getField(request, "body")));
-        assertEquals(userAgentString, ((Map<String, List<String>>)Deencapsulation.getField(request, "headers")).get("User-Agent").get(0));
+        assertEquals(userAgentString, ((Map<String, List<String>>) Deencapsulation.getField(request, "headers")).get("User-Agent").get(0));
     }
 }

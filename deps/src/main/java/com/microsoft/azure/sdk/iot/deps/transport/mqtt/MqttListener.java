@@ -9,6 +9,7 @@ public interface MqttListener
 {
     /**
      * Called when the message gets received by PAHO
+     *
      * @param message the received Mqtt message
      */
     void messageReceived(MqttMessage message);
@@ -20,6 +21,7 @@ public interface MqttListener
 
     /**
      * Called by PAHO when the connection is lost
+     *
      * @param throwable the disconnection reason.
      */
     void connectionLost(Throwable throwable);

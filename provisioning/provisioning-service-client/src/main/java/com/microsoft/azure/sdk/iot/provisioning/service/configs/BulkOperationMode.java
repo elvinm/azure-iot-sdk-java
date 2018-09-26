@@ -12,15 +12,11 @@ import com.google.gson.annotations.SerializedName;
  */
 public enum BulkOperationMode
 {
-    @SerializedName("create")
-    CREATE,
+    @SerializedName("create") CREATE,
 
-    @SerializedName("update")
-    UPDATE,
+    @SerializedName("update") UPDATE,
 
-    @SerializedName("updateIfMatchETag")
-    UPDATE_IF_MATCH_ETAG,
+    @SerializedName("updateIfMatchETag") UPDATE_IF_MATCH_ETAG,
 
-    @SerializedName("delete")
-    DELETE
+    @SerializedName("delete") DELETE
 }

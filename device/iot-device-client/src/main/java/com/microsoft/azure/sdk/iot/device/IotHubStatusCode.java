@@ -10,20 +10,7 @@ import com.microsoft.azure.sdk.iot.device.exceptions.*;
  */
 public enum IotHubStatusCode
 {
-    OK,
-    OK_EMPTY,
-    BAD_FORMAT,
-    UNAUTHORIZED,
-    TOO_MANY_DEVICES,
-    HUB_OR_DEVICE_ID_NOT_FOUND,
-    PRECONDITION_FAILED,
-    REQUEST_ENTITY_TOO_LARGE,
-    THROTTLED,
-    INTERNAL_SERVER_ERROR,
-    SERVER_BUSY,
-    ERROR,
-    MESSAGE_EXPIRED,
-    MESSAGE_CANCELLED_ONCLOSE;
+    OK, OK_EMPTY, BAD_FORMAT, UNAUTHORIZED, TOO_MANY_DEVICES, HUB_OR_DEVICE_ID_NOT_FOUND, PRECONDITION_FAILED, REQUEST_ENTITY_TOO_LARGE, THROTTLED, INTERNAL_SERVER_ERROR, SERVER_BUSY, ERROR, MESSAGE_EXPIRED, MESSAGE_CANCELLED_ONCLOSE;
 
     public static IotHubServiceException getConnectionStatusException(IotHubStatusCode statusCode, String statusDescription)
     {
@@ -77,11 +64,9 @@ public enum IotHubStatusCode
      * Returns the IoT Hub status code referenced by the HTTPS status code.
      *
      * @param httpsStatus the HTTPS status code.
-     *
      * @return the corresponding IoT Hub status code.
-     *
      * @throws IllegalArgumentException if the HTTPS status code does not map to
-     * an IoT Hub status code.
+     *                                  an IoT Hub status code.
      */
     public static IotHubStatusCode getIotHubStatusCode(int httpsStatus)
     {

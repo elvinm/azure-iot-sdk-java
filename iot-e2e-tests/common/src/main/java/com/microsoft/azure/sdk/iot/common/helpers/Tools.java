@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package com.microsoft.azure.sdk.iot.common.helpers;
 
@@ -24,8 +24,9 @@ public class Tools
 
     /**
      * Checks if the provided exception contains a certain type of exception in its cause chain
+     *
      * @param possibleExceptionCause the type of exception to be searched for
-     * @param exceptionToSearch the exception to search the stacktrace of
+     * @param exceptionToSearch      the exception to search the stacktrace of
      * @return if any variant of the possibleExceptionCause is found at any depth of the exception cause chain
      */
     public static boolean isCause(Class<? extends Throwable> possibleExceptionCause, Throwable exceptionToSearch)

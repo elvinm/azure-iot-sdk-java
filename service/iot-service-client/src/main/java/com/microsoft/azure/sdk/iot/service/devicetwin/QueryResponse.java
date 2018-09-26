@@ -19,6 +19,7 @@ public class QueryResponse implements Iterator<Object>
 
     /**
      * Creates an object for the query response
+     *
      * @param jsonString json response for query to parse
      * @throws IOException If any of the input parameters are invalid
      */
@@ -37,6 +38,7 @@ public class QueryResponse implements Iterator<Object>
 
     /**
      * returns the availability of next response
+     *
      * @return true if present and false otherwise
      */
     @Override
@@ -48,6 +50,7 @@ public class QueryResponse implements Iterator<Object>
 
     /**
      * returns next element in the response
+     *
      * @return next element in the response
      */
     @Override

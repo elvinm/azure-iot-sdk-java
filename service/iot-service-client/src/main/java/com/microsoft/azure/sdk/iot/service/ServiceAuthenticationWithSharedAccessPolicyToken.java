@@ -14,6 +14,20 @@ package com.microsoft.azure.sdk.iot.service;
 public class ServiceAuthenticationWithSharedAccessPolicyToken extends AuthenticationMethod
 {
     /**
+     * Constructor to create instance from policy name and policy key
+     *
+     * @param policyName The policy name string
+     * @param token      The token string
+     */
+    public ServiceAuthenticationWithSharedAccessPolicyToken(String policyName, String token)
+    {
+        this.setPolicyName(policyName);
+        this.setToken(token);
+    }
+
+    // Codes_SRS_SERVICE_SDK_JAVA_SERVICEAUTHENTICATIONWITHSHAREDACCESSTOKEN_12_001: [Provide access to the following properties: policyName, token]
+
+    /**
      * Populate given IotHubConnectionString with proper
      * policy token authentication data
      *
@@ -39,22 +53,9 @@ public class ServiceAuthenticationWithSharedAccessPolicyToken extends Authentica
         return iotHubConnectionString;
     }
 
-    // Codes_SRS_SERVICE_SDK_JAVA_SERVICEAUTHENTICATIONWITHSHAREDACCESSTOKEN_12_001: [Provide access to the following properties: policyName, token]
-
-    /**
-     * Constructor to create instance from policy name and policy key
-     *
-     * @param policyName The policy name string
-     * @param token The token string
-     */
-    public ServiceAuthenticationWithSharedAccessPolicyToken(String policyName, String token)
-    {
-        this.setPolicyName(policyName);
-        this.setToken(token);
-    }
-
     /**
      * Getter for policy name
+     *
      * @return The policy name string
      */
     public String getPolicyName()
@@ -64,6 +65,7 @@ public class ServiceAuthenticationWithSharedAccessPolicyToken extends Authentica
 
     /**
      * Setter for policy name
+     *
      * @param policyName The string value to set
      */
     protected void setPolicyName(String policyName)
@@ -73,6 +75,7 @@ public class ServiceAuthenticationWithSharedAccessPolicyToken extends Authentica
 
     /**
      * Getter for policy token
+     *
      * @return The policy token string
      */
     public String getToken()
@@ -82,6 +85,7 @@ public class ServiceAuthenticationWithSharedAccessPolicyToken extends Authentica
 
     /**
      * Setter for policy token
+     *
      * @param token The string value to set
      */
     protected void setToken(String token)

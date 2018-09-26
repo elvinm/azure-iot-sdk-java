@@ -26,20 +26,20 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class SendMessagesIT extends SendMessagesCommon
 {
+    public SendMessagesIT(InternalClient client, IotHubClientProtocol protocol, Device device, AuthenticationType authenticationType, String clientType)
+    {
+        super(client, protocol, device, authenticationType, clientType);
+    }
+
     //This function is run before even the @BeforeClass annotation, so it is used as the @BeforeClass method
     @Parameterized.Parameters(name = "{1} with {3} auth using {4}")
     public static Collection inputs() throws IOException, IotHubException, GeneralSecurityException, URISyntaxException, ModuleClientException
     {
         iotHubConnectionString = Tools.retrieveEnvironmentVariableValue(TestConstants.IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME);
-        X509Cert cert = new X509Cert(0,false, "TestLeaf", "TestRoot");
-        privateKey =  cert.getPrivateKeyLeafPem();
+        X509Cert cert = new X509Cert(0, false, "TestLeaf", "TestRoot");
+        privateKey = cert.getPrivateKeyLeafPem();
         publicKeyCert = cert.getPublicCertLeafPem();
         x509Thumbprint = cert.getThumbPrintLeaf();
         return SendMessagesCommon.inputsCommon();
-    }
-
-    public SendMessagesIT(InternalClient client, IotHubClientProtocol protocol, Device device, AuthenticationType authenticationType, String clientType)
-    {
-        super(client, protocol, device, authenticationType, clientType);
     }
 }

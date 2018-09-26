@@ -22,7 +22,7 @@ import java.util.Set;
 public class DeviceTwinDevice
 {
     /**
-     *Codes_SRS_DEVICETWINDEVICE_25_001: [** The DeviceTwinDevice class has the following properties: deviceId, a container for tags, desired and reported properties, and a twin object. **]**
+     * Codes_SRS_DEVICETWINDEVICE_25_001: [** The DeviceTwinDevice class has the following properties: deviceId, a container for tags, desired and reported properties, and a twin object. **]**
      */
     private String deviceId;
     private String moduleId;
@@ -40,7 +40,7 @@ public class DeviceTwinDevice
     public DeviceTwinDevice()
     {
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_003: [** The constructor shall create a new instance of twin object for this device and store the device id.**]**
+         **Codes_SRS_DEVICETWINDEVICE_25_003: [** The constructor shall create a new instance of twin object for this device and store the device id.**]**
          */
         this.deviceId = null;
         this.moduleId = null;
@@ -61,7 +61,7 @@ public class DeviceTwinDevice
         if (Tools.isNullOrEmpty(deviceId))
         {
             /*
-            **Codes_SRS_DEVICETWINDEVICE_25_002: [** The constructor shall throw IllegalArgumentException if the input string is empty or null.**]**
+             **Codes_SRS_DEVICETWINDEVICE_25_002: [** The constructor shall throw IllegalArgumentException if the input string is empty or null.**]**
              */
             throw new IllegalArgumentException("Device ID cannot be null or empty");
         }
@@ -100,18 +100,20 @@ public class DeviceTwinDevice
 
     /**
      * Getter to get device ID
+     *
      * @return device id for this device
      */
     public String getDeviceId()
     {
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_004: [** This method shall return the device id **]**
+         **Codes_SRS_DEVICETWINDEVICE_25_004: [** This method shall return the device id **]**
          */
         return this.deviceId;
     }
 
     /**
      * Getter to get module ID
+     *
      * @return device id for this device
      */
     public String getModuleId()
@@ -120,6 +122,30 @@ public class DeviceTwinDevice
          **Codes_SRS_DEVICETWINDEVICE_28_001: [** This method shall return the module id **]**
          */
         return this.moduleId;
+    }
+
+    /**
+     * Sets the module id of this object
+     *
+     * @param moduleId the module id of this object. Allowed to be null or empty
+     */
+    void setModuleId(String moduleId)
+    {
+        // Codes_SRS_DEVICETWINDEVICE_34_040: [This method shall save the provided moduleId.]
+        this.moduleId = moduleId;
+    }
+
+    /**
+     * Getter for the eTag
+     *
+     * @return the stored eTag. It will be {@code null} if not set.
+     */
+    public String getETag()
+    {
+        /*
+         **Codes_SRS_DEVICETWINDEVICE_21_031: [** The geteTag shall return the stored eTag.**]**
+         */
+        return this.eTag;
     }
 
     /**
@@ -133,41 +159,15 @@ public class DeviceTwinDevice
         if (Tools.isNullOrEmpty(eTag))
         {
             /*
-            **Codes_SRS_DEVICETWINDEVICE_21_029: [** The seteTag shall throw IllegalArgumentException if the input string is empty or null.**]**
+             **Codes_SRS_DEVICETWINDEVICE_21_029: [** The seteTag shall throw IllegalArgumentException if the input string is empty or null.**]**
              */
             throw new IllegalArgumentException("ETag cannot be null or empty");
         }
 
         /*
-        **Codes_SRS_DEVICETWINDEVICE_21_030: [** The seteTag shall store the eTag.**]**
+         **Codes_SRS_DEVICETWINDEVICE_21_030: [** The seteTag shall store the eTag.**]**
          */
         this.eTag = eTag;
-    }
-
-    /**
-     * Getter for the eTag
-     *
-     * @return the stored eTag. It will be {@code null} if not set.
-     */
-    public String getETag()
-    {
-        /*
-        **Codes_SRS_DEVICETWINDEVICE_21_031: [** The geteTag shall return the stored eTag.**]**
-         */
-        return this.eTag;
-    }
-
-    /**
-     * Setter for Twin version
-     *
-     * @param version is the value of the version
-     */
-    void setVersion(Integer version)
-    {
-        /*
-        **Codes_SRS_DEVICETWINDEVICE_21_032: [** The setVersion shall store the Twin version.**]**
-         */
-        this.version = version;
     }
 
     /**
@@ -178,9 +178,22 @@ public class DeviceTwinDevice
     public Integer getVersion()
     {
         /*
-        **Codes_SRS_DEVICETWINDEVICE_21_033: [** The getVersion shall return the stored Twin version.**]**
+         **Codes_SRS_DEVICETWINDEVICE_21_033: [** The getVersion shall return the stored Twin version.**]**
          */
         return this.version;
+    }
+
+    /**
+     * Setter for Twin version
+     *
+     * @param version is the value of the version
+     */
+    void setVersion(Integer version)
+    {
+        /*
+         **Codes_SRS_DEVICETWINDEVICE_21_032: [** The setVersion shall store the Twin version.**]**
+         */
+        this.version = version;
     }
 
     /**
@@ -194,28 +207,41 @@ public class DeviceTwinDevice
         if (tags == null)
         {
             /*
-            **Codes_SRS_DEVICETWINDEVICE_25_008: [** If the tags Set is null then this method shall throw IllegalArgumentException.**]**
+             **Codes_SRS_DEVICETWINDEVICE_25_008: [** If the tags Set is null then this method shall throw IllegalArgumentException.**]**
              */
             throw new IllegalArgumentException("tags cannot be null");
         }
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_007: [** This method shall convert the set of pairs of tags to a map and save it. **]**
+         **Codes_SRS_DEVICETWINDEVICE_25_007: [** This method shall convert the set of pairs of tags to a map and save it. **]**
          */
         this.tag = this.setToMap(tags);
     }
 
-
     /**
      * Getter to get Tags Set
+     *
      * @return A set of tag key value pairs.
      */
     public Set<Pair> getTags()
     {
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_009: [** This method shall convert the tags map to a set of pairs and return with it. **]**
-        **Codes_SRS_DEVICETWINDEVICE_25_010: [** If the tags map is null then this method shall return empty set of pairs.**]**
+         **Codes_SRS_DEVICETWINDEVICE_25_009: [** This method shall convert the tags map to a set of pairs and return with it. **]**
+         **Codes_SRS_DEVICETWINDEVICE_25_010: [** If the tags map is null then this method shall return empty set of pairs.**]**
          */
         return this.mapToSet(this.tag);
+    }
+
+    /**
+     * Setter for the tags
+     *
+     * @param tag A map of validated key and value pairs for tag
+     */
+    protected void setTags(TwinCollection tag)
+    {
+        /*
+         **Codes_SRS_DEVICETWINDEVICE_25_024: [** This method shall save the tags map**]**
+         */
+        this.tag = tag;
     }
 
     /**
@@ -234,7 +260,7 @@ public class DeviceTwinDevice
      */
     public Integer getTagsVersion()
     {
-        if(this.tag == null)
+        if (this.tag == null)
         {
             /*
              **Codes_SRS_DEVICETWINDEVICE_21_034: [** If the tags map is null then this method shall throw IllegalArgumentException.**]**
@@ -249,15 +275,29 @@ public class DeviceTwinDevice
 
     /**
      * Getter to get Desired Properties set
+     *
      * @return A set of desired property pairs.
      */
     public Set<Pair> getDesiredProperties()
     {
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_013: [** This method shall convert the desiredProperties map to a set of pairs and return with it. **]**
-        **Codes_SRS_DEVICETWINDEVICE_25_014: [** If the desiredProperties map is null then this method shall return empty set of pairs.**]**
+         **Codes_SRS_DEVICETWINDEVICE_25_013: [** This method shall convert the desiredProperties map to a set of pairs and return with it. **]**
+         **Codes_SRS_DEVICETWINDEVICE_25_014: [** If the desiredProperties map is null then this method shall return empty set of pairs.**]**
          */
         return this.mapToSet(this.desiredProperties);
+    }
+
+    /**
+     * Setter for the desired properties
+     *
+     * @param desiredProperties A map of validated key and value pairs for desired properties
+     */
+    protected void setDesiredProperties(TwinCollection desiredProperties)
+    {
+        /*
+         **Codes_SRS_DEVICETWINDEVICE_25_023: [** This method shall save the desiredProperties map**]**
+         */
+        this.desiredProperties = desiredProperties;
     }
 
     /**
@@ -271,24 +311,14 @@ public class DeviceTwinDevice
         if (desiredProperties == null)
         {
             /*
-            **Codes_SRS_DEVICETWINDEVICE_25_012: [** If the desiredProperties Set is null then this method shall throw IllegalArgumentException.**]**
+             **Codes_SRS_DEVICETWINDEVICE_25_012: [** If the desiredProperties Set is null then this method shall throw IllegalArgumentException.**]**
              */
             throw new IllegalArgumentException("desiredProperties cannot be null");
         }
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_011: [** This method shall convert the set of pairs of desiredProperties to a map and save it. **]**
+         **Codes_SRS_DEVICETWINDEVICE_25_011: [** This method shall convert the set of pairs of desiredProperties to a map and save it. **]**
          */
         this.desiredProperties = this.setToMap(desiredProperties);
-    }
-
-    /**
-     * Sets the module id of this object
-     * @param moduleId the module id of this object. Allowed to be null or empty
-     */
-    void setModuleId(String moduleId)
-    {
-        // Codes_SRS_DEVICETWINDEVICE_34_040: [This method shall save the provided moduleId.]
-        this.moduleId = moduleId;
     }
 
     /**
@@ -307,7 +337,7 @@ public class DeviceTwinDevice
      */
     public Integer getDesiredPropertiesVersion()
     {
-        if(this.desiredProperties == null)
+        if (this.desiredProperties == null)
         {
             /*
              **Codes_SRS_DEVICETWINDEVICE_21_036: [** If the desired properties is null then this method shall throw IllegalArgumentException.**]**
@@ -331,17 +361,31 @@ public class DeviceTwinDevice
 
     /**
      * Getter to get Reported Properties Set
+     *
      * @return A set of reported property pairs.
      */
     public Set<Pair> getReportedProperties()
     {
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_005: [** This method shall convert the reported properties map to a set of pairs and return with it. **]**
+         **Codes_SRS_DEVICETWINDEVICE_25_005: [** This method shall convert the reported properties map to a set of pairs and return with it. **]**
          */
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_006: [** If the reported properties map is null then this method shall return empty set of pairs.**]**
+         **Codes_SRS_DEVICETWINDEVICE_25_006: [** If the reported properties map is null then this method shall return empty set of pairs.**]**
          */
         return this.mapToSet(this.reportedProperties);
+    }
+
+    /**
+     * Setter for the reported properties
+     *
+     * @param reportedProperties A map of validated key and value pairs for reported properties
+     */
+    protected void setReportedProperties(TwinCollection reportedProperties)
+    {
+        /*
+         **Codes_SRS_DEVICETWINDEVICE_25_022: [** This method shall save the reportedProperties map**]**
+         */
+        this.reportedProperties = reportedProperties;
     }
 
     /**
@@ -352,7 +396,7 @@ public class DeviceTwinDevice
      */
     public Integer getReportedPropertiesVersion()
     {
-        if(this.reportedProperties == null)
+        if (this.reportedProperties == null)
         {
             /*
              **Codes_SRS_DEVICETWINDEVICE_21_038: [** If the reported properties is null then this method shall throw IllegalArgumentException.**]**
@@ -366,53 +410,14 @@ public class DeviceTwinDevice
     }
 
     /**
-     * Setter for the reported properties
-     *
-     * @param reportedProperties A map of validated key and value pairs for reported properties
-     */
-    protected void setReportedProperties(TwinCollection reportedProperties)
-    {
-        /*
-        **Codes_SRS_DEVICETWINDEVICE_25_022: [** This method shall save the reportedProperties map**]**
-         */
-        this.reportedProperties = reportedProperties;
-    }
-
-    /**
-     * Setter for the desired properties
-     *
-     * @param desiredProperties A map of validated key and value pairs for desired properties
-     */
-    protected void setDesiredProperties(TwinCollection desiredProperties)
-    {
-        /*
-        **Codes_SRS_DEVICETWINDEVICE_25_023: [** This method shall save the desiredProperties map**]**
-         */
-        this.desiredProperties = desiredProperties;
-    }
-
-    /**
-     * Setter for the tags
-     *
-     * @param tag A map of validated key and value pairs for tag
-     */
-    protected void setTags(TwinCollection tag)
-    {
-        /*
-        **Codes_SRS_DEVICETWINDEVICE_25_024: [** This method shall save the tags map**]**
-         */
-        this.tag = tag;
-    }
-
-    /**
      * Getter for the tags
      *
-     * @return  A map of validated key and value pairs for tag
+     * @return A map of validated key and value pairs for tag
      */
     protected TwinCollection getTagsMap()
     {
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_025: [** This method shall return the tags map**]**
+         **Codes_SRS_DEVICETWINDEVICE_25_025: [** This method shall return the tags map**]**
          */
         return this.tag;
     }
@@ -420,12 +425,12 @@ public class DeviceTwinDevice
     /**
      * Getter for the desired properties
      *
-     * @return  A map of validated key and value pairs for desired properties
+     * @return A map of validated key and value pairs for desired properties
      */
     protected TwinCollection getDesiredMap()
     {
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_027: [** This method shall return the desiredProperties map**]**
+         **Codes_SRS_DEVICETWINDEVICE_25_027: [** This method shall return the desiredProperties map**]**
          */
         return this.desiredProperties;
     }
@@ -433,27 +438,14 @@ public class DeviceTwinDevice
     /**
      * Getter for the reported properties
      *
-     * @return  A map of validated key and value pairs for reported properties
+     * @return A map of validated key and value pairs for reported properties
      */
     protected TwinCollection getReportedMap()
     {
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_026: [** This method shall return the reportedProperties map**]**
+         **Codes_SRS_DEVICETWINDEVICE_25_026: [** This method shall return the reportedProperties map**]**
          */
         return this.reportedProperties;
-    }
-
-    /**
-     * Setter for the configuration properties
-     *
-     * @param configurations is the configuration properties.
-     */
-    protected void setConfigurations(Map<String, ConfigurationInfo> configurations)
-    {
-        /*
-         **Codes_SRS_DEVICETWINDEVICE_28_002: [** The getConfigurations shall return the stored configuration properties.**]**
-         */
-        this.configurations = configurations;
     }
 
     /**
@@ -470,16 +462,16 @@ public class DeviceTwinDevice
     }
 
     /**
-     * Setter for capabilities
+     * Setter for the configuration properties
      *
-     * @param capabilities is the value of the capabilities
+     * @param configurations is the configuration properties.
      */
-    protected void setCapabilities(DeviceCapabilities capabilities)
+    protected void setConfigurations(Map<String, ConfigurationInfo> configurations)
     {
         /*
-         **Codes_SRS_DEVICETWINDEVICE_28_003: [** The setCapabilities shall store the device capabilities.**]**
+         **Codes_SRS_DEVICETWINDEVICE_28_002: [** The getConfigurations shall return the stored configuration properties.**]**
          */
-        this.capabilities = capabilities;
+        this.configurations = configurations;
     }
 
     /**
@@ -496,13 +488,27 @@ public class DeviceTwinDevice
     }
 
     /**
+     * Setter for capabilities
+     *
+     * @param capabilities is the value of the capabilities
+     */
+    protected void setCapabilities(DeviceCapabilities capabilities)
+    {
+        /*
+         **Codes_SRS_DEVICETWINDEVICE_28_003: [** The setCapabilities shall store the device capabilities.**]**
+         */
+        this.capabilities = capabilities;
+    }
+
+    /**
      * String representation for this device containing device id, tags, desired and reported properties
-     * @return  String representation for this device
+     *
+     * @return String representation for this device
      */
     public String toString()
     {
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_015: [** This method shall append device id, module id, etag, version, tags, desired and reported properties to string (if present) and return **]**
+         **Codes_SRS_DEVICETWINDEVICE_25_015: [** This method shall append device id, module id, etag, version, tags, desired and reported properties to string (if present) and return **]**
          */
         StringBuilder thisDevice = new StringBuilder();
 
@@ -511,11 +517,11 @@ public class DeviceTwinDevice
         {
             thisDevice.append("Module ID: " + this.getModuleId() + "\n");
         }
-        if(this.getETag() != null)
+        if (this.getETag() != null)
         {
             thisDevice.append("ETag: " + this.getETag() + "\n");
         }
-        if(this.getVersion() != null)
+        if (this.getVersion() != null)
         {
             thisDevice.append("Version: " + this.getVersion() + "\n");
         }
@@ -528,12 +534,13 @@ public class DeviceTwinDevice
 
     /**
      * String representation for this device containing tags
-     * @return  String representation for this device tags
+     *
+     * @return String representation for this device tags
      */
     public String tagsToString()
     {
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_016: [** This method shall convert the tags map to string (if present) and return **]**
+         **Codes_SRS_DEVICETWINDEVICE_25_016: [** This method shall convert the tags map to string (if present) and return **]**
          */
         StringBuilder thisDeviceTags = new StringBuilder();
         if (tag != null)
@@ -541,7 +548,7 @@ public class DeviceTwinDevice
             thisDeviceTags.append("Tags:" + this.tag.toString() + "\n");
         }
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_017: [** This method shall return an empty string if tags map is empty or null and return **]**
+         **Codes_SRS_DEVICETWINDEVICE_25_017: [** This method shall return an empty string if tags map is empty or null and return **]**
          */
         return thisDeviceTags.toString();
 
@@ -549,7 +556,8 @@ public class DeviceTwinDevice
 
     /**
      * String representation for this device containing desired properties
-     * @return  String representation for this device desired properties
+     *
+     * @return String representation for this device desired properties
      */
     public String desiredPropertiesToString()
     {
@@ -557,19 +565,20 @@ public class DeviceTwinDevice
         if (this.desiredProperties != null)
         {
             /*
-            **Codes_SRS_DEVICETWINDEVICE_25_018: [** This method shall convert the desiredProperties map to string (if present) and return **]**
+             **Codes_SRS_DEVICETWINDEVICE_25_018: [** This method shall convert the desiredProperties map to string (if present) and return **]**
              */
             thisDeviceRepProp.append("Desired Properties: " + this.desiredProperties.toString() + "\n");
         }
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_019: [** This method shall return an empty string if desiredProperties map is empty or null and return **]**
+         **Codes_SRS_DEVICETWINDEVICE_25_019: [** This method shall return an empty string if desiredProperties map is empty or null and return **]**
          */
         return thisDeviceRepProp.toString();
     }
 
     /**
      * String representation for this device containing reported properties
-     * @return  String representation for this device reported properties
+     *
+     * @return String representation for this device reported properties
      */
     public String reportedPropertiesToString()
     {
@@ -577,12 +586,12 @@ public class DeviceTwinDevice
         if (this.reportedProperties != null)
         {
             /*
-            **Codes_SRS_DEVICETWINDEVICE_25_020: [** This method shall convert the reportedProperties map to string (if present) and return **]**
+             **Codes_SRS_DEVICETWINDEVICE_25_020: [** This method shall convert the reportedProperties map to string (if present) and return **]**
              */
             thisDeviceDesProp.append("Reported Properties" + this.reportedProperties.toString() + "\n");
         }
         /*
-        **Codes_SRS_DEVICETWINDEVICE_25_021: [** This method shall return an empty string if reportedProperties map is empty or null and return **]**
+         **Codes_SRS_DEVICETWINDEVICE_25_021: [** This method shall return an empty string if reportedProperties map is empty or null and return **]**
          */
         return thisDeviceDesProp.toString();
     }

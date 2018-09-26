@@ -19,19 +19,7 @@ public class ServiceEnrollmentGroupSample
      * Details of the Provisioning.
      */
     private static final String PROVISIONING_CONNECTION_STRING = "[Provisioning Connection String]";
-    private static final String PUBLIC_KEY_CERTIFICATE_STRING =
-            "-----BEGIN CERTIFICATE-----\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "-----END CERTIFICATE-----\n";
+    private static final String PUBLIC_KEY_CERTIFICATE_STRING = "-----BEGIN CERTIFICATE-----\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "-----END CERTIFICATE-----\n";
 
     /*
      * The IoT Hub Host Name is an optional parameter, and it must fit one of the IoTHubs that you linked to your
@@ -49,20 +37,16 @@ public class ServiceEnrollmentGroupSample
         String enrollmentGroupId = "enrollmentgroupid-" + UUID.randomUUID();
 
         // *********************************** Create a Provisioning Service Client ************************************
-        ProvisioningServiceClient provisioningServiceClient =
-                ProvisioningServiceClient.createFromConnectionString(PROVISIONING_CONNECTION_STRING);
+        ProvisioningServiceClient provisioningServiceClient = ProvisioningServiceClient.createFromConnectionString(PROVISIONING_CONNECTION_STRING);
 
         // *************************************** Create a new enrollmentGroup ****************************************
         System.out.println("\nCreate a new enrollmentGroup...");
         Attestation attestation = X509Attestation.createFromRootCertificates(PUBLIC_KEY_CERTIFICATE_STRING);
-        EnrollmentGroup enrollmentGroup =
-                new EnrollmentGroup(
-                        enrollmentGroupId,
-                        attestation);
+        EnrollmentGroup enrollmentGroup = new EnrollmentGroup(enrollmentGroupId, attestation);
         enrollmentGroup.setIotHubHostName(IOTHUB_HOST_NAME);                // Optional parameter.
         enrollmentGroup.setProvisioningStatus(ProvisioningStatus.ENABLED);  // Optional parameter.
         System.out.println("\nAdd new enrollmentGroup...");
-        EnrollmentGroup enrollmentGroupResult =  provisioningServiceClient.createOrUpdateEnrollmentGroup(enrollmentGroup);
+        EnrollmentGroup enrollmentGroupResult = provisioningServiceClient.createOrUpdateEnrollmentGroup(enrollmentGroup);
         System.out.println("\nEnrollmentGroup created with success...");
         System.out.println(enrollmentGroupResult);
 
@@ -73,12 +57,10 @@ public class ServiceEnrollmentGroupSample
 
         // *************************************** Query info of enrollmentGroup ***************************************
         System.out.println("\nCreate a query for the enrollmentGroups...");
-        QuerySpecification querySpecification =
-                new QuerySpecificationBuilder("*", QuerySpecificationBuilder.FromType.ENROLLMENT_GROUPS)
-                        .createSqlQuery();
+        QuerySpecification querySpecification = new QuerySpecificationBuilder("*", QuerySpecificationBuilder.FromType.ENROLLMENT_GROUPS).createSqlQuery();
         Query query = provisioningServiceClient.createEnrollmentGroupQuery(querySpecification);
 
-        while(query.hasNext())
+        while (query.hasNext())
         {
             System.out.println("\nQuery the next enrollmentGroups...");
             QueryResult queryResult = query.next();

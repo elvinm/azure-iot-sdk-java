@@ -9,24 +9,17 @@ import com.google.gson.annotations.SerializedName;
 
 public enum ImportMode
 {
-    @SerializedName("createOrUpdate")
-    CreateOrUpdate,
+    @SerializedName("createOrUpdate") CreateOrUpdate,
 
-    @SerializedName("create")
-    Create,
+    @SerializedName("create") Create,
 
-    @SerializedName("update")
-    Update,
+    @SerializedName("update") Update,
 
-    @SerializedName("updateIfMatchETag")
-    UpdateIfMatchETag,
+    @SerializedName("updateIfMatchETag") UpdateIfMatchETag,
 
-    @SerializedName("createOrUpdateIfMatchETag")
-    CreateOrUpdateIfMatchETag,
+    @SerializedName("createOrUpdateIfMatchETag") CreateOrUpdateIfMatchETag,
 
-    @SerializedName("delete")
-    Delete,
+    @SerializedName("delete") Delete,
 
-    @SerializedName("deleteIfMatchETag")
-    DeleteIfMatchETag
+    @SerializedName("deleteIfMatchETag") DeleteIfMatchETag
 }

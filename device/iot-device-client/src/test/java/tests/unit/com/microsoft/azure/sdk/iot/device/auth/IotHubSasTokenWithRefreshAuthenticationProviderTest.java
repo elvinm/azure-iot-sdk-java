@@ -19,35 +19,6 @@ import static junit.framework.TestCase.assertFalse;
 
 public class IotHubSasTokenWithRefreshAuthenticationProviderTest
 {
-    private class IotHubImplSasTokenWithRefreshAuthenticationProvider extends IotHubSasTokenWithRefreshAuthenticationProvider
-    {
-        protected IotHubImplSasTokenWithRefreshAuthenticationProvider(String hostname, String gatewayHostName, String deviceId, String moduleId, String sharedAccessToken, int suggestedTimeToLiveSeconds, int timeBufferPercentage)
-        {
-            super(hostname, gatewayHostName, deviceId, moduleId, sharedAccessToken, suggestedTimeToLiveSeconds, timeBufferPercentage);
-        }
-
-        public void refreshSasToken() throws IOException, TransportException
-        {
-            this.sasToken = nextToken;
-        }
-
-        @Override
-        public boolean canRefreshToken()
-        {
-            return true;
-        }
-
-        @Override
-        public boolean shouldRefreshToken()
-        {
-            return this.shouldRefresh;
-        }
-
-        //test impl only methods. Used to create scenarios
-        private IotHubSasToken nextToken;
-        private boolean shouldRefresh;
-    }
-
     private final String expectedHostname = "somehostname";
     private final String expectedDeviceId = "somedeviceid";
     private final String expectedModuleId = "somemoduleid";
@@ -55,35 +26,34 @@ public class IotHubSasTokenWithRefreshAuthenticationProviderTest
     private final String expectedSharedAccessToken = "1234";
     private final int expectedTimeToLive = 10;
     private final int expectedTimeBufferPercentage = 10;
-
     @Mocked
     IotHubSasToken mockedIotHubSasToken;
 
     // Tests_SRS_MODULEAUTHENTICATIONWITHTOKENREFRESH_34_001: [If any of the provided arguments are null or empty, this
     // function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void buildAudienceRequiresHostname()
     {
         //act
-        Deencapsulation.invoke(IotHubSasTokenWithRefreshAuthenticationProvider.class, "buildAudience", new Class[] {String.class, String.class, String.class}, null, "1", "2");
+        Deencapsulation.invoke(IotHubSasTokenWithRefreshAuthenticationProvider.class, "buildAudience", new Class[]{String.class, String.class, String.class}, null, "1", "2");
     }
 
     // Tests_SRS_MODULEAUTHENTICATIONWITHTOKENREFRESH_34_001: [If any of the provided arguments are null or empty, this
     // function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void buildAudienceRequiresDeviceId()
     {
         //act
-        Deencapsulation.invoke(IotHubSasTokenWithRefreshAuthenticationProvider.class, "buildAudience", new Class[] {String.class, String.class, String.class}, "1", null, "2");
+        Deencapsulation.invoke(IotHubSasTokenWithRefreshAuthenticationProvider.class, "buildAudience", new Class[]{String.class, String.class, String.class}, "1", null, "2");
     }
 
     // Tests_SRS_MODULEAUTHENTICATIONWITHTOKENREFRESH_34_001: [If any of the provided arguments are null or empty, this
     // function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void buildAudienceRequiresModuleId()
     {
         //act
-        Deencapsulation.invoke(IotHubSasTokenWithRefreshAuthenticationProvider.class, "buildAudience", new Class[] {String.class, String.class, String.class}, "1", "2", null);
+        Deencapsulation.invoke(IotHubSasTokenWithRefreshAuthenticationProvider.class, "buildAudience", new Class[]{String.class, String.class, String.class}, "1", "2", null);
     }
 
     // Tests_SRS_MODULEAUTHENTICATIONWITHTOKENREFRESH_34_002: [This function shall return the path
@@ -95,7 +65,7 @@ public class IotHubSasTokenWithRefreshAuthenticationProviderTest
         String expected = expectedHostname + "%2Fdevices%2F" + expectedDeviceId + "%2Fmodules%2F" + expectedModuleId;
 
         //act
-        String actual = Deencapsulation.invoke(IotHubSasTokenWithRefreshAuthenticationProvider.class, "buildAudience", new Class[] {String.class, String.class, String.class}, expectedHostname, expectedDeviceId, expectedModuleId);
+        String actual = Deencapsulation.invoke(IotHubSasTokenWithRefreshAuthenticationProvider.class, "buildAudience", new Class[]{String.class, String.class, String.class}, expectedHostname, expectedDeviceId, expectedModuleId);
 
         //assert
         assertEquals(expected, actual);
@@ -118,7 +88,7 @@ public class IotHubSasTokenWithRefreshAuthenticationProviderTest
     public void getRenewedSasTokenRefreshesIfNeeded() throws IOException, TransportException
     {
         //arrange
-        final IotHubSasToken oldSasToken = Deencapsulation.newInstance(IotHubSasToken.class, new Class[] {String.class, String.class, String.class, String.class, String.class, long.class}, "", "", "", "", "", 1);
+        final IotHubSasToken oldSasToken = Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, "", "", "", "", "", 1);
         final IotHubSasToken newSasToken = mockedIotHubSasToken;
         IotHubImplSasTokenWithRefreshAuthenticationProvider moduleAuthenticationWithTokenRefresh = new IotHubImplSasTokenWithRefreshAuthenticationProvider(expectedHostname, expectedGatewayHostname, expectedDeviceId, expectedModuleId, expectedSharedAccessToken, expectedTimeToLive, expectedTimeBufferPercentage);
         Deencapsulation.setField(moduleAuthenticationWithTokenRefresh, "sasToken", oldSasToken);
@@ -138,7 +108,7 @@ public class IotHubSasTokenWithRefreshAuthenticationProviderTest
     public void getRenewedSasTokenDoesNotRefreshIfNotNeeded() throws IOException, TransportException
     {
         //arrange
-        final IotHubSasToken oldSasToken = Deencapsulation.newInstance(IotHubSasToken.class, new Class[] {String.class, String.class, String.class, String.class, String.class, long.class}, "", "", "", "", "", 1);
+        final IotHubSasToken oldSasToken = Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, "", "", "", "", "", 1);
         final IotHubSasToken newSasToken = mockedIotHubSasToken;
         IotHubImplSasTokenWithRefreshAuthenticationProvider moduleAuthenticationWithTokenRefresh = new IotHubImplSasTokenWithRefreshAuthenticationProvider(expectedHostname, expectedGatewayHostname, expectedDeviceId, expectedModuleId, expectedSharedAccessToken, expectedTimeToLive, expectedTimeBufferPercentage);
         Deencapsulation.setField(moduleAuthenticationWithTokenRefresh, "sasToken", oldSasToken);
@@ -150,6 +120,35 @@ public class IotHubSasTokenWithRefreshAuthenticationProviderTest
 
         //assert
         assertEquals(oldSasToken.toString(), actual);
+    }
+
+    private class IotHubImplSasTokenWithRefreshAuthenticationProvider extends IotHubSasTokenWithRefreshAuthenticationProvider
+    {
+        //test impl only methods. Used to create scenarios
+        private IotHubSasToken nextToken;
+        private boolean shouldRefresh;
+
+        protected IotHubImplSasTokenWithRefreshAuthenticationProvider(String hostname, String gatewayHostName, String deviceId, String moduleId, String sharedAccessToken, int suggestedTimeToLiveSeconds, int timeBufferPercentage)
+        {
+            super(hostname, gatewayHostName, deviceId, moduleId, sharedAccessToken, suggestedTimeToLiveSeconds, timeBufferPercentage);
+        }
+
+        public void refreshSasToken() throws IOException, TransportException
+        {
+            this.sasToken = nextToken;
+        }
+
+        @Override
+        public boolean canRefreshToken()
+        {
+            return true;
+        }
+
+        @Override
+        public boolean shouldRefreshToken()
+        {
+            return this.shouldRefresh;
+        }
     }
 
 }

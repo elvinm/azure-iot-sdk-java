@@ -10,16 +10,14 @@ import java.util.Map;
 public class ConfigurationMetricsParser
 {
     private static final String RESULTS_NAME = "results";
+    private static final String QUERIES_NAME = "queries";
+    private transient static Gson gson = new Gson();
     @Expose(serialize = true, deserialize = true)
     @SerializedName(RESULTS_NAME)
     private Map<String, Long> results;
-
-    private static final String QUERIES_NAME = "queries";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(QUERIES_NAME)
     private Map<String, String> queries;
-
-    private transient static Gson gson = new Gson();
 
     /**
      * Empty constructor: Used only to keep GSON happy.
@@ -30,6 +28,7 @@ public class ConfigurationMetricsParser
 
     /**
      * Constructor for an ConfigurationMetricsParser that is built using the provided json
+     *
      * @param json the json string to build the ConfigurationMetricsParser out of
      */
     public ConfigurationMetricsParser(String json)
@@ -60,6 +59,7 @@ public class ConfigurationMetricsParser
 
     /**
      * Converts this into json and returns it
+     *
      * @return the json representation of this
      */
     public String toJson()
@@ -81,6 +81,7 @@ public class ConfigurationMetricsParser
 
     /**
      * Setter for results
+     *
      * @param results the value to set results to
      */
     public void setResults(Map<String, Long> results)
@@ -102,6 +103,7 @@ public class ConfigurationMetricsParser
 
     /**
      * Setter for queries
+     *
      * @param queries the value to set queries to
      */
     public void setQueries(Map<String, String> queries)

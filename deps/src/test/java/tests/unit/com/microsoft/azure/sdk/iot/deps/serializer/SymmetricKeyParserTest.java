@@ -83,29 +83,29 @@ public class SymmetricKeyParserTest
     }
 
     //Tests_SRS_SymmetricKeyParser_34_002: [If the provided primaryKey value is null, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setPrimaryKeyNullValueThrowsIllegalArgumentException()
     {
         //arrange
-        SymmetricKeyParser parser = new SymmetricKeyParser("","");
+        SymmetricKeyParser parser = new SymmetricKeyParser("", "");
 
         //act
         parser.setPrimaryKey(null);
     }
 
     //Tests_SRS_SymmetricKeyParser_34_005: [If the provided secondaryKey value is null, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setSecondaryKeyNullValueThrowsIllegalArgumentException()
     {
         //arrange
-        SymmetricKeyParser parser = new SymmetricKeyParser("","");
+        SymmetricKeyParser parser = new SymmetricKeyParser("", "");
 
         //act
         parser.setSecondaryKey(null);
     }
 
     //Tests_SRS_SYMMETRIC_KEY_PARSER_34_011: [If the provided json null, empty, or cannot be parsed to a SymmetricKeyParser object, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullJson()
     {
         //act
@@ -113,7 +113,7 @@ public class SymmetricKeyParserTest
     }
 
     //Tests_SRS_SYMMETRIC_KEY_PARSER_34_011: [If the provided json null, empty, or cannot be parsed to a SymmetricKeyParser object, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForEmptyJson()
     {
         //act
@@ -121,7 +121,7 @@ public class SymmetricKeyParserTest
     }
 
     //Tests_SRS_SYMMETRIC_KEY_PARSER_34_011: [If the provided json null, empty, or cannot be parsed to a SymmetricKeyParser object, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForInvalidJson()
     {
         //act
@@ -129,7 +129,7 @@ public class SymmetricKeyParserTest
     }
 
     //Tests_SRS_SYMMETRIC_KEY_PARSER_34_010: [If the provided json is missing the field for either PrimaryKey or SecondaryKey, or either is missing a value, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void missingPrimaryKeyInJsonThrows()
     {
         //arrange
@@ -140,7 +140,7 @@ public class SymmetricKeyParserTest
     }
 
     //Tests_SRS_SYMMETRIC_KEY_PARSER_34_010: [If the provided json is missing the field for either PrimaryKey or SecondaryKey, or either is missing a value, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void missingSecondaryKeyInJsonThrows()
     {
         //arrange

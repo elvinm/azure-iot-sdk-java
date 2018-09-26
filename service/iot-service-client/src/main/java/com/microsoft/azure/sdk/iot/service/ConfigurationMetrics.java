@@ -18,24 +18,24 @@ public class ConfigurationMetrics
         this.queries = new HashMap<>();
     }
 
+    public Map<String, Long> getResults()
+    {
+        return results;
+    }
+
     // Codes_SRS_SERVICE_SDK_JAVA_CONFIGURATION_METRICS_28_002: [The ConfigurationMetrics class shall have the following properties: results and queries
     public void setResults(Map<String, Long> results)
     {
         this.results = results;
     }
 
-    public Map<String, Long> getResults()
+    public Map<String, String> getQueries()
     {
-        return results;
+        return queries;
     }
 
     public void setQueries(Map<String, String> queries)
     {
         this.queries = queries;
-    }
-
-    public Map<String, String> getQueries()
-    {
-        return queries;
     }
 }

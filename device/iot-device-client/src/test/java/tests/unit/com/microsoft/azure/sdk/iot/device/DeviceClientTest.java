@@ -34,42 +34,31 @@ import static org.junit.Assert.assertNull;
  */
 public class DeviceClientTest
 {
-    @Mocked
-    DeviceClientConfig mockConfig;
-
-    @Mocked
-    IotHubConnectionString mockIotHubConnectionString;
-
-    @Mocked
-    DeviceIO mockDeviceIO;
-
-    @Mocked
-    TransportClient mockTransportClient;
-
-    @Mocked
-    FileUpload mockFileUpload;
-
-    @Mocked
-    IotHubAuthenticationProvider mockIotHubAuthenticationProvider;
-
-    @Mocked
-    IotHubSasTokenAuthenticationProvider mockIotHubSasTokenAuthenticationProvider;
-
-    @Mocked
-    SecurityProvider mockSecurityProvider;
-
-    @Mocked
-    IotHubConnectionStatusChangeCallback mockedIotHubConnectionStatusChangeCallback;
-
-    @Mocked
-    ProductInfo mockedProductInfo;
-
-    private static long SEND_PERIOD_MILLIS = 10L;
-    private static long RECEIVE_PERIOD_MILLIS_AMQPS = 10L;
-    private static long RECEIVE_PERIOD_MILLIS_HTTPS = 25*60*1000; /*25 minutes*/
-
     private static final long SEND_PERIOD = 10;
     private static final long RECEIVE_PERIOD = 10;
+    private static long SEND_PERIOD_MILLIS = 10L;
+    private static long RECEIVE_PERIOD_MILLIS_AMQPS = 10L;
+    private static long RECEIVE_PERIOD_MILLIS_HTTPS = 25 * 60 * 1000; /*25 minutes*/
+    @Mocked
+    DeviceClientConfig mockConfig;
+    @Mocked
+    IotHubConnectionString mockIotHubConnectionString;
+    @Mocked
+    DeviceIO mockDeviceIO;
+    @Mocked
+    TransportClient mockTransportClient;
+    @Mocked
+    FileUpload mockFileUpload;
+    @Mocked
+    IotHubAuthenticationProvider mockIotHubAuthenticationProvider;
+    @Mocked
+    IotHubSasTokenAuthenticationProvider mockIotHubSasTokenAuthenticationProvider;
+    @Mocked
+    SecurityProvider mockSecurityProvider;
+    @Mocked
+    IotHubConnectionStatusChangeCallback mockedIotHubConnectionStatusChangeCallback;
+    @Mocked
+    ProductInfo mockedProductInfo;
 
     // Tests_SRS_DEVICECLIENT_12_009: [The constructor shall interpret the connection string as a set of key-value pairs delimited by ';', using the object IotHubConnectionString.]
     // Tests_SRS_DEVICECLIENT_12_010: [The constructor shall set the connection type to USE_TRANSPORTCLIENT.]
@@ -110,7 +99,7 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_12_018: [If the tranportClient is null, the function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorTransportClientTransportClientNullThrows() throws URISyntaxException, IOException
     {
         // arrange
@@ -159,8 +148,7 @@ public class DeviceClientTest
         final String publicKeyCert = "someCert";
         final String privateKey = "someKey";
 
-        final String connString =
-                "HostName=iothub.device.com;deviceId=testdevice;x509=true";
+        final String connString = "HostName=iothub.device.com;deviceId=testdevice;x509=true";
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS_WS;
 
         new NonStrictExpectations()
@@ -218,8 +206,7 @@ public class DeviceClientTest
     public void constructorBadConnectionStringThrows() throws URISyntaxException, IOException
     {
         // arrange
-        final String connString =
-                "HostName=iothub.device.com;CredentialType=SharedAccessKey;CredentialScope=Device;deviceId=testdevice;SharedAccessKey=adjkl234j52=;";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;CredentialScope=Device;deviceId=testdevice;SharedAccessKey=adjkl234j52=;";
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
         new NonStrictExpectations()
         {
@@ -247,21 +234,18 @@ public class DeviceClientTest
                 times = 1;
                 Deencapsulation.newInstance(DeviceClientConfig.class, iotHubConnectionString);
                 times = 0;
-                Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.device.DeviceIO",
-                        new Class[] {DeviceClientConfig.class, long.class, long.class},
-                        any, SEND_PERIOD_MILLIS, RECEIVE_PERIOD_MILLIS_AMQPS);
+                Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.device.DeviceIO", new Class[]{DeviceClientConfig.class, long.class, long.class}, any, SEND_PERIOD_MILLIS, RECEIVE_PERIOD_MILLIS_AMQPS);
                 times = 0;
             }
         };
     }
 
     /* Tests_SRS_DEVICECLIENT_21_002: [The constructor shall initialize the IoT Hub transport for the protocol specified, creating a instance of the deviceIO.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorBadDeviceIOThrows() throws URISyntaxException, IOException
     {
         // arrange
-        final String connString =
-                "HostName=iothub.device.com;CredentialType=SharedAccessKey;CredentialScope=Device;deviceId=testdevice;SharedAccessKey=adjkl234j52=;";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;CredentialScope=Device;deviceId=testdevice;SharedAccessKey=adjkl234j52=;";
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
 
         // act
@@ -273,23 +257,20 @@ public class DeviceClientTest
             {
                 Deencapsulation.newInstance(IotHubConnectionString.class, connString);
                 times = 1;
-                Deencapsulation.newInstance(DeviceClientConfig.class, (IotHubConnectionString)any, DeviceClientConfig.AuthType.SAS_TOKEN);
+                Deencapsulation.newInstance(DeviceClientConfig.class, (IotHubConnectionString) any, DeviceClientConfig.AuthType.SAS_TOKEN);
                 times = 1;
-                Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.device.DeviceIO",
-                        new Class[] {DeviceClientConfig.class, IotHubClientProtocol.class, long.class, long.class},
-                        (DeviceClientConfig)any, protocol, SEND_PERIOD_MILLIS, RECEIVE_PERIOD_MILLIS_AMQPS);
+                Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.device.DeviceIO", new Class[]{DeviceClientConfig.class, IotHubClientProtocol.class, long.class, long.class}, (DeviceClientConfig) any, protocol, SEND_PERIOD_MILLIS, RECEIVE_PERIOD_MILLIS_AMQPS);
                 times = 1;
             }
         };
     }
 
     /* Tests_SRS_DEVICECLIENT_21_003: [The constructor shall save the connection configuration using the object DeviceClientConfig.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorBadDeviceClientConfigThrows() throws URISyntaxException, IOException
     {
         // arrange
-        final String connString =
-                "HostName=iothub.device.com;CredentialType=SharedAccessKey;CredentialScope=Device;deviceId=testdevice;SharedAccessKey=adjkl234j52=;";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;CredentialScope=Device;deviceId=testdevice;SharedAccessKey=adjkl234j52=;";
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
 
         // act
@@ -299,11 +280,9 @@ public class DeviceClientTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(DeviceClientConfig.class, (IotHubConnectionString)any, DeviceClientConfig.AuthType.SAS_TOKEN);
+                Deencapsulation.newInstance(DeviceClientConfig.class, (IotHubConnectionString) any, DeviceClientConfig.AuthType.SAS_TOKEN);
                 times = 1;
-                Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.device.DeviceIO",
-                        new Class[] {DeviceClientConfig.class, IotHubClientProtocol.class, long.class, long.class},
-                        (DeviceClientConfig)any, protocol, SEND_PERIOD_MILLIS, RECEIVE_PERIOD_MILLIS_AMQPS);
+                Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.device.DeviceIO", new Class[]{DeviceClientConfig.class, IotHubClientProtocol.class, long.class, long.class}, (DeviceClientConfig) any, protocol, SEND_PERIOD_MILLIS, RECEIVE_PERIOD_MILLIS_AMQPS);
                 times = 0;
             }
         };
@@ -314,8 +293,7 @@ public class DeviceClientTest
     public void openOpensDeviceIOSuccess(final @Mocked InternalClient mockedInternalClient) throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
         DeviceClient client = new DeviceClient(connString, protocol);
         Deencapsulation.setField(client, "logger", new CustomLogger(this.getClass()));
@@ -334,12 +312,11 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_12_007: [If the client has been initialized to use TransportClient and the TransportClient is not opened yet the function shall throw an IOException.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void openUseTransportClientAndCalledBeforeTransportClientOpenedThrows() throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
 
         new NonStrictExpectations()
         {
@@ -360,8 +337,7 @@ public class DeviceClientTest
     public void openUseTransportClientAndCalledAfterTransportClientOpenedDoNothing(final @Mocked InternalClient mockedInternalClient) throws URISyntaxException, IOException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
 
         new NonStrictExpectations()
         {
@@ -391,8 +367,7 @@ public class DeviceClientTest
     public void closeClosesTransportSuccess(final @Mocked InternalClient mockedInternalClient) throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
         DeviceClient client = new DeviceClient(connString, protocol);
         Deencapsulation.setField(client, "logger", new CustomLogger(this.getClass()));
@@ -411,12 +386,11 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_12_006: [If the client has been initialized to use TransportClient and the TransportClient is already opened the function shall throw an IOException.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void closeUseTransportClientAndCalledAfterTransportClientOpenedThrows() throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
 
         new NonStrictExpectations()
         {
@@ -437,8 +411,7 @@ public class DeviceClientTest
     public void closeUseTransportClientAndCalledBeforeTransportClientOpenedDoNothing() throws URISyntaxException, IOException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
 
         new NonStrictExpectations()
         {
@@ -466,12 +439,11 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_12_005: [If the client has been initialized to use TransportClient and the TransportClient is already opened the function shall throw an IOException.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void closeNowUseTransportClientAndCalledAfterTransportClientOpenedThrows() throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
 
         new NonStrictExpectations()
         {
@@ -492,8 +464,7 @@ public class DeviceClientTest
     public void closeNowUseTransportClientAndCalledBeforeTransportClientOpenedDoNothing() throws URISyntaxException, IOException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
 
         new NonStrictExpectations()
         {
@@ -526,8 +497,7 @@ public class DeviceClientTest
     public void closeNowClosesTransportSuccess(final @Mocked InternalClient mockedInternalClient) throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
         DeviceClient client = new DeviceClient(connString, protocol);
         Deencapsulation.setField(client, "logger", new CustomLogger(this.getClass()));
@@ -546,13 +516,11 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_02_015: [If optionName is null or not an option handled by the client, then it shall throw IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
-    public void setOptionWithNullOptionNameThrows()
-            throws IOException, URISyntaxException
+    @Test(expected = IllegalArgumentException.class)
+    public void setOptionWithNullOptionNameThrows() throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.HTTPS;
         new NonStrictExpectations()
         {
@@ -572,13 +540,11 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_02_015: [If optionName is null or not an option handled by the client, then it shall throw IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
-    public void setOptionWithUnknownOptionNameThrows()
-            throws IOException, URISyntaxException
+    @Test(expected = IllegalArgumentException.class)
+    public void setOptionWithUnknownOptionNameThrows() throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.HTTPS;
         new NonStrictExpectations()
         {
@@ -598,13 +564,11 @@ public class DeviceClientTest
     }
 
     //Tests_SRS_DEVICECLIENT_02_017: [Available only for HTTP.]
-    @Test (expected = IllegalArgumentException.class)
-    public void setOptionMinimumPollingIntervalWithAMQPfails()
-            throws IOException, URISyntaxException
+    @Test(expected = IllegalArgumentException.class)
+    public void setOptionMinimumPollingIntervalWithAMQPfails() throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
         long someMilliseconds = 4;
         new NonStrictExpectations()
@@ -623,13 +587,11 @@ public class DeviceClientTest
     }
 
     //Tests_SRS_DEVICECLIENT_02_018: [Value needs to have type long].
-    @Test (expected = IllegalArgumentException.class)
-    public void setOptionMinimumPollingIntervalWithStringInsteadOfLongFails()
-            throws IOException, URISyntaxException
+    @Test(expected = IllegalArgumentException.class)
+    public void setOptionMinimumPollingIntervalWithStringInsteadOfLongFails() throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.HTTPS;
         new NonStrictExpectations()
         {
@@ -647,13 +609,11 @@ public class DeviceClientTest
     }
 
     //Tests_SRS_DEVICECLIENT_02_005: [Setting the option can only be done before open call.]
-    @Test (expected = IllegalStateException.class)
-    public void setOptionMinimumPollingIntervalAfterOpenFails()
-            throws IOException, URISyntaxException
+    @Test(expected = IllegalStateException.class)
+    public void setOptionMinimumPollingIntervalAfterOpenFails() throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.HTTPS;
         new NonStrictExpectations()
         {
@@ -674,12 +634,10 @@ public class DeviceClientTest
 
     //Tests_SRS_DEVICECLIENT_02_016: ["SetMinimumPollingInterval" - time in milliseconds between 2 consecutive polls.]
     @Test
-    public void setOptionMinimumPollingIntervalSucceeds()
-            throws IOException, URISyntaxException
+    public void setOptionMinimumPollingIntervalSucceeds() throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.HTTPS;
         new NonStrictExpectations()
         {
@@ -707,12 +665,10 @@ public class DeviceClientTest
 
     // Tests_SRS_DEVICECLIENT_21_040: ["SetSendInterval" - time in milliseconds between 2 consecutive message sends.]
     @Test
-    public void setOptionSendIntervalSucceeds()
-            throws IOException, URISyntaxException
+    public void setOptionSendIntervalSucceeds() throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.HTTPS;
         new NonStrictExpectations()
         {
@@ -738,13 +694,11 @@ public class DeviceClientTest
         };
     }
 
-    @Test (expected = IllegalArgumentException.class)
-    public void setOptionSendIntervalWithStringInsteadOfLongFails()
-            throws IOException, URISyntaxException
+    @Test(expected = IllegalArgumentException.class)
+    public void setOptionSendIntervalWithStringInsteadOfLongFails() throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.HTTPS;
         new NonStrictExpectations()
         {
@@ -761,13 +715,11 @@ public class DeviceClientTest
         client.setOption("SetSendInterval", "thisIsNotALong");
     }
 
-    @Test (expected = IllegalArgumentException.class)
-    public void setOptionValueNullThrows()
-            throws IOException, URISyntaxException
+    @Test(expected = IllegalArgumentException.class)
+    public void setOptionValueNullThrows() throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.HTTPS;
         new NonStrictExpectations()
         {
@@ -783,13 +735,11 @@ public class DeviceClientTest
     }
 
     //Tests_SRS_DEVICECLIENT_25_022: [**"SetSASTokenExpiryTime" should have value type long.]
-    @Test (expected = IllegalArgumentException.class)
-    public void setOptionSASTokenExpiryTimeWithStringInsteadOfLongFails()
-            throws IOException, URISyntaxException
+    @Test(expected = IllegalArgumentException.class)
+    public void setOptionSASTokenExpiryTimeWithStringInsteadOfLongFails() throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.HTTPS;
         new NonStrictExpectations()
         {
@@ -810,12 +760,10 @@ public class DeviceClientTest
 
     //Tests_SRS_DEVICECLIENT_25_021: ["SetSASTokenExpiryTime" - time in seconds after which SAS Token expires.]
     @Test
-    public void setOptionSASTokenExpiryTimeHTTPSucceeds()
-            throws IOException, URISyntaxException
+    public void setOptionSASTokenExpiryTimeHTTPSucceeds() throws IOException, URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.HTTPS;
         new NonStrictExpectations()
         {
@@ -847,8 +795,7 @@ public class DeviceClientTest
     //Tests_SRS_DEVICECLIENT_25_021: ["SetSASTokenExpiryTime" - time in seconds after which SAS Token expires.]
     //Tests_SRS_DEVICECLIENT_25_024: ["SetSASTokenExpiryTime" shall restart the transport if transport is already open after updating expiry time.]
     @Test
-    public void setOptionSASTokenExpiryTimeAfterClientOpenHTTPSucceeds()
-            throws IOException, URISyntaxException
+    public void setOptionSASTokenExpiryTimeAfterClientOpenHTTPSucceeds() throws IOException, URISyntaxException
     {
         // arrange
         new NonStrictExpectations()
@@ -864,8 +811,7 @@ public class DeviceClientTest
                 result = DeviceClientConfig.AuthType.SAS_TOKEN;
             }
         };
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.HTTPS;
 
         DeviceClient client = new DeviceClient(connString, protocol);
@@ -895,8 +841,7 @@ public class DeviceClientTest
                                     after updating expiry time.]
     */
     @Test
-    public void setOptionSASTokenExpiryTimeAfterClientOpenTransportWithSasTokenSucceeds()
-            throws IOException, URISyntaxException
+    public void setOptionSASTokenExpiryTimeAfterClientOpenTransportWithSasTokenSucceeds() throws IOException, URISyntaxException
     {
         // arrange
         new NonStrictExpectations()
@@ -935,10 +880,10 @@ public class DeviceClientTest
             }
         };
     }
+
     //Tests_SRS_DEVICECLIENT_25_021: ["SetSASTokenExpiryTime" - Time in secs to specify SAS Token Expiry time.]
     @Test
-    public void setOptionSASTokenExpiryTimeAMQPSucceeds()
-            throws IOException, URISyntaxException
+    public void setOptionSASTokenExpiryTimeAMQPSucceeds() throws IOException, URISyntaxException
     {
         // arrange
         new NonStrictExpectations()
@@ -953,8 +898,7 @@ public class DeviceClientTest
             }
         };
 
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
 
         DeviceClient client = new DeviceClient(connString, protocol);
@@ -976,8 +920,7 @@ public class DeviceClientTest
     //Tests_SRS_DEVICECLIENT_25_021: ["SetSASTokenExpiryTime" - time in seconds after which SAS Token expires.]
     //Tests_SRS_DEVICECLIENT_25_024: ["SetSASTokenExpiryTime" shall restart the transport if transport is already open after updating expiry time.]
     @Test
-    public void setOptionSASTokenExpiryTimeAfterClientOpenAMQPSucceeds()
-            throws IOException, URISyntaxException
+    public void setOptionSASTokenExpiryTimeAfterClientOpenAMQPSucceeds() throws IOException, URISyntaxException
     {
         // arrange
         new NonStrictExpectations()
@@ -993,8 +936,7 @@ public class DeviceClientTest
                 result = DeviceClientConfig.AuthType.SAS_TOKEN;
             }
         };
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
 
         DeviceClient client = new DeviceClient(connString, protocol);
@@ -1020,11 +962,11 @@ public class DeviceClientTest
 
     //Tests_SRS_DEVICECLIENT_25_021: [**"SetSASTokenExpiryTime" - Time in secs to specify SAS Token Expiry time.]
     @Test
-    public void setOptionSASTokenExpiryTimeMQTTSucceeds()
-            throws IOException, URISyntaxException
+    public void setOptionSASTokenExpiryTimeMQTTSucceeds() throws IOException, URISyntaxException
     {
         // arrange
-        new NonStrictExpectations() {
+        new NonStrictExpectations()
+        {
             {
                 mockDeviceIO.isOpen();
                 result = false;
@@ -1036,8 +978,7 @@ public class DeviceClientTest
                 result = DeviceClientConfig.AuthType.SAS_TOKEN;
             }
         };
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.MQTT;
 
         DeviceClient client = new DeviceClient(connString, protocol);
@@ -1059,8 +1000,7 @@ public class DeviceClientTest
     //Tests_SRS_DEVICECLIENT_25_021: ["SetSASTokenExpiryTime" - time in seconds after which SAS Token expires.]
     //Tests_SRS_DEVICECLIENT_25_024: ["SetSASTokenExpiryTime" shall restart the transport if transport is already open after updating expiry time.]
     @Test
-    public void setOptionSASTokenExpiryTimeAfterClientOpenMQTTSucceeds()
-            throws IOException, URISyntaxException
+    public void setOptionSASTokenExpiryTimeAfterClientOpenMQTTSucceeds() throws IOException, URISyntaxException
     {
         // arrange
         new NonStrictExpectations()
@@ -1076,8 +1016,7 @@ public class DeviceClientTest
                 result = DeviceClientConfig.AuthType.SAS_TOKEN;
             }
         };
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.MQTT;
 
         DeviceClient client = new DeviceClient(connString, protocol);
@@ -1103,8 +1042,7 @@ public class DeviceClientTest
 
     // Tests_SRS_DEVICECLIENT_12_025: [If the client configured to use TransportClient the function shall use transport client closeNow() and open() for restart.]
     @Test
-    public void setOptionWithTransportClientSASTokenExpiryTimeAfterClientOpenAMQPSucceeds()
-            throws IOException, URISyntaxException
+    public void setOptionWithTransportClientSASTokenExpiryTimeAfterClientOpenAMQPSucceeds() throws IOException, URISyntaxException
     {
         // arrange
         new NonStrictExpectations()
@@ -1120,8 +1058,7 @@ public class DeviceClientTest
                 result = DeviceClientConfig.AuthType.SAS_TOKEN;
             }
         };
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
 
         DeviceClient client = new DeviceClient(connString, mockTransportClient);
         Deencapsulation.setField(client, "config", mockConfig);
@@ -1146,9 +1083,8 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_12_027: [The function shall throw IOError if either the deviceIO or the tranportClient's open() or closeNow() throws.]
-    @Test (expected = IOError.class)
-    public void setOptionWithTransportClientSASTokenExpiryTimeAfterClientOpenAMQPThrowsTransportClientClose()
-            throws IOException, URISyntaxException
+    @Test(expected = IOError.class)
+    public void setOptionWithTransportClientSASTokenExpiryTimeAfterClientOpenAMQPThrowsTransportClientClose() throws IOException, URISyntaxException
     {
         // arrange
         new NonStrictExpectations()
@@ -1163,11 +1099,10 @@ public class DeviceClientTest
                 mockConfig.getAuthenticationType();
                 result = DeviceClientConfig.AuthType.SAS_TOKEN;
                 mockTransportClient.closeNow();
-                result =  new IOException();
+                result = new IOException();
             }
         };
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
 
         DeviceClient client = new DeviceClient(connString, mockTransportClient);
         Deencapsulation.setField(client, "config", mockConfig);
@@ -1179,9 +1114,8 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_12_027: [The function shall throw IOError if either the deviceIO or the tranportClient's open() or closeNow() throws.]
-    @Test (expected = IOError.class)
-    public void setOptionWithTransportClientSASTokenExpiryTimeAfterClientOpenAMQPThrowsTransportClientOpen()
-            throws IOException, URISyntaxException
+    @Test(expected = IOError.class)
+    public void setOptionWithTransportClientSASTokenExpiryTimeAfterClientOpenAMQPThrowsTransportClientOpen() throws IOException, URISyntaxException
     {
         // arrange
         new NonStrictExpectations()
@@ -1196,11 +1130,10 @@ public class DeviceClientTest
                 mockConfig.getAuthenticationType();
                 result = DeviceClientConfig.AuthType.SAS_TOKEN;
                 mockTransportClient.open();
-                result =  new IOException();
+                result = new IOException();
             }
         };
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
 
         DeviceClient client = new DeviceClient(connString, mockTransportClient);
         Deencapsulation.setField(client, "config", mockConfig);
@@ -1212,9 +1145,8 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_12_029: [*SetCertificatePath" shall throw if the transportClient or deviceIO already opene.]
-    @Test (expected = IllegalStateException.class)
-    public void setOptionWithTransportClientSetCertificatePathTransportOpenedThrows()
-            throws IOException, URISyntaxException
+    @Test(expected = IllegalStateException.class)
+    public void setOptionWithTransportClientSetCertificatePathTransportOpenedThrows() throws IOException, URISyntaxException
     {
         // arrange
         new NonStrictExpectations()
@@ -1224,12 +1156,11 @@ public class DeviceClientTest
                 result = TransportClient.TransportClientState.OPENED;
             }
         };
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
 
         DeviceClient client = new DeviceClient(connString, mockTransportClient);
-//        Deencapsulation.setField(client, "config", mockConfig);
-//        Deencapsulation.setField(client, "deviceIO", mockDeviceIO);
+        //        Deencapsulation.setField(client, "config", mockConfig);
+        //        Deencapsulation.setField(client, "deviceIO", mockDeviceIO);
         final String value = "certificatePath";
 
         // act
@@ -1238,8 +1169,7 @@ public class DeviceClientTest
 
     // Tests_SRS_DEVICECLIENT_12_030: [*SetCertificatePath" shall udate the config on transportClient if tranportClient used.]
     @Test
-    public void setOptionWithTransportClientSetCertificatePathSuccess()
-            throws IOException, URISyntaxException
+    public void setOptionWithTransportClientSetCertificatePathSuccess() throws IOException, URISyntaxException
     {
         // arrange
         final String value = "certificatePath";
@@ -1256,8 +1186,7 @@ public class DeviceClientTest
                 mockIotHubAuthenticationProvider.setPathToIotHubTrustedCert(value);
             }
         };
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
 
         DeviceClient client = new DeviceClient(connString, mockTransportClient);
         Deencapsulation.setField(client, "config", mockConfig);
@@ -1276,10 +1205,10 @@ public class DeviceClientTest
             }
         };
     }
+
     // Tests_SRS_DEVICECLIENT_12_029: [*SetCertificatePath" shall throw if the transportClient or deviceIO already open, otherwise set the path on the config.]
-    @Test (expected = IllegalStateException.class)
-    public void setOptionSetCertificatePathDeviceIOOpenedThrows()
-            throws URISyntaxException
+    @Test(expected = IllegalStateException.class)
+    public void setOptionSetCertificatePathDeviceIOOpenedThrows() throws URISyntaxException
     {
         // arrange
         new NonStrictExpectations()
@@ -1291,8 +1220,7 @@ public class DeviceClientTest
                 result = TransportClient.TransportClientState.OPENED;
             }
         };
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
 
         DeviceClient client = new DeviceClient(connString, protocol);
@@ -1305,9 +1233,8 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_12_030: [*SetCertificatePath" shall udate the config on transportClient if tranportClient used.]
-    @Test (expected = IllegalArgumentException.class)
-    public void setOptionSetCertificatePathWrongProtocolThrows()
-            throws IOException, URISyntaxException
+    @Test(expected = IllegalArgumentException.class)
+    public void setOptionSetCertificatePathWrongProtocolThrows() throws IOException, URISyntaxException
     {
         // arrange
         new NonStrictExpectations()
@@ -1321,8 +1248,7 @@ public class DeviceClientTest
                 result = TransportClient.TransportClientState.OPENED;
             }
         };
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.MQTT;
 
         DeviceClient client = new DeviceClient(connString, protocol);
@@ -1336,8 +1262,7 @@ public class DeviceClientTest
 
     // Tests_SRS_DEVICECLIENT_12_029: [*SetCertificatePath" shall throw if the transportClient or deviceIO already open, otherwise set the path on the config.]
     @Test
-    public void setOptionSetCertificatePathSASSuccess()
-            throws IOException, URISyntaxException
+    public void setOptionSetCertificatePathSASSuccess() throws IOException, URISyntaxException
     {
         // arrange
         new NonStrictExpectations()
@@ -1351,8 +1276,7 @@ public class DeviceClientTest
                 result = DeviceClientConfig.AuthType.SAS_TOKEN;
             }
         };
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS_WS;
 
         DeviceClient client = new DeviceClient(connString, protocol);
@@ -1375,9 +1299,8 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_12_027: [The function shall throw IOError if either the deviceIO or the tranportClient's open() or closeNow() throws.]
-    @Test (expected = IOError.class)
-    public void setOptionClientSASTokenExpiryTimeAfterClientOpenAMQPThrowsDeviceIOClose()
-            throws IOException, URISyntaxException
+    @Test(expected = IOError.class)
+    public void setOptionClientSASTokenExpiryTimeAfterClientOpenAMQPThrowsDeviceIOClose() throws IOException, URISyntaxException
     {
         // arrange
         new NonStrictExpectations()
@@ -1392,11 +1315,10 @@ public class DeviceClientTest
                 mockConfig.getAuthenticationType();
                 result = DeviceClientConfig.AuthType.SAS_TOKEN;
                 mockDeviceIO.close();
-                result =  new IOException();
+                result = new IOException();
             }
         };
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
 
         DeviceClient client = new DeviceClient(connString, protocol);
@@ -1409,9 +1331,8 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_12_027: [The function shall throw IOError if either the deviceIO or the tranportClient's open() or closeNow() throws.]
-    @Test (expected = IOError.class)
-    public void setOptionClientSASTokenExpiryTimeAfterClientOpenAMQPThrowsTransportDeviceIOOpen()
-            throws IOException, URISyntaxException
+    @Test(expected = IOError.class)
+    public void setOptionClientSASTokenExpiryTimeAfterClientOpenAMQPThrowsTransportDeviceIOOpen() throws IOException, URISyntaxException
     {
         // arrange
         new NonStrictExpectations()
@@ -1426,11 +1347,10 @@ public class DeviceClientTest
                 mockConfig.getAuthenticationType();
                 result = DeviceClientConfig.AuthType.SAS_TOKEN;
                 Deencapsulation.invoke(mockDeviceIO, "open");
-                result =  new IOException();
+                result = new IOException();
             }
         };
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
 
         DeviceClient client = new DeviceClient(connString, protocol);
@@ -1443,13 +1363,11 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_12_022: [If the client configured to use TransportClient the SetSendInterval shall throw IOException.]
-    @Test (expected = IllegalStateException.class)
-    public void setOptionWithTransportClientThrowsSetSendInterval()
-            throws URISyntaxException
+    @Test(expected = IllegalStateException.class)
+    public void setOptionWithTransportClientThrowsSetSendInterval() throws URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         DeviceClient client = new DeviceClient(connString, mockTransportClient);
 
         // act
@@ -1457,13 +1375,11 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_12_023: [If the client configured to use TransportClient the SetMinimumPollingInterval shall throw IOException.]
-    @Test (expected = IllegalStateException.class)
-    public void setOptionWithTransportClientThrowsSetMinimumPollingInterval()
-            throws URISyntaxException
+    @Test(expected = IllegalStateException.class)
+    public void setOptionWithTransportClientThrowsSetMinimumPollingInterval() throws URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         DeviceClient client = new DeviceClient(connString, mockTransportClient);
 
         // act
@@ -1471,12 +1387,11 @@ public class DeviceClientTest
     }
 
     //Tests_SRS_DEVICECLIENT_34_065: [""SetSASTokenExpiryTime" if this option is called when not using sas token authentication, an IllegalStateException shall be thrown.*]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void setOptionSASTokenExpiryTimeWhenNotUsingSasTokenAuthThrows() throws URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.HTTPS;
         new NonStrictExpectations()
         {
@@ -1496,12 +1411,11 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_34_074: [If the provided connection string contains a module id field, this function shall throw an UnsupportedOperationException.]
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void x509ConstructorThrowsIfConnStringContainsModuleIdField() throws URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.HTTPS;
         new NonStrictExpectations()
         {
@@ -1522,12 +1436,11 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_34_075: [If the provided connection string contains a module id field, this function shall throw an UnsupportedOperationException.]
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void ConstructorThrowsIfConnStringContainsModuleIdField() throws URISyntaxException
     {
         // arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         final IotHubClientProtocol protocol = IotHubClientProtocol.HTTPS;
         new NonStrictExpectations()
         {
@@ -1548,12 +1461,11 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_34_073: [If this constructor is called with a connection string that contains a moduleId, this function shall throw an UnsupportedOperationException.]
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void transportClientConstructorThrowsIfConnectionStringHasModuleId() throws URISyntaxException
     {
         //arrange
-        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;"
-                + "SharedAccessKey=adjkl234j52=";
+        final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;deviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
         new NonStrictExpectations()
         {
             {
@@ -1574,10 +1486,7 @@ public class DeviceClientTest
 
     /* Tests_SRS_INTERNALCLIENT_21_048: [If there is no instance of the FileUpload, the uploadToBlobAsync shall create a new instance of the FileUpload.] */
     @Test
-    public void startFileUploadOneFileUploadInstanceSucceeds(@Mocked final FileUpload mockedFileUpload,
-                                                             @Mocked final InputStream mockInputStream,
-                                                             @Mocked final IotHubEventCallback mockedStatusCB,
-                                                             @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
+    public void startFileUploadOneFileUploadInstanceSucceeds(@Mocked final FileUpload mockedFileUpload, @Mocked final InputStream mockInputStream, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -1589,11 +1498,10 @@ public class DeviceClientTest
             {
                 Deencapsulation.newInstance(FileUpload.class, mockConfig);
                 result = mockedFileUpload;
-                Deencapsulation.invoke(mockedFileUpload, "uploadToBlobAsync",
-                        destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
+                Deencapsulation.invoke(mockedFileUpload, "uploadToBlobAsync", destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
             }
         };
-        DeviceClient client = Deencapsulation.newInstance(DeviceClient.class, new Class[] {String.class, IotHubClientProtocol.class}, "some conn string", protocol);
+        DeviceClient client = Deencapsulation.newInstance(DeviceClient.class, new Class[]{String.class, IotHubClientProtocol.class}, "some conn string", protocol);
         Deencapsulation.setField(client, "logger", new CustomLogger(this.getClass()));
         Deencapsulation.setField(client, "config", mockConfig);
         Deencapsulation.invoke(client, "uploadToBlobAsync", destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
@@ -1607,8 +1515,7 @@ public class DeviceClientTest
             {
                 Deencapsulation.newInstance(FileUpload.class, mockConfig);
                 times = 1;
-                Deencapsulation.invoke(mockedFileUpload, "uploadToBlobAsync",
-                        destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
+                Deencapsulation.invoke(mockedFileUpload, "uploadToBlobAsync", destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
                 times = 2;
 
             }
@@ -1616,9 +1523,8 @@ public class DeviceClientTest
     }
 
     /* Tests_SRS_INTERNALCLIENT_21_045: [If the `callback` is null, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void startFileUploadNullCallbackThrows(@Mocked final InputStream mockInputStream,
-                                                  @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
+    @Test(expected = IllegalArgumentException.class)
+    public void startFileUploadNullCallbackThrows(@Mocked final InputStream mockInputStream, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -1626,16 +1532,15 @@ public class DeviceClientTest
         final long streamLength = 100;
 
         deviceClientInstanceExpectation(protocol);
-        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[] {IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
+        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[]{IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
 
         // act
         Deencapsulation.invoke(client, "uploadToBlobAsync", destinationBlobName, mockInputStream, streamLength, null, mockedPropertyCB);
     }
 
     /* Tests_SRS_INTERNALCLIENT_21_046: [If the `inputStream` is null, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void startFileUploadNullInputStreamThrows(@Mocked final IotHubEventCallback mockedStatusCB,
-                                                     @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
+    @Test(expected = IllegalArgumentException.class)
+    public void startFileUploadNullInputStreamThrows(@Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -1643,68 +1548,60 @@ public class DeviceClientTest
         final long streamLength = 100;
 
         deviceClientInstanceExpectation(protocol);
-        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[] {IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
+        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[]{IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
 
         // act
         Deencapsulation.invoke(client, "uploadToBlobAsync", destinationBlobName, (InputStream) null, streamLength, mockedStatusCB, mockedPropertyCB);
     }
 
     /* Tests_SRS_INTERNALCLIENT_21_052: [If the `streamLength` is negative, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void startFileUploadNegativeLengthThrows(@Mocked final IotHubEventCallback mockedStatusCB,
-                                                    @Mocked final InputStream mockInputStream,
-                                                    @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
+    @Test(expected = IllegalArgumentException.class)
+    public void startFileUploadNegativeLengthThrows(@Mocked final IotHubEventCallback mockedStatusCB, @Mocked final InputStream mockInputStream, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
         final String destinationBlobName = "valid/blob/name.txt";
 
         deviceClientInstanceExpectation(protocol);
-        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[] {IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
+        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[]{IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
 
         // act
         Deencapsulation.invoke(client, "uploadToBlobAsync", destinationBlobName, mockInputStream, -1, mockedStatusCB, mockedPropertyCB);
     }
 
     /* Tests_SRS_INTERNALCLIENT_21_047: [If the `destinationBlobName` is null, empty, or not valid, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void startFileUploadNullBlobNameThrows(@Mocked final InputStream mockInputStream,
-                                                  @Mocked final IotHubEventCallback mockedStatusCB,
-                                                  @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
+    @Test(expected = IllegalArgumentException.class)
+    public void startFileUploadNullBlobNameThrows(@Mocked final InputStream mockInputStream, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
         final long streamLength = 100;
 
         deviceClientInstanceExpectation(protocol);
-        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[] {IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
+        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[]{IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
 
         // act
-        Deencapsulation.invoke(client, "uploadToBlobAsync", new Class[] {String.class, InputStream.class, long.class, IotHubEventCallback.class, Object.class}, null, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
+        Deencapsulation.invoke(client, "uploadToBlobAsync", new Class[]{String.class, InputStream.class, long.class, IotHubEventCallback.class, Object.class}, null, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
     }
 
     /* Tests_SRS_INTERNALCLIENT_21_047: [If the `destinationBlobName` is null, empty, or not valid, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void startFileUploadEmptyBlobNameThrows(@Mocked final InputStream mockInputStream,
-                                                   @Mocked final IotHubEventCallback mockedStatusCB,
-                                                   @Mocked final PropertyCallBack mockedPropertyCB)
+    @Test(expected = IllegalArgumentException.class)
+    public void startFileUploadEmptyBlobNameThrows(@Mocked final InputStream mockInputStream, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB)
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
         final long streamLength = 100;
 
         deviceClientInstanceExpectation(protocol);
-        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[] {IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
+        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[]{IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
 
         // act
         Deencapsulation.invoke(client, "uploadToBlobAsync", "", mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
     }
 
     /* Tests_SRS_INTERNALCLIENT_21_047: [If the `destinationBlobName` is null, empty, or not valid, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void startFileUploadInvalidUTF8BlobNameThrows(@Mocked final InputStream mockInputStream,
-                                                         @Mocked final IotHubEventCallback mockedStatusCB,
-                                                         @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
+    @Test(expected = IllegalArgumentException.class)
+    public void startFileUploadInvalidUTF8BlobNameThrows(@Mocked final InputStream mockInputStream, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -1712,17 +1609,15 @@ public class DeviceClientTest
         final long streamLength = 100;
 
         deviceClientInstanceExpectation(protocol);
-        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[] {IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
+        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[]{IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
 
         // act
         Deencapsulation.invoke(client, "uploadToBlobAsync", destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
     }
 
     /* Tests_SRS_INTERNALCLIENT_21_047: [If the `destinationBlobName` is null, empty, or not valid, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void startFileUploadInvalidBigBlobNameThrows(@Mocked final InputStream mockInputStream,
-                                                        @Mocked final IotHubEventCallback mockedStatusCB,
-                                                        @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
+    @Test(expected = IllegalArgumentException.class)
+    public void startFileUploadInvalidBigBlobNameThrows(@Mocked final InputStream mockInputStream, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -1731,7 +1626,7 @@ public class DeviceClientTest
         final long streamLength = 100;
 
         // create a blob name bigger than 1024 characters.
-        for (int i = 0; i < (2000/directory.length()); i++)
+        for (int i = 0; i < (2000 / directory.length()); i++)
         {
             bigBlobName.append(directory);
         }
@@ -1740,7 +1635,7 @@ public class DeviceClientTest
 
         deviceClientInstanceExpectation(protocol);
 
-        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[] {IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
+        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[]{IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
 
         // act
         Deencapsulation.invoke(client, "uploadToBlobAsync", destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
@@ -1750,10 +1645,7 @@ public class DeviceClientTest
     /* Tests_SRS_INTERNALCLIENT_21_048: [If there is no instance of the FileUpload, the uploadToBlobAsync shall create a new instance of the FileUpload.] */
     /* Tests_SRS_INTERNALCLIENT_21_050: [The uploadToBlobAsync shall start the stream upload process, by calling uploadToBlobAsync on the FileUpload class.] */
     @Test
-    public void startFileUploadSucceeds(@Mocked final FileUpload mockedFileUpload,
-                                        @Mocked final InputStream mockInputStream,
-                                        @Mocked final IotHubEventCallback mockedStatusCB,
-                                        @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
+    public void startFileUploadSucceeds(@Mocked final FileUpload mockedFileUpload, @Mocked final InputStream mockInputStream, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -1763,13 +1655,12 @@ public class DeviceClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(FileUpload.class, new Class[] {DeviceClientConfig.class}, (DeviceClientConfig) any);
+                Deencapsulation.newInstance(FileUpload.class, new Class[]{DeviceClientConfig.class}, (DeviceClientConfig) any);
                 result = mockedFileUpload;
-                Deencapsulation.invoke(mockedFileUpload, "uploadToBlobAsync",
-                        destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
+                Deencapsulation.invoke(mockedFileUpload, "uploadToBlobAsync", destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
             }
         };
-        DeviceClient client = Deencapsulation.newInstance(DeviceClient.class, new Class[] {String.class, IotHubClientProtocol.class}, "some conn string", protocol);
+        DeviceClient client = Deencapsulation.newInstance(DeviceClient.class, new Class[]{String.class, IotHubClientProtocol.class}, "some conn string", protocol);
 
         // act
         Deencapsulation.invoke(client, "uploadToBlobAsync", destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
@@ -1778,10 +1669,9 @@ public class DeviceClientTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(FileUpload.class, new Class[] {DeviceClientConfig.class}, (DeviceClientConfig) any);
+                Deencapsulation.newInstance(FileUpload.class, new Class[]{DeviceClientConfig.class}, (DeviceClientConfig) any);
                 times = 1;
-                Deencapsulation.invoke(mockedFileUpload, "uploadToBlobAsync",
-                        destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
+                Deencapsulation.invoke(mockedFileUpload, "uploadToBlobAsync", destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
                 times = 1;
             }
         };
@@ -1789,10 +1679,7 @@ public class DeviceClientTest
 
     /* Tests_SRS_INTERNALCLIENT_21_054: [If the fileUpload is not null, the closeNow shall call closeNow on fileUpload.] */
     @Test
-    public void closeNowClosesFileUploadSucceeds(@Mocked final FileUpload mockedFileUpload,
-                                                 @Mocked final InputStream mockInputStream,
-                                                 @Mocked final IotHubEventCallback mockedStatusCB,
-                                                 @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
+    public void closeNowClosesFileUploadSucceeds(@Mocked final FileUpload mockedFileUpload, @Mocked final InputStream mockInputStream, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -1802,13 +1689,12 @@ public class DeviceClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(FileUpload.class, new Class[] {DeviceClientConfig.class}, (DeviceClientConfig) any);
+                Deencapsulation.newInstance(FileUpload.class, new Class[]{DeviceClientConfig.class}, (DeviceClientConfig) any);
                 result = mockedFileUpload;
-                Deencapsulation.invoke(mockedFileUpload, "uploadToBlobAsync",
-                        destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
+                Deencapsulation.invoke(mockedFileUpload, "uploadToBlobAsync", destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
             }
         };
-        DeviceClient client = Deencapsulation.newInstance(DeviceClient.class, new Class[] {String.class, IotHubClientProtocol.class}, "some conn string", protocol);
+        DeviceClient client = Deencapsulation.newInstance(DeviceClient.class, new Class[]{String.class, IotHubClientProtocol.class}, "some conn string", protocol);
         Deencapsulation.invoke(client, "open");
         Deencapsulation.setField(client, "logger", new CustomLogger(this.getClass()));
         Deencapsulation.invoke(client, "uploadToBlobAsync", destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
@@ -1827,10 +1713,8 @@ public class DeviceClientTest
     }
 
     /* Tests_SRS_INTERNALCLIENT_21_047: [If the `destinationBlobName` is null, empty, or not valid, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void startFileUploadInvalidPathBlobNameThrows(@Mocked final InputStream mockInputStream,
-                                                         @Mocked final IotHubEventCallback mockedStatusCB,
-                                                         @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
+    @Test(expected = IllegalArgumentException.class)
+    public void startFileUploadInvalidPathBlobNameThrows(@Mocked final InputStream mockInputStream, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -1848,18 +1732,15 @@ public class DeviceClientTest
 
         deviceClientInstanceExpectation(protocol);
 
-        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[] {IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
+        InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[]{IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
 
         // act
         Deencapsulation.invoke(client, "uploadToBlobAsync", destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
     }
 
     /* Tests_SRS_INTERNALCLIENT_21_049: [If uploadToBlobAsync failed to create a new instance of the FileUpload, it shall bypass the exception.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void startFileUploadNewInstanceThrows(@Mocked final FileUpload mockedFileUpload,
-                                                 @Mocked final InputStream mockInputStream,
-                                                 @Mocked final IotHubEventCallback mockedStatusCB,
-                                                 @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
+    @Test(expected = IllegalArgumentException.class)
+    public void startFileUploadNewInstanceThrows(@Mocked final FileUpload mockedFileUpload, @Mocked final InputStream mockInputStream, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -1869,22 +1750,19 @@ public class DeviceClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(FileUpload.class, new Class[] {DeviceClientConfig.class}, (DeviceClientConfig) any);
+                Deencapsulation.newInstance(FileUpload.class, new Class[]{DeviceClientConfig.class}, (DeviceClientConfig) any);
                 result = new IllegalArgumentException();
             }
         };
-        DeviceClient client = Deencapsulation.newInstance(DeviceClient.class, new Class[] {String.class, IotHubClientProtocol.class}, "some conn string", protocol);
+        DeviceClient client = Deencapsulation.newInstance(DeviceClient.class, new Class[]{String.class, IotHubClientProtocol.class}, "some conn string", protocol);
 
         // act
         Deencapsulation.invoke(client, "uploadToBlobAsync", destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
     }
 
     // Tests_SRS_INTERNALCLIENT_34_066: [If this function is called when the device client is using x509 authentication, an UnsupportedOperationException shall be thrown.]
-    @Test (expected = UnsupportedOperationException.class)
-    public void startFileUploadUploadToBlobAsyncAuthTypeThrows(@Mocked final FileUpload mockedFileUpload,
-                                                               @Mocked final InputStream mockInputStream,
-                                                               @Mocked final IotHubEventCallback mockedStatusCB,
-                                                               @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
+    @Test(expected = UnsupportedOperationException.class)
+    public void startFileUploadUploadToBlobAsyncAuthTypeThrows(@Mocked final FileUpload mockedFileUpload, @Mocked final InputStream mockInputStream, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -1898,7 +1776,7 @@ public class DeviceClientTest
                 result = DeviceClientConfig.AuthType.X509_CERTIFICATE;
             }
         };
-        DeviceClient client = Deencapsulation.newInstance(DeviceClient.class, new Class[] {String.class, IotHubClientProtocol.class}, "some conn string", protocol);
+        DeviceClient client = Deencapsulation.newInstance(DeviceClient.class, new Class[]{String.class, IotHubClientProtocol.class}, "some conn string", protocol);
         Deencapsulation.setField(client, "config", mockConfig);
 
         // act
@@ -1906,11 +1784,8 @@ public class DeviceClientTest
     }
 
     /* Tests_SRS_INTERNALCLIENT_21_051: [If uploadToBlobAsync failed to start the upload using the FileUpload, it shall bypass the exception.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void startFileUploadUploadToBlobAsyncThrows(@Mocked final FileUpload mockedFileUpload,
-                                                       @Mocked final InputStream mockInputStream,
-                                                       @Mocked final IotHubEventCallback mockedStatusCB,
-                                                       @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
+    @Test(expected = IllegalArgumentException.class)
+    public void startFileUploadUploadToBlobAsyncThrows(@Mocked final FileUpload mockedFileUpload, @Mocked final InputStream mockInputStream, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException, TransportException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -1920,14 +1795,13 @@ public class DeviceClientTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(FileUpload.class, new Class[] {DeviceClientConfig.class}, (DeviceClientConfig) any);
+                Deencapsulation.newInstance(FileUpload.class, new Class[]{DeviceClientConfig.class}, (DeviceClientConfig) any);
                 result = mockedFileUpload;
-                Deencapsulation.invoke(mockedFileUpload, "uploadToBlobAsync",
-                        destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
+                Deencapsulation.invoke(mockedFileUpload, "uploadToBlobAsync", destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
                 result = new IllegalArgumentException();
             }
         };
-        DeviceClient client = Deencapsulation.newInstance(DeviceClient.class, new Class[] {String.class, IotHubClientProtocol.class}, "some conn string", protocol);
+        DeviceClient client = Deencapsulation.newInstance(DeviceClient.class, new Class[]{String.class, IotHubClientProtocol.class}, "some conn string", protocol);
 
         // act
         Deencapsulation.invoke(client, "uploadToBlobAsync", destinationBlobName, mockInputStream, streamLength, mockedStatusCB, mockedPropertyCB);
@@ -1946,7 +1820,7 @@ public class DeviceClientTest
     }
 
     // Tests_SRS_DEVICECLIENT_34_042: [If this function is called with the SET_CERTIFICATE_AUTHORITY option, and is using an open transport client, this function shall throw an IllegalStateException]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void setCertificateAuthorityThrowsIfOpenTransportClient()
     {
         //arrange
@@ -2027,8 +1901,7 @@ public class DeviceClientTest
             {
                 Deencapsulation.newInstance(DeviceClientConfig.class, mockIotHubConnectionString);
                 result = mockConfig;
-                Deencapsulation.newInstance(DeviceIO.class,
-                        mockConfig, SEND_PERIOD_MILLIS, receivePeriod);
+                Deencapsulation.newInstance(DeviceIO.class, mockConfig, SEND_PERIOD_MILLIS, receivePeriod);
                 result = mockDeviceIO;
             }
         };

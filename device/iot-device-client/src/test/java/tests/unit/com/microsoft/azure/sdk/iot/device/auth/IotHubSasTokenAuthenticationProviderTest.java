@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package tests.unit.com.microsoft.azure.sdk.iot.device.auth;
 
@@ -30,6 +30,13 @@ import static org.junit.Assert.*;
  */
 public class IotHubSasTokenAuthenticationProviderTest
 {
+    private static final long MILLISECONDS_PER_SECOND = 1000L;
+    private static final long MINIMUM_EXPIRATION_TIME_OFFSET = 1L;
+    private static String expectedDeviceId = "deviceId";
+    private static String expectedHostname = "hostname";
+    private static String expectedDeviceKey = "deviceKey";
+    private static String expectedSasToken = "sasToken";
+    private static long expectedExpiryTime = 3600;
     @Mocked
     SSLContext mockSSLContext;
     @Mocked
@@ -38,61 +45,6 @@ public class IotHubSasTokenAuthenticationProviderTest
     IotHubSasToken mockSasToken;
     @Mocked
     System mockSystem;
-
-    private static String expectedDeviceId = "deviceId";
-    private static String expectedHostname = "hostname";
-    private static String expectedDeviceKey = "deviceKey";
-    private static String expectedSasToken = "sasToken";
-    private static long expectedExpiryTime = 3600;
-    private static final long MILLISECONDS_PER_SECOND = 1000L;
-    private static final long MINIMUM_EXPIRATION_TIME_OFFSET = 1L;
-
-    private class mockIotHubSasTokenAuthenticationImplementation extends IotHubSasTokenAuthenticationProvider
-    {
-        public mockIotHubSasTokenAuthenticationImplementation()
-        {
-            super(expectedHostname, null, expectedDeviceId, null);
-            this.sasToken = mockSasToken;
-            this.deviceId = expectedDeviceId;
-            this.hostname = expectedHostname;
-        }
-
-        public mockIotHubSasTokenAuthenticationImplementation(long expectedTimeToLive, int expectedBufferPercentage)
-        {
-            super(expectedHostname, null, expectedDeviceId, null, expectedTimeToLive, expectedBufferPercentage);
-            this.sasToken = mockSasToken;
-            this.deviceId = expectedDeviceId;
-            this.hostname = expectedHostname;
-        }
-
-        @Override
-        public void setPathToIotHubTrustedCert(String pathToCertificate)
-        {
-        }
-
-        @Override
-        public void setIotHubTrustedCert(String certificate)
-        {
-        }
-
-        @Override
-        public SSLContext getSSLContext() throws IOException
-        {
-            return null;
-        }
-
-        @Override
-        public String getRenewedSasToken() throws IOException
-        {
-            return null;
-        }
-
-        @Override
-        public boolean canRefreshToken()
-        {
-            return false;
-        }
-    }
 
     // Tests_SRS_IOTHUBSASTOKENAUTHENTICATION_12_001: [This function shall return the tokenValidSecs as the number of seconds the current sas token valid for.]
     @Test
@@ -189,7 +141,7 @@ public class IotHubSasTokenAuthenticationProviderTest
         IotHubSasTokenAuthenticationProvider sasAuth = new mockIotHubSasTokenAuthenticationImplementation();
 
         //act
-        long actualExpiryTime =  Deencapsulation.invoke(sasAuth, "getExpiryTimeInSeconds");
+        long actualExpiryTime = Deencapsulation.invoke(sasAuth, "getExpiryTimeInSeconds");
 
         //assert
         assertEquals(expectedExpiryTime, actualExpiryTime);
@@ -213,7 +165,7 @@ public class IotHubSasTokenAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBSASTOKENAUTHENTICATION_34_016: [If the provided tokenValidSecs is less than 1, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForTTLBelowOneSecond(@Mocked IotHubAuthenticationProvider mockedIotHubAuthenticationProvider)
     {
         //arrange
@@ -225,7 +177,7 @@ public class IotHubSasTokenAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBSASTOKENAUTHENTICATION_34_017: [If the provided timeBufferPercentage is less than 1 or greater than 100, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForBufferBelowOnePercent(@Mocked IotHubAuthenticationProvider mockedIotHubAuthenticationProvider)
     {
         //arrange
@@ -237,7 +189,7 @@ public class IotHubSasTokenAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBSASTOKENAUTHENTICATION_34_017: [If the provided timeBufferPercentage is less than 1 or greater than 100, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForBufferAboveOneHundred(@Mocked IotHubAuthenticationProvider mockedIotHubAuthenticationProvider)
     {
         //arrange
@@ -276,6 +228,53 @@ public class IotHubSasTokenAuthenticationProviderTest
 
         //assert
         assertFalse(result);
+    }
+
+    private class mockIotHubSasTokenAuthenticationImplementation extends IotHubSasTokenAuthenticationProvider
+    {
+        public mockIotHubSasTokenAuthenticationImplementation()
+        {
+            super(expectedHostname, null, expectedDeviceId, null);
+            this.sasToken = mockSasToken;
+            this.deviceId = expectedDeviceId;
+            this.hostname = expectedHostname;
+        }
+
+        public mockIotHubSasTokenAuthenticationImplementation(long expectedTimeToLive, int expectedBufferPercentage)
+        {
+            super(expectedHostname, null, expectedDeviceId, null, expectedTimeToLive, expectedBufferPercentage);
+            this.sasToken = mockSasToken;
+            this.deviceId = expectedDeviceId;
+            this.hostname = expectedHostname;
+        }
+
+        @Override
+        public void setPathToIotHubTrustedCert(String pathToCertificate)
+        {
+        }
+
+        @Override
+        public void setIotHubTrustedCert(String certificate)
+        {
+        }
+
+        @Override
+        public SSLContext getSSLContext() throws IOException
+        {
+            return null;
+        }
+
+        @Override
+        public String getRenewedSasToken() throws IOException
+        {
+            return null;
+        }
+
+        @Override
+        public boolean canRefreshToken()
+        {
+            return false;
+        }
     }
 
 }

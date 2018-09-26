@@ -14,9 +14,9 @@ public class AmqpsConvertFromProtonReturnValue
     /**
      * Create a return value object containing the message, callback and user context.
      *
-     * @param message the IoTHub message
+     * @param message         the IoTHub message
      * @param messageCallback the associated callback.
-     * @param messageContext the associated user context.
+     * @param messageContext  the associated user context.
      */
     AmqpsConvertFromProtonReturnValue(Message message, MessageCallback messageCallback, Object messageContext)
     {

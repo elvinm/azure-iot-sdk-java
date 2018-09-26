@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package com.microsoft.azure.sdk.iot.device.auth;
 
@@ -26,10 +26,10 @@ public class IotHubSasTokenHardwareAuthenticationProvider extends IotHubSasToken
     /**
      * Creates a Sas Token based authentication object that uses the provided security provider to produce sas tokens.
      *
-     * @param hostname The host name of the hub to authenticate against
-     * @param gatewayHostname The gateway hostname to use, or null if connecting to an IotHub
-     * @param deviceId The unique id of the device to authenticate
-     * @param moduleId the module id. May be null if not using a module
+     * @param hostname         The host name of the hub to authenticate against
+     * @param gatewayHostname  The gateway hostname to use, or null if connecting to an IotHub
+     * @param deviceId         The unique id of the device to authenticate
+     * @param moduleId         the module id. May be null if not using a module
      * @param securityProvider the security provider to use for authentication
      * @throws IOException if the provided securityProvider throws while retrieving a sas token or ssl context instance
      */
@@ -65,8 +65,8 @@ public class IotHubSasTokenHardwareAuthenticationProvider extends IotHubSasToken
     /**
      * Getter for SasToken. If the saved token has expired, this method shall renew it if possible
      *
-     * @throws IOException if generating the sas token from the TPM fails
      * @return The value of SasToken
+     * @throws IOException if generating the sas token from the TPM fails
      */
     public String getRenewedSasToken() throws IOException
     {
@@ -90,8 +90,9 @@ public class IotHubSasTokenHardwareAuthenticationProvider extends IotHubSasToken
 
     /**
      * Getter for SSLContext
-     * @throws IOException if an error occurs when generating the SSLContext
+     *
      * @return The value of SSLContext
+     * @throws IOException if an error occurs when generating the SSLContext
      */
     @Override
     public SSLContext getSSLContext() throws IOException
@@ -102,6 +103,7 @@ public class IotHubSasTokenHardwareAuthenticationProvider extends IotHubSasToken
 
     /**
      * Setter for the providing trusted certificate.
+     *
      * @param pathToCertificate path to the certificate for one way authentication.
      */
     @Override
@@ -113,6 +115,7 @@ public class IotHubSasTokenHardwareAuthenticationProvider extends IotHubSasToken
 
     /**
      * Setter for the user trusted certificate
+     *
      * @param certificate valid user trusted certificate string
      */
     @Override

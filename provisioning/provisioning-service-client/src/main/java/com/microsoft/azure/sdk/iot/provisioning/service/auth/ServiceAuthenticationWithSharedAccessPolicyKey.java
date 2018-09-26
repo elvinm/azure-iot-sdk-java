@@ -19,7 +19,7 @@ class ServiceAuthenticationWithSharedAccessPolicyKey extends AuthenticationMetho
      * Constructor to create instance from policy name and policy key
      *
      * @param policyName The policy name string
-     * @param key The policy key string
+     * @param key        The policy key string
      * @throws IllegalArgumentException if the provided policyName or key is null or empty.
      */
     ServiceAuthenticationWithSharedAccessPolicyKey(String policyName, String key)
@@ -48,9 +48,7 @@ class ServiceAuthenticationWithSharedAccessPolicyKey extends AuthenticationMetho
      * @throws IllegalArgumentException if the provided connection string is null
      */
     @Override
-    protected ProvisioningConnectionString populateWithAuthenticationProperties(
-            ProvisioningConnectionString provisioningConnectionString)
-            throws IllegalArgumentException
+    protected ProvisioningConnectionString populateWithAuthenticationProperties(ProvisioningConnectionString provisioningConnectionString) throws IllegalArgumentException
     {
         /* Codes_SRS_SERVICE_AUTHENTICATION_WITH_SHARED_ACCESS_POLICY_KEY_21_004: [If the provided provisioningConnectionString is null, the populateWithAuthenticationProperties shall throw IllegalArgumentException.] */
         if (provisioningConnectionString == null)

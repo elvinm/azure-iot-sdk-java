@@ -14,6 +14,7 @@ public class IotHubGatewayTimeoutException extends IotHubException
     {
         this(null);
     }
+
     public IotHubGatewayTimeoutException(String message)
     {
         super("Gateway timeout!" + (((message == null) || message.isEmpty()) ? "" : " " + message));

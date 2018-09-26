@@ -24,7 +24,7 @@ public class FileUploadNotificationReceiverTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATIONRECEIVER_25_001: [** The constructor shall throw IllegalArgumentException if any the input string is null or empty **]**
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorInputHostNameNull() throws Exception
     {
         // Arrange
@@ -37,7 +37,7 @@ public class FileUploadNotificationReceiverTest
     }
 
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorInputUserNameNull() throws Exception
     {
         // Arrange
@@ -50,7 +50,7 @@ public class FileUploadNotificationReceiverTest
     }
 
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorInputSasTokenNull() throws Exception
     {
         // Arrange
@@ -63,7 +63,7 @@ public class FileUploadNotificationReceiverTest
     }
 
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorInputProtocolNull() throws Exception
     {
         // Arrange
@@ -74,10 +74,10 @@ public class FileUploadNotificationReceiverTest
         // Act
         FileUploadNotificationReceiver fileUploadNotificationReceiver = Deencapsulation.newInstance(FileUploadNotificationReceiver.class, hostName, userName, sasToken, iotHubServiceClientProtocol);
     }
-    
-  
+
+
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorInputHostNameEmpty() throws Exception
     {
         // Arrange
@@ -90,7 +90,7 @@ public class FileUploadNotificationReceiverTest
     }
 
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorInputUserNameEmpty() throws Exception
     {
         // Arrange
@@ -103,7 +103,7 @@ public class FileUploadNotificationReceiverTest
     }
 
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorInputSasTokenEmpty() throws Exception
     {
         // Arrange
@@ -185,7 +185,7 @@ public class FileUploadNotificationReceiverTest
             }
         };
     }
-    
+
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATIONRECEIVER_25_007: [ The function shall call receive(long timeoutMs) function with the default timeout ]
     @Test
     public void receiveCallReceiveTimeout() throws Exception
@@ -209,10 +209,10 @@ public class FileUploadNotificationReceiverTest
             }
         };
     }
-    
+
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATIONRECEIVER_25_008: [ The function shall throw IOException if the member AmqpFileUploadNotificationReceive object has not been initialized ]
     // Assert
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void receiveWithTimeoutReceiverNull() throws Exception
     {
         // Arrange
@@ -251,7 +251,7 @@ public class FileUploadNotificationReceiverTest
             }
         };
     }
-    
+
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATIONRECEIVER_25_010: [ The function shall create an async wrapper around the open() function call ]
     @Test
     public void openAsync() throws Exception
@@ -305,7 +305,7 @@ public class FileUploadNotificationReceiverTest
             }
         };
     }
-    
+
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATIONRECEIVER_25_012: [ The function shall create an async wrapper around the receive() function call using the default timeout ]
     @Test
     public void receiveAsync() throws Exception
@@ -332,7 +332,7 @@ public class FileUploadNotificationReceiverTest
             }
         };
     }
-    
+
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATIONRECEIVER_25_013: [ The function shall create an async wrapper around the receive(long timeoutMs) function call ]
     @Test
     public void receiveWithTimeoutAsync() throws Exception

@@ -3,8 +3,9 @@
 
 package com.microsoft.azure.sdk.iot.device;
 
-/** This class enables mocking of the base class wait and notify functions
-*/
+/**
+ * This class enables mocking of the base class wait and notify functions
+ */
 public class ObjectLock
 {
     public void waitLock(long timeout) throws InterruptedException

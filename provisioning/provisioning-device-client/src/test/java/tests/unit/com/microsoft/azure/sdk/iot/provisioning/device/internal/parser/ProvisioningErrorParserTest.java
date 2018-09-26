@@ -22,7 +22,7 @@ public class ProvisioningErrorParserTest
         final int statusCode = 200;
         final String trackingIdValue = "some tracking id";
         final String messageValue = "This is an error message!";
-        final String provisioningErrorParserJson = "{\"errorCode\" : " + statusCode + ", \"trackingId\" : \"" + trackingIdValue +"\", \"message\" : \"" + messageValue + "\"}";
+        final String provisioningErrorParserJson = "{\"errorCode\" : " + statusCode + ", \"trackingId\" : \"" + trackingIdValue + "\", \"message\" : \"" + messageValue + "\"}";
 
         //act
         ProvisioningErrorParser errorParser = ProvisioningErrorParser.createFromJson(provisioningErrorParserJson);
@@ -41,7 +41,7 @@ public class ProvisioningErrorParserTest
         final int statusCode = 200;
         final String trackingIdValue = "some tracking id";
         final String messageValue = "This is an error message!";
-        final String provisioningErrorParserJson = "{\"errorCode\" : " + statusCode + ", \"trackingId\" : \"" + trackingIdValue +"\", \"message\" : \"" + messageValue + "\"}";
+        final String provisioningErrorParserJson = "{\"errorCode\" : " + statusCode + ", \"trackingId\" : \"" + trackingIdValue + "\", \"message\" : \"" + messageValue + "\"}";
 
         ProvisioningErrorParser errorParser = ProvisioningErrorParser.createFromJson(provisioningErrorParserJson);
 

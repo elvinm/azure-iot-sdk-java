@@ -32,39 +32,6 @@ public class ProvisioningX509Sample
 
     private static final Collection<String> signerCertificates = new LinkedList<>();
 
-    static class ProvisioningStatus
-    {
-        ProvisioningDeviceClientRegistrationResult provisioningDeviceClientRegistrationInfoClient = new ProvisioningDeviceClientRegistrationResult();
-        Exception exception;
-    }
-
-    static class ProvisioningDeviceClientRegistrationCallbackImpl implements ProvisioningDeviceClientRegistrationCallback
-    {
-        @Override
-        public void run(ProvisioningDeviceClientRegistrationResult provisioningDeviceClientRegistrationResult, Exception exception, Object context)
-        {
-            if (context instanceof ProvisioningStatus)
-            {
-                ProvisioningStatus status = (ProvisioningStatus) context;
-                status.provisioningDeviceClientRegistrationInfoClient = provisioningDeviceClientRegistrationResult;
-                status.exception = exception;
-            }
-            else
-            {
-                System.out.println("Received unknown context");
-            }
-        }
-    }
-
-    private static class IotHubEventCallbackImpl implements IotHubEventCallback
-    {
-        @Override
-        public void execute(IotHubStatusCode responseStatus, Object callbackContext)
-        {
-            System.out.println("Message received!");
-        }
-    }
-
     public static void main(String[] args) throws Exception
     {
         System.out.println("Starting...");
@@ -76,16 +43,13 @@ public class ProvisioningX509Sample
             ProvisioningStatus provisioningStatus = new ProvisioningStatus();
 
             SecurityProvider securityProviderX509 = new SecurityProviderX509Cert(leafPublicPem, leafPrivateKey, signerCertificates);
-            provisioningDeviceClient = ProvisioningDeviceClient.create(globalEndpoint, idScope, PROVISIONING_DEVICE_CLIENT_TRANSPORT_PROTOCOL,
-                                                                       securityProviderX509);
+            provisioningDeviceClient = ProvisioningDeviceClient.create(globalEndpoint, idScope, PROVISIONING_DEVICE_CLIENT_TRANSPORT_PROTOCOL, securityProviderX509);
 
             provisioningDeviceClient.registerDevice(new ProvisioningDeviceClientRegistrationCallbackImpl(), provisioningStatus);
 
             while (provisioningStatus.provisioningDeviceClientRegistrationInfoClient.getProvisioningDeviceClientStatus() != ProvisioningDeviceClientStatus.PROVISIONING_DEVICE_STATUS_ASSIGNED)
             {
-                if (provisioningStatus.provisioningDeviceClientRegistrationInfoClient.getProvisioningDeviceClientStatus() == ProvisioningDeviceClientStatus.PROVISIONING_DEVICE_STATUS_ERROR ||
-                        provisioningStatus.provisioningDeviceClientRegistrationInfoClient.getProvisioningDeviceClientStatus() == ProvisioningDeviceClientStatus.PROVISIONING_DEVICE_STATUS_DISABLED ||
-                        provisioningStatus.provisioningDeviceClientRegistrationInfoClient.getProvisioningDeviceClientStatus() == ProvisioningDeviceClientStatus.PROVISIONING_DEVICE_STATUS_FAILED )
+                if (provisioningStatus.provisioningDeviceClientRegistrationInfoClient.getProvisioningDeviceClientStatus() == ProvisioningDeviceClientStatus.PROVISIONING_DEVICE_STATUS_ERROR || provisioningStatus.provisioningDeviceClientRegistrationInfoClient.getProvisioningDeviceClientStatus() == ProvisioningDeviceClientStatus.PROVISIONING_DEVICE_STATUS_DISABLED || provisioningStatus.provisioningDeviceClientRegistrationInfoClient.getProvisioningDeviceClientStatus() == ProvisioningDeviceClientStatus.PROVISIONING_DEVICE_STATUS_FAILED)
 
                 {
                     provisioningStatus.exception.printStackTrace();
@@ -108,7 +72,7 @@ public class ProvisioningX509Sample
                 {
                     deviceClient = DeviceClient.createFromSecurityProvider(iotHubUri, deviceId, securityProviderX509, IotHubClientProtocol.MQTT);
                     deviceClient.open();
-                    Message messageToSendFromDeviceToHub =  new Message("Whatever message you would like to send");
+                    Message messageToSendFromDeviceToHub = new Message("Whatever message you would like to send");
 
                     System.out.println("Sending message from device to IoT Hub...");
                     deviceClient.sendEventAsync(messageToSendFromDeviceToHub, new IotHubEventCallbackImpl(), null);
@@ -145,6 +109,39 @@ public class ProvisioningX509Sample
         if (deviceClient != null)
         {
             deviceClient.closeNow();
+        }
+    }
+
+    static class ProvisioningStatus
+    {
+        ProvisioningDeviceClientRegistrationResult provisioningDeviceClientRegistrationInfoClient = new ProvisioningDeviceClientRegistrationResult();
+        Exception exception;
+    }
+
+    static class ProvisioningDeviceClientRegistrationCallbackImpl implements ProvisioningDeviceClientRegistrationCallback
+    {
+        @Override
+        public void run(ProvisioningDeviceClientRegistrationResult provisioningDeviceClientRegistrationResult, Exception exception, Object context)
+        {
+            if (context instanceof ProvisioningStatus)
+            {
+                ProvisioningStatus status = (ProvisioningStatus) context;
+                status.provisioningDeviceClientRegistrationInfoClient = provisioningDeviceClientRegistrationResult;
+                status.exception = exception;
+            }
+            else
+            {
+                System.out.println("Received unknown context");
+            }
+        }
+    }
+
+    private static class IotHubEventCallbackImpl implements IotHubEventCallback
+    {
+        @Override
+        public void execute(IotHubStatusCode responseStatus, Object callbackContext)
+        {
+            System.out.println("Message received!");
         }
     }
 }

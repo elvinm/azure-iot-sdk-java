@@ -33,47 +33,27 @@ import static com.microsoft.azure.sdk.iot.provisioning.device.internal.task.Cont
 
 public class RegisterTask implements Callable
 {
-    private static int MAX_WAIT_FOR_REGISTRATION_RESPONSE = 90*1000; // 90 seconds
-    private static final int SLEEP_INTERVAL_WHEN_WAITING_FOR_RESPONSE = 4*1000; //4 seconds
+    private static final int SLEEP_INTERVAL_WHEN_WAITING_FOR_RESPONSE = 4 * 1000; //4 seconds
     private static final int DEFAULT_EXPIRY_TIME_IN_SECS = 3600; // 1 Hour
     private static final String SASTOKEN_FORMAT = "SharedAccessSignature sr=%s&sig=%s&se=%s&skn=";
     private static final String THREAD_NAME = "azure-iot-sdk-RegisterTask";
+    private static int MAX_WAIT_FOR_REGISTRATION_RESPONSE = 90 * 1000; // 90 seconds
     private ResponseCallback responseCallback = null;
     private ProvisioningDeviceClientContract provisioningDeviceClientContract = null;
     private Authorization authorization = null;
     private SecurityProvider securityProvider = null;
     private ProvisioningDeviceClientConfig provisioningDeviceClientConfig = null;
 
-    private class ResponseCallbackImpl implements ResponseCallback
-    {
-        @Override
-        public void run(ResponseData responseData, Object context) throws ProvisioningDeviceClientException
-        {
-            if (context instanceof ResponseData)
-            {
-                ResponseData data = (ResponseData) context;
-                data.setResponseData(responseData.getResponseData());
-                data.setContractState(responseData.getContractState());
-                data.setWaitForStatusInMS(responseData.getWaitForStatusInMS());
-            }
-            else
-            {
-                throw new ProvisioningDeviceClientException(new IllegalArgumentException("Context mismatch for DPS registration"));
-            }
-        }
-    }
-
     /**
      * Constructor for the task to perform registration with service
-     * @param provisioningDeviceClientConfig Config client registered with. Cannot be {@code null}.
-     * @param securityProvider Security client holding HSM details. Cannot be {@code null}.
+     *
+     * @param provisioningDeviceClientConfig   Config client registered with. Cannot be {@code null}.
+     * @param securityProvider                 Security client holding HSM details. Cannot be {@code null}.
      * @param provisioningDeviceClientContract Lower level contract with the service over multiple protocols. Cannot be {@code null}.
-     * @param authorization An object that holds the state of the service retrieved data. Cannot be {@code null}.
+     * @param authorization                    An object that holds the state of the service retrieved data. Cannot be {@code null}.
      * @throws ProvisioningDeviceClientException When any of the provided parameters are invalid.
      */
-    RegisterTask(ProvisioningDeviceClientConfig provisioningDeviceClientConfig, SecurityProvider securityProvider,
-                 ProvisioningDeviceClientContract provisioningDeviceClientContract, Authorization authorization)
-            throws ProvisioningDeviceClientException
+    RegisterTask(ProvisioningDeviceClientConfig provisioningDeviceClientConfig, SecurityProvider securityProvider, ProvisioningDeviceClientContract provisioningDeviceClientContract, Authorization authorization) throws ProvisioningDeviceClientException
     {
         //SRS_RegisterTask_25_002: [ Constructor throw ProvisioningDeviceClientException if provisioningDeviceClientConfig , securityProvider, authorization or provisioningDeviceClientContract is null.]
         if (provisioningDeviceClientContract == null)
@@ -125,7 +105,7 @@ public class RegisterTask implements Callable
             }
             authorization.setSslContext(sslContext);
 
-            RequestData requestData = new RequestData( registrationId,  sslContext, null);
+            RequestData requestData = new RequestData(registrationId, sslContext, null);
 
             //SRS_RegisterTask_25_006: [ If the provided security client is for X509 then, this method shall trigger authenticateWithProvisioningService on the contract API and wait for response and return it. ]
             ResponseData dpsRegistrationData = new ResponseData();
@@ -185,10 +165,7 @@ public class RegisterTask implements Callable
         return String.format(SASTOKEN_FORMAT, tokenScope, base64UrlEncodedSignature, expiryTimeUTC);
     }
 
-    private RegistrationOperationStatusParser processWithNonce(byte[] base64DecodedAuthKey,
-                                                               SecurityProviderTpm securityClientTpm,
-                                                               RequestData requestData)
-            throws IOException, InterruptedException, ProvisioningDeviceClientException,SecurityProviderException
+    private RegistrationOperationStatusParser processWithNonce(byte[] base64DecodedAuthKey, SecurityProviderTpm securityClientTpm, RequestData requestData) throws IOException, InterruptedException, ProvisioningDeviceClientException, SecurityProviderException
 
     {
         if (base64DecodedAuthKey != null)
@@ -216,12 +193,10 @@ public class RegisterTask implements Callable
 
             //SRS_RegisterTask_25_016: [ If the provided security client is for Key then, this method shall trigger authenticateWithProvisioningService on the contract API using the sasToken generated and wait for response and return it. ]
             ResponseData responseDataForSasTokenAuth = new ResponseData();
-            this.provisioningDeviceClientContract.authenticateWithProvisioningService(requestData, responseCallback,
-                                                                                      responseDataForSasTokenAuth);
+            this.provisioningDeviceClientContract.authenticateWithProvisioningService(requestData, responseCallback, responseDataForSasTokenAuth);
             waitForResponse(responseDataForSasTokenAuth);
 
-            if (responseDataForSasTokenAuth.getResponseData() != null &&
-                    responseDataForSasTokenAuth.getContractState() == DPS_REGISTRATION_RECEIVED)
+            if (responseDataForSasTokenAuth.getResponseData() != null && responseDataForSasTokenAuth.getContractState() == DPS_REGISTRATION_RECEIVED)
             {
                 this.authorization.setSasToken(sasToken);
 
@@ -322,6 +297,7 @@ public class RegisterTask implements Callable
 
     /**
      * Callable call by the thread which handles Authentication and registration of a given device with the service
+     *
      * @return RegistrationOperationStatusParser holding the state of the service post registration
      * @throws Exception if registration fails.
      */
@@ -334,6 +310,7 @@ public class RegisterTask implements Callable
 
     /**
      * Busy waits for the provided responseData to be populated or for a timeout to occur
+     *
      * @param responseData the responseData object to periodically check for response data
      * @throws InterruptedException if an interrupted exception is thrown while this thread sleeps
      */
@@ -341,11 +318,29 @@ public class RegisterTask implements Callable
     {
         long millisecondsElapsed = 0;
         long waitTimeStart = System.currentTimeMillis();
-        while (responseData.getContractState() != DPS_REGISTRATION_RECEIVED
-                && millisecondsElapsed < MAX_WAIT_FOR_REGISTRATION_RESPONSE)
+        while (responseData.getContractState() != DPS_REGISTRATION_RECEIVED && millisecondsElapsed < MAX_WAIT_FOR_REGISTRATION_RESPONSE)
         {
             Thread.sleep(SLEEP_INTERVAL_WHEN_WAITING_FOR_RESPONSE);
             millisecondsElapsed = System.currentTimeMillis() - waitTimeStart;
+        }
+    }
+
+    private class ResponseCallbackImpl implements ResponseCallback
+    {
+        @Override
+        public void run(ResponseData responseData, Object context) throws ProvisioningDeviceClientException
+        {
+            if (context instanceof ResponseData)
+            {
+                ResponseData data = (ResponseData) context;
+                data.setResponseData(responseData.getResponseData());
+                data.setContractState(responseData.getContractState());
+                data.setWaitForStatusInMS(responseData.getWaitForStatusInMS());
+            }
+            else
+            {
+                throw new ProvisioningDeviceClientException(new IllegalArgumentException("Context mismatch for DPS registration"));
+            }
         }
     }
 }

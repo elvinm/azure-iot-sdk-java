@@ -32,19 +32,18 @@ public class LongHaulIT
     @Test
     public void runLongHaulTests()
     {
-        Class<?>[] classes = { LongHaulMessageTests.class };
+        Class<?>[] classes = {LongHaulMessageTests.class};
 
         JUnitCore.runClasses(new ParallelComputer(true, true), classes);
     }
 
     public static class LongHaulMessageTests
     {
+        static Map<String, String> messageProperties = new HashMap<>(3);
         private static String IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME = "IOTHUB_CONNECTION_STRING";
         private static String iotHubConnectionString = "";
-
         private static String longHaulDurationEnvVarName = "IOTHUB_DEVICE_LONGHAUL_DURATION_SECONDS";
         private static Long longHaulDuration = 0L;
-
         private static RegistryManager registryManager;
         private static Device deviceSendHttps;
         private static Device deviceSendAmqps;
@@ -52,9 +51,6 @@ public class LongHaulIT
         private static Device deviceReceiveHttps;
         private static Device deviceReceiveAmqps;
         private static Device deviceReceiveMqtt;
-
-        static Map<String, String> messageProperties = new HashMap<>(3);
-
         // How much to wait until receiving a message from the server, in milliseconds
         private Integer receiveTimeout = 60000;
 
@@ -77,7 +73,8 @@ public class LongHaulIT
                     try
                     {
                         longHaulDuration = Long.parseLong(env.get(envName));
-                    } catch (Exception e)
+                    }
+                    catch (Exception e)
                     {
                         //do nothing, the tests won't be executed
                     }
@@ -430,8 +427,7 @@ public class LongHaulIT
         {
             System.out.println("Started Mqtt receive long haul test...");
 
-            ServiceClient serviceClient = ServiceClient.createFromConnectionString(iotHubConnectionString,
-                    IotHubServiceClientProtocol.AMQPS);
+            ServiceClient serviceClient = ServiceClient.createFromConnectionString(iotHubConnectionString, IotHubServiceClientProtocol.AMQPS);
             serviceClient.open();
 
             DeviceClient client = new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceReceiveMqtt), IotHubClientProtocol.MQTT);
@@ -495,12 +491,12 @@ public class LongHaulIT
                 if (messageProperties.size() != messagePropertiesFromService.length)
                 {
                     resultValue = false;
-                } else
+                }
+                else
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        if (!messageProperties.containsKey(messagePropertiesFromService[i].getName())
-                                || !messageProperties.containsValue(messagePropertiesFromService[i].getValue()))
+                        if (!messageProperties.containsKey(messagePropertiesFromService[i].getName()) || !messageProperties.containsValue(messagePropertiesFromService[i].getValue()))
                         {
                             resultValue = false;
                             break;
@@ -517,7 +513,7 @@ public class LongHaulIT
     {
         public IotHubMessageResult execute(Message msg, Object context)
         {
-            Success messageReceived = (Success)context;
+            Success messageReceived = (Success) context;
             messageReceived.setResult(true);
             return IotHubMessageResult.COMPLETE;
         }

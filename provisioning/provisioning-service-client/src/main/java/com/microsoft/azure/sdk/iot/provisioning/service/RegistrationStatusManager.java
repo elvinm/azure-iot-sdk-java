@@ -17,7 +17,7 @@ import java.util.Map;
 
 /**
  * Registration Status Manager
- *
+ * <p>
  * <p> This is the inner class that implements the Registration Status APIs.
  * <p> For the exposed API, please see {@link ProvisioningServiceClient}.
  *
@@ -25,10 +25,10 @@ import java.util.Map;
  */
 public class RegistrationStatusManager
 {
-    private final ContractApiHttp contractApiHttp;
     private static final String CONDITION_KEY = "If-Match";
     private static final String PATH_SEPARATOR = "/";
     private static final String PATH_REGISTRATIONS = "registrations";
+    private final ContractApiHttp contractApiHttp;
 
     /**
      * PRIVATE CONSTRUCTOR
@@ -39,7 +39,7 @@ public class RegistrationStatusManager
     private RegistrationStatusManager(ContractApiHttp contractApiHttp)
     {
         /* SRS_REGISTRATION_STATUS_MANAGER_21_001: [The constructor shall throw IllegalArgumentException if the provided ContractApiHttp is null.] */
-        if(contractApiHttp == null)
+        if (contractApiHttp == null)
         {
             throw new IllegalArgumentException("ContractApiHttp cannot be null");
         }
@@ -48,7 +48,7 @@ public class RegistrationStatusManager
 
     /**
      * Create a new instance of the RegistrationStatusManager using the provided connection
-     *    string and https as the transport protocol.
+     * string and https as the transport protocol.
      *
      * @param contractApiHttp is the class that cares the Http connection.
      * @return The {@code RegistrationStatusManager} with the new instance of this class.
@@ -60,21 +60,25 @@ public class RegistrationStatusManager
         return new RegistrationStatusManager(contractApiHttp);
     }
 
+    private static String getDeviceRegistrationStatePath(String id)
+    {
+        return PATH_REGISTRATIONS + PATH_SEPARATOR + id;
+    }
+
     /**
      * Get device registration status information.
      *
-     * @see ProvisioningServiceClient#getDeviceRegistrationState(String)
-     *
      * @param id the {@code String} that identifies the registration status. It cannot be {@code null} or empty.
      * @return An {@link DeviceRegistrationState} with the registration status information.
-     * @throws IllegalArgumentException if the provided parameter is not correct.
+     * @throws IllegalArgumentException                    if the provided parameter is not correct.
      * @throws ProvisioningServiceClientTransportException if the SDK failed to send the request to the Device Provisioning Service.
-     * @throws ProvisioningServiceClientException if the Device Provisioning Service was not able to execute the bulk operation.
+     * @throws ProvisioningServiceClientException          if the Device Provisioning Service was not able to execute the bulk operation.
+     * @see ProvisioningServiceClient#getDeviceRegistrationState(String)
      */
     public DeviceRegistrationState get(String id) throws ProvisioningServiceClientException
     {
         /* SRS_REGISTRATION_STATUS_MANAGER_21_005: [The get shall throw IllegalArgumentException if the provided id is null or empty.] */
-        if(Tools.isNullOrEmpty(id))
+        if (Tools.isNullOrEmpty(id))
         {
             throw new IllegalArgumentException("Id cannot be null or empty.");
         }
@@ -85,16 +89,11 @@ public class RegistrationStatusManager
         /* SRS_REGISTRATION_STATUS_MANAGER_21_007: [The get shall send a Http request with a Http verb `GET`.] */
         /* SRS_REGISTRATION_STATUS_MANAGER_21_008: [The get shall throw ProvisioningServiceClientTransportException if the request failed. Threw by the callee.] */
         /* SRS_REGISTRATION_STATUS_MANAGER_21_009: [The get shall throw ProvisioningServiceClientException if the Device Provisioning Service could not successfully execute the request. Threw by the callee.] */
-        HttpResponse httpResponse =
-                contractApiHttp.request(
-                        HttpMethod.GET,
-                        enrollmentPath,
-                        null,
-                        "");
+        HttpResponse httpResponse = contractApiHttp.request(HttpMethod.GET, enrollmentPath, null, "");
 
         /* SRS_REGISTRATION_STATUS_MANAGER_21_028: [The get shall throw ProvisioningServiceClientServiceException if the heepResponse contains a null body.] */
         byte[] body = httpResponse.getBody();
-        if(body == null)
+        if (body == null)
         {
             throw new ProvisioningServiceClientServiceException("Http response for get cannot contains a null body");
         }
@@ -106,18 +105,17 @@ public class RegistrationStatusManager
     /**
      * Delete registration status.
      *
-     * @see ProvisioningServiceClient#deleteDeviceRegistrationStatus(DeviceRegistrationState)
-     *
      * @param DeviceRegistrationState is a {@link DeviceRegistrationState} that describes the registration status
-     *                                 that will be deleted. It cannot be {@code null}.
-     * @throws IllegalArgumentException if the provided parameter is not correct.
+     *                                that will be deleted. It cannot be {@code null}.
+     * @throws IllegalArgumentException                    if the provided parameter is not correct.
      * @throws ProvisioningServiceClientTransportException if the SDK failed to send the request to the Device Provisioning Service.
-     * @throws ProvisioningServiceClientException if the Device Provisioning Service was not able to execute the delete operation.
+     * @throws ProvisioningServiceClientException          if the Device Provisioning Service was not able to execute the delete operation.
+     * @see ProvisioningServiceClient#deleteDeviceRegistrationStatus(DeviceRegistrationState)
      */
     public void delete(DeviceRegistrationState DeviceRegistrationState) throws ProvisioningServiceClientException
     {
         /* SRS_REGISTRATION_STATUS_MANAGER_21_011: [The delete shall throw IllegalArgumentException if the provided DeviceRegistrationState is null.] */
-        if(DeviceRegistrationState == null)
+        if (DeviceRegistrationState == null)
         {
             throw new IllegalArgumentException("DeviceRegistrationState cannot be null.");
         }
@@ -127,7 +125,7 @@ public class RegistrationStatusManager
 
         /* SRS_REGISTRATION_STATUS_MANAGER_21_013: [If the DeviceRegistrationState contains eTag, the delete shall send a Http request with `If-Match` the eTag in the header.] */
         Map<String, String> headerParameters = new HashMap<>();
-        if(!Tools.isNullOrEmpty(DeviceRegistrationState.getEtag()))
+        if (!Tools.isNullOrEmpty(DeviceRegistrationState.getEtag()))
         {
             headerParameters.put(CONDITION_KEY, DeviceRegistrationState.getEtag());
         }
@@ -135,29 +133,24 @@ public class RegistrationStatusManager
         /* SRS_REGISTRATION_STATUS_MANAGER_21_014: [The delete shall send a Http request with a Http verb `DELETE`.] */
         /* SRS_REGISTRATION_STATUS_MANAGER_21_015: [The delete shall throw ProvisioningServiceClientTransportException if the request failed. Threw by the callee.] */
         /* SRS_REGISTRATION_STATUS_MANAGER_21_016: [The delete shall throw ProvisioningServiceClientException if the Device Provisioning Service could not successfully execute the request. Threw by the callee.] */
-        contractApiHttp.request(
-                HttpMethod.DELETE,
-                enrollmentPath,
-                headerParameters,
-                "");
+        contractApiHttp.request(HttpMethod.DELETE, enrollmentPath, headerParameters, "");
     }
 
     /**
      * Delete registration status.
      *
+     * @param id   is a {@link String} with the identification of the registration status to delete. It cannot be {@code null} or empty.
+     * @param eTag is a {@link String} with the eTag of the enrollment to delete. It can be {@code null} or empty (ignored).
+     * @throws IllegalArgumentException                    if the provided id is not correct.
+     * @throws ProvisioningServiceClientTransportException if the SDK failed to send the request to the Device Provisioning Service.
+     * @throws ProvisioningServiceClientException          if the Device Provisioning Service was not able to execute the bulk operation.
      * @see ProvisioningServiceClient#deleteDeviceRegistrationStatus(String)
      * @see ProvisioningServiceClient#deleteDeviceRegistrationStatus(String, String)
-     *
-     * @param id is a {@link String} with the identification of the registration status to delete. It cannot be {@code null} or empty.
-     * @param eTag is a {@link String} with the eTag of the enrollment to delete. It can be {@code null} or empty (ignored).
-     * @throws IllegalArgumentException if the provided id is not correct.
-     * @throws ProvisioningServiceClientTransportException if the SDK failed to send the request to the Device Provisioning Service.
-     * @throws ProvisioningServiceClientException if the Device Provisioning Service was not able to execute the bulk operation.
      */
     public void delete(String id, String eTag) throws ProvisioningServiceClientException
     {
         /* SRS_REGISTRATION_STATUS_MANAGER_21_017: [The delete shall throw IllegalArgumentException if the provided id is null or empty.] */
-        if(Tools.isNullOrEmpty(id))
+        if (Tools.isNullOrEmpty(id))
         {
             throw new IllegalArgumentException("Id cannot be null.");
         }
@@ -167,7 +160,7 @@ public class RegistrationStatusManager
 
         /* SRS_REGISTRATION_STATUS_MANAGER_21_019: [If the eTag is not null or empty, the delete shall send a Http request with `If-Match` the eTag in the header.] */
         Map<String, String> headerParameters = new HashMap<>();
-        if(!Tools.isNullOrEmpty(eTag))
+        if (!Tools.isNullOrEmpty(eTag))
         {
             headerParameters.put(CONDITION_KEY, eTag);
         }
@@ -175,41 +168,36 @@ public class RegistrationStatusManager
         /* SRS_REGISTRATION_STATUS_MANAGER_21_020: [The delete shall send a Http request with a Http verb `DELETE`.] */
         /* SRS_REGISTRATION_STATUS_MANAGER_21_021: [The delete shall throw ProvisioningServiceClientTransportException if the request failed. Threw by the callee.] */
         /* SRS_REGISTRATION_STATUS_MANAGER_21_022: [The delete shall throw ProvisioningServiceClientException if the Device Provisioning Service could not successfully execute the request. Threw by the callee.] */
-        contractApiHttp.request(
-                HttpMethod.DELETE,
-                enrollmentPath,
-                headerParameters,
-                "");
+        contractApiHttp.request(HttpMethod.DELETE, enrollmentPath, headerParameters, "");
     }
 
     /**
      * Create a new registration status query for enrollmentGroup.
      *
-     * @see ProvisioningServiceClient#createEnrollmentGroupRegistrationStatusQuery(QuerySpecification, String)
-     * @see ProvisioningServiceClient#createEnrollmentGroupRegistrationStatusQuery(QuerySpecification, String, int)
-     *
      * @param querySpecification is a {@code String} with the SQL query specification. It cannot be {@code null}.
-     * @param enrollmentGroupId is a {@code String} with the enrollmentGroupId of the enrollmentGroup to delete. It cannot be {@code null} or empty.
-     * @param pageSize the {@code int} with the maximum number of items per iteration. It can be 0 for default, but not negative.
+     * @param enrollmentGroupId  is a {@code String} with the enrollmentGroupId of the enrollmentGroup to delete. It cannot be {@code null} or empty.
+     * @param pageSize           the {@code int} with the maximum number of items per iteration. It can be 0 for default, but not negative.
      * @return A {@link Query} iterator.
      * @throws IllegalArgumentException if the provided parameter is not correct.
+     * @see ProvisioningServiceClient#createEnrollmentGroupRegistrationStatusQuery(QuerySpecification, String)
+     * @see ProvisioningServiceClient#createEnrollmentGroupRegistrationStatusQuery(QuerySpecification, String, int)
      */
     public Query createEnrollmentGroupQuery(QuerySpecification querySpecification, String enrollmentGroupId, int pageSize)
     {
         /* SRS_REGISTRATION_STATUS_MANAGER_21_023: [The createEnrollmentGroupQuery shall throw IllegalArgumentException if the provided querySpecification is null.] */
-        if(querySpecification == null)
+        if (querySpecification == null)
         {
             throw new IllegalArgumentException("querySpecification cannot be null.");
         }
 
         /* SRS_REGISTRATION_STATUS_MANAGER_21_024: [The createEnrollmentGroupQuery shall throw IllegalArgumentException if the provided enrollmentGroupId is null or empty.] */
-        if(Tools.isNullOrEmpty(enrollmentGroupId))
+        if (Tools.isNullOrEmpty(enrollmentGroupId))
         {
             throw new IllegalArgumentException("enrollmentGroupId cannot be null or empty.");
         }
 
         /* SRS_REGISTRATION_STATUS_MANAGER_21_025: [The createEnrollmentGroupQuery shall throw IllegalArgumentException if the provided pageSize is negative.] */
-        if(pageSize < 0)
+        if (pageSize < 0)
         {
             throw new IllegalArgumentException("pageSize cannot be negative.");
         }
@@ -219,10 +207,5 @@ public class RegistrationStatusManager
 
         /* SRS_REGISTRATION_STATUS_MANAGER_21_027: [The createEnrollmentGroupQuery shall create and return a new instance of the Query iterator.] */
         return new Query(contractApiHttp, targetPath, querySpecification, pageSize);
-    }
-
-    private static String getDeviceRegistrationStatePath(String id)
-    {
-        return PATH_REGISTRATIONS + PATH_SEPARATOR + id;
     }
 }

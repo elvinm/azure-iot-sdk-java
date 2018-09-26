@@ -1,6 +1,8 @@
 package io.swagger.server.api;
 
-public class MainApiException extends Exception {
+public class MainApiException extends Exception
+{
+    public static final MainApiException INTERNAL_SERVER_ERROR = new MainApiException(500, "Internal Server Error");
     private int statusCode;
     private String statusMessage;
 
@@ -17,6 +19,4 @@ public class MainApiException extends Exception {
     public String getStatusMessage() {
         return statusMessage;
     }
-    
-    public static final MainApiException INTERNAL_SERVER_ERROR = new MainApiException(500, "Internal Server Error"); 
 }

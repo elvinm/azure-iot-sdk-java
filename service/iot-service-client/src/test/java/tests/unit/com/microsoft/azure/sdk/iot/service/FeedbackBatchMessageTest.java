@@ -17,7 +17,9 @@ import javax.json.stream.JsonParsingException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-/** Unit tests for FeedbackBatchMessage */
+/**
+ * Unit tests for FeedbackBatchMessage
+ */
 @RunWith(JMockit.class)
 public class FeedbackBatchMessageTest
 {
@@ -74,7 +76,7 @@ public class FeedbackBatchMessageTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKBATCHMESSAGE_12_004: [The function shall throw a JsonParsingException if the parsing failed]
     // Assert
-    @Test (expected = JsonParsingException.class)
+    @Test(expected = JsonParsingException.class)
     public void json_data_invalid_format1()
     {
         // Arrange
@@ -97,7 +99,7 @@ public class FeedbackBatchMessageTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKBATCHMESSAGE_12_004: [The function shall throw a JsonParsingException if the parsing failed]
     // Assert
-    @Test (expected = JsonParsingException.class)
+    @Test(expected = JsonParsingException.class)
     public void json_data_invalid_format3()
     {
         // Arrange
@@ -108,7 +110,7 @@ public class FeedbackBatchMessageTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKBATCHMESSAGE_12_004: [The function shall throw a JsonParsingException if the parsing failed]
     // Assert
-    @Test (expected = JsonParsingException.class)
+    @Test(expected = JsonParsingException.class)
     public void json_data_invalid_format4()
     {
         // Arrange
@@ -119,7 +121,7 @@ public class FeedbackBatchMessageTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKBATCHMESSAGE_12_004: [The function shall throw a JsonParsingException if the parsing failed]
     // Assert
-    @Test (expected = JsonParsingException.class)
+    @Test(expected = JsonParsingException.class)
     public void json_data_invalid_format5()
     {
         // Arrange
@@ -130,7 +132,7 @@ public class FeedbackBatchMessageTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKBATCHMESSAGE_12_004: [The function shall throw a JsonParsingException if the parsing failed]
     // Assert
-    @Test (expected = JsonParsingException.class)
+    @Test(expected = JsonParsingException.class)
     public void json_data_invalid_format6()
     {
         // Arrange
@@ -145,14 +147,7 @@ public class FeedbackBatchMessageTest
     public void parse_FeedbackBatchMessage_json_good_case()
     {
         // Arrange
-        String jsonString =
-                "Data{[" +
-                        "{\"originalMessageId\":\"a1aaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"description\":\"Success\",\"statusCode\":\"Success\",\"deviceGenerationId\":\"111111111111111111\",\"deviceId\":\"xxx-01\",\"enqueuedTimeUtc\":\"2015-10-10T23:35:19.9774002Z\"}," +
-                        "{\"originalMessageId\":\"a2aaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"description\":\"Expired\",\"statusCode\":\"Expired\",\"deviceGenerationId\":\"222222222222222222\",\"deviceId\":\"xxx-02\",\"enqueuedTimeUtc\":\"2015-10-11T23:35:19.9774002Z\"}," +
-                        "{\"originalMessageId\":\"a3aaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"description\":\"Delivery Count Exceeded\",\"statusCode\":\"DeliveryCountExceeded\",\"deviceGenerationId\":\"333333333333333333\",\"deviceId\":\"xxx-03\",\"enqueuedTimeUtc\":\"2015-10-12T23:35:19.9774002Z\"}," +
-                        "{\"originalMessageId\":\"a3aaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"description\":\"xyz\",\"statusCode\":\"xyz\",\"deviceGenerationId\":\"444444444444444444\",\"deviceId\":\"xxx-04\",\"enqueuedTimeUtc\":\"2015-10-13T23:35:19.9774002Z\"}," +
-                        "{\"originalMessageId\":\"a4aaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"description\":\"Rejected\",\"statusCode\":\"Rejected\",\"deviceGenerationId\":\"555555555555555555\",\"deviceId\":\"xxx-05\",\"enqueuedTimeUtc\":\"2015-10-14T23:35:19.9774002Z\"}" +
-                        "]}";
+        String jsonString = "Data{[" + "{\"originalMessageId\":\"a1aaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"description\":\"Success\",\"statusCode\":\"Success\",\"deviceGenerationId\":\"111111111111111111\",\"deviceId\":\"xxx-01\",\"enqueuedTimeUtc\":\"2015-10-10T23:35:19.9774002Z\"}," + "{\"originalMessageId\":\"a2aaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"description\":\"Expired\",\"statusCode\":\"Expired\",\"deviceGenerationId\":\"222222222222222222\",\"deviceId\":\"xxx-02\",\"enqueuedTimeUtc\":\"2015-10-11T23:35:19.9774002Z\"}," + "{\"originalMessageId\":\"a3aaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"description\":\"Delivery Count Exceeded\",\"statusCode\":\"DeliveryCountExceeded\",\"deviceGenerationId\":\"333333333333333333\",\"deviceId\":\"xxx-03\",\"enqueuedTimeUtc\":\"2015-10-12T23:35:19.9774002Z\"}," + "{\"originalMessageId\":\"a3aaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"description\":\"xyz\",\"statusCode\":\"xyz\",\"deviceGenerationId\":\"444444444444444444\",\"deviceId\":\"xxx-04\",\"enqueuedTimeUtc\":\"2015-10-13T23:35:19.9774002Z\"}," + "{\"originalMessageId\":\"a4aaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\",\"description\":\"Rejected\",\"statusCode\":\"Rejected\",\"deviceGenerationId\":\"555555555555555555\",\"deviceId\":\"xxx-05\",\"enqueuedTimeUtc\":\"2015-10-14T23:35:19.9774002Z\"}" + "]}";
         // Act
         FeedbackBatch feedbackBatch = FeedbackBatchMessage.parse(jsonString);
         // Assert

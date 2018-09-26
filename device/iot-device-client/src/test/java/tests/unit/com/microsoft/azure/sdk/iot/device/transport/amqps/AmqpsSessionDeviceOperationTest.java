@@ -107,7 +107,7 @@ public class AmqpsSessionDeviceOperationTest
 
 
     // Tests_SRS_AMQPSESSIONDEVICEOPERATION_12_001: [The constructor shall throw IllegalArgumentException if the deviceClientConfig or the amqpsDeviceAuthentication parameter is null.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfDeviceClientIsNull() throws IllegalArgumentException, TransportException
     {
         // arrange
@@ -116,7 +116,7 @@ public class AmqpsSessionDeviceOperationTest
     }
 
     // Tests_SRS_AMQPSESSIONDEVICEOPERATION_12_001: [The constructor shall throw IllegalArgumentException if the deviceClientConfig or the amqpsDeviceAuthentication parameter is null.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfAmqpsDeviceAuthenticationIsNull() throws IllegalArgumentException, TransportException
     {
         // arrange
@@ -178,7 +178,7 @@ public class AmqpsSessionDeviceOperationTest
                 mockIotHubSasTokenAuthenticationProvider.getTokenValidSecs();
                 result = tokenValidSecs;
 
-                new AmqpsDeviceAuthenticationCBSTokenRenewalTask((AmqpsSessionDeviceOperation)any);
+                new AmqpsDeviceAuthenticationCBSTokenRenewalTask((AmqpsSessionDeviceOperation) any);
                 result = mockAmqpsDeviceAuthenticationCBSTokenRenewalTask;
                 mockExecutors.newScheduledThreadPool(1);
                 result = mockScheduledExecutorService;
@@ -251,7 +251,7 @@ public class AmqpsSessionDeviceOperationTest
     public void authenticateCBS() throws IllegalArgumentException, InterruptedException, TransportException
     {
         // arrange
-        final int MAX_WAIT_TO_AUTHENTICATE = 10*1000;
+        final int MAX_WAIT_TO_AUTHENTICATE = 10 * 1000;
         final AmqpsSessionDeviceOperation amqpsSessionDeviceOperation = new AmqpsSessionDeviceOperation(mockDeviceClientConfig, mockAmqpsDeviceAuthentication);
         Deencapsulation.setField(amqpsSessionDeviceOperation, "deviceClientConfig", mockDeviceClientConfig);
         Deencapsulation.setField(amqpsSessionDeviceOperation, "authenticationLatch", mockCountDownLatch);
@@ -287,11 +287,11 @@ public class AmqpsSessionDeviceOperationTest
     }
 
     // Tests_SRS_AMQPSESSIONDEVICEOPERATION_34_063: [If an InterruptedException is encountered while waiting for authentication to finish, this function shall throw a TransportException.]
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void authenticateLockThrows() throws IllegalArgumentException, InterruptedException, TransportException
     {
         // arrange
-        final int MAX_WAIT_TO_AUTHENTICATE = 10*1000;
+        final int MAX_WAIT_TO_AUTHENTICATE = 10 * 1000;
         final AmqpsSessionDeviceOperation amqpsSessionDeviceOperation = new AmqpsSessionDeviceOperation(mockDeviceClientConfig, mockAmqpsDeviceAuthentication);
         Deencapsulation.setField(amqpsSessionDeviceOperation, "authenticationLatch", mockCountDownLatch);
 
@@ -343,7 +343,7 @@ public class AmqpsSessionDeviceOperationTest
         new Verifications()
         {
             {
-                Deencapsulation.invoke(mockAmqpsDeviceAuthentication ,"authenticate", new Class[] {DeviceClientConfig.class, UUID.class}, (DeviceClientConfig) any, (UUID) any);
+                Deencapsulation.invoke(mockAmqpsDeviceAuthentication, "authenticate", new Class[]{DeviceClientConfig.class, UUID.class}, (DeviceClientConfig) any, (UUID) any);
                 times = 1;
             }
         };

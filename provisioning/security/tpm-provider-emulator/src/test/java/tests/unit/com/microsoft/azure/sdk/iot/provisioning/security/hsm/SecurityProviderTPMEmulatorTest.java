@@ -28,12 +28,8 @@ import static org.junit.Assert.assertTrue;
 
 public class SecurityProviderTPMEmulatorTest
 {
-    private static final String[] INVALID_REGISTRATION_IDS = {"UPPERCASE", "UPPERandLowerMix",
-            "greaterthan128lengthgreaterthan128lengthgreaterthan128lengthgreaterthan128lengthgreaterthan128lengthgreaterthan128lengthgreaterthan128lengthgreaterthan128lengthgreaterthan128lengthgreaterthan128length",
-            "nonalphanumeric&*"
-    };
-    private static final String[] VALID_REGISTRATION_IDS = {"lowercase", "lowerand1234567890", "withhyphen-", "1234567890-",
-            "lower-123456789"};
+    private static final String[] INVALID_REGISTRATION_IDS = {"UPPERCASE", "UPPERandLowerMix", "greaterthan128lengthgreaterthan128lengthgreaterthan128lengthgreaterthan128lengthgreaterthan128lengthgreaterthan128lengthgreaterthan128lengthgreaterthan128lengthgreaterthan128lengthgreaterthan128length", "nonalphanumeric&*"};
+    private static final String[] VALID_REGISTRATION_IDS = {"lowercase", "lowerand1234567890", "withhyphen-", "1234567890-", "lower-123456789"};
 
     @Mocked
     TpmFactory mockedTpmFactory;
@@ -95,11 +91,11 @@ public class SecurityProviderTPMEmulatorTest
         {
             {
                 mockedTpm._allowErrors();
-                mockedTpm.ReadPublic((TPM_HANDLE)any);
+                mockedTpm.ReadPublic((TPM_HANDLE) any);
                 result = mockedReadPublicResponse;
                 mockedTpm._getLastResponseCode();
                 result = TPM_RC.SUCCESS;
-                mockedTpm.EvictControl((TPM_HANDLE)any, (TPM_HANDLE)any, (TPM_HANDLE)any);
+                mockedTpm.EvictControl((TPM_HANDLE) any, (TPM_HANDLE) any, (TPM_HANDLE) any);
             }
         };
     }
@@ -110,15 +106,14 @@ public class SecurityProviderTPMEmulatorTest
         {
             {
                 mockedTpm._allowErrors();
-                mockedTpm.ReadPublic((TPM_HANDLE)any);
+                mockedTpm.ReadPublic((TPM_HANDLE) any);
                 result = mockedReadPublicResponse;
                 mockedTpm._getLastResponseCode();
                 result = TPM_RC.HANDLE;
-                mockedTpm.CreatePrimary((TPM_HANDLE)any, (TPMS_SENSITIVE_CREATE)any, (TPMT_PUBLIC)any, (byte[])any,
-                                        (TPMS_PCR_SELECTION[])any);
+                mockedTpm.CreatePrimary((TPM_HANDLE) any, (TPMS_SENSITIVE_CREATE) any, (TPMT_PUBLIC) any, (byte[]) any, (TPMS_PCR_SELECTION[]) any);
                 result = mockedCreatePrimaryResponse;
-                mockedTpm.EvictControl((TPM_HANDLE)any, (TPM_HANDLE)any, (TPM_HANDLE)any);
-                mockedTpm.FlushContext((TPM_HANDLE)any);
+                mockedTpm.EvictControl((TPM_HANDLE) any, (TPM_HANDLE) any, (TPM_HANDLE) any);
+                mockedTpm.FlushContext((TPM_HANDLE) any);
             }
         };
     }
@@ -151,7 +146,7 @@ public class SecurityProviderTPMEmulatorTest
         {
             {
                 mockedTpm._allowErrors();
-                mockedTpm.ReadPublic((TPM_HANDLE)any);
+                mockedTpm.ReadPublic((TPM_HANDLE) any);
                 result = mockedReadPublicResponse;
                 mockedTpm._getLastResponseCode();
                 result = TPM_RC.SUCCESS;
@@ -169,7 +164,7 @@ public class SecurityProviderTPMEmulatorTest
         };
     }
 
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void constructorThrowsOnReadPublicResponseNull() throws Exception
     {
         //arrange
@@ -179,7 +174,7 @@ public class SecurityProviderTPMEmulatorTest
         {
             {
                 mockedTpm._allowErrors();
-                mockedTpm.ReadPublic((TPM_HANDLE)any);
+                mockedTpm.ReadPublic((TPM_HANDLE) any);
                 result = null;
             }
         };
@@ -188,7 +183,7 @@ public class SecurityProviderTPMEmulatorTest
         SecurityProviderTPMEmulator securityProviderTPMEmulator = new SecurityProviderTPMEmulator();
     }
 
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void constructorThrowsOnResponseCodeNotSuccessNotHandle() throws Exception
     {
         //arrange
@@ -198,7 +193,7 @@ public class SecurityProviderTPMEmulatorTest
         {
             {
                 mockedTpm._allowErrors();
-                mockedTpm.ReadPublic((TPM_HANDLE)any);
+                mockedTpm.ReadPublic((TPM_HANDLE) any);
                 result = mockedReadPublicResponse;
                 mockedTpm._getLastResponseCode();
                 result = TPM_RC.TESTING;
@@ -210,7 +205,7 @@ public class SecurityProviderTPMEmulatorTest
     }
 
 
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void constructorThrowsOnResponseCodeNotSuccessNotHandleOnClear() throws Exception
     {
         //arrange
@@ -218,7 +213,7 @@ public class SecurityProviderTPMEmulatorTest
         {
             {
                 mockedTpm._allowErrors();
-                mockedTpm.ReadPublic((TPM_HANDLE)any);
+                mockedTpm.ReadPublic((TPM_HANDLE) any);
                 result = mockedReadPublicResponse;
                 mockedTpm._getLastResponseCode();
                 result = TPM_RC.TESTING;
@@ -229,7 +224,7 @@ public class SecurityProviderTPMEmulatorTest
         SecurityProviderTPMEmulator securityProviderTPMEmulator = new SecurityProviderTPMEmulator();
     }
 
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void constructorThrowsOnCreatePrimaryResponseNull() throws Exception
     {
         //arrange
@@ -239,12 +234,11 @@ public class SecurityProviderTPMEmulatorTest
         {
             {
                 mockedTpm._allowErrors();
-                mockedTpm.ReadPublic((TPM_HANDLE)any);
+                mockedTpm.ReadPublic((TPM_HANDLE) any);
                 result = mockedReadPublicResponse;
                 mockedTpm._getLastResponseCode();
                 result = TPM_RC.HANDLE;
-                mockedTpm.CreatePrimary((TPM_HANDLE)any, (TPMS_SENSITIVE_CREATE)any, (TPMT_PUBLIC)any, (byte[])any,
-                                        (TPMS_PCR_SELECTION[])any);
+                mockedTpm.CreatePrimary((TPM_HANDLE) any, (TPMS_SENSITIVE_CREATE) any, (TPMT_PUBLIC) any, (byte[]) any, (TPMS_PCR_SELECTION[]) any);
                 result = null;
             }
         };
@@ -298,7 +292,7 @@ public class SecurityProviderTPMEmulatorTest
     }
 
     //SRS_SecurityProviderTPMEmulator_25_003: [ The constructor shall throw IllegalArgumentException if registration id was null or empty. ]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullRegistrationId() throws Exception
     {
         SecurityProviderTPMEmulator securityProviderTPMEmulator = new SecurityProviderTPMEmulator(null);
@@ -366,30 +360,28 @@ public class SecurityProviderTPMEmulatorTest
                 result = mockedTpm2BPublic;
                 TPM2B_DATA.fromTpm((InByteBuf) any);
                 result = mockedTpm2BData;
-                mockedTpm.StartAuthSession((TPM_HANDLE)any, (TPM_HANDLE)any, (byte[]) any, (byte[])any, (TPM_SE)any, (TPMT_SYM_DEF)any
-                        , (TPM_ALG_ID)any);
+                mockedTpm.StartAuthSession((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (TPM_SE) any, (TPMT_SYM_DEF) any, (TPM_ALG_ID) any);
                 result = mockedStartAuthSessionResponse;
 
-                mockedTpm.PolicySecret((TPM_HANDLE)any, (TPM_HANDLE)any, (byte[])any, (byte[])any, (byte[])any, anyInt);
+                mockedTpm.PolicySecret((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (byte[]) any, anyInt);
 
-                mockedTpm._withSessions((TPM_HANDLE)any, mockedStartAuthSessionResponse.handle);
-                mockedTpm.ActivateCredential((TPM_HANDLE)any, (TPM_HANDLE)any, (TPMS_ID_OBJECT)any, (byte[])any);
+                mockedTpm._withSessions((TPM_HANDLE) any, mockedStartAuthSessionResponse.handle);
+                mockedTpm.ActivateCredential((TPM_HANDLE) any, (TPM_HANDLE) any, (TPMS_ID_OBJECT) any, (byte[]) any);
                 result = "innerWrapKey".getBytes();
 
-                mockedTpm.Import((TPM_HANDLE )any, (byte[] )any, (TPMT_PUBLIC )any, (TPM2B_PRIVATE )any, (byte[])any,
-                                 (TPMT_SYM_DEF_OBJECT)any);
+                mockedTpm.Import((TPM_HANDLE) any, (byte[]) any, (TPMT_PUBLIC) any, (TPM2B_PRIVATE) any, (byte[]) any, (TPMT_SYM_DEF_OBJECT) any);
                 result = mockedTpm2BPrivate;
 
-                mockedTpm.Load((TPM_HANDLE)any, (TPM2B_PRIVATE)any, (TPMT_PUBLIC)any);
+                mockedTpm.Load((TPM_HANDLE) any, (TPM2B_PRIVATE) any, (TPMT_PUBLIC) any);
                 result = mockedTpmHandle;
 
                 //clearPersistentExpectations
                 mockedTpm._allowErrors();
-                mockedTpm.ReadPublic((TPM_HANDLE)any);
+                mockedTpm.ReadPublic((TPM_HANDLE) any);
                 result = mockedReadPublicResponse;
                 mockedTpm._getLastResponseCode();
                 result = TPM_RC.SUCCESS;
-                mockedTpm.EvictControl((TPM_HANDLE)any, (TPM_HANDLE)any, (TPM_HANDLE)any);
+                mockedTpm.EvictControl((TPM_HANDLE) any, (TPM_HANDLE) any, (TPM_HANDLE) any);
 
 
                 mockedTpm.EvictControl((TPM_HANDLE) any, (TPM_HANDLE) any, (TPM_HANDLE) any);
@@ -401,16 +393,16 @@ public class SecurityProviderTPMEmulatorTest
                 TpmHelpers.getTpmProperty(mockedTpm, TPM_PT.INPUT_BUFFER);
                 result = 10;
 
-                mockedTpm.Create((TPM_HANDLE) any, (TPMS_SENSITIVE_CREATE) any, (TPMT_PUBLIC)any, (byte[])any, (TPMS_PCR_SELECTION[]) any);
+                mockedTpm.Create((TPM_HANDLE) any, (TPMS_SENSITIVE_CREATE) any, (TPMT_PUBLIC) any, (byte[]) any, (TPMS_PCR_SELECTION[]) any);
                 result = mockedCreateResponse;
 
-                mockedTpm.Load((TPM_HANDLE) any, (TPM2B_PRIVATE )any, (TPMT_PUBLIC )any);
+                mockedTpm.Load((TPM_HANDLE) any, (TPM2B_PRIVATE) any, (TPMT_PUBLIC) any);
                 result = mockedTpmHandle;
 
-                mockedTpm.EncryptDecrypt2((TPM_HANDLE )any, (byte[] )any, anyByte, (TPM_ALG_ID )any, (byte[]) any);
+                mockedTpm.EncryptDecrypt2((TPM_HANDLE) any, (byte[]) any, anyByte, (TPM_ALG_ID) any, (byte[]) any);
                 result = mockedEncryptDecrypt2Response;
 
-                mockedTpm.FlushContext((TPM_HANDLE )any);
+                mockedTpm.FlushContext((TPM_HANDLE) any);
             }
         };
 
@@ -419,7 +411,7 @@ public class SecurityProviderTPMEmulatorTest
     }
 
     //SRS_SecurityProviderTPMEmulator_25_008: [ This method shall throw SecurityProviderException if ID Key Public could not be extracted form TPM. ]
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void activateIdentityKeyThrowsOnNullIdKeyPub() throws Exception
     {
         //arrange
@@ -442,7 +434,7 @@ public class SecurityProviderTPMEmulatorTest
     }
 
     //SRS_SecurityProviderTPMEmulator_25_010: [ This method shall throw  SecurityProviderException if Authorization session with TPM could not be started. ]
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void activateIdentityKeyThrowsOnStartAuthSessionFail() throws Exception
     {
         //arrange
@@ -459,8 +451,7 @@ public class SecurityProviderTPMEmulatorTest
                 result = mockedTpm2BPublic;
                 TPM2B_DATA.fromTpm((InByteBuf) any);
                 result = mockedTpm2BData;
-                mockedTpm.StartAuthSession((TPM_HANDLE)any, (TPM_HANDLE)any, (byte[]) any, (byte[])any, (TPM_SE)any, (TPMT_SYM_DEF)any
-                        , (TPM_ALG_ID)any);
+                mockedTpm.StartAuthSession((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (TPM_SE) any, (TPMT_SYM_DEF) any, (TPM_ALG_ID) any);
                 result = null;
             }
         };
@@ -471,7 +462,7 @@ public class SecurityProviderTPMEmulatorTest
     }
 
     //SRS_SecurityProviderTPMEmulator_25_013: [ This method shall throw SecurityProviderException if activating the credential for the session fails. ]
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void activateIdentityKeyThrowsOnInnerWrapKeyNull() throws Exception
     {
         //arrange
@@ -488,14 +479,13 @@ public class SecurityProviderTPMEmulatorTest
                 result = mockedTpm2BPublic;
                 TPM2B_DATA.fromTpm((InByteBuf) any);
                 result = mockedTpm2BData;
-                mockedTpm.StartAuthSession((TPM_HANDLE)any, (TPM_HANDLE)any, (byte[]) any, (byte[])any, (TPM_SE)any, (TPMT_SYM_DEF)any
-                        , (TPM_ALG_ID)any);
+                mockedTpm.StartAuthSession((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (TPM_SE) any, (TPMT_SYM_DEF) any, (TPM_ALG_ID) any);
                 result = mockedStartAuthSessionResponse;
 
-                mockedTpm.PolicySecret((TPM_HANDLE)any, (TPM_HANDLE)any, (byte[])any, (byte[])any, (byte[])any, anyInt);
+                mockedTpm.PolicySecret((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (byte[]) any, anyInt);
 
-                mockedTpm._withSessions((TPM_HANDLE)any, mockedStartAuthSessionResponse.handle);
-                mockedTpm.ActivateCredential((TPM_HANDLE)any, (TPM_HANDLE)any, (TPMS_ID_OBJECT)any, (byte[])any);
+                mockedTpm._withSessions((TPM_HANDLE) any, mockedStartAuthSessionResponse.handle);
+                mockedTpm.ActivateCredential((TPM_HANDLE) any, (TPM_HANDLE) any, (TPMS_ID_OBJECT) any, (byte[]) any);
                 result = null;
             }
         };
@@ -506,7 +496,7 @@ public class SecurityProviderTPMEmulatorTest
     }
 
     //SRS_SecurityProviderTPMEmulator_25_015: [ This method shall throw SecurityProviderException if importing the activated credential onto TPM fails. ]
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void activateIdentityKeyThrowsOnIdKeyPrivateNull() throws Exception
     {
         //arrange
@@ -523,18 +513,16 @@ public class SecurityProviderTPMEmulatorTest
                 result = mockedTpm2BPublic;
                 TPM2B_DATA.fromTpm((InByteBuf) any);
                 result = mockedTpm2BData;
-                mockedTpm.StartAuthSession((TPM_HANDLE)any, (TPM_HANDLE)any, (byte[]) any, (byte[])any, (TPM_SE)any, (TPMT_SYM_DEF)any
-                        , (TPM_ALG_ID)any);
+                mockedTpm.StartAuthSession((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (TPM_SE) any, (TPMT_SYM_DEF) any, (TPM_ALG_ID) any);
                 result = mockedStartAuthSessionResponse;
 
-                mockedTpm.PolicySecret((TPM_HANDLE)any, (TPM_HANDLE)any, (byte[])any, (byte[])any, (byte[])any, anyInt);
+                mockedTpm.PolicySecret((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (byte[]) any, anyInt);
 
-                mockedTpm._withSessions((TPM_HANDLE)any, mockedStartAuthSessionResponse.handle);
-                mockedTpm.ActivateCredential((TPM_HANDLE)any, (TPM_HANDLE)any, (TPMS_ID_OBJECT)any, (byte[])any);
+                mockedTpm._withSessions((TPM_HANDLE) any, mockedStartAuthSessionResponse.handle);
+                mockedTpm.ActivateCredential((TPM_HANDLE) any, (TPM_HANDLE) any, (TPMS_ID_OBJECT) any, (byte[]) any);
                 result = "innerWrapKey".getBytes();
 
-                mockedTpm.Import((TPM_HANDLE )any, (byte[] )any, (TPMT_PUBLIC )any, (TPM2B_PRIVATE )any, (byte[])any,
-                                 (TPMT_SYM_DEF_OBJECT)any);
+                mockedTpm.Import((TPM_HANDLE) any, (byte[]) any, (TPMT_PUBLIC) any, (TPM2B_PRIVATE) any, (byte[]) any, (TPMT_SYM_DEF_OBJECT) any);
                 result = null;
             }
         };
@@ -545,7 +533,7 @@ public class SecurityProviderTPMEmulatorTest
     }
 
     //SRS_SecurityProviderTPMEmulator_25_017: [ This method shall throw SecurityProviderException if loading SRK onto TPM fails. ]
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void activateIdentityKeyThrowsOnHIdKeyNull() throws Exception
     {
         //arrange
@@ -562,21 +550,19 @@ public class SecurityProviderTPMEmulatorTest
                 result = mockedTpm2BPublic;
                 TPM2B_DATA.fromTpm((InByteBuf) any);
                 result = mockedTpm2BData;
-                mockedTpm.StartAuthSession((TPM_HANDLE)any, (TPM_HANDLE)any, (byte[]) any, (byte[])any, (TPM_SE)any, (TPMT_SYM_DEF)any
-                        , (TPM_ALG_ID)any);
+                mockedTpm.StartAuthSession((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (TPM_SE) any, (TPMT_SYM_DEF) any, (TPM_ALG_ID) any);
                 result = mockedStartAuthSessionResponse;
 
-                mockedTpm.PolicySecret((TPM_HANDLE)any, (TPM_HANDLE)any, (byte[])any, (byte[])any, (byte[])any, anyInt);
+                mockedTpm.PolicySecret((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (byte[]) any, anyInt);
 
-                mockedTpm._withSessions((TPM_HANDLE)any, mockedStartAuthSessionResponse.handle);
-                mockedTpm.ActivateCredential((TPM_HANDLE)any, (TPM_HANDLE)any, (TPMS_ID_OBJECT)any, (byte[])any);
+                mockedTpm._withSessions((TPM_HANDLE) any, mockedStartAuthSessionResponse.handle);
+                mockedTpm.ActivateCredential((TPM_HANDLE) any, (TPM_HANDLE) any, (TPMS_ID_OBJECT) any, (byte[]) any);
                 result = "innerWrapKey".getBytes();
 
-                mockedTpm.Import((TPM_HANDLE )any, (byte[] )any, (TPMT_PUBLIC )any, (TPM2B_PRIVATE )any, (byte[])any,
-                                 (TPMT_SYM_DEF_OBJECT)any);
+                mockedTpm.Import((TPM_HANDLE) any, (byte[]) any, (TPMT_PUBLIC) any, (TPM2B_PRIVATE) any, (byte[]) any, (TPMT_SYM_DEF_OBJECT) any);
                 result = mockedTpm2BPrivate;
 
-                mockedTpm.Load((TPM_HANDLE)any, (TPM2B_PRIVATE)any, (TPMT_PUBLIC)any);
+                mockedTpm.Load((TPM_HANDLE) any, (TPM2B_PRIVATE) any, (TPMT_PUBLIC) any);
                 result = null;
             }
         };
@@ -586,7 +572,7 @@ public class SecurityProviderTPMEmulatorTest
     }
 
     //SRS_SecurityProviderTPMEmulator_25_021: [ This method shall throw SecurityProviderException if the encoded Uri length is greater than Maximum Uri Length . ]
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void activateIdentityKeyThrowsOnInvalidLengthOfEncUriData() throws Exception
     {
         //arrange
@@ -603,30 +589,28 @@ public class SecurityProviderTPMEmulatorTest
                 result = mockedTpm2BPublic;
                 TPM2B_DATA.fromTpm((InByteBuf) any);
                 result = mockedTpm2BData;
-                mockedTpm.StartAuthSession((TPM_HANDLE)any, (TPM_HANDLE)any, (byte[]) any, (byte[])any, (TPM_SE)any, (TPMT_SYM_DEF)any
-                        , (TPM_ALG_ID)any);
+                mockedTpm.StartAuthSession((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (TPM_SE) any, (TPMT_SYM_DEF) any, (TPM_ALG_ID) any);
                 result = mockedStartAuthSessionResponse;
 
-                mockedTpm.PolicySecret((TPM_HANDLE)any, (TPM_HANDLE)any, (byte[])any, (byte[])any, (byte[])any, anyInt);
+                mockedTpm.PolicySecret((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (byte[]) any, anyInt);
 
-                mockedTpm._withSessions((TPM_HANDLE)any, mockedStartAuthSessionResponse.handle);
-                mockedTpm.ActivateCredential((TPM_HANDLE)any, (TPM_HANDLE)any, (TPMS_ID_OBJECT)any, (byte[])any);
+                mockedTpm._withSessions((TPM_HANDLE) any, mockedStartAuthSessionResponse.handle);
+                mockedTpm.ActivateCredential((TPM_HANDLE) any, (TPM_HANDLE) any, (TPMS_ID_OBJECT) any, (byte[]) any);
                 result = "innerWrapKey".getBytes();
 
-                mockedTpm.Import((TPM_HANDLE )any, (byte[] )any, (TPMT_PUBLIC )any, (TPM2B_PRIVATE )any, (byte[])any,
-                                 (TPMT_SYM_DEF_OBJECT)any);
+                mockedTpm.Import((TPM_HANDLE) any, (byte[]) any, (TPMT_PUBLIC) any, (TPM2B_PRIVATE) any, (byte[]) any, (TPMT_SYM_DEF_OBJECT) any);
                 result = mockedTpm2BPrivate;
 
-                mockedTpm.Load((TPM_HANDLE)any, (TPM2B_PRIVATE)any, (TPMT_PUBLIC)any);
+                mockedTpm.Load((TPM_HANDLE) any, (TPM2B_PRIVATE) any, (TPMT_PUBLIC) any);
                 result = mockedTpmHandle;
 
                 //clearPersistentExpectations
                 mockedTpm._allowErrors();
-                mockedTpm.ReadPublic((TPM_HANDLE)any);
+                mockedTpm.ReadPublic((TPM_HANDLE) any);
                 result = mockedReadPublicResponse;
                 mockedTpm._getLastResponseCode();
                 result = TPM_RC.SUCCESS;
-                mockedTpm.EvictControl((TPM_HANDLE)any, (TPM_HANDLE)any, (TPM_HANDLE)any);
+                mockedTpm.EvictControl((TPM_HANDLE) any, (TPM_HANDLE) any, (TPM_HANDLE) any);
 
 
                 mockedTpm.EvictControl((TPM_HANDLE) any, (TPM_HANDLE) any, (TPM_HANDLE) any);
@@ -645,7 +629,7 @@ public class SecurityProviderTPMEmulatorTest
     }
 
     //SRS_SecurityProviderTPMEmulator_25_023: [ This method shall throw SecurityProviderException if creating TPMS_SENSITIVE_CREATE for the inner wrap key fails. ]
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void activateIdentityKeyThrowsOnCreateResponseNull() throws Exception
     {
         //arrange
@@ -662,30 +646,28 @@ public class SecurityProviderTPMEmulatorTest
                 result = mockedTpm2BPublic;
                 TPM2B_DATA.fromTpm((InByteBuf) any);
                 result = mockedTpm2BData;
-                mockedTpm.StartAuthSession((TPM_HANDLE)any, (TPM_HANDLE)any, (byte[]) any, (byte[])any, (TPM_SE)any, (TPMT_SYM_DEF)any
-                        , (TPM_ALG_ID)any);
+                mockedTpm.StartAuthSession((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (TPM_SE) any, (TPMT_SYM_DEF) any, (TPM_ALG_ID) any);
                 result = mockedStartAuthSessionResponse;
 
-                mockedTpm.PolicySecret((TPM_HANDLE)any, (TPM_HANDLE)any, (byte[])any, (byte[])any, (byte[])any, anyInt);
+                mockedTpm.PolicySecret((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (byte[]) any, anyInt);
 
-                mockedTpm._withSessions((TPM_HANDLE)any, mockedStartAuthSessionResponse.handle);
-                mockedTpm.ActivateCredential((TPM_HANDLE)any, (TPM_HANDLE)any, (TPMS_ID_OBJECT)any, (byte[])any);
+                mockedTpm._withSessions((TPM_HANDLE) any, mockedStartAuthSessionResponse.handle);
+                mockedTpm.ActivateCredential((TPM_HANDLE) any, (TPM_HANDLE) any, (TPMS_ID_OBJECT) any, (byte[]) any);
                 result = "innerWrapKey".getBytes();
 
-                mockedTpm.Import((TPM_HANDLE )any, (byte[] )any, (TPMT_PUBLIC )any, (TPM2B_PRIVATE )any, (byte[])any,
-                                 (TPMT_SYM_DEF_OBJECT)any);
+                mockedTpm.Import((TPM_HANDLE) any, (byte[]) any, (TPMT_PUBLIC) any, (TPM2B_PRIVATE) any, (byte[]) any, (TPMT_SYM_DEF_OBJECT) any);
                 result = mockedTpm2BPrivate;
 
-                mockedTpm.Load((TPM_HANDLE)any, (TPM2B_PRIVATE)any, (TPMT_PUBLIC)any);
+                mockedTpm.Load((TPM_HANDLE) any, (TPM2B_PRIVATE) any, (TPMT_PUBLIC) any);
                 result = mockedTpmHandle;
 
                 //clearPersistentExpectations
                 mockedTpm._allowErrors();
-                mockedTpm.ReadPublic((TPM_HANDLE)any);
+                mockedTpm.ReadPublic((TPM_HANDLE) any);
                 result = mockedReadPublicResponse;
                 mockedTpm._getLastResponseCode();
                 result = TPM_RC.SUCCESS;
-                mockedTpm.EvictControl((TPM_HANDLE)any, (TPM_HANDLE)any, (TPM_HANDLE)any);
+                mockedTpm.EvictControl((TPM_HANDLE) any, (TPM_HANDLE) any, (TPM_HANDLE) any);
 
 
                 mockedTpm.EvictControl((TPM_HANDLE) any, (TPM_HANDLE) any, (TPM_HANDLE) any);
@@ -697,7 +679,7 @@ public class SecurityProviderTPMEmulatorTest
                 TpmHelpers.getTpmProperty(mockedTpm, TPM_PT.INPUT_BUFFER);
                 result = 10;
 
-                mockedTpm.Create((TPM_HANDLE) any, (TPMS_SENSITIVE_CREATE) any, (TPMT_PUBLIC)any, (byte[])any, (TPMS_PCR_SELECTION[]) any);
+                mockedTpm.Create((TPM_HANDLE) any, (TPMS_SENSITIVE_CREATE) any, (TPMT_PUBLIC) any, (byte[]) any, (TPMS_PCR_SELECTION[]) any);
                 result = null;
             }
         };
@@ -707,7 +689,7 @@ public class SecurityProviderTPMEmulatorTest
     }
 
     //SRS_SecurityProviderTPMEmulator_25_025: [ This method shall throw if loading the created response private onto TPM fails. ]
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void activateIdentityKeyThrowsOnHSymKeyNull() throws Exception
     {
         //arrange
@@ -724,8 +706,7 @@ public class SecurityProviderTPMEmulatorTest
                 result = mockedTpm2BPublic;
                 TPM2B_DATA.fromTpm((InByteBuf) any);
                 result = mockedTpm2BData;
-                mockedTpm.StartAuthSession((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (TPM_SE) any, (TPMT_SYM_DEF) any
-                        , (TPM_ALG_ID) any);
+                mockedTpm.StartAuthSession((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (TPM_SE) any, (TPMT_SYM_DEF) any, (TPM_ALG_ID) any);
                 result = mockedStartAuthSessionResponse;
 
                 mockedTpm.PolicySecret((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (byte[]) any, anyInt);
@@ -734,8 +715,7 @@ public class SecurityProviderTPMEmulatorTest
                 mockedTpm.ActivateCredential((TPM_HANDLE) any, (TPM_HANDLE) any, (TPMS_ID_OBJECT) any, (byte[]) any);
                 result = "innerWrapKey".getBytes();
 
-                mockedTpm.Import((TPM_HANDLE) any, (byte[]) any, (TPMT_PUBLIC) any, (TPM2B_PRIVATE) any, (byte[]) any,
-                                 (TPMT_SYM_DEF_OBJECT) any);
+                mockedTpm.Import((TPM_HANDLE) any, (byte[]) any, (TPMT_PUBLIC) any, (TPM2B_PRIVATE) any, (byte[]) any, (TPMT_SYM_DEF_OBJECT) any);
                 result = mockedTpm2BPrivate;
             }
         };
@@ -743,7 +723,7 @@ public class SecurityProviderTPMEmulatorTest
         new StrictExpectations()
         {
             {
-                mockedTpm.Load((TPM_HANDLE)any, (TPM2B_PRIVATE)any, (TPMT_PUBLIC)any);
+                mockedTpm.Load((TPM_HANDLE) any, (TPM2B_PRIVATE) any, (TPMT_PUBLIC) any);
                 result = mockedTpmHandle;
             }
         };
@@ -777,7 +757,7 @@ public class SecurityProviderTPMEmulatorTest
         {
             {
 
-                mockedTpm.Load((TPM_HANDLE) any, (TPM2B_PRIVATE )any, (TPMT_PUBLIC )any);
+                mockedTpm.Load((TPM_HANDLE) any, (TPM2B_PRIVATE) any, (TPMT_PUBLIC) any);
                 result = null;
             }
         };
@@ -787,7 +767,7 @@ public class SecurityProviderTPMEmulatorTest
     }
 
     //SRS_SecurityProviderTPMEmulator_25_0027: [ This method shall throw if Encrypt Decrypt the symmetric Key fails. ]
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void activateIdentityKeyThrowsOnEncryptDecryptResponseNull() throws Exception
     {
         //arrange
@@ -804,30 +784,28 @@ public class SecurityProviderTPMEmulatorTest
                 result = mockedTpm2BPublic;
                 TPM2B_DATA.fromTpm((InByteBuf) any);
                 result = mockedTpm2BData;
-                mockedTpm.StartAuthSession((TPM_HANDLE)any, (TPM_HANDLE)any, (byte[]) any, (byte[])any, (TPM_SE)any, (TPMT_SYM_DEF)any
-                        , (TPM_ALG_ID)any);
+                mockedTpm.StartAuthSession((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (TPM_SE) any, (TPMT_SYM_DEF) any, (TPM_ALG_ID) any);
                 result = mockedStartAuthSessionResponse;
 
-                mockedTpm.PolicySecret((TPM_HANDLE)any, (TPM_HANDLE)any, (byte[])any, (byte[])any, (byte[])any, anyInt);
+                mockedTpm.PolicySecret((TPM_HANDLE) any, (TPM_HANDLE) any, (byte[]) any, (byte[]) any, (byte[]) any, anyInt);
 
-                mockedTpm._withSessions((TPM_HANDLE)any, mockedStartAuthSessionResponse.handle);
-                mockedTpm.ActivateCredential((TPM_HANDLE)any, (TPM_HANDLE)any, (TPMS_ID_OBJECT)any, (byte[])any);
+                mockedTpm._withSessions((TPM_HANDLE) any, mockedStartAuthSessionResponse.handle);
+                mockedTpm.ActivateCredential((TPM_HANDLE) any, (TPM_HANDLE) any, (TPMS_ID_OBJECT) any, (byte[]) any);
                 result = "innerWrapKey".getBytes();
 
-                mockedTpm.Import((TPM_HANDLE )any, (byte[] )any, (TPMT_PUBLIC )any, (TPM2B_PRIVATE )any, (byte[])any,
-                                 (TPMT_SYM_DEF_OBJECT)any);
+                mockedTpm.Import((TPM_HANDLE) any, (byte[]) any, (TPMT_PUBLIC) any, (TPM2B_PRIVATE) any, (byte[]) any, (TPMT_SYM_DEF_OBJECT) any);
                 result = mockedTpm2BPrivate;
 
-                mockedTpm.Load((TPM_HANDLE)any, (TPM2B_PRIVATE)any, (TPMT_PUBLIC)any);
+                mockedTpm.Load((TPM_HANDLE) any, (TPM2B_PRIVATE) any, (TPMT_PUBLIC) any);
                 result = mockedTpmHandle;
 
                 //clearPersistentExpectations
                 mockedTpm._allowErrors();
-                mockedTpm.ReadPublic((TPM_HANDLE)any);
+                mockedTpm.ReadPublic((TPM_HANDLE) any);
                 result = mockedReadPublicResponse;
                 mockedTpm._getLastResponseCode();
                 result = TPM_RC.SUCCESS;
-                mockedTpm.EvictControl((TPM_HANDLE)any, (TPM_HANDLE)any, (TPM_HANDLE)any);
+                mockedTpm.EvictControl((TPM_HANDLE) any, (TPM_HANDLE) any, (TPM_HANDLE) any);
 
 
                 mockedTpm.EvictControl((TPM_HANDLE) any, (TPM_HANDLE) any, (TPM_HANDLE) any);
@@ -839,13 +817,13 @@ public class SecurityProviderTPMEmulatorTest
                 TpmHelpers.getTpmProperty(mockedTpm, TPM_PT.INPUT_BUFFER);
                 result = 10;
 
-                mockedTpm.Create((TPM_HANDLE) any, (TPMS_SENSITIVE_CREATE) any, (TPMT_PUBLIC)any, (byte[])any, (TPMS_PCR_SELECTION[]) any);
+                mockedTpm.Create((TPM_HANDLE) any, (TPMS_SENSITIVE_CREATE) any, (TPMT_PUBLIC) any, (byte[]) any, (TPMS_PCR_SELECTION[]) any);
                 result = mockedCreateResponse;
 
-                mockedTpm.Load((TPM_HANDLE) any, (TPM2B_PRIVATE )any, (TPMT_PUBLIC )any);
+                mockedTpm.Load((TPM_HANDLE) any, (TPM2B_PRIVATE) any, (TPMT_PUBLIC) any);
                 result = mockedTpmHandle;
 
-                mockedTpm.EncryptDecrypt2((TPM_HANDLE )any, (byte[] )any, anyByte, (TPM_ALG_ID )any, (byte[]) any);
+                mockedTpm.EncryptDecrypt2((TPM_HANDLE) any, (byte[]) any, anyByte, (TPM_ALG_ID) any, (byte[]) any);
                 result = null;
             }
         };
@@ -856,11 +834,7 @@ public class SecurityProviderTPMEmulatorTest
 
     //SRS_SecurityProviderTPMEmulator_25_031: [ This method shall sign the device ID data. ]
     @Test
-    public void signWithIdentitySucceeds(@Mocked TPM_ALG_ID mockedTpmAlgId,
-                                         @Mocked TPMU_ASYM_SCHEME mockedTpmuAsymScheme,
-                                         @Mocked TPMU_PUBLIC_PARMS mockedTpmuPublicParms,
-                                         @Mocked TPMS_SCHEME_HMAC mockedTpmsSchemeHmac,
-                                         @Mocked TPMS_KEYEDHASH_PARMS mockedTpmsKeyedhashParms) throws Exception
+    public void signWithIdentitySucceeds(@Mocked TPM_ALG_ID mockedTpmAlgId, @Mocked TPMU_ASYM_SCHEME mockedTpmuAsymScheme, @Mocked TPMU_PUBLIC_PARMS mockedTpmuPublicParms, @Mocked TPMS_SCHEME_HMAC mockedTpmsSchemeHmac, @Mocked TPMS_KEYEDHASH_PARMS mockedTpmsKeyedhashParms) throws Exception
     {
         //arrange
         final byte[] deviceIdData = "deviceIdData".getBytes();
@@ -877,20 +851,20 @@ public class SecurityProviderTPMEmulatorTest
                 // publicArea
                 Deencapsulation.setField(mockedTpm2BPublic, "publicArea", mockedTpmtPublic);
                 //parameters
-                Deencapsulation.setField(mockedTpmtPublic, "parameters",  mockedTpmsKeyedhashParms);
+                Deencapsulation.setField(mockedTpmtPublic, "parameters", mockedTpmsKeyedhashParms);
                 // scheme
-                Deencapsulation.setField(mockedTpmsKeyedhashParms, "scheme",  mockedTpmsSchemeHmac);
+                Deencapsulation.setField(mockedTpmsKeyedhashParms, "scheme", mockedTpmsSchemeHmac);
                 // hashAlg
-                Deencapsulation.setField(mockedTpmsSchemeHmac, "hashAlg",  mockedTpmAlgId);
+                Deencapsulation.setField(mockedTpmsSchemeHmac, "hashAlg", mockedTpmAlgId);
 
                 TpmHelpers.getTpmProperty(mockedTpm, TPM_PT.INPUT_BUFFER);
                 result = 10;
-                mockedTpm.HMAC_Start((TPM_HANDLE) any, (byte[] ) any, mockedTpmAlgId);
+                mockedTpm.HMAC_Start((TPM_HANDLE) any, (byte[]) any, mockedTpmAlgId);
                 result = mockedTpmHandle;
 
-                mockedTpm.SequenceUpdate((TPM_HANDLE) any, (byte[] ) any);
+                mockedTpm.SequenceUpdate((TPM_HANDLE) any, (byte[]) any);
 
-                mockedTpm.SequenceComplete((TPM_HANDLE) any, (byte[]) any, (TPM_HANDLE ) any);
+                mockedTpm.SequenceComplete((TPM_HANDLE) any, (byte[]) any, (TPM_HANDLE) any);
             }
         };
 
@@ -898,7 +872,7 @@ public class SecurityProviderTPMEmulatorTest
     }
 
     //SRS_SecurityProviderTPMEmulator_25_030: [ This method shall throw SecurityProviderException if ID KEY public was not instantiated. ]
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void signWithIdentityThrowsOnNullIdKeyPub() throws Exception
     {
         //arrange
@@ -920,7 +894,7 @@ public class SecurityProviderTPMEmulatorTest
     }
 
     //SRS_SecurityProviderTPMEmulator_25_029: [ This method shall throw IllegalArgumentException if `deviceIdData` is null or empty. ]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void signWithIdentityThrowsOnNullDeviceIdData() throws Exception
     {
         //arrange
@@ -936,11 +910,7 @@ public class SecurityProviderTPMEmulatorTest
     }
 
     @Test
-    public void signDataReturnsHMACOnSmallerLength(@Mocked TPM_ALG_ID mockedTpmAlgId,
-                                                   @Mocked TPMU_ASYM_SCHEME mockedTpmuAsymScheme,
-                                                   @Mocked TPMU_PUBLIC_PARMS mockedTpmuPublicParms,
-                                                   @Mocked TPMS_SCHEME_HMAC mockedTpmsSchemeHmac,
-                                                   @Mocked TPMS_KEYEDHASH_PARMS mockedTpmsKeyedhashParms) throws Exception
+    public void signDataReturnsHMACOnSmallerLength(@Mocked TPM_ALG_ID mockedTpmAlgId, @Mocked TPMU_ASYM_SCHEME mockedTpmuAsymScheme, @Mocked TPMU_PUBLIC_PARMS mockedTpmuPublicParms, @Mocked TPMS_SCHEME_HMAC mockedTpmsSchemeHmac, @Mocked TPMS_KEYEDHASH_PARMS mockedTpmsKeyedhashParms) throws Exception
     {
         //arrange
         final byte[] deviceIdData = "less<10".getBytes();
@@ -957,27 +927,23 @@ public class SecurityProviderTPMEmulatorTest
                 // publicArea
                 Deencapsulation.setField(mockedTpm2BPublic, "publicArea", mockedTpmtPublic);
                 //parameters
-                Deencapsulation.setField(mockedTpmtPublic, "parameters",  mockedTpmsKeyedhashParms);
+                Deencapsulation.setField(mockedTpmtPublic, "parameters", mockedTpmsKeyedhashParms);
                 // scheme
-                Deencapsulation.setField(mockedTpmsKeyedhashParms, "scheme",  mockedTpmsSchemeHmac);
+                Deencapsulation.setField(mockedTpmsKeyedhashParms, "scheme", mockedTpmsSchemeHmac);
                 // hashAlg
-                Deencapsulation.setField(mockedTpmsSchemeHmac, "hashAlg",  mockedTpmAlgId);
+                Deencapsulation.setField(mockedTpmsSchemeHmac, "hashAlg", mockedTpmAlgId);
 
                 TpmHelpers.getTpmProperty(mockedTpm, TPM_PT.INPUT_BUFFER);
                 result = 10;
-                mockedTpm.HMAC((TPM_HANDLE )any, (byte[] )any, mockedTpmAlgId);
+                mockedTpm.HMAC((TPM_HANDLE) any, (byte[]) any, mockedTpmAlgId);
             }
         };
 
         securityProviderTPMEmulator.signWithIdentity(deviceIdData);
     }
 
-    @Test (expected =  SecurityProviderException.class)
-    public void signWithIdentityThrowsOnNullHandle(@Mocked TPM_ALG_ID mockedTpmAlgId,
-                                                   @Mocked TPMU_ASYM_SCHEME mockedTpmuAsymScheme,
-                                                   @Mocked TPMU_PUBLIC_PARMS mockedTpmuPublicParms,
-                                                   @Mocked TPMS_SCHEME_HMAC mockedTpmsSchemeHmac,
-                                                   @Mocked TPMS_KEYEDHASH_PARMS mockedTpmsKeyedhashParms) throws Exception
+    @Test(expected = SecurityProviderException.class)
+    public void signWithIdentityThrowsOnNullHandle(@Mocked TPM_ALG_ID mockedTpmAlgId, @Mocked TPMU_ASYM_SCHEME mockedTpmuAsymScheme, @Mocked TPMU_PUBLIC_PARMS mockedTpmuPublicParms, @Mocked TPMS_SCHEME_HMAC mockedTpmsSchemeHmac, @Mocked TPMS_KEYEDHASH_PARMS mockedTpmsKeyedhashParms) throws Exception
     {
         //arrange
         final byte[] deviceIdData = "deviceIdData".getBytes();
@@ -994,15 +960,15 @@ public class SecurityProviderTPMEmulatorTest
                 // publicArea
                 Deencapsulation.setField(mockedTpm2BPublic, "publicArea", mockedTpmtPublic);
                 //parameters
-                Deencapsulation.setField(mockedTpmtPublic, "parameters",  mockedTpmsKeyedhashParms);
+                Deencapsulation.setField(mockedTpmtPublic, "parameters", mockedTpmsKeyedhashParms);
                 // scheme
-                Deencapsulation.setField(mockedTpmsKeyedhashParms, "scheme",  mockedTpmsSchemeHmac);
+                Deencapsulation.setField(mockedTpmsKeyedhashParms, "scheme", mockedTpmsSchemeHmac);
                 // hashAlg
-                Deencapsulation.setField(mockedTpmsSchemeHmac, "hashAlg",  mockedTpmAlgId);
+                Deencapsulation.setField(mockedTpmsSchemeHmac, "hashAlg", mockedTpmAlgId);
 
                 TpmHelpers.getTpmProperty(mockedTpm, TPM_PT.INPUT_BUFFER);
                 result = 10;
-                mockedTpm.HMAC_Start((TPM_HANDLE) any, (byte[] ) any, mockedTpmAlgId);
+                mockedTpm.HMAC_Start((TPM_HANDLE) any, (byte[]) any, mockedTpmAlgId);
                 result = null;
             }
         };

@@ -10,15 +10,15 @@ package com.microsoft.azure.sdk.iot.device.transport;
 import com.microsoft.azure.sdk.iot.device.exceptions.TransportException;
 
 /**
-  * Represents a retry policy that performs no retries.
-  */
+ * Represents a retry policy that performs no retries.
+ */
 public class NoRetry implements RetryPolicy
 {
     /**
      * Always says to not retry.
      *
      * @param currentRetryCount the number of retries for the given operation
-     * @param lastException the last exception encountered
+     * @param lastException     the last exception encountered
      * @return the retry decision.
      */
     public RetryDecision getRetryDecision(int currentRetryCount, TransportException lastException)

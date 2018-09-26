@@ -62,7 +62,7 @@ public class Base64Test
     }
 
     /* Tests_SRS_BASE64_21_002: [If the `base64Values` is null, the decodeBase64Local shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void decodeBase64ThrowsOnNullByteArray() throws UnsupportedEncodingException, IllegalArgumentException
     {
         // arrange
@@ -88,7 +88,7 @@ public class Base64Test
     }
 
     /* Tests_SRS_BASE64_21_004: [If the `base64Values` length is not multiple of 4, the decodeBase64Local shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void decodeBase64ThrowsOnInvalidByteArrayLength() throws UnsupportedEncodingException, IllegalArgumentException
     {
         // arrange
@@ -99,7 +99,7 @@ public class Base64Test
     }
 
     /* Tests_SRS_BASE64_21_004: [If the `base64Values` length is not multiple of 4, the decodeBase64Local shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void decodeBase64ThrowsOnLostPad() throws UnsupportedEncodingException, IllegalArgumentException
     {
         // arrange
@@ -110,7 +110,7 @@ public class Base64Test
     }
 
     /* Tests_SRS_BASE64_21_004: [If the `base64Values` length is not multiple of 4, the decodeBase64Local shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void decodeBase64ThrowsOnExtraPad() throws UnsupportedEncodingException, IllegalArgumentException
     {
         // arrange
@@ -121,7 +121,7 @@ public class Base64Test
     }
 
     /* Tests_SRS_BASE64_21_004: [If the `base64Values` length is not multiple of 4, the decodeBase64Local shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void decodeBase64ThrowsOnInvalidPad() throws UnsupportedEncodingException, IllegalArgumentException
     {
         // arrange
@@ -178,7 +178,7 @@ public class Base64Test
     }
 
     /* Tests_SRS_BASE64_21_006: [If the `dataValues` is null, the encodeBase64Local shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void encodeBase64ThrowsOnNullDataValues() throws UnsupportedEncodingException, IllegalArgumentException
     {
         // arrange
@@ -250,7 +250,7 @@ public class Base64Test
     }
 
     /* Tests_SRS_BASE64_21_009: [If the `dataValues` is null, the encodeBase64StringLocal shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void encodeBase64StringThrowsOnNullDataValues() throws UnsupportedEncodingException, IllegalArgumentException
     {
         // arrange

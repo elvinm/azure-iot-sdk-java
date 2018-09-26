@@ -79,7 +79,7 @@ public class AmqpsSessionManagerTest
     AmqpsConvertFromProtonReturnValue mockAmqpsConvertFromProtonReturnValue;
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_001: [The constructor shall throw IllegalArgumentException if the deviceClientConfig parameter is null.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfDeviceClientIsNull() throws IllegalArgumentException, TransportException
     {
         // act
@@ -121,7 +121,7 @@ public class AmqpsSessionManagerTest
         Deencapsulation.setField(amqpsSessionManager, "deviceClientConfig", mockDeviceClientConfig);
 
         // assert
-        ArrayList<AmqpsSessionDeviceOperation> actualList =  Deencapsulation.getField(amqpsSessionManager, "amqpsDeviceSessionList");
+        ArrayList<AmqpsSessionDeviceOperation> actualList = Deencapsulation.getField(amqpsSessionManager, "amqpsDeviceSessionList");
         assertEquals(actualList.size(), 1);
     }
 
@@ -151,7 +151,7 @@ public class AmqpsSessionManagerTest
         Deencapsulation.setField(amqpsSessionManager, "amqpsDeviceAuthentication", mockAmqpsDeviceAuthenticationCBS);
 
         // assert
-        ArrayList<AmqpsSessionDeviceOperation> actualList =  Deencapsulation.getField(amqpsSessionManager, "amqpsDeviceSessionList");
+        ArrayList<AmqpsSessionDeviceOperation> actualList = Deencapsulation.getField(amqpsSessionManager, "amqpsDeviceSessionList");
         assertEquals(actualList.size(), 1);
 
         new Verifications()
@@ -164,14 +164,14 @@ public class AmqpsSessionManagerTest
     }
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_008: [The function shall throw IllegalArgumentException if the deviceClientConfig parameter is null.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void addDeviceOperationSessionThrowsIfDeviceClientIsNull() throws IllegalArgumentException, TransportException
     {
         // arrange
         AmqpsSessionManager amqpsSessionManager = new AmqpsSessionManager(mockDeviceClientConfig);
 
         // act
-        Deencapsulation.invoke(amqpsSessionManager, "addDeviceOperationSession", (DeviceClientConfig)null);
+        Deencapsulation.invoke(amqpsSessionManager, "addDeviceOperationSession", (DeviceClientConfig) null);
     }
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_009: [The function shall create a new  AmqpsSessionDeviceOperation with the given deviceClietnConfig and add it to the session list.]
@@ -186,7 +186,7 @@ public class AmqpsSessionManagerTest
         Deencapsulation.invoke(amqpsSessionManager, "addDeviceOperationSession", mockDeviceClientConfig);
 
         // assert
-        ArrayList<AmqpsSessionDeviceOperation> actualList =  Deencapsulation.getField(amqpsSessionManager, "amqpsDeviceSessionList");
+        ArrayList<AmqpsSessionDeviceOperation> actualList = Deencapsulation.getField(amqpsSessionManager, "amqpsDeviceSessionList");
         assertEquals(actualList.size(), 2);
 
         new Verifications()
@@ -231,9 +231,9 @@ public class AmqpsSessionManagerTest
         Deencapsulation.invoke(amqpsSessionManager, "closeNow");
 
         // assert
-        ArrayList<AmqpsSessionDeviceOperation> actualList =  Deencapsulation.getField(amqpsSessionManager, "amqpsDeviceSessionList");
+        ArrayList<AmqpsSessionDeviceOperation> actualList = Deencapsulation.getField(amqpsSessionManager, "amqpsDeviceSessionList");
         assertEquals(2, actualList.size());
-        Session actualSession =  Deencapsulation.getField(amqpsSessionManager, "session");
+        Session actualSession = Deencapsulation.getField(amqpsSessionManager, "session");
         assertNull(actualSession);
 
         new Verifications()
@@ -327,7 +327,7 @@ public class AmqpsSessionManagerTest
     }
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_021: [The function shall throw TransportException if the lock throws.]
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void openDeviceOperationLinksLockThrows() throws IllegalArgumentException, InterruptedException, TransportException
     {
         // arrange
@@ -772,7 +772,7 @@ public class AmqpsSessionManagerTest
         Integer deliveryHash = Deencapsulation.invoke(amqpsSessionManager, "sendMessage", mockProtonMessage, MessageType.DEVICE_TELEMETRY, "someDeviceId");
 
         // assert
-        assertEquals((Integer)42, deliveryHash);
+        assertEquals((Integer) 42, deliveryHash);
     }
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_033: [The function shall do nothing and return null if the session is not open.]

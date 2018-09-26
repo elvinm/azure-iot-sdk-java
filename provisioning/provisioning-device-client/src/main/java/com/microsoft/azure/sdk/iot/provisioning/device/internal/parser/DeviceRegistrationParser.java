@@ -14,27 +14,11 @@ import com.google.gson.annotations.SerializedName;
 public class DeviceRegistrationParser
 {
     private static final String REGISTRATION_ID = "registrationId";
+    private static final String TPM = "tpm";
     @SerializedName(REGISTRATION_ID)
     private String registrationId;
-
-    private static final String TPM = "tpm";
     @SerializedName(TPM)
     private TpmAttestation tpmAttestation;
-
-    /**
-     * Inner class describing TPM Attestation i.e it holds EndorsementKey and StorageRootKey
-     */
-    class TpmAttestation
-    {
-        private String endorsementKey;
-        private String storageRootKey;
-
-        TpmAttestation(String endorsementKey, String storageRootKey)
-        {
-            this.endorsementKey = endorsementKey;
-            this.storageRootKey = storageRootKey;
-        }
-    }
 
     //empty constructor for Gson
     DeviceRegistrationParser()
@@ -43,6 +27,7 @@ public class DeviceRegistrationParser
 
     /**
      * Constructor for Device Registration for X509 flow
+     *
      * @param registrationId Registration Id to be sent to the service. Cannot be a {@code null} or empty value.
      * @throws IllegalArgumentException If the provided registration id was {@code null} or empty.
      */
@@ -60,6 +45,7 @@ public class DeviceRegistrationParser
 
     /**
      * Constructor for Device Registration for TPM flow
+     *
      * @param registrationId Registration Id to be sent to the service. Cannot be a {@code null} or empty value.
      * @param endorsementKey endorsement key to be sent to the service. Cannot be a {@code null} or empty value.
      * @param storageRootKey Storage Root Key to be sent to the service. Can be a {@code null} value.
@@ -88,22 +74,23 @@ public class DeviceRegistrationParser
      * Generates JSON output for this class.
      * Expected format :
      * For TPM :
-         * <pre>
+     * <pre>
      *     {@code
      *     "{\"registrationId\":\"[RegistrationID value]\"," +
-            "\"tpm\":{" +
-            "\"endorsementKey\":\"[Endorsement Key value]\"," +
-            "\"storageRootKey\":\"[Storage root key value]\"" +
-            "}}"
+     * "\"tpm\":{" +
+     * "\"endorsementKey\":\"[Endorsement Key value]\"," +
+     * "\"storageRootKey\":\"[Storage root key value]\"" +
+     * "}}"
      *     }
-         * </pre>
+     * </pre>
      * For X509:
      * <pre>
      *     {@code
      *     "{\"registrationId\":\"[RegistrationID value]\"," +
-            }"
+     * }"
      *     }
      * </pre>
+     *
      * @return A string that is JSON formatted.
      */
     public String toJson()
@@ -111,5 +98,20 @@ public class DeviceRegistrationParser
         //SRS_DeviceRegistration_25_007: [ This method shall create the expected Json with the provided Registration Id, EndorsementKey and StorageRootKey. ]
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         return gson.toJson(this);
+    }
+
+    /**
+     * Inner class describing TPM Attestation i.e it holds EndorsementKey and StorageRootKey
+     */
+    class TpmAttestation
+    {
+        private String endorsementKey;
+        private String storageRootKey;
+
+        TpmAttestation(String endorsementKey, String storageRootKey)
+        {
+            this.endorsementKey = endorsementKey;
+            this.storageRootKey = storageRootKey;
+        }
     }
 }

@@ -18,13 +18,12 @@ public class ModuleInvokeMethodSample
      * Receives requests from an IoT Hub. Default protocol is to use
      * MQTT transport.
      *
-     * @param args 
-     * args[0] = IoT Hub connection string
-     * args[1] = protocol (one of 'mqtt' or 'amqps' or 'mqtt_ws' or 'amqps_ws')
-     * args[2] = the method name
-     * args[3] = the string payload to send alongside the method invocation
-     * args[4] = the device id of the device to invoke the method on
-     * args[5] = (optional) the module id to invoke the method on
+     * @param args args[0] = IoT Hub connection string
+     *             args[1] = protocol (one of 'mqtt' or 'amqps' or 'mqtt_ws' or 'amqps_ws')
+     *             args[2] = the method name
+     *             args[3] = the string payload to send alongside the method invocation
+     *             args[4] = the device id of the device to invoke the method on
+     *             args[5] = (optional) the module id to invoke the method on
      */
     public static void main(String[] args) throws IOException, URISyntaxException, ModuleClientException
     {
@@ -33,15 +32,7 @@ public class ModuleInvokeMethodSample
 
         if (args.length != 4 && args.length != 5)
         {
-            System.out.format(
-                    "Expected 4 or 5 arguments but received: %d.\n"
-                            + "The program should be called with the following args: \n"
-                            + "1. (mqtt | https | amqps | amqps_ws | mqtt_ws)\n"
-                            + "2. The name of the method to invoke\n"
-                            + "3. The string payload to send alongside the method invocation\n"
-                            + "4. The id of the device to invoke the method on\n"
-                            + "5. (optional) The id of the module to invoke the method on\n",
-                    args.length);
+            System.out.format("Expected 4 or 5 arguments but received: %d.\n" + "The program should be called with the following args: \n" + "1. (mqtt | https | amqps | amqps_ws | mqtt_ws)\n" + "2. The name of the method to invoke\n" + "3. The string payload to send alongside the method invocation\n" + "4. The id of the device to invoke the method on\n" + "5. (optional) The id of the module to invoke the method on\n", args.length);
             return;
         }
 
@@ -69,9 +60,7 @@ public class ModuleInvokeMethodSample
         }
         else
         {
-            System.out.format(
-                    "Expected argument 2 to be one of 'mqtt', 'mqtt_ws', 'amqps' or 'amqps_ws' but received %s\n",
-                    protocolStr);
+            System.out.format("Expected argument 2 to be one of 'mqtt', 'mqtt_ws', 'amqps' or 'amqps_ws' but received %s\n", protocolStr);
             return;
         }
 
@@ -103,8 +92,7 @@ public class ModuleInvokeMethodSample
         {
             System.out.println("Encountered an exception while invoking method");
             e.printStackTrace();
-        }
-        finally
+        } finally
         {
             client.closeNow();
         }

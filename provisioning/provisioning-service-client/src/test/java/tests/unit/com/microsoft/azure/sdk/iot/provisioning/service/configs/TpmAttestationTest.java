@@ -20,7 +20,7 @@ public class TpmAttestationTest
     private static final String VALID_STORAGE_ROOT_KEY = "validStorageRootKey";
 
     /* SRS_TPM_ATTESTATION_21_001: [The constructor shall throw IllegalArgumentException if the provided endorsementKey is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullEndorsementKey()
     {
         // arrange
@@ -31,7 +31,7 @@ public class TpmAttestationTest
     }
 
     /* SRS_TPM_ATTESTATION_21_001: [The constructor shall throw IllegalArgumentException if the provided endorsementKey is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyEndorsementKey()
     {
         // arrange
@@ -56,18 +56,18 @@ public class TpmAttestationTest
     }
 
     /* SRS_TPM_ATTESTATION_21_004: [The constructor shall throw IllegalArgumentException if the provided endorsementKey is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorOnlyEndorsementKeyThrowsOnNullEndorsementKey()
     {
         // arrange
         // act
-        new TpmAttestation((String)null);
+        new TpmAttestation((String) null);
 
         // assert
     }
 
     /* SRS_TPM_ATTESTATION_21_004: [The constructor shall throw IllegalArgumentException if the provided endorsementKey is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorOnlyEndorsementKeyThrowsOnEmptyEndorsementKey()
     {
         // arrange
@@ -90,7 +90,7 @@ public class TpmAttestationTest
     }
 
     /* SRS_TPM_ATTESTATION_21_006: [The constructor shall throw IllegalArgumentException if the provided tpm is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorCopyThrowsOnNullTPM()
     {
         // arrange

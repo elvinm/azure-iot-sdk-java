@@ -7,11 +7,10 @@ package com.microsoft.azure.sdk.iot.device.exceptions;
 
 /**
  * Create IotHub size exceeded exceptions
- *
+ * <p>
  * This exception will be throw when a function tries to add
  * content in a buffer or message and the final size will
  * exceed the maximum size acceptable by the IotHub.
- *
  */
 public class IotHubSizeExceededException extends IotHubException
 {

@@ -14,7 +14,7 @@ import java.util.TimeZone;
 
 /**
  * INNER TWINPARSER CLASS
- *
+ * <p>
  * TwinParser metadata representation
  *
  * @deprecated As of release 0.4.0, replaced by {@link com.microsoft.azure.sdk.iot.deps.twin.TwinMetadata}
@@ -38,7 +38,7 @@ public class TwinMetadata
         this.lastUpdatedVersion = null;
     }
 
-    protected  TwinMetadata(Integer lastUpdatedVersion)
+    protected TwinMetadata(Integer lastUpdatedVersion)
     {
         update();
         this.lastUpdatedVersion = lastUpdatedVersion;
@@ -58,9 +58,9 @@ public class TwinMetadata
         {
             updated = true;
         }
-        else if(this.lastUpdatedVersion == null)
+        else if (this.lastUpdatedVersion == null)
         {
-            if(lastUpdatedVersion == null)
+            if (lastUpdatedVersion == null)
             {
                 updated = false;
             }
@@ -69,7 +69,7 @@ public class TwinMetadata
                 updated = true;
             }
         }
-        else if(this.lastUpdatedVersion.equals(lastUpdatedVersion))
+        else if (this.lastUpdatedVersion.equals(lastUpdatedVersion))
         {
             updated = false;
         }

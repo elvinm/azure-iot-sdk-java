@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package tests.unit.com.microsoft.azure.sdk.iot.device.transport.amqps;
 
@@ -15,10 +15,10 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertEquals;
 
 /**
-* Unit tests for IotHubReactor.java
-* 100% methods covered
-* 100% lines covered
-*/
+ * Unit tests for IotHubReactor.java
+ * 100% methods covered
+ * 100% lines covered
+ */
 public class IotHubReactorTest
 {
     @Mocked
@@ -29,7 +29,7 @@ public class IotHubReactorTest
     public void constructorSuccess()
     {
         //act
-        IotHubReactor iotHubReactor = Deencapsulation.newInstance(IotHubReactor.class, new Class[] {Reactor.class}, mockReactor);
+        IotHubReactor iotHubReactor = Deencapsulation.newInstance(IotHubReactor.class, new Class[]{Reactor.class}, mockReactor);
 
         //assert
         Reactor actualReactor = Deencapsulation.getField(iotHubReactor, "reactor");
@@ -43,7 +43,7 @@ public class IotHubReactorTest
     {
         //arrange
         final long expectedTimeout = 10;
-        IotHubReactor iotHubReactor = Deencapsulation.newInstance(IotHubReactor.class, new Class[] {Reactor.class}, mockReactor);
+        IotHubReactor iotHubReactor = Deencapsulation.newInstance(IotHubReactor.class, new Class[]{Reactor.class}, mockReactor);
 
         //act
         Deencapsulation.invoke(iotHubReactor, "run");

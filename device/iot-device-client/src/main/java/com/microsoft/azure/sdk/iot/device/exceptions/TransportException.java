@@ -10,17 +10,9 @@ import static com.microsoft.azure.sdk.iot.device.exceptions.TransportException.I
 public class TransportException extends DeviceClientException
 {
     protected boolean isRetryable = false;
-
-    public enum IotHubService
-    {
-        TWIN,
-        TELEMETRY,
-        METHODS,
-        FILE_UPLOAD,
-        NOT_APPLICABLE
-    };
-
     protected IotHubService iotHubService = NOT_APPLICABLE;
+
+    ;
 
     public TransportException()
     {
@@ -60,5 +52,10 @@ public class TransportException extends DeviceClientException
     public void setIotHubService(IotHubService iotHubService)
     {
         this.iotHubService = iotHubService;
+    }
+
+    public enum IotHubService
+    {
+        TWIN, TELEMETRY, METHODS, FILE_UPLOAD, NOT_APPLICABLE
     }
 }

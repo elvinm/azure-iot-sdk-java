@@ -31,6 +31,14 @@ public class ProvisioningConnectionString extends ProvisioningConnectionStringBu
     protected String sharedAccessSignature;
 
     /**
+     * Package private constructor
+     */
+    @SuppressWarnings("unused")
+    ProvisioningConnectionString()
+    {
+    }
+
+    /**
      * Serialize user string
      *
      * @return The user string in the following format: "SharedAccessKeyName@SAS.root.deviceProvisioningServiceName"
@@ -113,39 +121,6 @@ public class ProvisioningConnectionString extends ProvisioningConnectionStringBu
     }
 
     /**
-     * Getter for sharedAccessKey
-     *
-     * @return The sharedAccessKey string
-     */
-    public String getSharedAccessKey()
-    {
-        /* Codes_SRS_PROVISIONINGCONNECTIONSTRING_21_006: [The getSharedAccessKey shall return the stored sharedAccessKey.] */
-        return this.sharedAccessKey;
-    }
-
-    /**
-     * Getter for sharedAccessSignature
-     *
-     * @return The sharedAccessSignature string
-     */
-    public String getSharedAccessSignature()
-    {
-        /* Codes_SRS_PROVISIONINGCONNECTIONSTRING_21_007: [The getSharedAccessSignature shall return the stored sharedAccessSignature.] */
-        return this.sharedAccessSignature;
-    }
-
-    /**
-     * Getter for hostName
-     *
-     * @return The hostName string
-     */
-    public String getHostName()
-    {
-        /* Codes_SRS_PROVISIONINGCONNECTIONSTRING_21_008: [The getHostName shall return the stored hostName.] */
-        return this.hostName;
-    }
-
-    /**
      * Setter for sharedAccessKeyName
      *
      * @param sharedAccessKeyName The value of the signature to set
@@ -154,6 +129,17 @@ public class ProvisioningConnectionString extends ProvisioningConnectionStringBu
     {
         /* Codes_SRS_PROVISIONINGCONNECTIONSTRING_21_009: [The setSharedAccessKeyName shall update the sharedAccessKeyName by the provided one.] */
         this.sharedAccessKeyName = sharedAccessKeyName;
+    }
+
+    /**
+     * Getter for sharedAccessKey
+     *
+     * @return The sharedAccessKey string
+     */
+    public String getSharedAccessKey()
+    {
+        /* Codes_SRS_PROVISIONINGCONNECTIONSTRING_21_006: [The getSharedAccessKey shall return the stored sharedAccessKey.] */
+        return this.sharedAccessKey;
     }
 
     /**
@@ -168,6 +154,17 @@ public class ProvisioningConnectionString extends ProvisioningConnectionStringBu
     }
 
     /**
+     * Getter for sharedAccessSignature
+     *
+     * @return The sharedAccessSignature string
+     */
+    public String getSharedAccessSignature()
+    {
+        /* Codes_SRS_PROVISIONINGCONNECTIONSTRING_21_007: [The getSharedAccessSignature shall return the stored sharedAccessSignature.] */
+        return this.sharedAccessSignature;
+    }
+
+    /**
      * Setter for sharedAccessSignature
      *
      * @param sharedAccessSignature The value of the signature to set
@@ -179,10 +176,13 @@ public class ProvisioningConnectionString extends ProvisioningConnectionStringBu
     }
 
     /**
-     * Package private constructor
+     * Getter for hostName
+     *
+     * @return The hostName string
      */
-    @SuppressWarnings("unused")
-    ProvisioningConnectionString()
+    public String getHostName()
     {
+        /* Codes_SRS_PROVISIONINGCONNECTIONSTRING_21_008: [The getHostName shall return the stored hostName.] */
+        return this.hostName;
     }
 }

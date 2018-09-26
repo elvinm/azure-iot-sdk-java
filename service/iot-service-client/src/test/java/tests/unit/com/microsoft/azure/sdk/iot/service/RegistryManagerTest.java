@@ -38,6 +38,14 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JMockit.class)
 public class RegistryManagerTest
 {
+    final String deviceJson = "{\"deviceId\":\"mockdevice\",\"generationId\":\"635864360921156105\",\"etag\":\"MA==\",\"" + "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"status\":\"" + "Disabled\",\"statusReason\":null,\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" + "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\n" + "\"authentication\":\n" + "{\"symmetricKey\":{\"primaryKey\":\"firstKey\",\"" + "secondaryKey\":\"secondKey\"}}}";
+    final String moduleJson = "{\"deviceId\":\"mockdevice\", \"moduleId\":\"mockmodule\", \"generationId\":\"635864360921156105\",\"etag\":\"MA==\",\"" + "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"status\":\"" + "Disabled\",\"statusReason\":null,\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" + "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\n" + "\"authentication\":\n" + "{\"symmetricKey\":{\"primaryKey\":\"firstKey\",\"" + "secondaryKey\":\"secondKey\", \"managedBy\":\"xxx\"}}}";
+    final String configJson = "{\"id\":\"mockconfig\",\"schemaVersion\":\"1.0\",\"etag\":\"MQ==\",\"" + "labels\":{\"App\":\"label2\"},\"content\":{\"modulesContent\":{}, \"deviceContent\":{\"properties.desired.settings1\": {\"c\":3,\"d\":4}}}," + "\"targetCondition\":\"*\", \"createdTimeUtc\":\"0001-01-01T00:00:00\", \"lastUpdatedTimeUtc\":\"0001-01-01T00:00:00\"," + "\"priority\":10, \"systemMetrics\":{\"results\":{\"targetedCount\":3, \"appliedCount\":3}, " + "\"queries\":{}}, \"metrics\":{\"results\":{\"customMetric\":3}," + "\"queries\":{}}}";
+    final String configsJson = "[{\"id\":\"mockconfig0\",\"schemaVersion\":\"1.0\",\"etag\":\"MQ==\",\"" + "labels\":{\"App\":\"label2\"},\"content\":{\"modulesContent\":{}, \"deviceContent\":{\"properties.desired.settings1\": {\"c\":3,\"d\":4}}}," + "\"targetCondition\":\"*\", \"createdTimeUtc\":\"0001-01-01T00:00:00\", \"lastUpdatedTimeUtc\":\"0001-01-01T00:00:00\"," + "\"priority\":10, \"systemMetrics\":{\"results\":{\"targetedCount\":3, \"appliedCount\":3}, " + "\"queries\":{}}, \"metrics\":{\"results\":{\"customMetric\":3},\"queries\":{}}}," + "{\"id\":\"mockconfig1\",\"schemaVersion\":\"1.0\",\"etag\":\"MQ==\",\"" + "labels\":{\"App\":\"label2\"},\"content\":{\"modulesContent\":{}, \"deviceContent\":{\"properties.desired.settings1\": {\"c\":3,\"d\":4}}}," + "\"targetCondition\":\"*\", \"createdTimeUtc\":\"0001-01-01T00:00:00\", \"lastUpdatedTimeUtc\":\"0001-01-01T00:00:00\"," + "\"priority\":10, \"systemMetrics\":{\"results\":{\"targetedCount\":3, \"appliedCount\":3}, " + "\"queries\":{}}, \"metrics\":{\"results\":{\"customMetric\":3},\"queries\":{}}}" + "]";
+    final String devicesJson = "[{\"encryptionMethod\":\"AES\",\"UTC_TIME_DEFAULT\":\"0001-01-01T00:00:00\",\"" + "deviceId\":\"java-crud-e2e-test-873e7831-5778-4b1e-a998-cf11fffa6415\",\"generationId\":\"\",\"" + "etag\":\"\",\"status\":\"Disabled\",\"statusReason\":\"\",\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" + "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"" + "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\"forceUpdate\":false,\"" + "authentication\":{\"symmetricKey\":{\"primaryKey\":\"CZJIeLzepSADZe3Z9mQsCg\\u003d\\u003d\",\"" + "secondaryKey\":\"wP7t1W95u6zF8ocRGSAoYQ\\u003d\\u003d\"}}},{\"encryptionMethod\":\"AES\",\"" + "UTC_TIME_DEFAULT\":\"0001-01-01T00:00:00\",\"deviceId\":\"" + "java-crud-e2e-test-873e7831-5778-4b1e-a998-cf11fffa64152\",\"generationId\":\"\",\"etag\":\"\",\"" + "status\":\"Disabled\",\"statusReason\":\"\",\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" + "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"" + "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\"forceUpdate\":false,\"" + "authentication\":{\"symmetricKey\":{\"primaryKey\":\"V0UYjIYYLTERQheXas+YUw\\u003d\\u003d\",\"" + "secondaryKey\":\"cDAeY0gZkA9UIxKmSqDGDg\\u003d\\u003d\"}}},{\"encryptionMethod\":\"AES\",\"" + "UTC_TIME_DEFAULT\":\"0001-01-01T00:00:00\",\"deviceId\":\"" + "java-crud-e2e-test-873e7831-5778-4b1e-a998-cf11fffa64153\",\"generationId\":\"\",\"etag\":\"\",\"" + "status\":\"Disabled\",\"statusReason\":\"\",\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" + "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"" + "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\"forceUpdate\":false,\"" + "authentication\":{\"symmetricKey\":{\"primaryKey\":\"kOZFCG80Ytfd89FFZWc4XQ\\u003d\\u003d\",\"" + "secondaryKey\":\"RnMYfSEbt8Ql/MhFoIpopA\\u003d\\u003d\"}}}]";
+    final String modulesJson = "[{\"encryptionMethod\":\"AES\",\"UTC_TIME_DEFAULT\":\"0001-01-01T00:00:00\",\"" + "deviceId\":\"java-crud-e2e-test-873e7831-5778-4b1e-a998-cf11fffa6415\",\"moduleId\":\"module1\",\"generationId\":\"\",\"" + "etag\":\"\",\"status\":\"Disabled\",\"statusReason\":\"\",\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" + "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"" + "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\"forceUpdate\":false,\"" + "authentication\":{\"symmetricKey\":{\"primaryKey\":\"CZJIeLzepSADZe3Z9mQsCg\\u003d\\u003d\",\"" + "secondaryKey\":\"wP7t1W95u6zF8ocRGSAoYQ\\u003d\\u003d\"}}, \"managedBy\":\"xxx\"},{\"encryptionMethod\":\"AES\",\"" + "UTC_TIME_DEFAULT\":\"0001-01-01T00:00:00\",\"deviceId\":\"" + "java-crud-e2e-test-873e7831-5778-4b1e-a998-cf11fffa64152\",\"moduleId\":\"module2\",\"generationId\":\"\",\"etag\":\"\",\"" + "status\":\"Disabled\",\"statusReason\":\"\",\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" + "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"" + "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\"forceUpdate\":false,\"" + "authentication\":{\"symmetricKey\":{\"primaryKey\":\"V0UYjIYYLTERQheXas+YUw\\u003d\\u003d\",\"" + "secondaryKey\":\"cDAeY0gZkA9UIxKmSqDGDg\\u003d\\u003d\"}},\"managedBy\":\"xxx\"},{\"encryptionMethod\":\"AES\",\"" + "UTC_TIME_DEFAULT\":\"0001-01-01T00:00:00\",\"deviceId\":\"" + "java-crud-e2e-test-873e7831-5778-4b1e-a998-cf11fffa64153\",\"moduleId\":\"module3\",\"generationId\":\"\",\"etag\":\"\",\"" + "status\":\"Disabled\",\"statusReason\":\"\",\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" + "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"" + "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\"forceUpdate\":false,\"" + "authentication\":{\"symmetricKey\":{\"primaryKey\":\"kOZFCG80Ytfd89FFZWc4XQ\\u003d\\u003d\",\"" + "secondaryKey\":\"RnMYfSEbt8Ql/MhFoIpopA\\u003d\\u003d\"}},\"managedBy\":\"xxx\"}]";
+    final String registryStatisticsJson = "{\"totalDeviceCount\":45,\"enabledDeviceCount\":45,\"disabledDeviceCount\":0}";
+    final String jobPropertiesJson = "{\"jobId\":\"some_guid\",\"type\":\"export\",\"progress\"" + ":0,\"outputBlobContainerUri\":\"https://myurl.com\",\"excludeKeysInExport\":true}";
     @Mocked
     Device device;
     @Mocked
@@ -65,93 +73,9 @@ public class RegistryManagerTest
     @Mocked
     ConfigurationContentParser mockedConfigurationContentParser;
 
-    final String deviceJson = "{\"deviceId\":\"mockdevice\",\"generationId\":\"635864360921156105\",\"etag\":\"MA==\",\"" +
-            "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"status\":\"" +
-            "Disabled\",\"statusReason\":null,\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" +
-            "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\n" +
-            "\"authentication\":\n" +
-            "{\"symmetricKey\":{\"primaryKey\":\"firstKey\",\"" +
-            "secondaryKey\":\"secondKey\"}}}";
-
-    final String moduleJson = "{\"deviceId\":\"mockdevice\", \"moduleId\":\"mockmodule\", \"generationId\":\"635864360921156105\",\"etag\":\"MA==\",\"" +
-            "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"status\":\"" +
-            "Disabled\",\"statusReason\":null,\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" +
-            "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\n" +
-            "\"authentication\":\n" +
-            "{\"symmetricKey\":{\"primaryKey\":\"firstKey\",\"" +
-            "secondaryKey\":\"secondKey\", \"managedBy\":\"xxx\"}}}";
-
-    final String configJson = "{\"id\":\"mockconfig\",\"schemaVersion\":\"1.0\",\"etag\":\"MQ==\",\"" +
-            "labels\":{\"App\":\"label2\"},\"content\":{\"modulesContent\":{}, \"deviceContent\":{\"properties.desired.settings1\": {\"c\":3,\"d\":4}}}," +
-            "\"targetCondition\":\"*\", \"createdTimeUtc\":\"0001-01-01T00:00:00\", \"lastUpdatedTimeUtc\":\"0001-01-01T00:00:00\"," +
-            "\"priority\":10, \"systemMetrics\":{\"results\":{\"targetedCount\":3, \"appliedCount\":3}, " +
-            "\"queries\":{}}, \"metrics\":{\"results\":{\"customMetric\":3}," +
-            "\"queries\":{}}}";
-
-    final String configsJson = "[{\"id\":\"mockconfig0\",\"schemaVersion\":\"1.0\",\"etag\":\"MQ==\",\"" +
-            "labels\":{\"App\":\"label2\"},\"content\":{\"modulesContent\":{}, \"deviceContent\":{\"properties.desired.settings1\": {\"c\":3,\"d\":4}}}," +
-            "\"targetCondition\":\"*\", \"createdTimeUtc\":\"0001-01-01T00:00:00\", \"lastUpdatedTimeUtc\":\"0001-01-01T00:00:00\"," +
-            "\"priority\":10, \"systemMetrics\":{\"results\":{\"targetedCount\":3, \"appliedCount\":3}, " +
-            "\"queries\":{}}, \"metrics\":{\"results\":{\"customMetric\":3},\"queries\":{}}}," +
-            "{\"id\":\"mockconfig1\",\"schemaVersion\":\"1.0\",\"etag\":\"MQ==\",\"" +
-            "labels\":{\"App\":\"label2\"},\"content\":{\"modulesContent\":{}, \"deviceContent\":{\"properties.desired.settings1\": {\"c\":3,\"d\":4}}}," +
-            "\"targetCondition\":\"*\", \"createdTimeUtc\":\"0001-01-01T00:00:00\", \"lastUpdatedTimeUtc\":\"0001-01-01T00:00:00\"," +
-            "\"priority\":10, \"systemMetrics\":{\"results\":{\"targetedCount\":3, \"appliedCount\":3}, " +
-            "\"queries\":{}}, \"metrics\":{\"results\":{\"customMetric\":3},\"queries\":{}}}" +
-            "]";
-
-    final String devicesJson = "[{\"encryptionMethod\":\"AES\",\"UTC_TIME_DEFAULT\":\"0001-01-01T00:00:00\",\"" +
-            "deviceId\":\"java-crud-e2e-test-873e7831-5778-4b1e-a998-cf11fffa6415\",\"generationId\":\"\",\"" +
-            "etag\":\"\",\"status\":\"Disabled\",\"statusReason\":\"\",\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" +
-            "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"" +
-            "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\"forceUpdate\":false,\"" +
-            "authentication\":{\"symmetricKey\":{\"primaryKey\":\"CZJIeLzepSADZe3Z9mQsCg\\u003d\\u003d\",\"" +
-            "secondaryKey\":\"wP7t1W95u6zF8ocRGSAoYQ\\u003d\\u003d\"}}},{\"encryptionMethod\":\"AES\",\"" +
-            "UTC_TIME_DEFAULT\":\"0001-01-01T00:00:00\",\"deviceId\":\"" +
-            "java-crud-e2e-test-873e7831-5778-4b1e-a998-cf11fffa64152\",\"generationId\":\"\",\"etag\":\"\",\"" +
-            "status\":\"Disabled\",\"statusReason\":\"\",\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" +
-            "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"" +
-            "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\"forceUpdate\":false,\"" +
-            "authentication\":{\"symmetricKey\":{\"primaryKey\":\"V0UYjIYYLTERQheXas+YUw\\u003d\\u003d\",\"" +
-            "secondaryKey\":\"cDAeY0gZkA9UIxKmSqDGDg\\u003d\\u003d\"}}},{\"encryptionMethod\":\"AES\",\"" +
-            "UTC_TIME_DEFAULT\":\"0001-01-01T00:00:00\",\"deviceId\":\"" +
-            "java-crud-e2e-test-873e7831-5778-4b1e-a998-cf11fffa64153\",\"generationId\":\"\",\"etag\":\"\",\"" +
-            "status\":\"Disabled\",\"statusReason\":\"\",\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" +
-            "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"" +
-            "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\"forceUpdate\":false,\"" +
-            "authentication\":{\"symmetricKey\":{\"primaryKey\":\"kOZFCG80Ytfd89FFZWc4XQ\\u003d\\u003d\",\"" +
-            "secondaryKey\":\"RnMYfSEbt8Ql/MhFoIpopA\\u003d\\u003d\"}}}]";
-
-    final String modulesJson = "[{\"encryptionMethod\":\"AES\",\"UTC_TIME_DEFAULT\":\"0001-01-01T00:00:00\",\"" +
-            "deviceId\":\"java-crud-e2e-test-873e7831-5778-4b1e-a998-cf11fffa6415\",\"moduleId\":\"module1\",\"generationId\":\"\",\"" +
-            "etag\":\"\",\"status\":\"Disabled\",\"statusReason\":\"\",\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" +
-            "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"" +
-            "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\"forceUpdate\":false,\"" +
-            "authentication\":{\"symmetricKey\":{\"primaryKey\":\"CZJIeLzepSADZe3Z9mQsCg\\u003d\\u003d\",\"" +
-            "secondaryKey\":\"wP7t1W95u6zF8ocRGSAoYQ\\u003d\\u003d\"}}, \"managedBy\":\"xxx\"},{\"encryptionMethod\":\"AES\",\"" +
-            "UTC_TIME_DEFAULT\":\"0001-01-01T00:00:00\",\"deviceId\":\"" +
-            "java-crud-e2e-test-873e7831-5778-4b1e-a998-cf11fffa64152\",\"moduleId\":\"module2\",\"generationId\":\"\",\"etag\":\"\",\"" +
-            "status\":\"Disabled\",\"statusReason\":\"\",\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" +
-            "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"" +
-            "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\"forceUpdate\":false,\"" +
-            "authentication\":{\"symmetricKey\":{\"primaryKey\":\"V0UYjIYYLTERQheXas+YUw\\u003d\\u003d\",\"" +
-            "secondaryKey\":\"cDAeY0gZkA9UIxKmSqDGDg\\u003d\\u003d\"}},\"managedBy\":\"xxx\"},{\"encryptionMethod\":\"AES\",\"" +
-            "UTC_TIME_DEFAULT\":\"0001-01-01T00:00:00\",\"deviceId\":\"" +
-            "java-crud-e2e-test-873e7831-5778-4b1e-a998-cf11fffa64153\",\"moduleId\":\"module3\",\"generationId\":\"\",\"etag\":\"\",\"" +
-            "status\":\"Disabled\",\"statusReason\":\"\",\"statusUpdatedTime\":\"0001-01-01T00:00:00\",\"" +
-            "connectionState\":\"Disconnected\",\"connectionStateUpdatedTime\":\"0001-01-01T00:00:00\",\"" +
-            "lastActivityTime\":\"0000-00-00T00:00:00+00:00\",\"cloudToDeviceMessageCount\":0,\"forceUpdate\":false,\"" +
-            "authentication\":{\"symmetricKey\":{\"primaryKey\":\"kOZFCG80Ytfd89FFZWc4XQ\\u003d\\u003d\",\"" +
-            "secondaryKey\":\"RnMYfSEbt8Ql/MhFoIpopA\\u003d\\u003d\"}},\"managedBy\":\"xxx\"}]";
-
-    final String registryStatisticsJson = "{\"totalDeviceCount\":45,\"enabledDeviceCount\":45,\"disabledDeviceCount\":0}";
-
-    final String jobPropertiesJson = "{\"jobId\":\"some_guid\",\"type\":\"export\",\"progress\"" +
-            ":0,\"outputBlobContainerUri\":\"https://myurl.com\",\"excludeKeysInExport\":true}";
-
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_001: [The constructor shall throw IllegalArgumentException if the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_null() throws Exception
     {
         String connectionString = null;
@@ -161,7 +85,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_001: [The constructor shall throw IllegalArgumentException if the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_empty() throws Exception
     {
         String connectionString = null;
@@ -194,7 +118,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_004: [The constructor shall throw IllegalArgumentException if the input device is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void addDevice_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -235,7 +159,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_012: [The function shall throw IllegalArgumentException if the input device is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void addDeviceAsync_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -261,7 +185,7 @@ public class RegistryManagerTest
         commonExpectations(connectionString, deviceId);
 
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
-        CompletableFuture<Device> completableFuture =  registryManager.addDeviceAsync(device);
+        CompletableFuture<Device> completableFuture = registryManager.addDeviceAsync(device);
         Device returnDevice = completableFuture.get();
 
         commonVerifications(HttpMethod.PUT, deviceId, returnDevice);
@@ -269,7 +193,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_ REGISTRYMANAGER_12_013: [The function shall create an async wrapper around the addDevice() function call, handle the return value or delegate exception]
     // Assert
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void addDeviceAsync_future_throw() throws Exception
     {
         new MockUp<RegistryManager>()
@@ -284,13 +208,13 @@ public class RegistryManagerTest
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
 
-        CompletableFuture<Device> completableFuture =  registryManager.addDeviceAsync(device);
+        CompletableFuture<Device> completableFuture = registryManager.addDeviceAsync(device);
         completableFuture.get();
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_014: [The constructor shall throw IllegalArgumentException if the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getDevice_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -321,7 +245,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_021: [The constructor shall throw IllegalArgumentException if the input device is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getDeviceAsync_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -340,7 +264,7 @@ public class RegistryManagerTest
         commonExpectations(connectionString, deviceId);
 
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
-        CompletableFuture<Device> completableFuture =  registryManager.getDeviceAsync(deviceId);
+        CompletableFuture<Device> completableFuture = registryManager.getDeviceAsync(deviceId);
         Device returnDevice = completableFuture.get();
 
         commonVerifications(HttpMethod.GET, deviceId, returnDevice);
@@ -348,7 +272,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_022: [The function shall create an async wrapper around the addDevice() function call, handle the return value or delegate exception]
     // Assert
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void getDeviceAsync_future_throw() throws Exception
     {
         String deviceId = "somedevice";
@@ -363,13 +287,13 @@ public class RegistryManagerTest
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
 
-        CompletableFuture<Device> completableFuture =  registryManager.getDeviceAsync(deviceId);
+        CompletableFuture<Device> completableFuture = registryManager.getDeviceAsync(deviceId);
         completableFuture.get();
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_023: [The constructor shall throw IllegalArgumentException if the input count number is less than 1]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getDevices_input_zero() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -393,14 +317,14 @@ public class RegistryManagerTest
         getDevicesExpectations(connectionString, numberOfDevices);
 
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
-        ArrayList<Device> devices =  registryManager.getDevices(10);
+        ArrayList<Device> devices = registryManager.getDevices(10);
 
         getDevicesVerifications(numberOfDevices, devices);
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_030: [The function shall throw IllegalArgumentException if the input count number is less than 1]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getDevicesAsync_input_zero() throws Exception
     {
 
@@ -420,7 +344,7 @@ public class RegistryManagerTest
         getDevicesExpectations(connectionString, numberOfDevices);
 
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
-        CompletableFuture<ArrayList<Device>> completableFuture =  registryManager.getDevicesAsync(10);
+        CompletableFuture<ArrayList<Device>> completableFuture = registryManager.getDevicesAsync(10);
         ArrayList<Device> devices = completableFuture.get();
 
         getDevicesVerifications(numberOfDevices, devices);
@@ -440,7 +364,7 @@ public class RegistryManagerTest
         {
             {
                 iotHubConnectionString.getHostName();
-                result=hostName;
+                result = hostName;
                 device.getDeviceId();
                 result = deviceId;
                 device.getPrimaryKey();
@@ -452,7 +376,7 @@ public class RegistryManagerTest
 
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
         Device returnDevice = registryManager.getDevice(deviceId);
-        String returnDeviceConnectionString =  registryManager.getDeviceConnectionString(returnDevice);
+        String returnDeviceConnectionString = registryManager.getDeviceConnectionString(returnDevice);
 
         assertEquals(expectedDeviceConnectionString, returnDeviceConnectionString);
     }
@@ -472,7 +396,7 @@ public class RegistryManagerTest
         {
             {
                 iotHubConnectionString.getHostName();
-                result=hostName;
+                result = hostName;
                 device.getDeviceId();
                 result = deviceId;
                 device.getPrimaryThumbprint();
@@ -486,14 +410,14 @@ public class RegistryManagerTest
 
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
         Device returnDevice = registryManager.getDevice(deviceId);
-        String returnDeviceConnectionString =  registryManager.getDeviceConnectionString(returnDevice);
+        String returnDeviceConnectionString = registryManager.getDeviceConnectionString(returnDevice);
 
         assertEquals(expectedDeviceConnectionString, returnDeviceConnectionString);
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_21_086: [The function shall throw IllegalArgumentException if the input device is null, if deviceId is null, or primary key and primary thumbprint are empty or null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getDeviceConnectionString_null_device_throw() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -504,7 +428,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_21_086: [The function shall throw IllegalArgumentException if the input device is null, if deviceId is null, or primary key and primary thumbprint are empty or null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getDeviceConnectionString_null_deviceId_throw() throws Exception
     {
         String deviceId = "somedevice";
@@ -516,7 +440,7 @@ public class RegistryManagerTest
         {
             {
                 iotHubConnectionString.getHostName();
-                result=hostName;
+                result = hostName;
                 device.getDeviceId();
                 result = null;
                 device.getPrimaryKey();
@@ -533,7 +457,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_21_086: [The function shall throw IllegalArgumentException if the input device is null, if deviceId is null, or primary key and primary thumbprint are empty or null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getDeviceConnectionString_empty_deviceId_throw() throws Exception
     {
         String deviceId = "somedevice";
@@ -545,7 +469,7 @@ public class RegistryManagerTest
         {
             {
                 iotHubConnectionString.getHostName();
-                result=hostName;
+                result = hostName;
                 device.getDeviceId();
                 result = "";
                 device.getPrimaryKey();
@@ -562,7 +486,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_21_086: [The function shall throw IllegalArgumentException if the input device is null, if deviceId is null, or primary key and primary thumbprint are empty or null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getDeviceConnectionString_null_deviceKey_throw() throws Exception
     {
         String deviceId = "somedevice";
@@ -574,7 +498,7 @@ public class RegistryManagerTest
         {
             {
                 iotHubConnectionString.getHostName();
-                result=hostName;
+                result = hostName;
                 device.getDeviceId();
                 result = deviceId;
                 device.getPrimaryKey();
@@ -591,7 +515,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_21_086: [The function shall throw IllegalArgumentException if the input device is null, if deviceId is null, or primary key and primary thumbprint are empty or null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getDeviceConnectionString_empty_deviceKey_throw() throws Exception
     {
         String deviceId = "somedevice";
@@ -603,7 +527,7 @@ public class RegistryManagerTest
         {
             {
                 iotHubConnectionString.getHostName();
-                result=hostName;
+                result = hostName;
                 device.getDeviceId();
                 result = deviceId;
                 device.getPrimaryKey();
@@ -620,7 +544,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_031: [The function shall create an async wrapper around the getDevices() function call, handle the return value or delegate exception]
     // Assert
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void getDevicesAsync_future_throw() throws Exception
     {
         new MockUp<RegistryManager>()
@@ -640,7 +564,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_032: [The function shall throw IllegalArgumentException if the input device is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateDevice_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -681,7 +605,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_034: [The function shall throw IllegalArgumentException if the input device is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateDeviceForce_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -731,7 +655,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_042: [The function shall throw IllegalArgumentException if the input device is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateDeviceAsync_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -774,7 +698,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_043: [The function shall create an async wrapper around the updateDevice() function call, handle the return value or delegate exception]
     // Assert
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void updateDeviceAsync_future_throw() throws Exception
     {
         new MockUp<RegistryManager>()
@@ -794,7 +718,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_044: [The function shall throw IllegalArgumentException if the input device is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateDeviceAsyncForce_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -821,7 +745,7 @@ public class RegistryManagerTest
         commonExpectations(connectionString, deviceId);
 
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
-        CompletableFuture<Device> completableFuture =  registryManager.updateDeviceAsync(device, true);
+        CompletableFuture<Device> completableFuture = registryManager.updateDeviceAsync(device, true);
         Device returnDevice = completableFuture.get();
 
         commonVerifications(HttpMethod.PUT, deviceId, returnDevice);
@@ -837,7 +761,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_045: [The function shall create an async wrapper around the updateDevice(Device, device, Boolean forceUpdate) function call, handle the return value or delegate exception]
     // Assert
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void updateDeviceAsyncForce_future_throw() throws Exception
     {
         new MockUp<RegistryManager>()
@@ -851,13 +775,13 @@ public class RegistryManagerTest
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
 
-        CompletableFuture<Device> completableFuture =  registryManager.updateDeviceAsync(device, true);
+        CompletableFuture<Device> completableFuture = registryManager.updateDeviceAsync(device, true);
         completableFuture.get();
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_081: [The function shall throw IllegalArgumentException if the input device is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeDevice_input_null_Device() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -869,7 +793,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_087: [The function shall throw IllegalArgumentException if the input etag is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeDevice_input_Device_null_etag() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -890,7 +814,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_087: [The function shall throw IllegalArgumentException if the input etag is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeDevice_input_Device_empty_etag() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -953,7 +877,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_046: [The function shall throw IllegalArgumentException if the input deviceId is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeDevice_input_null_String() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -965,7 +889,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_046: [The function shall throw IllegalArgumentException if the input deviceId is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeDevice_input_empty() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1007,7 +931,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_052: [The function shall throw IllegalArgumentException if the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeDeviceAsync_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1018,7 +942,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_052: [The function shall throw IllegalArgumentException if the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeDeviceAsync_input_empty() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1056,7 +980,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_053: [The function shall create an async wrapper around the removeDevice() function call, handle the return value or delegate exception]
     // Assert
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void removeDeviceAsync_future_throw() throws Exception
     {
         String deviceId = "somedevice";
@@ -1144,7 +1068,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_060: [The function shall create an async wrapper around the getStatistics() function call, handle the return value or delegate exception]
     // Assert
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void getStatisticsAsync_future_throw() throws Exception
     {
         new MockUp<RegistryManager>()
@@ -1171,7 +1095,7 @@ public class RegistryManagerTest
     }
 
     // TESTS_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_15_061: [The function shall throw IllegalArgumentException if any of the input parameters is null]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void exportDevices_exclude_keys_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1230,14 +1154,13 @@ public class RegistryManagerTest
 
     // TESTS_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_15_068: [The function shall create an async wrapper around
     // the exportDevices() function call, handle the return value or delegate exception ]
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void exportDevicesAsync_future_throw() throws Exception
     {
         new MockUp<RegistryManager>()
         {
             @Mock
-            public JobProperties exportDevices(String url, Boolean excludeKeys)
-                    throws IllegalArgumentException, IOException, IotHubException
+            public JobProperties exportDevices(String url, Boolean excludeKeys) throws IllegalArgumentException, IOException, IotHubException
             {
                 throw new IllegalArgumentException();
             }
@@ -1246,12 +1169,12 @@ public class RegistryManagerTest
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
 
-        CompletableFuture<JobProperties> completableFuture =  registryManager.exportDevicesAsync("blah", true);
+        CompletableFuture<JobProperties> completableFuture = registryManager.exportDevicesAsync("blah", true);
         completableFuture.get();
     }
 
     // TESTS_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_15_069: [The function shall throw IllegalArgumentException if any of the input parameters is null]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void importDevices_blob_import_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1261,7 +1184,7 @@ public class RegistryManagerTest
     }
 
     // TESTS_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_15_069: [The function shall throw IllegalArgumentException if any of the input parameters is null]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void importDevices_blob_output_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1319,14 +1242,13 @@ public class RegistryManagerTest
 
     // TESTS_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_15_076: [The function shall create an async wrapper around
     // the importDevices() function call, handle the return value or delegate exception]
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void importDevicesAsync_future_throw() throws Exception
     {
         new MockUp<RegistryManager>()
         {
             @Mock
-            public JobProperties importDevices(String importBlobContainerUri, String outputBlobContainerUri)
-                    throws IllegalArgumentException, IOException, IotHubException
+            public JobProperties importDevices(String importBlobContainerUri, String outputBlobContainerUri) throws IllegalArgumentException, IOException, IotHubException
             {
                 throw new IllegalArgumentException();
             }
@@ -1335,12 +1257,12 @@ public class RegistryManagerTest
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
 
-        CompletableFuture<JobProperties> completableFuture =  registryManager.importDevicesAsync("importblob", "outputblob");
+        CompletableFuture<JobProperties> completableFuture = registryManager.importDevicesAsync("importblob", "outputblob");
         completableFuture.get();
     }
 
     // TESTS_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_15_077: [The function shall throw IllegalArgumentException if the input parameter is null]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getJob_job_id_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1399,14 +1321,13 @@ public class RegistryManagerTest
 
     // TESTS_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_15_084: [The function shall create an async wrapper
     // around the getJob() function call, handle the return value or delegate exception]
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void getJobAsync_future_throw() throws Exception
     {
         new MockUp<RegistryManager>()
         {
             @Mock
-            public JobProperties getJob(String jobId)
-                    throws IllegalArgumentException, IOException, IotHubException
+            public JobProperties getJob(String jobId) throws IllegalArgumentException, IOException, IotHubException
             {
                 throw new IllegalArgumentException();
             }
@@ -1415,7 +1336,7 @@ public class RegistryManagerTest
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
 
-        CompletableFuture<JobProperties> completableFuture =  registryManager.getJobAsync("someJobId");
+        CompletableFuture<JobProperties> completableFuture = registryManager.getJobAsync("someJobId");
         completableFuture.get();
     }
 
@@ -1434,7 +1355,7 @@ public class RegistryManagerTest
         };
 
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
-        Deencapsulation.setField(registryManager,"executor", mockExecutorService);
+        Deencapsulation.setField(registryManager, "executor", mockExecutorService);
 
         //act
         registryManager.close();
@@ -1449,7 +1370,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_001: [The constructor shall throw IllegalArgumentException if the input module is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void addModule_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1493,7 +1414,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_009: [The constructor shall throw IllegalArgumentException if the deviceId string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getModule_deviceId_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1504,7 +1425,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_009: [The constructor shall throw IllegalArgumentException if the deviceId string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getModule_deviceId_empty() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1515,7 +1436,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_010: [The constructor shall throw IllegalArgumentException if the moduleId string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getModule_moduleId_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1526,13 +1447,13 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_010: [The constructor shall throw IllegalArgumentException if the moduleId string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getModule_moduleId_empty() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
 
-        registryManager.getModule("somedevice","");
+        registryManager.getModule("somedevice", "");
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_011: [The function shall get the URL for the device]
@@ -1558,7 +1479,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_017: [The constructor shall throw IllegalArgumentException if the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getModulesOnDevice_deviceId_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1569,7 +1490,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_017: [The constructor shall throw IllegalArgumentException if the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getModulesOnDevice_deviceId_empty() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1593,7 +1514,7 @@ public class RegistryManagerTest
         getModulesExpectations(connectionString, deviceId);
 
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
-        List<Module> modules =  registryManager.getModulesOnDevice(deviceId);
+        List<Module> modules = registryManager.getModulesOnDevice(deviceId);
 
         getModulesVerifications(deviceId, modules);
         assertEquals(3, modules.size());
@@ -1601,7 +1522,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_024: [The function shall throw IllegalArgumentException if the input device is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateModule_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1645,7 +1566,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_026: [The function shall throw IllegalArgumentException if the input module is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateModuleForce_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1701,7 +1622,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_082: [The function shall throw IllegalArgumentException if the input module is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeModule_input_null_Module() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1758,7 +1679,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_034: [The function shall throw IllegalArgumentException if the deviceId is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeModule_deviceId_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1769,7 +1690,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_034: [The function shall throw IllegalArgumentException if the deviceId is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeModule_deviceId_empty() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1780,7 +1701,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_035: [The function shall throw IllegalArgumentException if the moduleId is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeModule_moduleId_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1791,7 +1712,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_035: [The function shall throw IllegalArgumentException if the moduleId is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeModule_moduleId_empty() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1802,7 +1723,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_078: [The function shall throw IllegalArgumentException if the etag is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeModule_Module_etag_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1825,7 +1746,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_078: [The function shall throw IllegalArgumentException if the etag is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeModule_Module_etag_empty() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1880,7 +1801,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_041: [The constructor shall throw IllegalArgumentException if the input configuration is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void addConfiguration_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1921,7 +1842,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_049: [The constructor shall throw IllegalArgumentException if the configurationId string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getConfiguration_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1932,7 +1853,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_049: [The constructor shall throw IllegalArgumentException if the configurationId string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getConfiguration_empty() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1963,7 +1884,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_056: [The function shall throw IllegalArgumentException if the input count number is less than 1]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getConfigurations_input_zero() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -1987,7 +1908,7 @@ public class RegistryManagerTest
         getConfigsExpectations(connectionString, numberOfConfigs);
 
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
-        List<Configuration> configs =  registryManager.getConfigurations(10);
+        List<Configuration> configs = registryManager.getConfigurations(10);
 
         getConfigsVerifications(numberOfConfigs, configs);
         assertEquals(2, configs.size());
@@ -1995,7 +1916,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_063: [The function shall throw IllegalArgumentException if the input device is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateConfiguration_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -2036,7 +1957,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_065: [The function shall throw IllegalArgumentException if the input configuration is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateConfigurationForce_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -2085,7 +2006,7 @@ public class RegistryManagerTest
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_083: [The function shall throw IllegalArgumentException if the input configuration is null]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeConfiguration_input_Configuration_Null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -2097,7 +2018,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_087: [The function shall throw IllegalArgumentException if the input etag is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeDevice_input_Configuration_null_etag() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -2118,7 +2039,7 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_087: [The function shall throw IllegalArgumentException if the input etag is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeDevice_input_Configuration_empty_etag() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -2139,18 +2060,18 @@ public class RegistryManagerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_073: [The function shall throw IllegalArgumentException if the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeConfiguration_input_null() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
         RegistryManager registryManager = RegistryManager.createFromConnectionString(connectionString);
 
-        registryManager.removeConfiguration((String)null);
+        registryManager.removeConfiguration((String) null);
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_28_073: [The function shall throw IllegalArgumentException if the input string is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void removeConfiguration_input_empty() throws Exception
     {
         String connectionString = "HostName=aaa.bbb.ccc;SharedAccessKeyName=XXX;SharedAccessKey=YYY";
@@ -2233,7 +2154,7 @@ public class RegistryManagerTest
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_34_088: [The function shall throw IllegalArgumentException if the provided content is null]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void applyConfigurationContentOnDeviceThrowsIfConfigurationContentIsNull() throws Exception
     {
         //arrange

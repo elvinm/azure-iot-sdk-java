@@ -13,6 +13,7 @@ public class MqttMessage
 
     /**
      * Constructor that takes the topic of the Message
+     *
      * @param topic The topic of the message
      */
     public MqttMessage(String topic)
@@ -22,7 +23,8 @@ public class MqttMessage
 
     /**
      * Constructor that takes the topic of the Message and a PAHO MqttMessage
-     * @param topic The topic of the message
+     *
+     * @param topic       The topic of the message
      * @param mqttMessage The mqtt message
      */
     public MqttMessage(String topic, org.eclipse.paho.client.mqttv3.MqttMessage mqttMessage)
@@ -55,7 +57,8 @@ public class MqttMessage
 
     /**
      * Constructor that takes the topic of the Message and payload
-     * @param topic The topic of the message
+     *
+     * @param topic   The topic of the message
      * @param payload The payload of the message
      */
     public MqttMessage(String topic, byte[] payload)
@@ -66,6 +69,7 @@ public class MqttMessage
 
     /**
      * Converts the MqttQOS value to a integer representation
+     *
      * @param qos MqttQos value
      * @return the qos value
      */
@@ -92,16 +96,8 @@ public class MqttMessage
     }
 
     /**
-     * Sets the topic of the message
-     * @param topic The topic of the message
-     */
-    public void setTopic(String topic)
-    {
-        this.topic = topic;
-    }
-
-    /**
      * Gets the topic of the message
+     *
      * @return Topic represented as a string
      */
     public String getTopic()
@@ -110,7 +106,18 @@ public class MqttMessage
     }
 
     /**
+     * Sets the topic of the message
+     *
+     * @param topic The topic of the message
+     */
+    public void setTopic(String topic)
+    {
+        this.topic = topic;
+    }
+
+    /**
      * Returns the Message Payload
+     *
      * @return the message in byte[]
      */
     public byte[] getPayload()
@@ -120,6 +127,7 @@ public class MqttMessage
 
     /**
      * Sets the Message Payload
+     *
      * @param payload the message in byte[]
      */
     public void setPayload(byte[] payload)
@@ -128,16 +136,8 @@ public class MqttMessage
     }
 
     /**
-     * Sets the Qos value of the Message
-     * @param qos the quality of service
-     */
-    public void setQos(MqttQos qos)
-    {
-        this.qos = qos;
-    }
-
-    /**
      * Gets the Qos value of the Message
+     *
      * @return the quality of service
      */
     public MqttQos getQos()
@@ -146,7 +146,18 @@ public class MqttMessage
     }
 
     /**
+     * Sets the Qos value of the Message
+     *
+     * @param qos the quality of service
+     */
+    public void setQos(MqttQos qos)
+    {
+        this.qos = qos;
+    }
+
+    /**
      * Gets the PAHO MqttMessage from an existing message
+     *
      * @return the mqtt message
      */
     public org.eclipse.paho.client.mqttv3.MqttMessage getMqttMessage()

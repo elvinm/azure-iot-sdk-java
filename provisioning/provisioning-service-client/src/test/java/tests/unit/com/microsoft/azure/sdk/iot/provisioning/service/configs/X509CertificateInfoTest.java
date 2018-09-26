@@ -27,20 +27,10 @@ public class X509CertificateInfoTest
     private static final String NOT_AFTER_UTC = "2017-11-20T12:34:182Z";
     private static final String SERIAL_NUMBER = "000000000000000000";
     private static final Integer VERSION = 3;
-    private static final String JSON =
-            "{\n" +
-            "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" +
-            "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" +
-            "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" +
-            "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" +
-            "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" +
-            "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" +
-            "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" +
-            "    \"version\": " + VERSION + "\n" +
-            "}\n";
+    private static final String JSON = "{\n" + "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" + "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" + "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" + "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" + "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" + "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" + "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorCopyThrowsOnNull()
     {
         // arrange
@@ -51,20 +41,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullSubjectName()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" +
-                        "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" +
-                        "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" +
-                        "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" +
-                        "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" +
-                        "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" + "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" + "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" + "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" + "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" + "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -75,21 +56,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptySubjectName()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"subjectName\": \"\",\n" +
-                        "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" +
-                        "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" +
-                        "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" +
-                        "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" +
-                        "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" +
-                        "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"subjectName\": \"\",\n" + "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" + "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" + "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" + "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" + "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" + "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -100,20 +71,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullSha1Thumbprint()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" +
-                        "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" +
-                        "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" +
-                        "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" +
-                        "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" +
-                        "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" + "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" + "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" + "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" + "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" + "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -124,21 +86,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptySha1Thumbprint()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" +
-                        "    \"sha1Thumbprint\": \"\",\n" +
-                        "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" +
-                        "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" +
-                        "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" +
-                        "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" +
-                        "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" + "    \"sha1Thumbprint\": \"\",\n" + "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" + "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" + "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" + "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" + "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -149,20 +101,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullSha256Thumbprint()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" +
-                        "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" +
-                        "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" +
-                        "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" +
-                        "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" +
-                        "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" + "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" + "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" + "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" + "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" + "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -173,21 +116,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptySha256Thumbprint()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" +
-                        "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" +
-                        "    \"sha256Thumbprint\": \"\",\n" +
-                        "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" +
-                        "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" +
-                        "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" +
-                        "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" + "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" + "    \"sha256Thumbprint\": \"\",\n" + "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" + "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" + "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" + "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -198,20 +131,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullIssuerName()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" +
-                        "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" +
-                        "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" +
-                        "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" +
-                        "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" +
-                        "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" + "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" + "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" + "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" + "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" + "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -222,21 +146,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyIssuerName()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" +
-                        "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" +
-                        "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" +
-                        "    \"issuerName\": \"\",\n" +
-                        "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" +
-                        "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" +
-                        "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" + "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" + "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" + "    \"issuerName\": \"\",\n" + "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" + "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" + "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -247,20 +161,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullNotBeforeUtc()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" +
-                        "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" +
-                        "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" +
-                        "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" +
-                        "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" +
-                        "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" + "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" + "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" + "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" + "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" + "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -271,21 +176,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyNotBeforeUtc()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" +
-                        "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" +
-                        "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" +
-                        "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" +
-                        "    \"notBeforeUtc\": \"\",\n" +
-                        "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" +
-                        "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" + "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" + "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" + "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" + "    \"notBeforeUtc\": \"\",\n" + "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" + "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -296,21 +191,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnInvalidNotBeforeUtc()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" +
-                        "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" +
-                        "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" +
-                        "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" +
-                        "    \"notBeforeUtc\": \"0000-00-00 00:00:00\",\n" +
-                        "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" +
-                        "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" + "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" + "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" + "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" + "    \"notBeforeUtc\": \"0000-00-00 00:00:00\",\n" + "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" + "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -321,20 +206,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullNotAfterUtc()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" +
-                        "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" +
-                        "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" +
-                        "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" +
-                        "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" +
-                        "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" + "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" + "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" + "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" + "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" + "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -345,21 +221,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyNotAfterUtc()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" +
-                        "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" +
-                        "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" +
-                        "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" +
-                        "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" +
-                        "    \"notAfterUtc\": \"\",\n" +
-                        "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" + "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" + "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" + "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" + "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" + "    \"notAfterUtc\": \"\",\n" + "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -370,21 +236,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnInvalidNotAfterUtc()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" +
-                        "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" +
-                        "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" +
-                        "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" +
-                        "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" +
-                        "    \"notAfterUtc\": \"0000-00-00 00:00:00\",\n" +
-                        "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" + "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" + "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" + "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" + "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" + "    \"notAfterUtc\": \"0000-00-00 00:00:00\",\n" + "    \"serialNumber\": \"" + SERIAL_NUMBER + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -395,20 +251,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullSerialNumber()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" +
-                        "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" +
-                        "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" +
-                        "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" +
-                        "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" +
-                        "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" + "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" + "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" + "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" + "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" + "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -419,21 +266,11 @@ public class X509CertificateInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided x509CertificateInfo is null or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptySerialNumber()
     {
         // arrange
-        final String invalidJson =
-                "{\n" +
-                        "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" +
-                        "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" +
-                        "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" +
-                        "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" +
-                        "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" +
-                        "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" +
-                        "    \"serialNumber\": \"\",\n" +
-                        "    \"version\": " + VERSION + "\n" +
-                        "}\n";
+        final String invalidJson = "{\n" + "    \"subjectName\": \"" + SUBJECT_NAME + "\",\n" + "    \"sha1Thumbprint\": \"" + SHA1THUMBPRINT + "\",\n" + "    \"sha256Thumbprint\": \"" + SHA256THUMBPRINT + "\",\n" + "    \"issuerName\": \"" + ISSUER_NAME + "\",\n" + "    \"notBeforeUtc\": \"" + NOT_BEFORE_UTC + "\",\n" + "    \"notAfterUtc\": \"" + NOT_AFTER_UTC + "\",\n" + "    \"serialNumber\": \"\",\n" + "    \"version\": " + VERSION + "\n" + "}\n";
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         X509CertificateInfo x509CertificateInfo = gson.fromJson(invalidJson, X509CertificateInfo.class);
 
@@ -470,7 +307,7 @@ public class X509CertificateInfoTest
         Helpers.assertDateWithError(result.getNotBeforeUtc(), NOT_BEFORE_UTC);
         Helpers.assertDateWithError(result.getNotAfterUtc(), NOT_AFTER_UTC);
         assertEquals(SERIAL_NUMBER, result.getSerialNumber());
-        assertEquals((int)VERSION, (int)result.getVersion());
+        assertEquals((int) VERSION, (int) result.getVersion());
     }
 
     /* SRS_X509_CERTIFICATE_INFO_21_013: [The X509CertificateInfo shall provide an empty constructor to make GSON happy.] */

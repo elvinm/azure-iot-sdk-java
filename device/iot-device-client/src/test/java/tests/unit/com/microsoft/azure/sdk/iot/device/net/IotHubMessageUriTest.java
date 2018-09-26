@@ -15,17 +15,19 @@ import java.net.URISyntaxException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/** Unit tests for IotHubMessageUri. */
+/**
+ * Unit tests for IotHubMessageUri.
+ */
 public class IotHubMessageUriTest
 {
     protected static String MESSAGE_PATH = "/messages/devicebound";
 
-    @Mocked IotHubUri mockIotHubUri;
+    @Mocked
+    IotHubUri mockIotHubUri;
 
     // Tests_SRS_IOTHUBMESSAGEURI_11_001: [The constructor returns a URI with the format "[iotHubHostname]/devices/[deviceId]/messages/devicebound?api-version=2016-02-03".]
     @Test
-    public void constructorConstructsIotHubUriCorrectly()
-            throws URISyntaxException
+    public void constructorConstructsIotHubUriCorrectly() throws URISyntaxException
     {
         final String iotHubHostname = "test.iothub";
         final String deviceId = "test-deviceid";
@@ -54,8 +56,7 @@ public class IotHubMessageUriTest
                 result = uriStr;
             }
         };
-        IotHubMessageUri messageUri =
-                new IotHubMessageUri(iotHubHostname, deviceId, "");
+        IotHubMessageUri messageUri = new IotHubMessageUri(iotHubHostname, deviceId, "");
 
         String testUriStr = messageUri.toString();
 
@@ -77,8 +78,7 @@ public class IotHubMessageUriTest
                 result = hostname;
             }
         };
-        IotHubMessageUri messageUri =
-                new IotHubMessageUri(iotHubHostname, deviceId, "");
+        IotHubMessageUri messageUri = new IotHubMessageUri(iotHubHostname, deviceId, "");
 
         String testHostname = messageUri.getHostname();
 
@@ -100,8 +100,7 @@ public class IotHubMessageUriTest
                 result = path;
             }
         };
-        IotHubMessageUri messageUri =
-                new IotHubMessageUri(iotHubHostname, deviceId, "");
+        IotHubMessageUri messageUri = new IotHubMessageUri(iotHubHostname, deviceId, "");
 
         String testPath = messageUri.getPath();
 

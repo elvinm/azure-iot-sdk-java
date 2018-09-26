@@ -16,7 +16,7 @@ import static org.junit.Assert.assertNull;
 /**
  * Unit tests for method result class
  */
-public class MethodResultTest 
+public class MethodResultTest
 {
     /* Tests_SRS_METHODRESULT_21_001: [The constructor shall save the status and payload representing the method invoke result.] */
     /* Tests_SRS_METHODRESULT_21_002: [There is no restrictions for these values, it can be empty, or null.] */
@@ -45,7 +45,7 @@ public class MethodResultTest
         assertNull(methodResult.getStatus());
         assertThat(methodResult.getPayload().toString(), is("TestObject"));
     }
-    
+
     @Test
     public void constructorCreatesNewMethodResult_NullPayload()
     {

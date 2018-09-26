@@ -23,110 +23,21 @@ public class QueryResultTest
     private static final String VALID_INT_JSON = "[1, 2, 3]";
     private static final String VALID_OBJECT_JSON = "[{\"a\":1}, {\"a\":2}, {\"a\":3}]";
 
-    private static final String VALID_ENROLLMENT_1 =
-            "    {\n" +
-            "      \"registrationId\": \"registrationid-ae518a62-3480-4639-bce2-5b69a3bb35a3\",\n" +
-            "      \"deviceId\": \"JavaDevice-c743c684-2190-4062-a5a8-efc416ad4dba\",\n" +
-            "      \"attestation\": {\n" +
-            "        \"type\": \"tpm\",\n" +
-            "        \"tpm\": {\n" +
-            "          \"endorsementKey\": \"randonendorsementkeyfortest==\"\n" +
-            "        }\n" +
-            "      },\n" +
-            "      \"iotHubHostName\": \"ContosoIotHub.azure-devices.net\",\n" +
-            "      \"provisioningStatus\": \"enabled\",\n" +
-            "      \"createdDateTimeUtc\": \"2017-09-19T15:45:53.3981876Z\",\n" +
-            "      \"lastUpdatedDateTimeUtc\": \"2017-09-19T15:45:53.3981876Z\",\n" +
-            "      \"capabilities\": {\n" + "        \"iotEdge\": false\n" + "      }" +
-            "    }";
-    private static final String VALID_ENROLLMENT_2 =
-            "    {\n" +
-            "      \"registrationId\": \"registrationid-6bdaeb7c-51fc-4a67-b24e-64e42d3aa698\",\n" +
-            "      \"deviceId\": \"JavaDevice-eb17e87a-11aa-4794-944f-bbbf1fb960a0\",\n" +
-            "      \"attestation\": {\n" +
-            "        \"type\": \"tpm\",\n" +
-            "        \"tpm\": {\n" +
-            "          \"endorsementKey\": \"randonendorsementkeyfortest==\"\n" +
-            "        }\n" +
-            "      },\n" +
-            "      \"iotHubHostName\": \"ContosoIotHub.azure-devices.net\",\n" +
-            "      \"provisioningStatus\": \"enabled\",\n" +
-            "      \"createdDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\",\n" +
-            "      \"lastUpdatedDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\"\n" +
-            "    }";
-    private static final String VALID_ENROLLMENT_JSON =
-        "[\n" +
-        VALID_ENROLLMENT_1 + ",\n" +
-        VALID_ENROLLMENT_2 +
-        "]";
+    private static final String VALID_ENROLLMENT_1 = "    {\n" + "      \"registrationId\": \"registrationid-ae518a62-3480-4639-bce2-5b69a3bb35a3\",\n" + "      \"deviceId\": \"JavaDevice-c743c684-2190-4062-a5a8-efc416ad4dba\",\n" + "      \"attestation\": {\n" + "        \"type\": \"tpm\",\n" + "        \"tpm\": {\n" + "          \"endorsementKey\": \"randonendorsementkeyfortest==\"\n" + "        }\n" + "      },\n" + "      \"iotHubHostName\": \"ContosoIotHub.azure-devices.net\",\n" + "      \"provisioningStatus\": \"enabled\",\n" + "      \"createdDateTimeUtc\": \"2017-09-19T15:45:53.3981876Z\",\n" + "      \"lastUpdatedDateTimeUtc\": \"2017-09-19T15:45:53.3981876Z\",\n" + "      \"capabilities\": {\n" + "        \"iotEdge\": false\n" + "      }" + "    }";
+    private static final String VALID_ENROLLMENT_2 = "    {\n" + "      \"registrationId\": \"registrationid-6bdaeb7c-51fc-4a67-b24e-64e42d3aa698\",\n" + "      \"deviceId\": \"JavaDevice-eb17e87a-11aa-4794-944f-bbbf1fb960a0\",\n" + "      \"attestation\": {\n" + "        \"type\": \"tpm\",\n" + "        \"tpm\": {\n" + "          \"endorsementKey\": \"randonendorsementkeyfortest==\"\n" + "        }\n" + "      },\n" + "      \"iotHubHostName\": \"ContosoIotHub.azure-devices.net\",\n" + "      \"provisioningStatus\": \"enabled\",\n" + "      \"createdDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\",\n" + "      \"lastUpdatedDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\"\n" + "    }";
+    private static final String VALID_ENROLLMENT_JSON = "[\n" + VALID_ENROLLMENT_1 + ",\n" + VALID_ENROLLMENT_2 + "]";
 
-    private static final String VALID_ENROLLMENT_GROUP_1 =
-            "    {\n" +
-            "      \"enrollmentGroupId\": \"enrollmentGroupId-ae518a62-3480-4639-bce2-5b69a3bb35a3\",\n" +
-            "      \"attestation\": {\n" +
-            "        \"type\": \"tpm\",\n" +
-            "        \"tpm\": {\n" +
-            "          \"endorsementKey\": \"randonendorsementkeyfortest==\"\n" +
-            "        }\n" +
-            "      },\n" +
-            "      \"iotHubHostName\": \"ContosoIotHub.azure-devices.net\",\n" +
-            "      \"provisioningStatus\": \"enabled\",\n" +
-            "      \"createdDateTimeUtc\": \"2017-09-19T15:45:53.3981876Z\",\n" +
-            "      \"lastUpdatedDateTimeUtc\": \"2017-09-19T15:45:53.3981876Z\"\n" +
-            "    }";
-    private static final String VALID_ENROLLMENT_GROUP_2 =
-            "    {\n" +
-            "      \"enrollmentGroupId\": \"enrollmentGroupId-6bdaeb7c-51fc-4a67-b24e-64e42d3aa698\",\n" +
-            "      \"attestation\": {\n" +
-            "        \"type\": \"tpm\",\n" +
-            "        \"tpm\": {\n" +
-            "          \"endorsementKey\": \"randonendorsementkeyfortest==\"\n" +
-            "        }\n" +
-            "      },\n" +
-            "      \"iotHubHostName\": \"ContosoIotHub.azure-devices.net\",\n" +
-            "      \"provisioningStatus\": \"enabled\",\n" +
-            "      \"createdDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\",\n" +
-            "      \"lastUpdatedDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\"\n" +
-            "    }";
+    private static final String VALID_ENROLLMENT_GROUP_1 = "    {\n" + "      \"enrollmentGroupId\": \"enrollmentGroupId-ae518a62-3480-4639-bce2-5b69a3bb35a3\",\n" + "      \"attestation\": {\n" + "        \"type\": \"tpm\",\n" + "        \"tpm\": {\n" + "          \"endorsementKey\": \"randonendorsementkeyfortest==\"\n" + "        }\n" + "      },\n" + "      \"iotHubHostName\": \"ContosoIotHub.azure-devices.net\",\n" + "      \"provisioningStatus\": \"enabled\",\n" + "      \"createdDateTimeUtc\": \"2017-09-19T15:45:53.3981876Z\",\n" + "      \"lastUpdatedDateTimeUtc\": \"2017-09-19T15:45:53.3981876Z\"\n" + "    }";
+    private static final String VALID_ENROLLMENT_GROUP_2 = "    {\n" + "      \"enrollmentGroupId\": \"enrollmentGroupId-6bdaeb7c-51fc-4a67-b24e-64e42d3aa698\",\n" + "      \"attestation\": {\n" + "        \"type\": \"tpm\",\n" + "        \"tpm\": {\n" + "          \"endorsementKey\": \"randonendorsementkeyfortest==\"\n" + "        }\n" + "      },\n" + "      \"iotHubHostName\": \"ContosoIotHub.azure-devices.net\",\n" + "      \"provisioningStatus\": \"enabled\",\n" + "      \"createdDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\",\n" + "      \"lastUpdatedDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\"\n" + "    }";
 
-    private static final String VALID_ENROLLMENT_GROUP_JSON =
-            "[\n" +
-            VALID_ENROLLMENT_GROUP_1 + ",\n" +
-            VALID_ENROLLMENT_GROUP_2 +
-            "]";
+    private static final String VALID_ENROLLMENT_GROUP_JSON = "[\n" + VALID_ENROLLMENT_GROUP_1 + ",\n" + VALID_ENROLLMENT_GROUP_2 + "]";
 
-    private static final String VALID_REGISTRATION_STATUS_1 =
-            "{\n" +
-            "    \"registrationId\":\"registrationid-ae518a62-3480-4639-bce2-5b69a3bb35a3\",\n" +
-            "    \"createdDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\",\n" +
-            "    \"assignedHub\":\"ContosoIotHub.azure-devices.net\",\n" +
-            "    \"deviceId\":\"JavaDevice-c743c684-2190-4062-a5a8-efc416ad4dba\",\n" +
-            "    \"status\":\"assigned\",\n" +
-            "    \"lastUpdatedDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\",\n" +
-            "    \"errorCode\": 200,\n" +
-            "    \"errorMessage\":\"Succeeded\",\n" +
-            "    \"etag\": \"00000000-0000-0000-0000-00000000000\"\n" +
-            "}";
-    private static final String VALID_REGISTRATION_STATUS_2 =
-            "{\n" +
-            "    \"registrationId\":\"registrationid-6bdaeb7c-51fc-4a67-b24e-64e42d3aa698\",\n" +
-            "    \"createdDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\",\n" +
-            "    \"assignedHub\":\"ContosoIotHub.azure-devices.net\",\n" +
-            "    \"deviceId\":\"JavaDevice-c743c684-2190-4062-a5a8-efc416ad4dba\",\n" +
-            "    \"status\":\"assigned\",\n" +
-            "    \"lastUpdatedDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\",\n" +
-            "    \"errorCode\": 200,\n" +
-            "    \"errorMessage\":\"Succeeded\",\n" +
-            "    \"etag\": \"00000000-0000-0000-0000-00000000000\"\n" +
-            "}";
-    private static final String VALID_REGISTRATION_STATUS_JSON =
-            "[\n" +
-            VALID_REGISTRATION_STATUS_1 + ",\n" +
-            VALID_REGISTRATION_STATUS_2 +
-            "]";
+    private static final String VALID_REGISTRATION_STATUS_1 = "{\n" + "    \"registrationId\":\"registrationid-ae518a62-3480-4639-bce2-5b69a3bb35a3\",\n" + "    \"createdDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\",\n" + "    \"assignedHub\":\"ContosoIotHub.azure-devices.net\",\n" + "    \"deviceId\":\"JavaDevice-c743c684-2190-4062-a5a8-efc416ad4dba\",\n" + "    \"status\":\"assigned\",\n" + "    \"lastUpdatedDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\",\n" + "    \"errorCode\": 200,\n" + "    \"errorMessage\":\"Succeeded\",\n" + "    \"etag\": \"00000000-0000-0000-0000-00000000000\"\n" + "}";
+    private static final String VALID_REGISTRATION_STATUS_2 = "{\n" + "    \"registrationId\":\"registrationid-6bdaeb7c-51fc-4a67-b24e-64e42d3aa698\",\n" + "    \"createdDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\",\n" + "    \"assignedHub\":\"ContosoIotHub.azure-devices.net\",\n" + "    \"deviceId\":\"JavaDevice-c743c684-2190-4062-a5a8-efc416ad4dba\",\n" + "    \"status\":\"assigned\",\n" + "    \"lastUpdatedDateTimeUtc\": \"2017-09-19T15:46:35.1533673Z\",\n" + "    \"errorCode\": 200,\n" + "    \"errorMessage\":\"Succeeded\",\n" + "    \"etag\": \"00000000-0000-0000-0000-00000000000\"\n" + "}";
+    private static final String VALID_REGISTRATION_STATUS_JSON = "[\n" + VALID_REGISTRATION_STATUS_1 + ",\n" + VALID_REGISTRATION_STATUS_2 + "]";
 
     /* SRS_QUERY_RESULT_21_001: [The constructor shall throw IllegalArgumentException if the provided type is null, empty, or not parsed to QueryResultType.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullType()
     {
         // arrange
@@ -136,7 +47,7 @@ public class QueryResultTest
     }
 
     /* SRS_QUERY_RESULT_21_001: [The constructor shall throw IllegalArgumentException if the provided type is null, empty, or not parsed to QueryResultType.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyType()
     {
         // arrange
@@ -146,7 +57,7 @@ public class QueryResultTest
     }
 
     /* SRS_QUERY_RESULT_21_001: [The constructor shall throw IllegalArgumentException if the provided type is null, empty, or not parsed to QueryResultType.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnInvalidType()
     {
         // arrange
@@ -156,7 +67,7 @@ public class QueryResultTest
     }
 
     /* SRS_QUERY_RESULT_21_002: [The constructor shall throw IllegalArgumentException if the provided body is null or empty and the type is not `unknown`.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullBody()
     {
         // arrange
@@ -166,7 +77,7 @@ public class QueryResultTest
     }
 
     /* SRS_QUERY_RESULT_21_002: [The constructor shall throw IllegalArgumentException if the provided body is null or empty and the type is not `unknown`.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyBody()
     {
         // arrange
@@ -176,7 +87,7 @@ public class QueryResultTest
     }
 
     /* SRS_QUERY_RESULT_21_003: [The constructor shall throw JsonSyntaxException if the JSON is invalid.] */
-    @Test (expected = JsonSyntaxException.class)
+    @Test(expected = JsonSyntaxException.class)
     public void constructorThrowsOnInvalidJson()
     {
         // arrange
@@ -361,14 +272,7 @@ public class QueryResultTest
         final String continuationToken = "{\"token\":\"+RID:Defghij6KLMNOPQ==#RS:1#TRC:2#FPC:AUAAAAAAAAAJQABAAAAAAAk=\",\"range\":{\"min\":\"0123456789abcd\",\"max\":\"FF\"}}";
         final String continuationTokenInJson = "{\\\"token\\\":\\\"+RID:Defghij6KLMNOPQ==#RS:1#TRC:2#FPC:AUAAAAAAAAAJQABAAAAAAAk=\\\",\\\"range\\\":{\\\"min\\\":\\\"0123456789abcd\\\",\\\"max\\\":\\\"FF\\\"}}";
         final String body = "[ " + VALID_ENROLLMENT_1 + " ]";
-        final String expectedResult =
-                "{\n" +
-                "  \"type\":\"enrollment\",\n" +
-                "  \"continuationToken\":\"" + continuationTokenInJson + "\",\n" +
-                "  \"items\":[\n" +
-                VALID_ENROLLMENT_1 + "\n" +
-                "  ]\n" +
-                "}";
+        final String expectedResult = "{\n" + "  \"type\":\"enrollment\",\n" + "  \"continuationToken\":\"" + continuationTokenInJson + "\",\n" + "  \"items\":[\n" + VALID_ENROLLMENT_1 + "\n" + "  ]\n" + "}";
         QueryResult queryResult = new QueryResult("enrollment", body, continuationToken);
 
         // act

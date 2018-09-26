@@ -32,10 +32,10 @@ import java.util.UUID;
 import static org.junit.Assert.*;
 
 /**
-*  Unit tests for AmqpsDeviceMethods
-* 100% methods covered
-* 98% lines covered
-*/
+ * Unit tests for AmqpsDeviceMethods
+ * 100% methods covered
+ * 98% lines covered
+ */
 public class AmqpsDeviceMethodsTest
 {
     @Mocked
@@ -146,15 +146,13 @@ public class AmqpsDeviceMethodsTest
     }
 
     /*
-    **Tests_SRS_AMQPSDEVICEMETHODS_12_002: [**The constructor shall set the sender and receiver endpoint path to IoTHub specific values.**]**
-    **Tests_SRS_AMQPSDEVICEMETHODS_12_003: [**The constructor shall concatenate a sender specific prefix to the sender link tag's current value.**]**
-    **Tests_SRS_AMQPSDEVICEMETHODS_12_004: [**The constructor shall concatenate a receiver specific prefix to the receiver link tag's current value.**]**
-    **Tests_SRS_AMQPSDEVICEMETHODS_12_005: [**The constructor shall insert the given deviceId argument to the sender and receiver link address.**]**
-    **Tests_SRS_AMQPSDEVICEMETHODS_12_006: [**The constructor shall add API version key to the amqpProperties.**]**     */
+     **Tests_SRS_AMQPSDEVICEMETHODS_12_002: [**The constructor shall set the sender and receiver endpoint path to IoTHub specific values.**]**
+     **Tests_SRS_AMQPSDEVICEMETHODS_12_003: [**The constructor shall concatenate a sender specific prefix to the sender link tag's current value.**]**
+     **Tests_SRS_AMQPSDEVICEMETHODS_12_004: [**The constructor shall concatenate a receiver specific prefix to the receiver link tag's current value.**]**
+     **Tests_SRS_AMQPSDEVICEMETHODS_12_005: [**The constructor shall insert the given deviceId argument to the sender and receiver link address.**]**
+     **Tests_SRS_AMQPSDEVICEMETHODS_12_006: [**The constructor shall add API version key to the amqpProperties.**]**     */
     @Test
-    public void constructorInitializesAllMembers(
-            @Mocked final UUID mockUUID
-    )
+    public void constructorInitializesAllMembers(@Mocked final UUID mockUUID)
     {
         // arrange
         final String uuidStr = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
@@ -211,9 +209,7 @@ public class AmqpsDeviceMethodsTest
     // Tests_SRS_AMQPSDEVICEMETHODS_34_036: [If a moduleId is present, the constructor shall insert the given deviceId and moduleId argument to the sender and receiver link address.]
     // Tests_SRS_AMQPSDEVICEMETHODS_34_037: [If a moduleId is present, the constructor shall add correlation ID key and a UUID value to the amqpProperties.]
     @Test
-    public void constructorInitializesAllMembersWithModuleId(
-            @Mocked final UUID mockUUID
-    )
+    public void constructorInitializesAllMembersWithModuleId(@Mocked final UUID mockUUID)
     {
         // arrange
         final String deviceId = "deviceId";
@@ -277,7 +273,7 @@ public class AmqpsDeviceMethodsTest
         assertTrue(amqpsProperties.containsKey(Symbol.getSymbol(CORRELATION_ID_KEY)));
         assertTrue(amqpsProperties.get(Symbol.getSymbol(CORRELATION_ID_KEY)).toString().equals("methods:" + uuidStr));
     }
-    
+
     // Tests_SRS_AMQPSDEVICEMETHODS_12_010: [The function shall call the super function if the MessageType is DEVICE_METHODS, and return with it's return value.]
     @Test
     public void sendMessageAndGetDeliveryHashCallsSuper() throws IOException
@@ -311,7 +307,7 @@ public class AmqpsDeviceMethodsTest
         Deencapsulation.invoke(amqpsDeviceMethods, "openLinks", mockSession);
 
         //act
-        AmqpsSendReturnValue amqpsSendReturnValue = Deencapsulation.invoke(amqpsDeviceMethods, "sendMessageAndGetDeliveryHash",MessageType.DEVICE_TWIN, bytes, 0, 1, bytes);
+        AmqpsSendReturnValue amqpsSendReturnValue = Deencapsulation.invoke(amqpsDeviceMethods, "sendMessageAndGetDeliveryHash", MessageType.DEVICE_TWIN, bytes, 0, 1, bytes);
         boolean deliverySuccessful = Deencapsulation.invoke(amqpsSendReturnValue, "isDeliverySuccessful");
         int deliveryHash = Deencapsulation.invoke(amqpsSendReturnValue, "getDeliveryHash");
 
@@ -342,7 +338,8 @@ public class AmqpsDeviceMethodsTest
                 result = false;
 
                 mockDeviceClientConfig.getDeviceId();
-                result = "deviceId";               }
+                result = "deviceId";
+            }
         };
 
         AmqpsDeviceMethods amqpsDeviceMethods = Deencapsulation.newInstance(AmqpsDeviceMethods.class, mockDeviceClientConfig);
@@ -390,7 +387,8 @@ public class AmqpsDeviceMethodsTest
                 result = false;
 
                 mockDeviceClientConfig.getDeviceId();
-                result = "deviceId";               }
+                result = "deviceId";
+            }
         };
 
         AmqpsDeviceMethods amqpsDeviceMethods = Deencapsulation.newInstance(AmqpsDeviceMethods.class, mockDeviceClientConfig);
@@ -419,10 +417,7 @@ public class AmqpsDeviceMethodsTest
 
     // Tests_SRS_AMQPSDEVICEMETHODS_12_015: [The function shall return null if the message type is not DEVICE_METHODS.]
     @Test
-    public void convertFromProtonReturnsNull(
-            @Mocked final AmqpsMessage mockAmqpsMessage,
-            @Mocked final DeviceClientConfig mockDeviceClientConfig
-    )
+    public void convertFromProtonReturnsNull(@Mocked final AmqpsMessage mockAmqpsMessage, @Mocked final DeviceClientConfig mockDeviceClientConfig)
     {
         //arrange
         String deviceId = "deviceId";
@@ -435,7 +430,8 @@ public class AmqpsDeviceMethodsTest
                 result = MessageType.DEVICE_TWIN;
 
                 mockDeviceClientConfig.getDeviceId();
-                result = "deviceId";            }
+                result = "deviceId";
+            }
         };
 
         AmqpsDeviceMethods amqpsDeviceMethods = Deencapsulation.newInstance(AmqpsDeviceMethods.class, mockDeviceClientConfig);
@@ -453,10 +449,7 @@ public class AmqpsDeviceMethodsTest
     // Tests_SRS_AMQPSDEVICEMETHODS_12_027: [The function shall create a AmqpsConvertFromProtonReturnValue and set the message field to the new IotHubTransportMessage.]
     // Tests_SRS_AMQPSDEVICEMETHODS_12_028: [The function shall create a AmqpsConvertFromProtonReturnValue and copy the DeviceClientConfig callback and context to it.]
     @Test
-    public void convertFromProtonEmptyBodySuccess(
-            @Mocked final AmqpsMessage mockAmqpsMessage,
-            @Mocked final DeviceClientConfig mockDeviceClientConfig
-    )
+    public void convertFromProtonEmptyBodySuccess(@Mocked final AmqpsMessage mockAmqpsMessage, @Mocked final DeviceClientConfig mockDeviceClientConfig)
     {
         //arrange
         String deviceId = "deviceId";
@@ -480,7 +473,8 @@ public class AmqpsDeviceMethodsTest
                 result = null;
 
                 mockDeviceClientConfig.getDeviceId();
-                result = "deviceId";            }
+                result = "deviceId";
+            }
         };
 
         AmqpsDeviceMethods amqpsDeviceMethods = Deencapsulation.newInstance(AmqpsDeviceMethods.class, mockDeviceClientConfig);
@@ -501,17 +495,14 @@ public class AmqpsDeviceMethodsTest
 
     // Tests_SRS_AMQPSDEVICEMETHODS_12_025: [The function shall copy the correlationId, messageId, To and userId properties to the IotHubTransportMessage properties.]
     @Test
-    public void convertFromProtonPropertiesSet(
-            @Mocked final Properties mockProperties,
-            @Mocked final DeviceClientConfig mockDeviceClientConfig
-    )
+    public void convertFromProtonPropertiesSet(@Mocked final Properties mockProperties, @Mocked final DeviceClientConfig mockDeviceClientConfig)
     {
         //arrange
         String deviceId = "deviceId";
         final String correlationId = "correlationId";
         final String messageId = "messageId";
         final String to = "to";
-        final byte[] bytes = new byte[] {1, 2};
+        final byte[] bytes = new byte[]{1, 2};
         final Object messageContext = "context";
 
         AmqpsMessage amqpsMessage = new AmqpsMessage();
@@ -560,9 +551,9 @@ public class AmqpsDeviceMethodsTest
         //assert
         assertNotNull(actualMessage);
         assertEquals(correlationId, (actualMessage).getRequestId());
-        assertEquals(messageId, ((IotHubTransportMessage)actualMessage).getMessageId());
-        assertEquals(to, ((IotHubTransportMessage)actualMessage).getProperty(AMQPS_APP_PROPERTY_PREFIX + TO_KEY));
-        assertEquals(userId.toString(), ((IotHubTransportMessage)actualMessage).getProperty(AMQPS_APP_PROPERTY_PREFIX + USER_ID_KEY));
+        assertEquals(messageId, ((IotHubTransportMessage) actualMessage).getMessageId());
+        assertEquals(to, ((IotHubTransportMessage) actualMessage).getProperty(AMQPS_APP_PROPERTY_PREFIX + TO_KEY));
+        assertEquals(userId.toString(), ((IotHubTransportMessage) actualMessage).getProperty(AMQPS_APP_PROPERTY_PREFIX + USER_ID_KEY));
 
         assertEquals(bytes.length, actualMessage.getBytes().length);
         assertEquals(mockMessageCallback, actualMessageCallback);
@@ -571,16 +562,11 @@ public class AmqpsDeviceMethodsTest
 
     // Tests_SRS_AMQPSDEVICEMETHODS_12_026: [The function shall copy the Proton application properties to IotHubTransportMessage properties excluding the reserved property names.]
     @Test
-    public void convertFromProtonApplicationPropertiesReservedNotSet(
-            @Mocked final Map<String, String> mockMapStringString,
-            @Mocked final ApplicationProperties mockApplicationProperties,
-            @Mocked final Map.Entry<String, String> mockStringStringEntry,
-            @Mocked final DeviceClientConfig mockDeviceClientConfig
-    )
+    public void convertFromProtonApplicationPropertiesReservedNotSet(@Mocked final Map<String, String> mockMapStringString, @Mocked final ApplicationProperties mockApplicationProperties, @Mocked final Map.Entry<String, String> mockStringStringEntry, @Mocked final DeviceClientConfig mockDeviceClientConfig)
     {
         //arrange
         String deviceId = "deviceId";
-        final byte[] bytes = new byte[] {1, 2};
+        final byte[] bytes = new byte[]{1, 2};
         final Object messageContext = "context";
         final String propertyKey = "iothub-absolute-expiry-time";
         final String propertyValue = "testPropertyValue";
@@ -627,7 +613,7 @@ public class AmqpsDeviceMethodsTest
 
         //assert
         assertNotNull(actualMessage);
-        assertEquals(null, ((IotHubTransportMessage)actualMessage).getProperty(propertyKey));
+        assertEquals(null, ((IotHubTransportMessage) actualMessage).getProperty(propertyKey));
 
         assertEquals(bytes.length, actualMessage.getBytes().length);
         assertEquals(mockMessageCallback, actualMessageCallback);
@@ -637,16 +623,11 @@ public class AmqpsDeviceMethodsTest
     // Tests_SRS_AMQPSDEVICETELEMETRY_34_052: [If the amqp message contains an application property of
     // "x-opt-input-name", this function shall assign its value to the IotHub message's input name.]
     @Test
-    public void convertFromProtonApplicationWithInputName(
-            @Mocked final Map<String, String> mockMapStringString,
-            @Mocked final ApplicationProperties mockApplicationProperties,
-            @Mocked final Map.Entry<String, String> mockStringStringEntry,
-            @Mocked final DeviceClientConfig mockDeviceClientConfig
-    )
+    public void convertFromProtonApplicationWithInputName(@Mocked final Map<String, String> mockMapStringString, @Mocked final ApplicationProperties mockApplicationProperties, @Mocked final Map.Entry<String, String> mockStringStringEntry, @Mocked final DeviceClientConfig mockDeviceClientConfig)
     {
         //arrange
         String deviceId = "deviceId";
-        final byte[] bytes = new byte[] {1, 2};
+        final byte[] bytes = new byte[]{1, 2};
         final Object messageContext = "context";
         final String inputNameValue = "someInputName";
         final String inputNameKey = Deencapsulation.getField(AmqpsDeviceTelemetry.class, "INPUT_NAME_PROPERTY_KEY");
@@ -696,16 +677,11 @@ public class AmqpsDeviceMethodsTest
 
     // Tests_SRS_AMQPSDEVICEMETHODS_12_026: [The function shall copy the Proton application properties to IotHubTransportMessage properties excluding the reserved property names.]
     @Test
-    public void convertFromProtonApplicationPropertiesSet(
-            @Mocked final Map<String, String> mockMapStringString,
-            @Mocked final ApplicationProperties mockApplicationProperties,
-            @Mocked final Map.Entry<String, String> mockStringStringEntry,
-            @Mocked final DeviceClientConfig mockDeviceClientConfig
-    )
+    public void convertFromProtonApplicationPropertiesSet(@Mocked final Map<String, String> mockMapStringString, @Mocked final ApplicationProperties mockApplicationProperties, @Mocked final Map.Entry<String, String> mockStringStringEntry, @Mocked final DeviceClientConfig mockDeviceClientConfig)
     {
         //arrange
         String deviceId = "deviceId";
-        final byte[] bytes = new byte[] {1, 2};
+        final byte[] bytes = new byte[]{1, 2};
         final Object messageContext = "context";
         final String propertyKey = "testPropertyKey";
         final String propertyValue = "testPropertyValue";
@@ -752,7 +728,7 @@ public class AmqpsDeviceMethodsTest
 
         //assert
         assertNotNull(actualMessage);
-        assertEquals(propertyValue, ((IotHubTransportMessage)actualMessage).getProperty(propertyKey));
+        assertEquals(propertyValue, ((IotHubTransportMessage) actualMessage).getProperty(propertyKey));
 
         assertEquals(bytes.length, actualMessage.getBytes().length);
         assertEquals(mockMessageCallback, actualMessageCallback);
@@ -761,14 +737,11 @@ public class AmqpsDeviceMethodsTest
 
     // Tests_SRS_AMQPSDEVICEMETHODS_12_025: [The function shall copy the method name from Proton application properties and set IotHubTransportMessage method name with it.]
     @Test
-    public void convertFromProtonApplicationPropertiesMethodName(
-            @Mocked final ApplicationProperties mockApplicationProperties,
-            @Mocked final DeviceClientConfig mockDeviceClientConfig
-    )
+    public void convertFromProtonApplicationPropertiesMethodName(@Mocked final ApplicationProperties mockApplicationProperties, @Mocked final DeviceClientConfig mockDeviceClientConfig)
     {
         //arrange
         String deviceId = "deviceId";
-        final byte[] bytes = new byte[] {1, 2};
+        final byte[] bytes = new byte[]{1, 2};
         final Object messageContext = "context";
         final String propertyKey = "IoThub-methodname";
         final String propertyValue = "testPropertyValue";
@@ -812,8 +785,8 @@ public class AmqpsDeviceMethodsTest
 
         //assert
         assertNotNull(actualMessage);
-        assertEquals(null, ((IotHubTransportMessage)actualMessage).getProperty(propertyKey));
-        assertEquals(propertyValue, ((IotHubTransportMessage)actualMessage).getMethodName());
+        assertEquals(null, ((IotHubTransportMessage) actualMessage).getProperty(propertyKey));
+        assertEquals(propertyValue, ((IotHubTransportMessage) actualMessage).getMethodName());
 
         assertEquals(bytes.length, actualMessage.getBytes().length);
         assertEquals(mockMessageCallback, actualMessageCallback);
@@ -822,9 +795,7 @@ public class AmqpsDeviceMethodsTest
 
     // Tests_SRS_AMQPSDEVICEMETHODS_12_029: [The function shall return null if the message type is not DEVICE_METHODS.]
     @Test
-    public void convertToProtonReturnsNull(
-            @Mocked final IotHubTransportMessage mockIotHubTransportMessage
-    )
+    public void convertToProtonReturnsNull(@Mocked final IotHubTransportMessage mockIotHubTransportMessage)
     {
         //arrange
         String deviceId = "deviceId";
@@ -836,7 +807,8 @@ public class AmqpsDeviceMethodsTest
                 result = MessageType.DEVICE_TWIN;
 
                 mockDeviceClientConfig.getDeviceId();
-                result = "deviceId";               }
+                result = "deviceId";
+            }
         };
 
         AmqpsDeviceMethods amqpsDeviceMethods = Deencapsulation.newInstance(AmqpsDeviceMethods.class, mockDeviceClientConfig);
@@ -853,9 +825,7 @@ public class AmqpsDeviceMethodsTest
     // Tests_SRS_AMQPSDEVICEMETHODS_12_041: [The function shall create a AmqpsConvertToProtonReturnValue and set the message field to the new proton message.]
     // Tests_SRS_AMQPSDEVICEMETHODS_12_042: [The function shall create a AmqpsConvertToProtonReturnValue and set the message type to DEVICE_METHODS.]
     @Test
-    public void convertToProtonReturnsProtonMessage(
-            @Mocked final IotHubTransportMessage mockIotHubTransportMessage
-    )
+    public void convertToProtonReturnsProtonMessage(@Mocked final IotHubTransportMessage mockIotHubTransportMessage)
     {
         //arrange
         String deviceId = "deviceId";
@@ -867,7 +837,8 @@ public class AmqpsDeviceMethodsTest
                 result = MessageType.DEVICE_METHODS;
 
                 mockDeviceClientConfig.getDeviceId();
-                result = "deviceId";               }
+                result = "deviceId";
+            }
         };
 
         AmqpsDeviceMethods amqpsDeviceMethods = Deencapsulation.newInstance(AmqpsDeviceMethods.class, mockDeviceClientConfig);
@@ -883,12 +854,7 @@ public class AmqpsDeviceMethodsTest
     }
 
     @Test
-    public void convertToProtonSetsProperties(
-            @Mocked final Properties mockProperties,
-            @Mocked final IotHubTransportMessage mockIotHubTransportMessage,
-            @Mocked final MessageImpl mockMessageImpl,
-            @Mocked final UUID mockUUID
-    )
+    public void convertToProtonSetsProperties(@Mocked final Properties mockProperties, @Mocked final IotHubTransportMessage mockIotHubTransportMessage, @Mocked final MessageImpl mockMessageImpl, @Mocked final UUID mockUUID)
     {
         //arrange
         String deviceId = "deviceId";
@@ -910,7 +876,8 @@ public class AmqpsDeviceMethodsTest
                 result = correlationId;
 
                 mockDeviceClientConfig.getDeviceId();
-                result = "deviceId";               }
+                result = "deviceId";
+            }
         };
 
         AmqpsDeviceMethods amqpsDeviceMethods = Deencapsulation.newInstance(AmqpsDeviceMethods.class, mockDeviceClientConfig);
@@ -939,13 +906,7 @@ public class AmqpsDeviceMethodsTest
 
     // Tests_SRS_AMQPSDEVICEMETHODS_12_032: [The function shall copy the user properties to Proton message application properties excluding the reserved property names.]
     @Test
-    public void convertToProtonSetsUserProperties(
-            @Mocked final Properties mockProtonProperties,
-            @Mocked final MessageProperty mockMessageProperty,
-            @Mocked final IotHubTransportMessage mockIotHubTransportMessage,
-            @Mocked final MessageImpl mockMessageImpl,
-            @Mocked final ApplicationProperties mockApplicationProperties
-    )
+    public void convertToProtonSetsUserProperties(@Mocked final Properties mockProtonProperties, @Mocked final MessageProperty mockMessageProperty, @Mocked final IotHubTransportMessage mockIotHubTransportMessage, @Mocked final MessageImpl mockMessageImpl, @Mocked final ApplicationProperties mockApplicationProperties)
     {
         //arrange
         String deviceId = "deviceId";
@@ -981,7 +942,8 @@ public class AmqpsDeviceMethodsTest
                 result = mockApplicationProperties;
 
                 mockDeviceClientConfig.getDeviceId();
-                result = "deviceId";            }
+                result = "deviceId";
+            }
         };
 
         AmqpsDeviceMethods amqpsDeviceMethods = Deencapsulation.newInstance(AmqpsDeviceMethods.class, mockDeviceClientConfig);
@@ -1006,13 +968,7 @@ public class AmqpsDeviceMethodsTest
 
     // Tests_SRS_AMQPSDEVICEMETHODS_12_033: [The function shall set the proton message status field to the value of IoTHubTransportMessage status field.]
     @Test
-    public void convertToProtonSetsStatus(
-            @Mocked final Properties mockProtonProperties,
-            @Mocked final MessageProperty mockMessageProperty,
-            @Mocked final IotHubTransportMessage mockIotHubTransportMessage,
-            @Mocked final MessageImpl mockMessageImpl,
-            @Mocked final ApplicationProperties mockApplicationProperties
-    )
+    public void convertToProtonSetsStatus(@Mocked final Properties mockProtonProperties, @Mocked final MessageProperty mockMessageProperty, @Mocked final IotHubTransportMessage mockIotHubTransportMessage, @Mocked final MessageImpl mockMessageImpl, @Mocked final ApplicationProperties mockApplicationProperties)
     {
         //arrange
         String deviceId = "deviceId";
@@ -1079,13 +1035,7 @@ public class AmqpsDeviceMethodsTest
 
     // Tests_SRS_AMQPSDEVICEMETHODS_34_051: [The function shall set the proton message outputname application property to the value of IoTHubTransportMessage outputName field.]
     @Test
-    public void convertToProtonSetsOutputName(
-            @Mocked final Properties mockProtonProperties,
-            @Mocked final MessageProperty mockMessageProperty,
-            @Mocked final IotHubTransportMessage mockIotHubTransportMessage,
-            @Mocked final MessageImpl mockMessageImpl,
-            @Mocked final ApplicationProperties mockApplicationProperties
-    )
+    public void convertToProtonSetsOutputName(@Mocked final Properties mockProtonProperties, @Mocked final MessageProperty mockMessageProperty, @Mocked final IotHubTransportMessage mockIotHubTransportMessage, @Mocked final MessageImpl mockMessageImpl, @Mocked final ApplicationProperties mockApplicationProperties)
     {
         //arrange
         String deviceId = "deviceId";

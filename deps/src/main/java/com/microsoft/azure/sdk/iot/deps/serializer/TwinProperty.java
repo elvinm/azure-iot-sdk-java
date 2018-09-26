@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * INNER TWINPARSER CLASS
- *
+ * <p>
  * TwinProperty is a representation of the device twin property collection.
  * It can represent `Desired` property as well `Reported` property.
  *
@@ -33,22 +33,10 @@ public class TwinProperty
     private static final int MAX_METADATA_LEVEL = MAX_PROPERTY_LEVEL + 2;
 
     private Object lock = new Object();
-
-    private class Property
-    {
-        private Object value;
-        private TwinMetadata metadata;
-        private Property(Object val, Integer propertyVersion)
-        {
-            this.value = val;
-            this.metadata = new TwinMetadata(propertyVersion);
-        }
-    }
-
-    private ConcurrentMap<String, Property> property = new ConcurrentHashMap<>();;
+    private ConcurrentMap<String, Property> property = new ConcurrentHashMap<>();
     private Integer version;
+    ;
     private Boolean reportMetadata;
-
     protected TwinProperty()
     {
         this.reportMetadata = false;
@@ -69,36 +57,36 @@ public class TwinProperty
         /* Codes_SRS_TWINPARSER_21_062: [All `key` and `value` in property shall be case sensitive.] */
         Boolean change = false;
 
-        if(key == null)
+        if (key == null)
         {
             /* Codes_SRS_TWINPARSER_21_073: [If any `key` is null, the updateDesiredProperty shall throw IllegalArgumentException.] */
             /* Codes_SRS_TWINPARSER_21_079: [If any `key` is null, the updateReportedProperty shall throw IllegalArgumentException.] */
             throw new IllegalArgumentException("Property key shall not be null");
         }
-        if(key.isEmpty())
+        if (key.isEmpty())
         {
             /* Codes_SRS_TWINPARSER_21_074: [If any `key` is empty, the updateDesiredProperty shall throw IllegalArgumentException.] */
             /* Codes_SRS_TWINPARSER_21_080: [If any `key` is empty, the updateReportedProperty shall throw IllegalArgumentException.] */
             throw new IllegalArgumentException("Property key shall not be empty");
         }
-        if(key.length()>128)
+        if (key.length() > 128)
         {
             /* Codes_SRS_TWINPARSER_21_075: [If any `key` is more than 128 characters long, the updateDesiredProperty shall throw IllegalArgumentException.] */
             /* Codes_SRS_TWINPARSER_21_081: [If any `key` is more than 128 characters long, the updateReportedProperty shall throw IllegalArgumentException.] */
             throw new IllegalArgumentException("Property key is too big for json");
         }
-        if(key.contains(".") || key.contains(" ") || key.contains("$") )
+        if (key.contains(".") || key.contains(" ") || key.contains("$"))
         {
             /* Codes_SRS_TWINPARSER_21_076: [If any `key` has an illegal character, the updateDesiredProperty shall throw IllegalArgumentException.] */
             /* Codes_SRS_TWINPARSER_21_082: [If any `key` has an illegal character, the updateReportedProperty shall throw IllegalArgumentException.] */
             throw new IllegalArgumentException("Property key contains illegal character");
         }
 
-        if(value == null)
+        if (value == null)
         {
             /* Codes_SRS_TWINPARSER_21_078: [If any `value` is null, the updateDesiredProperty shall delete it from the collection and report on Json.] */
             /* Codes_SRS_TWINPARSER_21_084: [If any `value` is null, the updateReportedProperty shall delete it from the collection and report on Json.] */
-            if(property.containsKey(key))
+            if (property.containsKey(key))
             {
                 property.remove(key);
             }
@@ -157,24 +145,24 @@ public class TwinProperty
 
     protected void validate(Map<String, Object> property) throws IllegalArgumentException
     {
-        if(property == null)
+        if (property == null)
         {
             throw new IllegalArgumentException("property cannot be null");
         }
         for (Map.Entry<String, Object> entry : property.entrySet())
         {
-            if(entry.getKey().equals(METADATA_TAG))
+            if (entry.getKey().equals(METADATA_TAG))
             {
-                if(entry.getValue() instanceof Map)
+                if (entry.getValue() instanceof Map)
                 {
-                    ParserUtility.validateMap((Map<String, Object>)entry.getValue(), MAX_METADATA_LEVEL, true);
+                    ParserUtility.validateMap((Map<String, Object>) entry.getValue(), MAX_METADATA_LEVEL, true);
                 }
             }
-            else if(!entry.getKey().equals(VERSION_TAG))
+            else if (!entry.getKey().equals(VERSION_TAG))
             {
-                if(entry.getValue() instanceof Map)
+                if (entry.getValue() instanceof Map)
                 {
-                    ParserUtility.validateMap((Map<String, Object>)entry.getValue(), MAX_PROPERTY_LEVEL, false);
+                    ParserUtility.validateMap((Map<String, Object>) entry.getValue(), MAX_PROPERTY_LEVEL, false);
                 }
             }
         }
@@ -281,12 +269,12 @@ public class TwinProperty
             }
         }
 
-        if(reportMetadata)
+        if (reportMetadata)
         {
             diffMap.put(METADATA_TAG, metadata);
         }
 
-        if(version != null)
+        if (version != null)
         {
             diffMap.put(VERSION_TAG, version);
         }
@@ -294,8 +282,7 @@ public class TwinProperty
         return ParserUtility.mapToJsonElement(diffMap);
     }
 
-    protected void update(Map<String, Object> jsonTree,
-                       TwinChangedCallback onCallback) throws IllegalArgumentException
+    protected void update(Map<String, Object> jsonTree, TwinChangedCallback onCallback) throws IllegalArgumentException
     {
         Map<String, Object> diffField = new HashMap<>();
         Map<String, Object> diffMetadata = new HashMap<>();
@@ -318,9 +305,9 @@ public class TwinProperty
             throw new IllegalArgumentException("Malformed Json:" + e);
         }
 
-        if(reportMetadata)
+        if (reportMetadata)
         {
-            for(Map.Entry<String, Object> entry : diffMetadata.entrySet())
+            for (Map.Entry<String, Object> entry : diffMetadata.entrySet())
             {
                 Property val = property.get(entry.getKey());
                 if (val == null)
@@ -343,7 +330,7 @@ public class TwinProperty
         /* Codes_SRS_TWINPARSER_21_037: [If the OnReportedCallback is set as null, the updateReportedProperty shall discard the map with the changed pairs.] */
         /* Codes_SRS_TWINPARSER_21_038: [If there is no change in the Reported property, the updateReportedProperty shall not change the collection and not call the OnReportedCallback.] */
         /* Codes_SRS_TWINPARSER_21_093: [If the provided json is not valid, the updateReportedProperty shall throws IllegalArgumentException.] */
-        if((diffField.size() != 0) &&(onCallback != null))
+        if ((diffField.size() != 0) && (onCallback != null))
         {
             /* Codes_SRS_TWINPARSER_21_044: [If OnDesiredCallback was provided, the updateTwin shall create a new map with a copy of all pars key values updated by the json in the Desired property, and OnDesiredCallback passing this map as parameter.] */
             /* Codes_SRS_TWINPARSER_21_045: [If OnReportedCallback was provided, the updateTwin shall create a new map with a copy of all pars key values updated by the json in the Reported property, and OnReportedCallback passing this map as parameter.] */
@@ -355,7 +342,7 @@ public class TwinProperty
 
     protected void update(String json, TwinChangedCallback onCallback) throws IllegalArgumentException
     {
-        Map   <String, Object> newValues;
+        Map<String, Object> newValues;
         try
         {
             /* Codes_SRS_TWINPARSER_21_095: [If the provided json have any duplicated `key`, the updateReportedProperty shall throws IllegalArgumentException.] */
@@ -376,7 +363,7 @@ public class TwinProperty
         {
             if (entry.getKey().equals(VERSION_TAG))
             {
-                version = new Integer( (int) ((double) entry.getValue()));
+                version = new Integer((int) ((double) entry.getValue()));
                 break;
             }
         }
@@ -387,9 +374,9 @@ public class TwinProperty
         Map<String, Object> diff = new HashMap<>();
         for (Map.Entry<String, Object> entry : jsonTree.entrySet())
         {
-            if(entry.getKey().equals(METADATA_TAG))
+            if (entry.getKey().equals(METADATA_TAG))
             {
-                Map<String, Object> metadataTree = (Map<String, Object>)entry.getValue();
+                Map<String, Object> metadataTree = (Map<String, Object>) entry.getValue();
                 for (Map.Entry<String, Object> item : metadataTree.entrySet())
                 {
                     synchronized (lock)
@@ -429,11 +416,11 @@ public class TwinProperty
 
         for (Map.Entry<String, Object> entry : jsonTree.entrySet())
         {
-            if(entry.getKey().isEmpty())
+            if (entry.getKey().isEmpty())
             {
                 throw new IllegalArgumentException("Invalid Key on Json");
             }
-            if(!entry.getKey().contains("$"))
+            if (!entry.getKey().contains("$"))
             {
                 synchronized (lock)
                 {
@@ -462,6 +449,18 @@ public class TwinProperty
         }
 
         return diff;
+    }
+
+    private class Property
+    {
+        private Object value;
+        private TwinMetadata metadata;
+
+        private Property(Object val, Integer propertyVersion)
+        {
+            this.value = val;
+            this.metadata = new TwinMetadata(propertyVersion);
+        }
     }
 
 }

@@ -16,31 +16,30 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class MqttConnection
 {
+    static final int QOS = 1;
+    static final int MAX_WAIT_TIME = 1000;
+    // paho mqtt only supports 10 messages in flight at the same time
+    static final int MAX_IN_FLIGHT_COUNT = 10;
+    //mqtt connection options
+    private static final int KEEP_ALIVE_INTERVAL = 230;
+    private static final int MQTT_VERSION = 4;
+    private static final boolean SET_CLEAN_SESSION = false;
     private MqttAsyncClient mqttAsyncClient = null;
     private MqttConnectOptions connectionOptions = null;
     private ConcurrentLinkedQueue<Pair<String, byte[]>> allReceivedMessages;
     private Object mqttLock;
     private MqttCallback mqttCallback;
 
-    //mqtt connection options
-    private static final int KEEP_ALIVE_INTERVAL = 230;
-    private static final int MQTT_VERSION = 4;
-    private static final boolean SET_CLEAN_SESSION = false;
-    static final int QOS = 1;
-    static final int MAX_WAIT_TIME = 1000;
-
-    // paho mqtt only supports 10 messages in flight at the same time
-    static final int MAX_IN_FLIGHT_COUNT = 10;
-
     /**
      * Constructor to create MqttAsync Client with Paho
-     * @param serverURI Uri to connect to
-     * @param clientId Client Id to connect to
-     * @param userName Username
-     * @param password password
+     *
+     * @param serverURI        Uri to connect to
+     * @param clientId         Client Id to connect to
+     * @param userName         Username
+     * @param password         password
      * @param iotHubSSLContext SSLContext for the connection
      * @throws IllegalArgumentException is thrown if any of the parameters are null or empty
-     * @throws TransportException when Mqtt async client cannot be instantiated
+     * @throws TransportException       when Mqtt async client cannot be instantiated
      */
     MqttConnection(String serverURI, String clientId, String userName, String password, SSLContext iotHubSSLContext) throws TransportException, IllegalArgumentException
     {
@@ -80,7 +79,7 @@ public class MqttConnection
     /**
      * Generates the connection options for the mqtt broker connection.
      *
-     * @param userName the user name for the mqtt broker connection.
+     * @param userName     the user name for the mqtt broker connection.
      * @param userPassword the user password for the mqtt broker connection.
      */
     private void updateConnectionOptions(String userName, String userPassword, SSLContext iotHubSSLContext)
@@ -99,6 +98,7 @@ public class MqttConnection
 
     /**
      * Callback to trigger onto if any of the Paho API's triggers callback
+     *
      * @param mqttCallback callback to be set
      * @throws IllegalArgumentException is thrown if callback is null
      */
@@ -117,12 +117,24 @@ public class MqttConnection
 
     /**
      * Getter for Mqtt Async Client
+     *
      * @return Mqtt Async Client created by this object
      */
     MqttAsyncClient getMqttAsyncClient()
     {
         //Codes_SRS_MQTTCONNECTION_25_007: [Getter for the MqttAsyncClient.]
         return this.mqttAsyncClient;
+    }
+
+    /**
+     * Setter for mqttAsyncClient
+     *
+     * @param mqttAsyncClient set mqttAsyncClient. Can be {@code null}.
+     */
+    void setMqttAsyncClient(MqttAsyncClient mqttAsyncClient)
+    {
+        //Codes_SRS_MQTTCONNECTION_25_011: [Setter for the MqttAsyncClient which can be null.]
+        this.mqttAsyncClient = mqttAsyncClient;
     }
 
     boolean isConnected()
@@ -163,6 +175,7 @@ public class MqttConnection
 
     /**
      * Getter for queue for the messages
+     *
      * @return Queue for the messages
      */
     ConcurrentLinkedQueue<Pair<String, byte[]>> getAllReceivedMessages()
@@ -173,6 +186,7 @@ public class MqttConnection
 
     /**
      * Getter for Mqtt Lock
+     *
      * @return The object to be used for the lock
      */
     Object getMqttLock()
@@ -183,22 +197,13 @@ public class MqttConnection
 
     /**
      * Getter for connection Options
+     *
      * @return the connection options to be used for Mqtt
      */
     MqttConnectOptions getConnectionOptions()
     {
         //Codes_SRS_MQTTCONNECTION_25_010: [Getter for the MqttConnectionOptions.]
         return this.connectionOptions;
-    }
-
-    /**
-     * Setter for mqttAsyncClient
-     * @param mqttAsyncClient set mqttAsyncClient. Can be {@code null}.
-     */
-    void setMqttAsyncClient(MqttAsyncClient mqttAsyncClient)
-    {
-        //Codes_SRS_MQTTCONNECTION_25_011: [Setter for the MqttAsyncClient which can be null.]
-        this.mqttAsyncClient = mqttAsyncClient;
     }
 
     /**

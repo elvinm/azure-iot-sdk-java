@@ -26,6 +26,120 @@ public class FileUploadResponseParserTest
     private static final String INVALID_BLOB_NAME = "\u1234 test-device1/image.jpg";
     private static final String VALID_SAS_TOKEN = "1234asdfSAStoken";
     private static final String INVALID_SAS_TOKEN = "\u1234asdfSAStoken";
+    private static final TestParameters[] tests = new TestParameters[]{new TestParameters()
+    {{
+        correlationId = VALID_CORRELATION_ID;
+        hostName = null;
+        containerName = VALID_CONTAINER_NAME;
+        blobName = VALID_BLOB_NAME;
+        sasToken = VALID_SAS_TOKEN;
+    }}, new TestParameters()
+    {{
+        correlationId = VALID_CORRELATION_ID;
+        hostName = "";
+        containerName = VALID_CONTAINER_NAME;
+        blobName = VALID_BLOB_NAME;
+        sasToken = VALID_SAS_TOKEN;
+    }}, new TestParameters()
+    {{
+        correlationId = VALID_CORRELATION_ID;
+        hostName = INVALID_HOST_NAME;
+        containerName = VALID_CONTAINER_NAME;
+        blobName = VALID_BLOB_NAME;
+        sasToken = VALID_SAS_TOKEN;
+    }},
+
+            new TestParameters()
+            {{
+                correlationId = VALID_CORRELATION_ID;
+                hostName = VALID_HOST_NAME;
+                containerName = null;
+                blobName = VALID_BLOB_NAME;
+                sasToken = VALID_SAS_TOKEN;
+            }}, new TestParameters()
+    {{
+        correlationId = VALID_CORRELATION_ID;
+        hostName = VALID_HOST_NAME;
+        containerName = "";
+        blobName = VALID_BLOB_NAME;
+        sasToken = VALID_SAS_TOKEN;
+    }}, new TestParameters()
+    {{
+        correlationId = VALID_CORRELATION_ID;
+        hostName = VALID_HOST_NAME;
+        containerName = INVALID_CONTAINER_NAME;
+        blobName = VALID_BLOB_NAME;
+        sasToken = VALID_SAS_TOKEN;
+    }},
+
+            new TestParameters()
+            {{
+                correlationId = null;
+                hostName = VALID_HOST_NAME;
+                containerName = VALID_CONTAINER_NAME;
+                blobName = VALID_BLOB_NAME;
+                sasToken = VALID_SAS_TOKEN;
+            }}, new TestParameters()
+    {{
+        correlationId = "";
+        hostName = VALID_HOST_NAME;
+        containerName = VALID_CONTAINER_NAME;
+        blobName = VALID_BLOB_NAME;
+        sasToken = VALID_SAS_TOKEN;
+    }}, new TestParameters()
+    {{
+        correlationId = INVALID_CORRELATION_ID;
+        hostName = VALID_HOST_NAME;
+        containerName = VALID_CONTAINER_NAME;
+        blobName = VALID_BLOB_NAME;
+        sasToken = VALID_SAS_TOKEN;
+    }},
+
+            new TestParameters()
+            {{
+                correlationId = VALID_CORRELATION_ID;
+                hostName = VALID_HOST_NAME;
+                containerName = VALID_CONTAINER_NAME;
+                blobName = null;
+                sasToken = VALID_SAS_TOKEN;
+            }}, new TestParameters()
+    {{
+        correlationId = VALID_CORRELATION_ID;
+        hostName = VALID_HOST_NAME;
+        containerName = VALID_CONTAINER_NAME;
+        blobName = "";
+        sasToken = VALID_SAS_TOKEN;
+    }}, new TestParameters()
+    {{
+        correlationId = VALID_CORRELATION_ID;
+        hostName = VALID_HOST_NAME;
+        containerName = VALID_CONTAINER_NAME;
+        blobName = INVALID_BLOB_NAME;
+        sasToken = VALID_SAS_TOKEN;
+    }},
+
+            new TestParameters()
+            {{
+                correlationId = VALID_CORRELATION_ID;
+                hostName = VALID_HOST_NAME;
+                containerName = VALID_CONTAINER_NAME;
+                blobName = VALID_BLOB_NAME;
+                sasToken = null;
+            }}, new TestParameters()
+    {{
+        correlationId = VALID_CORRELATION_ID;
+        hostName = VALID_HOST_NAME;
+        containerName = VALID_CONTAINER_NAME;
+        blobName = VALID_BLOB_NAME;
+        sasToken = "";
+    }}, new TestParameters()
+    {{
+        correlationId = VALID_CORRELATION_ID;
+        hostName = VALID_HOST_NAME;
+        containerName = VALID_CONTAINER_NAME;
+        blobName = VALID_BLOB_NAME;
+        sasToken = INVALID_SAS_TOKEN;
+    }},};
 
     private static void assertFileUploadResponse(FileUploadResponseParser fileUploadResponseParser, String expectedHostName, String expectedContainerName, String expectedCorrelationId, String expectedBlobName, String expectedSasToken)
     {
@@ -46,45 +160,8 @@ public class FileUploadResponseParserTest
 
     private static String createJson(String hostName, String containerName, String correlationId, String blobName, String sasToken)
     {
-        return "{\n" +
-                "    \"correlationId\": " + (correlationId == null ? "null" : "\"" + correlationId + "\"") + ",\n" +
-                "    \"hostName\": " + (hostName == null ? "null" : "\"" + hostName + "\"") + ",\n" +
-                "    \"containerName\": " + (containerName == null ? "null" : "\"" + containerName + "\"") + ",\n" +
-                "    \"blobName\": " + (blobName == null ? "null" : "\"" + blobName + "\"") + ",\n" +
-                "    \"sasToken\": " + (sasToken == null ? "null" : "\"" + sasToken + "\"") + "\n" +
-                "}";
+        return "{\n" + "    \"correlationId\": " + (correlationId == null ? "null" : "\"" + correlationId + "\"") + ",\n" + "    \"hostName\": " + (hostName == null ? "null" : "\"" + hostName + "\"") + ",\n" + "    \"containerName\": " + (containerName == null ? "null" : "\"" + containerName + "\"") + ",\n" + "    \"blobName\": " + (blobName == null ? "null" : "\"" + blobName + "\"") + ",\n" + "    \"sasToken\": " + (sasToken == null ? "null" : "\"" + sasToken + "\"") + "\n" + "}";
     }
-
-    private static class TestParameters
-    {
-        String correlationId;
-        String hostName;
-        String containerName;
-        String blobName;
-        String sasToken;
-    }
-    private static final TestParameters[] tests = new TestParameters[]
-    {
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; hostName = null; containerName = VALID_CONTAINER_NAME; blobName = VALID_BLOB_NAME; sasToken = VALID_SAS_TOKEN; }},
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; hostName = ""; containerName = VALID_CONTAINER_NAME; blobName = VALID_BLOB_NAME; sasToken = VALID_SAS_TOKEN; }},
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; hostName = INVALID_HOST_NAME; containerName = VALID_CONTAINER_NAME; blobName = VALID_BLOB_NAME;   sasToken = VALID_SAS_TOKEN; }},
-
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; hostName = VALID_HOST_NAME; containerName = null; blobName = VALID_BLOB_NAME; sasToken = VALID_SAS_TOKEN; }},
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; hostName = VALID_HOST_NAME; containerName = ""; blobName = VALID_BLOB_NAME; sasToken = VALID_SAS_TOKEN; }},
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; hostName = VALID_HOST_NAME; containerName = INVALID_CONTAINER_NAME; blobName = VALID_BLOB_NAME;   sasToken = VALID_SAS_TOKEN; }},
-
-            new TestParameters(){{ correlationId = null; hostName = VALID_HOST_NAME; containerName = VALID_CONTAINER_NAME; blobName = VALID_BLOB_NAME; sasToken = VALID_SAS_TOKEN; }},
-            new TestParameters(){{ correlationId = ""; hostName = VALID_HOST_NAME; containerName = VALID_CONTAINER_NAME; blobName = VALID_BLOB_NAME; sasToken = VALID_SAS_TOKEN; }},
-            new TestParameters(){{ correlationId = INVALID_CORRELATION_ID; hostName = VALID_HOST_NAME; containerName = VALID_CONTAINER_NAME; blobName = VALID_BLOB_NAME;   sasToken = VALID_SAS_TOKEN; }},
-
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; hostName = VALID_HOST_NAME; containerName = VALID_CONTAINER_NAME; blobName = null; sasToken = VALID_SAS_TOKEN; }},
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; hostName = VALID_HOST_NAME; containerName = VALID_CONTAINER_NAME; blobName = ""; sasToken = VALID_SAS_TOKEN; }},
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; hostName = VALID_HOST_NAME; containerName = VALID_CONTAINER_NAME; blobName = INVALID_BLOB_NAME; sasToken = VALID_SAS_TOKEN; }},
-
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; hostName = VALID_HOST_NAME; containerName = VALID_CONTAINER_NAME; blobName = VALID_BLOB_NAME; sasToken = null; }},
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; hostName = VALID_HOST_NAME; containerName = VALID_CONTAINER_NAME; blobName = VALID_BLOB_NAME; sasToken = ""; }},
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; hostName = VALID_HOST_NAME; containerName = VALID_CONTAINER_NAME; blobName = VALID_BLOB_NAME; sasToken = INVALID_SAS_TOKEN; }},
-    };
 
     /* Tests_SRS_FILE_UPLOAD_RESPONSE_21_001: [The constructor shall create an instance of the FileUploadResponseParser.] */
     /* Tests_SRS_FILE_UPLOAD_RESPONSE_21_002: [The constructor shall parse the provided json and initialize `correlationId`, `hostName`, `containerName`, `blobName`, and `sasToken` using the information in the json.] */
@@ -102,7 +179,7 @@ public class FileUploadResponseParserTest
     }
 
     /* Tests_SRS_FILE_UPLOAD_RESPONSE_21_003: [If the provided json is null, empty, or not valid, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_null_json_failed()
     {
         // act
@@ -110,7 +187,7 @@ public class FileUploadResponseParserTest
     }
 
     /* Tests_SRS_FILE_UPLOAD_RESPONSE_21_003: [If the provided json is null, empty, or not valid, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_empty_json_failed()
     {
         // act
@@ -118,7 +195,7 @@ public class FileUploadResponseParserTest
     }
 
     /* Tests_SRS_FILE_UPLOAD_RESPONSE_21_003: [If the provided json is null, empty, or not valid, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_invalid_json_failed()
     {
         // act
@@ -129,7 +206,7 @@ public class FileUploadResponseParserTest
     @Test
     public void constructor_json_failed()
     {
-        for (TestParameters test:tests)
+        for (TestParameters test : tests)
         {
             // arrange
             String invalidJson = createJson(test.hostName, test.containerName, test.correlationId, test.blobName, test.sasToken);
@@ -138,8 +215,7 @@ public class FileUploadResponseParserTest
             try
             {
                 new FileUploadResponseParser(invalidJson);
-                System.out.println("Test failed: hostName=" + test.hostName + ", containerName=" + test.containerName +
-                        ", correlationId=" + test.correlationId + ", blobName=" + test.blobName + ", sasToken=" + test.sasToken);
+                System.out.println("Test failed: hostName=" + test.hostName + ", containerName=" + test.containerName + ", correlationId=" + test.correlationId + ", blobName=" + test.blobName + ", sasToken=" + test.sasToken);
                 assert false;
             }
             catch (IllegalArgumentException expected)
@@ -150,68 +226,43 @@ public class FileUploadResponseParserTest
     }
 
     /* Tests_SRS_FILE_UPLOAD_RESPONSE_21_005: [If the provided json do not contains one of the keys `correlationId`, `hostName`, `containerName`, `blobName`, and `sasToken`, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_json_missing_correlationId_failed()
     {
         // act
-        new FileUploadResponseParser("{\n" +
-                "    \"hostName\": \"" + VALID_HOST_NAME + "\",\n" +
-                "    \"containerName\": \"" + VALID_CONTAINER_NAME + "\",\n" +
-                "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" +
-                "    \"sasToken\": \"" + VALID_SAS_TOKEN + "\"\n" +
-                "}");
+        new FileUploadResponseParser("{\n" + "    \"hostName\": \"" + VALID_HOST_NAME + "\",\n" + "    \"containerName\": \"" + VALID_CONTAINER_NAME + "\",\n" + "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" + "    \"sasToken\": \"" + VALID_SAS_TOKEN + "\"\n" + "}");
     }
 
     /* Tests_SRS_FILE_UPLOAD_RESPONSE_21_005: [If the provided json do not contains one of the keys `correlationId`, `hostName`, `containerName`, `blobName`, and `sasToken`, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_json_missing_hostName_failed()
     {
         // act
-        new FileUploadResponseParser("{\n" +
-                "    \"correlationId\": \"" + VALID_CORRELATION_ID + "\",\n" +
-                "    \"containerName\": \"" + VALID_CONTAINER_NAME + "\",\n" +
-                "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" +
-                "    \"sasToken\": \"" + VALID_SAS_TOKEN + "\"\n" +
-                "}");
+        new FileUploadResponseParser("{\n" + "    \"correlationId\": \"" + VALID_CORRELATION_ID + "\",\n" + "    \"containerName\": \"" + VALID_CONTAINER_NAME + "\",\n" + "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" + "    \"sasToken\": \"" + VALID_SAS_TOKEN + "\"\n" + "}");
     }
 
     /* Tests_SRS_FILE_UPLOAD_RESPONSE_21_005: [If the provided json do not contains one of the keys `correlationId`, `hostName`, `containerName`, `blobName`, and `sasToken`, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_json_missing_containerName_failed()
     {
         // act
-        new FileUploadResponseParser("{\n" +
-                "    \"correlationId\": \"" + VALID_CORRELATION_ID + "\",\n" +
-                "    \"hostName\": \"" + VALID_HOST_NAME + "\",\n" +
-                "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" +
-                "    \"sasToken\": \"" + VALID_SAS_TOKEN + "\"\n" +
-                "}");
+        new FileUploadResponseParser("{\n" + "    \"correlationId\": \"" + VALID_CORRELATION_ID + "\",\n" + "    \"hostName\": \"" + VALID_HOST_NAME + "\",\n" + "    \"blobName\": \"" + VALID_BLOB_NAME + "\",\n" + "    \"sasToken\": \"" + VALID_SAS_TOKEN + "\"\n" + "}");
     }
 
     /* Tests_SRS_FILE_UPLOAD_RESPONSE_21_005: [If the provided json do not contains one of the keys `correlationId`, `hostName`, `containerName`, `blobName`, and `sasToken`, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_json_missing_blobName_failed()
     {
         // act
-        new FileUploadResponseParser("{\n" +
-                "    \"correlationId\": \"" + VALID_CORRELATION_ID + "\",\n" +
-                "    \"hostName\": \"" + VALID_HOST_NAME + "\",\n" +
-                "    \"containerName\": \"" + VALID_CONTAINER_NAME + "\",\n" +
-                "    \"sasToken\": \"" + VALID_SAS_TOKEN + "\"\n" +
-                "}");
+        new FileUploadResponseParser("{\n" + "    \"correlationId\": \"" + VALID_CORRELATION_ID + "\",\n" + "    \"hostName\": \"" + VALID_HOST_NAME + "\",\n" + "    \"containerName\": \"" + VALID_CONTAINER_NAME + "\",\n" + "    \"sasToken\": \"" + VALID_SAS_TOKEN + "\"\n" + "}");
     }
 
     /* Tests_SRS_FILE_UPLOAD_RESPONSE_21_005: [If the provided json do not contains one of the keys `correlationId`, `hostName`, `containerName`, `blobName`, and `sasToken`, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_json_missing_sasToken_failed()
     {
         // act
-        new FileUploadResponseParser("{\n" +
-                "    \"correlationId\": \"" + VALID_CORRELATION_ID + "\",\n" +
-                "    \"hostName\": \"" + VALID_HOST_NAME + "\",\n" +
-                "    \"containerName\": \"" + VALID_CONTAINER_NAME + "\",\n" +
-                "    \"blobName\": \"" + VALID_BLOB_NAME + "\"\n" +
-                "}");
+        new FileUploadResponseParser("{\n" + "    \"correlationId\": \"" + VALID_CORRELATION_ID + "\",\n" + "    \"hostName\": \"" + VALID_HOST_NAME + "\",\n" + "    \"containerName\": \"" + VALID_CONTAINER_NAME + "\",\n" + "    \"blobName\": \"" + VALID_BLOB_NAME + "\"\n" + "}");
     }
 
     /* Tests_SRS_FILE_UPLOAD_RESPONSE_21_006: [The getCorrelationId shall return the string stored in `correlationId`.] */
@@ -233,5 +284,14 @@ public class FileUploadResponseParserTest
         assertEquals(VALID_CONTAINER_NAME, fileUploadResponseParser.getContainerName());
         assertEquals(VALID_BLOB_NAME, fileUploadResponseParser.getBlobName());
         assertEquals(VALID_SAS_TOKEN, fileUploadResponseParser.getSasToken());
+    }
+
+    private static class TestParameters
+    {
+        String correlationId;
+        String hostName;
+        String containerName;
+        String blobName;
+        String sasToken;
     }
 }

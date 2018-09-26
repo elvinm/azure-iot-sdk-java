@@ -15,21 +15,22 @@ import javax.crypto.Mac;
 public class SignRequest
 {
     private static final String KEY_ID_NAME = "keyId";
+    private static final String ALGO_NAME = "algo";
+    private static final String DATA_NAME = "data";
     @Expose(serialize = true, deserialize = false)
     @SerializedName(KEY_ID_NAME)
     private String keyId;
-
     private transient Mac algo;
-
-    private static final String ALGO_NAME = "algo";
     @Expose(serialize = true, deserialize = false)
     @SerializedName(ALGO_NAME)
     private String algoString;
-
-    private static final String DATA_NAME = "data";
     @Expose(serialize = true, deserialize = false)
     @SerializedName(DATA_NAME)
     private String data;
+
+    //empty constructor for Gson to use
+    public SignRequest() {
+    }
 
     public void setKeyId(String keyId)
     {
@@ -61,7 +62,4 @@ public class SignRequest
     {
         return new GsonBuilder().create().toJson(this);
     }
-
-    //empty constructor for Gson to use
-    public SignRequest() {}
 }

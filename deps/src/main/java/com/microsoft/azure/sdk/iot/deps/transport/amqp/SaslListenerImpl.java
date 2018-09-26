@@ -13,6 +13,7 @@ public class SaslListenerImpl implements SaslListener
     /**
      * Sasl listener implementation that defers mechanism selection, init message payloads, and challenge handling to
      * the provided saslHandler
+     *
      * @param saslHandler The object that decides how to choose which mechanism to use and how to build message payloads
      */
     public SaslListenerImpl(SaslHandler saslHandler)
@@ -23,7 +24,8 @@ public class SaslListenerImpl implements SaslListener
 
     /**
      * This event is fired when the service advertises some sasl authentication mechanisms. This method sends the init message in response.
-     * @param sasl the Sasl object
+     *
+     * @param sasl      the Sasl object
      * @param transport the related transport
      */
     public void onSaslMechanisms(Sasl sasl, Transport transport)
@@ -56,8 +58,7 @@ public class SaslListenerImpl implements SaslListener
     }
 
     /**
-     *
-     * @param sasl the Sasl object
+     * @param sasl      the Sasl object
      * @param transport the related transport
      */
     public void onSaslChallenge(Sasl sasl, Transport transport)
@@ -89,7 +90,8 @@ public class SaslListenerImpl implements SaslListener
 
     /**
      * This event is fired when Sasl negotiation finishes. It passes the results to the handler for any further processing
-     * @param sasl the Sasl object
+     *
+     * @param sasl      the Sasl object
      * @param transport the related transport
      */
     public void onSaslOutcome(Sasl sasl, Transport transport)
@@ -130,7 +132,8 @@ public class SaslListenerImpl implements SaslListener
                         this.saslHandler.handleOutcome(SaslHandler.SaslOutcome.SYS);
                         break;
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 this.savedException = e;
             }
@@ -139,6 +142,7 @@ public class SaslListenerImpl implements SaslListener
 
     /**
      * Returns an exception if the sasl negotiation encountered an exception, or null if it has not thrown any exceptions
+     *
      * @return the exception the sasl negotiation encountered
      */
     public Exception getSavedException()
@@ -149,10 +153,12 @@ public class SaslListenerImpl implements SaslListener
     /**
      * Does nothing. This implementation is for clients only, not servers
      */
-    public void onSaslResponse(Sasl sasl, Transport transport) {}
+    public void onSaslResponse(Sasl sasl, Transport transport) {
+    }
 
     /**
      * Does nothing. This implementation is for clients only, not servers
      */
-    public void onSaslInit(Sasl sasl, Transport transport) {}
+    public void onSaslInit(Sasl sasl, Transport transport) {
+    }
 }

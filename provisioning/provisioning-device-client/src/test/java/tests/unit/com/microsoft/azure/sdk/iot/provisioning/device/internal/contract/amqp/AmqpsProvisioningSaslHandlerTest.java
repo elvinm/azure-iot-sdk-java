@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package tests.unit.com.microsoft.azure.sdk.iot.provisioning.device.internal.contract.amqp;
 
@@ -35,15 +35,15 @@ public class AmqpsProvisioningSaslHandlerTest
     private static final String registrationId = "3";
     private static final byte[] endorsementKey = new byte[]{2, 2};
     private static final byte[] storageRootKey = new byte[]{1, 1};
-    private static final byte[] expectedInitPayload = new byte[] {0, 53, 0, 51, 0, 2, 2};
+    private static final byte[] expectedInitPayload = new byte[]{0, 53, 0, 51, 0, 2, 2};
     private static final byte[] validFirstChallenge = new byte[]{0};
     private static final byte[] validSecondChallenge = new byte[431];
     private static final byte[] validThirdChallenge = new byte[415];
     private static final byte[] expectedFullNonce = new byte[844];
     private static final String sasToken = "6";
-    private static final byte[] expectedFirstChallengeResponsePayload = new byte[] {0, 1, 1};
-    private static final byte[] expectedSecondChallengeResponsePayload = new byte[] {0};
-    private static final byte[] expectedFinalChallengeResponsePayload = new byte[] {0, 54};
+    private static final byte[] expectedFirstChallengeResponsePayload = new byte[]{0, 1, 1};
+    private static final byte[] expectedSecondChallengeResponsePayload = new byte[]{0};
+    private static final byte[] expectedFinalChallengeResponsePayload = new byte[]{0, 54};
 
     @Mocked
     ResponseCallback mockedResponseCallback;
@@ -56,6 +56,15 @@ public class AmqpsProvisioningSaslHandlerTest
     {
         validSecondChallenge[0] = Deencapsulation.getField(AmqpsProvisioningSaslHandler.class, "INTERMEDIATE_SEGMENT_CONTROL_BYTE");
         validThirdChallenge[0] = Deencapsulation.getField(AmqpsProvisioningSaslHandler.class, "FINAL_SEGMENT_CONTROL_BYTE");
+    }
+
+    private static void assertArraysEqual(byte[] expected, byte[] actual)
+    {
+        assertEquals("actual byte array has different length than expected", expected.length, actual.length);
+        for (int i = 0; i < expected.length; i++)
+        {
+            assertEquals("actual byte array has different contents than expected", expected[i], actual[i]);
+        }
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_001: [This constructor shall save the provided idScope, registrationId, endorsementKey, storageRootKey, responseCallback and autorizationCallbackContext .]
@@ -82,7 +91,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_002: [If any of the arguments are null or empty other than the autorizationCallbackContext, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullIdScope()
     {
         //act
@@ -90,7 +99,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_002: [If any of the arguments are null or empty other than the autorizationCallbackContext, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForEmptyIdScope()
     {
         //act
@@ -98,7 +107,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_002: [If any of the arguments are null or empty other than the autorizationCallbackContext, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullRegistrationId()
     {
         //act
@@ -106,7 +115,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_002: [If any of the arguments are null or empty other than the autorizationCallbackContext, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForEmptyRegistrationId()
     {
         //act
@@ -114,7 +123,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_002: [If any of the arguments are null or empty other than the autorizationCallbackContext, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullEndorsementKey()
     {
         //act
@@ -122,7 +131,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_002: [If any of the arguments are null or empty other than the autorizationCallbackContext, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullStorageRootKey()
     {
         //act
@@ -130,7 +139,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_002: [If any of the arguments are null or empty other than the autorizationCallbackContext, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullNonceCallback()
     {
         //act
@@ -138,7 +147,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_004: [If the provided mechanisms array does not contain "TPM" then this function shall throw a ProvisioningDeviceSecurityException.]
-    @Test (expected = ProvisioningDeviceSecurityException.class)
+    @Test(expected = ProvisioningDeviceSecurityException.class)
     public void choseSaslMechanismThrowsIfTPMNotPresent() throws ProvisioningDeviceSecurityException
     {
         //arrange
@@ -164,7 +173,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_003: [If this handler is not in the state where it is expecting to choose a sasl mechanism, this function shall throw in IllegalStateException.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void choseSaslMechanismThrowsIfNotWaitingToChooseMechanism() throws ProvisioningDeviceSecurityException
     {
         //arrange
@@ -191,7 +200,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_006: [If this handler is not in the state where it is expecting to build the init payload, this function shall throw in IllegalStateException.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void buildInitThrowsIfNotWaitingToBuildInit()
     {
         //arrange
@@ -272,7 +281,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_009: [If the provided saslChallenge is null, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void handleChallengeThrowsForNullChallengeData() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -285,7 +294,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_010: [If this object is waiting for the first challenge, this function shall validate that this challenge payload contains only a null byte and shall throw an IllegalStateException if it is not.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void handleFirstChallengeThrowsForChallengeDataWithIncorrectControlByte() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -298,7 +307,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_012: [If this object is waiting for the second challenge, this function shall validate that this challenge payload contains a control byte with the mask 0x80 and shall throw an IllegalStateException if it is not.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void handleSecondChallengeThrowsForChallengeDataWithIncorrectControlByte() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -312,7 +321,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_015: [If this object is waiting for the third challenge, this function shall validate that this challenge payload contains a control byte with the mask 0xC1 and shall throw an IllegalStateException if it is not.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void handleThirdChallengeThrowsForChallengeDataWithIncorrectControlByte() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -328,7 +337,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_020: [If this object is not waiting for a first, second or third challenge, this function shall throw an IllegalStateException.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void handleChallengeThrowsIfWaitingToChooseMechanism() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -339,7 +348,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_020: [If this object is not waiting for a first, second or third challenge, this function shall throw an IllegalStateException.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void handleChallengeThrowsIfWaitingToBuildInitPayload() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -351,7 +360,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_020: [If this object is not waiting for a first, second or third challenge, this function shall throw an IllegalStateException.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void handleChallengeThrowsIfWaitingForSaslOutcome() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -368,7 +377,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_022: [If the sasl outcome is not OK, this function shall throw a ProvisioningDeviceSecurityException.]
-    @Test (expected = ProvisioningDeviceSecurityException.class)
+    @Test(expected = ProvisioningDeviceSecurityException.class)
     public void handleOutcomeAuthThrowsProvisioningDeviceSecurityException() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -385,7 +394,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_022: [If the sasl outcome is not OK, this function shall throw a ProvisioningDeviceSecurityException.]
-    @Test (expected = ProvisioningDeviceSecurityException.class)
+    @Test(expected = ProvisioningDeviceSecurityException.class)
     public void handleOutcomeSysTempThrowsProvisioningDeviceSecurityException() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -402,7 +411,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_022: [If the sasl outcome is not OK, this function shall throw a ProvisioningDeviceSecurityException.]
-    @Test (expected = ProvisioningDeviceSecurityException.class)
+    @Test(expected = ProvisioningDeviceSecurityException.class)
     public void handleOutcomeSysThrowsProvisioningDeviceSecurityException() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -419,7 +428,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_022: [If the sasl outcome is not OK, this function shall throw a ProvisioningDeviceSecurityException.]
-    @Test (expected = ProvisioningDeviceSecurityException.class)
+    @Test(expected = ProvisioningDeviceSecurityException.class)
     public void handleOutcomeSysPermThrowsProvisioningDeviceSecurityException() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -436,7 +445,7 @@ public class AmqpsProvisioningSaslHandlerTest
     }
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_021: [If this object is not waiting for the sasl outcome, this function shall throw an IllegalStateException.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void handleOutcomeThrowsIfNotWaitingOnOutcome() throws ProvisioningDeviceSecurityException
     {
         //arrange
@@ -445,6 +454,9 @@ public class AmqpsProvisioningSaslHandlerTest
         //act
         handler.handleOutcome(SaslHandler.SaslOutcome.SYS_PERM);
     }
+
+    // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_019: [If this object is waiting for the third challenge, and if the sas token is not provided within 3 minutes of waiting, this function shall throw a ProvisioningDeviceSecurityException.]
+    //No test because it would take 3 minutes to run. This is an E2E scenario, not a unit test
 
     // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_008: [This function shall save the provided sas token.]
     @Test
@@ -459,17 +471,5 @@ public class AmqpsProvisioningSaslHandlerTest
         //assert
         String actualSasToken = Deencapsulation.getField(handler, "sasToken");
         assertEquals(sasToken, actualSasToken);
-    }
-
-    // Tests_SRS_AMQPSPROVISIONINGSASLHANDLER_34_019: [If this object is waiting for the third challenge, and if the sas token is not provided within 3 minutes of waiting, this function shall throw a ProvisioningDeviceSecurityException.]
-    //No test because it would take 3 minutes to run. This is an E2E scenario, not a unit test
-
-    private static void assertArraysEqual(byte[] expected, byte[] actual)
-    {
-        assertEquals("actual byte array has different length than expected", expected.length, actual.length);
-        for (int i = 0; i < expected.length; i++)
-        {
-            assertEquals("actual byte array has different contents than expected", expected[i], actual[i]);
-        }
     }
 }

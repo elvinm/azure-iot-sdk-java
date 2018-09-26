@@ -16,9 +16,8 @@ public interface MessageCallback
      * Executes the callback. The callback should return a response that
      * instructs an IoT Hub to complete, abandon, or reject the message.
      *
-     * @param message the message.
+     * @param message         the message.
      * @param callbackContext a custom context given by the developer.
-     *
      * @return whether the IoT Hub should complete, abandon, or reject the
      * message.
      */

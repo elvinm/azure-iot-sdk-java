@@ -64,63 +64,6 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
     private static MessageState[] messageStates;
     private static FileUploadNotificationReceiver fileUploadNotificationReceiver;
 
-    enum STATUS
-    {
-        SUCCESS, FAILURE
-    }
-
-    private static class FileUploadState
-    {
-        String blobName;
-        InputStream fileInputStream;
-        long fileLength;
-        boolean isCallBackTriggered;
-        STATUS fileUploadStatus;
-        STATUS fileUploadNotificationReceived;
-    }
-
-    private static class MessageState
-    {
-        String messageBody;
-        STATUS messageStatus;
-    }
-
-    private static class FileUploadCallback implements IotHubEventCallback
-    {
-        @Override
-        public void execute(IotHubStatusCode responseStatus, Object context)
-        {
-            if (context instanceof FileUploadState)
-            {
-                FileUploadState fileUploadState = (FileUploadState) context;
-                fileUploadState.isCallBackTriggered = true;
-
-                // On failure, Don't update fileUploadStatus any further
-                if ((responseStatus == OK || responseStatus == OK_EMPTY) && fileUploadState.fileUploadStatus != FAILURE)
-                {
-                    fileUploadState.fileUploadStatus = SUCCESS;
-                }
-                else
-                {
-                    fileUploadState.fileUploadStatus = FAILURE;
-                }
-            }
-            else if (context instanceof MessageState)
-            {
-                MessageState messageState = (MessageState) context;
-                // On failure, Don't update message status any further
-                if ((responseStatus == OK || responseStatus == OK_EMPTY) && messageState.messageStatus != FAILURE)
-                {
-                    messageState.messageStatus = SUCCESS;
-                }
-                else
-                {
-                    messageState.messageStatus = FAILURE;
-                }
-            }
-        }
-    }
-
     public static void setUp() throws IOException
     {
         registryManager = RegistryManager.createFromConnectionString(iotHubConnectionString);
@@ -128,6 +71,25 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
 
         fileUploadNotificationReceiver = serviceClient.getFileUploadNotificationReceiver();
         assertNotNull(fileUploadNotificationReceiver);
+    }
+
+    @AfterClass
+    public static void tearDown() throws IotHubException, IOException, InterruptedException
+    {
+        // flush all the notifications caused by this test suite to avoid failures running on different test suite attempt
+        assertNotNull(fileUploadNotificationReceiver);
+        fileUploadNotificationReceiver.open();
+        fileUploadNotificationReceiver.receive(MAX_MILLISECS_TIMEOUT_FLUSH_NOTIFICATION);
+        fileUploadNotificationReceiver.close();
+
+        if (registryManager != null)
+        {
+            registryManager.close();
+            registryManager = null;
+        }
+
+        serviceClient = null;
+        deviceClient = null;
     }
 
     @Before
@@ -181,25 +143,6 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
         messageStates = null;
     }
 
-    @AfterClass
-    public static void tearDown() throws IotHubException, IOException, InterruptedException
-    {
-        // flush all the notifications caused by this test suite to avoid failures running on different test suite attempt
-        assertNotNull(fileUploadNotificationReceiver);
-        fileUploadNotificationReceiver.open();
-        fileUploadNotificationReceiver.receive(MAX_MILLISECS_TIMEOUT_FLUSH_NOTIFICATION);
-        fileUploadNotificationReceiver.close();
-
-        if (registryManager != null)
-        {
-            registryManager.close();
-            registryManager = null;
-        }
-
-        serviceClient = null;
-        deviceClient = null;
-    }
-
     private void setUpDeviceClient(IotHubClientProtocol protocol) throws URISyntaxException
     {
         deviceClient = new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, scDevice), protocol);
@@ -219,9 +162,9 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
         URL u = new URL(fileUploadNotification.getBlobUri());
         try (InputStream inputStream = u.openStream())
         {
-            byte[] testBuf = new byte[(int)fileUploadState.fileLength];
-            int testLen = inputStream.read(testBuf,  0, (int)fileUploadState.fileLength);
-            byte[] actualBuf = new byte[(int)fileUploadState.fileLength];
+            byte[] testBuf = new byte[(int) fileUploadState.fileLength];
+            int testLen = inputStream.read(testBuf, 0, (int) fileUploadState.fileLength);
+            byte[] actualBuf = new byte[(int) fileUploadState.fileLength];
             fileUploadState.fileInputStream.reset();
             int actualLen = (fileUploadState.fileLength == 0) ? (int) fileUploadState.fileLength : fileUploadState.fileInputStream.read(actualBuf, 0, (int) fileUploadState.fileLength);
             assertEquals(testLen, actualLen);
@@ -232,7 +175,7 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
         fileUploadState.fileUploadNotificationReceived = SUCCESS;
     }
 
-    @Test (timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
+    @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
     public void uploadToBlobAsyncSingleFileZeroLength() throws URISyntaxException, IOException, InterruptedException
     {
         // arrange
@@ -250,7 +193,7 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
         tearDownDeviceClient();
     }
 
-    @Test (timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
+    @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
     public void uploadToBlobAsyncSingleFile() throws URISyntaxException, IOException, InterruptedException
     {
         // arrange
@@ -269,7 +212,7 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
         tearDownDeviceClient();
     }
 
-    @Test (timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
+    @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
     public void uploadToBlobAsyncMultipleFilesSequentially() throws URISyntaxException, IOException, InterruptedException
     {
         // arrange
@@ -295,7 +238,7 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
         tearDownDeviceClient();
     }
 
-    @Test (timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
+    @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
     public void uploadToBlobAsyncMultipleFilesParallel() throws URISyntaxException, IOException, InterruptedException, ExecutionException, TimeoutException
     {
         // arrange
@@ -344,7 +287,7 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
         tearDownDeviceClient();
     }
 
-    @Test (timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
+    @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
     public void uploadToBlobAsyncAndTelemetryOnMQTT() throws URISyntaxException, IOException, InterruptedException, ExecutionException, TimeoutException
     {
         // arrange
@@ -418,7 +361,7 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
         return fileUploadNotification;
     }
 
-    @Test (timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
+    @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
     public void uploadToBlobAsyncSingleFileAndTelemetryOnAMQP() throws URISyntaxException, IOException, InterruptedException, ExecutionException, TimeoutException
     {
         // arrange
@@ -477,7 +420,7 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
         tearDownDeviceClient();
     }
 
-    @Test (timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
+    @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
     public void uploadToBlobAsyncSingleFileAndTelemetryOnAMQPWS() throws URISyntaxException, IOException, InterruptedException, ExecutionException, TimeoutException
     {
         // arrange
@@ -536,7 +479,7 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
         tearDownDeviceClient();
     }
 
-    @Test (timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
+    @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
     public void uploadToBlobAsyncSingleFileAndTelemetryOnHttp() throws URISyntaxException, IOException, InterruptedException, ExecutionException, TimeoutException
     {
         // arrange
@@ -593,5 +536,62 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
         }
 
         tearDownDeviceClient();
+    }
+
+    enum STATUS
+    {
+        SUCCESS, FAILURE
+    }
+
+    private static class FileUploadState
+    {
+        String blobName;
+        InputStream fileInputStream;
+        long fileLength;
+        boolean isCallBackTriggered;
+        STATUS fileUploadStatus;
+        STATUS fileUploadNotificationReceived;
+    }
+
+    private static class MessageState
+    {
+        String messageBody;
+        STATUS messageStatus;
+    }
+
+    private static class FileUploadCallback implements IotHubEventCallback
+    {
+        @Override
+        public void execute(IotHubStatusCode responseStatus, Object context)
+        {
+            if (context instanceof FileUploadState)
+            {
+                FileUploadState fileUploadState = (FileUploadState) context;
+                fileUploadState.isCallBackTriggered = true;
+
+                // On failure, Don't update fileUploadStatus any further
+                if ((responseStatus == OK || responseStatus == OK_EMPTY) && fileUploadState.fileUploadStatus != FAILURE)
+                {
+                    fileUploadState.fileUploadStatus = SUCCESS;
+                }
+                else
+                {
+                    fileUploadState.fileUploadStatus = FAILURE;
+                }
+            }
+            else if (context instanceof MessageState)
+            {
+                MessageState messageState = (MessageState) context;
+                // On failure, Don't update message status any further
+                if ((responseStatus == OK || responseStatus == OK_EMPTY) && messageState.messageStatus != FAILURE)
+                {
+                    messageState.messageStatus = SUCCESS;
+                }
+                else
+                {
+                    messageState.messageStatus = FAILURE;
+                }
+            }
+        }
     }
 }

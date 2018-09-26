@@ -9,16 +9,14 @@ import com.google.gson.annotations.SerializedName;
 public class AuthenticationParser
 {
     private static final String SYMMETRIC_KEY_NAME = "symmetricKey";
+    private static final String X509_THUMBPRINT_NAME = "x509Thumbprint";
+    private static final String AUTHENTICATION_TYPE_NAME = "type";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(SYMMETRIC_KEY_NAME)
     private SymmetricKeyParser symmetricKey;
-
-    private static final String X509_THUMBPRINT_NAME = "x509Thumbprint";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(X509_THUMBPRINT_NAME)
     private X509ThumbprintParser thumbprint;
-
-    private static final String AUTHENTICATION_TYPE_NAME = "type";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(AUTHENTICATION_TYPE_NAME)
     private AuthenticationTypeParser type;
@@ -86,6 +84,7 @@ public class AuthenticationParser
 
     /**
      * Setter for Type
+     *
      * @param type the value to set Type to
      * @throws IllegalArgumentException if the provided type is null
      */

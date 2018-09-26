@@ -7,12 +7,10 @@ import com.microsoft.azure.sdk.iot.device.exceptions.TransportException;
 
 public class TopicParser
 {
-    private String[] topicTokens = null;
-
     private final String QUESTION = "?";
-
     private final String REQ_ID = "$rid=";
     private final String VERSION = "$version=";
+    private String[] topicTokens = null;
 
     public TopicParser(String topic) throws TransportException
     {
@@ -102,15 +100,15 @@ public class TopicParser
         if (topicTokens.length > tokenIndexVersion)
         {
             String token = topicTokens[tokenIndexVersion];
-            
+
             //Codes_SRS_TopicParser_25_010: [This method shall return the version value(if present) corresponding to the tokenIndexVersion from tokens.]
             //Codes_SRS_TopicParser_25_011: [If the topic token does not contain version then this method shall return null.]
-            if (token.contains(VERSION) && token.contains(QUESTION) ) //restriction for version
+            if (token.contains(VERSION) && token.contains(QUESTION)) //restriction for version
             {
                 int startIndex = token.indexOf(VERSION) + VERSION.length();
                 int endIndex = token.length();
 
-                if(!token.contains(QUESTION + REQ_ID) && token.contains(REQ_ID))
+                if (!token.contains(QUESTION + REQ_ID) && token.contains(REQ_ID))
                 {
                     endIndex = token.indexOf(REQ_ID) - 1;
                 }
@@ -136,7 +134,7 @@ public class TopicParser
         if (topicTokens.length > tokenIndexMethod)
         {
             String token = topicTokens[tokenIndexMethod];
-            
+
             //Codes_SRS_TopicParser_25_013: [This method shall return the method name(if present) corresponding to the tokenIndexMethod from tokens.]
             //Codes_SRS_TopicParser_25_014: [If the topic token does not contain method name or is null then this method shall throw TransportException.]
             if (token != null)

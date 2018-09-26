@@ -9,13 +9,13 @@ import com.microsoft.azure.sdk.iot.provisioning.service.Tools;
 
 /**
  * Representation of a single Device Provisioning Service X509 Primary and Secondary Certificate.
- *
+ * <p>
  * <p> this class creates a representation of an X509 certificate. It can receive primary and secondary
- *     certificate, but only the primary is mandatory.
- *
+ * certificate, but only the primary is mandatory.
+ * <p>
  * <p> Users must provide the certificate as a {@code String}, from a <b>.pem</b> files.
- *     This class will encapsulate both in a single {@link X509Attestation}. The following JSON is an example
- *     of the result of this class.
+ * This class will encapsulate both in a single {@link X509Attestation}. The following JSON is an example
+ * of the result of this class.
  * <pre>
  * {@code
  *  {
@@ -50,11 +50,11 @@ import com.microsoft.azure.sdk.iot.provisioning.service.Tools;
  *  }
  * }
  * </pre>
- *
+ * <p>
  * <p> After send an X509 certificate with success, the provisioning service will return the {@link X509CertificateInfo}
- *     for both primary and secondary certificate. User can get these info from this class, and once again, only
- *     the primary info is mandatory. The following JSON is an example what info the provisioning service will
- *     return for X509.
+ * for both primary and secondary certificate. User can get these info from this class, and once again, only
+ * the primary info is mandatory. The following JSON is an example what info the provisioning service will
+ * return for X509.
  * <pre>
  * {@code
  *  {
@@ -92,23 +92,22 @@ public class X509Certificates
 {
     // the primary X509 certificate [mandatory]
     private static final String PRIMARY_TAG = "primary";
+    // the secondary X509 certificate
+    private static final String SECONDARY_TAG = "secondary";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(PRIMARY_TAG)
     private X509CertificateWithInfo primary;
-
-    // the secondary X509 certificate
-    private static final String SECONDARY_TAG = "secondary";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(SECONDARY_TAG)
     private X509CertificateWithInfo secondary;
 
     /**
      * CONSTRUCTOR
-     *
+     * <p>
      * <p> Creates a new instance of the X509 certificates using the provided certificates.
-     *
+     * <p>
      * <P> The certificate is a {@code String}, normally stored in a <b>.pem</b> or <b>.cert</b> file,
-     *     and should looks like the following example:
+     * and should looks like the following example:
      * <pre>
      * {@code
      * "-----BEGIN CERTIFICATE-----\n" +
@@ -126,14 +125,14 @@ public class X509Certificates
      * }
      * </pre>
      *
-     * @param primary the {@code String} with the primary certificate.
+     * @param primary   the {@code String} with the primary certificate.
      * @param secondary the {@code String} with the secondary certificate.
      * @throws IllegalArgumentException if the primary certificate is {@code null} or empty.
      */
     X509Certificates(String primary, String secondary)
     {
         /* SRS_X509_CERTIFICATES_21_001: [The constructor shall throw IllegalArgumentException if the primary certificate is null or empty.] */
-        if(Tools.isNullOrEmpty(primary))
+        if (Tools.isNullOrEmpty(primary))
         {
             throw new IllegalArgumentException("primary certificate cannot be null or empty");
         }
@@ -141,7 +140,7 @@ public class X509Certificates
         this.primary = new X509CertificateWithInfo(primary);
 
         /* SRS_X509_CERTIFICATES_21_003: [If the secondary certificate is not null or empty, the constructor shall create a new instance of the X509CertificateWithInfo using the provided secondary certificate, and store it as the secondary Certificate.] */
-        if(!Tools.isNullOrEmpty(secondary))
+        if (!Tools.isNullOrEmpty(secondary))
         {
             this.secondary = new X509CertificateWithInfo(secondary);
         }
@@ -149,7 +148,7 @@ public class X509Certificates
 
     /**
      * Constructor [COPY]
-     *
+     * <p>
      * <p> Creates a new instance of the x509Certificates copping the content of the provided one.
      *
      * @param x509Certificates the original {@code X509Certificates} to copy.
@@ -158,7 +157,7 @@ public class X509Certificates
     public X509Certificates(X509Certificates x509Certificates)
     {
         /* SRS_X509_CERTIFICATES_21_004: [The constructor shall throw IllegalArgumentException if the provide X509Certificates is null or if its primary certificate is null.] */
-        if((x509Certificates == null) || (x509Certificates.getPrimary() == null))
+        if ((x509Certificates == null) || (x509Certificates.getPrimary() == null))
         {
             throw new IllegalArgumentException("original x509Certificates cannot be null and its primary certificate cannot be null.");
         }
@@ -166,10 +165,23 @@ public class X509Certificates
         this.primary = new X509CertificateWithInfo(x509Certificates.primary);
 
         /* SRS_X509_CERTIFICATES_21_006: [If the secondary certificate is not null, the constructor shall create a new instance of the X509CertificateWithInfo using the provided secondary certificate, and store it as the secondary Certificate.] */
-        if(x509Certificates.secondary != null)
+        if (x509Certificates.secondary != null)
         {
             this.secondary = new X509CertificateWithInfo(x509Certificates.secondary);
         }
+    }
+
+    /**
+     * Empty constructor
+     * <p>
+     * <p>
+     * Used only by the tools that will deserialize this class.
+     * </p>
+     */
+    @SuppressWarnings("unused")
+    X509Certificates()
+    {
+        /* SRS_X509_CERTIFICATES_21_009: [The X509Certificates shall provide an empty constructor to make GSON happy.] */
     }
 
     /**
@@ -192,18 +204,5 @@ public class X509Certificates
     {
         /* SRS_X509_CERTIFICATES_21_008: [The getSecondary shall return the stored secondary.] */
         return this.secondary;
-    }
-
-    /**
-     * Empty constructor
-     *
-     * <p>
-     *     Used only by the tools that will deserialize this class.
-     * </p>
-     */
-    @SuppressWarnings("unused")
-    X509Certificates()
-    {
-        /* SRS_X509_CERTIFICATES_21_009: [The X509Certificates shall provide an empty constructor to make GSON happy.] */
     }
 }

@@ -12,18 +12,13 @@ import com.google.gson.annotations.SerializedName;
  */
 public enum EnrollmentStatus
 {
-    @SerializedName("unassigned")
-    UNASSIGNED,
+    @SerializedName("unassigned") UNASSIGNED,
 
-    @SerializedName("assigning")
-    ASSIGNING,
+    @SerializedName("assigning") ASSIGNING,
 
-    @SerializedName("assigned")
-    ASSIGNED,
+    @SerializedName("assigned") ASSIGNED,
 
-    @SerializedName("failed")
-    FAILED,
+    @SerializedName("failed") FAILED,
 
-    @SerializedName("disabled")
-    DISABLED,
+    @SerializedName("disabled") DISABLED,
 }

@@ -15,7 +15,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 
-/** Unit tests for HttpsResponse. */
+/**
+ * Unit tests for HttpsResponse.
+ */
 public class HttpsResponseTest
 {
     // Tests_SRS_HTTPSRESPONSE_11_001: [The constructor shall store the input arguments so that the getters can return them later.]
@@ -24,12 +26,11 @@ public class HttpsResponseTest
     public void getStatusReturnsStatus()
     {
         final int status = 200;
-        final byte[] body = { 1 };
+        final byte[] body = {1};
         final Map<String, List<String>> headerFields = new HashMap<>();
         final byte[] errorReason = {};
 
-        HttpsResponse response =
-                new HttpsResponse(status, body, headerFields, errorReason);
+        HttpsResponse response = new HttpsResponse(status, body, headerFields, errorReason);
         int testStatus = response.getStatus();
 
         final int expectedStatus = status;
@@ -42,12 +43,11 @@ public class HttpsResponseTest
     public void getBodyReturnsCopyOfBody()
     {
         final int status = 200;
-        final byte[] body = { 1, 2, 3, 4 };
+        final byte[] body = {1, 2, 3, 4};
         final Map<String, List<String>> headerFields = new HashMap<>();
         byte[] errorReason = {};
 
-        HttpsResponse response =
-                new HttpsResponse(status, body, headerFields, errorReason);
+        HttpsResponse response = new HttpsResponse(status, body, headerFields, errorReason);
         byte[] testBody = response.getBody();
 
         final byte[] expectedBody = body;
@@ -63,7 +63,7 @@ public class HttpsResponseTest
     public void getHeaderFieldReturnsHeaderField()
     {
         final int status = 200;
-        final byte[] body = { 1 };
+        final byte[] body = {1};
         final byte[] errorReason = {};
         final Map<String, List<String>> headerFields = new HashMap<>();
         final String field = "test-field";
@@ -74,8 +74,7 @@ public class HttpsResponseTest
         values.add(value1);
         headerFields.put(field, values);
 
-        HttpsResponse response =
-                new HttpsResponse(status, body, headerFields, errorReason);
+        HttpsResponse response = new HttpsResponse(status, body, headerFields, errorReason);
         String testValues = response.getHeaderField(field);
 
         final String expectedValues = value0 + "," + value1;
@@ -87,7 +86,7 @@ public class HttpsResponseTest
     public void getHeaderFieldMatchesCaseInsensitive()
     {
         final int status = 200;
-        final byte[] body = { 1 };
+        final byte[] body = {1};
         final byte[] errorReason = {};
         final Map<String, List<String>> headerFields = new HashMap<>();
         final String field = "test-field";
@@ -98,8 +97,7 @@ public class HttpsResponseTest
         values.add(value1);
         headerFields.put(field, values);
 
-        HttpsResponse response =
-                new HttpsResponse(status, body, headerFields, errorReason);
+        HttpsResponse response = new HttpsResponse(status, body, headerFields, errorReason);
         String differentCaseField = "Test-Field";
         String testValues = response.getHeaderField(differentCaseField);
 
@@ -112,13 +110,12 @@ public class HttpsResponseTest
     public void getHeaderFieldRejectsInvalidFieldName() throws IllegalArgumentException
     {
         final int status = 200;
-        final byte[] body = { 1 };
+        final byte[] body = {1};
         final byte[] errorReason = {};
         final Map<String, List<String>> headerFields = new HashMap<>();
         final String field = "test-field";
 
-        HttpsResponse response =
-                new HttpsResponse(status, body, headerFields, errorReason);
+        HttpsResponse response = new HttpsResponse(status, body, headerFields, errorReason);
         response.getHeaderField(field);
     }
 
@@ -128,12 +125,11 @@ public class HttpsResponseTest
     public void getErrorReasonReturnsErrorReason()
     {
         final int status = 200;
-        final byte[] body = { 1 };
+        final byte[] body = {1};
         final Map<String, List<String>> headerFields = new HashMap<>();
-        final byte[] errorReason = { 2, 3, 4, 5 };
+        final byte[] errorReason = {2, 3, 4, 5};
 
-        HttpsResponse response =
-                new HttpsResponse(status, body, headerFields, errorReason);
+        HttpsResponse response = new HttpsResponse(status, body, headerFields, errorReason);
         byte[] testErrorReason = response.getErrorReason();
 
         final byte[] expectedErrorReason = errorReason;

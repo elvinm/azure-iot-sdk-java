@@ -89,8 +89,7 @@ public class RegisterTaskTest
         //arrange
 
         //act
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProvider,
-                                                                mockedProvisioningDeviceClientContract, mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProvider, mockedProvisioningDeviceClientContract, mockedAuthorization);
         //assert
         assertNotNull(Deencapsulation.getField(registerTask, "provisioningDeviceClientConfig"));
         assertNotNull(Deencapsulation.getField(registerTask, "securityProvider"));
@@ -100,52 +99,36 @@ public class RegisterTaskTest
     }
 
     //Tests_SRS_RegisterTask_25_002: [ Constructor throw ProvisioningDeviceClientException if provisioningDeviceClientConfig , securityProvider, authorization or provisioningDeviceClientContract is null.]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void constructorThrowsOnNullConfig() throws ProvisioningDeviceClientException
     {
         //arrange
         //act
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, new Class[]{ProvisioningDeviceClientConfig.class,
-                                                                        SecurityProvider.class, ProvisioningDeviceClientContract.class,
-                                                                        Authorization.class},
-                                                                null, mockedSecurityProvider,
-                                                                mockedProvisioningDeviceClientContract, mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, new Class[]{ProvisioningDeviceClientConfig.class, SecurityProvider.class, ProvisioningDeviceClientContract.class, Authorization.class}, null, mockedSecurityProvider, mockedProvisioningDeviceClientContract, mockedAuthorization);
         //assert
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void constructorThrowsOnNullSecurityProvider() throws ProvisioningDeviceClientException
     {
         //arrange
         //act
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, new Class[]{ProvisioningDeviceClientConfig.class,
-                                                                        SecurityProvider.class, ProvisioningDeviceClientContract.class,
-                                                                        Authorization.class},
-                                                                mockedProvisioningDeviceClientConfig, null,
-                                                                mockedProvisioningDeviceClientContract, mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, new Class[]{ProvisioningDeviceClientConfig.class, SecurityProvider.class, ProvisioningDeviceClientContract.class, Authorization.class}, mockedProvisioningDeviceClientConfig, null, mockedProvisioningDeviceClientContract, mockedAuthorization);
         //assert
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void constructorThrowsOnNullContract() throws ProvisioningDeviceClientException
     {
         //act
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, new Class[]{ProvisioningDeviceClientConfig.class,
-                                                                        SecurityProvider.class, ProvisioningDeviceClientContract.class,
-                                                                        Authorization.class},
-                                                                mockedProvisioningDeviceClientConfig, mockedSecurityProvider,
-                                                                null, mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, new Class[]{ProvisioningDeviceClientConfig.class, SecurityProvider.class, ProvisioningDeviceClientContract.class, Authorization.class}, mockedProvisioningDeviceClientConfig, mockedSecurityProvider, null, mockedAuthorization);
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void constructorThrowsOnNullAuthorization() throws ProvisioningDeviceClientException
     {
         //act
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, new Class[]{ProvisioningDeviceClientConfig.class,
-                                                                        SecurityProvider.class, ProvisioningDeviceClientContract.class,
-                                                                        Authorization.class},
-                                                                mockedProvisioningDeviceClientConfig, mockedSecurityProvider,
-                                                                mockedProvisioningDeviceClientContract, null);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, new Class[]{ProvisioningDeviceClientConfig.class, SecurityProvider.class, ProvisioningDeviceClientContract.class, Authorization.class}, mockedProvisioningDeviceClientConfig, mockedSecurityProvider, mockedProvisioningDeviceClientContract, null);
     }
 
     //Tests_SRS_RegisterTask_25_006: [ If the provided security client is for X509 then, this method shall trigger authenticateWithProvisioningService on the contract API and wait for response and return it. ]
@@ -153,9 +136,7 @@ public class RegisterTaskTest
     public void authenticateWithX509Succeeds() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -181,20 +162,17 @@ public class RegisterTaskTest
             {
                 Deencapsulation.invoke(mockedAuthorization, "setSslContext", mockedSslContext);
                 times = 1;
-                mockedProvisioningDeviceClientContract.authenticateWithProvisioningService((RequestData) any,
-                                                                                           (ResponseCallback)any, any);
+                mockedProvisioningDeviceClientContract.authenticateWithProvisioningService((RequestData) any, (ResponseCallback) any, any);
                 times = 1;
             }
         };
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithX509ThrowsOnNonExistentType() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProvider, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProvider, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         //act
         registerTask.call();
@@ -202,13 +180,11 @@ public class RegisterTaskTest
 
 
     //Tests_SRS_RegisterTask_25_003: [ If the provided security client is for X509 then, this method shall throw ProvisioningDeviceClientException if registration id is null. ]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithX509ThrowsOnNullRegId() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -223,13 +199,11 @@ public class RegisterTaskTest
     }
 
     //Tests_SRS_RegisterTask_25_004: [ If the provided security client is for X509 then, this method shall save the SSL context to Authorization if it is not null and throw ProvisioningDeviceClientException otherwise. ]
-    @Test (expected = ProvisioningDeviceSecurityException.class)
+    @Test(expected = ProvisioningDeviceSecurityException.class)
     public void authenticateWithX509ThrowsOnNullSSLContext() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -247,13 +221,11 @@ public class RegisterTaskTest
     }
 
     //Tests_SRS_RegisterTask_25_007: [ If the provided security client is for X509 then, this method shall throw ProvisioningDeviceClientException if null response is received. ]
-    @Test (expected = ProvisioningDeviceTransportException.class)
+    @Test(expected = ProvisioningDeviceTransportException.class)
     public void authenticateWithX509ThrowsOnAuthenticateWithDPSFail() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -264,8 +236,7 @@ public class RegisterTaskTest
                 result = "testJson";
                 mockedDpsSecurityProviderX509.getSSLContext();
                 result = mockedSslContext;
-                mockedProvisioningDeviceClientContract.authenticateWithProvisioningService((RequestData) any,
-                                                                                           (ResponseCallback)any, any);
+                mockedProvisioningDeviceClientContract.authenticateWithProvisioningService((RequestData) any, (ResponseCallback) any, any);
                 result = new ProvisioningDeviceTransportException("test transport exception");
             }
         };
@@ -273,13 +244,11 @@ public class RegisterTaskTest
         registerTask.call();
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithX509ThrowsIfNoResponseReceivedInMaxTime() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract, mockedAuthorization);
         Deencapsulation.setField(registerTask, "MAX_WAIT_FOR_REGISTRATION_RESPONSE", 50);
 
         new NonStrictExpectations()
@@ -297,13 +266,11 @@ public class RegisterTaskTest
         registerTask.call();
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithX509ThrowsIfNullResponseReceivedInMaxTime() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract, mockedAuthorization);
         Deencapsulation.setField(registerTask, "MAX_WAIT_FOR_REGISTRATION_RESPONSE", 50);
 
         new NonStrictExpectations()
@@ -325,13 +292,11 @@ public class RegisterTaskTest
         registerTask.call();
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithX509ThrowsOnThreadInterruptedException() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -352,9 +317,7 @@ public class RegisterTaskTest
     public void authenticateWithSasTokenSucceeds() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -377,7 +340,7 @@ public class RegisterTaskTest
                 result = TEST_AUTH_KEY;
                 mockedUrlPathBuilder.generateSasTokenUrl(TEST_REGISTRATION_ID);
                 result = "testUrl";
-                mockedSecurityProviderTpm.signWithIdentity((byte[])any);
+                mockedSecurityProviderTpm.signWithIdentity((byte[]) any);
                 result = "testToken".getBytes();
             }
         };
@@ -392,26 +355,22 @@ public class RegisterTaskTest
                 times = 1;
                 Deencapsulation.invoke(mockedAuthorization, "setSasToken", anyString);
                 times = 1;
-                mockedProvisioningDeviceClientContract.requestNonceForTPM((RequestData) any,
-                        (ResponseCallback)any, any);
+                mockedProvisioningDeviceClientContract.requestNonceForTPM((RequestData) any, (ResponseCallback) any, any);
                 times = 1;
-                mockedSecurityProviderTpm.activateIdentityKey((byte[])any);
+                mockedSecurityProviderTpm.activateIdentityKey((byte[]) any);
                 times = 1;
-                mockedProvisioningDeviceClientContract.authenticateWithProvisioningService((RequestData) any,
-                                                                                           (ResponseCallback)any, any);
+                mockedProvisioningDeviceClientContract.authenticateWithProvisioningService((RequestData) any, (ResponseCallback) any, any);
                 times = 1;
             }
         };
     }
 
     //Tests_SRS_RegisterTask_25_008: [ If the provided security client is for Key then, this method shall throw ProvisioningDeviceClientException if registration id or endorsement key or storage root key are null. ]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithSasTokenNonceThrowsOnNullRegId() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -424,13 +383,11 @@ public class RegisterTaskTest
         registerTask.call();
     }
 
-    @Test (expected = ProvisioningDeviceSecurityException.class)
+    @Test(expected = ProvisioningDeviceSecurityException.class)
     public void authenticateWithSasTokenNonceThrowsOnNullEk() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -445,13 +402,11 @@ public class RegisterTaskTest
         registerTask.call();
     }
 
-    @Test (expected = ProvisioningDeviceSecurityException.class)
+    @Test(expected = ProvisioningDeviceSecurityException.class)
     public void authenticateWithSasTokenNonceThrowsOnNullSRK() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -469,13 +424,11 @@ public class RegisterTaskTest
     }
 
     //Tests_SRS_RegisterTask_25_009: [ If the provided security client is for Key then, this method shall save the SSL context to Authorization if it is not null and throw ProvisioningDeviceClientException otherwise. ]
-    @Test (expected = ProvisioningDeviceSecurityException.class)
+    @Test(expected = ProvisioningDeviceSecurityException.class)
     public void authenticateWithSasTokenNonceThrowsOnNullSSLContext() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -497,13 +450,11 @@ public class RegisterTaskTest
     }
 
     //Tests_SRS_RegisterTask_25_011: [ If the provided security client is for Key then, this method shall trigger requestNonceForTPM on the contract API and wait for Authentication Key and decode it from Base64. Also this method shall pass the exception back to the user if it fails. ]
-    @Test (expected = ProvisioningDeviceHubException.class)
+    @Test(expected = ProvisioningDeviceHubException.class)
     public void authenticateWithSasTokenNonceThrowsOnRequestNonceFail() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -518,8 +469,7 @@ public class RegisterTaskTest
                 result = "testJson";
                 mockedSecurityProviderTpm.getSSLContext();
                 result = mockedSslContext;
-                mockedProvisioningDeviceClientContract.requestNonceForTPM((RequestData) any,
-                        (ResponseCallback)any, any);
+                mockedProvisioningDeviceClientContract.requestNonceForTPM((RequestData) any, (ResponseCallback) any, any);
                 result = new ProvisioningDeviceHubException("test exception");
             }
         };
@@ -528,13 +478,11 @@ public class RegisterTaskTest
     }
 
     //Tests_SRS_RegisterTask_25_012: [ If the provided security client is for Key then, this method shall throw ProvisioningDeviceClientException if null response is received. ]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithSasTokenNonceThrowsIfNoResponseReceivedInMaxTimeForNonce() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
         Deencapsulation.setField(registerTask, "MAX_WAIT_FOR_REGISTRATION_RESPONSE", 50);
         new NonStrictExpectations()
         {
@@ -555,13 +503,11 @@ public class RegisterTaskTest
         registerTask.call();
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithSasTokenNonceThrowsIfNullResponseReceivedInMaxTimeForNonce() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
         Deencapsulation.setField(registerTask, "MAX_WAIT_FOR_REGISTRATION_RESPONSE", 50);
 
         new NonStrictExpectations()
@@ -585,13 +531,11 @@ public class RegisterTaskTest
         registerTask.call();
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithSasTokenThrowsOnThreadInterruptedException() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -613,13 +557,11 @@ public class RegisterTaskTest
     }
 
     //Tests_SRS_RegisterTask_25_013: [ If the provided security client is for Key then, this method shall throw ProvisioningDeviceClientException if Authentication Key received is null. ]
-    @Test (expected = ProvisioningDeviceClientAuthenticationException.class)
+    @Test(expected = ProvisioningDeviceClientAuthenticationException.class)
     public void authenticateWithSasTokenThrowsOnNullAuthKey() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -645,13 +587,11 @@ public class RegisterTaskTest
     }
 
     //Tests_SRS_RegisterTask_25_018: [ If the provided security client is for Key then, this method shall import the Base 64 encoded Authentication Key into the HSM using the security client and pass the exception to the user on failure. ]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithSasTokenThrowsImportKeyFailure() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -672,7 +612,7 @@ public class RegisterTaskTest
                 result = DPS_REGISTRATION_RECEIVED;
                 mockedTpmRegistrationResultParser.getAuthenticationKey();
                 result = TEST_AUTH_KEY;
-                mockedSecurityProviderTpm.activateIdentityKey((byte[])any);
+                mockedSecurityProviderTpm.activateIdentityKey((byte[]) any);
                 result = new ProvisioningDeviceClientException("test exception");
             }
         };
@@ -685,13 +625,11 @@ public class RegisterTaskTest
             1. Build a tokenScope of format <scopeid>/registrations/<registrationId>
             2. Sign the HSM with the string of format <tokenScope>/n<expiryTime> and receive a token
             3. Encode the token to Base64 format and UrlEncode it to generate the signature. ]*/
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithSasTokenThrowsConstructTokenFailure() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -721,13 +659,11 @@ public class RegisterTaskTest
 
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithSasTokenThrowsUrlBuilderReturnsNull() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -756,13 +692,11 @@ public class RegisterTaskTest
         registerTask.call();
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithSasTokenThrowsUrlBuilderReturnsEmpty() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -791,13 +725,11 @@ public class RegisterTaskTest
         registerTask.call();
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithSasTokenThrowsConstructTokenSignDataFailure() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -820,7 +752,7 @@ public class RegisterTaskTest
                 result = TEST_AUTH_KEY;
                 mockedUrlPathBuilder.generateSasTokenUrl(TEST_REGISTRATION_ID);
                 result = "testUrl";
-                mockedSecurityProviderTpm.signWithIdentity((byte[])any);
+                mockedSecurityProviderTpm.signWithIdentity((byte[]) any);
                 result = new ProvisioningDeviceClientException("test Exception");
             }
         };
@@ -829,13 +761,11 @@ public class RegisterTaskTest
 
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithSasTokenThrowsConstructTokenSignDataReturnsNull() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -858,7 +788,7 @@ public class RegisterTaskTest
                 result = TEST_AUTH_KEY;
                 mockedUrlPathBuilder.generateSasTokenUrl(TEST_REGISTRATION_ID);
                 result = "testUrl";
-                mockedSecurityProviderTpm.signWithIdentity((byte[])any);
+                mockedSecurityProviderTpm.signWithIdentity((byte[]) any);
                 result = null;
             }
         };
@@ -867,13 +797,11 @@ public class RegisterTaskTest
 
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithSasTokenThrowsConstructTokenSignDataReturnsEmpty() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -896,7 +824,7 @@ public class RegisterTaskTest
                 result = TEST_AUTH_KEY;
                 mockedUrlPathBuilder.generateSasTokenUrl(TEST_REGISTRATION_ID);
                 result = "testUrl";
-                mockedSecurityProviderTpm.signWithIdentity((byte[])any);
+                mockedSecurityProviderTpm.signWithIdentity((byte[]) any);
                 result = "".getBytes();
             }
         };
@@ -906,13 +834,11 @@ public class RegisterTaskTest
     }
 
     //Tests_SRS_RegisterTask_25_016: [ If the provided security client is for Key then, this method shall trigger authenticateWithProvisioningService on the contract API using the sasToken generated and wait for response and return it. ]
-    @Test (expected = ProvisioningDeviceTransportException.class)
+    @Test(expected = ProvisioningDeviceTransportException.class)
     public void authenticateWithSasTokenThrowsOnAuthenticateWithDPSFail() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -935,10 +861,9 @@ public class RegisterTaskTest
                 result = TEST_AUTH_KEY;
                 mockedUrlPathBuilder.generateSasTokenUrl(TEST_REGISTRATION_ID);
                 result = "testUrl";
-                mockedSecurityProviderTpm.signWithIdentity((byte[])any);
+                mockedSecurityProviderTpm.signWithIdentity((byte[]) any);
                 result = "testToken".getBytes();
-                mockedProvisioningDeviceClientContract.authenticateWithProvisioningService((RequestData) any,
-                                                                                           (ResponseCallback)any, any);
+                mockedProvisioningDeviceClientContract.authenticateWithProvisioningService((RequestData) any, (ResponseCallback) any, any);
                 result = new ProvisioningDeviceTransportException("test transport exception");
             }
         };
@@ -947,13 +872,11 @@ public class RegisterTaskTest
     }
 
     //Tests_SRS_RegisterTask_25_017: [ If the provided security client is for Key then, this method shall throw ProvisioningDeviceClientException if null response to authenticateWithProvisioningService is received. ]
-    @Test (expected = ProvisioningDeviceClientAuthenticationException.class)
+    @Test(expected = ProvisioningDeviceClientAuthenticationException.class)
     public void authenticateWithSasTokenThrowsIfNoResponseReceivedInMaxTime() throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                                                                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                                                                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
         Deencapsulation.setField(registerTask, "MAX_WAIT_FOR_REGISTRATION_RESPONSE", 50);
         new NonStrictExpectations()
         {
@@ -968,7 +891,7 @@ public class RegisterTaskTest
                 result = "testJson";
                 mockedSecurityProviderTpm.getSSLContext();
                 result = mockedSslContext;
-                mockedProvisioningDeviceClientContract.requestNonceForTPM((RequestData) any, (ResponseCallback)any, any);
+                mockedProvisioningDeviceClientContract.requestNonceForTPM((RequestData) any, (ResponseCallback) any, any);
             }
         };
 
@@ -991,10 +914,9 @@ public class RegisterTaskTest
                 result = TEST_AUTH_KEY;
                 mockedUrlPathBuilder.generateSasTokenUrl(TEST_REGISTRATION_ID);
                 result = "testUrl";
-                mockedSecurityProviderTpm.signWithIdentity((byte[])any);
+                mockedSecurityProviderTpm.signWithIdentity((byte[]) any);
                 result = "testToken".getBytes();
-                mockedProvisioningDeviceClientContract.authenticateWithProvisioningService((RequestData) any,
-                                                                                           (ResponseCallback)any, any);
+                mockedProvisioningDeviceClientContract.authenticateWithProvisioningService((RequestData) any, (ResponseCallback) any, any);
             }
         };
 
@@ -1011,13 +933,11 @@ public class RegisterTaskTest
 
     //Tests_SRS_StatusTask_34_010: [ If the response data cannot be parsed into a RegistrationOperationStatusParser,
     // this function shall parse it into a ProvisioningErrorParser and throw a ProvisioningDeviceClientException with the parsed message. ]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithX509FallsBackToErrorParserIfRegistrationOperationStatusParsingFails(@Mocked final ProvisioningErrorParser mockedProvisioningErrorParser) throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract,
-                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedDpsSecurityProviderX509, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {
@@ -1056,13 +976,11 @@ public class RegisterTaskTest
         };
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithSasTokenFallsBackToErrorParserIfRegistrationOperationStatusParsingFails(@Mocked final ProvisioningErrorParser mockedProvisioningErrorParser) throws Exception
     {
         //arrange
-        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig,
-                mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract,
-                mockedAuthorization);
+        RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, mockedProvisioningDeviceClientConfig, mockedSecurityProviderTpm, mockedProvisioningDeviceClientContract, mockedAuthorization);
 
         new NonStrictExpectations()
         {

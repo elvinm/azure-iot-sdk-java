@@ -26,8 +26,9 @@ public class ResponseData
 
     /**
      * Contrautor for Response Data
-     * @param responseData response data value. Can be {@code null}
-     * @param contractState contract state value. Can be {@code null}
+     *
+     * @param responseData      response data value. Can be {@code null}
+     * @param contractState     contract state value. Can be {@code null}
      * @param waitForStatusInMS Maximum time to wait before query status. Can be {@code null}
      */
     public ResponseData(byte[] responseData, ContractState contractState, long waitForStatusInMS)
@@ -39,7 +40,8 @@ public class ResponseData
 
     /**
      * Getter for response data
-     * @return  Returns the byte array of response data
+     *
+     * @return Returns the byte array of response data
      */
     byte[] getResponseData()
     {
@@ -49,6 +51,7 @@ public class ResponseData
 
     /**
      * Setter for Response data
+     *
      * @param responseData Value of response data to be set
      */
     public void setResponseData(byte[] responseData)
@@ -59,6 +62,7 @@ public class ResponseData
 
     /**
      * Getter for the contract state
+     *
      * @return Returns the value of contract state
      */
     ContractState getContractState()
@@ -69,6 +73,7 @@ public class ResponseData
 
     /**
      * Setter for the contract state
+     *
      * @param contractState Sets the value of Contract state
      */
     public void setContractState(ContractState contractState)
@@ -79,6 +84,7 @@ public class ResponseData
 
     /**
      * Getter for the Maximum Time in MilliSeconds
+     *
      * @return Maximum time value.
      */
     long getWaitForStatusInMS()
@@ -88,6 +94,7 @@ public class ResponseData
 
     /**
      * Setter for Maximum Time in MilliSeconds
+     *
      * @param waitForStatusInMS Maximum time value. Can be {@code null}
      */
     public void setWaitForStatusInMS(long waitForStatusInMS)

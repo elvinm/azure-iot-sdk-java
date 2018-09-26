@@ -11,15 +11,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /* Unit tests for IotHubTransportMessage
-* 100% methods covered
-* 100% lines covered
-*/
+ * 100% methods covered
+ * 100% lines covered
+ */
 public class DeviceMethodMessageTest
 {
     /*
-    **Tests_SRS_DEVICEMETHODMESSAGE_25_001: [**The constructor shall save the message body by calling super with the body as parameter.**]**
-    **Tests_SRS_DEVICEMETHODMESSAGE_25_002: [**If the message body is null, the constructor shall throw an IllegalArgumentException thrown by base constructor.**]**
-    */
+     **Tests_SRS_DEVICEMETHODMESSAGE_25_001: [**The constructor shall save the message body by calling super with the body as parameter.**]**
+     **Tests_SRS_DEVICEMETHODMESSAGE_25_002: [**If the message body is null, the constructor shall throw an IllegalArgumentException thrown by base constructor.**]**
+     */
     @Test
     public void constructorSucceeds()
     {
@@ -32,7 +32,7 @@ public class DeviceMethodMessageTest
     }
 
     /*
-    **Tests_SRS_DEVICEMETHODMESSAGE_25_003: [**This method shall set the methodName.**]**
+     **Tests_SRS_DEVICEMETHODMESSAGE_25_003: [**This method shall set the methodName.**]**
      */
     @Test
     public void setMethodNameSets()
@@ -49,9 +49,9 @@ public class DeviceMethodMessageTest
     }
 
     /*
-    **Tests_SRS_DEVICEMETHODMESSAGE_25_004: [**This method shall throw IllegalArgumentException if the methodName is null.**]**
+     **Tests_SRS_DEVICEMETHODMESSAGE_25_004: [**This method shall throw IllegalArgumentException if the methodName is null.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setMethodNameThrowsOnNull()
     {
         //arrange
@@ -63,7 +63,7 @@ public class DeviceMethodMessageTest
     }
 
     /*
-    **Tests_SRS_DEVICEMETHODMESSAGE_25_005: [**The method shall return the methodName either set by the setter or the default (null) if unset so far.**]**
+     **Tests_SRS_DEVICEMETHODMESSAGE_25_005: [**The method shall return the methodName either set by the setter or the default (null) if unset so far.**]**
      */
     @Test
     public void getMethodNameGets()

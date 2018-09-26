@@ -32,22 +32,19 @@ public class ContractAPIMqtt extends ProvisioningDeviceClientContract implements
     private static final String MQTT_REGISTER_MESSAGE_FMT = "$dps/registrations/PUT/iotdps-register/?$rid=%d";
     private static final String MQTT_STATUS_MESSAGE_FMT = "$dps/registrations/GET/iotdps-get-operationstatus/?$rid=%d&operationId=%s";
 
-    private static final int MAX_WAIT_TO_SEND_MSG = 1*60*1000; // 1 minute timeout
-
+    private static final int MAX_WAIT_TO_SEND_MSG = 1 * 60 * 1000; // 1 minute timeout
+    private final ObjectLock receiveLock = new ObjectLock();
+    private final Queue<MqttMessage> receivedMessages = new LinkedBlockingQueue<>();
     private MqttConnection mqttConnection;
     private String hostname;
     private String idScope;
-
     private int packetId;
     private boolean useWebSockets;
-
-    private final ObjectLock receiveLock = new ObjectLock();
-    private final Queue<MqttMessage> receivedMessages = new LinkedBlockingQueue<>();
-
     private Throwable lostConnection = null;
 
     /**
      * This constructor creates an instance of Mqtt class and initializes member variables
+     *
      * @param provisioningDeviceClientConfig Config used for provisioning Cannot be {@code null}.
      * @throws ProvisioningDeviceClientException is thrown when any of the input parameters are invalid
      */
@@ -108,6 +105,7 @@ public class ContractAPIMqtt extends ProvisioningDeviceClientContract implements
 
     /**
      * Indicates need to open MQTT connection
+     *
      * @param requestData Data used for the connection initialization
      * @throws ProvisioningDeviceConnectionException is thrown when any of the input parameters are invalid
      */
@@ -151,13 +149,14 @@ public class ContractAPIMqtt extends ProvisioningDeviceClientContract implements
 
     /**
      * Indicates to close the connection
+     *
      * @throws ProvisioningDeviceConnectionException thrown if a failure in disconnect
      */
     public synchronized void close() throws ProvisioningDeviceConnectionException
     {
         try
         {
-            if (this.mqttConnection != null && this.mqttConnection.isMqttConnected() )
+            if (this.mqttConnection != null && this.mqttConnection.isMqttConnected())
             {
                 this.mqttConnection.disconnect();
             }
@@ -170,12 +169,13 @@ public class ContractAPIMqtt extends ProvisioningDeviceClientContract implements
 
     /**
      * Requests hub to authenticate this connection and start the registration process over MQTT
-     * @param requestData A non {@code null} value with all the required request data
+     *
+     * @param requestData      A non {@code null} value with all the required request data
      * @param responseCallback A non {@code null} value for the callback
-     * @param callbackContext An object for context. Can be {@code null}
-     * @throws ProvisioningDeviceClientException If any of the parameters are invalid ({@code null} or empty)
+     * @param callbackContext  An object for context. Can be {@code null}
+     * @throws ProvisioningDeviceClientException    If any of the parameters are invalid ({@code null} or empty)
      * @throws ProvisioningDeviceTransportException If any of the API calls to transport fail
-     * @throws ProvisioningDeviceHubException If hub responds back with an invalid status
+     * @throws ProvisioningDeviceHubException       If hub responds back with an invalid status
      */
     public synchronized void authenticateWithProvisioningService(RequestData requestData, ResponseCallback responseCallback, Object callbackContext) throws ProvisioningDeviceClientException
     {
@@ -205,12 +205,13 @@ public class ContractAPIMqtt extends ProvisioningDeviceClientContract implements
 
     /**
      * Gets the registration status over MQTT
-     * @param requestData A non {@code null} value with all the request data
+     *
+     * @param requestData      A non {@code null} value with all the request data
      * @param responseCallback A non {@code null} value for the callback
-     * @param callbackContext An object for context. Can be {@code null}
-     * @throws ProvisioningDeviceClientException If any of the parameters are invalid ({@code null} or empty)
+     * @param callbackContext  An object for context. Can be {@code null}
+     * @throws ProvisioningDeviceClientException    If any of the parameters are invalid ({@code null} or empty)
      * @throws ProvisioningDeviceTransportException If any of the API calls to transport fail
-     * @throws ProvisioningDeviceHubException If hub responds back with an invalid status
+     * @throws ProvisioningDeviceHubException       If hub responds back with an invalid status
      */
     public synchronized void getRegistrationStatus(RequestData requestData, ResponseCallback responseCallback, Object callbackContext) throws ProvisioningDeviceClientException
     {
@@ -256,12 +257,13 @@ public class ContractAPIMqtt extends ProvisioningDeviceClientContract implements
 
     /**
      * Requests hub to provide a device key to begin authentication over MQTT (Only for TPM)
-     * @param responseCallback A non {@code null} value for the callback
-     * @param responseCallback A non {@code null} value for the callback
+     *
+     * @param responseCallback             A non {@code null} value for the callback
+     * @param responseCallback             A non {@code null} value for the callback
      * @param authorizationCallbackContext An object for context. Can be {@code null}
-     * @throws ProvisioningDeviceClientException If any of the parameters are invalid ({@code null} or empty)
+     * @throws ProvisioningDeviceClientException    If any of the parameters are invalid ({@code null} or empty)
      * @throws ProvisioningDeviceTransportException If any of the API calls to transport fail
-     * @throws ProvisioningDeviceHubException If hub responds back with an invalid status
+     * @throws ProvisioningDeviceHubException       If hub responds back with an invalid status
      */
     public synchronized void requestNonceForTPM(RequestData requestData, ResponseCallback responseCallback, Object authorizationCallbackContext) throws ProvisioningDeviceClientException
     {

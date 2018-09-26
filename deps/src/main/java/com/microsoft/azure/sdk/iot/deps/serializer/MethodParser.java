@@ -14,46 +14,32 @@ import java.util.Map;
  */
 public class MethodParser
 {
-    protected enum Operation
-    {
-        invoke,
-        response,
-        payload,
-        none
-    }
-
-    @Expose(serialize = false, deserialize = false)
-    private Operation operation;
-
     /* Codes_SRS_METHODPARSER_21_015: [The toJsonElement shall include name as `methodName` in the json.] */
     private static final String METHOD_NAME_TAG = "methodName";
+    /* Codes_SRS_METHODPARSER_21_016: [The toJsonElement shall include responseTimeout in seconds as `responseTimeoutInSeconds` in the json.] */
+    private static final String RESPONSE_TIMEOUT_IN_SECONDS_TAG = "responseTimeoutInSeconds";
+    /* Codes_SRS_METHODPARSER_21_031: [The toJsonElement shall include connectTimeout in seconds as `connectTimeoutInSeconds` in the json.] */
+    private static final String CONNECT_TIMEOUT_IN_SECONDS_TAG = "connectTimeoutInSeconds";
+    /* Codes_SRS_METHODPARSER_21_024: [The class toJsonElement include status as `status` in the json.] */
+    private static final String STATUS_TAG = "status";
+    /* Codes_SRS_METHODPARSER_21_018: [The class toJsonElement include payload as `payload` in the json.] */
+    private static final String PAYLOAD_TAG = "payload";
+    @Expose(serialize = false, deserialize = false)
+    private Operation operation;
     @Expose(serialize = true, deserialize = false)
     @SerializedName(METHOD_NAME_TAG)
     private String name;
-
-    /* Codes_SRS_METHODPARSER_21_016: [The toJsonElement shall include responseTimeout in seconds as `responseTimeoutInSeconds` in the json.] */
-    private static final String RESPONSE_TIMEOUT_IN_SECONDS_TAG = "responseTimeoutInSeconds";
     @Expose(serialize = true, deserialize = false)
     @SerializedName(RESPONSE_TIMEOUT_IN_SECONDS_TAG)
     private Long responseTimeout;
-
-    /* Codes_SRS_METHODPARSER_21_031: [The toJsonElement shall include connectTimeout in seconds as `connectTimeoutInSeconds` in the json.] */
-    private static final String CONNECT_TIMEOUT_IN_SECONDS_TAG = "connectTimeoutInSeconds";
     @Expose(serialize = true, deserialize = false)
     @SerializedName(CONNECT_TIMEOUT_IN_SECONDS_TAG)
     private Long connectTimeout;
-
-    /* Codes_SRS_METHODPARSER_21_024: [The class toJsonElement include status as `status` in the json.] */
-    private static final String STATUS_TAG = "status";
     @Expose(serialize = false, deserialize = true)
     @SerializedName(STATUS_TAG)
     private Integer status;
-
-    /* Codes_SRS_METHODPARSER_21_018: [The class toJsonElement include payload as `payload` in the json.] */
-    private static final String PAYLOAD_TAG = "payload";
     @SerializedName(PAYLOAD_TAG)
     private Object payload;
-
     /**
      * CONSTRUCTOR
      * Create a MethodParser instance with provided values.
@@ -76,10 +62,10 @@ public class MethodParser
      * CONSTRUCTOR
      * Create a MethodParser instance with provided values.
      *
-     * @param name - method name [required].
+     * @param name            - method name [required].
      * @param responseTimeout - maximum interval of time, in seconds, that the Direct Method will wait for answer. It can be {@code null}.
-     * @param connectTimeout - maximum interval of time, in seconds, that the Direct Method will wait for the connection. It can be {@code null}.
-     * @param payload - Object that contains the payload defined by the user. It can be {@code null}.
+     * @param connectTimeout  - maximum interval of time, in seconds, that the Direct Method will wait for the connection. It can be {@code null}.
+     * @param payload         - Object that contains the payload defined by the user. It can be {@code null}.
      * @throws IllegalArgumentException This exception is thrown if the one of the provided information do not fits the requirements.
      */
     public MethodParser(String name, Long responseTimeout, Long connectTimeout, Object payload) throws IllegalArgumentException
@@ -91,13 +77,13 @@ public class MethodParser
         /* Codes_SRS_METHODPARSER_21_004: [If the `name` is null, empty, contains more than 128 chars, or illegal char (`$`, `.`, space), the constructor shall throw IllegalArgumentException.] */
         validateKey(name);
 
-        if(responseTimeout != null)
+        if (responseTimeout != null)
         {
             /* Codes_SRS_METHODPARSER_21_005: [If the responseTimeout is a negative number, the constructor shall throw IllegalArgumentException.] */
             validateTimeout(responseTimeout);
         }
 
-        if(connectTimeout != null)
+        if (connectTimeout != null)
         {
             /* Codes_SRS_METHODPARSER_21_033: [If the connectTimeout is a negative number, the constructor shall throw IllegalArgumentException.] */
             validateTimeout(connectTimeout);
@@ -135,16 +121,16 @@ public class MethodParser
      * Set the Method collection with the provided information in the json.
      *
      * @param json - Json with the information to change the collection.
-     *                  - If contains `methodName`, it is a full method including `methodName`, `responseTimeoutInSeconds`, `connectTimeoutInSeconds`, and `payload`.
-     *                  - If contains `status`, it is a response with `status` and `payload`.
-     *                  - Otherwise, it is only `payload`.
+     *             - If contains `methodName`, it is a full method including `methodName`, `responseTimeoutInSeconds`, `connectTimeoutInSeconds`, and `payload`.
+     *             - If contains `status`, it is a response with `status` and `payload`.
+     *             - Otherwise, it is only `payload`.
      * @throws IllegalArgumentException This exception is thrown if the one of the provided information do not fits the requirements.
      */
     public synchronized void fromJson(String json) throws IllegalArgumentException
     {
         MethodParser newMethodParser;
 
-        if((json == null) || json.isEmpty())
+        if ((json == null) || json.isEmpty())
         {
             /* Codes_SRS_METHODPARSER_21_008: [If the provided json is null, empty, or not valid, the fromJson shall throws IllegalArgumentException.] */
             throw new IllegalArgumentException("Invalid json");
@@ -154,9 +140,9 @@ public class MethodParser
         Gson gson = new GsonBuilder().serializeNulls().create();
 
         /* Codes_SRS_METHODPARSER_21_006: [The fromJson shall parse the json and fill the method collection.] */
-        if(json.contains(METHOD_NAME_TAG))
+        if (json.contains(METHOD_NAME_TAG))
         {
-            if(json.contains(STATUS_TAG))
+            if (json.contains(STATUS_TAG))
             {
                 /* Codes_SRS_METHODPARSER_21_008: [If the provided json is null, empty, or not valid, the fromJson shall throws IllegalArgumentException.] */
                 throw new IllegalArgumentException("Invoke method name and Status reported in the same json");
@@ -192,7 +178,7 @@ public class MethodParser
             this.payload = newMethodParser.payload;
             this.operation = Operation.invoke;
         }
-        else if(json.contains(STATUS_TAG))
+        else if (json.contains(STATUS_TAG))
         {
             /**
              * Codes_SRS_METHODPARSER_21_011: [If the json contains the `status` identification, the fromJson shall parse both status and payload, and set the operation as `response`.]
@@ -254,7 +240,7 @@ public class MethodParser
     public Integer getStatus() throws IllegalArgumentException
     {
         /* Codes_SRS_METHODPARSER_21_035: [If the operation is not `response`, the getStatus shall throws IllegalArgumentException.] */
-        if(operation != Operation.response)
+        if (operation != Operation.response)
         {
             throw new IllegalArgumentException("No response to report status");
         }
@@ -306,7 +292,7 @@ public class MethodParser
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().serializeNulls().create();
         JsonObject jsonProperty = new JsonObject();
 
-        switch(operation)
+        switch (operation)
         {
             case invoke:
                 /**
@@ -328,15 +314,15 @@ public class MethodParser
                     throw new IllegalArgumentException("cannot invoke method with null name");
                 }
                 jsonProperty.addProperty(METHOD_NAME_TAG, name);
-                if(responseTimeout != null)
+                if (responseTimeout != null)
                 {
                     jsonProperty.addProperty(RESPONSE_TIMEOUT_IN_SECONDS_TAG, responseTimeout);
                 }
-                if(connectTimeout != null)
+                if (connectTimeout != null)
                 {
                     jsonProperty.addProperty(CONNECT_TIMEOUT_IN_SECONDS_TAG, connectTimeout);
                 }
-                if(payload instanceof Map)
+                if (payload instanceof Map)
                 {
                     jsonProperty.add(PAYLOAD_TAG, ParserUtility.mapToJsonElement((Map<String, Object>) payload));
                 }
@@ -355,7 +341,7 @@ public class MethodParser
                  *  }
                  */
                 jsonProperty.addProperty(STATUS_TAG, status);
-                if(payload instanceof Map)
+                if (payload instanceof Map)
                 {
                     jsonProperty.add(PAYLOAD_TAG, ParserUtility.mapToJsonElement((Map<String, Object>) payload));
                 }
@@ -395,17 +381,17 @@ public class MethodParser
     private void validateKey(String key) throws IllegalArgumentException
     {
         /* Codes_SRS_METHODPARSER_21_004: [If the `name` is null, empty, contains more than 128 chars, or illegal char (`$`, `.`, space), the constructor shall throw IllegalArgumentException.] */
-        if((key == null) || (key.isEmpty()))
+        if ((key == null) || (key.isEmpty()))
         {
             throw new IllegalArgumentException("Key cannot be null or empty");
         }
 
-        if(key.length()>128)
+        if (key.length() > 128)
         {
             throw new IllegalArgumentException("Key cannot be longer than 128 characters");
         }
 
-        if(key.contains("$") || key.contains(".") ||key.contains(" "))
+        if (key.contains("$") || key.contains(".") || key.contains(" "))
         {
             throw new IllegalArgumentException("Key cannot contain \'$\', \'.\', or space");
         }
@@ -421,10 +407,15 @@ public class MethodParser
     {
         /* Codes_SRS_METHODPARSER_21_005: [If the responseTimeout is a negative number, the constructor shall throw IllegalArgumentException.] */
         /* Codes_SRS_METHODPARSER_21_033: [If the connectTimeout is a negative number, the constructor shall throw IllegalArgumentException.] */
-        if(timeout<0)
+        if (timeout < 0)
         {
             throw new IllegalArgumentException("Negative timeout");
         }
+    }
+
+    protected enum Operation
+    {
+        invoke, response, payload, none
     }
 
 }

@@ -22,11 +22,12 @@ public class RequestData
 
     /**
      * Constructor for Request data
+     *
      * @param endorsementKey Endorsement key value. Can be {@code null}
      * @param storageRootKey Storage root key value. Can be {@code null}
      * @param registrationId Registration ID value. Can be {@code null}
-     * @param sslContext SSL context value. Can be {@code null}
-     * @param sasToken SasToken value. Can be {@code null}
+     * @param sslContext     SSL context value. Can be {@code null}
+     * @param sasToken       SasToken value. Can be {@code null}
      */
     RequestData(byte[] endorsementKey, byte[] storageRootKey, String registrationId, SSLContext sslContext, String sasToken)
     {
@@ -40,9 +41,10 @@ public class RequestData
 
     /**
      * Constructor for Request data
+     *
      * @param registrationId Registration ID value. Can be {@code null}
-     * @param sslContext SSL context value. Can be {@code null}
-     * @param sasToken SasToken value. Can be {@code null}
+     * @param sslContext     SSL context value. Can be {@code null}
+     * @param sasToken       SasToken value. Can be {@code null}
      */
     RequestData(String registrationId, SSLContext sslContext, String sasToken)
     {
@@ -54,9 +56,10 @@ public class RequestData
 
     /**
      * Constructor for Request data
+     *
      * @param registrationId Registration ID value. Can be {@code null}
-     * @param sslContext SSL context value. Can be {@code null}
-     * @param isX509 True if X509 flow, false otherwise
+     * @param sslContext     SSL context value. Can be {@code null}
+     * @param isX509         True if X509 flow, false otherwise
      */
     RequestData(String registrationId, SSLContext sslContext, boolean isX509)
     {
@@ -68,10 +71,11 @@ public class RequestData
 
     /**
      * Constructor for Request data
+     *
      * @param registrationId Registration ID value. Can be {@code null};
-     * @param operationId Operation ID value. Can be {@code null};
-     * @param sslContext SSL context value. Can be {@code null};
-     * @param sasToken SasToken value. Can be {@code null};
+     * @param operationId    Operation ID value. Can be {@code null};
+     * @param sslContext     SSL context value. Can be {@code null};
+     * @param sasToken       SasToken value. Can be {@code null};
      */
     RequestData(String registrationId, String operationId, SSLContext sslContext, String sasToken)
     {
@@ -84,6 +88,7 @@ public class RequestData
 
     /**
      * Getter for endorsement key
+     *
      * @return endorsement key
      */
     public byte[] getEndorsementKey()
@@ -94,6 +99,7 @@ public class RequestData
 
     /**
      * Getter for Storage root key
+     *
      * @return Storage root key.
      */
     public byte[] getStorageRootKey()
@@ -104,6 +110,7 @@ public class RequestData
 
     /**
      * Getter for Registration ID
+     *
      * @return registration id.
      */
     public String getRegistrationId()
@@ -114,6 +121,7 @@ public class RequestData
 
     /**
      * Getter for operation Id
+     *
      * @return Operation Id value.
      */
     public String getOperationId()
@@ -124,6 +132,7 @@ public class RequestData
 
     /**
      * If the flow with the service is X509 or not.
+     *
      * @return true if the flow is X509.
      */
     public boolean isX509()
@@ -134,6 +143,7 @@ public class RequestData
 
     /**
      * Getter for SSL Context
+     *
      * @return SSL context
      */
     public SSLContext getSslContext()
@@ -144,6 +154,7 @@ public class RequestData
 
     /**
      * Setter for SSL context.
+     *
      * @param sslContext sslContext value. Can be {@code null};
      */
     void setSslContext(SSLContext sslContext)
@@ -154,6 +165,7 @@ public class RequestData
 
     /**
      * Getter for SasToken.
+     *
      * @return SasToken value.
      */
     public String getSasToken()
@@ -164,6 +176,7 @@ public class RequestData
 
     /**
      * Setter for SasToken.
+     *
      * @param sasToken Sastoken value. Can be {@code null};
      */
     void setSasToken(String sasToken)

@@ -22,7 +22,7 @@ import java.util.Map;
 public class DeviceOperations
 {
     /**
-     *  Values for Http header
+     * Values for Http header
      */
     private static final String AUTHORIZATION = "authorization";
     private static final String REQUEST_ID = "Request-Id";
@@ -36,52 +36,45 @@ public class DeviceOperations
 
     /**
      * Send a http request to the IoTHub using the Twin/Method standard, and return its response.
-     * 
+     *
      * @param iotHubConnectionString is the connection string for the IoTHub
-     * @param url is the Twin URL for the device ID.
-     * @param method is the HTTP method (GET, POST, DELETE, PATCH, PUT).
-     * @param payload is the array of bytes that contains the payload.
-     * @param requestId is an unique number that identify the request.
-     * @param timeoutInMs is timeout in milliseconds.
+     * @param url                    is the Twin URL for the device ID.
+     * @param method                 is the HTTP method (GET, POST, DELETE, PATCH, PUT).
+     * @param payload                is the array of bytes that contains the payload.
+     * @param requestId              is an unique number that identify the request.
+     * @param timeoutInMs            is timeout in milliseconds.
      * @return the result of the request.
      * @throws IotHubException This exception is thrown if the response verification failed
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      */
-    public static HttpResponse request(
-            IotHubConnectionString iotHubConnectionString, 
-            URL url, 
-            HttpMethod method, 
-            byte[] payload, 
-            String requestId,
-            long timeoutInMs) 
-            throws IOException, IotHubException, IllegalArgumentException
+    public static HttpResponse request(IotHubConnectionString iotHubConnectionString, URL url, HttpMethod method, byte[] payload, String requestId, long timeoutInMs) throws IOException, IotHubException, IllegalArgumentException
     {
         /* Codes_SRS_DEVICE_OPERATIONS_21_001: [The request shall throw IllegalArgumentException if the provided `iotHubConnectionString` is null.] */
-        if(iotHubConnectionString == null)
+        if (iotHubConnectionString == null)
         {
             throw new IllegalArgumentException("Null ConnectionString");
         }
 
         /* Codes_SRS_DEVICE_OPERATIONS_21_002: [The request shall throw IllegalArgumentException if the provided `url` is null.] */
-        if(url == null)
+        if (url == null)
         {
             throw new IllegalArgumentException("Null URL");
         }
 
         /* Codes_SRS_DEVICE_OPERATIONS_21_003: [The request shall throw IllegalArgumentException if the provided `method` is null.] */
-        if(method == null)
+        if (method == null)
         {
             throw new IllegalArgumentException("Null method");
         }
 
         /* Codes_SRS_DEVICE_OPERATIONS_21_004: [The request shall throw IllegalArgumentException if the provided `payload` is null.] */
-        if(payload == null)
+        if (payload == null)
         {
             throw new IllegalArgumentException("Null payload");
         }
 
         /* Codes_SRS_DEVICE_OPERATIONS_99_018: [The request shall throw IllegalArgumentException if the provided `timeoutInMs` exceed Integer.MAX_VALUE.] */
-        if((timeoutInMs + DEFAULT_HTTP_TIMEOUT_MS) > Integer.MAX_VALUE) 
+        if ((timeoutInMs + DEFAULT_HTTP_TIMEOUT_MS) > Integer.MAX_VALUE)
         {
             throw new IllegalArgumentException("HTTP Request timeout shouldn't not exceed " + timeoutInMs + DEFAULT_HTTP_TIMEOUT_MS + " milliseconds");
         }
@@ -89,7 +82,7 @@ public class DeviceOperations
         /* Codes_SRS_DEVICE_OPERATIONS_21_006: [The request shall create a new SASToken with the ServiceConnect rights.] */
         String sasTokenString = new IotHubServiceSasToken(iotHubConnectionString).toString();
         /* Codes_SRS_DEVICE_OPERATIONS_21_007: [If the SASToken is null or empty, the request shall throw IOException.] */
-         if((sasTokenString == null) || sasTokenString.isEmpty())
+        if ((sasTokenString == null) || sasTokenString.isEmpty())
         {
             throw new IOException("Illegal sasToken null or empty");
         }
@@ -98,13 +91,13 @@ public class DeviceOperations
         HttpRequest request = new HttpRequest(url, method, payload);
 
         /* Codes_SRS_DEVICE_OPERATIONS_21_009: [The request shall add to the HTTP header the sum of timeout and default timeout in milliseconds.] */
-        request.setReadTimeoutMillis((int)(timeoutInMs + DEFAULT_HTTP_TIMEOUT_MS));
-        
+        request.setReadTimeoutMillis((int) (timeoutInMs + DEFAULT_HTTP_TIMEOUT_MS));
+
         /* Codes_SRS_DEVICE_OPERATIONS_21_010: [The request shall add to the HTTP header an `authorization` key with the SASToken.] */
         request.setHeaderField(AUTHORIZATION, sasTokenString);
 
         //Codes_SRS_DEVICE_OPERATIONS_21_011: [If the requestId is not null or empty, the request shall add to the HTTP header a Request-Id key with a new unique string value for every request.]
-        if((requestId != null) && !requestId.isEmpty())
+        if ((requestId != null) && !requestId.isEmpty())
         {
             /* Codes_SRS_DEVICE_OPERATIONS_21_011: [The request shall add to the HTTP header a `Request-Id` key with a new unique string value for every request.] */
             request.setHeaderField(REQUEST_ID, requestId);
@@ -122,7 +115,7 @@ public class DeviceOperations
         if (headers != null)
         {
             //SRS_DEVICE_OPERATIONS_25_019: [The request shall add to the HTTP header all the additional custom headers set for this request.]
-            for(Map.Entry<String, String> header : headers.entrySet())
+            for (Map.Entry<String, String> header : headers.entrySet())
             {
                 request.setHeaderField(header.getKey(), header.getValue());
             }
@@ -135,13 +128,14 @@ public class DeviceOperations
 
         /* Codes_SRS_DEVICE_OPERATIONS_21_016: [If the resulted HttpResponseStatus represents fail, the request shall throw proper Exception by calling httpResponseVerification.] */
         IotHubExceptionManager.httpResponseVerification(response);
-        
+
         /* Codes_SRS_DEVICE_OPERATIONS_21_017: [If the resulted status represents success, the request shall return the http response.] */
         return response;
     }
 
     /**
      * Sets headers to be used on next HTTP request
+     *
      * @param httpHeaders non null and non empty custom headers
      * @throws IllegalArgumentException This exception is thrown if headers were null or empty
      */

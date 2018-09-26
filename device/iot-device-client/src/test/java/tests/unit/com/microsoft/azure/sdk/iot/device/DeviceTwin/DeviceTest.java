@@ -46,7 +46,7 @@ public class DeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICE_25_001: [**This method shall return a HashSet of properties that user has set by calling setReportedProp.**]**
+     **Tests_SRS_DEVICE_25_001: [**This method shall return a HashSet of properties that user has set by calling setReportedProp.**]**
      */
     @Test
     public void getReportedPropertiesReturnsMapsOfProperties()
@@ -73,7 +73,7 @@ public class DeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICE_25_002: [**The function shall add the new property to the map.**]**
+     **Tests_SRS_DEVICE_25_002: [**The function shall add the new property to the map.**]**
      */
     @Test
     public void setReportedPropertyAddsToReportedProperty()
@@ -100,7 +100,7 @@ public class DeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICE_25_003: [**If the already existing property is altered and added then the this method shall replace the old one.**]**
+     **Tests_SRS_DEVICE_25_003: [**If the already existing property is altered and added then the this method shall replace the old one.**]**
      */
     @Test
     public void setReportedPropertyAddsToAlteredReportedProperty()
@@ -131,9 +131,9 @@ public class DeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICE_25_004: [**If the parameter reportedProp is null then this method shall throw IllegalArgumentException**]**
+     **Tests_SRS_DEVICE_25_004: [**If the parameter reportedProp is null then this method shall throw IllegalArgumentException**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setReportedPropertyCannotAddNullProperty()
     {
         //arrange
@@ -151,7 +151,7 @@ public class DeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICE_25_005: [**The function shall return the HashMap containing the property and its callback and context pair set by the user so far.**]**
+     **Tests_SRS_DEVICE_25_005: [**The function shall return the HashMap containing the property and its callback and context pair set by the user so far.**]**
      */
     @Test
     public void getDesiredPropertiesReturnsMapsOfProperties()
@@ -178,7 +178,7 @@ public class DeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICE_25_006: [**The function shall add the property and its callback and context pair to the user map of desired properties.**]**
+     **Tests_SRS_DEVICE_25_006: [**The function shall add the property and its callback and context pair to the user map of desired properties.**]**
      */
     @Test
     public void setDesiredPropertyCallbackAddsToDesiredProperty()
@@ -205,9 +205,9 @@ public class DeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICE_25_007: [**If the parameter desiredProp is null then this method shall throw IllegalArgumentException**]**
+     **Tests_SRS_DEVICE_25_007: [**If the parameter desiredProp is null then this method shall throw IllegalArgumentException**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setDesiredPropertyCallbackCannotAddNullProperty()
     {
         //arrange
@@ -228,7 +228,7 @@ public class DeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICE_25_008: [**This method shall add the parameters to the map even if callback and object pair are null**]**
+     **Tests_SRS_DEVICE_25_008: [**This method shall add the parameters to the map even if callback and object pair are null**]**
      */
     @Test
     public void setDesiredPropertyCallbackCanAddNullPair()

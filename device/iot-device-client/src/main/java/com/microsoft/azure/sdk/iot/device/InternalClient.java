@@ -24,16 +24,13 @@ public class InternalClient
     static final String SET_MINIMUM_POLLING_INTERVAL = "SetMinimumPollingInterval";
     static final String SET_SEND_INTERVAL = "SetSendInterval";
     static final String SET_CERTIFICATE_PATH = "SetCertificatePath";
-	static final String SET_CERTIFICATE_AUTHORITY = "SetCertificateAuthority";
+    static final String SET_CERTIFICATE_AUTHORITY = "SetCertificateAuthority";
     static final String SET_SAS_TOKEN_EXPIRY_TIME = "SetSASTokenExpiryTime";
-
+    protected CustomLogger logger;
     DeviceClientConfig config;
     DeviceIO deviceIO;
-
     private DeviceTwin twin;
     private DeviceMethod method;
-
-    protected CustomLogger logger;
 
     InternalClient(IotHubConnectionString iotHubConnectionString, IotHubClientProtocol protocol, long sendPeriodMillis, long receivePeriodMillis)
     {
@@ -150,15 +147,14 @@ public class InternalClient
     /**
      * Asynchronously sends an event message to the IoT Hub.
      *
-     * @param message the message to be sent.
-     * @param callback the callback to be invoked when a response is received.
-     * Can be {@code null}.
+     * @param message         the message to be sent.
+     * @param callback        the callback to be invoked when a response is received.
+     *                        Can be {@code null}.
      * @param callbackContext a context to be passed to the callback. Can be
-     * {@code null} if no callback is provided.
-     *
+     *                        {@code null} if no callback is provided.
      * @throws IllegalArgumentException if the message provided is {@code null}.
-     * @throws IllegalStateException if the client has not been opened yet or is
-     * already closed.
+     * @throws IllegalStateException    if the client has not been opened yet or is
+     *                                  already closed.
      */
     public void sendEventAsync(Message message, IotHubEventCallback callback, Object callbackContext)
     {
@@ -173,7 +169,6 @@ public class InternalClient
      * Subscribes to desired properties
      *
      * @param onDesiredPropertyChange the Map for desired properties and their corresponding callback and context. Can be {@code null}.
-     *
      * @throws IOException if called when client is not opened or called before starting twin.
      */
     public void subscribeToDesiredProperties(Map<Property, Pair<PropertyCallBack<String, Object>, Object>> onDesiredPropertyChange) throws IOException
@@ -198,7 +193,6 @@ public class InternalClient
      * Subscribes to desired properties
      *
      * @param onDesiredPropertyChange the Map for desired properties and their corresponding callback and context. Can be {@code null}.
-     *
      * @throws IOException if called when client is not opened or called before starting twin.
      */
     public void subscribeToTwinDesiredProperties(Map<Property, Pair<TwinPropertyCallBack, Object>> onDesiredPropertyChange) throws IOException
@@ -223,8 +217,7 @@ public class InternalClient
      * Sends reported properties
      *
      * @param reportedProperties the Set for desired properties and their corresponding callback and context. Cannot be {@code null}.
-     *
-     * @throws IOException if called when client is not opened or called before starting twin.
+     * @throws IOException              if called when client is not opened or called before starting twin.
      * @throws IllegalArgumentException if reportedProperties is null or empty.
      */
     public void sendReportedProperties(Set<Property> reportedProperties) throws IOException, IllegalArgumentException
@@ -251,9 +244,8 @@ public class InternalClient
      * Sends reported properties
      *
      * @param reportedProperties the Set for desired properties and their corresponding callback and context. Cannot be {@code null}.
-     * @param version the Reported property version. Cannot be negative.
-     *
-     * @throws IOException if called when client is not opened or called before starting twin.
+     * @param version            the Reported property version. Cannot be negative.
+     * @throws IOException              if called when client is not opened or called before starting twin.
      * @throws IllegalArgumentException if reportedProperties is null or empty.
      */
     public void sendReportedProperties(Set<Property> reportedProperties, int version) throws IOException, IllegalArgumentException
@@ -273,7 +265,7 @@ public class InternalClient
             throw new IllegalArgumentException("Reported properties set cannot be null or empty.");
         }
 
-        if(version < 0)
+        if (version < 0)
         {
             throw new IllegalArgumentException("Version cannot be null.");
         }
@@ -286,8 +278,8 @@ public class InternalClient
      * with a status and a reason why the device's status changed. When the callback is fired, the provided context will
      * be provided alongside the status and reason.
      *
-     * @param callback The callback to be fired when the connection status of the device changes. Can be null to
-     *                 unset this listener as long as the provided callbackContext is also null.
+     * @param callback        The callback to be fired when the connection status of the device changes. Can be null to
+     *                        unset this listener as long as the provided callbackContext is also null.
      * @param callbackContext a context to be passed to the callback. Can be {@code null}.
      * @throws IllegalArgumentException if provided callback is null
      */
@@ -300,7 +292,8 @@ public class InternalClient
     /**
      * Sets the given retry policy on the underlying transport
      * <a href="https://github.com/Azure/azure-iot-sdk-java/blob/master/device/iot-device-client/devdoc/requirement_docs/com/microsoft/azure/iothub/retryPolicy.md">
-     *     See more details about the default retry policy and about using custom retry policies here</a>
+     * See more details about the default retry policy and about using custom retry policies here</a>
+     *
      * @param retryPolicy the new interval in milliseconds
      */
     public void setRetryPolicy(RetryPolicy retryPolicy)
@@ -312,6 +305,7 @@ public class InternalClient
     /**
      * Set the length of time, in milliseconds, that any given operation will expire in. These operations include
      * reconnecting upon a connection drop and sending a message.
+     *
      * @param timeout the length in time, in milliseconds, until a given operation shall expire
      * @throws IllegalArgumentException if the provided timeout is 0 or negative
      */
@@ -340,26 +334,26 @@ public class InternalClient
     /**
      * Sets a runtime option identified by parameter {@code optionName}
      * to {@code value}.
-     *
+     * <p>
      * The options that can be set via this API are:
-     *	    - <b>SetMinimumPollingInterval</b> - this option is applicable only
-     *	      when the transport configured with this client is HTTP. This
-     *	      option specifies the interval in milliseconds between calls to
-     *	      the service checking for availability of new messages. The value
-     *	      is expected to be of type {@code long}.
-     *	    - <b>SetCertificatePath</b> - this option is applicable only
-     *	      when the transport configured with this client is AMQP. This
-     *	      option specifies the path to the certificate used to verify peer.
-     *	      The value is expected to be of type {@code String}.
-     *      - <b>SetSASTokenExpiryTime</b> - this option is applicable for HTTP/
-     *         AMQP/MQTT. This option specifies the interval in seconds after which
-     *         SASToken expires. If the transport is already open then setting this
-     *         option will restart the transport with the updated expiry time, and
-     *         will use that expiry time length for all subsequently generated sas tokens.
-     *         The value is expected to be of type {@code long}.
+     * - <b>SetMinimumPollingInterval</b> - this option is applicable only
+     * when the transport configured with this client is HTTP. This
+     * option specifies the interval in milliseconds between calls to
+     * the service checking for availability of new messages. The value
+     * is expected to be of type {@code long}.
+     * - <b>SetCertificatePath</b> - this option is applicable only
+     * when the transport configured with this client is AMQP. This
+     * option specifies the path to the certificate used to verify peer.
+     * The value is expected to be of type {@code String}.
+     * - <b>SetSASTokenExpiryTime</b> - this option is applicable for HTTP/
+     * AMQP/MQTT. This option specifies the interval in seconds after which
+     * SASToken expires. If the transport is already open then setting this
+     * option will restart the transport with the updated expiry time, and
+     * will use that expiry time length for all subsequently generated sas tokens.
+     * The value is expected to be of type {@code long}.
      *
      * @param optionName the option name to modify
-     * @param value an object of the appropriate type for the option's value
+     * @param value      an object of the appropriate type for the option's value
      * @throws IllegalArgumentException if the provided optionName is null
      */
     public void setOption(String optionName, Object value)
@@ -383,8 +377,7 @@ public class InternalClient
                 {
                     if (this.deviceIO.isOpen())
                     {
-                        throw new IllegalStateException("setOption " + SET_MINIMUM_POLLING_INTERVAL +
-                                "only works when the transport is closed");
+                        throw new IllegalStateException("setOption " + SET_MINIMUM_POLLING_INTERVAL + "only works when the transport is closed");
                     }
                     else
                     {
@@ -437,7 +430,7 @@ public class InternalClient
                     }
                     else
                     {
-                        setTrustedCertificates((String)value);
+                        setTrustedCertificates((String) value);
                     }
 
                     break;
@@ -458,18 +451,15 @@ public class InternalClient
     /**
      * Starts the device twin.
      *
-     * @param twinStatusCallback the IotHubEventCallback callback for providing the status of Device Twin operations. Cannot be {@code null}.
-     * @param twinStatusCallbackContext the context to be passed to the status callback. Can be {@code null}.
-     * @param genericPropertyCallBack the PropertyCallBack callback for providing any changes in desired properties. Cannot be {@code null}.
+     * @param twinStatusCallback             the IotHubEventCallback callback for providing the status of Device Twin operations. Cannot be {@code null}.
+     * @param twinStatusCallbackContext      the context to be passed to the status callback. Can be {@code null}.
+     * @param genericPropertyCallBack        the PropertyCallBack callback for providing any changes in desired properties. Cannot be {@code null}.
      * @param genericPropertyCallBackContext the context to be passed to the property callback. Can be {@code null}.     *
-     *
-     * @throws IllegalArgumentException if the callback is {@code null}
+     * @throws IllegalArgumentException      if the callback is {@code null}
      * @throws UnsupportedOperationException if called more than once on the same device
-     * @throws IOException if called when client is not opened
+     * @throws IOException                   if called when client is not opened
      */
-    void startTwinInternal(IotHubEventCallback twinStatusCallback, Object twinStatusCallbackContext,
-                                 PropertyCallBack genericPropertyCallBack, Object genericPropertyCallBackContext)
-            throws IOException, IllegalArgumentException, UnsupportedOperationException
+    void startTwinInternal(IotHubEventCallback twinStatusCallback, Object twinStatusCallbackContext, PropertyCallBack genericPropertyCallBack, Object genericPropertyCallBackContext) throws IOException, IllegalArgumentException, UnsupportedOperationException
 
     {
         if (!this.deviceIO.isOpen())
@@ -483,13 +473,7 @@ public class InternalClient
         }
         if (this.twin == null)
         {
-            twin = new DeviceTwin(
-                    this.deviceIO,
-                    this.config,
-                    twinStatusCallback,
-                    twinStatusCallbackContext,
-                    genericPropertyCallBack,
-                    genericPropertyCallBackContext);
+            twin = new DeviceTwin(this.deviceIO, this.config, twinStatusCallback, twinStatusCallbackContext, genericPropertyCallBack, genericPropertyCallBackContext);
 
             twin.getDeviceTwin();
         }
@@ -502,19 +486,16 @@ public class InternalClient
     /**
      * Starts the device twin.
      *
-     * @param twinStatusCallback the IotHubEventCallback callback for providing the status of Device Twin operations. Cannot be {@code null}.
-     * @param twinStatusCallbackContext the context to be passed to the status callback. Can be {@code null}.
-     * @param genericPropertyCallBack the TwinPropertyCallBack callback for providing any changes in desired properties. Cannot be {@code null}.
+     * @param twinStatusCallback             the IotHubEventCallback callback for providing the status of Device Twin operations. Cannot be {@code null}.
+     * @param twinStatusCallbackContext      the context to be passed to the status callback. Can be {@code null}.
+     * @param genericPropertyCallBack        the TwinPropertyCallBack callback for providing any changes in desired properties. Cannot be {@code null}.
      * @param genericPropertyCallBackContext the context to be passed to the property callback. Can be {@code null}.     *
-     *
-     * @throws IllegalArgumentException if the callback is {@code null}
+     * @throws IllegalArgumentException      if the callback is {@code null}
      * @throws UnsupportedOperationException if called more than once on the same device
-     * @throws IOException if called when client is not opened
-     * @throws IllegalArgumentException if either callback is null
+     * @throws IOException                   if called when client is not opened
+     * @throws IllegalArgumentException      if either callback is null
      */
-    void startTwinInternal(IotHubEventCallback twinStatusCallback, Object twinStatusCallbackContext,
-                                 TwinPropertyCallBack genericPropertyCallBack, Object genericPropertyCallBackContext)
-            throws IOException, IllegalArgumentException, UnsupportedOperationException
+    void startTwinInternal(IotHubEventCallback twinStatusCallback, Object twinStatusCallbackContext, TwinPropertyCallBack genericPropertyCallBack, Object genericPropertyCallBackContext) throws IOException, IllegalArgumentException, UnsupportedOperationException
     {
         if (!this.deviceIO.isOpen())
         {
@@ -530,8 +511,7 @@ public class InternalClient
         if (this.twin == null)
         {
             //Codes_SRS_INTERNALCLIENT_34_084: [This function shall initialize a DeviceTwin object and invoke getDeviceTwin on it.]
-            twin = new DeviceTwin(this.deviceIO, this.config, twinStatusCallback, twinStatusCallbackContext,
-                    genericPropertyCallBack, genericPropertyCallBackContext);
+            twin = new DeviceTwin(this.deviceIO, this.config, twinStatusCallback, twinStatusCallbackContext, genericPropertyCallBack, genericPropertyCallBackContext);
             twin.getDeviceTwin();
         }
         else
@@ -543,6 +523,7 @@ public class InternalClient
 
     /**
      * Get the current desired properties for this client
+     *
      * @throws IOException if the iot hub cannot be reached
      * @throws IOException if the twin has not been initialized yet
      * @throws IOException if the client has not been opened yet
@@ -570,12 +551,11 @@ public class InternalClient
      * Sets the message callback.
      *
      * @param callback the message callback. Can be {@code null}.
-     * @param context the context to be passed to the callback. Can be {@code null}.
-     *
+     * @param context  the context to be passed to the callback. Can be {@code null}.
      * @throws IllegalArgumentException if the callback is {@code null} but a context is
-     * passed in.
-     * @throws IllegalStateException if the callback is set after the client is
-     * closed.
+     *                                  passed in.
+     * @throws IllegalStateException    if the callback is set after the client is
+     *                                  closed.
      */
     void setMessageCallbackInternal(MessageCallback callback, Object context)
     {
@@ -592,17 +572,14 @@ public class InternalClient
     /**
      * Subscribes to methods
      *
-     * @param methodCallback Callback on which methods shall be invoked. Cannot be {@code null}.
-     * @param methodCallbackContext Context for method callback. Can be {@code null}.
-     * @param methodStatusCallback Callback for providing IotHub status for methods. Cannot be {@code null}.
+     * @param methodCallback              Callback on which methods shall be invoked. Cannot be {@code null}.
+     * @param methodCallbackContext       Context for method callback. Can be {@code null}.
+     * @param methodStatusCallback        Callback for providing IotHub status for methods. Cannot be {@code null}.
      * @param methodStatusCallbackContext Context for method status callback. Can be {@code null}.
-     *
-     * @throws IOException if called when client is not opened.
+     * @throws IOException              if called when client is not opened.
      * @throws IllegalArgumentException if either callback are null.
      */
-    void subscribeToMethodsInternal(DeviceMethodCallback methodCallback, Object methodCallbackContext,
-                                              IotHubEventCallback methodStatusCallback, Object methodStatusCallbackContext)
-            throws IOException
+    void subscribeToMethodsInternal(DeviceMethodCallback methodCallback, Object methodCallbackContext, IotHubEventCallback methodStatusCallback, Object methodStatusCallbackContext) throws IOException
     {
         if (!this.deviceIO.isOpen())
         {

@@ -11,10 +11,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
-*  Unit tests for AmqpsSendReturnValue
-* 100% methods covered
-* 100% lines covered
-*/
+ * Unit tests for AmqpsSendReturnValue
+ * 100% methods covered
+ * 100% lines covered
+ */
 public class AmqpsSendReturnValueTest
 {
     // Tests_SRS_AMQPSSENDRETURNVALUE_12_001: [The constructor shall initialize deliverySuccessful and deliveryHash private member variables with the given arguments.]

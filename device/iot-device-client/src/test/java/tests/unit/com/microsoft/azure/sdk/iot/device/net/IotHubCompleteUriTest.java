@@ -15,18 +15,22 @@ import java.net.URISyntaxException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/** Unit tests for IotHubCompleteUri. */
+/**
+ * Unit tests for IotHubCompleteUri.
+ */
 public class IotHubCompleteUriTest
 {
-    /** The e-tag will be interpolated where the '%s' is placed. */
+    /**
+     * The e-tag will be interpolated where the '%s' is placed.
+     */
     protected static String COMPLETE_PATH_FORMAT = "/messages/devicebound/%s";
 
-    @Mocked IotHubUri mockIotHubUri;
+    @Mocked
+    IotHubUri mockIotHubUri;
 
     // Tests_SRS_IOTHUBCOMPLETEURI_11_001: [The constructor returns a URI with the format "[iotHubHostname]/devices/[deviceId]/messages/devicebound/[eTag]?api-version=2016-02-03".]
     @Test
-    public void constructorConstructsIotHubUriCorrectly()
-            throws URISyntaxException
+    public void constructorConstructsIotHubUriCorrectly() throws URISyntaxException
     {
         final String iotHubHostname = "test.iothub";
         final String deviceId = "test-deviceid";

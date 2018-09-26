@@ -18,47 +18,47 @@ import java.util.NoSuchElementException;
 
 /**
  * The query iterator.
- *
+ * <p>
  * <p> The {@code Query} iterator is the result of the query factory for
  * <table>
- *     <caption>Query factories</caption>
- *     <tr>
- *         <td><b>IndividualEnrollment:</b></td>
- *         <td>{@link ProvisioningServiceClient#createIndividualEnrollmentQuery(QuerySpecification, int)}</td>
- *     </tr>
- *     <tr>
- *         <td><b>EnrollmentGroup:</b></td>
- *         <td>{@link ProvisioningServiceClient#createEnrollmentGroupQuery(QuerySpecification, int)}</td>
- *     </tr>
- *     <tr>
- *         <td><b>RegistrationStatus:</b></td>
- *         <td>{@link ProvisioningServiceClient#createEnrollmentGroupRegistrationStatusQuery(QuerySpecification, String, int)}</td>
- *     </tr>
+ * <caption>Query factories</caption>
+ * <tr>
+ * <td><b>IndividualEnrollment:</b></td>
+ * <td>{@link ProvisioningServiceClient#createIndividualEnrollmentQuery(QuerySpecification, int)}</td>
+ * </tr>
+ * <tr>
+ * <td><b>EnrollmentGroup:</b></td>
+ * <td>{@link ProvisioningServiceClient#createEnrollmentGroupQuery(QuerySpecification, int)}</td>
+ * </tr>
+ * <tr>
+ * <td><b>RegistrationStatus:</b></td>
+ * <td>{@link ProvisioningServiceClient#createEnrollmentGroupRegistrationStatusQuery(QuerySpecification, String, int)}</td>
+ * </tr>
  * </table>
  * <p> On all cases, the <b>QuerySpecification</b> contains a SQL query that must follow the
- *     <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language">Query Language</a>
- *     for the Device Provisioning Service.
- *
+ * <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language">Query Language</a>
+ * for the Device Provisioning Service.
+ * <p>
  * <p> Optionally, an {@code Integer} with the <b>pageSize</b>, can determine the maximum number of the items in the
- *     {@link QueryResult} returned by the {@link #next()}. It must be any positive integer, and if it contains 0,
- *     the Device Provisioning Service will ignore it and use a standard page size.
- *
+ * {@link QueryResult} returned by the {@link #next()}. It must be any positive integer, and if it contains 0,
+ * the Device Provisioning Service will ignore it and use a standard page size.
+ * <p>
  * <p> You can use this Object as a standard Iterator, just using the {@link #hasNext()} and {@link #next()} in a
- *     {@code while} loop, up to the point where the {@link #hasNext()} return {@code false}. But, keep in mind
- *     that the {@link QueryResult} can contain a empty list, even if the {@link #hasNext()} returned {@code true}.
- *     For example, image that you have 10 IndividualEnrollment in the Device Provisioning Service and you created
- *     new query with the {@code pageSize} equals 5. The first {@code hasNext()} will return {@code true}, and the
- *     first {@code next()} will return a {@code QueryResult} with 5 items. After that you call the {@code hasNext},
- *     which will returns {@code true}. Now, before you get the next page, somebody delete all the IndividualEnrollment,
- *     What happened, when you call the {@code next()}, it will return a valid {@code QueryResult}, but the
- *     {@link QueryResult#getItems()} will return a empty list.
- *
+ * {@code while} loop, up to the point where the {@link #hasNext()} return {@code false}. But, keep in mind
+ * that the {@link QueryResult} can contain a empty list, even if the {@link #hasNext()} returned {@code true}.
+ * For example, image that you have 10 IndividualEnrollment in the Device Provisioning Service and you created
+ * new query with the {@code pageSize} equals 5. The first {@code hasNext()} will return {@code true}, and the
+ * first {@code next()} will return a {@code QueryResult} with 5 items. After that you call the {@code hasNext},
+ * which will returns {@code true}. Now, before you get the next page, somebody delete all the IndividualEnrollment,
+ * What happened, when you call the {@code next()}, it will return a valid {@code QueryResult}, but the
+ * {@link QueryResult#getItems()} will return a empty list.
+ * <p>
  * <p> You can also store a query context (QuerySpecification + ContinuationToken) and restart it in the future, from
- *     the point where you stopped.
- *
+ * the point where you stopped.
+ * <p>
  * <p> Besides the Items, the queryResult contains the continuationToken, the {@link QueryResult#getContinuationToken()}
- *     shall return it. In any point in the future, you may recreate the query using the same query factories that you
- *     used for the first time, and call {@link #next(String)} providing the stored continuationToken to get the next page.
+ * shall return it. In any point in the future, you may recreate the query using the same query factories that you
+ * used for the first time, and call {@link #next(String)} providing the stored continuationToken to get the next page.
  *
  * @see <a href="https://docs.microsoft.com/en-us/azure/iot-dps/">Azure IoT Hub Device Provisioning Service</a>
  * @see <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language">Query Language</a>
@@ -80,52 +80,52 @@ public class Query implements Iterator
 
     /**
      * INTERNAL CONSTRUCTOR
-     *
+     * <p>
      * <p> Use one of the factories to create a new query.
      * <table>
-     *     <caption>Query factories</caption>
-     *     <tr>
-     *         <td><b>IndividualEnrollment:</b></td>
-     *         <td>{@link ProvisioningServiceClient#createIndividualEnrollmentQuery(QuerySpecification, int)}</td>
-     *     </tr>
-     *     <tr>
-     *         <td><b>EnrollmentGroup:</b></td>
-     *         <td>{@link ProvisioningServiceClient#createEnrollmentGroupQuery(QuerySpecification, int)}</td>
-     *     </tr>
-     *     <tr>
-     *         <td><b>RegistrationStatus:</b></td>
-     *         <td>{@link ProvisioningServiceClient#createEnrollmentGroupRegistrationStatusQuery(QuerySpecification, String, int)}</td>
-     *     </tr>
+     * <caption>Query factories</caption>
+     * <tr>
+     * <td><b>IndividualEnrollment:</b></td>
+     * <td>{@link ProvisioningServiceClient#createIndividualEnrollmentQuery(QuerySpecification, int)}</td>
+     * </tr>
+     * <tr>
+     * <td><b>EnrollmentGroup:</b></td>
+     * <td>{@link ProvisioningServiceClient#createEnrollmentGroupQuery(QuerySpecification, int)}</td>
+     * </tr>
+     * <tr>
+     * <td><b>RegistrationStatus:</b></td>
+     * <td>{@link ProvisioningServiceClient#createEnrollmentGroupRegistrationStatusQuery(QuerySpecification, String, int)}</td>
+     * </tr>
      * </table>
      *
-     * @param contractApiHttp the {@link ContractApiHttp} that send request messages to the Device Provisioning Service. It cannot be {@code null}.
-     * @param targetPath the {@code String} with the path that will be part of the URL in the rest API. It cannot be {@code null}.
+     * @param contractApiHttp    the {@link ContractApiHttp} that send request messages to the Device Provisioning Service. It cannot be {@code null}.
+     * @param targetPath         the {@code String} with the path that will be part of the URL in the rest API. It cannot be {@code null}.
      * @param querySpecification the {@link QuerySpecification} with the SQL query. It cannot be {@code null}.
-     * @param pageSize the {@code int} with the maximum number of items per iteration. It cannot be negative.
+     * @param pageSize           the {@code int} with the maximum number of items per iteration. It cannot be negative.
      * @throws IllegalArgumentException if one of the parameters is invalid.
      */
     protected Query(ContractApiHttp contractApiHttp, String targetPath, QuerySpecification querySpecification, int pageSize)
     {
         /* SRS_QUERY_21_001: [The constructor shall throw IllegalArgumentException if the provided contractApiHttp is null.] */
-        if(contractApiHttp == null)
+        if (contractApiHttp == null)
         {
             throw new IllegalArgumentException("contractApiHttp cannot be null.");
         }
 
         /* SRS_QUERY_21_002: [The constructor shall throw IllegalArgumentException if the provided targetPath is null or empty.] */
-        if(Tools.isNullOrEmpty(targetPath))
+        if (Tools.isNullOrEmpty(targetPath))
         {
             throw new IllegalArgumentException("targetPath cannot be null.");
         }
 
         /* SRS_QUERY_21_003: [The constructor shall throw IllegalArgumentException if the provided querySpecification is null.] */
-        if(querySpecification == null)
+        if (querySpecification == null)
         {
             throw new IllegalArgumentException("querySpecification cannot be null.");
         }
 
         /* SRS_QUERY_21_004: [The constructor shall throw IllegalArgumentException if the provided pageSize is negative.] */
-        if(pageSize < 0)
+        if (pageSize < 0)
         {
             throw new IllegalArgumentException("pageSize cannot be negative.");
         }
@@ -149,11 +149,11 @@ public class Query implements Iterator
 
     /**
      * Getter for hasNext.
-     *
+     * <p>
      * <p> It will return {@code true} if the query is not finished in the Device Provisioning Service, and another
-     *     iteration with {@link #next()} may return more items. Call {@link #next()} after receive a {@code hasNext}
-     *     {@code true} will result in a {@link QueryResult} that can or cannot contains elements. And call
-     *     {@link #next()} after receive a {@code hasNext} {@code false} will result in a exception.
+     * iteration with {@link #next()} may return more items. Call {@link #next()} after receive a {@code hasNext}
+     * {@code true} will result in a {@link QueryResult} that can or cannot contains elements. And call
+     * {@link #next()} after receive a {@code hasNext} {@code false} will result in a exception.
      *
      * @return The{@code boolean} {@code true} if query is not finalize in the Service.
      */
@@ -174,19 +174,19 @@ public class Query implements Iterator
     public QueryResult next()
     {
         /* SRS_QUERY_21_011: [The next shall throw NoSuchElementException if the hasNext is false.] */
-        if(!hasNext)
+        if (!hasNext)
         {
             throw new NoSuchElementException("There are no more pending elements");
         }
 
         /* SRS_QUERY_21_012: [If the pageSize is not 0, the next shall send the Http request with `x-ms-max-item-count=[pageSize]` in the header.] */
         Map<String, String> headerParameters = new HashMap<>();
-        if(pageSize != 0)
+        if (pageSize != 0)
         {
             headerParameters.put(PAGE_SIZE_KEY, Integer.toString(pageSize));
         }
         /* SRS_QUERY_21_013: [If the continuationToken is not null or empty, the next shall send the Http request with `x-ms-continuation=[continuationToken]` in the header.] */
-        if(!Tools.isNullOrEmpty(this.continuationToken))
+        if (!Tools.isNullOrEmpty(this.continuationToken))
         {
             headerParameters.put(CONTINUATION_TOKEN_KEY, this.continuationToken);
         }
@@ -195,12 +195,7 @@ public class Query implements Iterator
         HttpResponse httpResponse;
         try
         {
-            httpResponse =
-                    contractApiHttp.request(
-                            HttpMethod.POST,
-                            queryPath,
-                            headerParameters,
-                            querySpecificationJson);
+            httpResponse = contractApiHttp.request(HttpMethod.POST, queryPath, headerParameters, querySpecificationJson);
         }
         catch (ProvisioningServiceClientException e)
         {
@@ -211,7 +206,7 @@ public class Query implements Iterator
 
         /* SRS_QUERY_21_024: [The next shall throw IllegalArgumentException if the heepResponse contains a null body.] */
         byte[] body = httpResponse.getBody();
-        if(body == null)
+        if (body == null)
         {
             throw new IllegalArgumentException("Http response for next cannot contains a null body");
         }
@@ -237,7 +232,7 @@ public class Query implements Iterator
     public QueryResult next(String continuationToken)
     {
         /* SRS_QUERY_21_018: [The next shall throw NoSuchElementException if the provided continuationToken is null or empty.] */
-        if(Tools.isNullOrEmpty(continuationToken))
+        if (Tools.isNullOrEmpty(continuationToken))
         {
             throw new NoSuchElementException("There is no Continuation Token to get pending elements,");
         }
@@ -251,7 +246,7 @@ public class Query implements Iterator
 
     /**
      * Getter for the pageSize.
-     *
+     * <p>
      * <p> PageSize is the maximum number of items in the {@link QueryResult} per iteration.
      *
      * @return An {@code int} with the current pageSize.
@@ -264,7 +259,7 @@ public class Query implements Iterator
 
     /**
      * Setter for the pageSize.
-     *
+     * <p>
      * <p> PageSize is the maximum number of items in the {@link QueryResult} per iteration.
      *
      * @param pageSize an {@code int} with the new pageSize. It cannot be negative. The Device Service Client
@@ -274,7 +269,7 @@ public class Query implements Iterator
     public void setPageSize(int pageSize)
     {
         /* SRS_QUERY_21_022: [The setPageSize shall throw IllegalArgumentException if the provided pageSize is negative.] */
-        if(pageSize < 0)
+        if (pageSize < 0)
         {
             throw new IllegalArgumentException("pageSize cannot be null");
         }

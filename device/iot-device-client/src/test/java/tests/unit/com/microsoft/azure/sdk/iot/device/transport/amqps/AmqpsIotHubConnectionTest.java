@@ -51,7 +51,8 @@ import static org.junit.Assert.assertNotNull;
  * 94% method,
  * 88% line
  */
-public class AmqpsIotHubConnectionTest {
+public class AmqpsIotHubConnectionTest
+{
 
     final String hostName = "test.host.name";
     final String hubName = "test.iothub";
@@ -59,88 +60,60 @@ public class AmqpsIotHubConnectionTest {
     final String deviceKey = "test-devicekey?&test";
     final String amqpPort = "5671";
     final String amqpWebSocketPort = "443";
-
-    @Mocked
-    ProtocolException mockedProtocolException;
-
-    @Mocked
-    TransportException mockedTransportException;
-
-    @Mocked
-    AmqpConnectionThrottledException mockedAmqpConnectionThrottledException;
-
     @Mocked
     protected Handshaker mockHandshaker;
-
     @Mocked
     protected FlowController mockFlowController;
-
     @Mocked
     protected Proton mockProton;
-
     @Mocked
     protected IotHubReactor mockIotHubReactor;
-
     @Mocked
     protected Reactor mockReactor;
-
     @Mocked
     protected DeviceClientConfig mockConfig;
-
     @Mocked
     protected IotHubUri mockIotHubUri;
-
     @Mocked
     protected Message mockProtonMessage;
-
     @Mocked
     protected AmqpsMessage mockAmqpsMessage;
-
     @Mocked
     protected Sender mockSender;
-
     @Mocked
     protected Receiver mockReceiver;
-
     @Mocked
     protected Connection mockConnection;
-
     @Mocked
     protected Session mockSession;
-
     @Mocked
     protected Event mockEvent;
-
     @Mocked
     protected Future mockReactorFuture;
-
     @Mocked
     protected ExecutorService mockExecutorService;
-
     @Mocked
     protected ScheduledExecutorService mockScheduledExecutorService;
-
     @Mocked
     protected Delivery mockDelivery;
-
     @Mocked
     protected Transport mockTransport;
-
     @Mocked
     protected TransportInternal mockTransportInternal;
-
     @Mocked
     protected Sasl mockSasl;
-
     @Mocked
     protected SslDomain mockSslDomain;
-
     @Mocked
     protected SSLContext mockSSLContext;
-
     @Mocked
     protected WebSocketImpl mockWebSocket;
-
+    @Mocked
+    ProtocolException mockedProtocolException;
+    @Mocked
+    TransportException mockedTransportException;
+    @Mocked
+    AmqpConnectionThrottledException mockedAmqpConnectionThrottledException;
     @Mocked
     IotHubListener mockedIotHubListener;
 
@@ -317,7 +290,8 @@ public class AmqpsIotHubConnectionTest {
     @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIllegalArgumentExceptionIfHubNameIsEmpty() throws TransportException
     {
-        new NonStrictExpectations() {
+        new NonStrictExpectations()
+        {
             {
                 mockConfig.getIotHubHostname();
                 result = hostName;
@@ -373,7 +347,7 @@ public class AmqpsIotHubConnectionTest {
     }
 
     // Tests_SRS_AMQPSIOTHUBCONNECTION_12_003: [The constructor shall throw TransportException if the Proton reactor creation failed.]
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void constructorCreatesProtonReactorThrows() throws TransportException, IOException
     {
         baseExpectations();
@@ -381,7 +355,7 @@ public class AmqpsIotHubConnectionTest {
         new NonStrictExpectations()
         {
             {
-                Proton.reactor((AmqpsIotHubConnection)any);
+                Proton.reactor((AmqpsIotHubConnection) any);
                 result = new IOException();
             }
         };
@@ -574,7 +548,7 @@ public class AmqpsIotHubConnectionTest {
 
     // Tests_SRS_AMQPSIOTHUBCONNECTION_34_062: [If, after attempting to open the connection, this
     // object has a saved exception, this function shall throw that saved exception.]
-    @Test (expected = AmqpConnectionForcedException.class)
+    @Test(expected = AmqpConnectionForcedException.class)
     public void openThrowsSavedExceptionsIfAnyExceptionsSavedDuringOpen() throws TransportException, InterruptedException
     {
         // arrange
@@ -609,7 +583,7 @@ public class AmqpsIotHubConnectionTest {
 
 
     // Tests_SRS_AMQPSIOTHUBCONNECTION_15_011: [If any exception is thrown while attempting to trigger the reactor, the function shall closeNow the connection and throw an IOException.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void openThrowsIfProtonReactorThrows() throws TransportException
     {
         // arrange
@@ -663,7 +637,7 @@ public class AmqpsIotHubConnectionTest {
         new Verifications()
         {
             {
-                new IotHubReactor((Reactor)any);
+                new IotHubReactor((Reactor) any);
                 times = 1;
                 mockOpenLatch.await(anyLong, TimeUnit.MILLISECONDS);
                 times = 1;
@@ -880,7 +854,8 @@ public class AmqpsIotHubConnectionTest {
             }
         };
 
-        new MockUp<AmqpsIotHubConnection>() {
+        new MockUp<AmqpsIotHubConnection>()
+        {
             @Mock
             void open(Queue<DeviceClientConfig> deviceClientConfigs)
             {
@@ -913,7 +888,7 @@ public class AmqpsIotHubConnectionTest {
     }
 
     // Tests_SRS_AMQPSIOTHUBCONNECTION_12_005: [The function shall throw IOException if the executor shutdown is interrupted.]
-    @Test (expected = InterruptedException.class)
+    @Test(expected = InterruptedException.class)
     public void closeThrowsIfShutdownThrows() throws TransportException
     {
         baseExpectations();
@@ -1000,13 +975,13 @@ public class AmqpsIotHubConnectionTest {
         // arrange
         baseExpectations();
 
-        final byte[] messageBytes = new byte[] {1, 2};
+        final byte[] messageBytes = new byte[]{1, 2};
         final Integer expectedDeliveryHash = 42;
 
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.invoke(mockAmqpsSessionManager, "sendMessage", new Class[] {Message.class, MessageType.class, String.class}, mockProtonMessage, MessageType.DEVICE_TELEMETRY, "someDeviceId");
+                Deencapsulation.invoke(mockAmqpsSessionManager, "sendMessage", new Class[]{Message.class, MessageType.class, String.class}, mockProtonMessage, MessageType.DEVICE_TELEMETRY, "someDeviceId");
                 result = expectedDeliveryHash;
 
                 mockConfig.getDeviceId();
@@ -1028,7 +1003,7 @@ public class AmqpsIotHubConnectionTest {
         new Verifications()
         {
             {
-                Deencapsulation.invoke(mockAmqpsSessionManager, "sendMessage", new Class[] {Message.class, MessageType.class, String.class}, mockProtonMessage, MessageType.DEVICE_TELEMETRY, "someDeviceId");
+                Deencapsulation.invoke(mockAmqpsSessionManager, "sendMessage", new Class[]{Message.class, MessageType.class, String.class}, mockProtonMessage, MessageType.DEVICE_TELEMETRY, "someDeviceId");
                 times = 1;
             }
         };
@@ -1244,7 +1219,7 @@ public class AmqpsIotHubConnectionTest {
                 mockConfig.getSasTokenAuthentication();
                 result = mockIotHubSasTokenAuthenticationProvider;
                 mockIotHubSasTokenAuthenticationProvider.getSSLContext();
-                result =  mockSSLContext;
+                result = mockSSLContext;
                 mockEvent.getConnection();
                 result = mockConnection;
                 mockConnection.getTransport();
@@ -1281,7 +1256,7 @@ public class AmqpsIotHubConnectionTest {
                 mockConfig.getSasTokenAuthentication();
                 result = mockIotHubSasTokenAuthenticationProvider;
                 mockIotHubSasTokenAuthenticationProvider.getSSLContext();
-                result =  mockSSLContext;
+                result = mockSSLContext;
                 mockEvent.getConnection();
                 result = mockConnection;
                 mockConnection.getTransport();
@@ -1937,7 +1912,7 @@ public class AmqpsIotHubConnectionTest {
         // arrange
         baseExpectations();
         final AmqpsIotHubConnection connection = new AmqpsIotHubConnection(mockConfig);
-        
+
         // act
         connection.setListener(mockedIotHubListener);
 
@@ -1947,7 +1922,7 @@ public class AmqpsIotHubConnectionTest {
     }
 
     // Tests_SRS_AMQPSIOTHUBCONNECTION_34_063: [If the provided listener is null, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setListenerThrowsForNullListener() throws TransportException
     {
         // arrange
@@ -2031,7 +2006,7 @@ public class AmqpsIotHubConnectionTest {
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(AmqpsIotHubConnection.ReconnectionTask.class, new Class[] {Throwable.class, IotHubListener.class, String.class}, any, mockedIotHubListener, connection.getConnectionId());
+                Deencapsulation.newInstance(AmqpsIotHubConnection.ReconnectionTask.class, new Class[]{Throwable.class, IotHubListener.class, String.class}, any, mockedIotHubListener, connection.getConnectionId());
                 times = 1;
             }
         };
@@ -2055,7 +2030,7 @@ public class AmqpsIotHubConnectionTest {
                 result = mockedSymbol;
                 mockedSymbol.toString();
                 result = AmqpLinkRedirectException.errorCode;
-                Deencapsulation.invoke(connection, "scheduleReconnection", new Class[] {Throwable.class}, (Throwable) any);
+                Deencapsulation.invoke(connection, "scheduleReconnection", new Class[]{Throwable.class}, (Throwable) any);
             }
         };
 
@@ -2066,7 +2041,7 @@ public class AmqpsIotHubConnectionTest {
         new Verifications()
         {
             {
-                Deencapsulation.invoke(connection, "scheduleReconnection", new Class[] {Throwable.class}, (Throwable) any);
+                Deencapsulation.invoke(connection, "scheduleReconnection", new Class[]{Throwable.class}, (Throwable) any);
                 times = 1;
             }
         };
@@ -2096,7 +2071,7 @@ public class AmqpsIotHubConnectionTest {
                 result = mockedApplicationProperties;
                 mockedApplicationProperties.getValue();
                 result = applicationPropertiesMap;
-                Deencapsulation.invoke(mockAmqpsSessionManager, "convertFromProton", new Class[] {AmqpsMessage.class, DeviceClientConfig.class}, any, any);
+                Deencapsulation.invoke(mockAmqpsSessionManager, "convertFromProton", new Class[]{AmqpsMessage.class, DeviceClientConfig.class}, any, any);
                 result = null;
                 mockAmqpsMessage.getAmqpsMessageType();
                 result = MessageType.CBS_AUTHENTICATION;
@@ -2258,7 +2233,7 @@ public class AmqpsIotHubConnectionTest {
     // Tests_SRS_AMQPSIOTHUBCONNECTION_12_074: [If authentication has not succeeded after calling
     // authenticate() and openLinks(), or if all links are not open yet,
     // this function shall throw a retryable transport exception.]
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void openChecksIfActuallyOpenExceptionEncountered() throws TransportException, InterruptedException
     {
         // arrange
@@ -2296,7 +2271,7 @@ public class AmqpsIotHubConnectionTest {
     // Tests_SRS_AMQPSIOTHUBCONNECTION_12_074: [If authentication has not succeeded after calling
     // authenticate() and openLinks(), or if all links are not open yet,
     // this function shall throw a retryable transport exception.]
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void openChecksIfActuallyOpenNotAllLinksOpened() throws TransportException, InterruptedException
     {
         // arrange
@@ -2335,7 +2310,7 @@ public class AmqpsIotHubConnectionTest {
     }
 
     // Tests_SRS_AMQPSTRANSPORT_34_076: [The function throws IllegalStateException if none of the device operation object could handle the conversion.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void sendMessageThrowsIfNoHandler() throws TransportException
     {
         //arrange
@@ -2379,7 +2354,7 @@ public class AmqpsIotHubConnectionTest {
                 mockIoTMessage.getIotHubConnectionString();
                 result = mockConnectionString;
 
-                Deencapsulation.invoke(mockAmqpsSessionManager, "sendMessage", new Class[] {Message.class, MessageType.class, String.class}, mockedMessageImpl, MessageType.DEVICE_TWIN, "someDeviceId");
+                Deencapsulation.invoke(mockAmqpsSessionManager, "sendMessage", new Class[]{Message.class, MessageType.class, String.class}, mockedMessageImpl, MessageType.DEVICE_TWIN, "someDeviceId");
                 result = expectedHash;
 
                 mockConfig.getDeviceId();
@@ -2424,7 +2399,7 @@ public class AmqpsIotHubConnectionTest {
                 mockIoTMessage.getIotHubConnectionString();
                 result = mockConnectionString;
 
-                Deencapsulation.invoke(mockAmqpsSessionManager, "sendMessage", new Class[] {Message.class, MessageType.class, String.class}, mockedMessageImpl, MessageType.DEVICE_TWIN, "someDeviceId");
+                Deencapsulation.invoke(mockAmqpsSessionManager, "sendMessage", new Class[]{Message.class, MessageType.class, String.class}, mockedMessageImpl, MessageType.DEVICE_TWIN, "someDeviceId");
                 result = expectedHash;
 
                 new ProtocolException(anyString);
@@ -2833,10 +2808,11 @@ public class AmqpsIotHubConnectionTest {
         //assert
         assertEquals("Unknown transport exception occurred", actualException.getMessage());
     }
-    
+
     private void baseExpectations()
     {
-        new NonStrictExpectations() {
+        new NonStrictExpectations()
+        {
             {
                 mockConfig.getAuthenticationType();
                 result = DeviceClientConfig.AuthType.SAS_TOKEN;

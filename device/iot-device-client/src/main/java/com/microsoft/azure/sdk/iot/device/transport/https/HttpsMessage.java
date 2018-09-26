@@ -14,27 +14,41 @@ import java.util.Map;
  */
 public interface HttpsMessage
 {
-    /** The prefix to be added to an HTTPS application-defined property. */
+    /**
+     * The prefix to be added to an HTTPS application-defined property.
+     */
     String HTTPS_APP_PROPERTY_PREFIX = "iothub-app-";
 
-    /** The prefix to be added to an HTTPS system-defined property. */
+    /**
+     * The prefix to be added to an HTTPS system-defined property.
+     */
     String HTTPS_SYSTEM_PROPERTY_PREFIX = "iothub-";
 
     /**
      * Gets the message body.
+     *
      * @return Returns the message body.
      */
     byte[] getBody();
 
-    /** Gets the message content type.
-     * @return Returns the message content-type. */
+    /**
+     * Gets the message content type.
+     *
+     * @return Returns the message content-type.
+     */
     String getContentType();
 
-    /**Gets the collection of message properties.
-     * @return Returns the message properties. */
+    /**
+     * Gets the collection of message properties.
+     *
+     * @return Returns the message properties.
+     */
     MessageProperty[] getProperties();
 
-    /**Gets the collection of system message properties.
-     * @return Returns the system message properties. */
+    /**
+     * Gets the collection of system message properties.
+     *
+     * @return Returns the system message properties.
+     */
     Map<String, String> getSystemProperties();
 }

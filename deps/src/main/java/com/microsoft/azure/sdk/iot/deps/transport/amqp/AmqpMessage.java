@@ -25,6 +25,7 @@ public class AmqpMessage
 
     /**
      * Consule a MessageImpl object
+     *
      * @param messageImpl the ProtonJ Impl message.
      */
     public AmqpMessage(MessageImpl messageImpl)
@@ -34,20 +35,22 @@ public class AmqpMessage
 
     /**
      * set the Body of the AMQP message
+     *
      * @param msgData the AMQP message body.
      */
     public void setBody(Data msgData)
     {
-        messageImpl.setBody((Section)msgData);
+        messageImpl.setBody((Section) msgData);
     }
 
     /**
      * Returns the amqp body used in the message
+     *
      * @return Byte array
      */
     public byte[] getAmqpBody()
     {
-        Data msgData = (Data)this.messageImpl.getBody();
+        Data msgData = (Data) this.messageImpl.getBody();
         Binary binData = msgData.getValue();
         byte[] msgBody = new byte[binData.getLength()];
         ByteBuffer buffer = binData.asByteBuffer();
@@ -57,6 +60,7 @@ public class AmqpMessage
 
     /**
      * Set the application property for the message
+     *
      * @param userProperties The user prototype.
      */
     public void setApplicationProperty(Map<String, Object> userProperties)
@@ -67,7 +71,8 @@ public class AmqpMessage
 
     /**
      * Sets the data value
-     * @param data the {@code byte[]} to be decoded
+     *
+     * @param data   the {@code byte[]} to be decoded
      * @param offset the offset in the byte[]
      * @param length the total length
      */

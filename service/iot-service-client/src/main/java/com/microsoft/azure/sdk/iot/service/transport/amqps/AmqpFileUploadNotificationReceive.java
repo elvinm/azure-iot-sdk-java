@@ -24,6 +24,7 @@ import java.util.concurrent.LinkedBlockingDeque;
  */
 public class AmqpFileUploadNotificationReceive extends BaseHandler implements AmqpFeedbackReceivedEvent
 {
+    private static final int REACTOR_TIMEOUT = 3141; // reactor timeout in milliseconds
     private final String hostName;
     private final String userName;
     private final String sasToken;
@@ -32,13 +33,13 @@ public class AmqpFileUploadNotificationReceive extends BaseHandler implements Am
     private Reactor reactor = null;
     private FileUploadNotification fileUploadNotification;
     private Queue<FileUploadNotification> fileUploadNotificationQueue;
-    private static final int REACTOR_TIMEOUT = 3141; // reactor timeout in milliseconds
 
     /**
      * Constructor to set up connection parameters
-     * @param hostName The address string of the service (example: AAA.BBB.CCC)
-     * @param userName The username string to use SASL authentication (example: user@sas.service)
-     * @param sasToken The SAS token string
+     *
+     * @param hostName                    The address string of the service (example: AAA.BBB.CCC)
+     * @param userName                    The username string to use SASL authentication (example: user@sas.service)
+     * @param sasToken                    The SAS token string
      * @param iotHubServiceClientProtocol protocol to use
      */
     public AmqpFileUploadNotificationReceive(String hostName, String userName, String sasToken, IotHubServiceClientProtocol iotHubServiceClientProtocol)
@@ -52,6 +53,7 @@ public class AmqpFileUploadNotificationReceive extends BaseHandler implements Am
 
     /**
      * Event handler for the reactor init event
+     *
      * @param event The proton event object
      */
     @Override
@@ -70,6 +72,7 @@ public class AmqpFileUploadNotificationReceive extends BaseHandler implements Am
 
     /**
      * Create AmqpsReceiveHandler and store it in a member variable
+     *
      * @throws IOException If underlying layers throws it for any reason
      */
     public synchronized void open() throws IOException
@@ -89,7 +92,7 @@ public class AmqpFileUploadNotificationReceive extends BaseHandler implements Am
     {
         // Codes_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVE_25_004: [The function shall invalidate the member AmqpsReceiveHandler object]
         amqpReceiveHandler = null;
-        if ( fileUploadNotificationQueue!= null && !fileUploadNotificationQueue.isEmpty())
+        if (fileUploadNotificationQueue != null && !fileUploadNotificationQueue.isEmpty())
         {
             fileUploadNotificationQueue.clear();
         }
@@ -99,33 +102,34 @@ public class AmqpFileUploadNotificationReceive extends BaseHandler implements Am
     /**
      * Synchronized call to receive feedback batch
      * Hide the event based receiving mechanism from the user API
+     *
      * @param timeoutMs The timeout in milliseconds to wait for the feedback
      * @return The received feedback batch
-     * @throws IOException This exception is thrown if the input AmqpReceive object is null
+     * @throws IOException          This exception is thrown if the input AmqpReceive object is null
      * @throws InterruptedException This exception is thrown if the receive process has been interrupted
      */
     public synchronized FileUploadNotification receive(long timeoutMs) throws IOException, InterruptedException
     {
-        if  (amqpReceiveHandler != null)
+        if (amqpReceiveHandler != null)
         {
             // Codes_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVE_25_005: [The function shall initialize the Proton reactor object]
             this.reactor = Proton.reactor(this);
             // Codes_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVE_25_006: [The function shall start the Proton reactor object]
             this.reactor.setTimeout(REACTOR_TIMEOUT);
             this.reactor.start();
-            
+
             // Codes_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVE_25_007: [The function shall wait for specified timeout to check for any feedback message]
             long startTime = System.currentTimeMillis();
             long endTime = startTime + timeoutMs;
-            
-            while(this.reactor.process())
+
+            while (this.reactor.process())
             {
                 if (System.currentTimeMillis() > endTime)
                 {
                     break;
                 }
             }
-            
+
             // Codes_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVE_25_008: [The function shall stop and free the Proton reactor object]
             this.reactor.stop();
             this.reactor.process();
@@ -151,6 +155,7 @@ public class AmqpFileUploadNotificationReceive extends BaseHandler implements Am
      * Handle on feedback received Proton event
      * Parse received json and save result to a member variable
      * Release semaphore for wait function
+     *
      * @param feedbackJson Received Json string to process
      */
     public synchronized void onFeedbackReceived(String feedbackJson)
@@ -161,9 +166,7 @@ public class AmqpFileUploadNotificationReceive extends BaseHandler implements Am
         {
             FileUploadNotificationParser notificationParser = new FileUploadNotificationParser(feedbackJson);
 
-            fileUploadNotification = new FileUploadNotification(notificationParser.getDeviceId(),
-                    notificationParser.getBlobUri(), notificationParser.getBlobName(), notificationParser.getLastUpdatedTime(),
-                    notificationParser.getBlobSizeInBytesTag(), notificationParser.getEnqueuedTimeUtc());
+            fileUploadNotification = new FileUploadNotification(notificationParser.getDeviceId(), notificationParser.getBlobUri(), notificationParser.getBlobName(), notificationParser.getLastUpdatedTime(), notificationParser.getBlobSizeInBytesTag(), notificationParser.getEnqueuedTimeUtc());
 
             fileUploadNotificationQueue.add(fileUploadNotification);
         }

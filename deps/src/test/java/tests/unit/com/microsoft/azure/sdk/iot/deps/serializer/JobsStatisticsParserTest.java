@@ -28,15 +28,8 @@ public class JobsStatisticsParserTest
     {
         // arrange
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        String json =
-                "{\n" +
-                "        \"deviceCount\": 1,\n" +
-                "        \"failedCount\": 2,\n" +
-                "        \"succeededCount\": 3,\n" +
-                "        \"runningCount\": 4,\n" +
-                "        \"pendingCount\": 5\n" +
-                "}";
-        JobsStatisticsParser jobsStatisticsParser= gson.fromJson(json, JobsStatisticsParser.class);
+        String json = "{\n" + "        \"deviceCount\": 1,\n" + "        \"failedCount\": 2,\n" + "        \"succeededCount\": 3,\n" + "        \"runningCount\": 4,\n" + "        \"pendingCount\": 5\n" + "}";
+        JobsStatisticsParser jobsStatisticsParser = gson.fromJson(json, JobsStatisticsParser.class);
 
         // act
         // assert

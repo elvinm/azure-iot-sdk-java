@@ -24,14 +24,12 @@ public class HttpResponse
     /**
      * Constructor.
      *
-     * @param status The HTTPS status code.
-     * @param body The response body.
+     * @param status       The HTTPS status code.
+     * @param body         The response body.
      * @param headerFields The map of header field names and the values associated with the field name.
-     * @param errorReason The error reason.
+     * @param errorReason  The error reason.
      */
-    public HttpResponse(int status, byte[] body,
-                        Map<String, List<String>> headerFields,
-                        byte[] errorReason)
+    public HttpResponse(int status, byte[] body, Map<String, List<String>> headerFields, byte[] errorReason)
     {
         // Codes_SRS_SERVICE_SDK_JAVA_HTTPRESPONSE_12_001: [The constructor shall store the input arguments so that the getters can return them later.]
         this.status = status;
@@ -39,8 +37,7 @@ public class HttpResponse
         this.errorReason = errorReason;
 
         this.headerFields = new HashMap<>();
-        for (Map.Entry<String, List<String>> headerField : headerFields
-                .entrySet())
+        for (Map.Entry<String, List<String>> headerField : headerFields.entrySet())
         {
             String key = headerField.getKey();
             if (key != null)
@@ -50,6 +47,38 @@ public class HttpResponse
                 this.headerFields.put(field, values);
             }
         }
+    }
+
+    protected HttpResponse()
+    {
+        this.status = 0;
+        this.body = null;
+        this.headerFields = null;
+        this.errorReason = null;
+    }
+
+    protected static String canonicalizeFieldName(String field)
+    {
+        String canonicalizedField = field;
+        if (canonicalizedField != null)
+        {
+            canonicalizedField = field.toLowerCase();
+        }
+
+        return canonicalizedField;
+    }
+
+    protected static String flattenValuesList(List<String> values)
+    {
+        String valuesStr = "";
+        for (String value : values)
+        {
+            valuesStr += value + ",";
+        }
+        // remove the trailing comma.
+        valuesStr = valuesStr.substring(0, Math.max(0, valuesStr.length() - 1));
+
+        return valuesStr;
     }
 
     /**
@@ -78,12 +107,10 @@ public class HttpResponse
      * Getter for a header field.
      *
      * @param field the header field name.
-     *
      * @return the header field value. If multiple values are present, they are
      * returned as a comma-separated list according to RFC2616.
-     *
      * @throws IllegalArgumentException if no value exists for the given field
-     * name.
+     *                                  name.
      */
     public String getHeaderField(String field)
     {
@@ -93,8 +120,7 @@ public class HttpResponse
         // Codes_SRS_SERVICE_SDK_JAVA_HTTPRESPONSE_12_006: [If a value could not be found for the given header field name, the function shall throw an IllegalArgumentException.]
         if (values == null)
         {
-            String errMsg = String.format("Could not find a value "
-                    + "associated with the header field name '%s'.\n", field);
+            String errMsg = String.format("Could not find a value " + "associated with the header field name '%s'.\n", field);
 
             throw new IllegalArgumentException(errMsg);
         }
@@ -128,38 +154,5 @@ public class HttpResponse
     {
         // Codes_SRS_SERVICE_SDK_JAVA_HTTPRESPONSE_12_007: [The function shall return the error reason given in the constructor.]
         return this.errorReason;
-    }
-
-    protected static String canonicalizeFieldName(String field)
-    {
-        String canonicalizedField = field;
-        if (canonicalizedField != null)
-        {
-            canonicalizedField = field.toLowerCase();
-        }
-
-        return canonicalizedField;
-    }
-
-    protected static String flattenValuesList(List<String> values)
-    {
-        String valuesStr = "";
-        for (String value : values)
-        {
-            valuesStr += value + ",";
-        }
-        // remove the trailing comma.
-        valuesStr =
-                valuesStr.substring(0, Math.max(0, valuesStr.length() - 1));
-
-        return valuesStr;
-    }
-
-    protected HttpResponse()
-    {
-        this.status = 0;
-        this.body = null;
-        this.headerFields = null;
-        this.errorReason = null;
     }
 }

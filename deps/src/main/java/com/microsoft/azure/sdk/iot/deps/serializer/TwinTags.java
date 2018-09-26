@@ -13,8 +13,9 @@ import java.util.Map;
 
 /**
  * INNER TWINPARSER CLASS
- *
+ * <p>
  * Twin tags representation
+ *
  * @deprecated As of release 0.4.0, replaced by {@link com.microsoft.azure.sdk.iot.deps.twin.TwinCollection}
  */
 @Deprecated
@@ -35,7 +36,7 @@ public class TwinTags
     protected synchronized JsonElement update(Map<String, Object> tagsMap) throws IllegalArgumentException
     {
         JsonElement innerDiff = updateFromMap(tagsMap, tags);
-        if((innerDiff == null) || (innerDiff.toString().equals("{}")))
+        if ((innerDiff == null) || (innerDiff.toString().equals("{}")))
         {
             return null;
         }
@@ -47,25 +48,25 @@ public class TwinTags
         JsonObject diffJson = new JsonObject();
 
         /* Codes_SRS_TWINPARSER_21_103: [The updateTags shall add all provided tags to the collection.] */
-        for (Map.Entry<String,Object> entry : newMap.entrySet())
+        for (Map.Entry<String, Object> entry : newMap.entrySet())
         {
             String key = entry.getKey();
             Object newValue = entry.getValue();
             Object oldValue = oldMap.get(key);
 
-            if(newValue == null)
+            if (newValue == null)
             {
                 oldMap.remove(key);
                 diffJson.add(key, null);
             }
             else
             {
-                if(!oldMap.containsKey(key))
+                if (!oldMap.containsKey(key))
                 {
-                    if(newValue instanceof Map)
+                    if (newValue instanceof Map)
                     {
                         oldMap.put(key, new HashMap<String, Object>());
-                        diffJson.add(key, updateFromMap((Map<String, Object>)newValue, (Map<String, Object>)oldMap.get(key)));
+                        diffJson.add(key, updateFromMap((Map<String, Object>) newValue, (Map<String, Object>) oldMap.get(key)));
                     }
                     else
                     {
@@ -75,19 +76,19 @@ public class TwinTags
                 }
                 else
                 {
-                    if(newValue instanceof Map)
+                    if (newValue instanceof Map)
                     {
-                        if(!(oldValue instanceof Map))
+                        if (!(oldValue instanceof Map))
                         {
                             oldMap.put(key, new HashMap<String, Object>());
                         }
-                        JsonElement innerDiff = updateFromMap((Map<String, Object>)newValue, (Map<String, Object>)oldMap.get(key));
-                        if((innerDiff != null) && (!innerDiff.toString().equals("{}")))
+                        JsonElement innerDiff = updateFromMap((Map<String, Object>) newValue, (Map<String, Object>) oldMap.get(key));
+                        if ((innerDiff != null) && (!innerDiff.toString().equals("{}")))
                         {
                             diffJson.add(key, innerDiff);
                         }
                     }
-                    else if(!newValue.equals(oldValue))
+                    else if (!newValue.equals(oldValue))
                     {
                         oldMap.put(key, newValue);
                         addProperty(diffJson, key, newValue);
@@ -96,24 +97,24 @@ public class TwinTags
             }
         }
 
-        return (JsonElement)diffJson;
+        return (JsonElement) diffJson;
     }
 
     private void addProperty(JsonObject diffJson, String key, Object newValue) throws IllegalArgumentException
     {
-        if(newValue instanceof Number)
+        if (newValue instanceof Number)
         {
             diffJson.addProperty(key, (Number) newValue);
         }
-        else if(newValue instanceof Boolean)
+        else if (newValue instanceof Boolean)
         {
             diffJson.addProperty(key, (Boolean) newValue);
         }
-        else if(newValue instanceof Character)
+        else if (newValue instanceof Character)
         {
             diffJson.addProperty(key, (Character) newValue);
         }
-        else if(newValue.getClass().isLocalClass() || newValue.getClass().isArray())
+        else if (newValue.getClass().isLocalClass() || newValue.getClass().isArray())
         {
             throw new IllegalArgumentException("Type not supported");
         }
@@ -147,7 +148,7 @@ public class TwinTags
     {
         Map<String, Object> diffMap = updateFromJson(tagsMap, tags);
 
-        if(diffMap != null && onTagsCallback != null)
+        if (diffMap != null && onTagsCallback != null)
         {
             onTagsCallback.execute(diffMap);
         }
@@ -155,24 +156,24 @@ public class TwinTags
 
     protected void validate(Map<String, Object> tagsMap)
     {
-        if(tagsMap == null)
+        if (tagsMap == null)
         {
             throw new IllegalArgumentException("property cannot be null");
         }
         for (Map.Entry<String, Object> entry : tagsMap.entrySet())
         {
-            if(entry.getKey().equals(METADATA_TAG))
+            if (entry.getKey().equals(METADATA_TAG))
             {
-                if(entry.getValue() instanceof Map)
+                if (entry.getValue() instanceof Map)
                 {
-                    ParserUtility.validateMap((Map<String, Object>)entry.getValue(), MAX_METADATA_LEVEL, true);
+                    ParserUtility.validateMap((Map<String, Object>) entry.getValue(), MAX_METADATA_LEVEL, true);
                 }
             }
-            else if(!entry.getKey().equals(VERSION_TAG))
+            else if (!entry.getKey().equals(VERSION_TAG))
             {
-                if(entry.getValue() instanceof Map)
+                if (entry.getValue() instanceof Map)
                 {
-                    ParserUtility.validateMap((Map<String, Object>)entry.getValue(), MAX_PROPERTY_LEVEL, false);
+                    ParserUtility.validateMap((Map<String, Object>) entry.getValue(), MAX_PROPERTY_LEVEL, false);
                 }
             }
         }
@@ -182,15 +183,15 @@ public class TwinTags
     {
         Map<String, Object> diffMap = new HashMap<>();
 
-        for (Map.Entry<String,Object> entry : newMap.entrySet())
+        for (Map.Entry<String, Object> entry : newMap.entrySet())
         {
             String key = entry.getKey();
             Object newValue = entry.getValue();
             Object oldValue = oldMap.get(key);
 
-            if(!oldMap.containsKey(key))
+            if (!oldMap.containsKey(key))
             {
-                if(newValue != null)
+                if (newValue != null)
                 {
                     oldMap.put(key, newValue);
                     diffMap.put(key, newValue);
@@ -198,14 +199,14 @@ public class TwinTags
             }
             else
             {
-                if(newValue == null)
+                if (newValue == null)
                 {
                     oldMap.remove(key);
                     diffMap.put(key, null);
                 }
-                else if(newValue instanceof Map)
+                else if (newValue instanceof Map)
                 {
-                    if(oldValue instanceof Map)
+                    if (oldValue instanceof Map)
                     {
                         Map<String, Object> innerDiffMap = updateFromJson((Map<String, Object>) newValue, (Map<String, Object>) oldValue);
                         if (innerDiffMap != null)
@@ -227,7 +228,7 @@ public class TwinTags
             }
         }
 
-        if(diffMap.size() == 0)
+        if (diffMap.size() == 0)
         {
             diffMap = null;
         }

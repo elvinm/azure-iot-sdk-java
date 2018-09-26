@@ -13,21 +13,22 @@ import java.util.Map;
 
 public class HttpRequest
 {
-    /** The underlying HTTPS connection stream. */
+    /**
+     * The underlying HTTPS connection stream.
+     */
     protected final HttpConnection connection;
 
     /**
      * Constructor. Takes a URL as an argument and returns an HTTPS request that
      * is ready to be sent.
      *
-     * @param url The URL for the request.
+     * @param url    The URL for the request.
      * @param method The HTTPS request method (i.e. GET).
-     * @param body The request body. Must be an array of size 0 if the request method is GET or DELETE.
-     *
-     * @throws IOException This exception thrown if an IOException occurs
-     * in setting up the HTTPS connection.
+     * @param body   The request body. Must be an array of size 0 if the request method is GET or DELETE.
+     * @throws IOException              This exception thrown if an IOException occurs
+     *                                  in setting up the HTTPS connection.
      * @throws IllegalArgumentException This exception thrown if the endpoint
-     * given does not use the HTTPS protocol.
+     *                                  given does not use the HTTPS protocol.
      */
     public HttpRequest(URL url, HttpMethod method, byte[] body) throws IOException
     {
@@ -40,13 +41,17 @@ public class HttpRequest
         this.connection.writeOutput(body);
     }
 
+    protected HttpRequest()
+    {
+        this.connection = null;
+    }
+
     /**
      * Executes the HTTPS request.
      *
      * @return The HTTPS response.
-     *
      * @throws IOException This exception thrown if the connection could not be
-     * established, or the input/output streams could not be accessed.
+     *                     established, or the input/output streams could not be accessed.
      */
     public HttpResponse send() throws IOException
     {
@@ -82,8 +87,7 @@ public class HttpRequest
         }
 
         // Codes_SRS_HTTPREQUEST_25_006: [The function shall return the HTTPS response received, including the status code, body, header fields, and error reason (if any).]
-        return new HttpResponse(responseStatus, responseBody, headerFields,
-                errorReason);
+        return new HttpResponse(responseStatus, responseBody, headerFields, errorReason);
     }
 
     /**
@@ -91,7 +95,6 @@ public class HttpRequest
      *
      * @param field The header field name.
      * @param value The header field value.
-     *
      * @return The object itself, for fluent setting.
      */
     public HttpRequest setHeaderField(String field, String value)
@@ -107,7 +110,6 @@ public class HttpRequest
      * before the server sends data back.
      *
      * @param timeout The read timeout.
-     *
      * @return The object itself, for fluent setting.
      */
     public HttpRequest setReadTimeoutMillis(int timeout)
@@ -127,10 +129,5 @@ public class HttpRequest
         //Codes_SRS_HTTPSREQUEST_25_016: [The function shall set the SSL context for the IotHub.]
         this.connection.setSSLContext(sslContext);
         return this;
-    }
-
-    protected HttpRequest()
-    {
-        this.connection = null;
     }
 }

@@ -22,8 +22,11 @@ public abstract class SecurityProviderX509 extends SecurityProvider
     private static final String ALIAS_CERT_ALIAS = "ALIAS_CERT";
 
     abstract public String getClientCertificateCommonName();
+
     abstract public X509Certificate getClientCertificate();
+
     abstract public Key getClientPrivateKey();
+
     abstract public Collection<X509Certificate> getIntermediateCertificatesChain();
 
     @Override
@@ -122,7 +125,7 @@ public abstract class SecurityProviderX509 extends SecurityProvider
         keyStore.setKeyEntry(ALIAS_CERT_ALIAS, leafPrivateKey, password.toCharArray(), certs);
 
         //SRS_SecurityClientX509_25_011: [ This method shall initialize the ssl context with X509KeyManager and X509TrustManager for the keystore. ]
-        sslContext.init(new KeyManager[] {this.getDefaultX509KeyManager(keyStore, password)}, new TrustManager[] {this.getDefaultX509TrustManager(keyStore)}, new SecureRandom());
+        sslContext.init(new KeyManager[]{this.getDefaultX509KeyManager(keyStore, password)}, new TrustManager[]{this.getDefaultX509TrustManager(keyStore)}, new SecureRandom());
         //SRS_SecurityClientX509_25_012: [ This method shall return the ssl context created as above to the caller. ]
         return sslContext;
     }

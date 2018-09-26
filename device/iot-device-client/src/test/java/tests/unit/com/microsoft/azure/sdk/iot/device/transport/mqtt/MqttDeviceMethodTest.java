@@ -168,14 +168,14 @@ public class MqttDeviceMethodTest
         new Verifications()
         {
             {
-                Deencapsulation.invoke(testMethod, "publish", new Class[] {String.class, Message.class}, anyString, any);
+                Deencapsulation.invoke(testMethod, "publish", new Class[]{String.class, Message.class}, anyString, any);
                 maxTimes = 1;
             }
         };
         assertTrue(testRequestMap.isEmpty());
     }
 
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void sendThrowsOnInvalidOperation(@Mocked final Mqtt mockMqtt) throws TransportException
     {
         final byte[] actualPayload = "TestMessage".getBytes();
@@ -189,7 +189,7 @@ public class MqttDeviceMethodTest
     }
 
     //Tests_SRS_MqttDeviceMethod_25_018: [send method shall throw a TransportException if device method has not been started yet.]
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void sendThrowsIfNotStarted(@Mocked final Mqtt mockMqtt) throws TransportException
     {
         final byte[] actualPayload = "TestMessage".getBytes();
@@ -201,7 +201,7 @@ public class MqttDeviceMethodTest
     }
 
     //Tests_SRS_MqttDeviceMethod_25_016: [send method shall throw an exception if the message is null.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void sendThrowsOnMessageNull() throws TransportException
     {
         MqttDeviceMethod testMethod = new MqttDeviceMethod(mockedMqttConnection, "");
@@ -239,7 +239,7 @@ public class MqttDeviceMethodTest
     }
 
     //Tests_SRS_MqttDeviceMethod_25_021: [send method shall throw an IllegalArgumentException if message contains a null or empty request id if the operation is of type DEVICE_OPERATION_METHOD_SEND_RESPONSE.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void sendThrowsOnNullRequestID() throws TransportException
     {
         final byte[] actualPayload = "TestMessage".getBytes();
@@ -254,7 +254,7 @@ public class MqttDeviceMethodTest
     }
 
     //Tests_SRS_MqttDeviceMethod_25_023: [send method shall throw an exception if a response is sent without having a method invoke on the request id if the operation is of type DEVICE_OPERATION_METHOD_SEND_RESPONSE.]
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void sendThrowsOnSendingResponseWithoutReceivingMethodInvoke() throws TransportException
     {
         final byte[] actualPayload = "TestMessage".getBytes();
@@ -272,7 +272,7 @@ public class MqttDeviceMethodTest
     /*
     Tests_SRS_MqttDeviceMethod_25_019: [**send method shall throw a TransportException if the getDeviceOperationType() is not of type DEVICE_OPERATION_METHOD_SUBSCRIBE_REQUEST or DEVICE_OPERATION_METHOD_SEND_RESPONSE .**]**
      */
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void sendThrowsOnMismatchedRequestType() throws TransportException
     {
         final byte[] actualPayload = "TestMessage".getBytes();
@@ -291,11 +291,11 @@ public class MqttDeviceMethodTest
     }
 
     /*
-    * Tests_SRS_MQTTDEVICEMETHOD_25_026: [**This method shall call peekMessage to get the message payload from the received Messages queue corresponding to the messaging client's operation.**]**
-    * Tests_SRS_MQTTDEVICEMETHOD_25_028: [**If the topic is of type post topic then this method shall parse further for method name and set it for the message by calling setMethodName for the message**]**
-    * Tests_SRS_MQTTDEVICEMETHOD_25_030: [**If the topic is of type post topic then this method shall parse further to look for request id which if found is set by calling setRequestId**]**
-    * Tests_SRS_MQTTDEVICEMETHOD_25_032: [**If the topic is of type post topic and if method name and request id has been successfully parsed then this method shall set operation type as DEVICE_OPERATION_METHOD_RECEIVE_REQUEST **]**
-    */
+     * Tests_SRS_MQTTDEVICEMETHOD_25_026: [**This method shall call peekMessage to get the message payload from the received Messages queue corresponding to the messaging client's operation.**]**
+     * Tests_SRS_MQTTDEVICEMETHOD_25_028: [**If the topic is of type post topic then this method shall parse further for method name and set it for the message by calling setMethodName for the message**]**
+     * Tests_SRS_MQTTDEVICEMETHOD_25_030: [**If the topic is of type post topic then this method shall parse further to look for request id which if found is set by calling setRequestId**]**
+     * Tests_SRS_MQTTDEVICEMETHOD_25_032: [**If the topic is of type post topic and if method name and request id has been successfully parsed then this method shall set operation type as DEVICE_OPERATION_METHOD_RECEIVE_REQUEST **]**
+     */
     @Test
     public void receiveSucceeds() throws TransportException
     {
@@ -362,7 +362,7 @@ public class MqttDeviceMethodTest
     }
 
     // Tests_SRS_MQTTDEVICEMETHOD_25_029: [**If method name not found or is null then receive shall throw TransportException **]**
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void receiveThrowsIfMethodNameCouldNotBeParsed() throws TransportException
     {
         //arrange
@@ -382,7 +382,7 @@ public class MqttDeviceMethodTest
     /*
     Tests_SRS_MqttDeviceMethod_25_031: [**If request id is not found or is null then receive shall throw TransportException **]**
      */
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void receiveThrowsIfRIDCouldNotBeParsed() throws TransportException
     {
         //arrange

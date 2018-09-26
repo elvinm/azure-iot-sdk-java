@@ -11,14 +11,14 @@ import java.util.Date;
 public class FileUploadNotification
 {
 
-   /* Ex of FileUploadNotification format:
-         *      deviceId : "mydevice",
-         *      blobUri: "https://{storage account}.blob.core.windows.net/{container name}/mydevice/myfile.jpg",
-         *      blobName: "mydevice/myfile.jpg",
-         *      lastUpdatedTime: 2016-06-01T21:22:41+00:00,
-         *      blobSizeInBytes: 1234,
-         *      enqueuedTimeUtc: 2016-06-01T21:22:43.7996883Z
-   */
+    /* Ex of FileUploadNotification format:
+     *      deviceId : "mydevice",
+     *      blobUri: "https://{storage account}.blob.core.windows.net/{container name}/mydevice/myfile.jpg",
+     *      blobName: "mydevice/myfile.jpg",
+     *      lastUpdatedTime: 2016-06-01T21:22:41+00:00,
+     *      blobSizeInBytes: 1234,
+     *      enqueuedTimeUtc: 2016-06-01T21:22:43.7996883Z
+     */
 
     private String deviceId;
     private String blobUri;
@@ -29,8 +29,7 @@ public class FileUploadNotification
 
     public FileUploadNotification(String deviceId, String blobUri, String blobName, Date lastUpdatedTimeDate, Long blobSizeInBytes, Date enqueuedTimeUtcDate) throws IOException
     {
-        if (deviceId == null || blobUri == null || blobName == null || lastUpdatedTimeDate == null || blobSizeInBytes == null || enqueuedTimeUtcDate == null ||
-                deviceId.isEmpty() || blobName.isEmpty() || blobUri.isEmpty())
+        if (deviceId == null || blobUri == null || blobName == null || lastUpdatedTimeDate == null || blobSizeInBytes == null || enqueuedTimeUtcDate == null || deviceId.isEmpty() || blobName.isEmpty() || blobUri.isEmpty())
         {
             // Codes_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATION_25_002: [** If any of the parameters are null or empty then this method shall throw IllegalArgumentException.**]
             throw new IllegalArgumentException("Null data for notification is not accepted");
@@ -47,6 +46,7 @@ public class FileUploadNotification
 
     /**
      * Getter for Device ID
+     *
      * @return device id
      */
     public String getDeviceId()
@@ -58,6 +58,7 @@ public class FileUploadNotification
 
     /**
      * Getter for BlobUri
+     *
      * @return BlobUri String
      */
     public String getBlobUri()
@@ -68,6 +69,7 @@ public class FileUploadNotification
 
     /**
      * Getter for BlobName
+     *
      * @return BlobName
      */
     public String getBlobName()
@@ -78,6 +80,7 @@ public class FileUploadNotification
 
     /**
      * Getter for LastUpdatedTimeDate
+     *
      * @return LastUpdatedTimeDate
      */
     public Date getLastUpdatedTimeDate()
@@ -88,6 +91,7 @@ public class FileUploadNotification
 
     /**
      * Getter for BlobSize in Bytes
+     *
      * @return BlobSize in Bytes
      */
     public Long getBlobSizeInBytes()
@@ -98,6 +102,7 @@ public class FileUploadNotification
 
     /**
      * Getter for EnqueuedTimeUtcDate
+     *
      * @return EnqueuedTimeUtcDate
      */
     public Date getEnqueuedTimeUtcDate()

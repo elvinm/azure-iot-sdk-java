@@ -5,7 +5,9 @@ package com.microsoft.azure.sdk.iot.service.transport;
 
 public class TransportUtils
 {
-    /** Version identifier key */
+    /**
+     * Version identifier key
+     */
     public static final String versionIdentifierKey = "com.microsoft:client-version";
     public static String javaServiceClientIdentifier = "com.microsoft.azure.sdk.iot.iot-service-client/";
     public static String serviceVersion = "1.15.0";
@@ -14,5 +16,5 @@ public class TransportUtils
     private static String OPERATING_SYSTEM = System.getProperty("os.name");
     private static String PROCESSOR_ARCHITECTURE = System.getProperty("os.arch");
 
-    public static final String USER_AGENT_STRING = javaServiceClientIdentifier + serviceVersion + " (" + JAVA_RUNTIME + "; " + OPERATING_SYSTEM +"; " + PROCESSOR_ARCHITECTURE + ")";
+    public static final String USER_AGENT_STRING = javaServiceClientIdentifier + serviceVersion + " (" + JAVA_RUNTIME + "; " + OPERATING_SYSTEM + "; " + PROCESSOR_ARCHITECTURE + ")";
 }

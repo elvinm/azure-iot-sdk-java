@@ -2,7 +2,7 @@
  *
  *  Copyright (c) Microsoft. All rights reserved.
  *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
- *  
+ *
  */
 
 package tests.unit.com.microsoft.azure.sdk.iot.provisioning.device.internal.task;
@@ -41,9 +41,7 @@ public class RequestDataTest
     public void constructorOneSucceeds() throws Exception
     {
         //act
-        RequestData testRequestData = newInstance(RequestData.class, new Class[] {byte[].class, byte[].class, String.class,
-                                                                        SSLContext.class, String.class},
-                                                  TEST_EK, TEST_SRK, TEST_REG, mockedSslContext, TEST_SASTOKEN);
+        RequestData testRequestData = newInstance(RequestData.class, new Class[]{byte[].class, byte[].class, String.class, SSLContext.class, String.class}, TEST_EK, TEST_SRK, TEST_REG, mockedSslContext, TEST_SASTOKEN);
 
 
         //assert
@@ -60,9 +58,7 @@ public class RequestDataTest
     public void constructorTwoSucceeds() throws Exception
     {
         //act
-        RequestData testRequestData = newInstance(RequestData.class, new Class[] {String.class,
-                                                          SSLContext.class, String.class},
-                                                  TEST_REG, mockedSslContext, TEST_SASTOKEN);
+        RequestData testRequestData = newInstance(RequestData.class, new Class[]{String.class, SSLContext.class, String.class}, TEST_REG, mockedSslContext, TEST_SASTOKEN);
 
 
         //assert
@@ -79,9 +75,7 @@ public class RequestDataTest
     public void constructorThreeSucceeds() throws Exception
     {
         //act
-        RequestData testRequestData = newInstance(RequestData.class, new Class[] {String.class,
-                                                          String.class, SSLContext.class, String.class},
-                                                  TEST_REG, TEST_OP, mockedSslContext, TEST_SASTOKEN);
+        RequestData testRequestData = newInstance(RequestData.class, new Class[]{String.class, String.class, SSLContext.class, String.class}, TEST_REG, TEST_OP, mockedSslContext, TEST_SASTOKEN);
 
 
         //assert
@@ -98,9 +92,7 @@ public class RequestDataTest
     public void constructorFourSucceeds() throws Exception
     {
         //act
-        RequestData testRequestData = newInstance(RequestData.class, new Class[] {String.class,
-                                                          SSLContext.class, boolean.class},
-                                                  TEST_REG, mockedSslContext, true);
+        RequestData testRequestData = newInstance(RequestData.class, new Class[]{String.class, SSLContext.class, boolean.class}, TEST_REG, mockedSslContext, true);
 
 
         //assert
@@ -112,6 +104,7 @@ public class RequestDataTest
         assertNull(testRequestData.getSasToken());
         assertTrue(testRequestData.isX509());
     }
+
     //SRS_RequestData_25_002: [ This method shall retrieve endorsementKey. ]
     //SRS_RequestData_25_003: [ This method shall set endorsementKey. ]
     //SRS_RequestData_25_004: [ This method shall retrieve storageRootKey. ]
@@ -130,9 +123,7 @@ public class RequestDataTest
         String random = new Random().toString();
         //act
         //act
-        RequestData testRequestData = newInstance(RequestData.class, new Class[] {byte[].class, byte[].class, String.class,
-                                                          SSLContext.class, String.class},
-                                                  TEST_EK, TEST_SRK, TEST_REG, mockedSslContext, TEST_SASTOKEN);
+        RequestData testRequestData = newInstance(RequestData.class, new Class[]{byte[].class, byte[].class, String.class, SSLContext.class, String.class}, TEST_EK, TEST_SRK, TEST_REG, mockedSslContext, TEST_SASTOKEN);
 
         //act
         invoke(testRequestData, "setSasToken", TEST_SASTOKEN + random);
@@ -154,10 +145,7 @@ public class RequestDataTest
         String random = new Random().toString();
         //act
         //act
-        RequestData testRequestData = newInstance(RequestData.class, new Class[] {String.class,
-                                                          String.class, SSLContext.class, String.class},
-                                                  TEST_REG, TEST_OP, mockedSslContext, TEST_SASTOKEN);
-
+        RequestData testRequestData = newInstance(RequestData.class, new Class[]{String.class, String.class, SSLContext.class, String.class}, TEST_REG, TEST_OP, mockedSslContext, TEST_SASTOKEN);
 
 
         //act
@@ -179,9 +167,7 @@ public class RequestDataTest
         String random = new Random().toString();
         //act
         //act
-        RequestData testRequestData = newInstance(RequestData.class, new Class[] {String.class,
-                                                          SSLContext.class, String.class},
-                                                  TEST_REG, mockedSslContext, TEST_SASTOKEN);
+        RequestData testRequestData = newInstance(RequestData.class, new Class[]{String.class, SSLContext.class, String.class}, TEST_REG, mockedSslContext, TEST_SASTOKEN);
 
         //act
         invoke(testRequestData, "setSasToken", TEST_SASTOKEN + random);

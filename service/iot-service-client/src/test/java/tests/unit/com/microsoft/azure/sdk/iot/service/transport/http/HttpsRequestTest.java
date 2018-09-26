@@ -25,11 +25,14 @@ import java.util.Map;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/** Unit tests for HttpRequest. */
+/**
+ * Unit tests for HttpRequest.
+ */
 @RunWith(JMockit.class)
 public class HttpsRequestTest
 {
-    @Mocked URL mockUrl;
+    @Mocked
+    URL mockUrl;
 
     // Tests_SRS_SERVICE_SDK_JAVA_HTTPSREQUEST_12_001: [The function shall open a connection with the given URL as the endpoint.]
     @Test
@@ -62,7 +65,7 @@ public class HttpsRequestTest
     {
         // Arrange
         final HttpMethod httpsMethod = HttpMethod.GET;
-        final byte[] body = { 1, 2, 3 };
+        final byte[] body = {1, 2, 3};
         final byte[] expectedBody = body;
         new NonStrictExpectations()
         {
@@ -77,8 +80,7 @@ public class HttpsRequestTest
         new Verifications()
         {
             {
-                new HttpConnection(mockUrl, (HttpMethod) any)
-                        .writeOutput(expectedBody);
+                new HttpConnection(mockUrl, (HttpMethod) any).writeOutput(expectedBody);
             }
         };
     }
@@ -190,8 +192,7 @@ public class HttpsRequestTest
             }
 
             @Mock
-            public Map<String, List<String>> getResponseHeaders()
-                    throws IOException
+            public Map<String, List<String>> getResponseHeaders() throws IOException
             {
                 return new HashMap<>();
             }
@@ -278,8 +279,7 @@ public class HttpsRequestTest
             }
 
             @Mock
-            public Map<String, List<String>> getResponseHeaders()
-                    throws IOException
+            public Map<String, List<String>> getResponseHeaders() throws IOException
             {
                 return new HashMap<>();
             }
@@ -305,7 +305,7 @@ public class HttpsRequestTest
     {
         // Arrange
         final HttpMethod httpsMethod = HttpMethod.POST;
-        final byte[] expectedBody = { 1, 2, 3 };
+        final byte[] expectedBody = {1, 2, 3};
         new MockUp<HttpConnection>()
         {
             byte[] testBody;
@@ -359,8 +359,7 @@ public class HttpsRequestTest
             }
 
             @Mock
-            public Map<String, List<String>> getResponseHeaders()
-                    throws IOException
+            public Map<String, List<String>> getResponseHeaders() throws IOException
             {
                 return new HashMap<>();
             }
@@ -411,7 +410,7 @@ public class HttpsRequestTest
         // Arrange
         final HttpMethod httpsMethod = HttpMethod.GET;
         final byte[] requestBody = new byte[0];
-        final byte[] responseBody = { 1, 2, 3, 0, 4 };
+        final byte[] responseBody = {1, 2, 3, 0, 4};
         final byte[] expectedBody = responseBody;
         new NonStrictExpectations()
         {
@@ -438,7 +437,7 @@ public class HttpsRequestTest
         // Arrange
         final HttpMethod httpsMethod = HttpMethod.GET;
         final byte[] body = new byte[0];
-        final byte[] error = { 5, 6, 7, 0, 1 };
+        final byte[] error = {5, 6, 7, 0, 1};
         final byte[] expectedError = error;
         new NonStrictExpectations()
         {

@@ -14,7 +14,9 @@ import org.junit.Test;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-/** Unit tests for IotHubReceiveTask. */
+/**
+ * Unit tests for IotHubReceiveTask.
+ */
 public class IotHubReceiveTaskTest
 {
     @Mocked

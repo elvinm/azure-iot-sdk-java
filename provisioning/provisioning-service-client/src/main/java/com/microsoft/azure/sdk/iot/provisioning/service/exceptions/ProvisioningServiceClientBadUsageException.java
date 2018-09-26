@@ -7,10 +7,10 @@ package com.microsoft.azure.sdk.iot.provisioning.service.exceptions;
 
 /**
  * This is the subset of the Device Provisioning Service exceptions for the exceptions related to usage error.
- *
+ * <p>
  * <p> The provisioning service will response a http request with one of the bad usage exception if
- *     the rest API was properly called, with a usage issue, for instance the user is not authorized
- *     for that operation.
+ * the rest API was properly called, with a usage issue, for instance the user is not authorized
+ * for that operation.
  * <p> HTTP status code 400 to 499.
  */
 public class ProvisioningServiceClientBadUsageException extends ProvisioningServiceClientServiceException

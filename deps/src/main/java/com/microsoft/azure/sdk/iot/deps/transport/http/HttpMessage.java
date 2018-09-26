@@ -14,12 +14,14 @@ public interface HttpMessage
 {
     /**
      * Gets the message body.
+     *
      * @return The message body.
      */
     byte[] getBody();
 
     /**
      * Gets the content type string.
+     *
      * @return The message content-type.
      */
     String getContentType();

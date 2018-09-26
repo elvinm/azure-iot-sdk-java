@@ -8,10 +8,10 @@ package com.microsoft.azure.sdk.iot.device.transport.mqtt.exceptions;
 import com.microsoft.azure.sdk.iot.device.exceptions.ProtocolException;
 
 /**
- *  This exception is thrown when an MQTT Connection Return code of 0x04 is encountered when opening an MQTT connection
- *
+ * This exception is thrown when an MQTT Connection Return code of 0x04 is encountered when opening an MQTT connection
+ * <p>
  * <a href="http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/csprd02/mqtt-v3.1.1-csprd02.html#_Toc385349771">
- *     MQTT Connect Return Code Documentation</a>
+ * MQTT Connect Return Code Documentation</a>
  */
 public class MqttBadUsernameOrPasswordException extends ProtocolException
 {

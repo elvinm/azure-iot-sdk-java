@@ -19,6 +19,7 @@ public abstract class ProvisioningDeviceClientContract
 {
     /**
      * Static method to create contracts with the service over the specified protocol
+     *
      * @param provisioningDeviceClientConfig Config used for provisioning
      * @return Implementation of the relevant contract for the requested protocol
      * @throws ProvisioningDeviceClientException This exception is thrown if the contract implementation could not be instantiated.
@@ -54,8 +55,12 @@ public abstract class ProvisioningDeviceClientContract
     }
 
     public abstract void open(RequestData requestData) throws ProvisioningDeviceConnectionException;
+
     public abstract void requestNonceForTPM(RequestData requestData, ResponseCallback responseCallback, Object dpsAuthorizationCallbackContext) throws ProvisioningDeviceClientException;
+
     public abstract void authenticateWithProvisioningService(RequestData requestData, ResponseCallback responseCallback, Object dpsAuthorizationCallbackContext) throws ProvisioningDeviceClientException;
+
     public abstract void getRegistrationStatus(RequestData requestData, ResponseCallback responseCallback, Object dpsAuthorizationCallbackContext) throws ProvisioningDeviceClientException;
+
     public abstract void close() throws ProvisioningDeviceConnectionException;
 }

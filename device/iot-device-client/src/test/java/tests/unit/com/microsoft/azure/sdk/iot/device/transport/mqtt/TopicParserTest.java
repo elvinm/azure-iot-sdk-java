@@ -34,7 +34,7 @@ public class TopicParserTest
     /*
     Tests_SRS_TopicParser_25_002: [**The constructor shall throw TransportException if topic is null or empty.**]**
      */
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void constructorFailsInvalidTopic() throws TransportException
     {
         //arrange
@@ -67,7 +67,7 @@ public class TopicParserTest
     /*
     Tests_SRS_TopicParser_25_003: [**If tokenIndexStatus is not valid i.e less than or equal to zero or greater then token length then getStatus shall throw TransportException.**]**
      */
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void getStatusInvalidTokenThrows() throws TransportException
     {
         String validString = "$iothub/twin/res/status";
@@ -80,7 +80,7 @@ public class TopicParserTest
     /*
     Tests_SRS_TopicParser_25_005: [**If token corresponding to tokenIndexStatus is null then this method shall throw TransportException.**]**
      */
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void getStatusMandatoryStatusExpected() throws TransportException
     {
         String validString = "$iothub/twin/res/";
@@ -148,6 +148,7 @@ public class TopicParserTest
 
         assertNull(status);
     }
+
     /*
     Tests_SRS_TopicParser_25_008: [**If the topic token does not contain request id then this method shall return null.**]**
      */
@@ -201,7 +202,7 @@ public class TopicParserTest
     /*
     Tests_SRS_TopicParser_25_006: [**If tokenIndexReqID is not valid i.e less than or equal to zero or greater then token length then getRequestId shall throw TransportException.**]**
      */
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void getRequestIdInvalidTokenThrows() throws TransportException
     {
         //arrange
@@ -288,6 +289,7 @@ public class TopicParserTest
         //assert
         assertNull(version);
     }
+
     @Test
     public void getVersionOnTopicWithRIDGets() throws TransportException
     {
@@ -319,10 +321,11 @@ public class TopicParserTest
         assertTrue(version.equals(String.valueOf(7)));
 
     }
+
     /*
     Tests_SRS_TopicParser_25_009: [**If tokenIndexVersion is not valid i.e less than or equal to zero or greater then token length then getVersion shall throw TransportException.**]**
      */
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void getVersionInvalidTokenThrows() throws TransportException
     {
         //arrange
@@ -358,7 +361,7 @@ public class TopicParserTest
     /*
     Tests_SRS_TopicParser_25_012: [**If tokenIndexMethod is not valid i.e less than or equal to zero or greater then token length then getMethodName shall throw  TransportException.**]**
      */
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void getMethodNameInvalidTokenThrows() throws TransportException
     {
         //arrange
@@ -369,7 +372,7 @@ public class TopicParserTest
         String methodName = Deencapsulation.invoke(testParser, "getMethodName", 4);
     }
 
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void getMethodNameInvalidTokenThrows_1() throws TransportException
     {
         //arrange
@@ -380,7 +383,7 @@ public class TopicParserTest
         String methodName = Deencapsulation.invoke(testParser, "getMethodName", 3);
     }
 
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void getMethodNameInvalidTokenThrows_2() throws TransportException
     {
         //arrange

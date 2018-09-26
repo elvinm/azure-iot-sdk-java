@@ -33,9 +33,10 @@ public class AmqpSend extends BaseHandler
 
     /**
      * Constructor to set up connection parameters
-     * @param hostName The address string of the service (example: AAA.BBB.CCC)
-     * @param userName The username string to use SASL authentication (example: user@sas.service)
-     * @param sasToken The SAS token string
+     *
+     * @param hostName                    The address string of the service (example: AAA.BBB.CCC)
+     * @param userName                    The username string to use SASL authentication (example: user@sas.service)
+     * @param sasToken                    The SAS token string
      * @param iotHubServiceClientProtocol protocol to use
      */
     public AmqpSend(String hostName, String userName, String sasToken, IotHubServiceClientProtocol iotHubServiceClientProtocol)
@@ -53,7 +54,7 @@ public class AmqpSend extends BaseHandler
         {
             throw new IllegalArgumentException("sasToken can not be null or empty");
         }
-        
+
         if (iotHubServiceClientProtocol == null)
         {
             throw new IllegalArgumentException("iotHubServiceClientProtocol cannot be null");
@@ -68,6 +69,7 @@ public class AmqpSend extends BaseHandler
 
     /**
      * Event handler for the reactor init event
+     *
      * @param event The proton event object
      */
     @Override
@@ -105,17 +107,18 @@ public class AmqpSend extends BaseHandler
      * Create binary message
      * Initialize and start Proton reactor
      * Send the created message
+     *
      * @param deviceId The device name string
      * @param moduleId The module name string
-     * @param message The message to be sent
-     * @throws IOException This exception is thrown if the AmqpSend object is not initialized
+     * @param message  The message to be sent
+     * @throws IOException     This exception is thrown if the AmqpSend object is not initialized
      * @throws IotHubException If IotHub rejects the message for any reason
      */
     public void send(String deviceId, String moduleId, Message message) throws IOException, IotHubException
     {
-        synchronized(this)
+        synchronized (this)
         {
-            if  (amqpSendHandler != null)
+            if (amqpSendHandler != null)
             {
                 if (moduleId == null)
                 {

@@ -10,16 +10,16 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Representation of a single Twin Properties for the {@link TwinState}.
- *
+ * <p>
  * <p> The Properties on the TwinState shall contains one {@link TwinCollection} of <b>desired</b> property.
- *
+ * <p>
  * <p> The desired property is a collection that can contain a associated {@link TwinMetadata}.
- *
+ * <p>
  * <p> These metadata are provided by the Service and contains information about the last
- *     updated date time, and version.
- *
+ * updated date time, and version.
+ * <p>
  * <p> For instance, the following is a valid desired property, represented as
- *     {@code properties.desired} in the rest API.
+ * {@code properties.desired} in the rest API.
  * <pre>
  *     {@code
  *      {
@@ -80,22 +80,21 @@ public class TwinProperties
 {
     // the twin desired properties
     private static final String DESIRED_PROPERTIES_TAG = "desired";
+    // the twin reported properties
+    private static final String REPORTED_PROPERTIES_TAG = "reported";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(DESIRED_PROPERTIES_TAG)
     private TwinCollection desired;
-
-    // the twin reported properties
-    private static final String REPORTED_PROPERTIES_TAG = "reported";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(REPORTED_PROPERTIES_TAG)
     private TwinCollection reported;
 
     /**
      * CONSTRUCTOR
-     *
+     * <p>
      * <p> This constructor creates an instance of the TwinProperties with the provided {@link TwinCollection}
-     *     desired property.
-     *
+     * desired property.
+     * <p>
      * <p> When serialized, this class will looks like the following example:
      * <pre>
      * {@code
@@ -116,40 +115,53 @@ public class TwinProperties
      * }
      * </pre>
      *
-     * @param desired the {@link TwinCollection} with the desired property. It cannot be {@code null}.
+     * @param desired  the {@link TwinCollection} with the desired property. It cannot be {@code null}.
      * @param reported the {@link TwinCollection} with the reported property. It cannot be {@code null}.
-     * @exception IllegalArgumentException if both desired and reported properties are {@code null}.
+     * @throws IllegalArgumentException if both desired and reported properties are {@code null}.
      */
     TwinProperties(TwinCollection desired, TwinCollection reported)
     {
         /* SRS_TWIN_PROPERTIES_21_001: [The constructor shall throw IllegalArgumentException if the provided desired and reported properties is null.] */
-        if((desired == null) && (reported == null))
+        if ((desired == null) && (reported == null))
         {
             throw new IllegalArgumentException("Desired property cannot be null.");
         }
 
         /* SRS_TWIN_PROPERTIES_21_002: [The constructor shall store the provided desired and reported properties converting from the row collection.] */
-        if(desired != null)
+        if (desired != null)
         {
             this.desired = TwinCollection.createFromRawCollection(desired);
         }
-        if(reported != null)
+        if (reported != null)
         {
             this.reported = TwinCollection.createFromRawCollection(reported);
         }
     }
 
     /**
-     * Serializer
-     *
+     * Empty constructor
      * <p>
-     *     Creates a {@code JsonElement}, which the content represents
-     *     the information in this class and its subclasses in a JSON format.
-     *
-     *     This is useful if the caller will integrate this JSON with JSON from
-     *     other classes to generate a consolidated JSON.
+     * <p>
+     * Used only by the tools that will deserialize this class.
      * </p>
+     */
+    @SuppressWarnings("unused")
+    TwinProperties()
+    {
+        /* SRS_TWIN_PROPERTIES_21_012: [The TwinProperties shall provide an empty constructor to make GSON happy.] */
+    }
 
+    /**
+     * Serializer
+     * <p>
+     * <p>
+     * Creates a {@code JsonElement}, which the content represents
+     * the information in this class and its subclasses in a JSON format.
+     * <p>
+     * This is useful if the caller will integrate this JSON with JSON from
+     * other classes to generate a consolidated JSON.
+     * </p>
+     *
      * @return The {@code JsonElement} with the content of this class.
      */
     protected JsonElement toJsonElement()
@@ -158,13 +170,13 @@ public class TwinProperties
         JsonObject twinJson = new JsonObject();
 
         /* SRS_TWIN_PROPERTIES_21_004: [If the desired property is null, the toJsonElement shall not include the `desired` in the final JSON.] */
-        if(this.desired != null)
+        if (this.desired != null)
         {
             twinJson.add(DESIRED_PROPERTIES_TAG, this.desired.toJsonElement());
         }
 
         /* SRS_TWIN_PROPERTIES_21_005: [If the reported property is null, the toJsonElement shall not include the `reported` in the final JSON.] */
-        if(this.reported != null)
+        if (this.reported != null)
         {
             twinJson.add(REPORTED_PROPERTIES_TAG, this.reported.toJsonElement());
         }
@@ -174,18 +186,18 @@ public class TwinProperties
 
     /**
      * Serializer
-     *
      * <p>
-     *     Creates a {@code JsonElement}, which the content represents
-     *     the information in this class and its subclasses in a JSON format.
-     *
-     *     If the desired property contains metadata, this method will include
-     *     it in the final JSON.
-     *
-     *     This is useful if the caller will integrate this JSON with JSON from
-     *     other classes to generate a consolidated JSON.
+     * <p>
+     * Creates a {@code JsonElement}, which the content represents
+     * the information in this class and its subclasses in a JSON format.
+     * <p>
+     * If the desired property contains metadata, this method will include
+     * it in the final JSON.
+     * <p>
+     * This is useful if the caller will integrate this JSON with JSON from
+     * other classes to generate a consolidated JSON.
      * </p>
-
+     *
      * @return The {@code JsonElement} with the content of this class.
      */
     protected JsonElement toJsonElementWithMetadata()
@@ -194,13 +206,13 @@ public class TwinProperties
         JsonObject twinJson = new JsonObject();
 
         /* SRS_TWIN_PROPERTIES_21_007: [If the desired property is null, the toJsonElementWithMetadata shall not include the `desired` in the final JSON.] */
-        if(this.desired != null)
+        if (this.desired != null)
         {
             twinJson.add(DESIRED_PROPERTIES_TAG, this.desired.toJsonElementWithMetadata());
         }
 
         /* SRS_TWIN_PROPERTIES_21_008: [If the reported property is null, the toJsonElementWithMetadata shall not include the `reported` in the final JSON.] */
-        if(this.reported != null)
+        if (this.reported != null)
         {
             twinJson.add(REPORTED_PROPERTIES_TAG, this.reported.toJsonElementWithMetadata());
         }
@@ -216,7 +228,7 @@ public class TwinProperties
     public TwinCollection getDesired()
     {
         /* SRS_TWIN_PROPERTIES_21_009: [The getDesired shall return a TwinCollection with the stored desired property.] */
-        if(this.desired == null)
+        if (this.desired == null)
         {
             return null;
         }
@@ -231,7 +243,7 @@ public class TwinProperties
     public TwinCollection getReported()
     {
         /* SRS_TWIN_PROPERTIES_21_010: [The getReported shall return a TwinCollection with the stored reported property.] */
-        if(this.reported == null)
+        if (this.reported == null)
         {
             return null;
         }
@@ -248,18 +260,5 @@ public class TwinProperties
     {
         /* SRS_TWIN_PROPERTIES_21_011: [The toString shall return a String with the information in this class in a pretty print JSON.] */
         return toJsonElementWithMetadata().toString();
-    }
-
-    /**
-     * Empty constructor
-     *
-     * <p>
-     *     Used only by the tools that will deserialize this class.
-     * </p>
-     */
-    @SuppressWarnings("unused")
-    TwinProperties()
-    {
-        /* SRS_TWIN_PROPERTIES_21_012: [The TwinProperties shall provide an empty constructor to make GSON happy.] */
     }
 }

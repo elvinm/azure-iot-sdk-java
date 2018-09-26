@@ -9,18 +9,15 @@ import java.util.Random;
 
 public class X509Thumbprint
 {
-    private String primaryThumbprint;
-    private String secondaryThumbprint;
-
     //Thumbprint format used by devices created manually
     private static final String THUMBPRINT_REGEX = "^([A-Fa-f0-9]{2}){20}$";
-
     //Thumbprint format used by devices that are provisioned by DPS
     private static final String THUMBPRINT_REGEX_DPS = "^([A-Fa-f0-9]{2}){32}$";
-
     //Thumbprints are made up of 40 hex characters
     private static final int THUMBPRINT_DIGIT_MAX = 16;
     private static final int THUMBPRINT_LENGTH = 40;
+    private String primaryThumbprint;
+    private String secondaryThumbprint;
 
     /**
      * Constructor for an X509 Thumbprint that randomly generates the primary and secondary thumbprints
@@ -34,7 +31,8 @@ public class X509Thumbprint
 
     /**
      * Constructor for an X509 Thumbprint with the provided primary and secondary thumbprints
-     * @param primaryThumbprint the primary thumbprint
+     *
+     * @param primaryThumbprint   the primary thumbprint
      * @param secondaryThumbprint the secondary thumbprint
      * @throws IllegalArgumentException if the provided thumbprint is an invalid format
      */
@@ -51,6 +49,7 @@ public class X509Thumbprint
 
     /**
      * Getter for the primary thumbprint
+     *
      * @return the primary thumbprint
      */
     String getPrimaryThumbprint()
@@ -60,17 +59,8 @@ public class X509Thumbprint
     }
 
     /**
-     * Getter for the secondary thumbprint
-     * @return the secondary thumbprint
-     */
-    String getSecondaryThumbprint()
-    {
-        //Codes_SRS_X509THUMBPRINT_34_002: [The function shall return the secondary thumbprint value of this.]
-        return this.secondaryThumbprint;
-    }
-
-    /**
      * Setter for primary thumbprint
+     *
      * @param primaryThumbprint the thumbprint value to set
      * @throws IllegalArgumentException if the provided thumbprint is an invalid format
      */
@@ -84,7 +74,19 @@ public class X509Thumbprint
     }
 
     /**
+     * Getter for the secondary thumbprint
+     *
+     * @return the secondary thumbprint
+     */
+    String getSecondaryThumbprint()
+    {
+        //Codes_SRS_X509THUMBPRINT_34_002: [The function shall return the secondary thumbprint value of this.]
+        return this.secondaryThumbprint;
+    }
+
+    /**
      * Setter for secondary thumbprint
+     *
      * @param secondaryThumbprint the thumbprint value to set
      * @throws IllegalArgumentException if the provided thumbprint is an invalid format
      */
@@ -104,8 +106,7 @@ public class X509Thumbprint
         {
             X509Thumbprint otherThumbprint = (X509Thumbprint) other;
 
-            return (Tools.areEqual(this.getPrimaryThumbprint(), otherThumbprint.getPrimaryThumbprint())
-                && Tools.areEqual(this.getSecondaryThumbprint(), otherThumbprint.getSecondaryThumbprint()));
+            return (Tools.areEqual(this.getPrimaryThumbprint(), otherThumbprint.getPrimaryThumbprint()) && Tools.areEqual(this.getSecondaryThumbprint(), otherThumbprint.getSecondaryThumbprint()));
         }
 
         return false;
@@ -113,6 +114,7 @@ public class X509Thumbprint
 
     /**
      * Validate the thumbprint
+     *
      * @param thumbprint The thumbprint to validate
      * @throws IllegalArgumentException if the provided thumbprint is the incorrect format
      */
@@ -136,6 +138,7 @@ public class X509Thumbprint
 
     /**
      * Creates a valid, random thumbprint
+     *
      * @return the generated thumbprint
      */
     private String generateValidThumbprint()

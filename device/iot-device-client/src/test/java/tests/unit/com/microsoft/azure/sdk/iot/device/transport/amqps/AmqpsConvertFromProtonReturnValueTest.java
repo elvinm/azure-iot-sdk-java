@@ -14,10 +14,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
-* Unit tests for AmqpsConvertFromProtonReturnValue
-* 100% methods covered
-* 100% lines covered
-*/
+ * Unit tests for AmqpsConvertFromProtonReturnValue
+ * 100% methods covered
+ * 100% lines covered
+ */
 public class AmqpsConvertFromProtonReturnValueTest
 {
     @Mocked

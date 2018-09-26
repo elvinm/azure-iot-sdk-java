@@ -28,35 +28,16 @@ public class StatusTask implements Callable
     private String operationId;
     private Authorization authorization;
 
-    private class ResponseCallbackImpl implements ResponseCallback
-    {
-        @Override
-        public void run(ResponseData responseData, Object context) throws ProvisioningDeviceClientException
-        {
-            if (context instanceof ResponseData)
-            {
-                ResponseData data = (ResponseData) context;
-                data.setResponseData(responseData.getResponseData());
-                data.setContractState(responseData.getContractState());
-                data.setWaitForStatusInMS(responseData.getWaitForStatusInMS());
-            }
-            else
-            {
-                throw new ProvisioningDeviceClientException("Context mismatch for DPS registration");
-            }
-        }
-    }
-
     /**
      * Task to query Status information from the service
-     * @param securityProvider security client for the HSM on which this device is registering on. Cannot be {@code null}
+     *
+     * @param securityProvider                 security client for the HSM on which this device is registering on. Cannot be {@code null}
      * @param provisioningDeviceClientContract Contract of the transport with the lower layers. Cannot be {@code null}
-     * @param operationId Id retrieved from the service.  Cannot be {@code null} or empty
-     * @param authorization Object holding auth info.  Cannot be {@code null}
+     * @param operationId                      Id retrieved from the service.  Cannot be {@code null} or empty
+     * @param authorization                    Object holding auth info.  Cannot be {@code null}
      * @throws ProvisioningDeviceClientException is thrown if any of the parameters are invalid.
      */
-    StatusTask(SecurityProvider securityProvider, ProvisioningDeviceClientContract provisioningDeviceClientContract,
-               String operationId, Authorization authorization) throws ProvisioningDeviceClientException
+    StatusTask(SecurityProvider securityProvider, ProvisioningDeviceClientContract provisioningDeviceClientContract, String operationId, Authorization authorization) throws ProvisioningDeviceClientException
     {
         //SRS_StatusTask_25_002: [ Constructor shall throw ProvisioningDeviceClientException if operationId , securityProvider, authorization or provisioningDeviceClientContract is null. ]
         if (provisioningDeviceClientContract == null)
@@ -104,7 +85,7 @@ public class StatusTask implements Callable
                 throw new ProvisioningDeviceSecurityException("SSL context cannot be null");
             }
 
-            RequestData requestData = new RequestData( registrationId, operationId, authorization.getSslContext(), authorization.getSasToken());
+            RequestData requestData = new RequestData(registrationId, operationId, authorization.getSslContext(), authorization.getSasToken());
             //SRS_StatusTask_25_005: [ This method shall trigger getRegistrationState on the contract API and wait for response and return it. ]
             ResponseData responseData = new ResponseData();
             provisioningDeviceClientContract.getRegistrationStatus(requestData, new ResponseCallbackImpl(), responseData);
@@ -142,6 +123,7 @@ public class StatusTask implements Callable
     /**
      * Implementation of callable for this task. This task queries for status
      * with the service
+     *
      * @return RegistrationOperationStatusParser object holding the information received from service
      * @throws Exception If any of the underlying calls fail
      */
@@ -150,5 +132,24 @@ public class StatusTask implements Callable
     {
         Thread.currentThread().setName(THREAD_NAME);
         return this.getRegistrationStatus(this.operationId, this.authorization);
+    }
+
+    private class ResponseCallbackImpl implements ResponseCallback
+    {
+        @Override
+        public void run(ResponseData responseData, Object context) throws ProvisioningDeviceClientException
+        {
+            if (context instanceof ResponseData)
+            {
+                ResponseData data = (ResponseData) context;
+                data.setResponseData(responseData.getResponseData());
+                data.setContractState(responseData.getContractState());
+                data.setWaitForStatusInMS(responseData.getWaitForStatusInMS());
+            }
+            else
+            {
+                throw new ProvisioningDeviceClientException("Context mismatch for DPS registration");
+            }
+        }
     }
 }

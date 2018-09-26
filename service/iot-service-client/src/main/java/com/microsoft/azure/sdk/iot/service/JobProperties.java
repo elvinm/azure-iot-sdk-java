@@ -9,10 +9,53 @@ import com.microsoft.azure.sdk.iot.deps.serializer.JobPropertiesParser;
 
 import java.util.Date;
 
-public class JobProperties {
+public class JobProperties
+{
+    // CODES_SRS_SERVICE_SDK_JAVA_JOB_PROPERTIES_34_001: [The JobProperties class shall have the following properties: jobId,
+    // startTimeUtc, endTimeUtc, JobType, JobStatus, progress, inputBlobContainerUri, outputBlobContainerUri,
+    // excludeKeysInExport, failureReason.]
+    private String jobId;
+    private Date startTimeUtc;
+    private Date endTimeUtc;
+    private JobType type;
+    private JobStatus status;
+    private int progress;
+    private String inputBlobContainerUri;
+    private String outputBlobContainerUri;
+    private boolean excludeKeysInExport;
+    private String failureReason;
+
     public JobProperties()
     {
         this.setJobId("");
+    }
+
+    /**
+     * Constructs a new JobProperties object using a JobPropertiesParser object
+     *
+     * @param parser the parser object to convert from
+     */
+    JobProperties(JobPropertiesParser parser)
+    {
+        //Codes_SRS_SERVICE_SDK_JAVA_JOB_PROPERTIES_34_003: [This method shall convert the provided parser into a JobProperty object and return it.]
+        this.endTimeUtc = parser.getEndTimeUtc();
+        this.excludeKeysInExport = parser.isExcludeKeysInExport();
+        this.failureReason = parser.getFailureReason();
+        this.inputBlobContainerUri = parser.getInputBlobContainerUri();
+        this.outputBlobContainerUri = parser.getOutputBlobContainerUri();
+        this.jobId = parser.getJobId();
+        this.progress = parser.getProgress();
+        this.startTimeUtc = parser.getStartTimeUtc();
+
+        if (parser.getStatus() != null)
+        {
+            this.status = JobStatus.valueOf(parser.getStatus().toUpperCase());
+        }
+
+        if (parser.getType() != null)
+        {
+            this.type = JobType.valueOf(parser.getType().toUpperCase());
+        }
     }
 
     /**
@@ -147,7 +190,7 @@ public class JobProperties {
 
     /**
      * @param excludeKeysInExport optional for export jobs; ignored for other jobs.  Default: false.
-     * If false, authorization keys are included in export output.  Keys are exported as null otherwise.
+     *                            If false, authorization keys are included in export output.  Keys are exported as null otherwise.
      */
     public void setExcludeKeysInExport(boolean excludeKeysInExport) {
         this.excludeKeysInExport = excludeKeysInExport;
@@ -168,66 +211,9 @@ public class JobProperties {
         this.failureReason = failureReason;
     }
 
-    public enum JobType
-    {
-        UNKNOWN,
-        EXPORT,
-        IMPORT
-    }
-
-    public enum JobStatus
-    {
-        UNKNOWN,
-        ENQUEUED,
-        RUNNING,
-        COMPLETED,
-        FAILED,
-        CANCELLED
-    }
-
-    // CODES_SRS_SERVICE_SDK_JAVA_JOB_PROPERTIES_34_001: [The JobProperties class shall have the following properties: jobId,
-    // startTimeUtc, endTimeUtc, JobType, JobStatus, progress, inputBlobContainerUri, outputBlobContainerUri,
-    // excludeKeysInExport, failureReason.]
-    private String jobId;
-    private Date startTimeUtc;
-    private Date endTimeUtc;
-    private JobType type;
-    private JobStatus status;
-    private int progress;
-    private String inputBlobContainerUri;
-    private String outputBlobContainerUri;
-    private boolean excludeKeysInExport;
-    private String failureReason;
-
-    /**
-     * Constructs a new JobProperties object using a JobPropertiesParser object
-     * @param parser the parser object to convert from
-     */
-    JobProperties(JobPropertiesParser parser)
-    {
-        //Codes_SRS_SERVICE_SDK_JAVA_JOB_PROPERTIES_34_003: [This method shall convert the provided parser into a JobProperty object and return it.]
-        this.endTimeUtc = parser.getEndTimeUtc();
-        this.excludeKeysInExport = parser.isExcludeKeysInExport();
-        this.failureReason = parser.getFailureReason();
-        this.inputBlobContainerUri = parser.getInputBlobContainerUri();
-        this.outputBlobContainerUri = parser.getOutputBlobContainerUri();
-        this.jobId = parser.getJobId();
-        this.progress = parser.getProgress();
-        this.startTimeUtc = parser.getStartTimeUtc();
-
-        if (parser.getStatus() != null)
-        {
-            this.status = JobStatus.valueOf(parser.getStatus().toUpperCase());
-        }
-
-        if (parser.getType() != null)
-        {
-            this.type = JobType.valueOf(parser.getType().toUpperCase());
-        }
-    }
-
     /**
      * Converts this into a JobPropertiesParser object that can be used for serialization and deserialization
+     *
      * @return the converted JobPropertiesParser object
      */
     JobPropertiesParser toJobPropertiesParser()
@@ -254,5 +240,15 @@ public class JobProperties {
         }
 
         return jobPropertiesParser;
+    }
+
+    public enum JobType
+    {
+        UNKNOWN, EXPORT, IMPORT
+    }
+
+    public enum JobStatus
+    {
+        UNKNOWN, ENQUEUED, RUNNING, COMPLETED, FAILED, CANCELLED
     }
 }

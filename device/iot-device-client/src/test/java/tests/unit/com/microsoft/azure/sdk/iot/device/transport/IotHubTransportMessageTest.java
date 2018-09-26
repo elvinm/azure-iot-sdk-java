@@ -21,16 +21,16 @@ import static org.junit.Assert.assertEquals;
 public class IotHubTransportMessageTest
 {
     /*
-    **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_001: [**If the message body is null, the constructor shall throw an IllegalArgumentException thrown by base constructor.**]**
-    */
-    @Test (expected = IllegalArgumentException.class)
+     **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_001: [**If the message body is null, the constructor shall throw an IllegalArgumentException thrown by base constructor.**]**
+     */
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithByteArrayThrowsIllegalArgumentExceptionIfMessageBodyNull()
     {
         IotHubTransportMessage iotHubTransportMessage = new IotHubTransportMessage(null, MessageType.DEVICE_TELEMETRY);
     }
 
     /*
-    **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_002: [**The constructor shall save the message body by calling super with the body as parameter.**]**
+     **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_002: [**The constructor shall save the message body by calling super with the body as parameter.**]**
      */
     @Test
     public void constructorWithByteArraySavesMessageData()
@@ -46,9 +46,9 @@ public class IotHubTransportMessageTest
     }
 
     /*
-    **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_003: [**The constructor shall set the messageType to the given value by calling the super with the given value.**]**
-    **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_015: [**The constructor shall initialize version, requestId and status to null.**]**
-    **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_016: [**The constructor shall initialize operationType to UNKNOWN**]**
+     **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_003: [**The constructor shall set the messageType to the given value by calling the super with the given value.**]**
+     **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_015: [**The constructor shall initialize version, requestId and status to null.**]**
+     **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_016: [**The constructor shall initialize operationType to UNKNOWN**]**
      */
     @Test
     public void constructorWithByteArraySetsMessageType()
@@ -83,7 +83,7 @@ public class IotHubTransportMessageTest
     }
 
     /*
-    **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_004: [**The function shall set the version.**]**
+     **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_004: [**The function shall set the version.**]**
      */
     @Test
     public void setVersionSetsTheVersion()
@@ -102,7 +102,7 @@ public class IotHubTransportMessageTest
     }
 
     /*
-    **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_005: [**The function shall return the value of the version either set by the setter or the default (null) if unset so far.**]**
+     **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_005: [**The function shall return the value of the version either set by the setter or the default (null) if unset so far.**]**
      */
     @Test
     public void getVersionGetsTheVersion()
@@ -122,7 +122,7 @@ public class IotHubTransportMessageTest
     }
 
     /*
-    **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_006: [**The function shall save the request id.**]**
+     **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_006: [**The function shall save the request id.**]**
      */
     @Test
     public void setRequestIdSetsTheRequestId()
@@ -241,7 +241,7 @@ public class IotHubTransportMessageTest
     /*
      **Tests_SRS_IOTHUBTRANSPORTMESSAGE_12_012: [**The function shall throw IllegalArgumentException if the methodName is null.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setMethodNameThrowsIllegalArgumentExceptionIfMethodNameIsNull()
     {
         // arrange
@@ -328,7 +328,7 @@ public class IotHubTransportMessageTest
     public void constructorWithPropertiesSavesProperties()
     {
         //arrange
-        byte[] expectedData = new byte[] {12,34,56};
+        byte[] expectedData = new byte[]{12, 34, 56};
         MessageType expectedMessageType = MessageType.DEVICE_TELEMETRY;
         String expectedCorrelationId = "1234";
         String expectedMessageId = "5678";

@@ -9,7 +9,7 @@ import com.microsoft.azure.sdk.iot.device.exceptions.ProtocolException;
 
 /**
  * This exception is thrown when a amqp:session:handle-in-use error is encountered over an AMQP connection
- *
+ * <p>
  * <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-complete-v1.0-os.pdf">For additional details, see this link</a>
  */
 public class AmqpSessionHandleInUseException extends ProtocolException

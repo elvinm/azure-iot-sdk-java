@@ -15,15 +15,15 @@ import java.util.List;
 
 /**
  * Representation of a single Device Provisioning Service bulk operation with a JSON serializer.
- * 
+ * <p>
  * <p> It is an internal class that creates a JSON for the bulk operations
- *     over the IndividualEnrollment. To use bulk operations, please use
- *     the external API {@link ProvisioningServiceClient#runBulkEnrollmentOperation(BulkOperationMode, Collection)}.
- *
+ * over the IndividualEnrollment. To use bulk operations, please use
+ * the external API {@link ProvisioningServiceClient#runBulkEnrollmentOperation(BulkOperationMode, Collection)}.
+ * <p>
  * <p> The following JSON is an example of the result of this serializer.
  * <pre>
- *{@code
- *{
+ * {@code
+ * {
  *    "mode":"update",
  *    "enrollments":
  *    [
@@ -52,10 +52,10 @@ import java.util.List;
  *            "provisioningStatus":"enabled"
  *        }
  *    ]
- *}
- *}
+ * }
+ * }
  * </pre>
- * 
+ *
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iot-dps/deviceenrollment">Device Enrollment</a>
  */
 public final class BulkEnrollmentOperation
@@ -68,11 +68,11 @@ public final class BulkEnrollmentOperation
 
     /**
      * Serializer
-     *
+     * <p>
      * <p> Creates a {@code String}, whose content represents the mode and the collection of
-     *     individualEnrollments in a JSON format.
+     * individualEnrollments in a JSON format.
      *
-     * @param mode the {@link BulkOperationMode} that defines the single operation to do over the individualEnrollments.
+     * @param mode                  the {@link BulkOperationMode} that defines the single operation to do over the individualEnrollments.
      * @param individualEnrollments the collection of {@link IndividualEnrollment} that contains the description of each individualEnrollment.
      * @return The {@code String} with the content of this class.
      * @throws IllegalArgumentException if one of the parameters is invalid.
@@ -86,11 +86,11 @@ public final class BulkEnrollmentOperation
 
     /**
      * Convert the class in a pretty print string.
-     *
+     * <p>
      * <p> Creates a {@code String}, whose content represents the mode and the collection of
-     *     individualEnrollments in a pretty print JSON format.
+     * individualEnrollments in a pretty print JSON format.
      *
-     * @param mode the {@link BulkOperationMode} that defines the single operation to do over the individualEnrollments.
+     * @param mode                  the {@link BulkOperationMode} that defines the single operation to do over the individualEnrollments.
      * @param individualEnrollments the collection of {@link IndividualEnrollment} that contains the description of each individualEnrollment.
      * @return The {@code String} with the content of this class.
      * @throws IllegalArgumentException if one of the parameters is invalid.
@@ -105,14 +105,14 @@ public final class BulkEnrollmentOperation
 
     /**
      * Serializer
-     *
+     * <p>
      * <p> Creates a {@code JsonElement}, whose content represents the mode and the collection of
-     *     individualEnrollments in a JSON format.
-     *
+     * individualEnrollments in a JSON format.
+     * <p>
      * <p> This is useful if the caller will integrate this JSON with JSON from other classes
-     *     to generate a consolidated JSON.
+     * to generate a consolidated JSON.
      *
-     * @param mode the {@link BulkOperationMode} that defines the single operation to do over the individualEnrollments.
+     * @param mode                  the {@link BulkOperationMode} that defines the single operation to do over the individualEnrollments.
      * @param individualEnrollments the collection of {@link IndividualEnrollment} that contains the description of each individualEnrollment.
      * @return The {@code JsonElement} with the content of this class.
      * @throws IllegalArgumentException if one of the parameters is invalid.
@@ -120,11 +120,11 @@ public final class BulkEnrollmentOperation
     public static JsonElement toJsonElement(BulkOperationMode mode, Collection<IndividualEnrollment> individualEnrollments)
     {
         /* SRS_BULK_OPERATION_21_005: [The toJsonElement shall throw IllegalArgumentException if the provided mode is null or the collection of individualEnrollments is null or empty.] */
-        if(mode == null)
+        if (mode == null)
         {
             throw new IllegalArgumentException("mode cannot be null");
         }
-        if((individualEnrollments == null) || individualEnrollments.isEmpty())
+        if ((individualEnrollments == null) || individualEnrollments.isEmpty())
         {
             throw new IllegalArgumentException("individualEnrollments cannot be null or empty");
         }

@@ -80,7 +80,7 @@ public class ExportImportIT
         List<ExportImportDevice> exportedDevices = runExportJob();
         List<ExportImportDevice> devicesToBeDeleted = new ArrayList<>();
 
-        for(ExportImportDevice device : exportedDevices)
+        for (ExportImportDevice device : exportedDevices)
         {
             if (device.getId().startsWith("java-bulk-test-"))
             {
@@ -98,55 +98,6 @@ public class ExportImportIT
         {
             registryManager.close();
             registryManager = null;
-        }
-    }
-
-    @Test (timeout = IMPORT_EXPORT_TEST_TIMEOUT)
-    public void export_import_e2e() throws Exception
-    {
-        //Creating the list of devices to be created, then deleted
-        Integer numberOfDevices = 10;
-        List<ExportImportDevice> devicesForImport = new ArrayList<>(numberOfDevices);
-        for (int i = 0; i < numberOfDevices; i++)
-        {
-            String deviceId = "java-bulk-test-" + UUID.randomUUID().toString();
-            Device device = Device.createFromId(deviceId, null, null);
-            AuthenticationMechanism authentication = new AuthenticationMechanism(device.getSymmetricKey());
-
-            ExportImportDevice deviceToAdd = new ExportImportDevice();
-            deviceToAdd.setId(deviceId);
-            deviceToAdd.setAuthentication(authentication);
-            deviceToAdd.setStatus(DeviceStatus.Enabled);
-            TwinCollection tags = new TwinCollection(); tags.put("test01", "firstvalue");
-            deviceToAdd.setTags(tags);
-
-            devicesForImport.add(deviceToAdd);
-        }
-
-        //importing devices - create mode
-        runImportJob(devicesForImport, ImportMode.CreateOrUpdate);
-
-        List<ExportImportDevice> exportedDevices = runExportJob();
-
-        for (ExportImportDevice importedDevice : devicesForImport)
-        {
-            if (!exportedDevices.contains(importedDevice))
-            {
-                Assert.fail("Exported devices list does not contain device with id: " + importedDevice.getId());
-            }
-        }
-
-        //importing devices - delete mode
-        runImportJob(devicesForImport, ImportMode.Delete);
-
-        exportedDevices = runExportJob();
-
-        for (ExportImportDevice importedDevice : devicesForImport)
-        {
-            if (exportedDevices.contains(importedDevice))
-            {
-                Assert.fail("Device with id: " + importedDevice.getId() + " was not deleted by the import job");
-            }
         }
     }
 
@@ -178,7 +129,7 @@ public class ExportImportIT
         }
 
         String exportedDevicesJson = "";
-        for(ListBlobItem blobItem : exportContainer.listBlobs())
+        for (ListBlobItem blobItem : exportContainer.listBlobs())
         {
             if (blobItem instanceof CloudBlockBlob)
             {
@@ -244,8 +195,7 @@ public class ExportImportIT
         while (true)
         {
             importJob = registryManager.getJob(importJob.getJobId());
-            if (importJob.getStatus() == JobProperties.JobStatus.COMPLETED
-                    || importJob.getStatus() == JobProperties.JobStatus.FAILED)
+            if (importJob.getStatus() == JobProperties.JobStatus.COMPLETED || importJob.getStatus() == JobProperties.JobStatus.FAILED)
             {
                 break;
             }
@@ -272,11 +222,7 @@ public class ExportImportIT
         SharedAccessBlobPolicy sasConstraints = new SharedAccessBlobPolicy();
         Date expirationDate = Date.from(Instant.now().plus(Duration.ofDays(1)));
         sasConstraints.setSharedAccessExpiryTime(expirationDate);
-        EnumSet<SharedAccessBlobPermissions> permissions = EnumSet.of(
-                SharedAccessBlobPermissions.WRITE,
-                SharedAccessBlobPermissions.LIST,
-                SharedAccessBlobPermissions.READ,
-                SharedAccessBlobPermissions.DELETE);
+        EnumSet<SharedAccessBlobPermissions> permissions = EnumSet.of(SharedAccessBlobPermissions.WRITE, SharedAccessBlobPermissions.LIST, SharedAccessBlobPermissions.READ, SharedAccessBlobPermissions.DELETE);
         sasConstraints.setPermissions(permissions);
 
         //Generate the shared access signature on the container, setting the constraints directly on the signature.
@@ -284,5 +230,55 @@ public class ExportImportIT
 
         //Return the URI string for the container, including the SAS token.
         return container.getUri() + "?" + sasContainerToken;
+    }
+
+    @Test(timeout = IMPORT_EXPORT_TEST_TIMEOUT)
+    public void export_import_e2e() throws Exception
+    {
+        //Creating the list of devices to be created, then deleted
+        Integer numberOfDevices = 10;
+        List<ExportImportDevice> devicesForImport = new ArrayList<>(numberOfDevices);
+        for (int i = 0; i < numberOfDevices; i++)
+        {
+            String deviceId = "java-bulk-test-" + UUID.randomUUID().toString();
+            Device device = Device.createFromId(deviceId, null, null);
+            AuthenticationMechanism authentication = new AuthenticationMechanism(device.getSymmetricKey());
+
+            ExportImportDevice deviceToAdd = new ExportImportDevice();
+            deviceToAdd.setId(deviceId);
+            deviceToAdd.setAuthentication(authentication);
+            deviceToAdd.setStatus(DeviceStatus.Enabled);
+            TwinCollection tags = new TwinCollection();
+            tags.put("test01", "firstvalue");
+            deviceToAdd.setTags(tags);
+
+            devicesForImport.add(deviceToAdd);
+        }
+
+        //importing devices - create mode
+        runImportJob(devicesForImport, ImportMode.CreateOrUpdate);
+
+        List<ExportImportDevice> exportedDevices = runExportJob();
+
+        for (ExportImportDevice importedDevice : devicesForImport)
+        {
+            if (!exportedDevices.contains(importedDevice))
+            {
+                Assert.fail("Exported devices list does not contain device with id: " + importedDevice.getId());
+            }
+        }
+
+        //importing devices - delete mode
+        runImportJob(devicesForImport, ImportMode.Delete);
+
+        exportedDevices = runExportJob();
+
+        for (ExportImportDevice importedDevice : devicesForImport)
+        {
+            if (exportedDevices.contains(importedDevice))
+            {
+                Assert.fail("Device with id: " + importedDevice.getId() + " was not deleted by the import job");
+            }
+        }
     }
 }

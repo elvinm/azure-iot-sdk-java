@@ -39,28 +39,58 @@ import static org.junit.Assert.assertNotNull;
  */
 public class IotHubSSLContextTest
 {
-    @Mocked UUID mockUUID;
-    @Mocked SecureRandom mockedSecureRandom;
-
-    @Mocked X509Certificate mockedX509Certificate;
-    @Mocked Key mockedPrivateKey;
-
-    @Mocked KeyStore mockedKeyStore;
-    @Mocked KeyManagerFactory mockKeyManagerFactory;
-    @Mocked KeyManager[] mockKeyManagers;
-
-    @Mocked SSLContext mockedSSLContext;
-
-    @Mocked TrustManagerFactory mockedTrustManagerFactory;
-    @Mocked TrustManager[] mockedTrustManager;
-    @Mocked IotHubCertificateManager mockedCertificateManager;
-
-    @Mocked byte[] mockedByteArray;
-    @Mocked ByteArrayInputStream mockedByteArrayInputStream;
-    @Mocked BouncyCastleProvider mockedBouncyCastleProvider;
-    @Mocked Security mockedSecurity;
-
     private final static Collection<Certificate> testCollection = new LinkedHashSet<Certificate>();
+    private static final String expectedPrivateKeyString = "some private key string";
+    private static final String expectedPublicKeyCertificateString = "some public key certificate string";
+    private static final String expectedPublicKeyCertificateString1 = "-----BEGIN CERTIFICATE-----\n" + "jdafjoadjojaofjajfijafijoiajfdoijafiojo\n" + "-----END CERTIFICATE-----\n";
+    @Mocked
+    UUID mockUUID;
+    @Mocked
+    SecureRandom mockedSecureRandom;
+    @Mocked
+    X509Certificate mockedX509Certificate;
+    @Mocked
+    Key mockedPrivateKey;
+    @Mocked
+    KeyStore mockedKeyStore;
+    @Mocked
+    KeyManagerFactory mockKeyManagerFactory;
+    @Mocked
+    KeyManager[] mockKeyManagers;
+    @Mocked
+    SSLContext mockedSSLContext;
+    @Mocked
+    TrustManagerFactory mockedTrustManagerFactory;
+    @Mocked
+    TrustManager[] mockedTrustManager;
+    @Mocked
+    IotHubCertificateManager mockedCertificateManager;
+    @Mocked
+    byte[] mockedByteArray;
+    @Mocked
+    ByteArrayInputStream mockedByteArrayInputStream;
+    @Mocked
+    BouncyCastleProvider mockedBouncyCastleProvider;
+    @Mocked
+    Security mockedSecurity;
+    @Mocked
+    PEMKeyPair mockedPEMKeyPair;
+    @Mocked
+    PrivateKeyInfo mockedPrivateKeyInfo;
+    @Mocked
+    PEMParser mockedPEMParser;
+    @Mocked
+    PemObject mockedPemObject;
+    @Mocked
+    PemReader mockedPemReader;
+    @Mocked
+    StringReader mockedStringReader;
+
+    //----------- PEM UTILITIES TESTS -----------
+    @Mocked
+    KeyPair mockedKeyPair;
+    @Mocked
+    CertificateFactory mockedCertificateFactory;
 
     private void generateSSLContextExpectations() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException, CertificateException
     {
@@ -100,7 +130,6 @@ public class IotHubSSLContextTest
         };
     }
 
-
     //Tests_SRS_IOTHUBSSLCONTEXT_25_001: [**The constructor shall create a default certificate to be used with IotHub.**]**
     //Tests_SRS_IOTHUBSSLCONTEXT_25_002: [**The constructor shall create default SSL context for TLSv1.2.**]**
     //Tests_SRS_IOTHUBSSLCONTEXT_25_003: [**The constructor shall create default TrustManagerFactory with the default algorithm.**]**
@@ -134,7 +163,7 @@ public class IotHubSSLContextTest
         testCollection.add(mockedX509Certificate);
         generateSSLContextExpectations();
 
-        IotHubSSLContext testContext = Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {});
+        IotHubSSLContext testContext = Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{});
 
         //act
         SSLContext testSSLContext = Deencapsulation.invoke(testContext, "getSSLContext");
@@ -151,8 +180,7 @@ public class IotHubSSLContextTest
     //Tests_SRS_IOTHUBSSLCONTEXT_34_021: [The constructor shall initialize a default trust manager factory that accepts communications from Iot Hub.]
     //Tests_SRS_IOTHUBSSLCONTEXT_34_024: [The constructor shall initialize SSL context with its initialized keystore, its initialized TrustManagerFactory and a new secure random.]
     @Test
-    public void constructorWithCertAndKeySuccess()
-            throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException, CertificateException, UnrecoverableKeyException
+    public void constructorWithCertAndKeySuccess() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException, CertificateException, UnrecoverableKeyException
     {
         //arrange
         final String publicKeyCert = "someCert";
@@ -205,7 +233,7 @@ public class IotHubSSLContextTest
                 new SecureRandom();
                 times = 1;
 
-                Deencapsulation.invoke(iotHubSSLContext, "generateTrustManagerFactory", new Class[] { IotHubCertificateManager.class, KeyStore.class }, mockedCertificateManager, mockedKeyStore);
+                Deencapsulation.invoke(iotHubSSLContext, "generateTrustManagerFactory", new Class[]{IotHubCertificateManager.class, KeyStore.class}, mockedCertificateManager, mockedKeyStore);
                 times = 1;
 
                 mockedSSLContext.init(mockKeyManagers, mockedTrustManager, new SecureRandom());
@@ -229,13 +257,13 @@ public class IotHubSSLContextTest
         };
 
         //act
-        Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {String.class, boolean.class}, defaultCertPath, true);
+        Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{String.class, boolean.class}, defaultCertPath, true);
 
         //assert
         new Verifications()
         {
             {
-                Deencapsulation.invoke(mockedCertificateManager, "setValidCertPath", new Class[] {String.class}, defaultCertPath);
+                Deencapsulation.invoke(mockedCertificateManager, "setValidCertPath", new Class[]{String.class}, defaultCertPath);
                 times = 1;
 
             }
@@ -257,13 +285,13 @@ public class IotHubSSLContextTest
         };
 
         //act
-        Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {String.class, boolean.class}, defaultCert, false);
+        Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{String.class, boolean.class}, defaultCert, false);
 
         //assert
         new Verifications()
         {
             {
-                Deencapsulation.invoke(mockedCertificateManager, "setValidCert", new Class[] {String.class}, defaultCert);
+                Deencapsulation.invoke(mockedCertificateManager, "setValidCert", new Class[]{String.class}, defaultCert);
                 times = 1;
             }
         };
@@ -276,8 +304,7 @@ public class IotHubSSLContextTest
     // Tests_SRS_IOTHUBSSLCONTEXT_34_045: [The constructor shall initialize a default trust manager factory that accepts communications from Iot Hub.]
     // Tests_SRS_IOTHUBSSLCONTEXT_34_046: [The constructor shall initialize SSL context with its initialized keystore, its initialized TrustManagerFactory and a new secure random.]
     @Test
-    public void constructorWithDefaultCertAndPublicCertAndPrivateKey()
-            throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException, CertificateException, UnrecoverableKeyException
+    public void constructorWithDefaultCertAndPublicCertAndPrivateKey() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException, CertificateException, UnrecoverableKeyException
     {
         //arrange
         final String publicKeyCert = "someCert";
@@ -322,7 +349,7 @@ public class IotHubSSLContextTest
         new Verifications()
         {
             {
-                Deencapsulation.invoke(mockedCertificateManager, "setValidCert", new Class[] {String.class}, iotHubTrustedCert);
+                Deencapsulation.invoke(mockedCertificateManager, "setValidCert", new Class[]{String.class}, iotHubTrustedCert);
                 times = 1;
 
                 SSLContext.getInstance("TLSv1.2");
@@ -337,7 +364,7 @@ public class IotHubSSLContextTest
                 new SecureRandom();
                 times = 1;
 
-                Deencapsulation.invoke(iotHubSSLContext, "generateTrustManagerFactory", new Class[] { IotHubCertificateManager.class, KeyStore.class }, mockedCertificateManager, mockedKeyStore);
+                Deencapsulation.invoke(iotHubSSLContext, "generateTrustManagerFactory", new Class[]{IotHubCertificateManager.class, KeyStore.class}, mockedCertificateManager, mockedKeyStore);
                 times = 1;
 
                 mockedSSLContext.init(mockKeyManagers, mockedTrustManager, new SecureRandom());
@@ -393,7 +420,7 @@ public class IotHubSSLContextTest
         new Verifications()
         {
             {
-                Deencapsulation.invoke(mockedCertificateManager, "setValidCertPath", new Class[] {String.class}, iotHubTrustedCertPath);
+                Deencapsulation.invoke(mockedCertificateManager, "setValidCertPath", new Class[]{String.class}, iotHubTrustedCertPath);
                 times = 1;
 
                 SSLContext.getInstance("TLSv1.2");
@@ -408,7 +435,7 @@ public class IotHubSSLContextTest
                 new SecureRandom();
                 times = 1;
 
-                Deencapsulation.invoke(iotHubSSLContext, "generateTrustManagerFactory", new Class[] { IotHubCertificateManager.class, KeyStore.class }, mockedCertificateManager, mockedKeyStore);
+                Deencapsulation.invoke(iotHubSSLContext, "generateTrustManagerFactory", new Class[]{IotHubCertificateManager.class, KeyStore.class}, mockedCertificateManager, mockedKeyStore);
                 times = 1;
 
                 mockedSSLContext.init(mockKeyManagers, mockedTrustManager, new SecureRandom());
@@ -416,24 +443,6 @@ public class IotHubSSLContextTest
             }
         };
     }
-
-    //----------- PEM UTILITIES TESTS -----------
-
-    private static final String expectedPrivateKeyString = "some private key string";
-    private static final String expectedPublicKeyCertificateString = "some public key certificate string";
-    private static final String expectedPublicKeyCertificateString1 =
-            "-----BEGIN CERTIFICATE-----\n" +
-            "jdafjoadjojaofjajfijafijoiajfdoijafiojo\n" +
-            "-----END CERTIFICATE-----\n";
-
-    @Mocked PEMKeyPair mockedPEMKeyPair;
-    @Mocked PrivateKeyInfo mockedPrivateKeyInfo;
-    @Mocked PEMParser mockedPEMParser;
-    @Mocked PemObject mockedPemObject;
-    @Mocked PemReader mockedPemReader;
-    @Mocked StringReader mockedStringReader;
-    @Mocked KeyPair mockedKeyPair;
-    @Mocked CertificateFactory mockedCertificateFactory;
 
     // Tests_SRS_IOTHUBSSLCONTEXT_34_031: [This function shall return a Private Key instance created by the provided PEM formatted privateKeyString.]
     @Test
@@ -453,13 +462,13 @@ public class IotHubSSLContextTest
                 result = mockedPEMKeyPair;
 
                 //Doing this instead of just mocking JCA converter because trying to mock the JCA converter causes strange errors to be thrown.
-                Deencapsulation.invoke(IotHubSSLContext.class, "getPrivateKey", new Class[] {Object.class}, mockedPEMKeyPair);
+                Deencapsulation.invoke(IotHubSSLContext.class, "getPrivateKey", new Class[]{Object.class}, mockedPEMKeyPair);
                 result = mockedPrivateKey;
             }
         };
 
         //act
-        Key actualPrivateKey = Deencapsulation.invoke(IotHubSSLContext.class, "parsePrivateKey", new Class[] {String.class}, expectedPrivateKeyString);
+        Key actualPrivateKey = Deencapsulation.invoke(IotHubSSLContext.class, "parsePrivateKey", new Class[]{String.class}, expectedPrivateKeyString);
 
         //assert
         assertEquals(mockedPrivateKey, actualPrivateKey);
@@ -482,20 +491,20 @@ public class IotHubSSLContextTest
                 result = mockedPrivateKeyInfo;
 
                 //Doing this instead of just mocking JCA converter because trying to mock the JCA converter causes strange errors to be thrown.
-                Deencapsulation.invoke(IotHubSSLContext.class, "getPrivateKey", new Class[] {Object.class}, mockedPrivateKeyInfo);
+                Deencapsulation.invoke(IotHubSSLContext.class, "getPrivateKey", new Class[]{Object.class}, mockedPrivateKeyInfo);
                 result = mockedPrivateKey;
             }
         };
 
         //act
-        Key actualPrivateKey = Deencapsulation.invoke(IotHubSSLContext.class, "parsePrivateKey", new Class[] {String.class}, expectedPrivateKeyString);
+        Key actualPrivateKey = Deencapsulation.invoke(IotHubSSLContext.class, "parsePrivateKey", new Class[]{String.class}, expectedPrivateKeyString);
 
         //assert
         assertEquals(mockedPrivateKey, actualPrivateKey);
     }
 
     // Tests_SRS_IOTHUBSSLCONTEXT_34_032: [If any exception is encountered while attempting to create the private key instance, this function shall throw a CertificateException.]
-    @Test (expected = CertificateException.class)
+    @Test(expected = CertificateException.class)
     public void parsePrivateKeyExceptionsWrappedInCertificateException() throws CertificateException, IOException
     {
         //arrange
@@ -508,14 +517,14 @@ public class IotHubSSLContextTest
         };
 
         //act
-        PrivateKey actualPrivateKey = Deencapsulation.invoke(IotHubSSLContext.class, "parsePrivateKey", new Class[] {String.class}, expectedPrivateKeyString);
+        PrivateKey actualPrivateKey = Deencapsulation.invoke(IotHubSSLContext.class, "parsePrivateKey", new Class[]{String.class}, expectedPrivateKeyString);
     }
 
     // Tests_Codes_SRS_IOTHUBSSLCONTEXT_34_033: [This function shall return the X509Certificate cert chain specified by the PEM formatted publicKeyCertificateString.]
     @Test
     public void parsePublicKeyCertificateSuccess() throws CertificateException, IOException
     {
-        final byte[] byteArray = new byte[]{1,2};
+        final byte[] byteArray = new byte[]{1, 2};
         //arrange
         new StrictExpectations()
         {
@@ -578,7 +587,7 @@ public class IotHubSSLContextTest
         };
 
         //act
-        Collection<X509Certificate> actualPublicKeyCertificate = Deencapsulation.invoke(IotHubSSLContext.class, "parsePublicKeyCertificate", new Class[] {String.class}, expectedPublicKeyCertificateString);
+        Collection<X509Certificate> actualPublicKeyCertificate = Deencapsulation.invoke(IotHubSSLContext.class, "parsePublicKeyCertificate", new Class[]{String.class}, expectedPublicKeyCertificateString);
 
         //assert
         assertNotNull(actualPublicKeyCertificate);
@@ -586,7 +595,7 @@ public class IotHubSSLContextTest
     }
 
     // Tests_SRS_IOTHUBSSLCONTEXT_34_034: [If any exception is encountered while attempting to create the public key certificate instance, this function shall throw a CertificateException.]
-    @Test (expected = CertificateException.class)
+    @Test(expected = CertificateException.class)
     public void parsePublicKeyCertificateExceptionsWrappedInCertificateException() throws CertificateException, IOException
     {
         //arrange
@@ -599,7 +608,7 @@ public class IotHubSSLContextTest
         };
 
         //act
-        X509Certificate actualPublicKeyCertificate = Deencapsulation.invoke(IotHubSSLContext.class, "parsePublicKeyCertificate", new Class[] {String.class}, expectedPublicKeyCertificateString);
+        X509Certificate actualPublicKeyCertificate = Deencapsulation.invoke(IotHubSSLContext.class, "parsePublicKeyCertificate", new Class[]{String.class}, expectedPublicKeyCertificateString);
 
         //assert
         assertEquals(mockedX509Certificate, actualPublicKeyCertificate);
@@ -618,7 +627,7 @@ public class IotHubSSLContextTest
     }
 
     //Tests_SRS_IOTHUBSSLCONTEXT_34_028: [If the provided sslContext is null, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullSSLContext()
     {
         //act

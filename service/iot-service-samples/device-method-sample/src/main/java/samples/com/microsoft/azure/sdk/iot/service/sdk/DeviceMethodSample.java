@@ -18,7 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-/** Manages device Method operations on IotHub */
+/**
+ * Manages device Method operations on IotHub
+ */
 public class DeviceMethodSample
 {
     public static final String iotHubConnectionString = "[IOT HUB Connection String]";
@@ -81,7 +83,7 @@ public class DeviceMethodSample
     {
         System.out.println("directly invoke method on the Device");
         MethodResult result = methodClient.invoke(deviceId, methodName, responseTimeout, connectTimeout, payload);
-        if(result == null)
+        if (result == null)
         {
             throw new IOException("Method invoke returns null");
         }

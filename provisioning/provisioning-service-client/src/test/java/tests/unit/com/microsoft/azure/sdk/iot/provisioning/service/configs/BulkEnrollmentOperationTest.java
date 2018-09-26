@@ -24,63 +24,20 @@ public class BulkEnrollmentOperationTest
     private static final String VALID_ENDORSEMENT_KEY = "76cadbbd-67af-49ab-b112-0c2e6a8445b0";
     private static final String VALID_STORAGE_ROOT_KEY = "validStorageRootKey";
 
-    private static final String VALID_JSON_ENROLLMENT_1 =
-            "      {\n" +
-                    "        \"registrationId\": \"" + VALID_REGISTRATION_ID_1 + "\",\n" +
-                    "        \"deviceId\": \"" + VALID_DEVICE_ID + "\",\n" +
-                    "        \"attestation\": {\n" +
-                    "          \"type\": \"tpm\",\n" +
-                    "          \"tpm\": {\n" +
-                    "            \"endorsementKey\": \"" + VALID_ENDORSEMENT_KEY + "\",\n" +
-                    "            \"storageRootKey\": \"" + VALID_STORAGE_ROOT_KEY + "\"\n" +
-                    "          }\n" +
-                    "        },\n" +
-                    "        \"iotHubHostName\": \"" + VALID_IOTHUB_HOST_NAME + "\",\n" +
-                    "        \"provisioningStatus\": \"enabled\",\n" +
-                    "        \"capabilities\": {\n" +
-                    "           \"iotEdge\": false\n" +
-                    "         }\n" +
-                    "      }";
+    private static final String VALID_JSON_ENROLLMENT_1 = "      {\n" + "        \"registrationId\": \"" + VALID_REGISTRATION_ID_1 + "\",\n" + "        \"deviceId\": \"" + VALID_DEVICE_ID + "\",\n" + "        \"attestation\": {\n" + "          \"type\": \"tpm\",\n" + "          \"tpm\": {\n" + "            \"endorsementKey\": \"" + VALID_ENDORSEMENT_KEY + "\",\n" + "            \"storageRootKey\": \"" + VALID_STORAGE_ROOT_KEY + "\"\n" + "          }\n" + "        },\n" + "        \"iotHubHostName\": \"" + VALID_IOTHUB_HOST_NAME + "\",\n" + "        \"provisioningStatus\": \"enabled\",\n" + "        \"capabilities\": {\n" + "           \"iotEdge\": false\n" + "         }\n" + "      }";
 
-    private static final String VALID_JSON_ENROLLMENT_2 =
-            "      {\n" +
-                    "        \"registrationId\": \"" + VALID_REGISTRATION_ID_2 + "\",\n" +
-                    "        \"deviceId\": \"" + VALID_DEVICE_ID + "\",\n" +
-                    "        \"attestation\": {\n" +
-                    "          \"type\": \"tpm\",\n" +
-                    "          \"tpm\": {\n" +
-                    "            \"endorsementKey\": \"" + VALID_ENDORSEMENT_KEY + "\"\n" +
-                    "          }\n" +
-                    "        },\n" +
-                    "        \"iotHubHostName\": \"" + VALID_IOTHUB_HOST_NAME + "\",\n" +
-                    "        \"provisioningStatus\": \"disabled\",\n" +
-                    "        \"capabilities\": {\n" +
-                    "           \"iotEdge\": false\n" +
-                    "         }\n" +
-                    "      }";
+    private static final String VALID_JSON_ENROLLMENT_2 = "      {\n" + "        \"registrationId\": \"" + VALID_REGISTRATION_ID_2 + "\",\n" + "        \"deviceId\": \"" + VALID_DEVICE_ID + "\",\n" + "        \"attestation\": {\n" + "          \"type\": \"tpm\",\n" + "          \"tpm\": {\n" + "            \"endorsementKey\": \"" + VALID_ENDORSEMENT_KEY + "\"\n" + "          }\n" + "        },\n" + "        \"iotHubHostName\": \"" + VALID_IOTHUB_HOST_NAME + "\",\n" + "        \"provisioningStatus\": \"disabled\",\n" + "        \"capabilities\": {\n" + "           \"iotEdge\": false\n" + "         }\n" + "      }";
 
-    private static final String VALID_JSON_BULK =
-            "{\n" +
-                    "  \"mode\":\"create\",\n" +
-                    "  \"enrollments\": \n" +
-                    "    [\n" +
-                    VALID_JSON_ENROLLMENT_1 + ",\n" +
-                    VALID_JSON_ENROLLMENT_2 + "\n" +
-                    "    ]\n" +
-                    "}";
+    private static final String VALID_JSON_BULK = "{\n" + "  \"mode\":\"create\",\n" + "  \"enrollments\": \n" + "    [\n" + VALID_JSON_ENROLLMENT_1 + ",\n" + VALID_JSON_ENROLLMENT_2 + "\n" + "    ]\n" + "}";
 
     private List<IndividualEnrollment> makeBulkEnrollment()
     {
-        IndividualEnrollment individualEnrollment1 = new IndividualEnrollment(
-                VALID_REGISTRATION_ID_1,
-                new TpmAttestation(VALID_ENDORSEMENT_KEY, VALID_STORAGE_ROOT_KEY));
+        IndividualEnrollment individualEnrollment1 = new IndividualEnrollment(VALID_REGISTRATION_ID_1, new TpmAttestation(VALID_ENDORSEMENT_KEY, VALID_STORAGE_ROOT_KEY));
         individualEnrollment1.setDeviceId(VALID_DEVICE_ID);
         individualEnrollment1.setIotHubHostName(VALID_IOTHUB_HOST_NAME);
         individualEnrollment1.setProvisioningStatus(ProvisioningStatus.ENABLED);
 
-        IndividualEnrollment individualEnrollment2 = new IndividualEnrollment(
-                VALID_REGISTRATION_ID_2,
-                new TpmAttestation(VALID_ENDORSEMENT_KEY, null));
+        IndividualEnrollment individualEnrollment2 = new IndividualEnrollment(VALID_REGISTRATION_ID_2, new TpmAttestation(VALID_ENDORSEMENT_KEY, null));
         individualEnrollment2.setDeviceId(VALID_DEVICE_ID);
         individualEnrollment2.setIotHubHostName(VALID_IOTHUB_HOST_NAME);
         individualEnrollment2.setProvisioningStatus(ProvisioningStatus.DISABLED);
@@ -110,7 +67,7 @@ public class BulkEnrollmentOperationTest
     }
 
     /* SRS_BULK_OPERATION_21_002: [The toJson shall throw IllegalArgumentException if the provided mode is null or the collection of enrollments is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void toJsonThrowsOnNullOperationMode()
     {
         // arrange
@@ -123,7 +80,7 @@ public class BulkEnrollmentOperationTest
     }
 
     /* SRS_BULK_OPERATION_21_002: [The toJson shall throw IllegalArgumentException if the provided mode is null or the collection of enrollments is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void toJsonThrowsOnNullListOfEnrollments()
     {
         // arrange
@@ -136,7 +93,7 @@ public class BulkEnrollmentOperationTest
     }
 
     /* SRS_BULK_OPERATION_21_002: [The toJson shall throw IllegalArgumentException if the provided mode is null or the collection of enrollments is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void toJsonThrowsOnEmptyListOfEnrollments()
     {
         // arrange
@@ -163,7 +120,7 @@ public class BulkEnrollmentOperationTest
     }
 
     /* SRS_BULK_OPERATION_21_004: [The toString shall throw IllegalArgumentException if the provided mode is null or the collection of enrollments is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void toStringThrowsOnNullOperationMode()
     {
         // arrange
@@ -176,7 +133,7 @@ public class BulkEnrollmentOperationTest
     }
 
     /* SRS_BULK_OPERATION_21_004: [The toString shall throw IllegalArgumentException if the provided mode is null or the collection of enrollments is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void toStringThrowsOnNullListOfEnrollments()
     {
         // arrange
@@ -189,7 +146,7 @@ public class BulkEnrollmentOperationTest
     }
 
     /* SRS_BULK_OPERATION_21_004: [The toString shall throw IllegalArgumentException if the provided mode is null or the collection of enrollments is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void toStringThrowsOnEmptyListOfEnrollments()
     {
         // arrange
@@ -202,7 +159,7 @@ public class BulkEnrollmentOperationTest
     }
 
     /* SRS_BULK_OPERATION_21_005: [The toJsonElement shall throw IllegalArgumentException if the provided mode is null or the collection of enrollments is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void toJsonElementThrowsOnNullOperationMode()
     {
         // arrange
@@ -215,7 +172,7 @@ public class BulkEnrollmentOperationTest
     }
 
     /* SRS_BULK_OPERATION_21_005: [The toJsonElement shall throw IllegalArgumentException if the provided mode is null or the collection of enrollments is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void toJsonElementThrowsOnNullListOfEnrollments()
     {
         // arrange
@@ -228,7 +185,7 @@ public class BulkEnrollmentOperationTest
     }
 
     /* SRS_BULK_OPERATION_21_005: [The toJsonElement shall throw IllegalArgumentException if the provided mode is null or the collection of enrollments is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void toJsonElementThrowsOnEmptyListOfEnrollments()
     {
         // arrange

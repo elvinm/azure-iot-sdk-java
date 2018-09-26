@@ -35,8 +35,7 @@ public class TemplateTest
 
     // Tests_SRS_TEMPLATE_99_001: [The constructor shall save the input parameters.]
     // Tests_SRS_TEMPLATE_99_003: [The constructor shall create a new instance of the public and private objects.]
-    @Test                           /* Mock objects specific for this test */
-    public void testConstructor(final @Mocked Set<String> mockedSet)
+    @Test                           /* Mock objects specific for this test */ public void testConstructor(final @Mocked Set<String> mockedSet)
     {
         //arrange
         final String testString = "testString";
@@ -74,8 +73,8 @@ public class TemplateTest
     }
 
     // Tests_SRS_TEMPLATE_99_002: [If the input parameter is null, the constructor shall throw an IllegalArgumentException.]
-            /* Verify if the method throws expected exception */
-    @Test (expected = IllegalArgumentException.class)
+    /* Verify if the method throws expected exception */
+    @Test(expected = IllegalArgumentException.class)
     public void testConstructorThrowsOnNullArguments()
     {
         //act
@@ -362,7 +361,7 @@ public class TemplateTest
     }
 
     // Tests_SRS_TEMPLATE_99_011: [The method shall throw IllegalArgumentException if the collection to be added was either empty or null .]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testAddToSetThrowsIfNullInputSet()
     {
         //arrange
@@ -390,7 +389,7 @@ public class TemplateTest
     }
 
     // Tests_SRS_TEMPLATE_99_011: [The method shall throw IllegalArgumentException if the collection to be added was either empty or null .]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testAddToSetThrowsIfEmptyInputSet(final @Mocked Set<String> mockedSet)
     {
         //arrange
@@ -418,7 +417,7 @@ public class TemplateTest
     }
 
     // Tests_SRS_TEMPLATE_99_012: [The method shall throw IllegalStateException if it is called before calling open. ]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testAddToSetThrowsIfCalledWithoutOpen()
     {
         //arrange

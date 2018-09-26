@@ -86,6 +86,7 @@ public class ToolsTest
         new Expectations()
         {
             Tools tools;
+
             {
                 tools.isNullOrEmpty(anyString);
             }
@@ -106,6 +107,7 @@ public class ToolsTest
         new Expectations()
         {
             Tools tools;
+
             {
                 tools.isNullOrEmpty(anyString);
             }
@@ -126,6 +128,7 @@ public class ToolsTest
         new Expectations()
         {
             Tools tools;
+
             {
                 tools.isNullOrEmpty(anyString);
             }

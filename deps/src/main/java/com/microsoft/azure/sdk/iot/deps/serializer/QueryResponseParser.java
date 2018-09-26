@@ -31,7 +31,7 @@ public class QueryResponseParser
         gson = new GsonBuilder().disableHtmlEscaping().create();
 
         //Codes_SRS_QUERY_RESPONSE_PARSER_25_003: [If the provided json is null, empty, or not valid, the constructor shall throws IllegalArgumentException.]
-        if((json == null) || json.isEmpty())
+        if ((json == null) || json.isEmpty())
         {
             throw new IllegalArgumentException("parameter is null or empty");
         }
@@ -48,7 +48,16 @@ public class QueryResponseParser
     }
 
     /**
+     * Empty constructor: Used only to keep GSON happy.
+     */
+    @SuppressWarnings("unused")
+    QueryResponseParser()
+    {
+    }
+
+    /**
      * Getter for Json Items from Json Array
+     *
      * @return the array of json as string
      */
     public List<String> getJsonItems()
@@ -61,13 +70,5 @@ public class QueryResponseParser
         }
         //Codes_SRS_QUERY_RESPONSE_PARSER_25_008: [The getJsonItems shall return the list of json items as strings .]
         return jsonElements;
-    }
-
-    /**
-     * Empty constructor: Used only to keep GSON happy.
-     */
-    @SuppressWarnings("unused")
-    QueryResponseParser()
-    {
     }
 }

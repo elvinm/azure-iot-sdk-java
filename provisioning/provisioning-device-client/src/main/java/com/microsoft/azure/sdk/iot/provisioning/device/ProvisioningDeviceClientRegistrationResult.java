@@ -23,6 +23,7 @@ public class ProvisioningDeviceClientRegistrationResult
 
     /**
      * Getter for the IotHubUri.
+     *
      * @return returns IotHubUri. Can be {@code null} when registration fails.
      */
     public String getIothubUri()
@@ -33,6 +34,7 @@ public class ProvisioningDeviceClientRegistrationResult
 
     /**
      * Getter for Device ID.
+     *
      * @return Returns device ID. Can be {@code null} when registration fails.
      */
     public String getDeviceId()
@@ -43,6 +45,7 @@ public class ProvisioningDeviceClientRegistrationResult
 
     /**
      * Getter for the Provisioning Device Client Status
+     *
      * @return Returns the status of Provisioning Device Client
      */
     public ProvisioningDeviceClientStatus getProvisioningDeviceClientStatus()

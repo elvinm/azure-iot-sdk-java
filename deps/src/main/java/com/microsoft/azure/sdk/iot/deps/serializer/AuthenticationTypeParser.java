@@ -7,12 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 public enum AuthenticationTypeParser
 {
-    @SerializedName("sas")
-    SAS,
+    @SerializedName("sas") SAS,
 
-    @SerializedName("selfSigned")
-    SELF_SIGNED,
+    @SerializedName("selfSigned") SELF_SIGNED,
 
-    @SerializedName("certificateAuthority")
-    CERTIFICATE_AUTHORITY;
+    @SerializedName("certificateAuthority") CERTIFICATE_AUTHORITY;
 }

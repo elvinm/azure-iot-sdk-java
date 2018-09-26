@@ -10,9 +10,5 @@ package com.microsoft.azure.sdk.iot.service;
  */
 public enum FeedbackStatusCode
 {
-    success,
-    expired,
-    deliveryCountExceeded,
-    rejected,
-    unknown
+    success, expired, deliveryCountExceeded, rejected, unknown
 }

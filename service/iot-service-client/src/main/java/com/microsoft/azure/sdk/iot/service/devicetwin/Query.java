@@ -46,8 +46,9 @@ public class Query
 
     /**
      * Constructor for Query
-     * @param query Sql style query to be sent to IotHub
-     * @param pageSize page size for the query response to request query over
+     *
+     * @param query            Sql style query to be sent to IotHub
+     * @param pageSize         page size for the query response to request query over
      * @param requestQueryType Type of query
      * @throws IllegalArgumentException if the input parameters are invalid
      */
@@ -82,7 +83,8 @@ public class Query
 
     /**
      * Constructor for Query
-     * @param pageSize page size for the query response to request query over
+     *
+     * @param pageSize         page size for the query response to request query over
      * @param requestQueryType Type of query
      * @throws IllegalArgumentException if the input parameters are invalid
      */
@@ -112,8 +114,9 @@ public class Query
 
     /**
      * Continuation token to be used for next query request
+     *
      * @param continuationToken token to be used for next query request. Can be {@code null}
-     * @throws IOException if sending the request is unsuccessful because of input parameters
+     * @throws IOException     if sending the request is unsuccessful because of input parameters
      * @throws IotHubException if sending the request is unsuccessful at the Hub
      */
     private void continueQuery(String continuationToken) throws IOException, IotHubException
@@ -126,9 +129,10 @@ public class Query
 
     /**
      * Continuation token and page size to be used for next query request
+     *
      * @param continuationToken token to be used for next query request. Can be {@code null}
-     * @param pageSize size batch for this query
-     * @throws IOException if sending the request is unsuccessful because of input parameters
+     * @param pageSize          size batch for this query
+     * @throws IOException     if sending the request is unsuccessful because of input parameters
      * @throws IotHubException if sending the request is unsuccessful at the Hub
      */
     private void continueQuery(String continuationToken, int pageSize) throws IOException, IotHubException
@@ -147,18 +151,16 @@ public class Query
 
     /**
      * Sends request for the query to the IotHub
+     *
      * @param iotHubConnectionString Hub Connection String
-     * @param url URL to Query on
-     * @param method HTTP Method for the requesting a query
-     * @param timeoutInMs Maximum time to wait for the hub to respond
+     * @param url                    URL to Query on
+     * @param method                 HTTP Method for the requesting a query
+     * @param timeoutInMs            Maximum time to wait for the hub to respond
      * @return QueryResponse object which holds the response Iterator
-     * @throws IOException If any of the input parameters are not valid
+     * @throws IOException     If any of the input parameters are not valid
      * @throws IotHubException If HTTP response other then status ok is received
      */
-    public QueryResponse sendQueryRequest(IotHubConnectionString iotHubConnectionString,
-                                   URL url,
-                                   HttpMethod method,
-                                   Long timeoutInMs) throws IOException, IotHubException
+    public QueryResponse sendQueryRequest(IotHubConnectionString iotHubConnectionString, URL url, HttpMethod method, Long timeoutInMs) throws IOException, IotHubException
     {
         if (iotHubConnectionString == null || url == null || method == null)
         {
@@ -235,6 +237,7 @@ public class Query
 
     /**
      * Getter for the continuation token received on response
+     *
      * @return continuation token. Can be {@code null}.
      */
     private String getContinuationToken()
@@ -245,8 +248,9 @@ public class Query
 
     /**
      * Returns the availability of next element in the query response
+     *
      * @return the availability of next element in the query response
-     * @throws IOException if sending the request is unsuccessful because of input parameters
+     * @throws IOException     if sending the request is unsuccessful because of input parameters
      * @throws IotHubException if sending the request is unsuccessful at the Hub
      */
     public boolean hasNext() throws IOException, IotHubException
@@ -268,23 +272,24 @@ public class Query
 
     /**
      * provides the next element in query response
+     *
      * @return the next element in query response
-     * @throws IOException if sending the request is unsuccessful because of input parameters
-     * @throws IotHubException if sending the request is unsuccessful at the Hub
+     * @throws IOException            if sending the request is unsuccessful because of input parameters
+     * @throws IotHubException        if sending the request is unsuccessful at the Hub
      * @throws NoSuchElementException if no further elements are available
      */
     public Object next() throws IOException, IotHubException, NoSuchElementException
     {
         //Codes_SRS_QUERY_25_016: [The method shall return the next element for this QueryResponse.]
-       if (this.hasNext())
-       {
-           return queryResponse.next();
-       }
-       else
-       {
-           //Codes_SRS_QUERY_25_022: [The method shall check if any further elements are available by calling hasNext and if none is available then it shall throw NoSuchElementException.]
-           throw new NoSuchElementException();
-       }
+        if (this.hasNext())
+        {
+            return queryResponse.next();
+        }
+        else
+        {
+            //Codes_SRS_QUERY_25_022: [The method shall check if any further elements are available by calling hasNext and if none is available then it shall throw NoSuchElementException.]
+            throw new NoSuchElementException();
+        }
 
     }
 }

@@ -7,7 +7,7 @@ package com.microsoft.azure.sdk.iot.provisioning.service.exceptions;
 
 /**
  * Create bad message format exception
- *
+ * <p>
  * <p> The body of the Http request is not valid; for example, it cannot be parsed, or the object cannot be validated.
  * <p> HTTP status code 400.
  */

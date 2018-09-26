@@ -32,15 +32,15 @@ public class HttpsIotHubConnection implements IotHubTransportConnection
     private static final String HTTPS_PROPERTY_IOTHUB_MESSAGELOCKTIMEOUT_TAG = "iothub-messagelocktimeout";
     private static final String HTTPS_PROPERTY_IF_MATCH_TAG = "if-match";
     private static final String HTTPS_PROPERTY_ETAG_TAG = "etag";
-
-    private IotHubListener listener;
-
-    /** The HTTPS connection lock. */
+    /**
+     * The HTTPS connection lock.
+     */
     private final Object HTTPS_CONNECTION_LOCK = new Object();
-
-    /** The client configuration. */
+    /**
+     * The client configuration.
+     */
     private final DeviceClientConfig config;
-
+    private IotHubListener listener;
     /**
      * Message e-tag is obtained when the device receives a
      * message and used when sending a message result back to
@@ -64,12 +64,21 @@ public class HttpsIotHubConnection implements IotHubTransportConnection
     }
 
     /**
+     * Removes double quotes from the e-tag property.
+     *
+     * @param dirtyEtag the dirty e-tag value.
+     * @return the e-tag value with double quotes removed.
+     */
+    private static String sanitizeEtag(String dirtyEtag)
+    {
+        return dirtyEtag.replace("\"", "");
+    }
+
+    /**
      * Sends an event message.
      *
      * @param message the event message.
-     *
      * @return the IotHubStatusCode from sending the event message.
-     *
      * @throws TransportException if the IoT Hub could not be reached.
      */
     public IotHubStatusCode sendMessage(Message message) throws TransportException
@@ -94,8 +103,7 @@ public class HttpsIotHubConnection implements IotHubTransportConnection
             // Codes_SRS_HTTPSIOTHUBCONNECTION_11_005: [The function shall write each message property as a request header.]
             for (MessageProperty property : httpsMessage.getProperties())
             {
-                request.setHeaderField(property.getName(),
-                        property.getValue());
+                request.setHeaderField(property.getName(), property.getValue());
             }
 
             if (message.getContentEncoding() != null)
@@ -148,12 +156,11 @@ public class HttpsIotHubConnection implements IotHubTransportConnection
     /**
      * Sends an generic https message.
      *
-     * @param httpsMessage the message to send.
-     * @param httpsMethod the https method (GET, POST, PUT, DELETE).
-     * @param httpsPath the path that will be added at the end of the URI with `/`.
+     * @param httpsMessage      the message to send.
+     * @param httpsMethod       the https method (GET, POST, PUT, DELETE).
+     * @param httpsPath         the path that will be added at the end of the URI with `/`.
      * @param additionalHeaders any extra headers to be included in the http request
      * @return the ResponseMessage including status code and payload from sending message.
-     *
      * @throws TransportException if the IoT Hub could not be reached.
      */
     public ResponseMessage sendHttpsMessage(HttpsMessage httpsMessage, HttpsMethod httpsMethod, String httpsPath, Map<String, String> additionalHeaders) throws TransportException
@@ -206,7 +213,6 @@ public class HttpsIotHubConnection implements IotHubTransportConnection
      * Receives an IotHubTransportMessage, if one exists.
      *
      * @return an IotHubTransportMessage, or null if none exists.
-     *
      * @throws TransportException if the IoT Hub could not be reached.
      */
     public IotHubTransportMessage receiveMessage() throws TransportException
@@ -218,14 +224,11 @@ public class HttpsIotHubConnection implements IotHubTransportConnection
             URL messageUrl = this.buildUrlFromString(HTTPS_HEAD_TAG + messageUri.toString());
 
             // Codes_SRS_HTTPSIOTHUBCONNECTION_11_014: [The function shall send a GET request.]
-            HttpsRequest request =
-                    new HttpsRequest(messageUrl, HttpsMethod.GET, new byte[0], this.config.getProductInfo().getUserAgentString()).
-                            // Codes_SRS_HTTPSIOTHUBCONNECTION_11_017: [The function shall set the header field 'iothub-to' to be '/devices/[deviceId]/messages/devicebound'.]
-                                    setHeaderField(HTTPS_PROPERTY_IOTHUB_TO_TAG,
-                                    messageUri.getPath()).
-                            // Codes_SRS_HTTPSIOTHUBCONNECTION_11_018: [The function shall set the header field 'iothub-messagelocktimeout' to be the configuration parameter messageLockTimeoutSecs.]
-                                    setHeaderField(HTTPS_PROPERTY_IOTHUB_MESSAGELOCKTIMEOUT_TAG,
-                                    Integer.toString(this.config.getMessageLockTimeoutSecs()));
+            HttpsRequest request = new HttpsRequest(messageUrl, HttpsMethod.GET, new byte[0], this.config.getProductInfo().getUserAgentString()).
+                    // Codes_SRS_HTTPSIOTHUBCONNECTION_11_017: [The function shall set the header field 'iothub-to' to be '/devices/[deviceId]/messages/devicebound'.]
+                            setHeaderField(HTTPS_PROPERTY_IOTHUB_TO_TAG, messageUri.getPath()).
+                    // Codes_SRS_HTTPSIOTHUBCONNECTION_11_018: [The function shall set the header field 'iothub-messagelocktimeout' to be the configuration parameter messageLockTimeoutSecs.]
+                            setHeaderField(HTTPS_PROPERTY_IOTHUB_MESSAGELOCKTIMEOUT_TAG, Integer.toString(this.config.getMessageLockTimeoutSecs()));
 
             // Codes_SRS_HTTPSIOTHUBCONNECTION_34_057: [This function shall retrieve a sas token from its config to use in the https request header.]
             // Codes_SRS_HTTPSIOTHUBCONNECTION_11_016: [The function shall set the header field 'authorization' to be a valid SAS token generated from the configuration parameters.]
@@ -260,18 +263,6 @@ public class HttpsIotHubConnection implements IotHubTransportConnection
         }
     }
 
-    /**
-     * Removes double quotes from the e-tag property.
-     *
-     * @param dirtyEtag the dirty e-tag value.
-     *
-     * @return the e-tag value with double quotes removed.
-     */
-    private static String sanitizeEtag(String dirtyEtag)
-    {
-        return dirtyEtag.replace("\"", "");
-    }
-
     @Override
     public void open(Queue<DeviceClientConfig> deviceClientConfigs)
     {
@@ -302,11 +293,10 @@ public class HttpsIotHubConnection implements IotHubTransportConnection
      * message.
      *
      * @param message the message that was received from the service to send the result of
-     * @param result the message result (one of {@link IotHubMessageResult#COMPLETE},
-     *               {@link IotHubMessageResult#ABANDON}, or {@link IotHubMessageResult#REJECT}).
-     *
+     * @param result  the message result (one of {@link IotHubMessageResult#COMPLETE},
+     *                {@link IotHubMessageResult#ABANDON}, or {@link IotHubMessageResult#REJECT}).
      * @throws TransportException if {@code sendMessageResult} is called before
-     * {@link #receiveMessage()} is called.
+     *                            {@link #receiveMessage()} is called.
      * @throws TransportException if the IoT Hub could not be reached.
      */
 
@@ -320,8 +310,7 @@ public class HttpsIotHubConnection implements IotHubTransportConnection
             // Codes_SRS_HTTPSIOTHUBCONNECTION_11_039: [If the function is called before receiveMessage() returns a message, the function shall throw an IllegalStateException.]
             if (messageEtag == null)
             {
-                throw new IllegalStateException("Cannot send a message "
-                        + "result before a message is received or if the result was already sent");
+                throw new IllegalStateException("Cannot send a message " + "result before a message is received or if the result was already sent");
             }
 
             String iotHubHostname = getHostName();
@@ -335,8 +324,7 @@ public class HttpsIotHubConnection implements IotHubTransportConnection
             {
                 case COMPLETE:
                     // Codes_SRS_HTTPSIOTHUBCONNECTION_11_024: [If the result is COMPLETE, the function shall send a request to the URL 'https://[iotHubHostname]/devices/[deviceId]/messages/devicebound/[eTag]?api-version=2016-02-03'.]
-                    IotHubCompleteUri completeUri =
-                            new IotHubCompleteUri(iotHubHostname, deviceId, messageEtag, this.config.getModuleId());
+                    IotHubCompleteUri completeUri = new IotHubCompleteUri(iotHubHostname, deviceId, messageEtag, this.config.getModuleId());
                     resultUri += completeUri.toString();
                     // Codes_SRS_HTTPSIOTHUBCONNECTION_11_026: [If the result is COMPLETE, the function shall set the header field 'iothub-to' to be '/devices/[deviceId]/messages/devicebound/[eTag]'.]
                     resultPath = completeUri.getPath();
@@ -346,8 +334,7 @@ public class HttpsIotHubConnection implements IotHubTransportConnection
                     break;
                 case ABANDON:
                     // Codes_SRS_HTTPSIOTHUBCONNECTION_11_027: [If the result is ABANDON, the function shall send a request to the URL 'https://[iotHubHostname]/devices/[deviceId]/messages/devicebound/[eTag]/abandon?api-version=2016-02-03'.]
-                    IotHubAbandonUri abandonUri =
-                            new IotHubAbandonUri(iotHubHostname, deviceId, messageEtag, this.config.getModuleId());
+                    IotHubAbandonUri abandonUri = new IotHubAbandonUri(iotHubHostname, deviceId, messageEtag, this.config.getModuleId());
                     resultUri += abandonUri.toString();
                     // Codes_SRS_HTTPSIOTHUBCONNECTION_11_029: [If the result is ABANDON, the function shall set the header field 'iothub-to' to be '/devices/[deviceId]/messages/devicebound/[eTag]/abandon'.]
                     resultPath = abandonUri.getPath();
@@ -361,8 +348,7 @@ public class HttpsIotHubConnection implements IotHubTransportConnection
                     break;
                 case REJECT:
                     // Codes_SRS_HTTPSIOTHUBCONNECTION_11_030: [If the result is REJECT, the function shall send a request to the URL 'https://[iotHubHostname]/devices/[deviceId]/messages/devicebound/[eTag]??reject=true&api-version=2016-02-03' (the query parameters can be in any order).]
-                    IotHubRejectUri rejectUri =
-                            new IotHubRejectUri(iotHubHostname, deviceId, messageEtag, this.config.getModuleId());
+                    IotHubRejectUri rejectUri = new IotHubRejectUri(iotHubHostname, deviceId, messageEtag, this.config.getModuleId());
                     resultUri += rejectUri.toString();
                     // Codes_SRS_HTTPSIOTHUBCONNECTION_11_032: [If the result is REJECT, the function shall set the header field 'iothub-to' to be '/devices/[deviceId]/messages/devicebound/[eTag]'.]
                     resultPath = rejectUri.getPath();
@@ -372,8 +358,7 @@ public class HttpsIotHubConnection implements IotHubTransportConnection
                     break;
                 default:
                     // should never happen.
-                    throw new IllegalStateException(
-                            "Invalid message result specified.");
+                    throw new IllegalStateException("Invalid message result specified.");
             }
 
             request.setHeaderField(HTTPS_PROPERTY_IOTHUB_TO_TAG, resultPath).
@@ -391,9 +376,7 @@ public class HttpsIotHubConnection implements IotHubTransportConnection
 
             if (resultStatus != IotHubStatusCode.OK_EMPTY && resultStatus != IotHubStatusCode.OK)
             {
-                String errMsg = String.format(
-                        "Sending message result failed with status %s.%n",
-                        resultStatus.name());
+                String errMsg = String.format("Sending message result failed with status %s.%n", resultStatus.name());
 
                 // Codes_SRS_HTTPSIOTHUBCONNECTION_11_038: [If the IoT Hub status code in the response is not OK_EMPTY, the function shall throw an IotHubServiceException.]
                 throw new IotHubServiceException(errMsg);

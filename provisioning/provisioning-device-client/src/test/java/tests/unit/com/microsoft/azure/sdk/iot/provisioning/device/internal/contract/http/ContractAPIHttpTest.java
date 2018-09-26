@@ -120,7 +120,7 @@ public class ContractAPIHttpTest
         new Verifications()
         {
             {
-                new HttpRequest((URL)any, method, (byte[])any);
+                new HttpRequest((URL) any, method, (byte[]) any);
                 times = 1;
                 mockedHttpRequest.setHeaderField(anyString, anyString);
                 times = 3 + headerSize;
@@ -152,7 +152,7 @@ public class ContractAPIHttpTest
     }
 
     //SRS_ContractAPIHttp_25_002: [The constructor shall throw ProvisioningDeviceClientException if either idScope and hostName are null or empty.]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void constructorThrowsOnNullScopeID() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -170,7 +170,7 @@ public class ContractAPIHttpTest
         //assert
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void constructorThrowsOnEmptyScopeID() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -188,7 +188,7 @@ public class ContractAPIHttpTest
         //assert
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void constructorThrowsOnNullHostName() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -209,7 +209,7 @@ public class ContractAPIHttpTest
 
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void constructorThrowsOnEmptyHostName() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -293,7 +293,7 @@ public class ContractAPIHttpTest
     }
 
     //SRS_ContractAPIHttp_25_003: [If either registrationId, sslcontext or restResponseCallback is null or if registrationId is empty then this method shall throw ProvisioningDeviceClientException.]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void requestNonceWithDPSTPMThrowsOnNullRegistrationId() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -316,7 +316,7 @@ public class ContractAPIHttpTest
         contractAPIHttp.requestNonceForTPM(mockedRequestData, mockedResponseCallback, null);
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void requestNonceWithDPSTPMThrowsOnEmptyRegistrationId() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -339,7 +339,7 @@ public class ContractAPIHttpTest
         contractAPIHttp.requestNonceForTPM(mockedRequestData, mockedResponseCallback, null);
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void requestNonceWithDPSTPMThrowsOnNullEk() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -362,7 +362,7 @@ public class ContractAPIHttpTest
         contractAPIHttp.requestNonceForTPM(mockedRequestData, mockedResponseCallback, null);
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void requestNonceWithDPSTPMThrowsOnNullSRk() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -385,7 +385,7 @@ public class ContractAPIHttpTest
         contractAPIHttp.requestNonceForTPM(mockedRequestData, mockedResponseCallback, null);
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void requestNonceWithDPSTPMThrowsOnNullSSLContext() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -408,7 +408,7 @@ public class ContractAPIHttpTest
         contractAPIHttp.requestNonceForTPM(mockedRequestData, mockedResponseCallback, null);
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void requestNonceWithDPSTPMThrowsOnNullResponseCallback() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -432,7 +432,7 @@ public class ContractAPIHttpTest
     }
 
     //SRS_ContractAPIHttp_25_009: [If service return any other status other than 404 then this method shall throw ProvisioningDeviceTransportException in case of 202 or ProvisioningDeviceHubException on any other status.]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void requestNonceWithDPSTPMThrowsHubExceptionWithStatusOtherThan404Throws() throws IOException, ProvisioningDeviceClientException
     {
         final byte[] expectedPayload = "testByte".getBytes();
@@ -466,8 +466,7 @@ public class ContractAPIHttpTest
         try
         {
             contractAPIHttp.requestNonceForTPM(mockedRequestData, mockedResponseCallback, null);
-        }
-        finally
+        } finally
         {
             //assert
             new Verifications()
@@ -481,7 +480,7 @@ public class ContractAPIHttpTest
     }
 
     //SRS_ContractAPIHttp_25_009: [If service return any other status other than 404 then this method shall throw ProvisioningDeviceTransportException in case of < 300 or ProvisioningDeviceHubException on any other status.]
-    @Test (expected = ProvisioningDeviceTransportException.class)
+    @Test(expected = ProvisioningDeviceTransportException.class)
     public void requestNonceWithDPSTPMThrowsHubExceptionWithStatusLessThan300Throws() throws IOException, ProvisioningDeviceClientException
     {
         final byte[] expectedPayload = "testByte".getBytes();
@@ -514,8 +513,7 @@ public class ContractAPIHttpTest
         try
         {
             contractAPIHttp.requestNonceForTPM(mockedRequestData, mockedResponseCallback, null);
-        }
-        finally
+        } finally
         {
             //assert
             new Verifications()
@@ -528,7 +526,7 @@ public class ContractAPIHttpTest
         }
     }
 
-    @Test (expected = ProvisioningDeviceTransportException.class)
+    @Test(expected = ProvisioningDeviceTransportException.class)
     public void requestNonceWithDPSTPMThrowsTransportExceptionIfAnyOfTheTransportCallsFails() throws IOException, ProvisioningDeviceClientException
     {
         final byte[] expectedPayload = "testByte".getBytes();
@@ -553,8 +551,7 @@ public class ContractAPIHttpTest
         try
         {
             contractAPIHttp.requestNonceForTPM(mockedRequestData, mockedResponseCallback, null);
-        }
-        finally
+        } finally
         {
             //assert
             new Verifications()
@@ -646,7 +643,7 @@ public class ContractAPIHttpTest
                 mockedRequestData.getSasToken();
                 result = null;
 
-                Deencapsulation.newInstance(DeviceRegistrationParser.class, new Class[] {String.class, String.class, String.class}, anyString, "", "");
+                Deencapsulation.newInstance(DeviceRegistrationParser.class, new Class[]{String.class, String.class, String.class}, anyString, "", "");
                 result = mockedDeviceRegistrationParser;
 
                 mockedDeviceRegistrationParser.toJson();
@@ -676,7 +673,7 @@ public class ContractAPIHttpTest
         };
     }
 
-    @Test (expected = ProvisioningDeviceHubException.class)
+    @Test(expected = ProvisioningDeviceHubException.class)
     public void authenticateWithDPSThrowsOnSendFailure() throws IOException, ProvisioningDeviceClientException
     {
         //arrange
@@ -781,7 +778,7 @@ public class ContractAPIHttpTest
     }
 
     //SRS_ContractAPIHttp_25_011: [If either registrationId, sslcontext or restResponseCallback is null or if registrationId is empty then this method shall throw ProvisioningDeviceClientException.]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithDPSThrowsOnNullRegistrationId() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -803,7 +800,7 @@ public class ContractAPIHttpTest
 
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithDPSThrowsOnEmptyRegistrationId() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -824,7 +821,7 @@ public class ContractAPIHttpTest
         contractAPIHttp.authenticateWithProvisioningService(mockedRequestData, mockedResponseCallback, null);
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithDPSThrowsOnNullSSLContext() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -845,7 +842,7 @@ public class ContractAPIHttpTest
         contractAPIHttp.authenticateWithProvisioningService(mockedRequestData, mockedResponseCallback, null);
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void authenticateWithDPSThrowsOnNullResponseCallback() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -867,7 +864,7 @@ public class ContractAPIHttpTest
 
     }
 
-    @Test (expected = ProvisioningDeviceTransportException.class)
+    @Test(expected = ProvisioningDeviceTransportException.class)
     public void authenticateWithDPSThrowsTransportExceptionIfAnyOfTheTransportCallsFails() throws ProvisioningDeviceClientException
     {
         final byte[] expectedPayload = "testByte".getBytes();
@@ -890,8 +887,7 @@ public class ContractAPIHttpTest
         try
         {
             contractAPIHttp.authenticateWithProvisioningService(mockedRequestData, mockedResponseCallback, null);
-        }
-        finally
+        } finally
         {
             //assert
             new Verifications()
@@ -996,7 +992,7 @@ public class ContractAPIHttpTest
     }
 
     //SRS_ContractAPIHttp_25_024: [If service return any other status other than < 300 then this method shall throw ProvisioningDeviceHubException.]
-    @Test (expected = ProvisioningDeviceHubException.class)
+    @Test(expected = ProvisioningDeviceHubException.class)
     public void getRegistrationStatusThrowsOnFailureStatus() throws IOException, ProvisioningDeviceClientException
     {
         //arrange
@@ -1024,8 +1020,7 @@ public class ContractAPIHttpTest
         try
         {
             contractAPIHttp.getRegistrationStatus(mockedRequestData, mockedResponseCallback, null);
-        }
-        finally
+        } finally
         {
             //assert
             prepareRequestVerifications(HttpMethod.GET, 0);
@@ -1047,7 +1042,7 @@ public class ContractAPIHttpTest
     }
 
     //SRS_ContractAPIHttp_25_018: [If either operationId, registrationId, sslcontext or restResponseCallback is null or if operationId, registrationId is empty then this method shall throw ProvisioningDeviceClientException.]
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void getRegistrationStatusThrowsOnNullOperationId() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -1070,7 +1065,7 @@ public class ContractAPIHttpTest
         contractAPIHttp.getRegistrationStatus(mockedRequestData, mockedResponseCallback, null);
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void getRegistrationStatusThrowsOnEmptyOperationId() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -1093,7 +1088,7 @@ public class ContractAPIHttpTest
         contractAPIHttp.getRegistrationStatus(mockedRequestData, mockedResponseCallback, null);
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void getRegistrationStatusThrowsOnNullRegistrationId() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -1117,7 +1112,7 @@ public class ContractAPIHttpTest
 
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void getRegistrationStatusThrowsOnEmptyRegistrationId() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -1142,7 +1137,7 @@ public class ContractAPIHttpTest
     }
 
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void getRegistrationStatusThrowsOnNullSSLContext() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -1165,7 +1160,7 @@ public class ContractAPIHttpTest
         contractAPIHttp.getRegistrationStatus(mockedRequestData, mockedResponseCallback, null);
     }
 
-    @Test (expected = ProvisioningDeviceClientException.class)
+    @Test(expected = ProvisioningDeviceClientException.class)
     public void getRegistrationStatusThrowsOnNullResponseCallback() throws ProvisioningDeviceClientException
     {
         //arrange
@@ -1188,7 +1183,7 @@ public class ContractAPIHttpTest
         contractAPIHttp.getRegistrationStatus(mockedRequestData, null, null);
     }
 
-    @Test (expected = ProvisioningDeviceTransportException.class)
+    @Test(expected = ProvisioningDeviceTransportException.class)
     public void getRegistrationStatusThrowsTransportExceptionIfAnyOfTheTransportCallsFails() throws ProvisioningDeviceClientException
     {
         ContractAPIHttp contractAPIHttp = createContractClass();
@@ -1212,8 +1207,7 @@ public class ContractAPIHttpTest
         try
         {
             contractAPIHttp.getRegistrationStatus(mockedRequestData, mockedResponseCallback, null);
-        }
-        finally
+        } finally
         {
             //assert
             new Verifications()
@@ -1226,7 +1220,7 @@ public class ContractAPIHttpTest
         }
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void prepareRequestThrowsOnNullUrl() throws Exception
     {
         //arrange
@@ -1235,11 +1229,11 @@ public class ContractAPIHttpTest
         ContractAPIHttp contractAPIHttp = createContractClass();
 
         //act
-        Deencapsulation.invoke(contractAPIHttp, "prepareRequest", new Class[] {URL.class, HttpMethod.class, byte[].class, Integer.class, Map.class, String.class}, null, HttpMethod.PUT, expectedPayload, 0, null, expectedUserAgentValue);
+        Deencapsulation.invoke(contractAPIHttp, "prepareRequest", new Class[]{URL.class, HttpMethod.class, byte[].class, Integer.class, Map.class, String.class}, null, HttpMethod.PUT, expectedPayload, 0, null, expectedUserAgentValue);
         //assert
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void prepareRequestThrowsOnNullMethod() throws Exception
     {
         //arrange
@@ -1248,11 +1242,11 @@ public class ContractAPIHttpTest
         ContractAPIHttp contractAPIHttp = createContractClass();
 
         //act
-        Deencapsulation.invoke(contractAPIHttp, "prepareRequest", new Class[] {URL.class, HttpMethod.class, byte[].class, Integer.class, Map.class, String.class}, mockedUrl, null, expectedPayload, 0, null, expectedUserAgentValue);
+        Deencapsulation.invoke(contractAPIHttp, "prepareRequest", new Class[]{URL.class, HttpMethod.class, byte[].class, Integer.class, Map.class, String.class}, mockedUrl, null, expectedPayload, 0, null, expectedUserAgentValue);
         //assert
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void prepareRequestThrowsOnNullPayload() throws Exception
     {
         //arrange
@@ -1261,11 +1255,11 @@ public class ContractAPIHttpTest
         ContractAPIHttp contractAPIHttp = createContractClass();
 
         //act
-        Deencapsulation.invoke(contractAPIHttp, "prepareRequest", new Class[] {URL.class, HttpMethod.class, byte[].class, Integer.class, Map.class, String.class}, mockedUrl, HttpMethod.PUT, expectedPayload, 0, null, expectedUserAgentValue);
+        Deencapsulation.invoke(contractAPIHttp, "prepareRequest", new Class[]{URL.class, HttpMethod.class, byte[].class, Integer.class, Map.class, String.class}, mockedUrl, HttpMethod.PUT, expectedPayload, 0, null, expectedUserAgentValue);
         //assert
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void prepareRequestThrowsOnInvalidTimeout() throws Exception
     {
         //arrange
@@ -1274,11 +1268,11 @@ public class ContractAPIHttpTest
         ContractAPIHttp contractAPIHttp = createContractClass();
 
         //act
-        Deencapsulation.invoke(contractAPIHttp, "prepareRequest", new Class[] {URL.class, HttpMethod.class, byte[].class, Integer.class, Map.class, String.class}, mockedUrl, HttpMethod.PUT, expectedPayload, -2, null, expectedUserAgentValue);
+        Deencapsulation.invoke(contractAPIHttp, "prepareRequest", new Class[]{URL.class, HttpMethod.class, byte[].class, Integer.class, Map.class, String.class}, mockedUrl, HttpMethod.PUT, expectedPayload, -2, null, expectedUserAgentValue);
         //assert
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void sendRequestThrowsOnSendFailure() throws Exception
     {
         ContractAPIHttp contractAPIHttp = createContractClass();

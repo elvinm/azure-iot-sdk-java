@@ -84,7 +84,7 @@ public class AuthenticationParserTest
 
 
     //Tests_SRS_AUTHENTICATION_PARSER_34_003: [If the provided type is null, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void cannotSetTypeToNull()
     {
         //act

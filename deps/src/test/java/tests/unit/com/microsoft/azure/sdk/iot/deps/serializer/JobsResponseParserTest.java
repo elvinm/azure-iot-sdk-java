@@ -28,18 +28,7 @@ public class JobsResponseParserTest
     public void constructorSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\",\n" +
-                "    \"queryCondition\":\"DeviceId IN ['new_device']\",\n" +
-                "    \"failureReason\":\"Valid failure reason\",\n" +
-                "    \"statusMessage\":\"Valid status message\",\n" +
-                "    \"deviceId\":\"ValidDeviceId\",\n" +
-                "    \"parentJobId\":\"ValidParentJobId\",\n" +
-                "    \"maxExecutionTimeInSeconds\":120\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"queryCondition\":\"DeviceId IN ['new_device']\",\n" + "    \"failureReason\":\"Valid failure reason\",\n" + "    \"statusMessage\":\"Valid status message\",\n" + "    \"deviceId\":\"ValidDeviceId\",\n" + "    \"parentJobId\":\"ValidParentJobId\",\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
@@ -62,12 +51,7 @@ public class JobsResponseParserTest
     public void constructorMinJsonSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\"\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\"\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
@@ -83,20 +67,7 @@ public class JobsResponseParserTest
     public void constructorTwinSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\",\n" +
-                "    \"updateTwin\":\n" +
-                "    {\n" +
-                "        \"deviceId\":\"new_device\",\n" +
-                "        \"etag\":null,\n" +
-                "        \"tags\":{\"Tag1\":100},\n" +
-                "        \"properties\":{\"desired\":{},\"reported\":{}}\n" +
-                "    },\n" +
-                "    \"maxExecutionTimeInSeconds\":120\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"updateTwin\":\n" + "    {\n" + "        \"deviceId\":\"new_device\",\n" + "        \"etag\":null,\n" + "        \"tags\":{\"Tag1\":100},\n" + "        \"properties\":{\"desired\":{},\"reported\":{}}\n" + "    },\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
@@ -110,20 +81,7 @@ public class JobsResponseParserTest
     public void constructorMethodSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleDeviceMethod\",\n" +
-                "    \"cloudToDeviceMethod\":\n" +
-                "    {\n" +
-                "        \"methodName\":\"reboot\",\n" +
-                "        \"responseTimeoutInSeconds\":200,\n" +
-                "        \"connectTimeoutInSeconds\":5,\n" +
-                "        \"payload\":{\"Tag1\":100}\n" +
-                "    },\n" +
-                "    \"maxExecutionTimeInSeconds\":120\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleDeviceMethod\",\n" + "    \"cloudToDeviceMethod\":\n" + "    {\n" + "        \"methodName\":\"reboot\",\n" + "        \"responseTimeoutInSeconds\":200,\n" + "        \"connectTimeoutInSeconds\":5,\n" + "        \"payload\":{\"Tag1\":100}\n" + "    },\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
@@ -136,16 +94,7 @@ public class JobsResponseParserTest
     public void constructorQueryResponseTwinSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\"deviceId\":\"validDeviceID\"," +
-                        "\"jobId\":\"DHCMD302dbaae-cec5-4755-b529-1ca48d17dabc\"," +
-                        "\"jobType\":\"scheduleUpdateTwin\"," +
-                        "\"status\":\"completed\"," +
-                        "\"startTimeUtc\":\"2017-07-11T23:55:12.0052Z\"," +
-                        "\"endTimeUtc\":\"2017-07-11T23:56:52.0052Z\"," +
-                        "\"createdDateTimeUtc\":\"2017-07-11T23:55:13.4955445Z\"," +
-                        "\"lastUpdatedDateTimeUtc\":\"2017-07-11T23:55:13.5267866Z\"," +
-                        "\"outcome\":{}}";
+        String json = "{\"deviceId\":\"validDeviceID\"," + "\"jobId\":\"DHCMD302dbaae-cec5-4755-b529-1ca48d17dabc\"," + "\"jobType\":\"scheduleUpdateTwin\"," + "\"status\":\"completed\"," + "\"startTimeUtc\":\"2017-07-11T23:55:12.0052Z\"," + "\"endTimeUtc\":\"2017-07-11T23:56:52.0052Z\"," + "\"createdDateTimeUtc\":\"2017-07-11T23:55:13.4955445Z\"," + "\"lastUpdatedDateTimeUtc\":\"2017-07-11T23:55:13.5267866Z\"," + "\"outcome\":{}}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
@@ -178,16 +127,7 @@ public class JobsResponseParserTest
     public void constructorQueryResponseMethodSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\"deviceId\":\"validDeviceID\"," +
-                        "\"jobId\":\"DHCMD7605b0fb-dff4-4368-aa00-9be5c563cfcd\"," +
-                        "\"jobType\":\"scheduleDeviceMethod\"," +
-                        "\"status\":\"completed\"," +
-                        "\"startTimeUtc\":\"2017-07-11T23:55:12.0052Z\"," +
-                        "\"endTimeUtc\":\"2017-07-11T23:56:52.0052Z\"," +
-                        "\"createdDateTimeUtc\":\"2017-07-11T23:55:14.0580263Z\"," +
-                        "\"lastUpdatedDateTimeUtc\":\"2017-07-11T23:55:14.198687Z\"," +
-                        "\"outcome\":{\"deviceMethodResponse\":{\"status\":404,\"payload\":\"executed reboot\"}}}";
+        String json = "{\"deviceId\":\"validDeviceID\"," + "\"jobId\":\"DHCMD7605b0fb-dff4-4368-aa00-9be5c563cfcd\"," + "\"jobType\":\"scheduleDeviceMethod\"," + "\"status\":\"completed\"," + "\"startTimeUtc\":\"2017-07-11T23:55:12.0052Z\"," + "\"endTimeUtc\":\"2017-07-11T23:56:52.0052Z\"," + "\"createdDateTimeUtc\":\"2017-07-11T23:55:14.0580263Z\"," + "\"lastUpdatedDateTimeUtc\":\"2017-07-11T23:55:14.198687Z\"," + "\"outcome\":{\"deviceMethodResponse\":{\"status\":404,\"payload\":\"executed reboot\"}}}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
@@ -209,21 +149,7 @@ public class JobsResponseParserTest
     public void constructorQueryResponseErrorSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\"deviceId\":\"validDeviceID\"," +
-                        "\"jobId\":\"DHCMD798400e8-6d6c-44a5-b0ec-a790ad9705de\"," +
-                        "\"jobType\":\"scheduleDeviceMethod\"," +
-                        "\"status\":\"failed\"," +
-                        "\"startTimeUtc\":\"2017-07-08T00:02:25.0556Z\"," +
-                        "\"endTimeUtc\":\"2017-07-08T00:04:05.0556Z\"," +
-                        "\"createdDateTimeUtc\":\"2017-07-08T00:02:31.6162976Z\"," +
-                        "\"lastUpdatedDateTimeUtc\":\"2017-07-08T00:04:05.0736166Z\"," +
-                        "\"outcome\":{}," +
-                        "\"error\":{" +
-                            "\"code\":\"JobRunPreconditionFailed\"," +
-                        "   \"description\":\"The job did not start within specified period: either device did not come online or invalid endTime specified.\"" +
-                            "}" +
-                        "}";
+        String json = "{\"deviceId\":\"validDeviceID\"," + "\"jobId\":\"DHCMD798400e8-6d6c-44a5-b0ec-a790ad9705de\"," + "\"jobType\":\"scheduleDeviceMethod\"," + "\"status\":\"failed\"," + "\"startTimeUtc\":\"2017-07-08T00:02:25.0556Z\"," + "\"endTimeUtc\":\"2017-07-08T00:04:05.0556Z\"," + "\"createdDateTimeUtc\":\"2017-07-08T00:02:31.6162976Z\"," + "\"lastUpdatedDateTimeUtc\":\"2017-07-08T00:04:05.0736166Z\"," + "\"outcome\":{}," + "\"error\":{" + "\"code\":\"JobRunPreconditionFailed\"," + "   \"description\":\"The job did not start within specified period: either device did not come online or invalid endTime specified.\"" + "}" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
@@ -247,20 +173,7 @@ public class JobsResponseParserTest
     public void constructorStatisticsSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\",\n" +
-                "    \"deviceJobStatistics\": {\n" +
-                "        \"deviceCount\": 1,\n" +
-                "        \"failedCount\": 2,\n" +
-                "        \"succeededCount\": 3,\n" +
-                "        \"runningCount\": 4,\n" +
-                "        \"pendingCount\": 5\n" +
-                "    },\n" +
-                "    \"maxExecutionTimeInSeconds\":120\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"deviceJobStatistics\": {\n" + "        \"deviceCount\": 1,\n" + "        \"failedCount\": 2,\n" + "        \"succeededCount\": 3,\n" + "        \"runningCount\": 4,\n" + "        \"pendingCount\": 5\n" + "    },\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
@@ -270,7 +183,7 @@ public class JobsResponseParserTest
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_006: [If the json is null or empty, the createFromJson shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorJsonNullThrows() throws ParseException
     {
         // arrange
@@ -281,7 +194,7 @@ public class JobsResponseParserTest
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_006: [If the json is null or empty, the createFromJson shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorJsonEmptyThrows() throws ParseException
     {
         // arrange
@@ -292,157 +205,110 @@ public class JobsResponseParserTest
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_007: [If the json is not valid, the createFromJson shall throws JsonParseException.] */
-    @Test (expected = JsonParseException.class)
+    @Test(expected = JsonParseException.class)
     public void constructorInvalidJsonThrows() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\"\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\"\n" + "}";
 
         // act
         JobsResponseParser.createFromJson(json);
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_008: [If the json do not contains `jobId`, the createFromJson shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorNoJobIdThrows() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\"\n" +
-                "}";
+        String json = "{\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\"\n" + "}";
 
         // act
         JobsResponseParser.createFromJson(json);
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_008: [If the json do not contains `jobId`, the createFromJson shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorNullJobIdThrows() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":null,\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\"\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":null,\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\"\n" + "}";
 
         // act
         JobsResponseParser.createFromJson(json);
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_008: [If the json do not contains `jobId`, the createFromJson shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorEmptyJobIdThrows() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"\",\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\"\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\"\n" + "}";
 
         // act
         JobsResponseParser.createFromJson(json);
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_009: [If the json do not contains `type`, or the `type` is invalid, the createFromJson shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorNoTypeThrows() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"enqueued\"\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\"\n" + "}";
 
         // act
         JobsResponseParser.createFromJson(json);
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_009: [If the json do not contains `type`, or the `type` is invalid, the createFromJson shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorNullTypeThrows() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":null\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":null\n" + "}";
 
         // act
         JobsResponseParser.createFromJson(json);
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_009: [If the json do not contains `type`, or the `type` is invalid, the createFromJson shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorEmptyTypeThrows() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"\"\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"\"\n" + "}";
 
         // act
         JobsResponseParser.createFromJson(json);
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_010: [If the json do not contains `status`, or the `status` is invalid, the createFromJson shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorNoStatusThrows() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\"\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"type\":\"scheduleUpdateTwin\"\n" + "}";
 
         // act
         JobsResponseParser.createFromJson(json);
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_010: [If the json do not contains `status`, or the `status` is invalid, the createFromJson shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorNullStatusThrows() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":null,\n" +
-                "    \"type\":\"scheduleUpdateTwin\"\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":null,\n" + "    \"type\":\"scheduleUpdateTwin\"\n" + "}";
 
         // act
         JobsResponseParser.createFromJson(json);
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_010: [If the json do not contains `status`, or the `status` is invalid, the createFromJson shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorEmptyStatusThrows() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\"\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"\",\n" + "    \"type\":\"scheduleUpdateTwin\"\n" + "}";
 
         // act
         JobsResponseParser.createFromJson(json);
@@ -453,24 +319,15 @@ public class JobsResponseParserTest
     public void constructorDateSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\",\n" +
-                "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" +
-                "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" +
-                "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" +
-                "    \"maxExecutionTimeInSeconds\":120\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" + "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" + "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
 
         // assert
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "createdTimeDate"),"2017-06-21T10:47:33.798692Z");
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "startTimeDate"),"2017-06-21T16:47:33.798692Z");
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "endTimeDate"),"2017-06-21T20:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "createdTimeDate"), "2017-06-21T10:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "startTimeDate"), "2017-06-21T16:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "endTimeDate"), "2017-06-21T20:47:33.798692Z");
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_012: [If the createFromJson cannot properly parse the date in json, it shall ignore this value.] */
@@ -478,24 +335,15 @@ public class JobsResponseParserTest
     public void constructorInvalidCreateTimeSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\",\n" +
-                "    \"createdTime\":\"InvalidDateString\",\n" +
-                "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" +
-                "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" +
-                "    \"maxExecutionTimeInSeconds\":120\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"createdTime\":\"InvalidDateString\",\n" + "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" + "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
 
         // assert
         assertNull(Deencapsulation.getField(jobsResponseParser, "createdTimeDate"));
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "startTimeDate"),"2017-06-21T16:47:33.798692Z");
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "endTimeDate"),"2017-06-21T20:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "startTimeDate"), "2017-06-21T16:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "endTimeDate"), "2017-06-21T20:47:33.798692Z");
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_012: [If the createFromJson cannot properly parse the date in json, it shall ignore this value.] */
@@ -503,128 +351,69 @@ public class JobsResponseParserTest
     public void constructorEmptyCreateTimeUTCSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                        "    \"jobId\":\"jobName\",\n" +
-                        "    \"status\":\"enqueued\",\n" +
-                        "    \"type\":\"scheduleUpdateTwin\",\n" +
-                        "    \"createdDateTimeUtc\":\"\",\n" +
-                        "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" +
-                        "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" +
-                        "    \"maxExecutionTimeInSeconds\":120\n" +
-                        "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"createdDateTimeUtc\":\"\",\n" + "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" + "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
 
         // assert
         assertNull(Deencapsulation.getField(jobsResponseParser, "createdTimeDate"));
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "startTimeDate"),"2017-06-21T16:47:33.798692Z");
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "endTimeDate"),"2017-06-21T20:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "startTimeDate"), "2017-06-21T16:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "endTimeDate"), "2017-06-21T20:47:33.798692Z");
     }
 
     @Test
     public void constructorEmptyLastUpdatedTimeUTCSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                        "    \"jobId\":\"jobName\",\n" +
-                        "    \"status\":\"enqueued\",\n" +
-                        "    \"type\":\"scheduleUpdateTwin\",\n" +
-                        "    \"createdDateTimeUtc\":\"2017-06-21T16:47:33.798692Z\",\n" +
-                        "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" +
-                        "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" +
-                        "    \"lastUpdatedDateTimeUtc\":\"\",\n" +
-                        "    \"maxExecutionTimeInSeconds\":120\n" +
-                        "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"createdDateTimeUtc\":\"2017-06-21T16:47:33.798692Z\",\n" + "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" + "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" + "    \"lastUpdatedDateTimeUtc\":\"\",\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
 
         // assert
         assertNull(Deencapsulation.getField(jobsResponseParser, "lastUpdatedTimeDate"));
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "createdTimeDate"),"2017-06-21T16:47:33.798692Z");
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "startTimeDate"),"2017-06-21T16:47:33.798692Z");
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "endTimeDate"),"2017-06-21T20:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "createdTimeDate"), "2017-06-21T16:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "startTimeDate"), "2017-06-21T16:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "endTimeDate"), "2017-06-21T20:47:33.798692Z");
     }
 
     //Tests_SRS_JOBSRESPONSEPARSER_25_034: [If the json contains both of the dates createdTime and createdDateTimeUtc or startTime and startTimeUtc or endTime and endTimeUtc, the createFromJson shall throw IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorBothCreateTimeAndUTCInJsonThrows() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                        "    \"jobId\":\"jobName\",\n" +
-                        "    \"status\":\"enqueued\",\n" +
-                        "    \"type\":\"scheduleUpdateTwin\",\n" +
-                        "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" +
-                        "    \"createdDateTimeUtc\":\"2017-06-21T10:47:33.798692Z\",\n" +
-                        "    \"startTimeUtc\":\"invalidDate\",\n" +
-                        "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" +
-                        "    \"maxExecutionTimeInSeconds\":120\n" +
-                        "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" + "    \"createdDateTimeUtc\":\"2017-06-21T10:47:33.798692Z\",\n" + "    \"startTimeUtc\":\"invalidDate\",\n" + "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorBothStartTimeAndUTCInJsonThrows() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                        "    \"jobId\":\"jobName\",\n" +
-                        "    \"status\":\"enqueued\",\n" +
-                        "    \"type\":\"scheduleUpdateTwin\",\n" +
-                        "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" +
-                        "    \"startTime\":\"2017-06-21T10:47:33.798692Z\",\n" +
-                        "    \"startTimeUtc\":\"2017-06-21T10:47:33.798692Z\",\n" +
-                        "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" +
-                        "    \"maxExecutionTimeInSeconds\":120\n" +
-                        "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" + "    \"startTime\":\"2017-06-21T10:47:33.798692Z\",\n" + "    \"startTimeUtc\":\"2017-06-21T10:47:33.798692Z\",\n" + "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorBothEndTimeAndUTCInJsonThrows() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                        "    \"jobId\":\"jobName\",\n" +
-                        "    \"status\":\"enqueued\",\n" +
-                        "    \"type\":\"scheduleUpdateTwin\",\n" +
-                        "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" +
-                        "    \"startTime\":\"2017-06-21T10:47:33.798692Z\",\n" +
-                        "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" +
-                        "    \"endTimeUtc\":\"2017-06-21T20:47:33.798692Z\",\n" +
-                        "    \"maxExecutionTimeInSeconds\":120\n" +
-                        "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" + "    \"startTime\":\"2017-06-21T10:47:33.798692Z\",\n" + "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" + "    \"endTimeUtc\":\"2017-06-21T20:47:33.798692Z\",\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorBothTypeAndJobTypeInJsonThrows() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                        "    \"jobId\":\"jobName\",\n" +
-                        "    \"status\":\"enqueued\",\n" +
-                        "    \"type\":\"scheduleUpdateTwin\",\n" +
-                        "    \"jobType\":\"scheduleUpdateTwin\",\n" +
-                        "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" +
-                        "    \"startTime\":\"2017-06-21T10:47:33.798692Z\",\n" +
-                        "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" +
-                        "    \"maxExecutionTimeInSeconds\":120\n" +
-                        "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"jobType\":\"scheduleUpdateTwin\",\n" + "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" + "    \"startTime\":\"2017-06-21T10:47:33.798692Z\",\n" + "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
@@ -635,24 +424,15 @@ public class JobsResponseParserTest
     public void constructorEmptyStartTimeUTCSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                        "    \"jobId\":\"jobName\",\n" +
-                        "    \"status\":\"enqueued\",\n" +
-                        "    \"type\":\"scheduleUpdateTwin\",\n" +
-                        "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" +
-                        "    \"startTimeUtc\":\"invalidDate\",\n" +
-                        "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" +
-                        "    \"maxExecutionTimeInSeconds\":120\n" +
-                        "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" + "    \"startTimeUtc\":\"invalidDate\",\n" + "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
 
         // assert
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "createdTimeDate"),"2017-06-21T10:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "createdTimeDate"), "2017-06-21T10:47:33.798692Z");
         assertNull(Deencapsulation.getField(jobsResponseParser, "startTimeDate"));
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "endTimeDate"),"2017-06-21T20:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "endTimeDate"), "2017-06-21T20:47:33.798692Z");
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_012: [If the createFromJson cannot properly parse the date in json, it shall ignore this value.] */
@@ -660,23 +440,14 @@ public class JobsResponseParserTest
     public void constructorEmptyEndTimeUTCSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                        "    \"jobId\":\"jobName\",\n" +
-                        "    \"status\":\"enqueued\",\n" +
-                        "    \"type\":\"scheduleUpdateTwin\",\n" +
-                        "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" +
-                        "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" +
-                        "    \"endTimeUtc\":\"invalidDate\",\n" +
-                        "    \"maxExecutionTimeInSeconds\":120\n" +
-                        "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" + "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" + "    \"endTimeUtc\":\"invalidDate\",\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
 
         // assert
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "createdTimeDate"),"2017-06-21T10:47:33.798692Z");
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "startTimeDate"),"2017-06-21T16:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "createdTimeDate"), "2017-06-21T10:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "startTimeDate"), "2017-06-21T16:47:33.798692Z");
         assertNull(Deencapsulation.getField(jobsResponseParser, "endTimeDate"));
     }
 
@@ -685,24 +456,15 @@ public class JobsResponseParserTest
     public void constructorEmptyCreateTimeSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\",\n" +
-                "    \"createdTime\":\"\",\n" +
-                "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" +
-                "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" +
-                "    \"maxExecutionTimeInSeconds\":120\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"createdTime\":\"\",\n" + "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" + "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
 
         // assert
         assertNull(Deencapsulation.getField(jobsResponseParser, "createdTimeDate"));
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "startTimeDate"),"2017-06-21T16:47:33.798692Z");
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "endTimeDate"),"2017-06-21T20:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "startTimeDate"), "2017-06-21T16:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "endTimeDate"), "2017-06-21T20:47:33.798692Z");
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_012: [If the createFromJson cannot properly parse the date in json, it shall ignore this value.] */
@@ -710,24 +472,15 @@ public class JobsResponseParserTest
     public void constructorEmptyStartTimeSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\",\n" +
-                "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" +
-                "    \"startTime\":\"invalidDate\",\n" +
-                "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" +
-                "    \"maxExecutionTimeInSeconds\":120\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" + "    \"startTime\":\"invalidDate\",\n" + "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
 
         // assert
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "createdTimeDate"),"2017-06-21T10:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "createdTimeDate"), "2017-06-21T10:47:33.798692Z");
         assertNull(Deencapsulation.getField(jobsResponseParser, "startTimeDate"));
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "endTimeDate"),"2017-06-21T20:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "endTimeDate"), "2017-06-21T20:47:33.798692Z");
     }
 
     /* Tests_SRS_JOBSRESPONSEPARSER_21_012: [If the createFromJson cannot properly parse the date in json, it shall ignore this value.] */
@@ -735,23 +488,14 @@ public class JobsResponseParserTest
     public void constructorEmptyEndTimeSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\",\n" +
-                "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" +
-                "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" +
-                "    \"endTime\":\"invalidDate\",\n" +
-                "    \"maxExecutionTimeInSeconds\":120\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" + "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" + "    \"endTime\":\"invalidDate\",\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
 
         // act
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
 
         // assert
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "createdTimeDate"),"2017-06-21T10:47:33.798692Z");
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(jobsResponseParser, "startTimeDate"),"2017-06-21T16:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "createdTimeDate"), "2017-06-21T10:47:33.798692Z");
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(jobsResponseParser, "startTimeDate"), "2017-06-21T16:47:33.798692Z");
         assertNull(Deencapsulation.getField(jobsResponseParser, "endTimeDate"));
     }
 
@@ -773,45 +517,17 @@ public class JobsResponseParserTest
     public void gettersSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleUpdateTwin\",\n" +
-                "    \"updateTwin\":\n" +
-                "    {\n" +
-                "        \"deviceId\":\"new_device\",\n" +
-                "        \"etag\":null,\n" +
-                "        \"tags\":{\"Tag1\":100},\n" +
-                "        \"properties\":{\"desired\":{},\"reported\":{}}\n" +
-                "    },\n" +
-                "    \"queryCondition\":\"DeviceId IN ['new_device']\",\n" +
-                "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" +
-                "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" +
-                "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" +
-                "    \"failureReason\":\"Valid failure reason\",\n" +
-                "    \"statusMessage\":\"Valid status message\",\n" +
-                "    \"deviceId\":\"ValidDeviceId\",\n" +
-                "    \"parentJobId\":\"ValidParentJobId\",\n" +
-                "    \"deviceJobStatistics\": {\n" +
-                "        \"deviceCount\": 1,\n" +
-                "        \"failedCount\": 2,\n" +
-                "        \"succeededCount\": 3,\n" +
-                "        \"runningCount\": 4,\n" +
-                "        \"pendingCount\": 5\n" +
-                "    },\n" +
-                "    \"maxExecutionTimeInSeconds\":120\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleUpdateTwin\",\n" + "    \"updateTwin\":\n" + "    {\n" + "        \"deviceId\":\"new_device\",\n" + "        \"etag\":null,\n" + "        \"tags\":{\"Tag1\":100},\n" + "        \"properties\":{\"desired\":{},\"reported\":{}}\n" + "    },\n" + "    \"queryCondition\":\"DeviceId IN ['new_device']\",\n" + "    \"createdTime\":\"2017-06-21T10:47:33.798692Z\",\n" + "    \"startTime\":\"2017-06-21T16:47:33.798692Z\",\n" + "    \"endTime\":\"2017-06-21T20:47:33.798692Z\",\n" + "    \"failureReason\":\"Valid failure reason\",\n" + "    \"statusMessage\":\"Valid status message\",\n" + "    \"deviceId\":\"ValidDeviceId\",\n" + "    \"parentJobId\":\"ValidParentJobId\",\n" + "    \"deviceJobStatistics\": {\n" + "        \"deviceCount\": 1,\n" + "        \"failedCount\": 2,\n" + "        \"succeededCount\": 3,\n" + "        \"runningCount\": 4,\n" + "        \"pendingCount\": 5\n" + "    },\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
 
         // act
         // assert
         assertEquals("jobName", jobsResponseParser.getJobId());
         assertEquals("DeviceId IN ['new_device']", jobsResponseParser.getQueryCondition());
-        Helpers.assertDateWithError(jobsResponseParser.getCreatedTime(),"2017-06-21T10:47:33.798692Z");
-        Helpers.assertDateWithError(jobsResponseParser.getStartTime(),"2017-06-21T16:47:33.798692Z");
-        Helpers.assertDateWithError(jobsResponseParser.getEndTime(),"2017-06-21T20:47:33.798692Z");
-        assertEquals(120L, (long)jobsResponseParser.getMaxExecutionTimeInSeconds());
+        Helpers.assertDateWithError(jobsResponseParser.getCreatedTime(), "2017-06-21T10:47:33.798692Z");
+        Helpers.assertDateWithError(jobsResponseParser.getStartTime(), "2017-06-21T16:47:33.798692Z");
+        Helpers.assertDateWithError(jobsResponseParser.getEndTime(), "2017-06-21T20:47:33.798692Z");
+        assertEquals(120L, (long) jobsResponseParser.getMaxExecutionTimeInSeconds());
         assertEquals("scheduleUpdateTwin", jobsResponseParser.getType());
         assertEquals("enqueued", jobsResponseParser.getJobsStatus());
         assertNull(jobsResponseParser.getCloudToDeviceMethod());
@@ -827,16 +543,7 @@ public class JobsResponseParserTest
     public void gettersSucceedQueryResponse() throws ParseException
     {
         // arrange
-        String json =
-                "{\"deviceId\":\"validDeviceID\"," +
-                        "\"jobId\":\"jobName\"," +
-                        "\"jobType\":\"scheduleDeviceMethod\"," +
-                        "\"status\":\"completed\"," +
-                        "\"startTimeUtc\":\"2017-07-11T23:55:12.0052Z\"," +
-                        "\"endTimeUtc\":\"2017-07-11T23:56:52.0052Z\"," +
-                        "\"createdDateTimeUtc\":\"2017-07-11T23:55:14.0580263Z\"," +
-                        "\"lastUpdatedDateTimeUtc\":\"2017-07-11T23:55:14.198687Z\"," +
-                        "\"outcome\":{\"deviceMethodResponse\":{\"status\":404,\"payload\":\"executed reboot\"}}}";
+        String json = "{\"deviceId\":\"validDeviceID\"," + "\"jobId\":\"jobName\"," + "\"jobType\":\"scheduleDeviceMethod\"," + "\"status\":\"completed\"," + "\"startTimeUtc\":\"2017-07-11T23:55:12.0052Z\"," + "\"endTimeUtc\":\"2017-07-11T23:56:52.0052Z\"," + "\"createdDateTimeUtc\":\"2017-07-11T23:55:14.0580263Z\"," + "\"lastUpdatedDateTimeUtc\":\"2017-07-11T23:55:14.198687Z\"," + "\"outcome\":{\"deviceMethodResponse\":{\"status\":404,\"payload\":\"executed reboot\"}}}";
         ;
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
 
@@ -844,9 +551,9 @@ public class JobsResponseParserTest
         // assert
         assertEquals("validDeviceID", jobsResponseParser.getDeviceId());
         assertEquals("jobName", jobsResponseParser.getJobId());
-        Helpers.assertDateWithError(jobsResponseParser.getCreatedTime(),"2017-07-11T23:55:14.0580263Z");
-        Helpers.assertDateWithError(jobsResponseParser.getStartTime(),"2017-07-11T23:55:12.0052Z");
-        Helpers.assertDateWithError(jobsResponseParser.getEndTime(),"2017-07-11T23:56:52.0052Z");
+        Helpers.assertDateWithError(jobsResponseParser.getCreatedTime(), "2017-07-11T23:55:14.0580263Z");
+        Helpers.assertDateWithError(jobsResponseParser.getStartTime(), "2017-07-11T23:55:12.0052Z");
+        Helpers.assertDateWithError(jobsResponseParser.getEndTime(), "2017-07-11T23:56:52.0052Z");
         Helpers.assertDateWithError(jobsResponseParser.getLastUpdatedTimeDate(), "2017-07-11T23:55:14.198687Z");
         assertEquals("scheduleDeviceMethod", jobsResponseParser.getType());
         assertEquals("completed", jobsResponseParser.getJobsStatus());
@@ -862,20 +569,7 @@ public class JobsResponseParserTest
     public void gettersMethodSucceed() throws ParseException
     {
         // arrange
-        String json =
-                "{\n" +
-                "    \"jobId\":\"jobName\",\n" +
-                "    \"status\":\"enqueued\",\n" +
-                "    \"type\":\"scheduleDeviceMethod\",\n" +
-                "    \"cloudToDeviceMethod\":\n" +
-                "    {\n" +
-                "        \"methodName\":\"reboot\",\n" +
-                "        \"responseTimeoutInSeconds\":200,\n" +
-                "        \"connectTimeoutInSeconds\":5,\n" +
-                "        \"payload\":{\"Tag1\":100}\n" +
-                "    },\n" +
-                "    \"maxExecutionTimeInSeconds\":120\n" +
-                "}";
+        String json = "{\n" + "    \"jobId\":\"jobName\",\n" + "    \"status\":\"enqueued\",\n" + "    \"type\":\"scheduleDeviceMethod\",\n" + "    \"cloudToDeviceMethod\":\n" + "    {\n" + "        \"methodName\":\"reboot\",\n" + "        \"responseTimeoutInSeconds\":200,\n" + "        \"connectTimeoutInSeconds\":5,\n" + "        \"payload\":{\"Tag1\":100}\n" + "    },\n" + "    \"maxExecutionTimeInSeconds\":120\n" + "}";
         JobsResponseParser jobsResponseParser = JobsResponseParser.createFromJson(json);
 
         // act

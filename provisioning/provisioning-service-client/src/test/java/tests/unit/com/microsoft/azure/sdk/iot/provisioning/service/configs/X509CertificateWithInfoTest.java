@@ -18,37 +18,25 @@ import static org.junit.Assert.*;
 public class X509CertificateWithInfoTest
 {
     //PEM encoded representation of the public key certificate
-    private static String PUBLIC_CERTIFICATE_STRING =
-            "-----BEGIN CERTIFICATE-----\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "-----END CERTIFICATE-----\n";
+    private static String PUBLIC_CERTIFICATE_STRING = "-----BEGIN CERTIFICATE-----\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "-----END CERTIFICATE-----\n";
 
     /* SRS_X509_CERTIFICATE_WITH_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided certificate is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnCertificateNull()
     {
         // arrange
         // act
-        Deencapsulation.newInstance(X509CertificateWithInfo.class, new Class[] {String.class},(String)null);
+        Deencapsulation.newInstance(X509CertificateWithInfo.class, new Class[]{String.class}, (String) null);
         // assert
     }
 
     /* SRS_X509_CERTIFICATE_WITH_INFO_21_001: [The constructor shall throw IllegalArgumentException if the provided certificate is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnCertificateEmpty()
     {
         // arrange
         // act
-        Deencapsulation.newInstance(X509CertificateWithInfo.class, new Class[] {String.class},"");
+        Deencapsulation.newInstance(X509CertificateWithInfo.class, new Class[]{String.class}, "");
         // assert
     }
 
@@ -58,7 +46,7 @@ public class X509CertificateWithInfoTest
     {
         // arrange
         // act
-        X509CertificateWithInfo x509CertificateWithInfo = Deencapsulation.newInstance(X509CertificateWithInfo.class, new Class[] {String.class}, PUBLIC_CERTIFICATE_STRING);
+        X509CertificateWithInfo x509CertificateWithInfo = Deencapsulation.newInstance(X509CertificateWithInfo.class, new Class[]{String.class}, PUBLIC_CERTIFICATE_STRING);
 
         // assert
         assertEquals(PUBLIC_CERTIFICATE_STRING, Deencapsulation.getField(x509CertificateWithInfo, "certificate"));
@@ -66,7 +54,7 @@ public class X509CertificateWithInfoTest
     }
 
     /* SRS_X509_CERTIFICATE_WITH_INFO_21_003: [The constructor shall throw IllegalArgumentException if the provided x509CertificateWithInfo is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorCopyThrowsOnNull()
     {
         // arrange
@@ -80,7 +68,7 @@ public class X509CertificateWithInfoTest
     public void constructorCopyCertificate()
     {
         // arrange
-        X509CertificateWithInfo x509CertificateWithInfo = Deencapsulation.newInstance(X509CertificateWithInfo.class, new Class[] {String.class}, PUBLIC_CERTIFICATE_STRING);
+        X509CertificateWithInfo x509CertificateWithInfo = Deencapsulation.newInstance(X509CertificateWithInfo.class, new Class[]{String.class}, PUBLIC_CERTIFICATE_STRING);
 
         // act
         X509CertificateWithInfo x509CertificateWithInfoCopy = new X509CertificateWithInfo(x509CertificateWithInfo);
@@ -93,12 +81,10 @@ public class X509CertificateWithInfoTest
     /* SRS_X509_CERTIFICATE_WITH_INFO_21_004: [The constructor shall copy the certificate form the provided x509CertificateWithInfo.] */
     /* SRS_X509_CERTIFICATE_WITH_INFO_21_005: [If the provide x509CertificateWithInfo contains `info`, the constructor shall create a new instance of the X509CertificateInfo with the provided `info`.] */
     @Test
-    public void constructorCopyCertificateAndInfo(
-            @Mocked final X509CertificateInfo mockedX509CertificateInfo)
-            throws IllegalArgumentException
+    public void constructorCopyCertificateAndInfo(@Mocked final X509CertificateInfo mockedX509CertificateInfo) throws IllegalArgumentException
     {
         // arrange
-        X509CertificateWithInfo x509CertificateWithInfo = Deencapsulation.newInstance(X509CertificateWithInfo.class, new Class[] {String.class}, PUBLIC_CERTIFICATE_STRING);
+        X509CertificateWithInfo x509CertificateWithInfo = Deencapsulation.newInstance(X509CertificateWithInfo.class, new Class[]{String.class}, PUBLIC_CERTIFICATE_STRING);
         Deencapsulation.setField(x509CertificateWithInfo, "info", mockedX509CertificateInfo);
 
         // act
@@ -111,9 +97,7 @@ public class X509CertificateWithInfoTest
 
     /* SRS_X509_CERTIFICATE_WITH_INFO_21_005: [If the provide x509CertificateWithInfo contains `info`, the constructor shall create a new instance of the X509CertificateInfo with the provided `info`.] */
     @Test
-    public void constructorCopyInfo(
-            @Mocked final X509CertificateInfo mockedX509CertificateInfo)
-            throws IllegalArgumentException
+    public void constructorCopyInfo(@Mocked final X509CertificateInfo mockedX509CertificateInfo) throws IllegalArgumentException
     {
         // arrange
         X509CertificateWithInfo x509CertificateWithInfo = Deencapsulation.newInstance(X509CertificateWithInfo.class);
@@ -130,12 +114,10 @@ public class X509CertificateWithInfoTest
     /* SRS_X509_CERTIFICATE_WITH_INFO_21_006: [The getCertificate shall return the stored certificate.] */
     /* SRS_X509_CERTIFICATE_WITH_INFO_21_007: [The getInfo shall return the stored info.] */
     @Test
-    public void gettersSucceed(
-            @Mocked final X509CertificateInfo mockedX509CertificateInfo)
-            throws IllegalArgumentException
+    public void gettersSucceed(@Mocked final X509CertificateInfo mockedX509CertificateInfo) throws IllegalArgumentException
     {
         // arrange
-        X509CertificateWithInfo x509CertificateWithInfo = Deencapsulation.newInstance(X509CertificateWithInfo.class, new Class[] {String.class}, PUBLIC_CERTIFICATE_STRING);
+        X509CertificateWithInfo x509CertificateWithInfo = Deencapsulation.newInstance(X509CertificateWithInfo.class, new Class[]{String.class}, PUBLIC_CERTIFICATE_STRING);
         Deencapsulation.setField(x509CertificateWithInfo, "info", mockedX509CertificateInfo);
 
         // act

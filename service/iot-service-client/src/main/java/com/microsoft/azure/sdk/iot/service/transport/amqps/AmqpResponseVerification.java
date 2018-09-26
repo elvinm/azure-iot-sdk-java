@@ -35,7 +35,7 @@ public class AmqpResponseVerification implements AmqpError
         }
         else if (state.getClass().equals(Rejected.class))
         {
-            Rejected rejectedState = (Rejected)state;
+            Rejected rejectedState = (Rejected) state;
             ErrorCondition errorCond = rejectedState.getError();
             this.errorCondition = errorCond.getCondition();
             this.errorDescription = errorCond.getDescription();
@@ -74,12 +74,12 @@ public class AmqpResponseVerification implements AmqpError
         else if (this.errorCondition.equals(NOT_IMPLEMENTED))
         {
             //Codes_SRS_SERVICE_SDK_JAVA_AMQPRESPONSEVERIFICATION_25_002: [** The function shall save IotHubNotSupportedException if the amqp delivery state is rejected and error condition is amqp error code amqp:not-implemented **]**
-            this.exception =  new IotHubNotSupportedException(errorDescription);
+            this.exception = new IotHubNotSupportedException(errorDescription);
         }
         else if (this.errorCondition.equals(NOT_ALLOWED))
         {
             //Codes_SRS_SERVICE_SDK_JAVA_AMQPRESPONSEVERIFICATION_25_003: [** The function shall save IotHubInvalidOperationException if the amqp delivery state is rejected and error condition is amqp error code amqp:not-allowed **]**
-            this.exception =  new IotHubInvalidOperationException(errorDescription);
+            this.exception = new IotHubInvalidOperationException(errorDescription);
         }
         else if (this.errorCondition.equals(UNAUTHORIZED_ACCESS))
         {

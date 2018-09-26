@@ -33,15 +33,6 @@ import static org.junit.Assert.*;
  */
 public class JobResultTest
 {
-    @Mocked
-    JobsResponseParser mockedJobsResponseParser;
-
-    @Mocked
-    JobsStatisticsParser mockedJobsStatisticsParser;
-
-    @Mocked
-    JobStatistics mockedJobStatistics;
-
     final static String JOB_ID = "validJobId";
     final static String QUERY_CONDITION = "DeviceId IN ['validDevice']";
     final static long MAX_EXECUTION_TIME_IN_SECONDS = 100L;
@@ -51,7 +42,12 @@ public class JobResultTest
     final static String PARENT_JOB_ID = "validParentJobId";
     final static String ETAG = "validETag";
     final static String DATEFORMAT_JSON = "MMM d, yyyy h:mm:ss a";
-
+    @Mocked
+    JobsResponseParser mockedJobsResponseParser;
+    @Mocked
+    JobsStatisticsParser mockedJobsStatisticsParser;
+    @Mocked
+    JobStatistics mockedJobStatistics;
 
     private void JobsResponseParserExpectations(String json, TwinState twinState, MethodParser methodParser, Date date, MethodParser methodParserResponse, String jobTypeStr)
     {
@@ -150,15 +146,16 @@ public class JobResultTest
             }
         };
     }
+
     /* Tests_SRS_JOBRESULT_21_001: [The constructor shall throw IllegalArgumentException if the input body is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullJson()
     {
         //arrange
         final byte[] resultBytes = null;
 
         //act
-        Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, resultBytes);
+        Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, resultBytes);
     }
 
     /* Tests_SRS_JOBRESULT_21_002: [The constructor shall parse the body using the JobsResponseParser.] */
@@ -178,7 +175,7 @@ public class JobResultTest
         JobsResponseParserExpectations(json, twinState, null, new Date(), null, "scheduleUpdateTwin");
 
         //act
-        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, json.getBytes());
+        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, json.getBytes());
 
         //assert
         new Verifications()
@@ -191,7 +188,7 @@ public class JobResultTest
     }
 
     /* Tests_SRS_JOBRESULT_21_003: [The constructor shall throw JsonParseException if the input body contains a invalid json.] */
-    @Test (expected = JsonParseException.class)
+    @Test(expected = JsonParseException.class)
     public void constructorThrowsOnInvalidJson()
     {
         //arrange
@@ -206,7 +203,7 @@ public class JobResultTest
         };
 
         //act
-        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, json.getBytes());
+        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, json.getBytes());
     }
 
     /* Tests_SRS_JOBRESULT_21_004: [The constructor shall locally store all results information in the provided body.] */
@@ -227,7 +224,7 @@ public class JobResultTest
         JobsResponseParserExpectations(json, twinState, null, now, null, "scheduleUpdateTwin");
 
         //act
-        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, json.getBytes());
+        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, json.getBytes());
 
         //assert
         assertEquals(JOB_ID, Deencapsulation.getField(jobResult, "jobId"));
@@ -235,7 +232,7 @@ public class JobResultTest
         assertEquals(now, Deencapsulation.getField(jobResult, "createdTime"));
         assertEquals(now, Deencapsulation.getField(jobResult, "startTime"));
         assertEquals(now, Deencapsulation.getField(jobResult, "endTime"));
-        assertEquals(MAX_EXECUTION_TIME_IN_SECONDS, (long)Deencapsulation.getField(jobResult, "maxExecutionTimeInSeconds"));
+        assertEquals(MAX_EXECUTION_TIME_IN_SECONDS, (long) Deencapsulation.getField(jobResult, "maxExecutionTimeInSeconds"));
         assertEquals(JobType.scheduleUpdateTwin, Deencapsulation.getField(jobResult, "jobType"));
         assertEquals(JobStatus.enqueued, Deencapsulation.getField(jobResult, "jobStatus"));
         assertNull(Deencapsulation.getField(jobResult, "cloudToDeviceMethod"));
@@ -265,7 +262,7 @@ public class JobResultTest
         JobsResponseParserExpectations(json, twinState, null, now, null, "scheduleUpdateTwin");
 
         //act
-        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, json.getBytes());
+        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, json.getBytes());
 
         //assert
         assertNotNull(Deencapsulation.getField(jobResult, "updateTwin"));
@@ -302,7 +299,7 @@ public class JobResultTest
         JobsResponseParserExpectations(json, twinState, null, now, null, "scheduleUpdateTwin");
 
         //act
-        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, json.getBytes());
+        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, json.getBytes());
 
         //assert
         assertEquals(JOB_ID, jobResult.getJobId());
@@ -310,7 +307,7 @@ public class JobResultTest
         assertEquals(now, jobResult.getCreatedTime());
         assertEquals(now, jobResult.getStartTime());
         assertEquals(now, jobResult.getEndTime());
-        assertEquals(MAX_EXECUTION_TIME_IN_SECONDS, (long)jobResult.getMaxExecutionTimeInSeconds());
+        assertEquals(MAX_EXECUTION_TIME_IN_SECONDS, (long) jobResult.getMaxExecutionTimeInSeconds());
         assertEquals(JobType.scheduleUpdateTwin, jobResult.getJobType());
         assertEquals(JobStatus.enqueued, jobResult.getJobStatus());
         assertNull(jobResult.getCloudToDeviceMethod());
@@ -339,7 +336,7 @@ public class JobResultTest
         jobsResponseParserWithNullDeviceIdExpectations(json, twinState, null, now, null, "scheduleUpdateTwin");
 
         //act
-        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, json.getBytes());
+        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, json.getBytes());
 
         //assert
         assertEquals(JOB_ID, jobResult.getJobId());
@@ -347,7 +344,7 @@ public class JobResultTest
         assertEquals(now, jobResult.getCreatedTime());
         assertEquals(now, jobResult.getStartTime());
         assertEquals(now, jobResult.getEndTime());
-        assertEquals(MAX_EXECUTION_TIME_IN_SECONDS, (long)jobResult.getMaxExecutionTimeInSeconds());
+        assertEquals(MAX_EXECUTION_TIME_IN_SECONDS, (long) jobResult.getMaxExecutionTimeInSeconds());
         assertEquals(JobType.scheduleUpdateTwin, jobResult.getJobType());
         assertEquals(JobStatus.enqueued, jobResult.getJobStatus());
         assertNull(jobResult.getCloudToDeviceMethod());
@@ -406,7 +403,7 @@ public class JobResultTest
         };
 
         //act
-        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, json.getBytes());
+        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, json.getBytes());
 
         //assert
         assertEquals(JOB_ID, jobResult.getJobId());
@@ -415,7 +412,7 @@ public class JobResultTest
         assertNotNull(jobResult.getCloudToDeviceMethod());
         assertNotNull(jobResult.getOutcome());
         MethodResult methodResult = jobResult.getOutcomeResult();
-        assertEquals(methodReturnStatus, (long)methodResult.getStatus());
+        assertEquals(methodReturnStatus, (long) methodResult.getStatus());
         assertEquals(methodReturnPayload, methodResult.getPayload());
         assertNotNull(jobResult.getLastUpdatedDateTime());
         assertNull(jobResult.getError());
@@ -460,7 +457,7 @@ public class JobResultTest
         };
 
         //act
-        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, json.getBytes());
+        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, json.getBytes());
 
         //assert
         assertNull(jobResult.getOutcomeResult());
@@ -468,44 +465,14 @@ public class JobResultTest
 
     /* Tests_SRS_JOBRESULT_21_020: [The toString shall return a String with a pretty print json that represents this class.] */
     @Test
-    public void  toStringReturnClassContent() throws IOException
+    public void toStringReturnClassContent() throws IOException
     {
         //arrange
         final String json = "validJson";
         final Date now = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATEFORMAT_JSON);
         String nowString = dateFormat.format(now);
-        final String expectedPrettyPrint =
-                "{\n" +
-                "  \"jobId\": \"validJobId\",\n" +
-                "  \"queryCondition\": \"DeviceId IN ['validDevice']\",\n" +
-                "  \"createdTime\": \"" + nowString + "\",\n" +
-                "  \"startTime\": \"" + nowString + "\",\n" +
-                "  \"lastUpdatedDateTime\": \"" + nowString + "\",\n" +
-                "  \"endTime\": \"" + nowString + "\",\n" +
-                "  \"maxExecutionTimeInSeconds\": 100,\n" +
-                "  \"jobType\": \"scheduleUpdateTwin\",\n" +
-                "  \"jobStatus\": \"enqueued\",\n" +
-                "  \"updateTwin\": {\n" +
-                "    \"deviceId\": \"validDeviceId\",\n" +
-                "    \"eTag\": \"validETag\",\n" +
-                "    \"tag\": {\n" +
-                "      \"tag1\": \"val1\"\n" +
-                "    },\n" +
-                "    \"desiredProperties\": {}\n" +
-                "  },\n" +
-                "  \"failureReason\": \"This is a valid failure reason\",\n" +
-                "  \"statusMessage\": \"This is a valid status message\",\n" +
-                "  \"jobStatistics\": {\n" +
-                "    \"deviceCount\": 0,\n" +
-                "    \"failedCount\": 0,\n" +
-                "    \"succeededCount\": 0,\n" +
-                "    \"runningCount\": 0,\n" +
-                "    \"pendingCount\": 0\n" +
-                "  },\n" +
-                "  \"deviceId\": \"validDeviceId\",\n" +
-                "  \"parentJobId\": \"validParentJobId\"\n" +
-                "}";
+        final String expectedPrettyPrint = "{\n" + "  \"jobId\": \"validJobId\",\n" + "  \"queryCondition\": \"DeviceId IN ['validDevice']\",\n" + "  \"createdTime\": \"" + nowString + "\",\n" + "  \"startTime\": \"" + nowString + "\",\n" + "  \"lastUpdatedDateTime\": \"" + nowString + "\",\n" + "  \"endTime\": \"" + nowString + "\",\n" + "  \"maxExecutionTimeInSeconds\": 100,\n" + "  \"jobType\": \"scheduleUpdateTwin\",\n" + "  \"jobStatus\": \"enqueued\",\n" + "  \"updateTwin\": {\n" + "    \"deviceId\": \"validDeviceId\",\n" + "    \"eTag\": \"validETag\",\n" + "    \"tag\": {\n" + "      \"tag1\": \"val1\"\n" + "    },\n" + "    \"desiredProperties\": {}\n" + "  },\n" + "  \"failureReason\": \"This is a valid failure reason\",\n" + "  \"statusMessage\": \"This is a valid status message\",\n" + "  \"jobStatistics\": {\n" + "    \"deviceCount\": 0,\n" + "    \"failedCount\": 0,\n" + "    \"succeededCount\": 0,\n" + "    \"runningCount\": 0,\n" + "    \"pendingCount\": 0\n" + "  },\n" + "  \"deviceId\": \"validDeviceId\",\n" + "  \"parentJobId\": \"validParentJobId\"\n" + "}";
 
         TwinCollection tags = new TwinCollection();
         tags.put("tag1", "val1");
@@ -515,7 +482,7 @@ public class JobResultTest
         twinState.setETag(ETAG);
 
         JobsResponseParserExpectations(json, twinState, null, now, null, "scheduleUpdateTwin");
-        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, json.getBytes());
+        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, json.getBytes());
 
         //act
         String prettyPrint = jobResult.toString();
@@ -526,46 +493,14 @@ public class JobResultTest
 
     /* Tests_SRS_JOBRESULT_21_020: [The toString shall return a String with a pretty print json that represents this class.] */
     @Test
-    public void  toStringReturnJobTypeUnknown() throws IOException
+    public void toStringReturnJobTypeUnknown() throws IOException
     {
         //arrange
         final String json = "validJson";
         final Date now = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATEFORMAT_JSON);
         String nowString = dateFormat.format(now);
-        final String expectedPrettyPrint =
-                "{\n" +
-                        "  \"jobId\": \"validJobId\",\n" +
-                        "  \"queryCondition\": \"DeviceId IN ['validDevice']\",\n" +
-                        "  \"createdTime\": \"" + nowString + "\",\n" +
-                        "  \"startTime\": \"" + nowString + "\",\n" +
-                        "  \"lastUpdatedDateTime\": \"" + nowString + "\",\n" +
-                        "  \"endTime\": \"" + nowString + "\",\n" +
-                        "  \"maxExecutionTimeInSeconds\": 100,\n" +
-                        "  \"jobType\": \"unknown\",\n" +
-                        "  \"jobStatus\": \"enqueued\",\n" +
-                        "  \"updateTwin\": {\n" +
-                        "    \"deviceId\": \"validDeviceId\",\n" +
-                        "    \"eTag\": \"validETag\",\n" +
-                        "    \"tag\": {\n" +
-                        "      \"tag1\": \"val1\"\n" +
-                        "    },\n" +
-                        "    \"desiredProperties\": {\n" +
-                        "      \"key1\": \"val1\"\n" +
-                        "    }\n" +
-                        "  },\n" +
-                        "  \"failureReason\": \"This is a valid failure reason\",\n" +
-                        "  \"statusMessage\": \"This is a valid status message\",\n" +
-                        "  \"jobStatistics\": {\n" +
-                        "    \"deviceCount\": 0,\n" +
-                        "    \"failedCount\": 0,\n" +
-                        "    \"succeededCount\": 0,\n" +
-                        "    \"runningCount\": 0,\n" +
-                        "    \"pendingCount\": 0\n" +
-                        "  },\n" +
-                        "  \"deviceId\": \"validDeviceId\",\n" +
-                        "  \"parentJobId\": \"validParentJobId\"\n" +
-                        "}";
+        final String expectedPrettyPrint = "{\n" + "  \"jobId\": \"validJobId\",\n" + "  \"queryCondition\": \"DeviceId IN ['validDevice']\",\n" + "  \"createdTime\": \"" + nowString + "\",\n" + "  \"startTime\": \"" + nowString + "\",\n" + "  \"lastUpdatedDateTime\": \"" + nowString + "\",\n" + "  \"endTime\": \"" + nowString + "\",\n" + "  \"maxExecutionTimeInSeconds\": 100,\n" + "  \"jobType\": \"unknown\",\n" + "  \"jobStatus\": \"enqueued\",\n" + "  \"updateTwin\": {\n" + "    \"deviceId\": \"validDeviceId\",\n" + "    \"eTag\": \"validETag\",\n" + "    \"tag\": {\n" + "      \"tag1\": \"val1\"\n" + "    },\n" + "    \"desiredProperties\": {\n" + "      \"key1\": \"val1\"\n" + "    }\n" + "  },\n" + "  \"failureReason\": \"This is a valid failure reason\",\n" + "  \"statusMessage\": \"This is a valid status message\",\n" + "  \"jobStatistics\": {\n" + "    \"deviceCount\": 0,\n" + "    \"failedCount\": 0,\n" + "    \"succeededCount\": 0,\n" + "    \"runningCount\": 0,\n" + "    \"pendingCount\": 0\n" + "  },\n" + "  \"deviceId\": \"validDeviceId\",\n" + "  \"parentJobId\": \"validParentJobId\"\n" + "}";
 
         TwinCollection tags = new TwinCollection();
         tags.put("tag1", "val1");
@@ -577,7 +512,7 @@ public class JobResultTest
         twinState.setETag(ETAG);
 
         JobsResponseParserExpectations(json, twinState, null, now, null, "unknown");
-        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[] {byte[].class}, json.getBytes());
+        JobResult jobResult = Deencapsulation.newInstance(JobResult.class, new Class[]{byte[].class}, json.getBytes());
 
         //act
         String prettyPrint = jobResult.toString();

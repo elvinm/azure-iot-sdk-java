@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  * Methods: 100%
  * Lines: 97%
  */
-public class IotHubConnectionStringTest 
+public class IotHubConnectionStringTest
 {
     private static final String VALID_HUBNAME = "iothub";
     private static final String VALID_HOSTNAME = VALID_HUBNAME + ".device.com";
@@ -31,8 +31,7 @@ public class IotHubConnectionStringTest
     private static final String VALID_MODULEID = "moduleId";
     private static final String VALID_GATEWAYHOSTNAME = "edgeHubHostName";
 
-    private void assertConnectionString(Object iotHubConnectionString, String expectedHostName,
-                                        String expectedDeviceId, String expectedSharedAccessKey, String expectedSharedAccessToken)
+    private void assertConnectionString(Object iotHubConnectionString, String expectedHostName, String expectedDeviceId, String expectedSharedAccessKey, String expectedSharedAccessToken)
     {
         assertNotNull(iotHubConnectionString);
 
@@ -61,13 +60,10 @@ public class IotHubConnectionStringTest
     public void IotHubConnectionStringSharedAccessKeySuccess() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";";
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";";
 
         // act
-        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
 
         // assert
         assertConnectionString(iotHubConnectionString, VALID_HOSTNAME, VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, null);
@@ -80,9 +76,7 @@ public class IotHubConnectionStringTest
     public void ConstructorSavesModuleIdAndGatewayHostname() throws URISyntaxException
     {
         //arrange
-        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;" +
-                "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";ModuleId=" +
-                VALID_MODULEID +";GatewayHostName=" + VALID_GATEWAYHOSTNAME + ";";
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";ModuleId=" + VALID_MODULEID + ";GatewayHostName=" + VALID_GATEWAYHOSTNAME + ";";
 
         //act
         IotHubConnectionString connectionString = new IotHubConnectionString(connString);
@@ -101,9 +95,7 @@ public class IotHubConnectionStringTest
     public void IotHubConnectionStringParametersSharedAccessKeySuccess() throws ClassNotFoundException
     {
         // act
-        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                VALID_HOSTNAME, VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, null);
+        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, VALID_HOSTNAME, VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, null);
 
         // assert
         assertConnectionString(iotHubConnectionString, VALID_HOSTNAME, VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, null);
@@ -115,13 +107,10 @@ public class IotHubConnectionStringTest
     public void IotHubConnectionStringSharedAccessTokenSuccess() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN + ";";
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN + ";";
 
         // act
-        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
 
         // assert
         assertConnectionString(iotHubConnectionString, VALID_HOSTNAME, VALID_DEVICEID, null, VALID_SHARED_ACCESS_TOKEN);
@@ -132,9 +121,7 @@ public class IotHubConnectionStringTest
     public void IotHubConnectionStringParametersSharedAccessTokenSuccess() throws ClassNotFoundException
     {
         // act
-        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                VALID_HOSTNAME, VALID_DEVICEID, null, VALID_SHARED_ACCESS_TOKEN);
+        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, VALID_HOSTNAME, VALID_DEVICEID, null, VALID_SHARED_ACCESS_TOKEN);
 
         // assert
         assertConnectionString(iotHubConnectionString, VALID_HOSTNAME, VALID_DEVICEID, null, VALID_SHARED_ACCESS_TOKEN);
@@ -145,13 +132,10 @@ public class IotHubConnectionStringTest
     public void IotHubConnectionStringDeviceIdSuccess() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=test%3Bdevice;SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";";
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=test%3Bdevice;SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";";
 
         // act
-        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
 
         // assert
         assertConnectionString(iotHubConnectionString, VALID_HOSTNAME, "test;device", VALID_SHARED_ACCESS_KEY, null);
@@ -162,351 +146,287 @@ public class IotHubConnectionStringTest
     public void IotHubConnectionStringParametersDeviceIdSuccess() throws ClassNotFoundException
     {
         // act
-        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                VALID_HOSTNAME, "test;device", VALID_SHARED_ACCESS_KEY, null);
+        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, VALID_HOSTNAME, "test;device", VALID_SHARED_ACCESS_KEY, null);
 
         // assert
         assertConnectionString(iotHubConnectionString, VALID_HOSTNAME, "test;device", VALID_SHARED_ACCESS_KEY, null);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_016: [If the connection string is null or empty, the constructor shall throw an IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringNullConnectionStringThrows() throws ClassNotFoundException
     {
         // arrange
         final String connString = null;
 
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_016: [If the connection string is null or empty, the constructor shall throw an IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringEmptyConnectionStringThrows() throws ClassNotFoundException
     {
         // arrange
         final String connString = "";
 
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_017: [If the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_001: [A valid `hostName` shall not be null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringMissingHostNameThrows() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";";
+        final String connString = "CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";";
 
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_017: [If the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_001: [A valid `hostName` shall not be null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringEmptyHostNameThrows() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=;CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";";
+        final String connString = "HostName=;CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";";
 
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_025: [If the parameters for the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_001: [A valid `hostName` shall not be null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringParametersNullHostNameThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                null, VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, null);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, null, VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, null);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_025: [If the parameters for the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_001: [A valid `hostName` shall not be null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringParametersEmptyHostNameThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                "", VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, null);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, "", VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, null);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_017: [If the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_002: [A valid `hostName` shall be a valid URI.] */
-    @Test (expected = URISyntaxException.class)
+    @Test(expected = URISyntaxException.class)
     public void IotHubConnectionStringHostNameNotURIThrows() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=iot Hub Name.azure.net;CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN;
+        final String connString = "HostName=iot Hub Name.azure.net;CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN;
 
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_025: [If the parameters for the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_002: [A valid `hostName` shall be a valid URI.] */
-    @Test (expected = URISyntaxException.class)
+    @Test(expected = URISyntaxException.class)
     public void IotHubConnectionStringParametersHostNameNotURIThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                "iot hub.azure.net", VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, null);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, "iot hub.azure.net", VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, null);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_017: [If the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_003: [A valid `hostName` shall contain at least one `.`.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringNoHubNameThrows() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=azure;CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN;
+        final String connString = "HostName=azure;CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN;
 
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_025: [If the parameters for the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_003: [A valid `hostName` shall contain at least one `.`.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringParametersNoHubNameThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                "iothub", VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, null);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, "iothub", VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, null);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_017: [If the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_004: [A valid `deviceId` shall not be null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringMissingDeviceIdThrows() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";";
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";";
 
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_017: [If the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_004: [A valid `deviceId` shall not be null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringEmptyDeviceIdThrows() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=;SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";";
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=;SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";";
 
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_025: [If the parameters for the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_004: [A valid `deviceId` shall not be null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringParametersNullDeviceIdThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                VALID_HOSTNAME, null, VALID_SHARED_ACCESS_KEY, null);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, VALID_HOSTNAME, null, VALID_SHARED_ACCESS_KEY, null);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_025: [If the parameters for the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_004: [A valid `deviceId` shall not be null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringParametersEmptyDeviceIdThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                VALID_HOSTNAME, "", VALID_SHARED_ACCESS_KEY, null);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, VALID_HOSTNAME, "", VALID_SHARED_ACCESS_KEY, null);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_017: [If the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_005: [A valid connectionString shall contain a `sharedAccessToken` or a `sharedAccessKey` unless using x509 Authentication.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringMissingAccessKeyAndTokenThrows() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID;
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID;
 
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_017: [If the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_006: [If provided, the `sharedAccessToken` shall not be null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionString_emptyAccessToken_failed() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessSignature=";
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessSignature=";
 
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_017: [If the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_007: [If provided, the `sharedAccessKey` shall not be null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringEmptyAccessKeyThrows() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=";
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=";
 
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_025: [If the parameters for the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_006: [If provided, the `sharedAccessToken` shall not be null or empty.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_007: [If provided, the `sharedAccessKey` shall not be null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringParametersEmptyAccessKeyThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                VALID_HOSTNAME, VALID_DEVICEID, "", null);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, VALID_HOSTNAME, VALID_DEVICEID, "", null);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_025: [If the parameters for the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_006: [If provided, the `sharedAccessToken` shall not be null or empty.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_007: [If provided, the `sharedAccessKey` shall not be null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringParametersEmptyAccessTokenThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                VALID_HOSTNAME, VALID_DEVICEID, null, "");
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, VALID_HOSTNAME, VALID_DEVICEID, null, "");
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_025: [If the parameters for the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_006: [If provided, the `sharedAccessToken` shall not be null or empty.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_007: [If provided, the `sharedAccessKey` shall not be null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringParametersBothEmptyAccessKeyAndTokenThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                VALID_HOSTNAME, VALID_DEVICEID, "", "");
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, VALID_HOSTNAME, VALID_DEVICEID, "", "");
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_017: [If the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_008: [A valid connectionString shall not contain both `sharedAccessToken` and `sharedAccessKey` at the same time.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringBothValidKeyEmptyTokenThrows() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";SharedAccessSignature=";
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";SharedAccessSignature=";
 
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_017: [If the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_008: [A valid connectionString shall not contain both `sharedAccessToken` and `sharedAccessKey` at the same time.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringBothEmptyKeyValidTokenThrows() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=;SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN;
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=;SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN;
 
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_017: [If the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_008: [A valid connectionString shall not contain both `sharedAccessToken` and `sharedAccessKey` at the same time.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringBothValidKeyValidTokenThrows() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN;
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN;
 
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_025: [If the parameters for the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_008: [A valid connectionString shall not contain both `sharedAccessToken` and `sharedAccessKey` at the same time.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringParametersBothValidKeyEmptyTokenThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                VALID_HOSTNAME, VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, "");
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, VALID_HOSTNAME, VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, "");
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_025: [If the parameters for the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_008: [A valid connectionString shall not contain both `sharedAccessToken` and `sharedAccessKey` at the same time.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringParametersBothEmptyKeyValidTokenThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                VALID_HOSTNAME, VALID_DEVICEID, "", VALID_SHARED_ACCESS_TOKEN);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, VALID_HOSTNAME, VALID_DEVICEID, "", VALID_SHARED_ACCESS_TOKEN);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_025: [If the parameters for the connection string is not valid, the constructor shall throw an IllegalArgumentException.] */
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_008: [A valid connectionString shall not contain both `sharedAccessToken` and `sharedAccessKey` at the same time.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void IotHubConnectionStringParametersBothValidKeyValidTokenThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                VALID_HOSTNAME, VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, VALID_SHARED_ACCESS_TOKEN);
+        Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, VALID_HOSTNAME, VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, VALID_SHARED_ACCESS_TOKEN);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_21_030: [The getHostName shall return the stored host name.] */
@@ -517,11 +437,8 @@ public class IotHubConnectionStringTest
     public void IotHubConnectionString_getters_sharedAccessKey_success() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY;
-        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY;
+        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
         assertConnectionString(iotHubConnectionString, VALID_HOSTNAME, VALID_DEVICEID, VALID_SHARED_ACCESS_KEY, null);
 
         // act
@@ -540,11 +457,8 @@ public class IotHubConnectionStringTest
     public void IotHubConnectionString_getters_sharedAccessToken_success() throws ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN + ";";
-        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN + ";";
+        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
         assertConnectionString(iotHubConnectionString, VALID_HOSTNAME, VALID_DEVICEID, null, VALID_SHARED_ACCESS_TOKEN);
 
         // act
@@ -556,13 +470,11 @@ public class IotHubConnectionStringTest
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_34_035: [If the connection string contains an expired SAS Token, throw a SecurityException] */
-    @Test (expected = SecurityException.class)
+    @Test(expected = SecurityException.class)
     public void IotHubConnectionStringExpiredConnectionStringThrowsSecurityException(@Mocked final IotHubSasToken iotHubSasToken) throws SecurityException, ClassNotFoundException
     {
         // arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessSignature=" + EXPIRED_SHARED_ACCESS_TOKEN + ";";
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessSignature=" + EXPIRED_SHARED_ACCESS_TOKEN + ";";
 
         new NonStrictExpectations()
         {
@@ -573,12 +485,11 @@ public class IotHubConnectionStringTest
         };
 
         // act
-        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
     }
 
     /* Tests_SRS_IOTHUB_CONNECTIONSTRING_34_036: [If the SAS Token has expired, throw a SecurityException.] */
-    @Test (expected = SecurityException.class)
+    @Test(expected = SecurityException.class)
     public void IotHubConnectionStringExpiredSharedAccessTokenThrowsSecurityException(@Mocked final IotHubSasToken iotHubSasToken) throws SecurityException, ClassNotFoundException
     {
         // arrange
@@ -591,9 +502,7 @@ public class IotHubConnectionStringTest
         };
 
         // act
-        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[]{String.class, String.class, String.class, String.class},
-                VALID_HOSTNAME, "test;device", null, EXPIRED_SHARED_ACCESS_TOKEN);
+        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class, String.class, String.class, String.class}, VALID_HOSTNAME, "test;device", null, EXPIRED_SHARED_ACCESS_TOKEN);
     }
 
     //Tests_SRS_IOTHUB_CONNECTIONSTRING_34_038: [This function shall set the value of this object's shared access token to the provided value.]
@@ -602,12 +511,9 @@ public class IotHubConnectionStringTest
     {
         //arrange
         String expectedToken = "new token";
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN + ";";
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN + ";";
 
-        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
 
         //act
         Deencapsulation.invoke(iotHubConnectionString, "setSharedAccessToken", expectedToken);
@@ -618,16 +524,13 @@ public class IotHubConnectionStringTest
     }
 
     //Tests_SRS_IOTHUB_CONNECTIONSTRING_34_037: [If the provided shared access token is null or empty, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void sharedAccessTokenCannotBeSetEmpty() throws ClassNotFoundException
     {
         //arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN + ";";
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN + ";";
 
-        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
 
         //act
         Deencapsulation.invoke(iotHubConnectionString, "setSharedAccessToken", "");
@@ -638,12 +541,10 @@ public class IotHubConnectionStringTest
     public void missingSasTokenAndDeviceKeyDoesNotThrowIfUsingX509() throws ClassNotFoundException
     {
         //arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";DeviceId=" + VALID_DEVICEID + ";x509=true;";
+        final String connString = "HostName=" + VALID_HOSTNAME + ";DeviceId=" + VALID_DEVICEID + ";x509=true;";
 
         //act
-        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS),
-                new Class[] {String.class}, connString);
+        Object iotHubConnectionString = Deencapsulation.newInstance(Class.forName(IOTHUB_CONNECTION_STRING_CLASS), new Class[]{String.class}, connString);
 
         //assert
         assertNotNull(iotHubConnectionString);
@@ -656,10 +557,9 @@ public class IotHubConnectionStringTest
     public void isUsingX509WorksWhenTrue()
     {
         //arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";DeviceId=" + VALID_DEVICEID + ";x509=true;";
+        final String connString = "HostName=" + VALID_HOSTNAME + ";DeviceId=" + VALID_DEVICEID + ";x509=true;";
 
-        IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[] {String.class}, connString);
+        IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class}, connString);
 
         //act
         boolean isUsingX509 = iotHubConnectionString.isUsingX509();
@@ -673,11 +573,9 @@ public class IotHubConnectionStringTest
     public void isUsingX509WorksWhenFalse()
     {
         //arrange
-        final String connString =
-                "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" +
-                        "DeviceId=" + VALID_DEVICEID + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN + ";";
+        final String connString = "HostName=" + VALID_HOSTNAME + ";CredentialType=SharedAccessKey;CredentialScope=Device;" + "DeviceId=" + VALID_DEVICEID + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_TOKEN + ";";
 
-        IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[] {String.class}, connString);
+        IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class}, connString);
 
         //act
         boolean isUsingX509 = iotHubConnectionString.isUsingX509();

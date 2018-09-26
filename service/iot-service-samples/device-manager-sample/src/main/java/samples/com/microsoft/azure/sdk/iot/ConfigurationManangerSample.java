@@ -16,25 +16,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/** Manages configuration on IotHub - CRUD operations */
+/**
+ * Manages configuration on IotHub - CRUD operations
+ */
 public class ConfigurationManangerSample
 {
     static final HashMap<String, Object> DEVICE_CONTENT_SAMPLE = new HashMap<String, Object>()
     {
         {
             put("properties.desired.chiller-water", new HashMap<String, Object>()
-                    {
-                        {
-                            put("temperature", 66);
-                            put("pressure", 28);
-                        }
-                    }
-            );
+            {
+                {
+                    put("temperature", 66);
+                    put("pressure", 28);
+                }
+            });
         }
     };
 
     /**
      * A simple sample for doing CRUD operations
+     *
      * @param args
      * @throws IOException
      * @throws URISyntaxException
@@ -108,8 +110,10 @@ public class ConfigurationManangerSample
 
         Configuration config = new Configuration(SampleUtils.configurationId);
         config.setContent(content);
-        config.getMetrics().setQueries(new HashMap<String, String>(){{put("waterSettingsPending",
-                "SELECT deviceId FROM devices WHERE properties.reported.chillerWaterSettings.status=\'pending\'");}});
+        config.getMetrics().setQueries(new HashMap<String, String>()
+        {{
+            put("waterSettingsPending", "SELECT deviceId FROM devices WHERE properties.reported.chillerWaterSettings.status=\'pending\'");
+        }});
         config.setTargetCondition("properties.reported.chillerProperties.model=\'4000x\'");
         config.setPriority(20);
 

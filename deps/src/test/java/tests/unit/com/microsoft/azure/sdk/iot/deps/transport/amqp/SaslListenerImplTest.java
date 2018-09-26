@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package tests.unit.com.microsoft.azure.sdk.iot.deps.transport.amqp;
 
@@ -57,9 +57,9 @@ public class SaslListenerImplTest
     public void onSaslMechanismsTest() throws Exception
     {
         //arrange
-        final String[] remoteMechanisms = new String[] {"1", "2"};
+        final String[] remoteMechanisms = new String[]{"1", "2"};
         final String chosenMechanism = "1";
-        final byte[] initPayload = new byte[] {0, 0, 0};
+        final byte[] initPayload = new byte[]{0, 0, 0};
         SaslListener saslListener = new SaslListenerImpl(mockedSaslHandler);
         new NonStrictExpectations()
         {
@@ -100,8 +100,8 @@ public class SaslListenerImplTest
     public void onSaslChallengeTest() throws Exception
     {
         //arrange
-        final byte[] challengePayload = new byte[] {0, 0, 0};
-        final byte[] challengeResponsePayload = new byte[] {1, 1, 1};
+        final byte[] challengePayload = new byte[]{0, 0, 0};
+        final byte[] challengeResponsePayload = new byte[]{1, 1, 1};
         SaslListener saslListener = new SaslListenerImpl(mockedSaslHandler);
         new NonStrictExpectations()
         {
@@ -324,9 +324,9 @@ public class SaslListenerImplTest
     public void onSaslMechanismHandlerThrowsDoesNotSendInit() throws Exception
     {
         //arrange
-        final String[] remoteMechanisms = new String[] {"1", "2"};
+        final String[] remoteMechanisms = new String[]{"1", "2"};
         final String chosenMechanism = "1";
-        final byte[] initPayload = new byte[] {0, 0, 0};
+        final byte[] initPayload = new byte[]{0, 0, 0};
         SaslListenerImpl saslListener = new SaslListenerImpl(mockedSaslHandler);
         new NonStrictExpectations()
         {
@@ -367,9 +367,9 @@ public class SaslListenerImplTest
     public void onBuildInitHandlerThrowsDoesNotSendInit() throws Exception
     {
         //arrange
-        final String[] remoteMechanisms = new String[] {"1", "2"};
+        final String[] remoteMechanisms = new String[]{"1", "2"};
         final String chosenMechanism = "1";
-        final byte[] initPayload = new byte[] {0, 0, 0};
+        final byte[] initPayload = new byte[]{0, 0, 0};
         SaslListenerImpl saslListener = new SaslListenerImpl(mockedSaslHandler);
         new NonStrictExpectations()
         {
@@ -411,8 +411,8 @@ public class SaslListenerImplTest
     public void onSaslChallengeThrowsDoesNotSendResponseTest() throws Exception
     {
         //arrange
-        final byte[] challengePayload = new byte[] {0, 0, 0};
-        final byte[] challengeResponsePayload = new byte[] {1, 1, 1};
+        final byte[] challengePayload = new byte[]{0, 0, 0};
+        final byte[] challengeResponsePayload = new byte[]{1, 1, 1};
         SaslListenerImpl saslListener = new SaslListenerImpl(mockedSaslHandler);
         new NonStrictExpectations()
         {

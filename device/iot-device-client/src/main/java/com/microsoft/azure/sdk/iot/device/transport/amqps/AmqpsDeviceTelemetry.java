@@ -39,9 +39,7 @@ public final class AmqpsDeviceTelemetry extends AmqpsDeviceOperations
     AmqpsDeviceTelemetry(DeviceClientConfig deviceClientConfig) throws IllegalArgumentException
     {
         // Codes_SRS_AMQPSDEVICETELEMETRY_34_050: [This constructor shall call super with the provided user agent string.]
-        super(deviceClientConfig, SENDER_LINK_ENDPOINT_PATH, RECEIVER_LINK_ENDPOINT_PATH,
-                SENDER_LINK_ENDPOINT_PATH_MODULES, RECEIVER_LINK_ENDPOINT_PATH_MODULES,
-                SENDER_LINK_TAG_PREFIX, RECEIVER_LINK_TAG_PREFIX);
+        super(deviceClientConfig, SENDER_LINK_ENDPOINT_PATH, RECEIVER_LINK_ENDPOINT_PATH, SENDER_LINK_ENDPOINT_PATH_MODULES, RECEIVER_LINK_ENDPOINT_PATH_MODULES, SENDER_LINK_TAG_PREFIX, RECEIVER_LINK_TAG_PREFIX);
 
         this.deviceClientConfig = deviceClientConfig;
 
@@ -110,12 +108,12 @@ public final class AmqpsDeviceTelemetry extends AmqpsDeviceOperations
     /**
      * Sends the given message and returns with the delivery hash if the message type is telemetry
      *
-     * @param msgData The binary array of the bytes to send
-     * @param offset The start offset to copy the bytes from
-     * @param length The number of bytes to be send related to the offset
+     * @param msgData     The binary array of the bytes to send
+     * @param offset      The start offset to copy the bytes from
+     * @param length      The number of bytes to be send related to the offset
      * @param deliveryTag The unique identfier of the delivery
      * @return delivery tag
-     * @throws IllegalStateException if sender link has not been initialized
+     * @throws IllegalStateException    if sender link has not been initialized
      * @throws IllegalArgumentException if deliveryTag's length is 0
      */
     @Override
@@ -140,7 +138,7 @@ public final class AmqpsDeviceTelemetry extends AmqpsDeviceOperations
      * @param linkName The receiver link's name to read from
      * @return the received message
      * @throws IllegalArgumentException if linkName argument is empty
-     * @throws TransportException if Proton throws
+     * @throws TransportException       if Proton throws
      */
     @Override
     protected AmqpsMessage getMessageFromReceiverLink(String linkName) throws TransportException
@@ -161,15 +159,14 @@ public final class AmqpsDeviceTelemetry extends AmqpsDeviceOperations
     /**
      * Convert Proton message to IoTHubMessage if the message type is telemetry
      *
-     * @param amqpsMessage The Proton message to convert
+     * @param amqpsMessage       The Proton message to convert
      * @param deviceClientConfig The device client configuration
      * @return the converted message
      */
     @Override
     protected AmqpsConvertFromProtonReturnValue convertFromProton(AmqpsMessage amqpsMessage, DeviceClientConfig deviceClientConfig) throws TransportException
     {
-        if (((amqpsMessage.getAmqpsMessageType() == null) || (amqpsMessage.getAmqpsMessageType() == MessageType.DEVICE_TELEMETRY)) &&
-            (this.deviceClientConfig.getDeviceId() == deviceClientConfig.getDeviceId()))
+        if (((amqpsMessage.getAmqpsMessageType() == null) || (amqpsMessage.getAmqpsMessageType() == MessageType.DEVICE_TELEMETRY)) && (this.deviceClientConfig.getDeviceId() == deviceClientConfig.getDeviceId()))
         {
             // Codes_SRS_AMQPSDEVICETELEMETRY_12_009: [The function shall create a new IoTHubMessage using the Proton message body.]
             // Codes_SRS_AMQPSDEVICETELEMETRY_12_010: [**The function shall copy the correlationId, messageId, To and userId properties to the IotHubMessage properties.]
@@ -222,8 +219,8 @@ public final class AmqpsDeviceTelemetry extends AmqpsDeviceOperations
      * Converts an AMQPS message to a corresponding IoT Hub message.
      *
      * @param protonMsg the AMQPS message.
-     * @throws TransportException if the conversion fails
      * @return the corresponding IoT Hub message.
+     * @throws TransportException if the conversion fails
      */
     @Override
     protected IotHubTransportMessage protonMessageToIoTHubMessage(MessageImpl protonMsg) throws TransportException
@@ -237,9 +234,10 @@ public final class AmqpsDeviceTelemetry extends AmqpsDeviceOperations
 
     /**
      * Creates a proton message from the IoTHub message.
+     *
      * @param message the IoTHub input message.
-     * @throws TransportException if the conversion fails
      * @return the proton message.
+     * @throws TransportException if the conversion fails
      */
     @Override
     protected MessageImpl iotHubMessageToProtonMessage(com.microsoft.azure.sdk.iot.device.Message message) throws TransportException

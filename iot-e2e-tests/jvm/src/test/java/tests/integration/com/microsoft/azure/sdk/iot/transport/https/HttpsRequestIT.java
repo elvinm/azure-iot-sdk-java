@@ -18,7 +18,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 
-/** Integration tests for HttpsRequest. */
+/**
+ * Integration tests for HttpsRequest.
+ */
 public class HttpsRequestIT
 {
     @Test
@@ -36,8 +38,7 @@ public class HttpsRequestIT
         String testBody = new String(response.getBody(), encoding);
 
         int expectedStatus = 200;
-        String expectedBodyPrefix = "@font-face {\n"
-                + "  font-family: 'Inconsolata';";
+        String expectedBodyPrefix = "@font-face {\n" + "  font-family: 'Inconsolata';";
         assertThat(testStatus, is(expectedStatus));
         assertThat(testBody, is(startsWith(expectedBodyPrefix)));
     }

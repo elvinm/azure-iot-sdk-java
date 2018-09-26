@@ -22,20 +22,20 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class DeviceMethodIT extends DeviceMethodCommon
 {
+    public DeviceMethodIT(DeviceTestManager deviceTestManager, IotHubClientProtocol protocol, AuthenticationType authenticationType, String clientType, Device device, Module module)
+    {
+        super(deviceTestManager, protocol, authenticationType, clientType, device, module);
+    }
+
     //This function is run before even the @BeforeClass annotation, so it is used as the @BeforeClass method
     @Parameterized.Parameters(name = "{1} with {2} auth using {3}")
     public static Collection inputsCommons() throws IOException, IotHubException, GeneralSecurityException, URISyntaxException, InterruptedException, ModuleClientException
     {
         iotHubConnectionString = Tools.retrieveEnvironmentVariableValue(TestConstants.IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME);
-        X509Cert cert = new X509Cert(0,false, "TestLeaf", "TestRoot");
-        privateKey =  cert.getPrivateKeyLeafPem();
+        X509Cert cert = new X509Cert(0, false, "TestLeaf", "TestRoot");
+        privateKey = cert.getPrivateKeyLeafPem();
         publicKeyCert = cert.getPublicCertLeafPem();
         x509Thumbprint = cert.getThumbPrintLeaf();
         return DeviceMethodCommon.inputsCommon();
-    }
-
-    public DeviceMethodIT(DeviceTestManager deviceTestManager, IotHubClientProtocol protocol, AuthenticationType authenticationType, String clientType, Device device, Module module)
-    {
-        super(deviceTestManager, protocol, authenticationType, clientType, device, module);
     }
 }

@@ -17,7 +17,7 @@ import java.util.Map;
 
 /**
  * IndividualEnrollment Manager
- *
+ * <p>
  * <p> This is the inner class that implements the IndividualEnrollment APIs.
  * <p> For the public API, please see {@link ProvisioningServiceClient}.
  *
@@ -26,10 +26,10 @@ import java.util.Map;
  */
 public class IndividualEnrollmentManager
 {
-    private final ContractApiHttp contractApiHttp;
     private static final String PATH_SEPARATOR = "/";
     private static final String PATH_ENROLLMENTS = "enrollments";
     private static final String CONDITION_KEY = "If-Match";
+    private final ContractApiHttp contractApiHttp;
 
     /**
      * PRIVATE CONSTRUCTOR
@@ -40,7 +40,7 @@ public class IndividualEnrollmentManager
     private IndividualEnrollmentManager(ContractApiHttp contractApiHttp)
     {
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_001: [The constructor shall throw IllegalArgumentException if the provided ProvisioningConnectionString is null.] */
-        if(contractApiHttp == null)
+        if (contractApiHttp == null)
         {
             throw new IllegalArgumentException("ContractApiHttp cannot be null");
         }
@@ -49,7 +49,7 @@ public class IndividualEnrollmentManager
 
     /**
      * Create a new instance of the IndividualEnrollmentManager using the provided connection
-     *    string and https as the transport protocol.
+     * string and https as the transport protocol.
      *
      * @param contractApiHttp is the class that cares the Http communication.
      * @return The {@code IndividualEnrollmentManager} with the new instance of this class.
@@ -61,21 +61,30 @@ public class IndividualEnrollmentManager
         return new IndividualEnrollmentManager(contractApiHttp);
     }
 
+    private static String getEnrollmentPath(String registrationId)
+    {
+        return PATH_ENROLLMENTS + PATH_SEPARATOR + registrationId;
+    }
+
+    private static String getEnrollmentsPath()
+    {
+        return PATH_ENROLLMENTS;
+    }
+
     /**
      * Create or update a device enrollment record.
      *
-     * @see ProvisioningServiceClient#createOrUpdateIndividualEnrollment(IndividualEnrollment)
-     *
      * @param individualEnrollment is an {@link IndividualEnrollment} that describes the enrollment that will be created of updated. It cannot be {@code null}.
      * @return An {@link IndividualEnrollment} with the result of the creation or update request.
-     * @throws IllegalArgumentException if the provided parameter is not correct.
+     * @throws IllegalArgumentException                    if the provided parameter is not correct.
      * @throws ProvisioningServiceClientTransportException if the SDK failed to send the request to the Device Provisioning Service.
-     * @throws ProvisioningServiceClientException if the Device Provisioning Service was not able to create or update the enrollment.
+     * @throws ProvisioningServiceClientException          if the Device Provisioning Service was not able to create or update the enrollment.
+     * @see ProvisioningServiceClient#createOrUpdateIndividualEnrollment(IndividualEnrollment)
      */
     IndividualEnrollment createOrUpdate(IndividualEnrollment individualEnrollment) throws ProvisioningServiceClientException
     {
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_005: [The createOrUpdate shall throw IllegalArgumentException if the provided individualEnrollment is null.] */
-        if(individualEnrollment == null)
+        if (individualEnrollment == null)
         {
             throw new IllegalArgumentException("individualEnrollment cannot be null.");
         }
@@ -88,7 +97,7 @@ public class IndividualEnrollmentManager
 
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_045: [If the individualEnrollment contains eTag, the createOrUpdate shall send a Http request with `If-Match` the eTag in the header.] */
         Map<String, String> headerParameters = new HashMap<>();
-        if(!Tools.isNullOrEmpty(individualEnrollment.getEtag()))
+        if (!Tools.isNullOrEmpty(individualEnrollment.getEtag()))
         {
             headerParameters.put(CONDITION_KEY, individualEnrollment.getEtag());
         }
@@ -96,16 +105,11 @@ public class IndividualEnrollmentManager
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_008: [The createOrUpdate shall send a Http request with a Http verb `PUT`.] */
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_009: [The createOrUpdate shall throw ProvisioningServiceClientTransportException if the request failed. Threw by the callee.] */
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_010: [The createOrUpdate shall throw ProvisioningServiceClientException if the Device Provisioning Service could not successfully execute the request. Threw by the callee.] */
-        HttpResponse httpResponse =
-                    contractApiHttp.request(
-                            HttpMethod.PUT,
-                            enrollmentPath,
-                            headerParameters,
-                            enrollmentPayload);
+        HttpResponse httpResponse = contractApiHttp.request(HttpMethod.PUT, enrollmentPath, headerParameters, enrollmentPayload);
 
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_042: [The createOrUpdate shall throw ProvisioningServiceClientServiceException if the heepResponse contains a null body.] */
         byte[] body = httpResponse.getBody();
-        if(body == null)
+        if (body == null)
         {
             throw new ProvisioningServiceClientServiceException("Http response for createOrUpdate cannot contains a null body");
         }
@@ -117,24 +121,23 @@ public class IndividualEnrollmentManager
     /**
      * Rum a bulk individualEnrollment operation.
      *
-     * @see ProvisioningServiceClient#runBulkEnrollmentOperation(BulkOperationMode, Collection)
-     *
-     * @param bulkOperationMode the {@link BulkOperationMode} that defines the single operation to do over the individualEnrollments. It cannot be {@code null}.
+     * @param bulkOperationMode     the {@link BulkOperationMode} that defines the single operation to do over the individualEnrollments. It cannot be {@code null}.
      * @param individualEnrollments the collection of {@link IndividualEnrollment} that contains the description of each individualEnrollment. It cannot be {@code null} or empty.
      * @return An {@link BulkEnrollmentOperationResult} with the result of the bulk operation request.
-     * @throws IllegalArgumentException if the provided parameters are not correct.
+     * @throws IllegalArgumentException                    if the provided parameters are not correct.
      * @throws ProvisioningServiceClientTransportException if the SDK failed to send the request to the Device Provisioning Service.
-     * @throws ProvisioningServiceClientException if the Device Provisioning Service was not able to execute the bulk operation.
+     * @throws ProvisioningServiceClientException          if the Device Provisioning Service was not able to execute the bulk operation.
+     * @see ProvisioningServiceClient#runBulkEnrollmentOperation(BulkOperationMode, Collection)
      */
     BulkEnrollmentOperationResult bulkOperation(BulkOperationMode bulkOperationMode, Collection<IndividualEnrollment> individualEnrollments) throws ProvisioningServiceClientException
     {
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_012: [The BulkEnrollmentOperation shall throw IllegalArgumentException if the provided bulkOperationMode is null.] */
-        if(bulkOperationMode == null)
+        if (bulkOperationMode == null)
         {
             throw new IllegalArgumentException("bulkOperationMode cannot be null.");
         }
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_013: [The BulkEnrollmentOperation shall throw IllegalArgumentException if the provided individualEnrollments is null or empty.] */
-        if((individualEnrollments == null) || individualEnrollments.isEmpty())
+        if ((individualEnrollments == null) || individualEnrollments.isEmpty())
         {
             throw new IllegalArgumentException("individualEnrollments cannot be null or empty.");
         }
@@ -147,16 +150,11 @@ public class IndividualEnrollmentManager
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_016: [The BulkEnrollmentOperation shall send a Http request with a Http verb `POST`.] */
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_017: [The BulkEnrollmentOperation shall throw ProvisioningServiceClientTransportException if the request failed. Threw by the callee.] */
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_018: [The BulkEnrollmentOperation shall throw ProvisioningServiceClientException if the Device Provisioning Service could not successfully execute the request. Threw by the callee.] */
-        HttpResponse httpResponse =
-                contractApiHttp.request(
-                        HttpMethod.POST,
-                        bulkEnrollmentPath,
-                        null,
-                        bulkEnrollmentPayload);
+        HttpResponse httpResponse = contractApiHttp.request(HttpMethod.POST, bulkEnrollmentPath, null, bulkEnrollmentPayload);
 
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_043: [The BulkEnrollmentOperation shall throw ProvisioningServiceClientServiceException if the heepResponse contains a null body.] */
         byte[] body = httpResponse.getBody();
-        if(body == null)
+        if (body == null)
         {
             throw new ProvisioningServiceClientServiceException("Http response for BulkEnrollmentOperation cannot contains a null body");
         }
@@ -168,18 +166,17 @@ public class IndividualEnrollmentManager
     /**
      * Get individualEnrollment information.
      *
-     * @see ProvisioningServiceClient#getIndividualEnrollment(String)
-     *
      * @param registrationId the {@code String} that identifies the individualEnrollment. It cannot be {@code null} or empty.
      * @return An {@link IndividualEnrollment} with the enrollment information.
-     * @throws IllegalArgumentException if the provided parameter is not correct.
+     * @throws IllegalArgumentException                    if the provided parameter is not correct.
      * @throws ProvisioningServiceClientTransportException if the SDK failed to send the request to the Device Provisioning Service.
-     * @throws ProvisioningServiceClientException if the Device Provisioning Service was not able to execute the get operation.
+     * @throws ProvisioningServiceClientException          if the Device Provisioning Service was not able to execute the get operation.
+     * @see ProvisioningServiceClient#getIndividualEnrollment(String)
      */
     IndividualEnrollment get(String registrationId) throws ProvisioningServiceClientException
     {
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_020: [The get shall throw IllegalArgumentException if the provided registrationId is null or empty.] */
-        if(Tools.isNullOrEmpty(registrationId))
+        if (Tools.isNullOrEmpty(registrationId))
         {
             throw new IllegalArgumentException("registrationId cannot be null or empty.");
         }
@@ -190,16 +187,11 @@ public class IndividualEnrollmentManager
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_022: [The get shall send a Http request with a Http verb `GET`.] */
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_023: [The get shall throw ProvisioningServiceClientTransportException if the request failed. Threw by the callee.] */
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_024: [The get shall throw ProvisioningServiceClientException if the Device Provisioning Service could not successfully execute the request. Threw by the callee.] */
-        HttpResponse httpResponse =
-                    contractApiHttp.request(
-                            HttpMethod.GET,
-                            enrollmentPath,
-                            null,
-                            "");
+        HttpResponse httpResponse = contractApiHttp.request(HttpMethod.GET, enrollmentPath, null, "");
 
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_044: [The get shall throw ProvisioningServiceClientServiceException if the heepResponse contains a null body.] */
         byte[] body = httpResponse.getBody();
-        if(body == null)
+        if (body == null)
         {
             throw new ProvisioningServiceClientServiceException("Http response for get cannot contains a null body");
         }
@@ -211,17 +203,16 @@ public class IndividualEnrollmentManager
     /**
      * Delete individualEnrollment.
      *
-     * @see ProvisioningServiceClient#deleteIndividualEnrollment(IndividualEnrollment)
-     *
      * @param individualEnrollment is an {@link IndividualEnrollment} that describes the enrollment that will be deleted. It cannot be {@code null}.
-     * @throws IllegalArgumentException if the provided parameter is not correct.
+     * @throws IllegalArgumentException                    if the provided parameter is not correct.
      * @throws ProvisioningServiceClientTransportException if the SDK failed to send the request to the Device Provisioning Service.
-     * @throws ProvisioningServiceClientException if the Device Provisioning Service was not able to execute the delete operation.
+     * @throws ProvisioningServiceClientException          if the Device Provisioning Service was not able to execute the delete operation.
+     * @see ProvisioningServiceClient#deleteIndividualEnrollment(IndividualEnrollment)
      */
     void delete(IndividualEnrollment individualEnrollment) throws ProvisioningServiceClientException
     {
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_026: [The delete shall throw IllegalArgumentException if the provided individualEnrollment is null.] */
-        if(individualEnrollment == null)
+        if (individualEnrollment == null)
         {
             throw new IllegalArgumentException("individualEnrollment cannot be null.");
         }
@@ -231,7 +222,7 @@ public class IndividualEnrollmentManager
 
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_028: [If the individualEnrollment contains eTag, the delete shall send a Http request with `If-Match` the eTag in the header.] */
         Map<String, String> headerParameters = new HashMap<>();
-        if(!Tools.isNullOrEmpty(individualEnrollment.getEtag()))
+        if (!Tools.isNullOrEmpty(individualEnrollment.getEtag()))
         {
             headerParameters.put(CONDITION_KEY, individualEnrollment.getEtag());
         }
@@ -239,29 +230,24 @@ public class IndividualEnrollmentManager
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_029: [The delete shall send a Http request with a Http verb `DELETE`.] */
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_030: [The delete shall throw ProvisioningServiceClientTransportException if the request failed. Threw by the callee.] */
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_031: [The delete shall throw ProvisioningServiceClientException if the Device Provisioning Service could not successfully execute the request. Threw by the callee.] */
-        contractApiHttp.request(
-                HttpMethod.DELETE,
-                enrollmentPath,
-                headerParameters,
-                "");
+        contractApiHttp.request(HttpMethod.DELETE, enrollmentPath, headerParameters, "");
     }
 
     /**
      * Delete individualEnrollment.
      *
+     * @param registrationId is a {@link String} with the registrationId of the enrollment to delete. It cannot be {@code null} or empty.
+     * @param eTag           is a {@link String} with the eTag of the enrollment to delete. It can be {@code null} or empty (ignored).
+     * @throws IllegalArgumentException                    if the provided registrationId is not correct.
+     * @throws ProvisioningServiceClientTransportException if the SDK failed to send the request to the Device Provisioning Service.
+     * @throws ProvisioningServiceClientException          if the Device Provisioning Service was not able to execute the delete operation.
      * @see ProvisioningServiceClient#deleteIndividualEnrollment(String)
      * @see ProvisioningServiceClient#deleteIndividualEnrollment(String, String)
-     *
-     * @param registrationId is a {@link String} with the registrationId of the enrollment to delete. It cannot be {@code null} or empty.
-     * @param eTag is a {@link String} with the eTag of the enrollment to delete. It can be {@code null} or empty (ignored).
-     * @throws IllegalArgumentException if the provided registrationId is not correct.
-     * @throws ProvisioningServiceClientTransportException if the SDK failed to send the request to the Device Provisioning Service.
-     * @throws ProvisioningServiceClientException if the Device Provisioning Service was not able to execute the delete operation.
      */
     void delete(String registrationId, String eTag) throws ProvisioningServiceClientException
     {
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_032: [The delete shall throw IllegalArgumentException if the provided registrationId is null or empty.] */
-        if(Tools.isNullOrEmpty(registrationId))
+        if (Tools.isNullOrEmpty(registrationId))
         {
             throw new IllegalArgumentException("registrationId cannot be null.");
         }
@@ -271,7 +257,7 @@ public class IndividualEnrollmentManager
 
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_034: [If the eTag is not null or empty, the delete shall send a Http request with `If-Match` the eTag in the header.] */
         Map<String, String> headerParameters = new HashMap<>();
-        if(!Tools.isNullOrEmpty(eTag))
+        if (!Tools.isNullOrEmpty(eTag))
         {
             headerParameters.put(CONDITION_KEY, eTag);
         }
@@ -279,34 +265,29 @@ public class IndividualEnrollmentManager
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_035: [The delete shall send a Http request with a Http verb `DELETE`.] */
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_036: [The delete shall throw ProvisioningServiceClientTransportException if the request failed. Threw by the callee.] */
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_037: [The delete shall throw ProvisioningServiceClientException if the Device Provisioning Service could not successfully execute the request. Threw by the callee.] */
-        contractApiHttp.request(
-                HttpMethod.DELETE,
-                enrollmentPath,
-                headerParameters,
-                "");
+        contractApiHttp.request(HttpMethod.DELETE, enrollmentPath, headerParameters, "");
     }
 
     /**
      * Create a new individualEnrollment query.
      *
-     * @see ProvisioningServiceClient#createIndividualEnrollmentQuery(QuerySpecification)
-     * @see ProvisioningServiceClient#createIndividualEnrollmentQuery(QuerySpecification, int)
-     *
      * @param querySpecification is a {@code String} with the SQL query specification. It cannot be {@code null}.
-     * @param pageSize the {@code int} with the maximum number of items per iteration. It can be 0 for default, but not negative.
+     * @param pageSize           the {@code int} with the maximum number of items per iteration. It can be 0 for default, but not negative.
      * @return A {@link Query} iterator.
      * @throws IllegalArgumentException if the provided parameter is not correct.
+     * @see ProvisioningServiceClient#createIndividualEnrollmentQuery(QuerySpecification)
+     * @see ProvisioningServiceClient#createIndividualEnrollmentQuery(QuerySpecification, int)
      */
     Query createQuery(QuerySpecification querySpecification, int pageSize)
     {
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_038: [The createQuery shall throw IllegalArgumentException if the provided querySpecification is null.] */
-        if(querySpecification == null)
+        if (querySpecification == null)
         {
             throw new IllegalArgumentException("querySpecification cannot be null.");
         }
 
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_039: [The createQuery shall throw IllegalArgumentException if the provided pageSize is negative.] */
-        if(pageSize < 0)
+        if (pageSize < 0)
         {
             throw new IllegalArgumentException("pageSize cannot be negative.");
         }
@@ -316,15 +297,5 @@ public class IndividualEnrollmentManager
 
         /* SRS_INDIVIDUAL_ENROLLMENT_MANAGER_21_041: [The createQuery shall create and return a new instance of the Query iterator.] */
         return new Query(contractApiHttp, targetPath, querySpecification, pageSize);
-    }
-
-    private static String getEnrollmentPath(String registrationId)
-    {
-        return PATH_ENROLLMENTS + PATH_SEPARATOR + registrationId;
-    }
-
-    private static String getEnrollmentsPath()
-    {
-        return PATH_ENROLLMENTS;
     }
 }

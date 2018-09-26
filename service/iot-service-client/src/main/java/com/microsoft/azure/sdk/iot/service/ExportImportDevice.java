@@ -39,7 +39,8 @@ public class ExportImportDevice
 
     /**
      * Constructor for an ExportImportDevice object.
-     * @param deviceId the id of the new device
+     *
+     * @param deviceId           the id of the new device
      * @param authenticationType the type of authentication to be used. For shared access signature and self signed x.509, all keys shall be generated automatically.
      * @throws IllegalArgumentException if the provided deviceId or authenticationType is null or empty
      */
@@ -62,209 +63,12 @@ public class ExportImportDevice
     }
 
     /**
-     * Setter for device id.
-     * @param id The device id.
-     * @throws IllegalArgumentException if the provided id is null
-     */
-    public void setId(String id) throws IllegalArgumentException
-    {
-        //Codes_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_055: [If the provided id is null, an IllegalArgumentException shall be thrown.]
-        if (id == null)
-        {
-            throw new IllegalArgumentException("The provided id may not be null");
-        }
-
-        this.id = id;
-    }
-
-    /**
-     * Getter for device id.
-     * @return The device id.
-     */
-    public String getId()
-    {
-        return this.id;
-    }
-
-    /**
-     * Getter for device eTag.
-     * @return The device eTag.
-     */
-    public String geteTag()
-    {
-        return eTag;
-    }
-
-    /**
-     * Setter for device eTag.
-     * @param eTag The device eTag.
-     */
-    public void seteTag(String eTag)
-    {
-        this.eTag = eTag;
-    }
-
-    /**
-     * Getter for device import mode.
-     * @return The device import mode.
-     */
-    public ImportMode getImportMode()
-    {
-        return importMode;
-    }
-
-    /**
-     * Setter for device import mode.
-     * @param importMode The device import mode.
-     */
-    public void setImportMode(ImportMode importMode)
-    {
-        this.importMode = importMode;
-    }
-
-    /**
-     * Getter for device status.
-     * @return The device status.
-     */
-    public DeviceStatus getStatus()
-    {
-        return status;
-    }
-
-    /**
-     * Setter for device status.
-     * @param status The device status.
-     */
-    public void setStatus(DeviceStatus status)
-    {
-        this.status = status;
-    }
-
-    /**
-     * Getter for device status reason.
-     * @return The device status reason.
-     */
-    public String getStatusReason()
-    {
-        return statusReason;
-    }
-
-    /**
-     * Setter for device status reason.
-     * @param statusReason The device status reason.
-     */
-    public void setStatusReason(String statusReason)
-    {
-        this.statusReason = statusReason;
-    }
-
-    /**
-     * Getter for device authentication mechanism.
-     * @return The device authentication mechanism.
-     */
-    public AuthenticationMechanism getAuthentication()
-    {
-        return authentication;
-    }
-
-    /**
-     * Setter for device authentication mechanism.
-     * @param authentication The device authentication mechanism.
-     * @throws IllegalArgumentException if the provided authentication is null
-     */
-    public void setAuthentication(AuthenticationMechanism authentication) throws IllegalArgumentException
-    {
-        //Codes_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_056: [If the provided authentication is null, an IllegalArgumentException shall be thrown.]
-        if (authentication == null)
-        {
-            throw new IllegalArgumentException("The provided authentication object may not be null");
-        }
-
-        this.authentication = authentication;
-    }
-
-	/**
-	 * @return the tags
-	 */
-	public TwinCollection getTags() {
-		return tags;
-	}
-
-	/**
-	 * @param tags the tags to set
-	 */
-	public void setTags(TwinCollection tags) {
-		this.tags = tags;
-	}
-
-	/**
-	 * @return the reportedProperties
-	 */
-	public TwinCollection getReportedProperties() {
-		return reportedProperties;
-	}
-
-	/**
-	 * @param reportedProperties the reportedProperties to set
-	 */
-	public void setReportedProperties(TwinCollection reportedProperties) {
-		this.reportedProperties = reportedProperties;
-	}
-
-	/**
-	 * @return the desiredProperties
-	 */
-	public TwinCollection getDesiredProperties() {
-		return desiredProperties;
-	}
-
-	/**
-	 * @param desiredProperties the desiredProperties to set
-	 */
-	public void setDesiredProperties(TwinCollection desiredProperties) {
-		this.desiredProperties = desiredProperties;
-	}    
-    
-    @Override
-    public boolean equals(Object other)
-    {
-        if (other instanceof ExportImportDevice)
-        {
-            ExportImportDevice otherExportImportDevice = (ExportImportDevice) other;
-
-            if (!Tools.areEqual(this.getAuthentication(), otherExportImportDevice.getAuthentication()))
-            {
-                return false;
-            }
-            else if (!Tools.areEqual(this.getStatus(), otherExportImportDevice.getStatus()))
-            {
-                return false;
-            }
-            else if (!Tools.areEqual(this.getImportMode(), otherExportImportDevice.getImportMode()))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int result = id.hashCode();
-        result = 31 * result + authentication.hashCode();
-        return result;
-    }
-
-    /**
      * Retrieves information from the provided parser and returns it in a new ExportImportDevice instance. All information on this shall be overwritten.
+     *
      * @param parser the parser to read from
      * @throws IllegalArgumentException if the provided parser is missing the authentication or id fields. It also shall
-     * be thrown if the authentication object in the parser uses SAS authentication and is missing one of the symmetric key fields, or if it uses SelfSigned authentication
-     * and is missing one of the thumbprint fields.
+     *                                  be thrown if the authentication object in the parser uses SAS authentication and is missing one of the symmetric key fields, or if it uses SelfSigned authentication
+     *                                  and is missing one of the thumbprint fields.
      */
     ExportImportDevice(ExportImportDeviceParser parser) throws IllegalArgumentException
     {
@@ -302,9 +106,7 @@ public class ExportImportDevice
         }
         else if (this.authentication.getAuthenticationType() == AuthenticationType.SELF_SIGNED)
         {
-            if (parser.getAuthentication().getThumbprint() == null
-                    || Tools.isNullOrEmpty(parser.getAuthentication().getThumbprint().getPrimaryThumbprint())
-                    || Tools.isNullOrEmpty(parser.getAuthentication().getThumbprint().getSecondaryThumbprint()))
+            if (parser.getAuthentication().getThumbprint() == null || Tools.isNullOrEmpty(parser.getAuthentication().getThumbprint().getPrimaryThumbprint()) || Tools.isNullOrEmpty(parser.getAuthentication().getThumbprint().getSecondaryThumbprint()))
             {
                 //Codes_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_059: [If the provided parser uses self signed authentication and is missing one or both thumbprints, two new thumbprints will be generated.]
                 this.authentication = new AuthenticationMechanism(this.authentication.getAuthenticationType());
@@ -318,9 +120,7 @@ public class ExportImportDevice
         }
         else if (this.authentication.getAuthenticationType() == AuthenticationType.SAS)
         {
-            if (parser.getAuthentication().getSymmetricKey() == null
-                    || Tools.isNullOrEmpty(parser.getAuthentication().getSymmetricKey().getPrimaryKey())
-                    || Tools.isNullOrEmpty(parser.getAuthentication().getSymmetricKey().getSecondaryKey()))
+            if (parser.getAuthentication().getSymmetricKey() == null || Tools.isNullOrEmpty(parser.getAuthentication().getSymmetricKey().getPrimaryKey()) || Tools.isNullOrEmpty(parser.getAuthentication().getSymmetricKey().getSecondaryKey()))
             {
                 //Codes_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_058: [If the provided parser uses SAS authentication and is missing one or both symmetric keys, two new keys will be generated.]
                 this.authentication = new AuthenticationMechanism(AuthenticationType.SAS);
@@ -336,7 +136,218 @@ public class ExportImportDevice
     }
 
     /**
+     * Getter for device id.
+     *
+     * @return The device id.
+     */
+    public String getId()
+    {
+        return this.id;
+    }
+
+    /**
+     * Setter for device id.
+     *
+     * @param id The device id.
+     * @throws IllegalArgumentException if the provided id is null
+     */
+    public void setId(String id) throws IllegalArgumentException
+    {
+        //Codes_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_055: [If the provided id is null, an IllegalArgumentException shall be thrown.]
+        if (id == null)
+        {
+            throw new IllegalArgumentException("The provided id may not be null");
+        }
+
+        this.id = id;
+    }
+
+    /**
+     * Getter for device eTag.
+     *
+     * @return The device eTag.
+     */
+    public String geteTag()
+    {
+        return eTag;
+    }
+
+    /**
+     * Setter for device eTag.
+     *
+     * @param eTag The device eTag.
+     */
+    public void seteTag(String eTag)
+    {
+        this.eTag = eTag;
+    }
+
+    /**
+     * Getter for device import mode.
+     *
+     * @return The device import mode.
+     */
+    public ImportMode getImportMode()
+    {
+        return importMode;
+    }
+
+    /**
+     * Setter for device import mode.
+     *
+     * @param importMode The device import mode.
+     */
+    public void setImportMode(ImportMode importMode)
+    {
+        this.importMode = importMode;
+    }
+
+    /**
+     * Getter for device status.
+     *
+     * @return The device status.
+     */
+    public DeviceStatus getStatus()
+    {
+        return status;
+    }
+
+    /**
+     * Setter for device status.
+     *
+     * @param status The device status.
+     */
+    public void setStatus(DeviceStatus status)
+    {
+        this.status = status;
+    }
+
+    /**
+     * Getter for device status reason.
+     *
+     * @return The device status reason.
+     */
+    public String getStatusReason()
+    {
+        return statusReason;
+    }
+
+    /**
+     * Setter for device status reason.
+     *
+     * @param statusReason The device status reason.
+     */
+    public void setStatusReason(String statusReason)
+    {
+        this.statusReason = statusReason;
+    }
+
+    /**
+     * Getter for device authentication mechanism.
+     *
+     * @return The device authentication mechanism.
+     */
+    public AuthenticationMechanism getAuthentication()
+    {
+        return authentication;
+    }
+
+    /**
+     * Setter for device authentication mechanism.
+     *
+     * @param authentication The device authentication mechanism.
+     * @throws IllegalArgumentException if the provided authentication is null
+     */
+    public void setAuthentication(AuthenticationMechanism authentication) throws IllegalArgumentException
+    {
+        //Codes_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_056: [If the provided authentication is null, an IllegalArgumentException shall be thrown.]
+        if (authentication == null)
+        {
+            throw new IllegalArgumentException("The provided authentication object may not be null");
+        }
+
+        this.authentication = authentication;
+    }
+
+    /**
+     * @return the tags
+     */
+    public TwinCollection getTags() {
+        return tags;
+    }
+
+    /**
+     * @param tags the tags to set
+     */
+    public void setTags(TwinCollection tags) {
+        this.tags = tags;
+    }
+
+    /**
+     * @return the reportedProperties
+     */
+    public TwinCollection getReportedProperties() {
+        return reportedProperties;
+    }
+
+    /**
+     * @param reportedProperties the reportedProperties to set
+     */
+    public void setReportedProperties(TwinCollection reportedProperties) {
+        this.reportedProperties = reportedProperties;
+    }
+
+    /**
+     * @return the desiredProperties
+     */
+    public TwinCollection getDesiredProperties() {
+        return desiredProperties;
+    }
+
+    /**
+     * @param desiredProperties the desiredProperties to set
+     */
+    public void setDesiredProperties(TwinCollection desiredProperties) {
+        this.desiredProperties = desiredProperties;
+    }
+
+    @Override
+    public boolean equals(Object other)
+    {
+        if (other instanceof ExportImportDevice)
+        {
+            ExportImportDevice otherExportImportDevice = (ExportImportDevice) other;
+
+            if (!Tools.areEqual(this.getAuthentication(), otherExportImportDevice.getAuthentication()))
+            {
+                return false;
+            }
+            else if (!Tools.areEqual(this.getStatus(), otherExportImportDevice.getStatus()))
+            {
+                return false;
+            }
+            else if (!Tools.areEqual(this.getImportMode(), otherExportImportDevice.getImportMode()))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = id.hashCode();
+        result = 31 * result + authentication.hashCode();
+        return result;
+    }
+
+    /**
      * Converts this into a ExportImportDeviceParser object. To serialize a ExportImportDevice object, it must first be converted to a ExportImportDeviceParser object.
+     *
      * @return the ExportImportDeviceParser object that can be serialized.
      */
     ExportImportDeviceParser toExportImportDeviceParser()
@@ -371,9 +382,7 @@ public class ExportImportDevice
                 {
                     if (this.authentication.getPrimaryThumbprint() != null && this.authentication.getSecondaryThumbprint() != null)
                     {
-                        parser.getAuthentication().setThumbprint(new X509ThumbprintParser(
-                                this.authentication.getPrimaryThumbprint(),
-                                this.authentication.getSecondaryThumbprint()));
+                        parser.getAuthentication().setThumbprint(new X509ThumbprintParser(this.authentication.getPrimaryThumbprint(), this.authentication.getSecondaryThumbprint()));
                     }
                     else
                     {
@@ -383,13 +392,9 @@ public class ExportImportDevice
                 }
                 else if (this.getAuthentication().getAuthenticationType() == AuthenticationType.SAS)
                 {
-                    if (this.authentication.getSymmetricKey() != null
-                            && this.authentication.getSymmetricKey().getPrimaryKey() != null
-                            && this.authentication.getSymmetricKey().getSecondaryKey() != null)
+                    if (this.authentication.getSymmetricKey() != null && this.authentication.getSymmetricKey().getPrimaryKey() != null && this.authentication.getSymmetricKey().getSecondaryKey() != null)
                     {
-                        parser.getAuthentication().setSymmetricKey(new SymmetricKeyParser(
-                                this.authentication.getSymmetricKey().getPrimaryKey(),
-                                this.authentication.getSymmetricKey().getSecondaryKey()));
+                        parser.getAuthentication().setSymmetricKey(new SymmetricKeyParser(this.authentication.getSymmetricKey().getPrimaryKey(), this.authentication.getSymmetricKey().getSecondaryKey()));
                     }
                     else
                     {
@@ -399,7 +404,7 @@ public class ExportImportDevice
                 }
             }
         }
-        
+
         parser.setTags(this.tags);
 
         return parser;

@@ -30,38 +30,7 @@ public class ExportImportDeviceParserTest
     public void fromJsonWithCASignedAuthentication()
     {
         //arrange
-        String json = "{\n" +
-                "  \"id\": \"test\",\n" +
-                "  \"eTag\": \"MA==\",\n" +
-                "  \"status\": \"enabled\",\n" +
-                "  \"authentication\": {\n" +
-                "    \"symmetricKey\": {\n" +
-                "      \"primaryKey\": null,\n" +
-                "      \"secondaryKey\": null\n" +
-                "    },\n" +
-                "    \"x509Thumbprint\": {\n" +
-                "      \"primaryThumbprint\":null,\n" +
-                "      \"secondaryThumbprint\": null\n" +
-                "    },\n" +
-                "    \"type\": \"" + CERTIFICATE_AUTHORITY_JSON_VALUE + "\"\n" +
-                "  },\n" +
-                "  \"twinETag\": \"AAAAAAAAAAE=\",\n" +
-                "  \"tags\": {},\n" +
-                "  \"properties\": {\n" +
-                "    \"desired\": {\n" +
-                "      \"$metadata\": {\n" +
-                "        \"$lastUpdated\": \"0001-01-01T00:00:00Z\"\n" +
-                "      },\n" +
-                "      \"$version\": 1\n" +
-                "    },\n" +
-                "    \"reported\": {\n" +
-                "      \"$metadata\": {\n" +
-                "        \"$lastUpdated\": \"2017-07-26T21:44:15.80668Z\"\n" +
-                "      },\n" +
-                "      \"$version\": 1\n" +
-                "    }\n" +
-                "  }\n" +
-                "}";
+        String json = "{\n" + "  \"id\": \"test\",\n" + "  \"eTag\": \"MA==\",\n" + "  \"status\": \"enabled\",\n" + "  \"authentication\": {\n" + "    \"symmetricKey\": {\n" + "      \"primaryKey\": null,\n" + "      \"secondaryKey\": null\n" + "    },\n" + "    \"x509Thumbprint\": {\n" + "      \"primaryThumbprint\":null,\n" + "      \"secondaryThumbprint\": null\n" + "    },\n" + "    \"type\": \"" + CERTIFICATE_AUTHORITY_JSON_VALUE + "\"\n" + "  },\n" + "  \"twinETag\": \"AAAAAAAAAAE=\",\n" + "  \"tags\": {},\n" + "  \"properties\": {\n" + "    \"desired\": {\n" + "      \"$metadata\": {\n" + "        \"$lastUpdated\": \"0001-01-01T00:00:00Z\"\n" + "      },\n" + "      \"$version\": 1\n" + "    },\n" + "    \"reported\": {\n" + "      \"$metadata\": {\n" + "        \"$lastUpdated\": \"2017-07-26T21:44:15.80668Z\"\n" + "      },\n" + "      \"$version\": 1\n" + "    }\n" + "  }\n" + "}";
 
         //act
         ExportImportDeviceParser parser = new ExportImportDeviceParser(json);
@@ -81,38 +50,7 @@ public class ExportImportDeviceParserTest
         //arrange
         String expectedPrimaryThumbprint = "0000000000000000000000000000000000000000";
         String expectedSecondaryThumbprint = "1111111111111111111111111111111111111111";
-        String json = "{\n" +
-                "  \"id\": \"test\",\n" +
-                "  \"eTag\": \"MA==\",\n" +
-                "  \"status\": \"enabled\",\n" +
-                "  \"authentication\": {\n" +
-                "    \"symmetricKey\": {\n" +
-                "      \"primaryKey\": null,\n" +
-                "      \"secondaryKey\": null\n" +
-                "    },\n" +
-                "    \"x509Thumbprint\": {\n" +
-                "      \"primaryThumbprint\":\"" + expectedPrimaryThumbprint + "\",\n" +
-                "      \"secondaryThumbprint\":\"" + expectedSecondaryThumbprint + "\"\n" +
-                "    },\n" +
-                "    \"type\": \"" + SELF_SIGNED_JSON_VALUE + "\"\n" +
-                "  },\n" +
-                "  \"twinETag\": \"AAAAAAAAAAE=\",\n" +
-                "  \"tags\": {},\n" +
-                "  \"properties\": {\n" +
-                "    \"desired\": {\n" +
-                "      \"$metadata\": {\n" +
-                "        \"$lastUpdated\": \"0001-01-01T00:00:00Z\"\n" +
-                "      },\n" +
-                "      \"$version\": 1\n" +
-                "    },\n" +
-                "    \"reported\": {\n" +
-                "      \"$metadata\": {\n" +
-                "        \"$lastUpdated\": \"2017-07-26T21:44:15.80668Z\"\n" +
-                "      },\n" +
-                "      \"$version\": 1\n" +
-                "    }\n" +
-                "  }\n" +
-                "}";
+        String json = "{\n" + "  \"id\": \"test\",\n" + "  \"eTag\": \"MA==\",\n" + "  \"status\": \"enabled\",\n" + "  \"authentication\": {\n" + "    \"symmetricKey\": {\n" + "      \"primaryKey\": null,\n" + "      \"secondaryKey\": null\n" + "    },\n" + "    \"x509Thumbprint\": {\n" + "      \"primaryThumbprint\":\"" + expectedPrimaryThumbprint + "\",\n" + "      \"secondaryThumbprint\":\"" + expectedSecondaryThumbprint + "\"\n" + "    },\n" + "    \"type\": \"" + SELF_SIGNED_JSON_VALUE + "\"\n" + "  },\n" + "  \"twinETag\": \"AAAAAAAAAAE=\",\n" + "  \"tags\": {},\n" + "  \"properties\": {\n" + "    \"desired\": {\n" + "      \"$metadata\": {\n" + "        \"$lastUpdated\": \"0001-01-01T00:00:00Z\"\n" + "      },\n" + "      \"$version\": 1\n" + "    },\n" + "    \"reported\": {\n" + "      \"$metadata\": {\n" + "        \"$lastUpdated\": \"2017-07-26T21:44:15.80668Z\"\n" + "      },\n" + "      \"$version\": 1\n" + "    }\n" + "  }\n" + "}";
 
         //act
         ExportImportDeviceParser parser = new ExportImportDeviceParser(json);
@@ -130,38 +68,7 @@ public class ExportImportDeviceParserTest
         //arrange
         String expectedPrimaryKey = "000000000000000000000000";
         String expectedSecondaryKey = "000000000000000000000000";
-        String json = "{\n" +
-                "  \"id\": \"test\",\n" +
-                "  \"eTag\": \"MA==\",\n" +
-                "  \"status\": \"enabled\",\n" +
-                "  \"authentication\": {\n" +
-                "    \"symmetricKey\": {\n" +
-                "      \"primaryKey\": \"" + expectedPrimaryKey + "\",\n" +
-                "      \"secondaryKey\": \"" + expectedSecondaryKey + "\"\n" +
-                "    },\n" +
-                "    \"x509Thumbprint\": {\n" +
-                "      \"primaryThumbprint\": null,\n" +
-                "      \"secondaryThumbprint\": null\n" +
-                "    },\n" +
-                "    \"type\": \"" + SAS_JSON_VALUE + "\"\n" +
-                "  },\n" +
-                "  \"twinETag\": \"AAAAAAAAAAE=\",\n" +
-                "  \"tags\": {},\n" +
-                "  \"properties\": {\n" +
-                "    \"desired\": {\n" +
-                "      \"$metadata\": {\n" +
-                "        \"$lastUpdated\": \"0001-01-01T00:00:00Z\"\n" +
-                "      },\n" +
-                "      \"$version\": 1\n" +
-                "    },\n" +
-                "    \"reported\": {\n" +
-                "      \"$metadata\": {\n" +
-                "        \"$lastUpdated\": \"2017-07-26T21:44:15.80668Z\"\n" +
-                "      },\n" +
-                "      \"$version\": 1\n" +
-                "    }\n" +
-                "  }\n" +
-                "}";
+        String json = "{\n" + "  \"id\": \"test\",\n" + "  \"eTag\": \"MA==\",\n" + "  \"status\": \"enabled\",\n" + "  \"authentication\": {\n" + "    \"symmetricKey\": {\n" + "      \"primaryKey\": \"" + expectedPrimaryKey + "\",\n" + "      \"secondaryKey\": \"" + expectedSecondaryKey + "\"\n" + "    },\n" + "    \"x509Thumbprint\": {\n" + "      \"primaryThumbprint\": null,\n" + "      \"secondaryThumbprint\": null\n" + "    },\n" + "    \"type\": \"" + SAS_JSON_VALUE + "\"\n" + "  },\n" + "  \"twinETag\": \"AAAAAAAAAAE=\",\n" + "  \"tags\": {},\n" + "  \"properties\": {\n" + "    \"desired\": {\n" + "      \"$metadata\": {\n" + "        \"$lastUpdated\": \"0001-01-01T00:00:00Z\"\n" + "      },\n" + "      \"$version\": 1\n" + "    },\n" + "    \"reported\": {\n" + "      \"$metadata\": {\n" + "        \"$lastUpdated\": \"2017-07-26T21:44:15.80668Z\"\n" + "      },\n" + "      \"$version\": 1\n" + "    }\n" + "  }\n" + "}";
 
         //act
         ExportImportDeviceParser parser = new ExportImportDeviceParser(json);
@@ -171,45 +78,14 @@ public class ExportImportDeviceParserTest
         assertEquals(expectedSecondaryKey, parser.getAuthentication().getSymmetricKey().getSecondaryKey());
         assertEquals(AuthenticationTypeParser.SAS, parser.getAuthentication().getType());
     }
-    
+
     @Test
     public void fromJsonWithTags()
     {
         //arrange
         String expectedPrimaryKey = "000000000000000000000000";
         String expectedSecondaryKey = "000000000000000000000000";
-        String json = "{\n" +
-                "  \"id\": \"test\",\n" +
-                "  \"eTag\": \"MA==\",\n" +
-                "  \"status\": \"enabled\",\n" +
-                "  \"authentication\": {\n" +
-                "    \"symmetricKey\": {\n" +
-                "      \"primaryKey\": \"" + expectedPrimaryKey + "\",\n" +
-                "      \"secondaryKey\": \"" + expectedSecondaryKey + "\"\n" +
-                "    },\n" +
-                "    \"x509Thumbprint\": {\n" +
-                "      \"primaryThumbprint\": null,\n" +
-                "      \"secondaryThumbprint\": null\n" +
-                "    },\n" +
-                "    \"type\": \"" + SAS_JSON_VALUE + "\"\n" +
-                "  },\n" +
-                "  \"twinETag\": \"AAAAAAAAAAE=\",\n" +
-                "  \"tags\": { \"test01\" : \"firstvalue\", \"test02\" : \"secondvalue\"},\n" +
-                "  \"properties\": {\n" +
-                "    \"desired\": {\n" +
-                "      \"$metadata\": {\n" +
-                "        \"$lastUpdated\": \"0001-01-01T00:00:00Z\"\n" +
-                "      },\n" +
-                "      \"$version\": 1\n" +
-                "    },\n" +
-                "    \"reported\": {\n" +
-                "      \"$metadata\": {\n" +
-                "        \"$lastUpdated\": \"2017-07-26T21:44:15.80668Z\"\n" +
-                "      },\n" +
-                "      \"$version\": 1\n" +
-                "    }\n" +
-                "  }\n" +
-                "}";
+        String json = "{\n" + "  \"id\": \"test\",\n" + "  \"eTag\": \"MA==\",\n" + "  \"status\": \"enabled\",\n" + "  \"authentication\": {\n" + "    \"symmetricKey\": {\n" + "      \"primaryKey\": \"" + expectedPrimaryKey + "\",\n" + "      \"secondaryKey\": \"" + expectedSecondaryKey + "\"\n" + "    },\n" + "    \"x509Thumbprint\": {\n" + "      \"primaryThumbprint\": null,\n" + "      \"secondaryThumbprint\": null\n" + "    },\n" + "    \"type\": \"" + SAS_JSON_VALUE + "\"\n" + "  },\n" + "  \"twinETag\": \"AAAAAAAAAAE=\",\n" + "  \"tags\": { \"test01\" : \"firstvalue\", \"test02\" : \"secondvalue\"},\n" + "  \"properties\": {\n" + "    \"desired\": {\n" + "      \"$metadata\": {\n" + "        \"$lastUpdated\": \"0001-01-01T00:00:00Z\"\n" + "      },\n" + "      \"$version\": 1\n" + "    },\n" + "    \"reported\": {\n" + "      \"$metadata\": {\n" + "        \"$lastUpdated\": \"2017-07-26T21:44:15.80668Z\"\n" + "      },\n" + "      \"$version\": 1\n" + "    }\n" + "  }\n" + "}";
 
         //act
         ExportImportDeviceParser parser = new ExportImportDeviceParser(json);
@@ -221,8 +97,8 @@ public class ExportImportDeviceParserTest
         assertNotNull(parser.getTags());
         assertEquals("firstvalue", parser.getTags().get("test01"));
         assertEquals("secondvalue", parser.getTags().get("test02"));
-    }   
-    
+    }
+
 
     //Tests_SRS_EXPORTIMPORTDEVICE_PARSER_34_001: [The parser shall save the ExportImportDeviceParser's authentication to the returned json representation]
     @Test
@@ -279,7 +155,7 @@ public class ExportImportDeviceParserTest
         // assert
         assertEquals(expectedJson, serializedDevice);
     }
-    
+
     @Test
     public void toJsonForTaggedDevice() throws NoSuchAlgorithmException
     {
@@ -289,7 +165,8 @@ public class ExportImportDeviceParserTest
         parser.getAuthentication().setType(AuthenticationTypeParser.SAS);
         parser.getAuthentication().setSymmetricKey(new SymmetricKeyParser("", ""));
         TwinCollection tags = new TwinCollection();
-        tags.put("test01", "firstvalue"); tags.put("test02", "secondvalue");
+        tags.put("test01", "firstvalue");
+        tags.put("test02", "secondvalue");
         parser.setTags(tags);
 
         //String expectedJson = "{\"authentication\":{\"symmetricKey\":{\"primaryKey\":\"\",\"secondaryKey\":\"\"},\"type\":\"" + SAS_JSON_VALUE + "\"},\"tags\":{\"test01\":\"firstvalue\",\"test02\":\"secondvalue\"}}";
@@ -300,7 +177,7 @@ public class ExportImportDeviceParserTest
         // assert
         //assertEquals(expectedJson, serializedDevice);
         assertTrue(serializedDevice.contains("\"tags\":{"));
-    }    
+    }
 
     //Tests_SRS_EXPORTIMPORTDEVICE_PARSER_34_023: [This method shall set the value of this object's AuthenticationParser equal to the provided value.]
     //Tests_SRS_EXPORTIMPORTDEVICE_PARSER_34_012: [This method shall return the value of this object's AuthenticationParser.]
@@ -353,7 +230,7 @@ public class ExportImportDeviceParserTest
         String secondaryKey = "123451234512345123451234";
         AuthenticationTypeParser authType = AuthenticationTypeParser.SAS;
         String expectedId = "DEVICE_ID";
-        String json = "{\"id\" : \"" + expectedId + "\", \"authentication\":{\"symmetricKey\":{\"primaryKey\":\"" + primaryKey + "\",\"secondaryKey\":\"" + secondaryKey +"\"},\"type\":\"" + SAS_JSON_VALUE + "\"}}";
+        String json = "{\"id\" : \"" + expectedId + "\", \"authentication\":{\"symmetricKey\":{\"primaryKey\":\"" + primaryKey + "\",\"secondaryKey\":\"" + secondaryKey + "\"},\"type\":\"" + SAS_JSON_VALUE + "\"}}";
 
         //act
         ExportImportDeviceParser parser = new ExportImportDeviceParser(json);
@@ -366,7 +243,7 @@ public class ExportImportDeviceParserTest
     }
 
     //Tests_SRS_EXPORTIMPORTDEVICE_PARSER_34_007: [If the provided id is null, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void idSetterCannotTakeNullArgument()
     {
         //act
@@ -374,7 +251,7 @@ public class ExportImportDeviceParserTest
     }
 
     //Tests_SRS_EXPORTIMPORTDEVICE_PARSER_34_006: [If the provided authentication is null, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void authenticationSetterCannotTakeNullArgument()
     {
         //act
@@ -382,31 +259,11 @@ public class ExportImportDeviceParserTest
     }
 
     //Tests_SRS_EXPORTIMPORTDEVICE_PARSER_34_009: [If the provided json is missing the Authentication field, or its value is empty, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForMissingAuthentication()
     {
         //arrange
-        String json = "{\n" +
-                "  \"id\": \"test\",\n" +
-                "  \"eTag\": \"MA==\",\n" +
-                "  \"status\": \"enabled\",\n" +
-                "  \"twinETag\": \"AAAAAAAAAAE=\",\n" +
-                "  \"tags\": {},\n" +
-                "  \"properties\": {\n" +
-                "    \"desired\": {\n" +
-                "      \"$metadata\": {\n" +
-                "        \"$lastUpdated\": \"0001-01-01T00:00:00Z\"\n" +
-                "      },\n" +
-                "      \"$version\": 1\n" +
-                "    },\n" +
-                "    \"reported\": {\n" +
-                "      \"$metadata\": {\n" +
-                "        \"$lastUpdated\": \"2017-07-26T21:44:15.80668Z\"\n" +
-                "      },\n" +
-                "      \"$version\": 1\n" +
-                "    }\n" +
-                "  }\n" +
-                "}";
+        String json = "{\n" + "  \"id\": \"test\",\n" + "  \"eTag\": \"MA==\",\n" + "  \"status\": \"enabled\",\n" + "  \"twinETag\": \"AAAAAAAAAAE=\",\n" + "  \"tags\": {},\n" + "  \"properties\": {\n" + "    \"desired\": {\n" + "      \"$metadata\": {\n" + "        \"$lastUpdated\": \"0001-01-01T00:00:00Z\"\n" + "      },\n" + "      \"$version\": 1\n" + "    },\n" + "    \"reported\": {\n" + "      \"$metadata\": {\n" + "        \"$lastUpdated\": \"2017-07-26T21:44:15.80668Z\"\n" + "      },\n" + "      \"$version\": 1\n" + "    }\n" + "  }\n" + "}";
 
         //act
         new ExportImportDeviceParser(json);
@@ -414,48 +271,18 @@ public class ExportImportDeviceParserTest
 
 
     //Tests_SRS_EXPORTIMPORTDEVICE_PARSER_34_008: [If the provided json is missing the Id field, or its value is empty, an IllegalArgumentException shall be thrown]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForMissingId()
     {
         //arrange
-        String json = "{\n" +
-                "  \"eTag\": \"MA==\",\n" +
-                "  \"status\": \"enabled\",\n" +
-                "  \"authentication\": {\n" +
-                "    \"symmetricKey\": {\n" +
-                "      \"primaryKey\": null,\n" +
-                "      \"secondaryKey\": null\n" +
-                "    },\n" +
-                "    \"x509Thumbprint\": {\n" +
-                "      \"primaryThumbprint\":null,\n" +
-                "      \"secondaryThumbprint\":null\n" +
-                "    },\n" +
-                "    \"type\": \"" + CERTIFICATE_AUTHORITY_JSON_VALUE + "\"\n" +
-                "  },\n" +
-                "  \"twinETag\": \"AAAAAAAAAAE=\",\n" +
-                "  \"tags\": {},\n" +
-                "  \"properties\": {\n" +
-                "    \"desired\": {\n" +
-                "      \"$metadata\": {\n" +
-                "        \"$lastUpdated\": \"0001-01-01T00:00:00Z\"\n" +
-                "      },\n" +
-                "      \"$version\": 1\n" +
-                "    },\n" +
-                "    \"reported\": {\n" +
-                "      \"$metadata\": {\n" +
-                "        \"$lastUpdated\": \"2017-07-26T21:44:15.80668Z\"\n" +
-                "      },\n" +
-                "      \"$version\": 1\n" +
-                "    }\n" +
-                "  }\n" +
-                "}";
+        String json = "{\n" + "  \"eTag\": \"MA==\",\n" + "  \"status\": \"enabled\",\n" + "  \"authentication\": {\n" + "    \"symmetricKey\": {\n" + "      \"primaryKey\": null,\n" + "      \"secondaryKey\": null\n" + "    },\n" + "    \"x509Thumbprint\": {\n" + "      \"primaryThumbprint\":null,\n" + "      \"secondaryThumbprint\":null\n" + "    },\n" + "    \"type\": \"" + CERTIFICATE_AUTHORITY_JSON_VALUE + "\"\n" + "  },\n" + "  \"twinETag\": \"AAAAAAAAAAE=\",\n" + "  \"tags\": {},\n" + "  \"properties\": {\n" + "    \"desired\": {\n" + "      \"$metadata\": {\n" + "        \"$lastUpdated\": \"0001-01-01T00:00:00Z\"\n" + "      },\n" + "      \"$version\": 1\n" + "    },\n" + "    \"reported\": {\n" + "      \"$metadata\": {\n" + "        \"$lastUpdated\": \"2017-07-26T21:44:15.80668Z\"\n" + "      },\n" + "      \"$version\": 1\n" + "    }\n" + "  }\n" + "}";
 
         //act
         new ExportImportDeviceParser(json);
     }
 
     //Tests_SRS_EXPORTIMPORTDEVICE_PARSER_34_011: [If the provided json is null, empty, or cannot be parsed into an ExportImportDeviceParser object, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForInvalidJson()
     {
         //arrange
@@ -466,7 +293,7 @@ public class ExportImportDeviceParserTest
     }
 
     //Tests_SRS_EXPORTIMPORTDEVICE_PARSER_34_011: [If the provided json is null, empty, or cannot be parsed into an ExportImportDeviceParser object, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForEmptyJson()
     {
         //arrange
@@ -477,7 +304,7 @@ public class ExportImportDeviceParserTest
     }
 
     //Tests_SRS_EXPORTIMPORTDEVICE_PARSER_34_011: [If the provided json is null, empty, or cannot be parsed into an ExportImportDeviceParser object, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForNullJson()
     {
         //arrange

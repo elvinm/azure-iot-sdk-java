@@ -10,19 +10,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class RegistryStatisticsParser
 {
-    private transient static Gson gson = new Gson();
-
     private static final String TOTAL_DEVICE_COUNT_NAME = "totalDeviceCount";
+    private static final String ENABLED_DEVICE_COUNT_NAME = "enableDeviceCount";
+    private static final String DISABLED_DEVICE_COUNT_NAME = "disabledDeviceCount";
+    private transient static Gson gson = new Gson();
     @Expose(serialize = true, deserialize = true)
     @SerializedName(TOTAL_DEVICE_COUNT_NAME)
     private long totalDeviceCount;
-
-    private static final String ENABLED_DEVICE_COUNT_NAME = "enableDeviceCount";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(ENABLED_DEVICE_COUNT_NAME)
     private long enabledDeviceCount;
-
-    private static final String DISABLED_DEVICE_COUNT_NAME = "disabledDeviceCount";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(DISABLED_DEVICE_COUNT_NAME)
     private long disabledDeviceCount;
@@ -36,6 +33,7 @@ public class RegistryStatisticsParser
 
     /**
      * Constructor for a RegistryStatisticsParser that is constructed from Json.
+     *
      * @param json the json to build from.
      */
     public RegistryStatisticsParser(String json)
@@ -65,6 +63,7 @@ public class RegistryStatisticsParser
 
     /**
      * Converts this into a json string.
+     *
      * @return the json representation of this.
      */
     public String toJson()

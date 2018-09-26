@@ -12,11 +12,11 @@ import java.util.Collection;
 
 /**
  * Representation of a single Device Provisioning Service device registration operation error.
- *
+ * <p>
  * <p> This error is returned as a result of the
- *     {@link ProvisioningServiceClient#runBulkEnrollmentOperation(BulkOperationMode, Collection)},
- *     in the {@link BulkEnrollmentOperationResult}.
- *
+ * {@link ProvisioningServiceClient#runBulkEnrollmentOperation(BulkOperationMode, Collection)},
+ * in the {@link BulkEnrollmentOperationResult}.
+ * <p>
  * <p> The following JSON is an example of a single error operation from a Bulk operation
  * <pre>
  * {@code
@@ -34,21 +34,32 @@ public class BulkEnrollmentOperationError
 {
     // the registration identifier
     private static final String REGISTRATION_ID_TAG = "registrationId";
-    @Expose(serialize = true, deserialize = true)
-    @SerializedName(REGISTRATION_ID_TAG)
-    private String registrationId;
-
     // the error code
     private static final String ERROR_CODE_TAG = "errorCode";
-    @Expose(serialize = true, deserialize = true)
-    @SerializedName(ERROR_CODE_TAG)
-    private Integer errorCode;
-
     // the error status
     private static final String ERROR_STATUS_TAG = "errorStatus";
     @Expose(serialize = true, deserialize = true)
+    @SerializedName(REGISTRATION_ID_TAG)
+    private String registrationId;
+    @Expose(serialize = true, deserialize = true)
+    @SerializedName(ERROR_CODE_TAG)
+    private Integer errorCode;
+    @Expose(serialize = true, deserialize = true)
     @SerializedName(ERROR_STATUS_TAG)
     private String errorStatus;
+
+    /**
+     * Empty constructor
+     * <p>
+     * <p>
+     * Used only by the tools that will deserialize this class.
+     * </p>
+     */
+    @SuppressWarnings("unused")
+    BulkEnrollmentOperationError()
+    {
+        /* SRS_DEVICE_REGISTRATION_OPERATION_ERROR_21_007: [The BulkEnrollmentOperationResult shall provide an empty constructor to make GSON happy.] */
+    }
 
     /**
      * Getter for the error registrationId.
@@ -95,18 +106,5 @@ public class BulkEnrollmentOperationError
         /* SRS_DEVICE_REGISTRATION_OPERATION_ERROR_21_005: [The validateError shall throw IllegalArgumentException if the errorCode is null.] */
         ParserUtility.validateObject(this.errorCode);
         /* SRS_DEVICE_REGISTRATION_OPERATION_ERROR_21_006: [The validateError shall do nothing if all parameters in the class are correct.] */
-    }
-
-    /**
-     * Empty constructor
-     *
-     * <p>
-     *     Used only by the tools that will deserialize this class.
-     * </p>
-     */
-    @SuppressWarnings("unused")
-    BulkEnrollmentOperationError()
-    {
-        /* SRS_DEVICE_REGISTRATION_OPERATION_ERROR_21_007: [The BulkEnrollmentOperationResult shall provide an empty constructor to make GSON happy.] */
     }
 }

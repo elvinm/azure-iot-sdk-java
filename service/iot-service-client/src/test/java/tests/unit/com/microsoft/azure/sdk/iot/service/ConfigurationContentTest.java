@@ -30,12 +30,24 @@ public class ConfigurationContentTest
     public void getterAndSetter()
     {
         //arrange
-        Map<String, Map<String, Object>> mc = new HashMap<String, Map<String, Object>>(){{put("mproperty",
-                new HashMap<String, Object>(){{put("abc", "123"); put("cde", "456");}});}};
-        Map<String, Object> dc = new HashMap<String, Object>(){{put("dproperty",
-                new HashMap<String, Integer>(){{put("c", 3);put("d", 4);}});}};
+        Map<String, Map<String, Object>> mc = new HashMap<String, Map<String, Object>>()
+        {{
+            put("mproperty", new HashMap<String, Object>()
+            {{
+                put("abc", "123");
+                put("cde", "456");
+            }});
+        }};
+        Map<String, Object> dc = new HashMap<String, Object>()
+        {{
+            put("dproperty", new HashMap<String, Integer>()
+            {{
+                put("c", 3);
+                put("d", 4);
+            }});
+        }};
 
-        ConfigurationContent cc= new ConfigurationContent();
+        ConfigurationContent cc = new ConfigurationContent();
 
         // Act
         cc.setDeviceContent(dc);
@@ -46,7 +58,7 @@ public class ConfigurationContentTest
         Map<String, Object> moduleContentMap = (cc.getModulesContent().get("mproperty"));
         assertEquals("123", moduleContentMap.get("abc"));
         assertEquals("456", moduleContentMap.get("cde"));
-        Map<String, Object> deviceContentMap = ((Map<String,Object>)(cc.getDeviceContent().get("dproperty")));
+        Map<String, Object> deviceContentMap = ((Map<String, Object>) (cc.getDeviceContent().get("dproperty")));
         assertEquals(3, deviceContentMap.get("c"));
         assertEquals(4, deviceContentMap.get("d"));
     }
@@ -56,10 +68,22 @@ public class ConfigurationContentTest
     public void ToParserSuccess()
     {
         //arrange
-        Map<String, Map<String, Object>> mc = new HashMap<String, Map<String, Object>>(){{put("mproperty",
-                new HashMap<String, Object>(){{put("abc", "123"); put("cde", "456");}});}};
-        Map<String, Object> dc = new HashMap<String, Object>(){{put("dproperty",
-                new HashMap<String, Integer>(){{put("c", 3);put("d", 4);}});}};
+        Map<String, Map<String, Object>> mc = new HashMap<String, Map<String, Object>>()
+        {{
+            put("mproperty", new HashMap<String, Object>()
+            {{
+                put("abc", "123");
+                put("cde", "456");
+            }});
+        }};
+        Map<String, Object> dc = new HashMap<String, Object>()
+        {{
+            put("dproperty", new HashMap<String, Integer>()
+            {{
+                put("c", 3);
+                put("d", 4);
+            }});
+        }};
 
         ConfigurationContent cc = new ConfigurationContent();
 

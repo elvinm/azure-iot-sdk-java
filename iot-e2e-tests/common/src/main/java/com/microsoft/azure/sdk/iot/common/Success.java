@@ -11,20 +11,14 @@ public class Success
     private IotHubStatusCode callbackStatusCode;
     private boolean callbackWasFired = false;
 
-    public void setResult(Boolean result)
-    {
-        this.result = result;
-    }
-
-    public void setCallbackStatusCode(IotHubStatusCode callbackStatusCode)
-    {
-        this.callbackStatusCode = callbackStatusCode;
-        this.callbackWasFired = true;
-    }
-
     public Boolean getResult()
     {
         return this.result;
+    }
+
+    public void setResult(Boolean result)
+    {
+        this.result = result;
     }
 
     public boolean wasCallbackFired()
@@ -35,6 +29,12 @@ public class Success
     public IotHubStatusCode getCallbackStatusCode()
     {
         return this.callbackStatusCode;
+    }
+
+    public void setCallbackStatusCode(IotHubStatusCode callbackStatusCode)
+    {
+        this.callbackStatusCode = callbackStatusCode;
+        this.callbackWasFired = true;
     }
 
     public void callbackWasFired()

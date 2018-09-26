@@ -20,8 +20,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-/** Unit tests for AmqpConnection.
- * Coverage : 100% method, 100% line */
+/**
+ * Unit tests for AmqpConnection.
+ * Coverage : 100% method, 100% line
+ */
 @RunWith(JMockit.class)
 public class AmqpMessageTest
 {
@@ -88,7 +90,7 @@ public class AmqpMessageTest
         new NonStrictExpectations()
         {
             {
-                mockedMessageImpl.setApplicationProperties((ApplicationProperties)any);
+                mockedMessageImpl.setApplicationProperties((ApplicationProperties) any);
             }
         };
 
@@ -96,7 +98,7 @@ public class AmqpMessageTest
         amqpMessage.setApplicationProperty(userProperties);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void decodeThrowsOnDataNull()
     {
         AmqpMessage amqpMessage = new AmqpMessage(mockedMessageImpl);
@@ -111,7 +113,7 @@ public class AmqpMessageTest
         new NonStrictExpectations()
         {
             {
-                mockedMessageImpl.decode((byte[])any, 0, 10);
+                mockedMessageImpl.decode((byte[]) any, 0, 10);
             }
         };
 
@@ -120,7 +122,7 @@ public class AmqpMessageTest
         amqpMessage.decode(data, 0, 10);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void encodeThrowsOnDataNull() throws IOException
     {
         AmqpMessage amqpMessage = new AmqpMessage(mockedMessageImpl);
@@ -135,7 +137,7 @@ public class AmqpMessageTest
         new NonStrictExpectations()
         {
             {
-                mockedMessageImpl.decode((byte[])any, 0, 10);
+                mockedMessageImpl.decode((byte[]) any, 0, 10);
             }
         };
 

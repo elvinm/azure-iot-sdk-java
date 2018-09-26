@@ -21,7 +21,7 @@ public class AmqpsDeviceAuthenticationCBSSendTaskTest
     AmqpsDeviceAuthenticationCBS mockAmqpsDeviceAuthenticationCBS;
 
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONCBSSENDTASK_12_001: [The constructor shall throw IllegalArgumentException if the amqpsDeviceAuthenticationCBS parameter is null.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfDeviceClientIsNull() throws IllegalArgumentException
     {
         // act

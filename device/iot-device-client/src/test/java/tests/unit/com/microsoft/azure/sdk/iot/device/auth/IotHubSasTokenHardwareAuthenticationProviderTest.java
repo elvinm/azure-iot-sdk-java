@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package tests.unit.com.microsoft.azure.sdk.iot.device.auth;
 
@@ -36,21 +36,26 @@ import static org.junit.Assert.*;
  */
 public class IotHubSasTokenHardwareAuthenticationProviderTest
 {
-    @Mocked SecurityProvider mockSecurityProvider;
-    @Mocked SecurityProviderTpm mockSecurityProviderTpm;
-    @Mocked IotHubSSLContext mockIotHubSSLContext;
-    @Mocked SSLContext mockSSLContext;
-    @Mocked IotHubSasToken mockSasToken;
-    @Mocked URLEncoder mockURLEncoder;
-    @Mocked Base64 mockBase64;
-
     private static final String encodingName = StandardCharsets.UTF_8.displayName();
-
     private static String expectedDeviceId = "deviceId";
     private static String expectedModuleId = "moduleId";
     private static String expectedHostname = "hostname";
     private static String expectedGatewayHostname = "gateway";
     private static String expectedSasToken = "sasToken";
+    @Mocked
+    SecurityProvider mockSecurityProvider;
+    @Mocked
+    SecurityProviderTpm mockSecurityProviderTpm;
+    @Mocked
+    IotHubSSLContext mockIotHubSSLContext;
+    @Mocked
+    SSLContext mockSSLContext;
+    @Mocked
+    IotHubSasToken mockSasToken;
+    @Mocked
+    URLEncoder mockURLEncoder;
+    @Mocked
+    Base64 mockBase64;
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_033: [This constructor shall generate and save a sas token from the security provider with the default time to live.]
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_034: [This constructor shall retrieve and save the ssl context from the security provider.]
@@ -59,7 +64,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
     {
         //arrange
         final String someToken = "someToken";
-        final byte[] tokenBytes= someToken.getBytes();
+        final byte[] tokenBytes = someToken.getBytes();
         new NonStrictExpectations()
         {
             {
@@ -78,7 +83,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
                 mockSecurityProviderTpm.getSSLContext();
                 result = mockSSLContext;
 
-                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {SSLContext.class}, mockSSLContext);
+                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{SSLContext.class}, mockSSLContext);
                 result = mockIotHubSSLContext;
             }
         };
@@ -98,14 +103,14 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {SSLContext.class}, mockSSLContext);
+                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{SSLContext.class}, mockSSLContext);
                 times = 1;
             }
         };
     }
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_003: [If the provided security provider is not an instance of SecurityProviderTpm, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void securityProviderConstructorThrowsForInvalidSecurityProviderInstance() throws IOException, InvalidKeyException, SecurityProviderException
     {
         //act
@@ -113,12 +118,12 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_023: [If the security provider throws an exception while retrieving a sas token or ssl context from it, this function shall throw an IOException.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void securityProviderConstructorThrowsIfRetrievingSSLContextFromSecurityProviderThrows() throws IOException, InvalidKeyException, SecurityProviderException
     {
         //arrange
         final String someToken = "someToken";
-        final byte[] tokenBytes= someToken.getBytes();
+        final byte[] tokenBytes = someToken.getBytes();
         new NonStrictExpectations()
         {
             {
@@ -149,7 +154,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
     {
         //arrange
         final String someToken = "someToken";
-        final byte[] tokenBytes= someToken.getBytes();
+        final byte[] tokenBytes = someToken.getBytes();
         new Expectations()
         {
             {
@@ -167,7 +172,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
 
                 URLEncoder.encode(anyString, encodingName);
                 result = someToken;
-                
+
                 Deencapsulation.invoke(mockSasToken, "isExpired");
                 result = true;
             }
@@ -197,9 +202,9 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
         {
             {
                 mockSasToken.toString();
-                result  = expectedSasToken;
+                result = expectedSasToken;
 
-                Deencapsulation.newInstance(IotHubSasToken.class, new Class[] {String.class, String.class, String.class, String.class, String.class, long.class}, anyString, anyString, anyString, anyString, anyString, anyLong);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, anyString, anyString, anyString, anyString, anyString, anyLong);
                 result = mockSasToken;
 
                 Deencapsulation.invoke(mockSasToken, "isExpired");
@@ -223,7 +228,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_001: [This function shall throw an UnsupportedOperationException.]
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void setPathToCertificateThrows() throws IOException, InvalidKeyException, SecurityProviderException
     {
         //arrange
@@ -235,7 +240,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_002: [This function shall throw an UnsupportedOperationException.]
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void setCertificateThrows() throws IOException, InvalidKeyException, SecurityProviderException
     {
         //arrange
@@ -252,9 +257,9 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
         {
             {
                 mockSasToken.toString();
-                result  = expectedSasToken;
+                result = expectedSasToken;
 
-                Deencapsulation.newInstance(IotHubSasToken.class, new Class[] {String.class, String.class, String.class, String.class, String.class, long.class}, anyString, anyString, anyString, anyString, anyString, anyLong);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, anyString, anyString, anyString, anyString, anyString, anyLong);
                 result = mockSasToken;
 
                 Deencapsulation.invoke(mockSasToken, "isExpired");
@@ -275,7 +280,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
     {
         //arrange
         final String someToken = "someToken";
-        final byte[] tokenBytes= someToken.getBytes();
+        final byte[] tokenBytes = someToken.getBytes();
         new NonStrictExpectations()
         {
             {
@@ -294,13 +299,13 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
                 mockSecurityProviderTpm.getSSLContext();
                 result = mockSSLContext;
 
-                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {SSLContext.class}, mockSSLContext);
+                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{SSLContext.class}, mockSSLContext);
                 result = mockIotHubSSLContext;
 
                 mockSecurityProviderTpm.getSSLContext();
                 result = mockSSLContext;
 
-                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {SSLContext.class}, mockSSLContext);
+                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{SSLContext.class}, mockSSLContext);
                 result = mockIotHubSSLContext;
 
                 Deencapsulation.invoke(mockIotHubSSLContext, "getSSLContext");
@@ -318,7 +323,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_009: [If the token scope cannot be encoded, this function shall throw an IOException.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void generateSasTokenSignatureFromSecurityProviderFailsToEncodeTokenScopeThrowsIOException() throws IOException, InvalidKeyException, SecurityProviderException
     {
         //arrange
@@ -335,7 +340,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_010: [If the call for the saved security provider to sign with identity returns null or empty bytes, this function shall throw an IOException.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void generateSasTokenSignatureFromSecurityProviderFailsToSignWithIdentityAndReturnsNullThrowsIOException() throws IOException, InvalidKeyException, SecurityProviderException
     {
         //arrange
@@ -355,7 +360,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_010: [If the call for the saved security provider to sign with identity returns null or empty bytes, this function shall throw an IOException.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void generateSasTokenSignatureFromSecurityProviderFailsToSignWithIdentityAndReturnsEmptyBytesThrowsIOException() throws IOException, InvalidKeyException, SecurityProviderException
     {
         //arrange
@@ -366,7 +371,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
                 result = "some token";
 
                 mockSecurityProviderTpm.signWithIdentity((byte[]) any);
-                result = new byte[] {};
+                result = new byte[]{};
             }
         };
 
@@ -375,7 +380,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_011: [When generating the sas token signature from the security provider, if an UnsupportedEncodingException or SecurityProviderException is thrown, this function shall throw an IOException.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void generateSasTokenSignatureThrowsUnsupportedEncodingWrappedInIOException() throws IOException, InvalidKeyException, SecurityProviderException
     {
         //arrange
@@ -392,7 +397,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_011: [When generating the sas token signature from the security provider, if an UnsupportedEncodingException or SecurityProviderException is thrown, this function shall throw an IOException.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void generateSasTokenSignatureFromSecurityProviderThrowsDuringSignWithIdentityThrowsIOException() throws IOException, InvalidKeyException, SecurityProviderException
     {
         //arrange
@@ -417,7 +422,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
     {
         //arrange
         final String someToken = "someToken";
-        final byte[] tokenBytes= someToken.getBytes();
+        final byte[] tokenBytes = someToken.getBytes();
         new NonStrictExpectations()
         {
             {
@@ -436,7 +441,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
                 mockSecurityProviderTpm.getSSLContext();
                 result = mockSSLContext;
 
-                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {SSLContext.class}, mockSSLContext);
+                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{SSLContext.class}, mockSSLContext);
                 result = mockIotHubSSLContext;
             }
         };
@@ -456,7 +461,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
     {
         //arrange
         final String someToken = "someToken";
-        final byte[] tokenBytes= someToken.getBytes();
+        final byte[] tokenBytes = someToken.getBytes();
         new NonStrictExpectations()
         {
             {
@@ -475,7 +480,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
                 mockSecurityProviderTpm.getSSLContext();
                 result = mockSSLContext;
 
-                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {SSLContext.class}, mockSSLContext);
+                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{SSLContext.class}, mockSSLContext);
                 result = mockIotHubSSLContext;
             }
         };

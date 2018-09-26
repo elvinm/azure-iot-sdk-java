@@ -17,8 +17,8 @@ import java.io.FileOutputStream;
 
 public class DeviceManagerExportSample
 {
-    private static final Boolean excludeKeys = false;
     public static final String sampleContainerName = "exportsample";
+    private static final Boolean excludeKeys = false;
 
     public static void main(String[] args) throws Exception
     {
@@ -33,7 +33,7 @@ public class DeviceManagerExportSample
         RegistryManager registryManager = RegistryManager.createFromConnectionString(SampleUtils.iotHubConnectionString);
         JobProperties exportJob = registryManager.exportDevices(containerSasUri, excludeKeys);
 
-        while(true)
+        while (true)
         {
             exportJob = registryManager.getJob(exportJob.getJobId());
             if (exportJob.getStatus() == JobProperties.JobStatus.COMPLETED)
@@ -43,7 +43,7 @@ public class DeviceManagerExportSample
             Thread.sleep(500);
         }
 
-        for(ListBlobItem blobItem : container.listBlobs())
+        for (ListBlobItem blobItem : container.listBlobs())
         {
             if (blobItem instanceof CloudBlob)
             {

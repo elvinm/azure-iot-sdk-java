@@ -26,48 +26,42 @@ public class JobsParser
 
     // Job identifier
     private static final String JOBID_TAG = "jobId";
-    @Expose(serialize = true, deserialize = false)
-    @SerializedName(JOBID_TAG)
-    private String jobId;
-
     // Required.
     // The type of job to execute.
     private static final String TYPE_TAG = "type";
-    @Expose(serialize = true, deserialize = false)
-    @SerializedName(TYPE_TAG)
-    private String jobType;
-
     // Required if jobType is cloudToDeviceMethod.
     // The method type and parameters.
     // Ignored by the json serializer if null.
     private static final String CLOUDTODEVICEMETHOD_TAG = "cloudToDeviceMethod";
-    @Expose(serialize = true, deserialize = false)
-    @SerializedName(CLOUDTODEVICEMETHOD_TAG)
-    private JsonElement cloudToDeviceMethod = null;
-
     // Required if jobType is updateTwin.
     // The Update Twin tags and desired properties.
     // Ignored by the json serializer if null.
     private static final String UPDATETWIN_TAG = "updateTwin";
-    @Expose(serialize = true, deserialize = false)
-    @SerializedName(UPDATETWIN_TAG)
-    private JsonElement updateTwin = null;
-
     // Required if jobType is updateTwin or cloudToDeviceMethod.
     // Condition for device query to get devices to execute the job on
     private static final String QUERYCONDITION_TAG = "queryCondition";
+    // ISO 8601 date time to start the job
+    private static final String STARTTIME_TAG = "startTime";
+    // Max execution time in seconds (ttl duration)
+    private static final String MAXEXECUTIONTIMEINSECONDS_TAG = "maxExecutionTimeInSeconds";
+    @Expose(serialize = true, deserialize = false)
+    @SerializedName(JOBID_TAG)
+    private String jobId;
+    @Expose(serialize = true, deserialize = false)
+    @SerializedName(TYPE_TAG)
+    private String jobType;
+    @Expose(serialize = true, deserialize = false)
+    @SerializedName(CLOUDTODEVICEMETHOD_TAG)
+    private JsonElement cloudToDeviceMethod = null;
+    @Expose(serialize = true, deserialize = false)
+    @SerializedName(UPDATETWIN_TAG)
+    private JsonElement updateTwin = null;
     @Expose(serialize = true, deserialize = false)
     @SerializedName(QUERYCONDITION_TAG)
     private String queryCondition;
-
-    // ISO 8601 date time to start the job
-    private static final String STARTTIME_TAG = "startTime";
     @Expose(serialize = true, deserialize = false)
     @SerializedName(STARTTIME_TAG)
     private String startTime;
-
-    // Max execution time in seconds (ttl duration)
-    private static final String MAXEXECUTIONTIMEINSECONDS_TAG = "maxExecutionTimeInSeconds";
     @Expose(serialize = true, deserialize = false)
     @SerializedName(MAXEXECUTIONTIMEINSECONDS_TAG)
     private long maxExecutionTimeInSeconds;
@@ -75,17 +69,14 @@ public class JobsParser
     /**
      * CONSTRUCTOR
      *
-     * @param jobId is a string with the job identification. Cannot be {@code null} or empty.
-     * @param cloudToDeviceMethod is the class that contains the json for the cloud to Device Method. Cannot be {@code null}.
-     * @param queryCondition is a string with the deviceId or an <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language">IoT Hub Query Condition</a>. Cannot be {@code null} or empty.
-     * @param startTime is the date and time to start the job. Cannot be {@code null}.
+     * @param jobId                     is a string with the job identification. Cannot be {@code null} or empty.
+     * @param cloudToDeviceMethod       is the class that contains the json for the cloud to Device Method. Cannot be {@code null}.
+     * @param queryCondition            is a string with the deviceId or an <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language">IoT Hub Query Condition</a>. Cannot be {@code null} or empty.
+     * @param startTime                 is the date and time to start the job. Cannot be {@code null}.
      * @param maxExecutionTimeInSeconds is the maximum time that the device can expend to execute the job. Cannot be negative
      * @throws IllegalArgumentException if one of the parameter is not valid.
      */
-    public JobsParser(
-            String jobId, MethodParser cloudToDeviceMethod,
-            String queryCondition, Date startTime, long maxExecutionTimeInSeconds)
-            throws IllegalArgumentException
+    public JobsParser(String jobId, MethodParser cloudToDeviceMethod, String queryCondition, Date startTime, long maxExecutionTimeInSeconds) throws IllegalArgumentException
     {
         /* Codes_SRS_JOBSPARSER_21_004: [If the cloudToDeviceMethod is null, the constructor shall throws IllegalArgumentException.] */
         if (cloudToDeviceMethod == null)
@@ -111,19 +102,16 @@ public class JobsParser
     /**
      * CONSTRUCTOR
      *
-     * @param jobId is a string with the job identification. Cannot be {@code null} or empty.
-     * @param updateTwin is the class that contains the json for the update twin properties. Cannot be {@code null}.
-     * @param queryCondition is a string with the deviceId or an <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language">IoT Hub Query Condition</a>. Cannot be {@code null} or empty.
-     * @param startTime is the date and time to start the job. Cannot be {@code null}.
+     * @param jobId                     is a string with the job identification. Cannot be {@code null} or empty.
+     * @param updateTwin                is the class that contains the json for the update twin properties. Cannot be {@code null}.
+     * @param queryCondition            is a string with the deviceId or an <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language">IoT Hub Query Condition</a>. Cannot be {@code null} or empty.
+     * @param startTime                 is the date and time to start the job. Cannot be {@code null}.
      * @param maxExecutionTimeInSeconds is the maximum time that the device can expend to execute the job. Cannot be negative
      * @throws IllegalArgumentException if one of the parameter is not valid.
      * @deprecated As of release 0.4.0, replaced by {@link #JobsParser(String, TwinState, String, Date, long)}
      */
     @Deprecated
-    public JobsParser(
-            String jobId, TwinParser updateTwin,
-            String queryCondition, Date startTime, long maxExecutionTimeInSeconds)
-            throws IllegalArgumentException
+    public JobsParser(String jobId, TwinParser updateTwin, String queryCondition, Date startTime, long maxExecutionTimeInSeconds) throws IllegalArgumentException
     {
         /* Codes_SRS_JOBSPARSER_21_010: [If the updateTwin is null, the constructor shall throws IllegalArgumentException.] */
         if (updateTwin == null)
@@ -148,17 +136,14 @@ public class JobsParser
     /**
      * CONSTRUCTOR
      *
-     * @param jobId is a string with the job identification. Cannot be {@code null} or empty.
-     * @param updateTwin is the class that contains the json for the update twin properties. Cannot be {@code null}.
-     * @param queryCondition is a string with the deviceId or an <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language">IoT Hub Query Condition</a>. Cannot be {@code null} or empty.
-     * @param startTime is the date and time to start the job. Cannot be {@code null}.
+     * @param jobId                     is a string with the job identification. Cannot be {@code null} or empty.
+     * @param updateTwin                is the class that contains the json for the update twin properties. Cannot be {@code null}.
+     * @param queryCondition            is a string with the deviceId or an <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language">IoT Hub Query Condition</a>. Cannot be {@code null} or empty.
+     * @param startTime                 is the date and time to start the job. Cannot be {@code null}.
      * @param maxExecutionTimeInSeconds is the maximum time that the device can expend to execute the job. Cannot be negative
      * @throws IllegalArgumentException if one of the parameter is not valid.
      */
-    public JobsParser(
-            String jobId, TwinState updateTwin,
-            String queryCondition, Date startTime, long maxExecutionTimeInSeconds)
-            throws IllegalArgumentException
+    public JobsParser(String jobId, TwinState updateTwin, String queryCondition, Date startTime, long maxExecutionTimeInSeconds) throws IllegalArgumentException
     {
         /* Codes_SRS_JOBSPARSER_21_010: [If the updateTwin is null, the constructor shall throws IllegalArgumentException.] */
         if (updateTwin == null)
@@ -182,6 +167,14 @@ public class JobsParser
 
 
     /**
+     * Empty constructor: Used only to keep GSON happy.
+     */
+    @SuppressWarnings("unused")
+    JobsParser()
+    {
+    }
+
+    /**
      * Getter for the string with the json.
      *
      * @return a String with the json the represents the content of this class.
@@ -193,19 +186,16 @@ public class JobsParser
         return gson.toJson(this);
     }
 
-
     /**
      * Evaluate and store the common fields.
      *
-     * @param jobId is a string with the job identification. Cannot be {@code null} or empty.
-     * @param queryCondition is a string with the deviceId or an <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language">IoT Hub Query Condition</a>. Cannot be {@code null} or empty.
-     * @param startTime is the date and time to start the job. Cannot be {@code null}.
+     * @param jobId                     is a string with the job identification. Cannot be {@code null} or empty.
+     * @param queryCondition            is a string with the deviceId or an <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language">IoT Hub Query Condition</a>. Cannot be {@code null} or empty.
+     * @param startTime                 is the date and time to start the job. Cannot be {@code null}.
      * @param maxExecutionTimeInSeconds is the maximum time that the device can expend to execute the job. Cannot be negative
      * @throws IllegalArgumentException if one of the parameter is not valid.
      */
-    private void validateCommonFields(
-            String jobId, String queryCondition, Date startTime, long maxExecutionTimeInSeconds)
-            throws IllegalArgumentException
+    private void validateCommonFields(String jobId, String queryCondition, Date startTime, long maxExecutionTimeInSeconds) throws IllegalArgumentException
     {
         /* Codes_SRS_JOBSPARSER_21_015: [If the jobId is null, empty, or invalid, the validateCommonFields shall throws IllegalArgumentException.] */
         ParserUtility.validateStringUTF8(jobId);
@@ -217,7 +207,7 @@ public class JobsParser
         }
 
         /* Codes_SRS_JOBSPARSER_21_017: [If the maxExecutionTimeInSeconds is negative, the validateCommonFields shall throws IllegalArgumentException.] */
-        if(maxExecutionTimeInSeconds < 0)
+        if (maxExecutionTimeInSeconds < 0)
         {
             throw new IllegalArgumentException("Negative max execution time in seconds");
         }
@@ -231,13 +221,5 @@ public class JobsParser
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATEFORMAT);
         dateFormat.setTimeZone(TimeZone.getTimeZone(TIMEZONE));
         this.startTime = dateFormat.format(startTime);
-    }
-
-    /**
-     * Empty constructor: Used only to keep GSON happy.
-     */
-    @SuppressWarnings("unused")
-    JobsParser()
-    {
     }
 }

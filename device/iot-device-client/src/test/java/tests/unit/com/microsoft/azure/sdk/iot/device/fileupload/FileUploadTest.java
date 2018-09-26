@@ -73,7 +73,7 @@ public class FileUploadTest
     }
 
     /* Tests_SRS_FILEUPLOAD_21_001: [If the provided `config` is null, the constructor shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorNullConfigThrows() throws IOException
     {
         // act
@@ -116,7 +116,7 @@ public class FileUploadTest
     }
 
     /* Tests_SRS_FILEUPLOAD_21_003: [If the constructor fail to create the new instance of the `HttpsTransportManager`, it shall throw IllegalArgumentException, threw by the HttpsTransportManager constructor.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorHttpsTransportManagerThrows() throws IOException
     {
         // arrange
@@ -134,7 +134,7 @@ public class FileUploadTest
     }
 
     /* Tests_SRS_FILEUPLOAD_21_015: [If create the executor failed, the constructor shall throws IOException.] */
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void constructorExecutorThrows() throws IOException
     {
         // arrange
@@ -174,14 +174,10 @@ public class FileUploadTest
             {
                 mockInputStream.available();
                 result = streamLength;
-                Deencapsulation.newInstance(FileUploadInProgress.class,
-                        new Class[] {IotHubEventCallback.class, Object.class},
-                        mockIotHubEventCallback, context);
+                Deencapsulation.newInstance(FileUploadInProgress.class, new Class[]{IotHubEventCallback.class, Object.class}, mockIotHubEventCallback, context);
                 result = mockFileUploadInProgress;
                 times = 1;
-                Deencapsulation.newInstance(FileUploadTask.class,
-                        new Class[] { String.class, InputStream.class, long.class, HttpsTransportManager.class, IotHubEventCallback.class, Object.class},
-                        blobName, mockInputStream, streamLength, mockHttpsTransportManager, (IotHubEventCallback)any, mockFileUploadInProgress);
+                Deencapsulation.newInstance(FileUploadTask.class, new Class[]{String.class, InputStream.class, long.class, HttpsTransportManager.class, IotHubEventCallback.class, Object.class}, blobName, mockInputStream, streamLength, mockHttpsTransportManager, (IotHubEventCallback) any, mockFileUploadInProgress);
                 result = mockFileUploadTask;
                 times = 1;
                 mockScheduler.submit(mockFileUploadTask);
@@ -194,7 +190,7 @@ public class FileUploadTest
     }
 
     /* Tests_SRS_FILEUPLOAD_21_005: [If the `blobName` is null or empty, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void uploadToBlobAsyncNullBlobNameThrows() throws IOException
     {
         // arrange
@@ -210,7 +206,7 @@ public class FileUploadTest
     }
 
     /* Tests_SRS_FILEUPLOAD_21_005: [If the `blobName` is null or empty, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void uploadToBlobAsyncEmptyBlobNameThrows() throws IOException
     {
         // arrange
@@ -226,7 +222,7 @@ public class FileUploadTest
     }
 
     /* Tests_SRS_FILEUPLOAD_21_006: [If the `inputStream` is null or not available, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void uploadToBlobAsyncNullInputStreamThrows() throws IOException
     {
         // arrange
@@ -249,7 +245,7 @@ public class FileUploadTest
     }
 
     /* Tests_SRS_FILEUPLOAD_21_007: [If the `streamLength` is negative, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void uploadToBlobAsyncNegativeStreamLenghtThrows() throws IOException
     {
         // arrange
@@ -272,7 +268,7 @@ public class FileUploadTest
     }
 
     /* Tests_SRS_FILEUPLOAD_21_008: [If the `userCallback` is null, the uploadToBlobAsync shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void uploadToBlobAsyncNullUserCallbackThrows() throws IOException
     {
         // arrange
@@ -350,7 +346,7 @@ public class FileUploadTest
         new Verifications()
         {
             {
-                Deencapsulation.invoke(mockFileUploadInProgress, "triggerCallback" , new Class[] {IotHubStatusCode.class}, IotHubStatusCode.ERROR);
+                Deencapsulation.invoke(mockFileUploadInProgress, "triggerCallback", new Class[]{IotHubStatusCode.class}, IotHubStatusCode.ERROR);
                 times = 1;
             }
         };
@@ -375,7 +371,7 @@ public class FileUploadTest
         new Verifications()
         {
             {
-                Deencapsulation.invoke(mockFileUploadInProgress, "triggerCallback" , new Class[] {IotHubStatusCode.class}, IotHubStatusCode.OK_EMPTY);
+                Deencapsulation.invoke(mockFileUploadInProgress, "triggerCallback", new Class[]{IotHubStatusCode.class}, IotHubStatusCode.OK_EMPTY);
                 times = 1;
             }
         };
@@ -433,7 +429,7 @@ public class FileUploadTest
         new Verifications()
         {
             {
-                mockCustomLogger.LogError((String)any);
+                mockCustomLogger.LogError((String) any);
                 times = 1;
             }
         };
@@ -465,7 +461,7 @@ public class FileUploadTest
         new Verifications()
         {
             {
-                Deencapsulation.invoke(mockFileUploadInProgress, "triggerCallback" , new Class[] {IotHubStatusCode.class}, IotHubStatusCode.OK_EMPTY);
+                Deencapsulation.invoke(mockFileUploadInProgress, "triggerCallback", new Class[]{IotHubStatusCode.class}, IotHubStatusCode.OK_EMPTY);
                 times = 1;
             }
         };

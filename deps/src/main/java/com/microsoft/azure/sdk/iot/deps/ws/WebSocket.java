@@ -12,74 +12,15 @@ import java.util.Map;
  */
 public interface WebSocket
 {
-    public enum WebSocketState
-    {
-        /**
-         * WebSocket
-         */
-        PN_WS_NOT_STARTED,
-        /**
-         * Pending connection
-         */
-        PN_WS_CONNECTING,
-        /**
-         * Connected and messages flow
-         */
-        PN_WS_CONNECTED_FLOW,
-        /**
-         * Connected and ping-pong
-         */
-        PN_WS_CONNECTED_PONG,
-        /**
-         * Connected and received a close
-         */
-        PN_WS_CONNECTED_CLOSING,
-        /**
-         * Connection closed
-         */
-        PN_WS_CLOSED,
-        /**
-         * Connection failed
-         */
-        PN_WS_FAILED
-    }
-
-    public enum WebSocketFrameReadState
-    {
-        /**
-         * The initial read
-         */
-        INIT_READ,
-
-        /**
-         * Reading chunks of bytes until a full header is read
-         */
-        CHUNK_READ,
-
-        /**
-         * Continue reading bytes until correct number of bytes are read
-         */
-        CONTINUED_FRAME_READ,
-
-        /**
-         * Full header has been read
-         */
-        HEADER_READ,
-
-        /**
-         * An error reading
-         */
-        READ_ERROR
-    }
-
     /**
      * Configure WebSocket connection
-     * @param host the hots name
-     * @param path the resource path
-     * @param port the port
-     * @param protocol the base protocol
+     *
+     * @param host              the hots name
+     * @param path              the resource path
+     * @param port              the port
+     * @param protocol          the base protocol
      * @param additionalHeaders the Map of additional headers
-     * @param webSocketHandler the web socket handler
+     * @param webSocketHandler  the web socket handler
      */
     void configure(String host, String path, int port, String protocol, Map<String, String> additionalHeaders, WebSocketHandler webSocketHandler);
 
@@ -147,4 +88,58 @@ public interface WebSocket
      * @return The wsInputBuffer input buffer.
      */
     ByteBuffer getWsInputBuffer();
+
+    public enum WebSocketState
+    {
+        /**
+         * WebSocket
+         */
+        PN_WS_NOT_STARTED, /**
+     * Pending connection
+     */
+    PN_WS_CONNECTING, /**
+     * Connected and messages flow
+     */
+    PN_WS_CONNECTED_FLOW, /**
+     * Connected and ping-pong
+     */
+    PN_WS_CONNECTED_PONG, /**
+     * Connected and received a close
+     */
+    PN_WS_CONNECTED_CLOSING, /**
+     * Connection closed
+     */
+    PN_WS_CLOSED, /**
+     * Connection failed
+     */
+    PN_WS_FAILED
+    }
+
+    public enum WebSocketFrameReadState
+    {
+        /**
+         * The initial read
+         */
+        INIT_READ,
+
+        /**
+         * Reading chunks of bytes until a full header is read
+         */
+        CHUNK_READ,
+
+        /**
+         * Continue reading bytes until correct number of bytes are read
+         */
+        CONTINUED_FRAME_READ,
+
+        /**
+         * Full header has been read
+         */
+        HEADER_READ,
+
+        /**
+         * An error reading
+         */
+        READ_ERROR
+    }
 }

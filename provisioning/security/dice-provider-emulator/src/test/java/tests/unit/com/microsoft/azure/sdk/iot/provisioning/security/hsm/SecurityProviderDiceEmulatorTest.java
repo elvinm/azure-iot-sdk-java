@@ -50,9 +50,7 @@ public class SecurityProviderDiceEmulatorTest
     public void constructorWithNamesSucceeds() throws Exception
     {
         //act
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       TEST_SIGNER,
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, TEST_SIGNER, TEST_ROOT);
         //assert
         assertEquals(TEST_ALIAS, Deencapsulation.getField(testSecurityClientDiceEmulator, "commonNameAlias"));
         assertEquals(TEST_SIGNER, Deencapsulation.getField(testSecurityClientDiceEmulator, "commonNameSigner"));
@@ -60,93 +58,75 @@ public class SecurityProviderDiceEmulatorTest
     }
 
     //SRS_SecurityClientDiceEmulator_25_004: [ Constructor shall throw SecurityProviderException if Alias Certificate, Signer Certificate and Root certificate names are not unique ]
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void constructorWithSameRootAndSignerNamesThrows() throws Exception
     {
         //act
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       TEST_ROOT,
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, TEST_ROOT, TEST_ROOT);
     }
 
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void constructorWithSameAliasAndSignerNamesThrows() throws Exception
     {
         //act
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       TEST_ALIAS,
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, TEST_ALIAS, TEST_ROOT);
     }
 
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void constructorWithSameRootAndAliasNamesThrows() throws Exception
     {
 
         //act
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       TEST_SIGNER,
-                                                                                                       TEST_ALIAS);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, TEST_SIGNER, TEST_ALIAS);
     }
 
     //SRS_SecurityClientDiceEmulator_25_003: [ Constructor shall throw SecurityProviderException if Alias Certificate, Signer Certificate and Root certificate names are null or empty ]
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void constructorWithNullAliasNamesThrows() throws Exception
     {
 
         //act
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(null,
-                                                                                                       TEST_SIGNER,
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(null, TEST_SIGNER, TEST_ROOT);
     }
 
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void constructorWithEmptyAliasNamesThrows() throws Exception
     {
 
         //act
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator("",
-                                                                                                       TEST_SIGNER,
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator("", TEST_SIGNER, TEST_ROOT);
     }
 
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void constructorWithNullSignerNamesThrows() throws Exception
     {
 
         //act
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       null,
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, null, TEST_ROOT);
     }
 
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void constructorWithEmptySignerNamesThrows() throws Exception
     {
 
         //act
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       "",
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, "", TEST_ROOT);
     }
 
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void constructorWithNullRootNamesThrows() throws Exception
     {
 
         //act
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       TEST_SIGNER,
-                                                                                                       null);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, TEST_SIGNER, null);
     }
 
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void constructorWithEmptyRootNamesThrows() throws Exception
     {
 
         //act
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       TEST_SIGNER,
-                                                                                                       "");
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, TEST_SIGNER, "");
     }
 
     //SRS_SecurityClientDiceEmulator_25_005: [ This method shall return Root certificate name as common name ]
@@ -154,9 +134,7 @@ public class SecurityProviderDiceEmulatorTest
     public void getterForCommonNameSucceeds() throws Exception
     {
         //arrange
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       TEST_SIGNER,
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, TEST_SIGNER, TEST_ROOT);
         //act
         String cName = testSecurityClientDiceEmulator.getClientCertificateCommonName();
 
@@ -169,9 +147,7 @@ public class SecurityProviderDiceEmulatorTest
     public void getterForAliasCertSucceeds() throws Exception
     {
         //arrange
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       TEST_SIGNER,
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, TEST_SIGNER, TEST_ROOT);
         //act
         X509Certificate cert = testSecurityClientDiceEmulator.getClientCertificate();
 
@@ -184,9 +160,7 @@ public class SecurityProviderDiceEmulatorTest
     public void getterForAliasKeySucceeds() throws Exception
     {
         //arrange
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       TEST_SIGNER,
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, TEST_SIGNER, TEST_ROOT);
         //act
         Key aliasKey = testSecurityClientDiceEmulator.getClientPrivateKey();
 
@@ -199,9 +173,7 @@ public class SecurityProviderDiceEmulatorTest
     public void getterForDeviceSignerCertificatesSucceeds() throws Exception
     {
         //arrange
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       TEST_SIGNER,
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, TEST_SIGNER, TEST_ROOT);
         //act
         Collection<X509Certificate> cert = testSecurityClientDiceEmulator.getIntermediateCertificatesChain();
 
@@ -216,9 +188,7 @@ public class SecurityProviderDiceEmulatorTest
     {
 
         //arrange
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       TEST_SIGNER,
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, TEST_SIGNER, TEST_ROOT);
         //act
         String cert = testSecurityClientDiceEmulator.getAliasCertPem();
 
@@ -232,9 +202,7 @@ public class SecurityProviderDiceEmulatorTest
     {
 
         //arrange
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       TEST_SIGNER,
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, TEST_SIGNER, TEST_ROOT);
         //act
         String cert = testSecurityClientDiceEmulator.getSignerCertPem();
 
@@ -247,9 +215,7 @@ public class SecurityProviderDiceEmulatorTest
     public void getterForRootCertPemSucceeds() throws Exception
     {
         //arrange
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       TEST_SIGNER,
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, TEST_SIGNER, TEST_ROOT);
         //act
         String cert = testSecurityClientDiceEmulator.getRootCertPem();
 
@@ -258,24 +224,20 @@ public class SecurityProviderDiceEmulatorTest
     }
 
     //SRS_SecurityClientDiceEmulator_25_012: [ This method shall return Leaf certificate generated by DICE with unique ID as common Name in PEM Format ]
-    @Test (expected =  SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void generateLeafCertThrowsOnNullID() throws Exception
     {
         //arrange
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       TEST_SIGNER,
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, TEST_SIGNER, TEST_ROOT);
         //act
         testSecurityClientDiceEmulator.generateLeafCert(null);
     }
 
-    @Test (expected =  SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void generateLeafCertThrowsOnEmptyID() throws Exception
     {
         //arrange
-        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS,
-                                                                                                       TEST_SIGNER,
-                                                                                                       TEST_ROOT);
+        SecurityProviderDiceEmulator testSecurityClientDiceEmulator = new SecurityProviderDiceEmulator(TEST_ALIAS, TEST_SIGNER, TEST_ROOT);
         //act
         testSecurityClientDiceEmulator.generateLeafCert("");
     }

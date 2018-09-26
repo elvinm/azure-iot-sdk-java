@@ -33,33 +33,24 @@ public class AmqpsDeviceOperations
 
     protected AmqpsDeviceOperationLinkState amqpsSendLinkState = AmqpsDeviceOperationLinkState.UNKNOWN;
     protected AmqpsDeviceOperationLinkState amqpsRecvLinkState = AmqpsDeviceOperationLinkState.UNKNOWN;
-
-    Map<Symbol, Object> amqpProperties;
-
     protected String senderLinkTag;
     protected String receiverLinkTag;
-
     protected String senderLinkEndpointPath;
     protected String receiverLinkEndpointPath;
-
     protected String senderLinkAddress;
     protected String receiverLinkAddress;
-
     protected Sender senderLink;
     protected Receiver receiverLink;
-
+    Map<Symbol, Object> amqpProperties;
     private CustomLogger logger;
 
     /**
      * This constructor creates an instance of device operation class and initializes member variables
      *
      * @param deviceClientConfig the config to pull the user agent string from
-     *
      * @throws IllegalArgumentException if the provided deviceClientConfig is null
      */
-    AmqpsDeviceOperations(DeviceClientConfig deviceClientConfig, String senderLinkEndpointPath, String receiverLinkEndpointpath,
-                          String senderLinkEndpointPathModules, String receiverLinkEndpointPathModules,
-                          String senderLinkTagPrefix, String receiverLinkTagPrefix) throws IllegalArgumentException
+    AmqpsDeviceOperations(DeviceClientConfig deviceClientConfig, String senderLinkEndpointPath, String receiverLinkEndpointpath, String senderLinkEndpointPathModules, String receiverLinkEndpointPathModules, String senderLinkTagPrefix, String receiverLinkTagPrefix) throws IllegalArgumentException
     {
         if (deviceClientConfig == null)
         {
@@ -121,9 +112,10 @@ public class AmqpsDeviceOperations
 
     /**
      * Opens receiver and sender link
+     *
      * @param session The session where the links shall be created
      * @throws IllegalArgumentException if session argument is null
-     * @throws TransportException if Proton throws
+     * @throws TransportException       if Proton throws
      */
     protected synchronized void openLinks(Session session) throws TransportException
     {
@@ -222,9 +214,10 @@ public class AmqpsDeviceOperations
 
     /**
      * Initializes the link's other endpoint according to its type
+     *
      * @param link The link which shall be initialize.
      * @throws IllegalArgumentException if link argument is null
-     * @throws TransportException if Proton throws
+     * @throws TransportException       if Proton throws
      */
     protected synchronized void initLink(Link link) throws TransportException, IllegalArgumentException
     {
@@ -287,13 +280,14 @@ public class AmqpsDeviceOperations
 
     /**
      * Sends the given message and returns with the delivery hash
+     *
      * @param messageType The message operation type.
-     * @param msgData The binary array of the bytes to send
-     * @param offset The start offset to copy the bytes from
-     * @param length The number of bytes to be send related to the offset
+     * @param msgData     The binary array of the bytes to send
+     * @param offset      The start offset to copy the bytes from
+     * @param length      The number of bytes to be send related to the offset
      * @param deliveryTag The unique identfier of the delivery
      * @return delivery tag
-     * @throws IllegalStateException if sender link has not been initialized
+     * @throws IllegalStateException    if sender link has not been initialized
      * @throws IllegalArgumentException if deliveryTag's length is 0
      */
     protected synchronized AmqpsSendReturnValue sendMessageAndGetDeliveryHash(MessageType messageType, byte[] msgData, int offset, int length, byte[] deliveryTag) throws IllegalStateException, IllegalArgumentException
@@ -333,10 +327,11 @@ public class AmqpsDeviceOperations
 
     /**
      * Reads the received buffer and handles the link
+     *
      * @param linkName The receiver link's name to read from
      * @return the received message
      * @throws IllegalArgumentException if linkName argument is empty
-     * @throws TransportException if Proton throws
+     * @throws TransportException       if Proton throws
      */
     protected AmqpsMessage getMessageFromReceiverLink(String linkName) throws IllegalArgumentException, TransportException
     {
@@ -387,6 +382,7 @@ public class AmqpsDeviceOperations
 
     /**
      * Gets the status of the operation's links
+     *
      * @return true if the all the operation links are opened, false otherwise
      */
     public Boolean operationLinksOpened()
@@ -410,7 +406,7 @@ public class AmqpsDeviceOperations
     /**
      * Prototype (empty) function for operation specific implementations to convert Proton message to IoTHubMessage
      *
-     * @param amqpsMessage The Proton message to convert
+     * @param amqpsMessage       The Proton message to convert
      * @param deviceClientConfig The device client configuration
      * @return the converted message
      * @throws TransportException if conversion fails.
@@ -530,6 +526,7 @@ public class AmqpsDeviceOperations
 
     /**
      * Converts an iothub message to a proton message
+     *
      * @param message The IoTHubMessage to convert
      * @return the converted message
      * @throws TransportException if conversion fails.
@@ -566,7 +563,7 @@ public class AmqpsDeviceOperations
         Map<String, Object> userProperties = new HashMap<>();
         if (message.getProperties().length > 0)
         {
-            for(MessageProperty messageProperty : message.getProperties())
+            for (MessageProperty messageProperty : message.getProperties())
             {
                 if (!MessageProperty.RESERVED_PROPERTY_NAMES.contains(messageProperty.getName()))
                 {
@@ -597,6 +594,7 @@ public class AmqpsDeviceOperations
 
     /**
      * Getter for the AmqpsProperties map
+     *
      * @return Map of AmqpsProperties of the given operation
      */
     Map<Symbol, Object> getAmqpProperties()
@@ -607,6 +605,7 @@ public class AmqpsDeviceOperations
 
     /**
      * Getter for the SenderLinkTag string
+     *
      * @return String od SenderLinkTag of the given operation
      */
     String getSenderLinkTag()
@@ -617,6 +616,7 @@ public class AmqpsDeviceOperations
 
     /**
      * Getter for the ReceiverLinkTag string
+     *
      * @return String od ReceiverLinkTag of the given operation
      */
     String getReceiverLinkTag()
@@ -627,6 +627,7 @@ public class AmqpsDeviceOperations
 
     /**
      * Getter for the SenderLinkAddress string
+     *
      * @return String od SenderLinkAddress of the given operation
      */
     String getSenderLinkAddress()
@@ -637,6 +638,7 @@ public class AmqpsDeviceOperations
 
     /**
      * Getter for the ReceiverLinkAddress string
+     *
      * @return String od ReceiverLinkAddress of the given operation
      */
     String getReceiverLinkAddress()

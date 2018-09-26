@@ -22,15 +22,6 @@ import java.net.URISyntaxException;
 
 public class IotHubSasTokenHsmAuthenticationProviderTest
 {
-    @Mocked
-    SignatureProvider mockedSignatureProvider;
-
-    @Mocked
-    IotHubSasToken mockedIotHubSasToken;
-
-    @Mocked
-    IotHubSasTokenAuthenticationProvider mockedIotHubSasTokenAuthenticationProvider;
-
     private static final String expectedHostname = "hostname";
     private static final String expectedGatewayHostname = "gatewayHostname";
     private static final String expectedDeviceId = "device";
@@ -39,7 +30,12 @@ public class IotHubSasTokenHsmAuthenticationProviderTest
     private static final int expectedBufferPercent = 25;
     private static final String expectedSignature = "someSignature";
     private static final String expectedSharedAccessToken = "someSharedAccessToken";
-
+    @Mocked
+    SignatureProvider mockedSignatureProvider;
+    @Mocked
+    IotHubSasToken mockedIotHubSasToken;
+    @Mocked
+    IotHubSasTokenAuthenticationProvider mockedIotHubSasTokenAuthenticationProvider;
 
     // Tests_SRS_MODULEAUTHENTICATIONWITHHSM_34_001: [This function shall construct a sas token from the provided arguments and then return a IotHubSasTokenHsmAuthenticationProvider instance that uses that sas token.]
     // Tests_SRS_MODULEAUTHENTICATIONWITHHSM_34_003: [If the gatewayHostname is not null or empty, this function shall construct the sas token using the gateway hostname instead of the hostname.]
@@ -56,9 +52,7 @@ public class IotHubSasTokenHsmAuthenticationProviderTest
                 IotHubSasToken.buildSharedAccessToken(anyString, expectedSignature, anyLong);
                 result = expectedSharedAccessToken;
 
-                Deencapsulation.newInstance(IotHubSasToken.class,
-                        new Class[] {String.class, String.class, String.class, String.class, String.class, long.class},
-                        expectedGatewayHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, expectedGatewayHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
                 result = mockedIotHubSasToken;
 
                 System.currentTimeMillis();
@@ -73,9 +67,7 @@ public class IotHubSasTokenHsmAuthenticationProviderTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(IotHubSasToken.class,
-                        new Class[] {String.class, String.class, String.class, String.class, String.class, long.class},
-                        expectedGatewayHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, expectedGatewayHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
                 times = 1;
             }
         };
@@ -95,9 +87,7 @@ public class IotHubSasTokenHsmAuthenticationProviderTest
                 IotHubSasToken.buildSharedAccessToken(anyString, expectedSignature, anyLong);
                 result = expectedSharedAccessToken;
 
-                Deencapsulation.newInstance(IotHubSasToken.class,
-                        new Class[] {String.class, String.class, String.class, String.class, String.class, long.class},
-                        expectedHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, expectedHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
                 result = mockedIotHubSasToken;
 
                 System.currentTimeMillis();
@@ -112,9 +102,7 @@ public class IotHubSasTokenHsmAuthenticationProviderTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(IotHubSasToken.class,
-                        new Class[] {String.class, String.class, String.class, String.class, String.class, long.class},
-                        expectedHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, expectedHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
                 times = 1;
             }
         };
@@ -134,9 +122,7 @@ public class IotHubSasTokenHsmAuthenticationProviderTest
                 IotHubSasToken.buildSharedAccessToken(anyString, expectedSignature, anyLong);
                 result = expectedSharedAccessToken;
 
-                Deencapsulation.newInstance(IotHubSasToken.class,
-                        new Class[] {String.class, String.class, String.class, String.class, String.class, long.class},
-                        expectedGatewayHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, expectedGatewayHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
                 result = mockedIotHubSasToken;
 
                 System.currentTimeMillis();
@@ -151,9 +137,7 @@ public class IotHubSasTokenHsmAuthenticationProviderTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(IotHubSasToken.class,
-                        new Class[] {String.class, String.class, String.class, String.class, String.class, long.class},
-                        expectedGatewayHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, expectedGatewayHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
                 times = 1;
             }
         };
@@ -173,9 +157,7 @@ public class IotHubSasTokenHsmAuthenticationProviderTest
                 IotHubSasToken.buildSharedAccessToken(anyString, expectedSignature, anyLong);
                 result = expectedSharedAccessToken;
 
-                Deencapsulation.newInstance(IotHubSasToken.class,
-                        new Class[] {String.class, String.class, String.class, String.class, String.class, long.class},
-                        expectedHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, expectedHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
                 result = mockedIotHubSasToken;
 
                 System.currentTimeMillis();
@@ -201,16 +183,14 @@ public class IotHubSasTokenHsmAuthenticationProviderTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(IotHubSasToken.class,
-                        new Class[] {String.class, String.class, String.class, String.class, String.class, long.class},
-                        expectedHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
+                Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, String.class, long.class}, expectedHostname, expectedDeviceId, null, expectedSharedAccessToken, expectedModuleId, expectedTimeToLive);
                 times = 2; //once for constuctor, once for call to refreshSasToken
             }
         };
     }
 
     // Tests_SRS_MODULEAUTHENTICATIONWITHHSM_34_002: [If the provided signature provider is null, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void staticConstructorThrowsForNullSignatureProvider() throws IOException, TransportException
     {
         //act

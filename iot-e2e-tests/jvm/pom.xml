@@ -2,7 +2,8 @@
   ~  Copyright (c) Microsoft. All rights reserved.
   ~  Licensed under the MIT license. See LICENSE file in the project root for full license information.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.microsoft.azure.sdk.iot</groupId>
     <artifactId>iot-e2e-jvm-tests</artifactId>
@@ -109,7 +110,7 @@
                     <!-- These tests are currently disabled due to a known issue on the service side 
                          where sometimes, scheduled jobs block indefinitely -->
                     <excludes>
-                    	<exclude>**/ExportImportIT.java</exclude>
+                        <exclude>**/ExportImportIT.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -142,7 +143,7 @@
                     <!-- These tests are currently disabled due to a known issue on the service side 
                          where sometimes, scheduled jobs block indefinitely -->
                     <excludes>
-                    	<exclude>**/ExportImportIT.java</exclude>
+                        <exclude>**/ExportImportIT.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>

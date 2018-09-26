@@ -33,8 +33,7 @@ public class ConfigurationMetricsParserTest
     public void constructorFromJson()
     {
         //arrange
-        String json = "{\"results\":{\"abc\":3,\"def\":5}, " +
-                "\"queries\":{\"c\":\"d\",\"e\":\"f\"}}";
+        String json = "{\"results\":{\"abc\":3,\"def\":5}, " + "\"queries\":{\"c\":\"d\",\"e\":\"f\"}}";
 
         //act
         ConfigurationMetricsParser parser = new ConfigurationMetricsParser(json);
@@ -51,7 +50,7 @@ public class ConfigurationMetricsParserTest
 
     //Tests_SRS_CONFIGURATION_METRICS_PARSER_28_003: [If the provided json cannot be parsed into a ConfigurationMetricsParser
     // object, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsForInvalidJson()
     {
         //arrange
@@ -69,14 +68,16 @@ public class ConfigurationMetricsParserTest
     public void gettersAndSetters()
     {
         //arrange
-        HashMap<String, Long> results = new HashMap<String, Long>() {
+        HashMap<String, Long> results = new HashMap<String, Long>()
+        {
             {
                 put("abc", new Long(3));
                 put("def", new Long(5));
             }
         };
 
-        HashMap<String, String> queries = new HashMap<String, String>() {
+        HashMap<String, String> queries = new HashMap<String, String>()
+        {
             {
                 put("c", "d");
                 put("e", "f");

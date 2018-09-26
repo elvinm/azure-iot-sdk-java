@@ -32,7 +32,8 @@ public class X509ThumbprintTest
     {
         X509Thumbprint thumbprint = Deencapsulation.newInstance(X509Thumbprint.class);
         expectedPrimaryThumbprint = Deencapsulation.invoke(thumbprint, "getPrimaryThumbprint");
-        expectedSecondaryThumbprint = Deencapsulation.invoke(thumbprint, "getSecondaryThumbprint");;
+        expectedSecondaryThumbprint = Deencapsulation.invoke(thumbprint, "getSecondaryThumbprint");
+        ;
     }
 
     //Tests_SRS_X509THUMBPRINT_34_001: [The function shall return the primary thumbprint value of this.]
@@ -46,12 +47,12 @@ public class X509ThumbprintTest
         X509Thumbprint thumbprint = createTestThumbprint(expectedPrimaryThumbprint.toLowerCase(), expectedSecondaryThumbprint.toLowerCase());
 
         //act
-        Deencapsulation.invoke(thumbprint, "setPrimaryThumbprint", new Class[] { String.class }, expectedPrimaryThumbprint);
-        Deencapsulation.invoke(thumbprint, "setSecondaryThumbprint", new Class[] { String.class }, expectedSecondaryThumbprint);
+        Deencapsulation.invoke(thumbprint, "setPrimaryThumbprint", new Class[]{String.class}, expectedPrimaryThumbprint);
+        Deencapsulation.invoke(thumbprint, "setSecondaryThumbprint", new Class[]{String.class}, expectedSecondaryThumbprint);
 
         //assert
-        assertEquals(expectedPrimaryThumbprint, Deencapsulation.invoke(thumbprint, "getPrimaryThumbprint", new Class[] {}));
-        assertEquals(expectedSecondaryThumbprint, Deencapsulation.invoke(thumbprint, "getSecondaryThumbprint", new Class[] {}));
+        assertEquals(expectedPrimaryThumbprint, Deencapsulation.invoke(thumbprint, "getPrimaryThumbprint", new Class[]{}));
+        assertEquals(expectedSecondaryThumbprint, Deencapsulation.invoke(thumbprint, "getSecondaryThumbprint", new Class[]{}));
     }
 
     //Tests_SRS_X509THUMBPRINT_34_006: [This constructor shall create an X509Thumbprint with the provided primary thumbprint and the provided secondary thumbprint.]
@@ -62,12 +63,12 @@ public class X509ThumbprintTest
         X509Thumbprint thumbprint = createTestThumbprint(expectedPrimaryThumbprint, expectedSecondaryThumbprint);
 
         //assert
-        assertEquals(expectedPrimaryThumbprint, Deencapsulation.invoke(thumbprint, "getPrimaryThumbprint", new Class[] {}));
-        assertEquals(expectedSecondaryThumbprint, Deencapsulation.invoke(thumbprint, "getSecondaryThumbprint", new Class[] {}));
+        assertEquals(expectedPrimaryThumbprint, Deencapsulation.invoke(thumbprint, "getPrimaryThumbprint", new Class[]{}));
+        assertEquals(expectedSecondaryThumbprint, Deencapsulation.invoke(thumbprint, "getSecondaryThumbprint", new Class[]{}));
     }
 
     //Tests_SRS_X509THUMBPRINT_34_010: [This constructor shall throw an IllegalArgumentException if the provided thumbprints are null, empty, or not a valid format.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void illegalArgumentExceptionThrownByConstructorForEmptyPrimaryThumbprint()
     {
         //act
@@ -75,7 +76,7 @@ public class X509ThumbprintTest
     }
 
     //Tests_SRS_X509THUMBPRINT_34_010: [This constructor shall throw an IllegalArgumentException if the provided thumbprints are null, empty, or not a valid format.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void illegalArgumentExceptionThrownByConstructorForEmptySecondaryThumbprint()
     {
         //act
@@ -83,7 +84,7 @@ public class X509ThumbprintTest
     }
 
     //Tests_SRS_X509THUMBPRINT_34_010: [This constructor shall throw an IllegalArgumentException if the provided thumbprints are null, empty, or not a valid format.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void illegalArgumentExceptionThrownByConstructorForNullPrimaryThumbprint()
     {
         //act
@@ -91,7 +92,7 @@ public class X509ThumbprintTest
     }
 
     //Tests_SRS_X509THUMBPRINT_34_010: [This constructor shall throw an IllegalArgumentException if the provided thumbprints are null, empty, or not a valid format.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void illegalArgumentExceptionThrownByConstructorForNullSecondaryThumbprint()
     {
         //act
@@ -99,7 +100,7 @@ public class X509ThumbprintTest
     }
 
     //Tests_SRS_X509THUMBPRINT_34_010: [This constructor shall throw an IllegalArgumentException if the provided thumbprints are null, empty, or not a valid format.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void illegalArgumentExceptionThrownByConstructorForInvalidPrimaryThumbprint()
     {
         //act
@@ -107,7 +108,7 @@ public class X509ThumbprintTest
     }
 
     //Tests_SRS_X509THUMBPRINT_34_010: [This constructor shall throw an IllegalArgumentException if the provided thumbprints are null, empty, or not a valid format.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void illegalArgumentExceptionThrownByConstructorForInvalidSecondaryThumbprint()
     {
         //act
@@ -115,25 +116,25 @@ public class X509ThumbprintTest
     }
 
     //Tests_SRS_X509THUMBPRINT_34_007: [If the provided thumbprint string is not the proper format, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void illegalArgumentExceptionThrownBySetPrimaryThumbprintForIllegalThumbprint()
     {
         //arrange
         X509Thumbprint thumbprint = createTestThumbprint(null, null);
 
         //act
-        Deencapsulation.invoke(thumbprint, "setPrimaryThumbprint", new Class[] { String.class }, "");
+        Deencapsulation.invoke(thumbprint, "setPrimaryThumbprint", new Class[]{String.class}, "");
     }
 
     //Tests_SRS_X509THUMBPRINT_34_008: [If the provided thumbprint string is not the proper format, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void illegalArgumentExceptionThrownBySetSecondaryThumbprintForIllegalThumbprint()
     {
         //arrange
         X509Thumbprint thumbprint = createTestThumbprint(null, null);
 
         //act
-        Deencapsulation.invoke(thumbprint, "setSecondaryThumbprint", new Class[] { String.class }, "");
+        Deencapsulation.invoke(thumbprint, "setSecondaryThumbprint", new Class[]{String.class}, "");
     }
 
     //Tests_SRS_X509THUMBPRINT_34_011: [This constructor shall generate a random primary and secondary thumbprint.]
@@ -205,25 +206,27 @@ public class X509ThumbprintTest
 
     /**
      * Creates a thumbprint using the constructor X509Thumbprint(String primaryThumbprint, String secondaryThumbprint)
-     * @param primaryThumbprint the primary thumbprint value to set
+     *
+     * @param primaryThumbprint   the primary thumbprint value to set
      * @param secondaryThumbprint the secondary thumbprint value to set
      * @return the created thumbprint object
      */
     private X509Thumbprint createTestThumbprint(String primaryThumbprint, String secondaryThumbprint)
     {
-        return Deencapsulation.newInstance(X509Thumbprint.class, new Class[] { String.class, String.class }, primaryThumbprint, secondaryThumbprint);
+        return Deencapsulation.newInstance(X509Thumbprint.class, new Class[]{String.class, String.class}, primaryThumbprint, secondaryThumbprint);
     }
 
     /**
      * Creates a thumbprint using the empty constructor for X509Thumbprint and then sets the primary and secondary thumbprints using reflection.
      * This avoids some checks in the constructor and allows for creating thumbprints in illegal states.
-     * @param primaryThumbprint the primary thumbprint value to set
+     *
+     * @param primaryThumbprint   the primary thumbprint value to set
      * @param secondaryThumbprint the secondary thumbprint value to set
      * @return the created thumbprint object
      */
     private X509Thumbprint createTestThumbprintWithInvalidThumbprintValues(String primaryThumbprint, String secondaryThumbprint)
     {
-        X509Thumbprint thumbprint = Deencapsulation.newInstance(X509Thumbprint.class, new Class[] { String.class, String.class }, expectedPrimaryThumbprint, expectedSecondaryThumbprint);
+        X509Thumbprint thumbprint = Deencapsulation.newInstance(X509Thumbprint.class, new Class[]{String.class, String.class}, expectedPrimaryThumbprint, expectedSecondaryThumbprint);
         Deencapsulation.setField(thumbprint, "primaryThumbprint", primaryThumbprint);
         Deencapsulation.setField(thumbprint, "secondaryThumbprint", secondaryThumbprint);
         return thumbprint;

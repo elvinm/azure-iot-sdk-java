@@ -26,7 +26,9 @@ import java.util.Map;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/** Unit tests for HttpConnection. */
+/**
+ * Unit tests for HttpConnection.
+ */
 @RunWith(JMockit.class)
 public class HttpConnectionTest
 {
@@ -64,8 +66,7 @@ public class HttpConnectionTest
     // Tests_SRS_SERVICE_SDK_JAVA_HTTPSCONNECTION_12_002: [The constructor shall throw an IOException if the connection was unable to be opened.]
     // Assert
     @Test(expected = IOException.class)
-    public void constructorThrowsIoExceptionIfCannotOpenConnection()
-            throws IOException
+    public void constructorThrowsIoExceptionIfCannotOpenConnection() throws IOException
     {
         // Arrange
         final HttpMethod httpsMethod = HttpMethod.PUT;
@@ -167,8 +168,8 @@ public class HttpConnectionTest
     {
         // Arrange
         final HttpMethod httpsMethod = HttpMethod.PUT;
-        byte[] body = { 1, 2, 3 };
-        final byte[] expectedBody = { 1, 2, 3 };
+        byte[] body = {1, 2, 3};
+        final byte[] expectedBody = {1, 2, 3};
         new NonStrictExpectations()
         {
             {
@@ -243,8 +244,7 @@ public class HttpConnectionTest
         new Verifications()
         {
             {
-                ((HttpsURLConnection) mockUrl.openConnection())
-                        .setRequestMethod(httpsMethod.name());
+                ((HttpsURLConnection) mockUrl.openConnection()).setRequestMethod(httpsMethod.name());
             }
         };
     }
@@ -257,7 +257,7 @@ public class HttpConnectionTest
         // Arrange
         final HttpMethod httpsMethod = HttpMethod.POST;
         final HttpMethod illegalHttpsMethod = HttpMethod.DELETE;
-        final byte[] body = { 1, 2, 3 };
+        final byte[] body = {1, 2, 3};
         new NonStrictExpectations()
         {
             {
@@ -346,7 +346,7 @@ public class HttpConnectionTest
     {
         // Arrange
         final HttpMethod httpsMethod = HttpMethod.GET;
-        final byte[] body = { 1, 2 };
+        final byte[] body = {1, 2};
         new NonStrictExpectations()
         {
             {
@@ -393,7 +393,7 @@ public class HttpConnectionTest
     {
         // Arrange
         final HttpMethod httpsMethod = HttpMethod.GET;
-        byte[] expectedResponse = { 1, 2, 3 };
+        byte[] expectedResponse = {1, 2, 3};
         new NonStrictExpectations()
         {
             {
@@ -483,7 +483,7 @@ public class HttpConnectionTest
     {
         // Arrange
         final HttpMethod httpsMethod = HttpMethod.GET;
-        byte[] expectedError = { 1, 2, 3 };
+        byte[] expectedError = {1, 2, 3};
         new NonStrictExpectations()
         {
             {
@@ -687,12 +687,11 @@ public class HttpConnectionTest
         // Act
         Map<String, List<String>> testResponseHeaders = conn.getResponseHeaders();
         // Assert
-        assertThat(testResponseHeaders.size(),
-                is(expectedResponseHeaders.size()));
+        assertThat(testResponseHeaders.size(), is(expectedResponseHeaders.size()));
         // the list of values for each field is of size 1, so the lists
         // can be directly compared.
-        assertThat(testResponseHeaders.get(field0),is(expectedResponseHeaders.get(field0)));
-        assertThat(testResponseHeaders.get(field1),is(expectedResponseHeaders.get(field1)));
+        assertThat(testResponseHeaders.get(field0), is(expectedResponseHeaders.get(field0)));
+        assertThat(testResponseHeaders.get(field1), is(expectedResponseHeaders.get(field1)));
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_HTTPSCONNECTION_12_023: [The function shall throw an IOException if no response was received.]

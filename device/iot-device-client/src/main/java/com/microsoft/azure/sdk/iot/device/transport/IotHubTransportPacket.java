@@ -13,29 +13,25 @@ import com.microsoft.azure.sdk.iot.device.Message;
  */
 public final class IotHubTransportPacket
 {
+    private final long startTimeMillis;
     private Message message;
     private IotHubEventCallback eventCallback;
     private Object callbackContext;
     private IotHubStatusCode status;
-    private final long startTimeMillis;
     private int currentRetryAttempt;
 
     /**
      * Constructor.
      *
-     * @param message the message to be sent.
-     * @param eventCallback the callback to be invoked when a response from the IoT Hub is received.
+     * @param message         the message to be sent.
+     * @param eventCallback   the callback to be invoked when a response from the IoT Hub is received.
      * @param callbackContext the context to be passed to the callback.
-     * @param status the status code associated with the message
+     * @param status          the status code associated with the message
      * @param startTimeMillis the milliseconds since epoch that this packet was created. Used for tracking how long a
      *                        packet has been in process for
      * @throws IllegalArgumentException if startTimeMillis is 0 or negative
      */
-    public IotHubTransportPacket(Message message,
-                                 IotHubEventCallback eventCallback,
-                                 Object callbackContext,
-                                 IotHubStatusCode status,
-                                 long startTimeMillis) throws IllegalArgumentException
+    public IotHubTransportPacket(Message message, IotHubEventCallback eventCallback, Object callbackContext, IotHubStatusCode status, long startTimeMillis) throws IllegalArgumentException
     {
         if (startTimeMillis < 1)
         {
@@ -92,6 +88,7 @@ public final class IotHubTransportPacket
 
     /**
      * Get the status of this transport packet
+     *
      * @return the status of this packet
      */
     public IotHubStatusCode getStatus()
@@ -102,6 +99,7 @@ public final class IotHubTransportPacket
 
     /**
      * Set the status of this transport packet
+     *
      * @param status the status to set for this packet
      */
     public void setStatus(IotHubStatusCode status)
@@ -112,6 +110,7 @@ public final class IotHubTransportPacket
 
     /**
      * Getter for startTimeMillis
+     *
      * @return the number of milliseconds since epoch that this packet was created
      */
     public long getStartTimeMillis()
@@ -122,6 +121,7 @@ public final class IotHubTransportPacket
 
     /**
      * Getter for current retry attempt. This count should be incremented using incrementRetryAttempt
+     *
      * @return the current retry attempt
      */
     public int getCurrentRetryAttempt()

@@ -28,19 +28,18 @@ public class ProvisioningAmqpOperations extends AmqpDeviceOperations implements 
     private static final String API_VERSION_KEY = "com.microsoft:api-version";
     private static final String CLIENT_VERSION_IDENTIFIER_KEY = "com.microsoft:client-version";
 
-    private static final int MAX_WAIT_TO_SEND_MSG = 1*60*1000; // 1 minute timeout
-    private static final long MAX_WAIT_TO_OPEN_AMQP_CONNECTION = 1*60*1000; //1 minute timeout
-
-    private AmqpsConnection amqpConnection;
+    private static final int MAX_WAIT_TO_SEND_MSG = 1 * 60 * 1000; // 1 minute timeout
+    private static final long MAX_WAIT_TO_OPEN_AMQP_CONNECTION = 1 * 60 * 1000; //1 minute timeout
     private final Queue<AmqpMessage> receivedMessages = new LinkedBlockingQueue<>();
     private final ObjectLock receiveLock = new ObjectLock();
-
+    private AmqpsConnection amqpConnection;
     private String idScope;
     private String hostName;
 
     /**
      * Constructor for ProvisioningAmqpOperation that handle the AMQP transport for provisioning
-     * @param idScope The Scope ID associated with this provisioning client
+     *
+     * @param idScope  The Scope ID associated with this provisioning client
      * @param hostName The Provisioning Endpoint
      * @throws ProvisioningDeviceClientException Exception thrown if parameter is not provided
      */
@@ -100,6 +99,7 @@ public class ProvisioningAmqpOperations extends AmqpDeviceOperations implements 
 
     /**
      * Determines if the AMQP connect is up
+     *
      * @return boolean true is connected false otherwise
      */
     public boolean isAmqpConnected() throws ProvisioningDeviceClientException
@@ -121,9 +121,10 @@ public class ProvisioningAmqpOperations extends AmqpDeviceOperations implements 
 
     /**
      * Opens the Amqp connection
+     *
      * @param registrationId The specified registration id for the connection
-     * @param sslContext The SSLContext that will get used for this connection
-     * @param saslHandler custom handler for sasl logic. May be null if no sasl frames are expected
+     * @param sslContext     The SSLContext that will get used for this connection
+     * @param saslHandler    custom handler for sasl logic. May be null if no sasl frames are expected
      * @throws ProvisioningDeviceConnectionException if connection could not succeed for any reason.
      */
     public void open(String registrationId, SSLContext sslContext, SaslHandler saslHandler, boolean useWebSockets) throws ProvisioningDeviceConnectionException
@@ -175,6 +176,7 @@ public class ProvisioningAmqpOperations extends AmqpDeviceOperations implements 
 
     /**
      * Closes the AMQP connection
+     *
      * @throws IOException if connection could not be closed.
      */
     public void close() throws IOException
@@ -189,9 +191,10 @@ public class ProvisioningAmqpOperations extends AmqpDeviceOperations implements 
 
     /**
      * Sends the Status message to the Amqp Endpoint
-     * @param operationId The operation ID of this call?
+     *
+     * @param operationId      The operation ID of this call?
      * @param responseCallback Callback that gets initiated when the function call is complete
-     * @param callbackContext Callback context for the response call.
+     * @param callbackContext  Callback context for the response call.
      * @throws ProvisioningDeviceClientException If sending status is unsuccessful for any reason.
      */
     public void sendStatusMessage(String operationId, ResponseCallback responseCallback, Object callbackContext) throws ProvisioningDeviceClientException
@@ -227,8 +230,9 @@ public class ProvisioningAmqpOperations extends AmqpDeviceOperations implements 
 
     /**
      * Sends the Registration message to the Amqp Endpoint
+     *
      * @param responseCallback Callback that gets initiated when the function call is complete
-     * @param callbackContext Callback context for the response call.
+     * @param callbackContext  Callback context for the response call.
      * @throws ProvisioningDeviceClientException If sending Register Message is unsuccessful for any reason.
      */
     public void sendRegisterMessage(ResponseCallback responseCallback, Object callbackContext) throws ProvisioningDeviceClientException
@@ -302,6 +306,7 @@ public class ProvisioningAmqpOperations extends AmqpDeviceOperations implements 
 
     /**
      * Function that gets called when amqp gets a message from the amqp endpoint
+     *
      * @param message Message received during transmission.
      */
     public void messageReceived(AmqpMessage message)

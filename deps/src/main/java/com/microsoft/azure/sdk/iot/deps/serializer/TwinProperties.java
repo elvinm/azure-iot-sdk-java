@@ -10,20 +10,20 @@ import java.util.Map;
 
 /**
  * INNER TWINPARSER CLASS
- *
+ * <p>
  * TwinParser Properties representation
- *
+ * <p>
  * This class is part of the TwinParser. It is necessary to generate the properties json.
+ *
  * @deprecated As of release 0.4.0, replaced by {@link com.microsoft.azure.sdk.iot.deps.twin.TwinProperties}
  */
 @Deprecated
 public class TwinProperties
 {
-    private TwinProperty desired = new TwinProperty();
-    private TwinProperty reported = new TwinProperty();
-
     private static final String DESIRED_TAG = "desired";
     private static final String REPORTED_TAG = "reported";
+    private TwinProperty desired = new TwinProperty();
+    private TwinProperty reported = new TwinProperty();
 
     protected void enableDesiredMetadata()
     {
@@ -129,17 +129,15 @@ public class TwinProperties
         return (JsonElement) propertiesJson;
     }
 
-    protected void update(Map<String, Object> jsonTree,
-                          TwinChangedCallback onDesiredCallback, TwinChangedCallback onReportedCallback)
-            throws IllegalArgumentException
+    protected void update(Map<String, Object> jsonTree, TwinChangedCallback onDesiredCallback, TwinChangedCallback onReportedCallback) throws IllegalArgumentException
     {
-        for(Map.Entry<String, Object> entry : jsonTree.entrySet())
+        for (Map.Entry<String, Object> entry : jsonTree.entrySet())
         {
-            if(entry.getKey().equals(DESIRED_TAG))
+            if (entry.getKey().equals(DESIRED_TAG))
             {
                 desired.update((Map<String, Object>) entry.getValue(), onDesiredCallback);
             }
-            else if(entry.getKey().equals(REPORTED_TAG))
+            else if (entry.getKey().equals(REPORTED_TAG))
             {
                 reported.update((Map<String, Object>) entry.getValue(), onReportedCallback);
             }
@@ -152,13 +150,13 @@ public class TwinProperties
 
     protected void validate(Map<String, Object> jsonTree) throws IllegalArgumentException
     {
-        for(Map.Entry<String, Object> entry : jsonTree.entrySet())
+        for (Map.Entry<String, Object> entry : jsonTree.entrySet())
         {
-            if(entry.getKey().equals(DESIRED_TAG))
+            if (entry.getKey().equals(DESIRED_TAG))
             {
                 desired.validate((Map<String, Object>) entry.getValue());
             }
-            else if(entry.getKey().equals(REPORTED_TAG))
+            else if (entry.getKey().equals(REPORTED_TAG))
             {
                 reported.validate((Map<String, Object>) entry.getValue());
             }

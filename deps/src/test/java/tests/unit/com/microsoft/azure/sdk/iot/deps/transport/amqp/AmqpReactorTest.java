@@ -13,8 +13,10 @@ import org.apache.qpid.proton.reactor.Reactor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/** Unit tests for AmqpConnection.
- * Coverage : 100% method, 100% line */
+/**
+ * Unit tests for AmqpConnection.
+ * Coverage : 100% method, 100% line
+ */
 @RunWith(JMockit.class)
 public class AmqpReactorTest
 {

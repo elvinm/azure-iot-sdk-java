@@ -26,8 +26,10 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 
-/** Unit tests for AmqpConnection.
- * Coverage : 95% method, 100% line */
+/**
+ * Unit tests for AmqpConnection.
+ * Coverage : 95% method, 100% line
+ */
 @RunWith(JMockit.class)
 public class AmqpConnectionTest
 {
@@ -82,7 +84,7 @@ public class AmqpConnectionTest
     @Mocked
     private DeliveryState mockDeliveryState;
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void AmqpsConnectionThrowsOnHostNameNull() throws IOException
     {
         new AmqpsConnection(null, mockedProvisionOperations, null, null, false);
@@ -95,39 +97,39 @@ public class AmqpConnectionTest
         new NonStrictExpectations()
         {
             {
-                mockedProton.reactor((ReactorOptions)any, (Handler)any);
+                mockedProton.reactor((ReactorOptions) any, (Handler) any);
                 result = mockedReactor;
             }
         };
 
         // Act
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         //assert
         assertEquals(TEST_HOST_NAME, Deencapsulation.getField(amqpsConnection, "hostName"));
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void AmqpsConnectionConstructorThrowsOnReactor() throws IOException
     {
         // Arrange
         new NonStrictExpectations()
         {
             {
-                mockedProton.reactor((ReactorOptions)any, (Handler)any);
+                mockedProton.reactor((ReactorOptions) any, (Handler) any);
                 result = new IOException();
             }
         };
 
         // Act
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void SetListenerNullSucceeds() throws IOException
     {
         // Arrange
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         // Act
         amqpsConnection.setListener(null);
@@ -139,7 +141,7 @@ public class AmqpConnectionTest
     public void SetListenerSucceeds() throws IOException
     {
         // Arrange
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         // Act
         amqpsConnection.setListener(mockedAmqpListener);
@@ -147,15 +149,15 @@ public class AmqpConnectionTest
         //assert
     }
 
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void OpenThrowExceptionReactor() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         new NonStrictExpectations()
         {
             {
-                new AmqpReactor((Reactor)any);
+                new AmqpReactor((Reactor) any);
                 result = new Exception();
             }
         };
@@ -166,15 +168,15 @@ public class AmqpConnectionTest
         //assert
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void OpenThrowsOnWaitLock() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         new NonStrictExpectations()
         {
             {
-                new AmqpReactor((Reactor)any);
+                new AmqpReactor((Reactor) any);
                 result = mockedAmqpReactor;
 
                 mockedObjectLock.waitLock(anyLong);
@@ -187,11 +189,11 @@ public class AmqpConnectionTest
 
         //assert
     }
-    
-    @Test (expected = IOException.class)
+
+    @Test(expected = IOException.class)
     public void closeThrowsOnWaitLock() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         Deencapsulation.setField(amqpsConnection, "isOpen", true);
         Deencapsulation.setField(amqpsConnection, "session", mockedSession);
@@ -215,7 +217,7 @@ public class AmqpConnectionTest
     @Test
     public void closeThrowOnShutdown() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         Deencapsulation.setField(amqpsConnection, "isOpen", true);
         Deencapsulation.setField(amqpsConnection, "session", mockedSession);
@@ -246,7 +248,7 @@ public class AmqpConnectionTest
     @Test
     public void closeSucceeds() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         Deencapsulation.setField(amqpsConnection, "isOpen", true);
         Deencapsulation.setField(amqpsConnection, "session", mockedSession);
@@ -270,7 +272,7 @@ public class AmqpConnectionTest
     @Test
     public void onReactorInitSucceeds() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         new NonStrictExpectations()
         {
@@ -289,7 +291,7 @@ public class AmqpConnectionTest
     @Test
     public void onReactorFinalSucceeds() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         // Act
         amqpsConnection.onReactorFinal(mockedEvent);
@@ -300,7 +302,7 @@ public class AmqpConnectionTest
     @Test
     public void onConnectionInitThrowOnOpenLinks() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         new NonStrictExpectations()
         {
@@ -328,7 +330,7 @@ public class AmqpConnectionTest
     @Test
     public void onConnectionInitSucceeds() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         new NonStrictExpectations()
         {
@@ -355,7 +357,7 @@ public class AmqpConnectionTest
     @Test
     public void onConnectionBoundSucceeds() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         new NonStrictExpectations()
         {
@@ -382,7 +384,7 @@ public class AmqpConnectionTest
     @Test
     public void onConnectionBoundThrowOnSslDomain() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         new NonStrictExpectations()
         {
@@ -407,7 +409,7 @@ public class AmqpConnectionTest
     @Test
     public void onConnectionUnboundSucceeds() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         // Act
         amqpsConnection.onConnectionUnbound(mockedEvent);
@@ -419,7 +421,7 @@ public class AmqpConnectionTest
     @Test
     public void onLinkInitSucceeds() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         new NonStrictExpectations()
         {
@@ -440,7 +442,7 @@ public class AmqpConnectionTest
     @Test
     public void onLinkInitThrowsOnGetLink() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         new NonStrictExpectations()
         {
@@ -459,7 +461,7 @@ public class AmqpConnectionTest
     @Test
     public void onLinkRemoteOpenSucceeds() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         Deencapsulation.setField(amqpsConnection, "msgListener", mockedAmqpListener);
 
@@ -485,7 +487,7 @@ public class AmqpConnectionTest
     @Test
     public void sendAmqpMessageNotConnected() throws Exception
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         // Act
         boolean result = amqpsConnection.sendAmqpMessage(mockedMessage);
@@ -497,7 +499,7 @@ public class AmqpConnectionTest
     @Test
     public void sendAmqpMessageEncodeThrowsBufferOverflowSuccess() throws Exception
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         Deencapsulation.setField(amqpsConnection, "isOpen", true);
         Deencapsulation.setField(amqpsConnection, "amqpDeviceOperations", mockedProvisionOperations);
@@ -505,9 +507,9 @@ public class AmqpConnectionTest
         new NonStrictExpectations()
         {
             {
-                mockedMessage.encode((byte[])any, 0);
+                mockedMessage.encode((byte[]) any, 0);
                 result = new BufferOverflowException();
-                mockedMessage.encode((byte[])any, 0);
+                mockedMessage.encode((byte[]) any, 0);
                 result = 10;
             }
         };
@@ -522,7 +524,7 @@ public class AmqpConnectionTest
     @Test
     public void sendAmqpMessageLengthZero() throws Exception
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         Deencapsulation.setField(amqpsConnection, "isOpen", true);
         Deencapsulation.setField(amqpsConnection, "amqpDeviceOperations", mockedProvisionOperations);
@@ -530,7 +532,7 @@ public class AmqpConnectionTest
         new NonStrictExpectations()
         {
             {
-                mockedMessage.encode((byte[])any, 0);
+                mockedMessage.encode((byte[]) any, 0);
                 result = 0;
             }
         };
@@ -545,7 +547,7 @@ public class AmqpConnectionTest
     @Test
     public void sendAmqpMessageSucceeds() throws Exception
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         Deencapsulation.setField(amqpsConnection, "isOpen", true);
         Deencapsulation.setField(amqpsConnection, "amqpDeviceOperations", mockedProvisionOperations);
@@ -553,7 +555,7 @@ public class AmqpConnectionTest
         new NonStrictExpectations()
         {
             {
-                mockedMessage.encode((byte[])any, 0);
+                mockedMessage.encode((byte[]) any, 0);
                 result = 10;
             }
         };
@@ -568,7 +570,7 @@ public class AmqpConnectionTest
     @Test
     public void onDeliverySucceeds() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         Deencapsulation.setField(amqpsConnection, "msgListener", mockedAmqpListener);
 
@@ -594,7 +596,7 @@ public class AmqpConnectionTest
     @Test
     public void onDeliveryTypeDeliverySucceeds() throws IOException, InterruptedException
     {
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         new NonStrictExpectations()
         {
@@ -627,7 +629,7 @@ public class AmqpConnectionTest
     public void onLinkFlowSucceeds() throws IOException
     {
         // Arrange
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         new NonStrictExpectations()
         {
@@ -650,7 +652,7 @@ public class AmqpConnectionTest
     public void onLinkRemoteCloseSucceeds() throws IOException
     {
         // Arrange
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         // Act
         amqpsConnection.onLinkRemoteClose(mockedEvent);
@@ -662,7 +664,7 @@ public class AmqpConnectionTest
     public void onTransportErrorSucceeds() throws IOException
     {
         // Arrange
-        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null,  false);
+        AmqpsConnection amqpsConnection = new AmqpsConnection(TEST_HOST_NAME, mockedProvisionOperations, null, null, false);
 
         // Act
         amqpsConnection.onTransportError(mockedEvent);

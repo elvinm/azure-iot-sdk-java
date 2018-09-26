@@ -16,23 +16,23 @@ public class JobQueryResponseError
 {
     // Code for the error
     private static final String CODE_TAG = "code";
-    @SerializedName(CODE_TAG)
-    private String code;
-
     // Description for the error
     private static final String DESCRIPTION_TAG = "description";
+    @SerializedName(CODE_TAG)
+    private String code;
     @SerializedName(DESCRIPTION_TAG)
     private String description;
 
     /**
      * A method to create this object from Json
+     *
      * @param json valid json for error generated during query response
      * @return an object for this class
      * @throws IOException When provided json is invalid or cannot be parsed
      */
     public JobQueryResponseError fromJson(String json) throws IOException
     {
-        if((json == null) || json.isEmpty())
+        if ((json == null) || json.isEmpty())
         {
             //Codes_SRSJOB_QUERY_RESPONSE_ERROR_25_007: [If the input json is null or empty then this method shall throw IllegalArgumentException.]
             throw new IllegalArgumentException("Json is null or empty");
@@ -67,6 +67,7 @@ public class JobQueryResponseError
 
     /**
      * Converts this object to json
+     *
      * @return a json string representing this object
      */
     public String toJson()
@@ -78,6 +79,7 @@ public class JobQueryResponseError
 
     /**
      * Getter for code
+     *
      * @return string for the code
      */
     public String getCode()
@@ -88,6 +90,7 @@ public class JobQueryResponseError
 
     /**
      * getter for description
+     *
      * @return string for description
      */
     public String getDescription()

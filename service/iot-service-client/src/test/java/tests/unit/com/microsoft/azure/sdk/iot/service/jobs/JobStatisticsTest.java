@@ -22,14 +22,14 @@ public class JobStatisticsTest
     JobsStatisticsParser mockedJobsStatisticsParser;
 
     /* Tests_SRS_JOBSTATISTICS_21_001: [The constructor shall throw IllegalArgumentException if the input jobsStatisticsParser is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullJobId()
     {
         //arrange
         final JobsStatisticsParser jobsStatisticsParser = null;
 
         //act
-        JobStatistics jobStatistics = Deencapsulation.newInstance(JobStatistics.class, new Class[] {JobsStatisticsParser.class}, jobsStatisticsParser);
+        JobStatistics jobStatistics = Deencapsulation.newInstance(JobStatistics.class, new Class[]{JobsStatisticsParser.class}, jobsStatisticsParser);
     }
 
     /* Tests_SRS_JOBSTATISTICS_21_002: [The constructor shall locally store all statistics information in jobsStatisticsParser.] */
@@ -61,14 +61,14 @@ public class JobStatisticsTest
         };
 
         //act
-        JobStatistics jobStatistics = Deencapsulation.newInstance(JobStatistics.class, new Class[] {JobsStatisticsParser.class}, jobsStatisticsParser);
+        JobStatistics jobStatistics = Deencapsulation.newInstance(JobStatistics.class, new Class[]{JobsStatisticsParser.class}, jobsStatisticsParser);
 
         //assert
-        assertEquals(1, (int)Deencapsulation.getField(jobStatistics, "deviceCount"));
-        assertEquals(2, (int)Deencapsulation.getField(jobStatistics, "failedCount"));
-        assertEquals(3, (int)Deencapsulation.getField(jobStatistics, "succeededCount"));
-        assertEquals(4, (int)Deencapsulation.getField(jobStatistics, "runningCount"));
-        assertEquals(5, (int)Deencapsulation.getField(jobStatistics, "pendingCount"));
+        assertEquals(1, (int) Deencapsulation.getField(jobStatistics, "deviceCount"));
+        assertEquals(2, (int) Deencapsulation.getField(jobStatistics, "failedCount"));
+        assertEquals(3, (int) Deencapsulation.getField(jobStatistics, "succeededCount"));
+        assertEquals(4, (int) Deencapsulation.getField(jobStatistics, "runningCount"));
+        assertEquals(5, (int) Deencapsulation.getField(jobStatistics, "pendingCount"));
     }
 
     /* Tests_SRS_JOBSTATISTICS_21_003: [The getDeviceCount shall return the stored device count.] */
@@ -99,7 +99,7 @@ public class JobStatisticsTest
         };
 
         //act
-        JobStatistics jobStatistics = Deencapsulation.newInstance(JobStatistics.class, new Class[] {JobsStatisticsParser.class}, jobsStatisticsParser);
+        JobStatistics jobStatistics = Deencapsulation.newInstance(JobStatistics.class, new Class[]{JobsStatisticsParser.class}, jobsStatisticsParser);
 
         //assert
         assertEquals(1, jobStatistics.getDeviceCount());

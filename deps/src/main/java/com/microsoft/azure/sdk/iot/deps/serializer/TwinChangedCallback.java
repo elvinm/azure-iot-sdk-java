@@ -7,12 +7,13 @@ import java.util.Map;
 
 /**
  * INNER TWINPARSER CLASS
- *
+ * <p>
  * An interface for an IoT Hub Device Twin callback.
- *
+ * <p>
  * Developers are expected to create an implementation of this interface,
  * and the transport will call {@link TwinChangedCallback#execute(Map)}
  * upon receiving a property or tags changes from an IoT Hub Device Twin.
+ *
  * @deprecated As of release 0.4.0, this interface is not necessary anymore.
  */
 @Deprecated
@@ -23,5 +24,5 @@ public interface TwinChangedCallback
      *
      * @param changes is a sub-collection of properties or tags that had its values changed.
      */
-    void execute(Map<String , Object> changes);
+    void execute(Map<String, Object> changes);
 }

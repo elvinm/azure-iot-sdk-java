@@ -23,7 +23,7 @@ public class SymmetricKeyTest
 {
     // Tests_SRS_SERVICE_SDK_JAVA_SYMMETRICKEY_12_001: [The function shall throw IllegalArgumentException if the length of the key less than 16 or greater than 64]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setPrimaryKey_length_less_than_16()
     {
         // Arrange
@@ -35,7 +35,7 @@ public class SymmetricKeyTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_SYMMETRICKEY_12_001: [The function shall throw IllegalArgumentException if the length of the key less than 16 or greater than 64]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setPrimaryKey_length_greater_than_64()
     {
         // Arrange
@@ -73,7 +73,7 @@ public class SymmetricKeyTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_SYMMETRICKEY_12_003: [The function shall throw IllegalArgumentException if the length of the key less than 16 or greater than 64]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setSecondaryKey_length_less_than_16()
     {
         // Arrange
@@ -85,7 +85,7 @@ public class SymmetricKeyTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_SYMMETRICKEY_12_003: [The function shall throw IllegalArgumentException if the length of the key less than 16 or greater than 64]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setSecondaryKey_length_greater_than_64()
     {
         // Arrange
@@ -176,7 +176,8 @@ public class SymmetricKeyTest
 
     /**
      * Creates a symmetric key and uses reflection to set the primary and secondary keys
-     * @param primaryKey the primary key value to set
+     *
+     * @param primaryKey   the primary key value to set
      * @param secondaryKey the secondary key value to set
      * @return the created SymmetricKey
      */

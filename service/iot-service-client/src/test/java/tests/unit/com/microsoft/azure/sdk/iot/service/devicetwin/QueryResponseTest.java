@@ -31,7 +31,7 @@ public class QueryResponseTest
 
     private void assertEqualsIterator(Iterator test, Iterator actual)
     {
-        while(test.hasNext())
+        while (test.hasNext())
         {
             assertTrue(actual.hasNext());
             assertEquals(test.next(), actual.next());
@@ -61,11 +61,11 @@ public class QueryResponseTest
         QueryResponse testResponse = Deencapsulation.newInstance(QueryResponse.class, json);
 
         //assert
-        assertEqualsIterator(testList.iterator(), Deencapsulation.getField(testResponse, "responseElementsIterator" ));
+        assertEqualsIterator(testList.iterator(), Deencapsulation.getField(testResponse, "responseElementsIterator"));
     }
 
     //**SRS_QUERY_RESPONSE_25_002: [**If the jsonString is null or empty, the constructor shall throw an IllegalArgumentException.**]**
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullString() throws IOException
     {
         //arrange
@@ -75,7 +75,7 @@ public class QueryResponseTest
         QueryResponse testResponse = Deencapsulation.newInstance(QueryResponse.class, String.class);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyString() throws IOException
     {
         //arrange
@@ -85,7 +85,7 @@ public class QueryResponseTest
         QueryResponse testResponse = Deencapsulation.newInstance(QueryResponse.class, json);
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void constructorThrowsWhenParserThrows() throws IOException
     {
         //arrange
@@ -127,7 +127,7 @@ public class QueryResponseTest
         assertTrue(testResponse.hasNext());
 
         //assert
-        assertEqualsIterator(testList.iterator(), Deencapsulation.getField(testResponse, "responseElementsIterator" ));
+        assertEqualsIterator(testList.iterator(), Deencapsulation.getField(testResponse, "responseElementsIterator"));
     }
 
     @Test
@@ -173,7 +173,7 @@ public class QueryResponseTest
         assertNotNull(testResponse.next());
     }
 
-    @Test (expected = NoSuchElementException.class)
+    @Test(expected = NoSuchElementException.class)
     public void nextThrowsWhenNotFound() throws IOException
     {
         //arrange

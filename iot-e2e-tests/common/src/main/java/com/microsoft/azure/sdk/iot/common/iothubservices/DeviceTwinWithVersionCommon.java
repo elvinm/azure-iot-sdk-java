@@ -38,13 +38,10 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
     private static final long BREATHE_TIME = 100; // 0.1 sec
     private static final long MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB = 1000; // 1 sec
     private static final long MAX_MILLISECS_TIMEOUT_KILL_TEST = MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB + 50000; // 50 secs
-    protected static String iotHubConnectionString = "";
-
     private static final String PROPERTY_KEY_1 = "Key1";
     private static final String PROPERTY_VALUE_1 = "Value1";
     private static final String PROPERTY_KEY_2 = "Key2";
     private static final String PROPERTY_VALUE_2 = "Value2";
-
     private static final Set<Property> PROPERTIES = new HashSet<Property>()
     {
         {
@@ -52,36 +49,17 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
             add(new Property(PROPERTY_KEY_2, PROPERTY_VALUE_2));
         }
     };
-
+    protected static String iotHubConnectionString = "";
     private static RegistryManager registryManager;
     private static com.microsoft.azure.sdk.iot.service.Device deviceForRegistryManager;
 
     private static DeviceTwin sCDeviceTwin;
     private static TestDevice testDevice;
 
-    private enum STATUS
-    {
-        SUCCESS,
-        IOTHUB_FAILURE,
-        BAD_ANSWER,
-        UNKNOWN
-    }
-
-    private static class TestDevice
-    {
-        String deviceId;
-        DeviceClient deviceClient;
-        STATUS deviceTwinStatus;
-        Throwable exception;
-        Set<Property> expectedProperties;
-        Set<Property> receivedProperties;
-        Integer reportedPropertyVersion;
-    }
-
     private static void assertSetEquals(Set<Property> expected, Set<Pair> actual)
     {
         assertEquals(expected.size(), actual.size());
-        for(Pair actualProperty: actual)
+        for (Pair actualProperty : actual)
         {
             Property expectedProperty = fetchProperty(expected, actualProperty.getKey());
             assertNotNull("Expected Set of Properties do no contain " + actualProperty.getKey(), expectedProperty);
@@ -91,64 +69,14 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
 
     private static Property fetchProperty(Set<Property> expected, String key)
     {
-        for(Property property: expected)
+        for (Property property : expected)
         {
-            if(property.getKey().equals(key))
+            if (property.getKey().equals(key))
             {
                 return property;
             }
         }
         return null;
-    }
-
-    private static class DeviceTwinPropertyCallback implements TwinPropertyCallBack
-    {
-        @Override
-        public void TwinPropertyCallBack(Property property, Object context)
-        {
-            TestDevice state = (TestDevice) context;
-            state.receivedProperties.add(property);
-            try
-            {
-                if(property.getIsReported())
-                {
-                    state.reportedPropertyVersion = property.getVersion();
-                    Property toRemove = null;
-                    for (Property entry: state.expectedProperties)
-                    {
-                        if(entry.getKey().equals(property.getKey()) && entry.getValue().equals(property.getValue()))
-                        {
-                            toRemove = entry;
-                            break;
-                        }
-                    }
-                    state.expectedProperties.remove(toRemove);
-                }
-            }
-            catch (Exception e)
-            {
-                state.exception = e;
-                state.deviceTwinStatus = STATUS.BAD_ANSWER;
-            }
-        }
-    }
-
-    protected class DeviceTwinStatusCallBack implements IotHubEventCallback
-    {
-        public void execute(IotHubStatusCode status, Object context)
-        {
-            TestDevice state = (TestDevice) context;
-
-            //On failure, Don't update status any further
-            if ((status == OK || status == OK_EMPTY) && state.deviceTwinStatus != STATUS.IOTHUB_FAILURE)
-            {
-                state.deviceTwinStatus = STATUS.SUCCESS;
-            }
-            else
-            {
-                state.deviceTwinStatus = STATUS.IOTHUB_FAILURE;
-            }
-        }
     }
 
     public static void setUp() throws IOException
@@ -221,26 +149,26 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while(testDevice.deviceTwinStatus == STATUS.UNKNOWN)
+        while (testDevice.deviceTwinStatus == STATUS.UNKNOWN)
         {
             Thread.sleep(BREATHE_TIME);
         }
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(2, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(2, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(PROPERTIES, reported);
     }
@@ -258,19 +186,19 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
+            if (testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
             {
                 throw new IOException("IoTHub send Http error code");
             }
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // New values for the reported properties
         final Set<Property> newValues = new HashSet<Property>()
@@ -291,32 +219,33 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while(testDevice.deviceTwinStatus == STATUS.UNKNOWN)
+        while (testDevice.deviceTwinStatus == STATUS.UNKNOWN)
         {
             Thread.sleep(BREATHE_TIME);
         }
 
-        do {
+        do
+        {
             Thread.sleep(BREATHE_TIME);
             testDevice.expectedProperties = new HashSet<>(newValues);
             testDevice.deviceTwinStatus = STATUS.UNKNOWN;
             testDevice.reportedPropertyVersion = null;
             testDevice.receivedProperties = new HashSet<>();
             testDevice.deviceClient.getDeviceTwin();
-            while(!testDevice.expectedProperties.isEmpty())
+            while (!testDevice.expectedProperties.isEmpty())
             {
                 Thread.sleep(BREATHE_TIME);
-                if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+                if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
                 {
                     throw new IOException(testDevice.exception);
                 }
             }
-        }while (testDevice.reportedPropertyVersion != 3);
+        } while (testDevice.reportedPropertyVersion != 3);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(3, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(3, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(newValues, reported);
     }
@@ -334,19 +263,19 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
+            if (testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
             {
                 throw new IOException("IoTHub send Http error code");
             }
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // New values for the reported properties
         final Set<Property> newValues = new HashSet<Property>()
@@ -367,7 +296,7 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
+        while ((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
         {
             Thread.sleep(BREATHE_TIME);
         }
@@ -376,20 +305,20 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         testDevice.reportedPropertyVersion = null;
         testDevice.receivedProperties = new HashSet<>();
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(2, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(2, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(PROPERTIES, reported);
     }
@@ -407,19 +336,19 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
+            if (testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
             {
                 throw new IOException("IoTHub send Http error code");
             }
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // New values for the reported properties
         final Set<Property> newValues = new HashSet<Property>()
@@ -440,7 +369,7 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
+        while ((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
         {
             Thread.sleep(BREATHE_TIME);
         }
@@ -449,20 +378,20 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         testDevice.reportedPropertyVersion = null;
         testDevice.receivedProperties = new HashSet<>();
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(2, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(2, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(PROPERTIES, reported);
     }
@@ -481,26 +410,26 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while(testDevice.deviceTwinStatus == STATUS.UNKNOWN)
+        while (testDevice.deviceTwinStatus == STATUS.UNKNOWN)
         {
             Thread.sleep(BREATHE_TIME);
         }
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(2, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(2, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(PROPERTIES, reported);
     }
@@ -518,19 +447,19 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
+            if (testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
             {
                 throw new IOException("IoTHub send Http error code");
             }
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // New values for the reported properties
         final Set<Property> newValues = new HashSet<Property>()
@@ -551,32 +480,33 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while(testDevice.deviceTwinStatus == STATUS.UNKNOWN)
+        while (testDevice.deviceTwinStatus == STATUS.UNKNOWN)
         {
             Thread.sleep(BREATHE_TIME);
         }
 
-        do {
+        do
+        {
             Thread.sleep(BREATHE_TIME);
             testDevice.expectedProperties = new HashSet<>(newValues);
             testDevice.deviceTwinStatus = STATUS.UNKNOWN;
             testDevice.reportedPropertyVersion = null;
             testDevice.receivedProperties = new HashSet<>();
             testDevice.deviceClient.getDeviceTwin();
-            while(!testDevice.expectedProperties.isEmpty())
+            while (!testDevice.expectedProperties.isEmpty())
             {
                 Thread.sleep(BREATHE_TIME);
-                if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+                if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
                 {
                     throw new IOException(testDevice.exception);
                 }
             }
-        }while (testDevice.reportedPropertyVersion != 3);
+        } while (testDevice.reportedPropertyVersion != 3);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(3, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(3, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(newValues, reported);
     }
@@ -594,19 +524,19 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
+            if (testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
             {
                 throw new IOException("IoTHub send Http error code");
             }
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // New values for the reported properties
         final Set<Property> newValues = new HashSet<Property>()
@@ -627,7 +557,7 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
+        while ((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
         {
             Thread.sleep(BREATHE_TIME);
         }
@@ -636,20 +566,20 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         testDevice.reportedPropertyVersion = null;
         testDevice.receivedProperties = new HashSet<>();
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(2, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(2, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(PROPERTIES, reported);
     }
@@ -667,19 +597,19 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
+            if (testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
             {
                 throw new IOException("IoTHub send Http error code");
             }
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // New values for the reported properties
         final Set<Property> newValues = new HashSet<Property>()
@@ -700,7 +630,7 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
+        while ((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
         {
             Thread.sleep(BREATHE_TIME);
         }
@@ -709,20 +639,20 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         testDevice.reportedPropertyVersion = null;
         testDevice.receivedProperties = new HashSet<>();
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(2, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(2, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(PROPERTIES, reported);
     }
@@ -741,26 +671,26 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while(testDevice.deviceTwinStatus == STATUS.UNKNOWN)
+        while (testDevice.deviceTwinStatus == STATUS.UNKNOWN)
         {
             Thread.sleep(BREATHE_TIME);
         }
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(2, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(2, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(PROPERTIES, reported);
     }
@@ -778,19 +708,19 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
+            if (testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
             {
                 throw new IOException("IoTHub send Http error code");
             }
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // New values for the reported properties
         final Set<Property> newValues = new HashSet<Property>()
@@ -811,32 +741,33 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while(testDevice.deviceTwinStatus == STATUS.UNKNOWN)
+        while (testDevice.deviceTwinStatus == STATUS.UNKNOWN)
         {
             Thread.sleep(BREATHE_TIME);
         }
 
-        do {
+        do
+        {
             Thread.sleep(BREATHE_TIME);
             testDevice.expectedProperties = new HashSet<>(newValues);
             testDevice.deviceTwinStatus = STATUS.UNKNOWN;
             testDevice.reportedPropertyVersion = null;
             testDevice.receivedProperties = new HashSet<>();
             testDevice.deviceClient.getDeviceTwin();
-            while(!testDevice.expectedProperties.isEmpty())
+            while (!testDevice.expectedProperties.isEmpty())
             {
                 Thread.sleep(BREATHE_TIME);
-                if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+                if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
                 {
                     throw new IOException(testDevice.exception);
                 }
             }
-        }while (testDevice.reportedPropertyVersion != 3);
+        } while (testDevice.reportedPropertyVersion != 3);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(3, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(3, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(newValues, reported);
     }
@@ -854,19 +785,19 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
+            if (testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
             {
                 throw new IOException("IoTHub send Http error code");
             }
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // New values for the reported properties
         final Set<Property> newValues = new HashSet<Property>()
@@ -887,7 +818,7 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
+        while ((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
         {
             Thread.sleep(BREATHE_TIME);
         }
@@ -896,20 +827,20 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         testDevice.reportedPropertyVersion = null;
         testDevice.receivedProperties = new HashSet<>();
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(2, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(2, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(PROPERTIES, reported);
     }
@@ -927,19 +858,19 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
+            if (testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
             {
                 throw new IOException("IoTHub send Http error code");
             }
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // New values for the reported properties
         final Set<Property> newValues = new HashSet<Property>()
@@ -960,7 +891,7 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
+        while ((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
         {
             Thread.sleep(BREATHE_TIME);
         }
@@ -969,20 +900,20 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         testDevice.reportedPropertyVersion = null;
         testDevice.receivedProperties = new HashSet<>();
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(2, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(2, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(PROPERTIES, reported);
     }
@@ -1001,26 +932,26 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while(testDevice.deviceTwinStatus == STATUS.UNKNOWN)
+        while (testDevice.deviceTwinStatus == STATUS.UNKNOWN)
         {
             Thread.sleep(BREATHE_TIME);
         }
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(2, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(2, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(PROPERTIES, reported);
     }
@@ -1038,19 +969,19 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
+            if (testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
             {
                 throw new IOException("IoTHub send Http error code");
             }
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // New values for the reported properties
         final Set<Property> newValues = new HashSet<Property>()
@@ -1071,32 +1002,33 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while(testDevice.deviceTwinStatus == STATUS.UNKNOWN)
+        while (testDevice.deviceTwinStatus == STATUS.UNKNOWN)
         {
             Thread.sleep(BREATHE_TIME);
         }
 
-        do {
+        do
+        {
             Thread.sleep(BREATHE_TIME);
             testDevice.expectedProperties = new HashSet<>(newValues);
             testDevice.deviceTwinStatus = STATUS.UNKNOWN;
             testDevice.reportedPropertyVersion = null;
             testDevice.receivedProperties = new HashSet<>();
             testDevice.deviceClient.getDeviceTwin();
-            while(!testDevice.expectedProperties.isEmpty())
+            while (!testDevice.expectedProperties.isEmpty())
             {
                 Thread.sleep(BREATHE_TIME);
-                if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+                if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
                 {
                     throw new IOException(testDevice.exception);
                 }
             }
-        }while (testDevice.reportedPropertyVersion != 3);
+        } while (testDevice.reportedPropertyVersion != 3);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(3, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(3, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(newValues, reported);
     }
@@ -1114,19 +1046,19 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
+            if (testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
             {
                 throw new IOException("IoTHub send Http error code");
             }
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // New values for the reported properties
         final Set<Property> newValues = new HashSet<Property>()
@@ -1147,7 +1079,7 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
+        while ((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
         {
             Thread.sleep(BREATHE_TIME);
         }
@@ -1156,20 +1088,20 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         testDevice.reportedPropertyVersion = null;
         testDevice.receivedProperties = new HashSet<>();
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(2, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(2, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(PROPERTIES, reported);
     }
@@ -1187,19 +1119,19 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
+            if (testDevice.deviceTwinStatus == STATUS.IOTHUB_FAILURE)
             {
                 throw new IOException("IoTHub send Http error code");
             }
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // New values for the reported properties
         final Set<Property> newValues = new HashSet<Property>()
@@ -1220,7 +1152,7 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         // assert
         // test device client
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-        while((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
+        while ((testDevice.deviceTwinStatus != STATUS.BAD_ANSWER) && (testDevice.deviceTwinStatus != STATUS.IOTHUB_FAILURE))
         {
             Thread.sleep(BREATHE_TIME);
         }
@@ -1229,21 +1161,87 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
         testDevice.reportedPropertyVersion = null;
         testDevice.receivedProperties = new HashSet<>();
         testDevice.deviceClient.getDeviceTwin();
-        while(!testDevice.expectedProperties.isEmpty())
+        while (!testDevice.expectedProperties.isEmpty())
         {
             Thread.sleep(BREATHE_TIME);
-            if(testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
+            if (testDevice.deviceTwinStatus == STATUS.BAD_ANSWER)
             {
                 throw new IOException(testDevice.exception);
             }
         }
-        assertEquals(2, (int)testDevice.reportedPropertyVersion);
+        assertEquals(2, (int) testDevice.reportedPropertyVersion);
 
         // test service client
         DeviceTwinDevice deviceOnServiceClient = new DeviceTwinDevice(testDevice.deviceId);
         sCDeviceTwin.getTwin(deviceOnServiceClient);
-        assertEquals(2, (int)deviceOnServiceClient.getReportedPropertiesVersion());
+        assertEquals(2, (int) deviceOnServiceClient.getReportedPropertiesVersion());
         Set<Pair> reported = deviceOnServiceClient.getReportedProperties();
         assertSetEquals(PROPERTIES, reported);
+    }
+
+    private enum STATUS
+    {
+        SUCCESS, IOTHUB_FAILURE, BAD_ANSWER, UNKNOWN
+    }
+
+    private static class TestDevice
+    {
+        String deviceId;
+        DeviceClient deviceClient;
+        STATUS deviceTwinStatus;
+        Throwable exception;
+        Set<Property> expectedProperties;
+        Set<Property> receivedProperties;
+        Integer reportedPropertyVersion;
+    }
+
+    private static class DeviceTwinPropertyCallback implements TwinPropertyCallBack
+    {
+        @Override
+        public void TwinPropertyCallBack(Property property, Object context)
+        {
+            TestDevice state = (TestDevice) context;
+            state.receivedProperties.add(property);
+            try
+            {
+                if (property.getIsReported())
+                {
+                    state.reportedPropertyVersion = property.getVersion();
+                    Property toRemove = null;
+                    for (Property entry : state.expectedProperties)
+                    {
+                        if (entry.getKey().equals(property.getKey()) && entry.getValue().equals(property.getValue()))
+                        {
+                            toRemove = entry;
+                            break;
+                        }
+                    }
+                    state.expectedProperties.remove(toRemove);
+                }
+            }
+            catch (Exception e)
+            {
+                state.exception = e;
+                state.deviceTwinStatus = STATUS.BAD_ANSWER;
+            }
+        }
+    }
+
+    protected class DeviceTwinStatusCallBack implements IotHubEventCallback
+    {
+        public void execute(IotHubStatusCode status, Object context)
+        {
+            TestDevice state = (TestDevice) context;
+
+            //On failure, Don't update status any further
+            if ((status == OK || status == OK_EMPTY) && state.deviceTwinStatus != STATUS.IOTHUB_FAILURE)
+            {
+                state.deviceTwinStatus = STATUS.SUCCESS;
+            }
+            else
+            {
+                state.deviceTwinStatus = STATUS.IOTHUB_FAILURE;
+            }
+        }
     }
 }

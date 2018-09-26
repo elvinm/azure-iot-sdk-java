@@ -7,22 +7,13 @@ package com.microsoft.azure.sdk.iot.service.devicetwin;
 
 public enum QueryType
 {
-    TWIN("twin"),
-    DEVICE_JOB("deviceJob"),
-    JOB_RESPONSE("jobResponse"),
-    RAW("raw"),
-    UNKNOWN("unknown");
+    TWIN("twin"), DEVICE_JOB("deviceJob"), JOB_RESPONSE("jobResponse"), RAW("raw"), UNKNOWN("unknown");
 
     private final String type;
 
     QueryType(String type)
     {
         this.type = type;
-    }
-
-    public String getValue()
-    {
-        return type;
     }
 
     public static QueryType fromString(String type)
@@ -37,5 +28,10 @@ public enum QueryType
 
         //if no values match, then it is unknown
         return UNKNOWN;
+    }
+
+    public String getValue()
+    {
+        return type;
     }
 }

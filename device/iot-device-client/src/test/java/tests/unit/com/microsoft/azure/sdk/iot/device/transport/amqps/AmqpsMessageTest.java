@@ -19,10 +19,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 /**
-*  Unit tests for AmqpsMessage
-* 100% methods covered
-* 95% lines covered
-*/
+ * Unit tests for AmqpsMessage
+ * 100% methods covered
+ * 95% lines covered
+ */
 public class AmqpsMessageTest
 {
     @Mocked
@@ -33,7 +33,7 @@ public class AmqpsMessageTest
 
     // Tests_SRS_AMQPSMESSAGE_14_001: [If the ACK_TYPE is COMPLETE, the function shall set an Accepted disposition on the private Delivery object.]
     @Test
-    public void acknowledgeSetsAcceptedDispositionForComlete(){
+    public void acknowledgeSetsAcceptedDispositionForComlete() {
         AmqpsMessage message = new AmqpsMessage();
         message.setDelivery(mockDelivery);
         message.acknowledge(AmqpsMessage.ACK_TYPE.COMPLETE);
@@ -50,7 +50,7 @@ public class AmqpsMessageTest
 
     // Tests_SRS_AMQPSMESSAGE_14_002: [If the ACK_TYPE is ABANDON, the function shall set a Released disposition on the private Delivery object.]
     @Test
-    public void acknowledgeSetsReleasedDispositionForAbandon(){
+    public void acknowledgeSetsReleasedDispositionForAbandon() {
         AmqpsMessage message = new AmqpsMessage();
         message.setDelivery(mockDelivery);
         message.acknowledge(AmqpsMessage.ACK_TYPE.ABANDON);
@@ -67,9 +67,7 @@ public class AmqpsMessageTest
 
     // Tests_SRS_AMQPSMESSAGE_14_003: [If the ACK_TYPE is REJECT, the function shall set a Rejected disposition on the private Delivery object.]
     @Test
-    public void acknowledgeSetsRejectedDispositionForReject(
-            @Mocked final Rejected mockRejected
-    ){
+    public void acknowledgeSetsRejectedDispositionForReject(@Mocked final Rejected mockRejected) {
         new NonStrictExpectations()
         {
             {
@@ -106,7 +104,8 @@ public class AmqpsMessageTest
         new Verifications()
         {
             {
-                expectedDelivery.settle(); times = 3;
+                expectedDelivery.settle();
+                times = 3;
             }
         };
     }

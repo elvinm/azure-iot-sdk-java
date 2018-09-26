@@ -15,6 +15,60 @@ import java.util.HashMap;
 public class Configuration
 {
     protected final String UTC_TIME_DEFAULT = "0001-01-01T00:00:00";
+    /**
+     * Configuration name
+     * A case-sensitive string (up to 128 char long)
+     * of ASCII 7-bit alphanumeric chars
+     * + {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.
+     */
+    protected String id;
+    /**
+     * Specifies the schemaVersion
+     */
+    protected String schemaVersion;
+
+    // Codes_SRS_SERVICE_SDK_JAVA_MODULE_28_003: [The Configuration class shall have the following properties: id, schemaVersion,
+    // labels, content, targetCondition, createdTimeUtc, lastUpdatedTimeUtc, priority, systemMetrics, metrics, etag
+    /**
+     * Specifies the labels map of the configuration
+     */
+    protected HashMap<String, String> labels = null;
+    /**
+     * Specifies the configuration content
+     */
+    protected ConfigurationContent content;
+    /**
+     * Specifies the targetCondition
+     */
+    protected String targetCondition;
+    /**
+     * Datetime of configuration created time.
+     */
+    protected String createdTimeUtc;
+    /**
+     * Datetime of configuration last updated time.
+     */
+    protected String lastUpdatedTimeUtc;
+    /**
+     * Specifies the priority
+     */
+    protected Integer priority;
+    /**
+     * Specifies the system configuration metrics
+     */
+    protected ConfigurationMetrics systemMetrics = null;
+    /**
+     * Specifies the custom configuration metrics
+     */
+    protected ConfigurationMetrics metrics = null;
+    /**
+     * A string representing a ETAG
+     */
+    protected String etag;
+    /**
+     * Flip-flop helper for sending a forced update
+     */
+    private Boolean forceUpdate;
 
     /**
      * Create a Configuration instance using the given configuration name
@@ -49,16 +103,60 @@ public class Configuration
         this.createdTimeUtc = UTC_TIME_DEFAULT;
     }
 
-    // Codes_SRS_SERVICE_SDK_JAVA_MODULE_28_003: [The Configuration class shall have the following properties: id, schemaVersion,
-    // labels, content, targetCondition, createdTimeUtc, lastUpdatedTimeUtc, priority, systemMetrics, metrics, etag
-
     /**
-     * Configuration name
-     * A case-sensitive string (up to 128 char long)
-     * of ASCII 7-bit alphanumeric chars
-     * + {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.
+     * Retrieves information from the provided parser and saves it to this. All information on this will be overwritten.
+     *
+     * @param parser the parser to read from
+     * @throws IllegalArgumentException if the provided parser is missing the Id field. It also shall
      */
-    protected String id;
+    Configuration(ConfigurationParser parser) throws IllegalArgumentException
+    {
+        if (parser.getId() == null)
+        {
+            //Codes_SRS_SERVICE_SDK_JAVA_CONFIGURATION_28_005: [If the provided parser is missing the id,
+            //an IllegalArgumentException shall be thrown.]
+            throw new IllegalArgumentException("configurationParser must have a configurationId assigned");
+        }
+
+        //Codes_SRS_SERVICE_SDK_JAVA_CONFIGURATION_28_005: [This constructor shall create a new Configuration object using the values within the provided parser.]
+        this.id = parser.getId();
+        this.schemaVersion = parser.getSchemaVersion();
+        this.labels = parser.getLabels();
+        this.targetCondition = parser.getTargetCondition();
+        this.priority = parser.getPriority();
+        this.etag = parser.getETag();
+
+        if (parser.getContent() != null)
+        {
+            this.content = new ConfigurationContent();
+            this.content.deviceContent = parser.getContent().getDeviceContent();
+            this.content.modulesContent = parser.getContent().getModulesContent();
+        }
+
+        if (parser.getCreatedTimeUtc() != null)
+        {
+            this.createdTimeUtc = ParserUtility.getDateStringFromDate(parser.getCreatedTimeUtc());
+        }
+
+        if (parser.getLastUpdatedTimeUtc() != null)
+        {
+            this.lastUpdatedTimeUtc = ParserUtility.getDateStringFromDate(parser.getLastUpdatedTimeUtc());
+        }
+
+        if (parser.getSystemMetrics() != null)
+        {
+            this.systemMetrics = new ConfigurationMetrics();
+            this.systemMetrics.queries = parser.getSystemMetrics().getQueries();
+            this.systemMetrics.results = parser.getSystemMetrics().getResults();
+        }
+
+        if (parser.getMetrics() != null)
+        {
+            this.metrics = new ConfigurationMetrics();
+            this.metrics.queries = parser.getMetrics().getQueries();
+            this.metrics.results = parser.getMetrics().getResults();
+        }
+    }
 
     /**
      * Getter for configuration name
@@ -71,11 +169,6 @@ public class Configuration
     }
 
     /**
-     * Specifies the schemaVersion
-     */
-    protected String schemaVersion;
-
-    /**
      * Getter for schema version
      *
      * @return The schema version
@@ -83,21 +176,6 @@ public class Configuration
     public String getSchemaVersion()
     {
         return this.schemaVersion;
-    }
-
-    /**
-     * Specifies the labels map of the configuration
-     */
-    protected HashMap<String, String> labels = null;
-
-    /**
-     * Setter for the labels of the configuration
-     *
-     * @param labels labels to be set
-     */
-    public void setLabels(HashMap<String, String> labels)
-    {
-        this.labels = labels;
     }
 
     /**
@@ -111,18 +189,13 @@ public class Configuration
     }
 
     /**
-     * Specifies the configuration content
-     */
-    protected ConfigurationContent content;
-
-    /**
-     * Setter for the configuration content
+     * Setter for the labels of the configuration
      *
-     * @param content configuration content to be set
+     * @param labels labels to be set
      */
-    public void setContent(ConfigurationContent content)
+    public void setLabels(HashMap<String, String> labels)
     {
-        this.content = content;
+        this.labels = labels;
     }
 
     /**
@@ -136,18 +209,13 @@ public class Configuration
     }
 
     /**
-     * Specifies the targetCondition
-     */
-    protected String targetCondition;
-
-    /**
-     * Setter for the targetCondition
+     * Setter for the configuration content
      *
-     * @param targetCondition targetCondition to be set
+     * @param content configuration content to be set
      */
-    public void setTargetCondition(String targetCondition)
+    public void setContent(ConfigurationContent content)
     {
-        this.targetCondition = targetCondition;
+        this.content = content;
     }
 
     /**
@@ -161,9 +229,14 @@ public class Configuration
     }
 
     /**
-     * Datetime of configuration created time.
+     * Setter for the targetCondition
+     *
+     * @param targetCondition targetCondition to be set
      */
-    protected String createdTimeUtc;
+    public void setTargetCondition(String targetCondition)
+    {
+        this.targetCondition = targetCondition;
+    }
 
     /**
      * Getter for configuration created time
@@ -176,11 +249,6 @@ public class Configuration
     }
 
     /**
-     * Datetime of configuration last updated time.
-     */
-    protected String lastUpdatedTimeUtc;
-
-    /**
      * Getter for configuration last updated time string
      *
      * @return The string containing the time when the configuration was last updated
@@ -188,21 +256,6 @@ public class Configuration
     public String getLastUpdatedTimeUtc()
     {
         return lastUpdatedTimeUtc;
-    }
-
-    /**
-     * Specifies the priority
-     */
-    protected Integer priority;
-
-    /**
-     * Setter for the configuration priority
-     *
-     * @param priority to be set
-     */
-    public void setPriority(Integer priority)
-    {
-        this.priority = priority;
     }
 
     /**
@@ -216,9 +269,14 @@ public class Configuration
     }
 
     /**
-     * Specifies the system configuration metrics
+     * Setter for the configuration priority
+     *
+     * @param priority to be set
      */
-    protected ConfigurationMetrics systemMetrics = null;
+    public void setPriority(Integer priority)
+    {
+        this.priority = priority;
+    }
 
     /**
      * Getter for the system configuration metrics
@@ -231,11 +289,6 @@ public class Configuration
     }
 
     /**
-     * Specifies the custom configuration metrics
-     */
-    protected ConfigurationMetrics metrics = null;
-
-    /**
      * Getter for the custom configuration metrics
      *
      * @return The custom configuration metrics object
@@ -243,21 +296,6 @@ public class Configuration
     public ConfigurationMetrics getMetrics()
     {
         return metrics;
-    }
-
-    /**
-     * A string representing a ETAG
-     */
-    protected String etag;
-
-    /**
-     * Setter for the ETAG
-     *
-     * @param etag to be set
-     */
-    public void setEtag(String etag)
-    {
-        this.etag = etag;
     }
 
     /**
@@ -271,9 +309,14 @@ public class Configuration
     }
 
     /**
-     * Flip-flop helper for sending a forced update
+     * Setter for the ETAG
+     *
+     * @param etag to be set
      */
-    private Boolean forceUpdate;
+    public void setEtag(String etag)
+    {
+        this.etag = etag;
+    }
 
     /**
      * Setter for force update boolean
@@ -336,60 +379,6 @@ public class Configuration
             configurationParser.setMetrics(parser);
         }
 
-        return  configurationParser;
-    }
-
-    /**
-     * Retrieves information from the provided parser and saves it to this. All information on this will be overwritten.
-     * @param parser the parser to read from
-     * @throws IllegalArgumentException if the provided parser is missing the Id field. It also shall
-     */
-    Configuration(ConfigurationParser parser) throws IllegalArgumentException
-    {
-        if (parser.getId() == null)
-        {
-            //Codes_SRS_SERVICE_SDK_JAVA_CONFIGURATION_28_005: [If the provided parser is missing the id,
-            //an IllegalArgumentException shall be thrown.]
-            throw new IllegalArgumentException("configurationParser must have a configurationId assigned");
-        }
-
-        //Codes_SRS_SERVICE_SDK_JAVA_CONFIGURATION_28_005: [This constructor shall create a new Configuration object using the values within the provided parser.]
-        this.id = parser.getId();
-        this.schemaVersion = parser.getSchemaVersion();
-        this.labels = parser.getLabels();
-        this.targetCondition = parser.getTargetCondition();
-        this.priority = parser.getPriority();
-        this.etag = parser.getETag();
-
-        if (parser.getContent() != null)
-        {
-            this.content = new ConfigurationContent();
-            this.content.deviceContent = parser.getContent().getDeviceContent();
-            this.content.modulesContent = parser.getContent().getModulesContent();
-        }
-
-        if (parser.getCreatedTimeUtc() != null)
-        {
-            this.createdTimeUtc = ParserUtility.getDateStringFromDate(parser.getCreatedTimeUtc());
-        }
-
-        if (parser.getLastUpdatedTimeUtc() != null)
-        {
-            this.lastUpdatedTimeUtc = ParserUtility.getDateStringFromDate(parser.getLastUpdatedTimeUtc());
-        }
-
-        if (parser.getSystemMetrics() != null)
-        {
-            this.systemMetrics = new ConfigurationMetrics();
-            this.systemMetrics.queries = parser.getSystemMetrics().getQueries();
-            this.systemMetrics.results = parser.getSystemMetrics().getResults();
-        }
-
-        if (parser.getMetrics() != null)
-        {
-            this.metrics = new ConfigurationMetrics();
-            this.metrics.queries = parser.getMetrics().getQueries();
-            this.metrics.results = parser.getMetrics().getResults();
-        }
+        return configurationParser;
     }
 }

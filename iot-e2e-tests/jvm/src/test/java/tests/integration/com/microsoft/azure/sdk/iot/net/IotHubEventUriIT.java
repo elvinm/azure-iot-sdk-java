@@ -14,7 +14,9 @@ import java.net.URISyntaxException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/** Integration tests for IotHubEventUri. */
+/**
+ * Integration tests for IotHubEventUri.
+ */
 public class IotHubEventUriIT
 {
     @Test

@@ -13,7 +13,9 @@ import com.microsoft.azure.sdk.iot.service.jobs.JobStatus;
 import java.io.IOException;
 import java.util.*;
 
-/** Manages device twin operations on IotHub */
+/**
+ * Manages device twin operations on IotHub
+ */
 public class DeviceTwinSample
 {
     public static final String iotHubConnectionString = "[IOT HUB Connection String]";

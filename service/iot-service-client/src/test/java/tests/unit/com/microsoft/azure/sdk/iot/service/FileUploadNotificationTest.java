@@ -48,7 +48,7 @@ public class FileUploadNotificationTest
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATION_25_002: [** If any of the parameters are null or empty then this method shall throw IllegalArgumentException.**]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullDevID() throws IOException
     {
         //arrange
@@ -72,7 +72,7 @@ public class FileUploadNotificationTest
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATION_25_002: [** If any of the parameters are null or empty then this method shall throw IllegalArgumentException.**]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyDevID() throws IOException
     {
         //arrange
@@ -96,7 +96,7 @@ public class FileUploadNotificationTest
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATION_25_002: [** If any of the parameters are null or empty then this method shall throw IllegalArgumentException.**]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullBlobUri() throws IOException
     {
         //arrange
@@ -120,7 +120,7 @@ public class FileUploadNotificationTest
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATION_25_002: [** If any of the parameters are null or empty then this method shall throw IllegalArgumentException.**]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyBlobUri() throws IOException
     {
         //arrange
@@ -144,7 +144,7 @@ public class FileUploadNotificationTest
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATION_25_002: [** If any of the parameters are null or empty then this method shall throw IllegalArgumentException.**]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullBlobName() throws IOException
     {
         //arrange
@@ -168,7 +168,7 @@ public class FileUploadNotificationTest
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATION_25_002: [** If any of the parameters are null or empty then this method shall throw IllegalArgumentException.**]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyBlobName() throws IOException
     {
         //arrange
@@ -192,7 +192,7 @@ public class FileUploadNotificationTest
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATION_25_002: [** If any of the parameters are null or empty then this method shall throw IllegalArgumentException.**]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullDate() throws IOException
     {
         //arrange
@@ -216,7 +216,7 @@ public class FileUploadNotificationTest
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATION_25_002: [** If any of the parameters are null or empty then this method shall throw IllegalArgumentException.**]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullSize() throws IOException
     {
         //arrange
@@ -240,7 +240,7 @@ public class FileUploadNotificationTest
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATION_25_002: [** If any of the parameters are null or empty then this method shall throw IllegalArgumentException.**]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullEnqueuedTime() throws IOException
     {
         //arrange

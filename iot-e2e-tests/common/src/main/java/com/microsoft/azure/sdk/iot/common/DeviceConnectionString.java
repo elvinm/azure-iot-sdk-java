@@ -21,7 +21,7 @@ public class DeviceConnectionString
             String[] keyValueArray = tokenArray[i].split("=");
             if (keyValueArray[0].equals("HostName"))
             {
-                hostName =  tokenArray[i] + ';';
+                hostName = tokenArray[i] + ';';
                 break;
             }
         }
@@ -51,7 +51,7 @@ public class DeviceConnectionString
             String[] keyValueArray = tokenArray[i].split("=");
             if (keyValueArray[0].equals("HostName"))
             {
-                hostName =  tokenArray[i] + ';';
+                hostName = tokenArray[i] + ';';
                 break;
             }
         }

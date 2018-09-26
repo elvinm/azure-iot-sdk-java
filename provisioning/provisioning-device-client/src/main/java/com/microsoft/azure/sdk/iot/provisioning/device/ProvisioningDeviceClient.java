@@ -24,20 +24,6 @@ public class ProvisioningDeviceClient
     private ProvisioningDeviceClientContract provisioningDeviceClientContract;
     private ExecutorService executor;
 
-    /**
-     * Creates an instance of ProvisioningDeviceClient
-     * @param globalEndpoint global endpoint for the service to connect to. Cannot be {@code null}.
-     * @param idScope IdScope for the instance of the service hosted by you. Cannot be {@code null}.
-     * @param protocol Protocol to communicate with the service onto. Cannot be {@code null}.
-     * @param securityProvider Security Provider for X509 or TPM flow. Cannot be {@code null}.
-     * @return An instance of ProvisioningDeviceClient
-     * @throws ProvisioningDeviceClientException if any of the underlying API calls fail to process.
-     */
-    public static ProvisioningDeviceClient create(String globalEndpoint, String idScope, ProvisioningDeviceClientTransportProtocol protocol, SecurityProvider securityProvider) throws ProvisioningDeviceClientException
-    {
-        return new ProvisioningDeviceClient(globalEndpoint, idScope, protocol, securityProvider);
-    }
-
     private ProvisioningDeviceClient(String globalEndpoint, String idScope, ProvisioningDeviceClientTransportProtocol protocol, SecurityProvider securityProvider) throws ProvisioningDeviceClientException
     {
         if (globalEndpoint == null || globalEndpoint.isEmpty())
@@ -79,10 +65,26 @@ public class ProvisioningDeviceClient
     }
 
     /**
+     * Creates an instance of ProvisioningDeviceClient
+     *
+     * @param globalEndpoint   global endpoint for the service to connect to. Cannot be {@code null}.
+     * @param idScope          IdScope for the instance of the service hosted by you. Cannot be {@code null}.
+     * @param protocol         Protocol to communicate with the service onto. Cannot be {@code null}.
+     * @param securityProvider Security Provider for X509 or TPM flow. Cannot be {@code null}.
+     * @return An instance of ProvisioningDeviceClient
+     * @throws ProvisioningDeviceClientException if any of the underlying API calls fail to process.
+     */
+    public static ProvisioningDeviceClient create(String globalEndpoint, String idScope, ProvisioningDeviceClientTransportProtocol protocol, SecurityProvider securityProvider) throws ProvisioningDeviceClientException
+    {
+        return new ProvisioningDeviceClient(globalEndpoint, idScope, protocol, securityProvider);
+    }
+
+    /**
      * Register's a device with the service and provides you with iothub uri and the registered device.
+     *
      * @param provisioningDeviceClientRegistrationCallback Callback where you can retrieve the status of registration like iothub uri and the registered device or
      *                                                     any exception that was caused during registration process. Cannot be {@code null}.
-     * @param context Context for the callback. Can be {@code null}.
+     * @param context                                      Context for the callback. Can be {@code null}.
      * @throws ProvisioningDeviceClientException if any of the underlying API calls fail to process.
      */
     public void registerDevice(ProvisioningDeviceClientRegistrationCallback provisioningDeviceClientRegistrationCallback, Object context) throws ProvisioningDeviceClientException

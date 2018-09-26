@@ -18,19 +18,19 @@ import java.util.Map;
 public final class IotHubUri
 {
     /**
+     * The API version will be passed as a param in the URI.
+     */
+    public static final String API_VERSION = "api-version=" + TransportUtils.IOTHUB_API_VERSION;
+    /**
      * The device ID and specific IoT Hub method path will be interpolated into
      * the path.
      */
     private static final String PATH_FORMAT = "/devices/%s%s";
-
     private static final String PATH_FORMAT_WITH_MODULEID = "/devices/%s/modules/%s/%s";
-
-    /** The API version will be passed as a param in the URI. */
-    public static final String API_VERSION = "api-version=" + TransportUtils.IOTHUB_API_VERSION;
-
-    /** The charset used when URL-encoding the IoT Hub name and device ID. */
-    private static final Charset IOTHUB_URL_ENCODING_CHARSET =
-            StandardCharsets.UTF_8;
+    /**
+     * The charset used when URL-encoding the IoT Hub name and device ID.
+     */
+    private static final Charset IOTHUB_URL_ENCODING_CHARSET = StandardCharsets.UTF_8;
 
     /**
      * The IoT Hub resource URI is the hostname and path component that is
@@ -45,15 +45,14 @@ public final class IotHubUri
      * Constructor. Creates a URI to an IoT Hub method. The URI does not include
      * a protocol. The function will safely escape the given arguments.
      *
-     * @param iotHubHostname the IoT Hub hostname.
-     * @param deviceId the device ID.
+     * @param iotHubHostname   the IoT Hub hostname.
+     * @param deviceId         the device ID.
      * @param iotHubMethodPath the path from the IoT Hub resource to the
-     * method.
-     * @param queryParams the URL query parameters. Can be null.
-     * @param moduleId the module ID. May be null
+     *                         method.
+     * @param queryParams      the URL query parameters. Can be null.
+     * @param moduleId         the module ID. May be null
      */
-    public IotHubUri(String iotHubHostname, String deviceId,
-            String iotHubMethodPath, Map<String, String> queryParams, String moduleId)
+    public IotHubUri(String iotHubHostname, String deviceId, String iotHubMethodPath, Map<String, String> queryParams, String moduleId)
     {
         this.hostname = iotHubHostname;
 
@@ -79,15 +78,13 @@ public final class IotHubUri
         uriBuilder.append(API_VERSION);
         if (queryParams != null)
         {
-            Iterator<Map.Entry<String, String>> paramIter =
-                    queryParams.entrySet().iterator();
+            Iterator<Map.Entry<String, String>> paramIter = queryParams.entrySet().iterator();
             while (paramIter.hasNext())
             {
                 Map.Entry<String, String> param = paramIter.next();
                 uriBuilder.append("&");
                 // Codes_SRS_IOTHUBURI_11_013: [The constructor shall URL-encode each query param.]
-                appendQueryParam(uriBuilder, param.getKey(),
-                        param.getValue());
+                appendQueryParam(uriBuilder, param.getKey(), param.getValue());
             }
         }
 
@@ -98,11 +95,11 @@ public final class IotHubUri
      * Constructor. Equivalent to {@code new IotHubUri(iotHubHostname, deviceId,
      * iotHubMethodPath, null)}.
      *
-     * @param iotHubHostname the IoT Hub hostname.
-     * @param deviceId the device ID.
+     * @param iotHubHostname   the IoT Hub hostname.
+     * @param deviceId         the device ID.
      * @param iotHubMethodPath the path from the IoT Hub resource to the
-     * method.
-     * @param moduleId the module ID.
+     *                         method.
+     * @param moduleId         the module ID.
      */
     public IotHubUri(String iotHubHostname, String deviceId, String iotHubMethodPath, String moduleId)
     {
@@ -110,6 +107,92 @@ public final class IotHubUri
         // Codes_SRS_IOTHUBURI_11_015: [The constructor shall URL-encode the device ID.]
         // Codes_SRS_IOTHUBURI_11_016: [The constructor shall URL-encode the IoT Hub method path.]
         this(iotHubHostname, deviceId, iotHubMethodPath, null, moduleId);
+    }
+
+    @SuppressWarnings("unused")
+    protected IotHubUri()
+    {
+
+    }
+
+    /**
+     * Returns the string representation of the IoT Hub resource URI. The IoT
+     * Hub resource URI is the hostname and path component that is common to all
+     * IoT Hub communication methods between the given device and IoT Hub.
+     * Safely escapes the IoT Hub resource URI.
+     *
+     * @param iotHubHostname the IoT Hub hostname.
+     * @param deviceId       the device ID.
+     * @param moduleId       the module ID.
+     * @return the string representation of the IoT Hub resource URI.
+     */
+    public static String getResourceUri(String iotHubHostname, String deviceId, String moduleId)
+    {
+        // Codes_SRS_IOTHUBURI_11_002: [The function shall return a URI with the format '[iotHubHostname]/devices/[deviceId]'.]
+        // Codes_SRS_IOTHUBURI_11_019: [The constructor shall URL-encode the device ID.]
+        IotHubUri iotHubUri = new IotHubUri(iotHubHostname, deviceId, "", moduleId);
+        return iotHubUri.getHostname() + iotHubUri.getPath();
+    }
+
+    /**
+     * URL-encodes each subdirectory in the path.
+     *
+     * @param path the path to be safely escaped.
+     * @return a path with each subdirectory URL-encoded.
+     */
+    private static String urlEncodePath(String path)
+    {
+        String[] pathSubDirs = path.split("/");
+        StringBuilder urlEncodedPathBuilder = new StringBuilder();
+        try
+        {
+            for (String subDir : pathSubDirs)
+            {
+                if (subDir.length() > 0)
+                {
+                    String urlEncodedSubDir = URLEncoder.encode(subDir, IOTHUB_URL_ENCODING_CHARSET.name());
+                    urlEncodedPathBuilder.append("/");
+                    urlEncodedPathBuilder.append(urlEncodedSubDir);
+                }
+            }
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            // should never happen.
+            throw new IllegalStateException(e);
+        }
+
+        return urlEncodedPathBuilder.toString();
+    }
+
+    /**
+     * URL-encodes the query param {@code name} and {@code value} using charset UTF-8 and
+     * appends them to the URI.
+     *
+     * @param uriBuilder the URI.
+     * @param name       the query param name.
+     * @param value      the query param value.
+     */
+    private static void appendQueryParam(StringBuilder uriBuilder, String name, String value)
+    {
+        try
+        {
+            String urlEncodedName = URLEncoder.encode(name, IOTHUB_URL_ENCODING_CHARSET.name());
+            String urlEncodedValue = URLEncoder.encode(value, IOTHUB_URL_ENCODING_CHARSET.name());
+            uriBuilder.append(urlEncodedName);
+            uriBuilder.append("=");
+            uriBuilder.append(urlEncodedValue);
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            // should never happen, since the encoding is hard-coded.
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public static String getApiVersionString()
+    {
+        return API_VERSION;
     }
 
     /**
@@ -151,96 +234,5 @@ public final class IotHubUri
     {
         // Codes_SRS_IOTHUBURI_11_006: [The function shall return a URI with the format '/devices/[deviceId]/[IoT Hub method path]'.]
         return this.path;
-    }
-
-    /**
-     * Returns the string representation of the IoT Hub resource URI. The IoT
-     * Hub resource URI is the hostname and path component that is common to all
-     * IoT Hub communication methods between the given device and IoT Hub.
-     * Safely escapes the IoT Hub resource URI.
-     *
-     * @param iotHubHostname the IoT Hub hostname.
-     * @param deviceId the device ID.
-     * @param moduleId the module ID.
-     * @return the string representation of the IoT Hub resource URI.
-     */
-    public static String getResourceUri(String iotHubHostname, String deviceId, String moduleId)
-    {
-        // Codes_SRS_IOTHUBURI_11_002: [The function shall return a URI with the format '[iotHubHostname]/devices/[deviceId]'.]
-        // Codes_SRS_IOTHUBURI_11_019: [The constructor shall URL-encode the device ID.]
-        IotHubUri iotHubUri = new IotHubUri(iotHubHostname, deviceId, "", moduleId);
-        return iotHubUri.getHostname() + iotHubUri.getPath();
-    }
-
-    /**
-     * URL-encodes each subdirectory in the path.
-     *
-     * @param path the path to be safely escaped.
-     *
-     * @return a path with each subdirectory URL-encoded.
-     */
-    private static String urlEncodePath(String path)
-    {
-        String[] pathSubDirs = path.split("/");
-        StringBuilder urlEncodedPathBuilder = new StringBuilder();
-        try
-        {
-            for (String subDir : pathSubDirs)
-            {
-                if (subDir.length() > 0)
-                {
-                    String urlEncodedSubDir = URLEncoder.encode(
-                            subDir, IOTHUB_URL_ENCODING_CHARSET.name());
-                    urlEncodedPathBuilder.append("/");
-                    urlEncodedPathBuilder.append(urlEncodedSubDir);
-                }
-            }
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            // should never happen.
-            throw new IllegalStateException(e);
-        }
-
-        return urlEncodedPathBuilder.toString();
-    }
-
-    /**
-     * URL-encodes the query param {@code name} and {@code value} using charset UTF-8 and
-     * appends them to the URI.
-     *
-     * @param uriBuilder the URI.
-     * @param name the query param name.
-     * @param value the query param value.
-     */
-    private static void appendQueryParam(StringBuilder uriBuilder,
-                                         String name, String value)
-    {
-        try
-        {
-            String urlEncodedName = URLEncoder.encode(name,
-                    IOTHUB_URL_ENCODING_CHARSET.name());
-            String urlEncodedValue = URLEncoder.encode(value,
-                    IOTHUB_URL_ENCODING_CHARSET.name());
-            uriBuilder.append(urlEncodedName);
-            uriBuilder.append("=");
-            uriBuilder.append(urlEncodedValue);
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            // should never happen, since the encoding is hard-coded.
-            throw new IllegalStateException(e);
-        }
-    }
-
-    public static String getApiVersionString()
-    {
-        return API_VERSION;
-    }
-
-    @SuppressWarnings("unused")
-    protected IotHubUri()
-    {
-
     }
 }

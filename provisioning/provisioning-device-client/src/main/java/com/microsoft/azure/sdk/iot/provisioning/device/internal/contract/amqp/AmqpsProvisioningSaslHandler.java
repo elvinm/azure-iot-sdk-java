@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package com.microsoft.azure.sdk.iot.provisioning.device.internal.contract.amqp;
 
@@ -22,8 +22,8 @@ public class AmqpsProvisioningSaslHandler implements SaslHandler
     private final static byte INIT_SEGMENT_CONTROL_BYTE = (byte) 0;
     private final static byte INTERMEDIATE_SEGMENT_CONTROL_BYTE = (byte) 0x80;
     private final static byte FINAL_SEGMENT_CONTROL_BYTE = (byte) 0xC1;
-    private final static long MAX_MILLISECONDS_TIMEOUT_FOR_SAS_TOKEN_WAIT = 60*1000; // 1 minute
-    private final static long WAIT_INTERVALS = 4*1000; // 4 second wait intervals when waiting and checking for sas token
+    private final static long MAX_MILLISECONDS_TIMEOUT_FOR_SAS_TOKEN_WAIT = 60 * 1000; // 1 minute
+    private final static long WAIT_INTERVALS = 4 * 1000; // 4 second wait intervals when waiting and checking for sas token
 
     private String idScope;
     private String registrationId;
@@ -36,27 +36,13 @@ public class AmqpsProvisioningSaslHandler implements SaslHandler
     private String sasToken;
 
     /**
-     * Tracks the state of the TPM Provisioning sasl negotiation
-     */
-    private enum ChallengeState
-    {
-        WAITING_FOR_MECHANISMS,
-        WAITING_TO_BUILD_INIT,
-        WAITING_FOR_FIRST_CHALLENGE,
-        WAITING_FOR_SECOND_CHALLENGE,
-        WAITING_FOR_THIRD_CHALLENGE,
-        WAITING_TO_SEND_SAS_TOKEN,
-        WAITING_FOR_FINAL_OUTCOME
-    }
-
-    /**
      * SaslHandler implementation that handles the TPM flow for Provisioning
      *
-     * @param idScope idScope of the provisioning service
-     * @param registrationId registration id of this provisioning
-     * @param endorsementKey Endorsement key of the provisioned device
-     * @param storageRootKey Storage root key of the provisioned device
-     * @param responseCallback The callback to be fired upon receiving the full nonce
+     * @param idScope                      idScope of the provisioning service
+     * @param registrationId               registration id of this provisioning
+     * @param endorsementKey               Endorsement key of the provisioned device
+     * @param storageRootKey               Storage root key of the provisioned device
+     * @param responseCallback             The callback to be fired upon receiving the full nonce
      * @param authorizationCallbackContext the context to pass along in the response callback
      */
     AmqpsProvisioningSaslHandler(String idScope, String registrationId, byte[] endorsementKey, byte[] storageRootKey, ResponseCallback responseCallback, Object authorizationCallbackContext)
@@ -102,8 +88,62 @@ public class AmqpsProvisioningSaslHandler implements SaslHandler
         this.sasToken = null;
     }
 
+    private static byte[] buildSaslInitPayload(String idScope, String registrationId, byte[] endorsementKey)
+    {
+        byte[] bytes = concatBytesWithNullDelimiter(idScope.getBytes(), registrationId.getBytes(), endorsementKey);
+        return prependByteArrayWithControlByte(INIT_SEGMENT_CONTROL_BYTE, bytes);
+    }
+
+    private static byte[] buildFirstSaslChallengeResponsePayload(byte[] srk)
+    {
+        return prependByteArrayWithControlByte(INIT_SEGMENT_CONTROL_BYTE, srk);
+    }
+
+    private static byte[] concatBytesWithNullDelimiter(byte[]... arrays)
+    {
+        // Determine the length of the result array
+        int totalLength = 0;
+        for (int i = 0; i < arrays.length; i++)
+        {
+            totalLength += arrays[i].length;
+        }
+
+        //for X arrays, there will be X-1 delimiters
+        totalLength += arrays.length - 1;
+
+        // create the result array
+        byte[] result = new byte[totalLength];
+
+        // copy the source arrays into the result array
+        int currentIndex = 0;
+        for (int i = 0; i < arrays.length - 1; i++)
+        {
+            //copy the source array into the single new array
+            System.arraycopy(arrays[i], 0, result, currentIndex, arrays[i].length);
+
+            //add the UTF8NUL delimiter
+            result[currentIndex + arrays[i].length] = NULL_BYTE;
+
+            currentIndex += arrays[i].length + 1;
+        }
+
+        //copy the final value into the array without adding a delimiter at the end
+        System.arraycopy(arrays[arrays.length - 1], 0, result, currentIndex, arrays[arrays.length - 1].length);
+
+        return result;
+    }
+
+    private static byte[] prependByteArrayWithControlByte(byte controlByte, byte[] bytes)
+    {
+        byte[] newByteArray = new byte[bytes.length + 1];
+        newByteArray[0] = controlByte;
+        System.arraycopy(bytes, 0, newByteArray, 1, bytes.length);
+        return newByteArray;
+    }
+
     /**
      * Checks to ensure that TPM is an available mechanism and chooses it
+     *
      * @param mechanisms A list of available Sasl Mechanisms offered by the service
      * @return "TPM" if offered by the service
      */
@@ -135,6 +175,7 @@ public class AmqpsProvisioningSaslHandler implements SaslHandler
 
     /**
      * Builds the init payload out of the saved idScope, registrationId, and endorsementKey
+     *
      * @param chosenMechanism The sasl mechanism chosen to be used when doing Sasl negotiation with the service
      * @return the payload of the init message to be sent to the service
      */
@@ -154,6 +195,7 @@ public class AmqpsProvisioningSaslHandler implements SaslHandler
 
     /**
      * Handles the three expected challenges from the service that happen in Sasl negotiation
+     *
      * @param saslChallenge The bytes from the Sasl challenge received from the service
      * @return the payload of the challenge response to the given challenge
      */
@@ -201,6 +243,7 @@ public class AmqpsProvisioningSaslHandler implements SaslHandler
 
     /**
      * Handles the outcome of the Sasl negotiation
+     *
      * @param outcome The outcome of the sasl negotiation
      */
     public void handleOutcome(SaslOutcome outcome) throws ProvisioningDeviceSecurityException
@@ -225,7 +268,7 @@ public class AmqpsProvisioningSaslHandler implements SaslHandler
             case SYS_TEMP:
                 // Codes_SRS_AMQPSPROVISIONINGSASLHANDLER_34_022: [If the sasl outcome is not OK, this function shall throw a SecurityException.]
                 throw new ProvisioningDeviceSecurityException("Sasl negotiation failed due to transient system error");
-                
+
             case SYS:
             case SYS_PERM:
             default:
@@ -238,6 +281,7 @@ public class AmqpsProvisioningSaslHandler implements SaslHandler
     /**
      * Sets the value of this object's saved sas token. Should only be called when that sas token was generated using the
      * nonce retrieved from the Device Provisioning service.
+     *
      * @param sasToken The SAS token to be used when finishing Sasl negotiation.
      */
     void setSasToken(String sasToken)
@@ -271,8 +315,8 @@ public class AmqpsProvisioningSaslHandler implements SaslHandler
         this.challengeState = ChallengeState.WAITING_FOR_THIRD_CHALLENGE;
 
         // Codes_SRS_AMQPSPROVISIONINGSASLHANDLER_34_013: [If this object is waiting for the second challenge, this function shall read the challenge in the format "control byte + nonce (first half)" and save the nonce portion.]
-        this.challengeKey = new byte[challengeData.length-1];
-        System.arraycopy(challengeData, 1, this.challengeKey, 0, challengeData.length-1);
+        this.challengeKey = new byte[challengeData.length - 1];
+        System.arraycopy(challengeData, 1, this.challengeKey, 0, challengeData.length - 1);
 
         // Codes_SRS_AMQPSPROVISIONINGSASLHANDLER_34_014: [If this object is waiting for the second challenge, this function shall return a payload of one null byte.]
         return new byte[]{NULL_BYTE};
@@ -292,7 +336,7 @@ public class AmqpsProvisioningSaslHandler implements SaslHandler
 
         // Codes_SRS_AMQPSPROVISIONINGSASLHANDLER_34_017: [If this object is waiting for the third challenge, this function shall put together the full nonce byte array and run the saved responseCallback with the nonce and DPS_REGISTRATION_RECEIVED.]
         this.responseCallback.run(new ResponseData(this.challengeKey, ContractState.DPS_REGISTRATION_RECEIVED, 0), this.authorizationCallbackContext);
-        
+
         this.challengeState = ChallengeState.WAITING_TO_SEND_SAS_TOKEN;
 
         // Codes_SRS_AMQPSPROVISIONINGSASLHANDLER_34_018: [If this object is waiting for the third challenge, after running the saved responseCallback, this function shall wait for the sas token to be set before returning a payload in the format "control byte + sas token".]
@@ -330,56 +374,11 @@ public class AmqpsProvisioningSaslHandler implements SaslHandler
         return completeChallengeKey;
     }
 
-    private static byte[] buildSaslInitPayload(String idScope, String registrationId, byte[] endorsementKey)
+    /**
+     * Tracks the state of the TPM Provisioning sasl negotiation
+     */
+    private enum ChallengeState
     {
-        byte[] bytes = concatBytesWithNullDelimiter(idScope.getBytes(), registrationId.getBytes(), endorsementKey);
-        return prependByteArrayWithControlByte(INIT_SEGMENT_CONTROL_BYTE, bytes);
-    }
-
-    private static byte[] buildFirstSaslChallengeResponsePayload(byte[] srk)
-    {
-        return prependByteArrayWithControlByte(INIT_SEGMENT_CONTROL_BYTE, srk);
-    }
-
-    private static byte[] concatBytesWithNullDelimiter(byte[]...arrays)
-    {
-        // Determine the length of the result array
-        int totalLength = 0;
-        for (int i = 0; i < arrays.length; i++)
-        {
-            totalLength += arrays[i].length;
-        }
-
-        //for X arrays, there will be X-1 delimiters
-        totalLength += arrays.length - 1;
-
-        // create the result array
-        byte[] result = new byte[totalLength];
-
-        // copy the source arrays into the result array
-        int currentIndex = 0;
-        for (int i = 0; i < arrays.length-1; i++)
-        {
-            //copy the source array into the single new array
-            System.arraycopy(arrays[i], 0, result, currentIndex, arrays[i].length);
-
-            //add the UTF8NUL delimiter
-            result[currentIndex + arrays[i].length] = NULL_BYTE;
-
-            currentIndex += arrays[i].length + 1;
-        }
-
-        //copy the final value into the array without adding a delimiter at the end
-        System.arraycopy(arrays[arrays.length-1], 0, result, currentIndex, arrays[arrays.length-1].length);
-
-        return result;
-    }
-
-    private static byte[] prependByteArrayWithControlByte(byte controlByte, byte[] bytes)
-    {
-        byte[] newByteArray = new byte[bytes.length + 1];
-        newByteArray[0] = controlByte;
-        System.arraycopy(bytes, 0, newByteArray, 1, bytes.length);
-        return newByteArray;
+        WAITING_FOR_MECHANISMS, WAITING_TO_BUILD_INIT, WAITING_FOR_FIRST_CHALLENGE, WAITING_FOR_SECOND_CHALLENGE, WAITING_FOR_THIRD_CHALLENGE, WAITING_TO_SEND_SAS_TOKEN, WAITING_FOR_FINAL_OUTCOME
     }
 }

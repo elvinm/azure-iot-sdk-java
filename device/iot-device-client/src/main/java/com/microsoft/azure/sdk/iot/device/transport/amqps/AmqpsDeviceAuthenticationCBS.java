@@ -30,34 +30,23 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public final class AmqpsDeviceAuthenticationCBS extends AmqpsDeviceAuthentication
 {
-    private String PROP_KEY_STATUS_CODE = "status-code";
-
     public static final String SENDER_LINK_ENDPOINT_PATH = "$cbs";
     public static final String RECEIVER_LINK_ENDPOINT_PATH = "$cbs";
-
     private final String SENDER_LINK_TAG_PREFIX = "cbs-sender-";
     private final String RECEIVER_LINK_TAG_PREFIX = "cbs-receiver-";
-
     private final String CBS_TO = "$cbs";
     private final String CBS_REPLY = "cbs";
-
     private final String OPERATION_KEY = "operation";
     private final String TYPE_KEY = "type";
     private final String NAME_KEY = "name";
-
     private final String OPERATION_VALUE = "put-token";
     private final String TYPE_VALUE = "servicebus.windows.net:sastoken";
-
-    private final String DEVICES_PATH =  "/devices/";
-
-    private long nextTag = 0;
-
+    private final String DEVICES_PATH = "/devices/";
     private final Queue<MessageImpl> waitingMessages = new LinkedBlockingDeque<>();
-
-    private Integer queueLock = new Integer(1);
-
     private final DeviceClientConfig deviceClientConfig;
-
+    private String PROP_KEY_STATUS_CODE = "status-code";
+    private long nextTag = 0;
+    private Integer queueLock = new Integer(1);
     private CustomLogger logger;
 
     /**
@@ -139,7 +128,7 @@ public final class AmqpsDeviceAuthenticationCBS extends AmqpsDeviceAuthenticatio
      * @param linkName The receiver link's name to read from
      * @return the Proton message
      * @throws IllegalArgumentException if link name argument is empty
-     * @throws TransportException if Proton throws
+     * @throws TransportException       if Proton throws
      */
     @Override
     protected AmqpsMessage getMessageFromReceiverLink(String linkName) throws IllegalArgumentException, TransportException
@@ -159,7 +148,7 @@ public final class AmqpsDeviceAuthenticationCBS extends AmqpsDeviceAuthenticatio
     /**
      * Verify if the given message is a 200OK for authentication.
      *
-     * @param amqpsMessage the message to evaluate.
+     * @param amqpsMessage                the message to evaluate.
      * @param authenticationCorrelationId the expected correlation ID.
      * @return true if it is 200OK and correlationId matches, false otherwise.
      */
@@ -196,9 +185,9 @@ public final class AmqpsDeviceAuthenticationCBS extends AmqpsDeviceAuthenticatio
     }
 
     /**
-     * Create domain from the SSLContext, set the sasl mechanism to 
-     * ANONYMUS and set domain on the transport 
-     * 
+     * Create domain from the SSLContext, set the sasl mechanism to
+     * ANONYMUS and set domain on the transport
+     *
      * @param transport Proton-J Transport object
      * @throws TransportException if Proton throws IOException
      */
@@ -226,10 +215,10 @@ public final class AmqpsDeviceAuthenticationCBS extends AmqpsDeviceAuthenticatio
     }
 
     /**
-     * Start CBS authentication process by creating an adding 
-     * authentication message to the send queue 
-     * 
-     * @param deviceClientConfig device configuration to use for 
+     * Start CBS authentication process by creating an adding
+     * authentication message to the send queue
+     *
+     * @param deviceClientConfig device configuration to use for
      *                           authentication
      * @throws TransportException when CBS Authentication Message failed to be created
      */
@@ -247,10 +236,9 @@ public final class AmqpsDeviceAuthenticationCBS extends AmqpsDeviceAuthenticatio
     }
 
     /**
-     * Search for a link using the given link name. 
-     * 
+     * Search for a link using the given link name.
+     *
      * @param linkName name (tag) of the link to find
-     * 
      * @return Boolean true is found, false otherwise
      */
     @Override
@@ -273,12 +261,12 @@ public final class AmqpsDeviceAuthenticationCBS extends AmqpsDeviceAuthenticatio
     }
 
     /**
-     * Create a CBS authentication message for the given device 
-     * client 
-     * 
+     * Create a CBS authentication message for the given device
+     * client
+     *
      * @param deviceClientConfig device client configuration
-     * @throws TransportException when failed to get renewed SAS token
      * @return MessageImpl the Proton-j message to send
+     * @throws TransportException when failed to get renewed SAS token
      */
     private MessageImpl createCBSAuthenticationMessage(DeviceClientConfig deviceClientConfig, UUID messageId) throws TransportException
     {

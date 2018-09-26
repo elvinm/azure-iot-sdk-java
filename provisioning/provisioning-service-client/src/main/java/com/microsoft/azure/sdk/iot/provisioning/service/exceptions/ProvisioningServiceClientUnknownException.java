@@ -4,9 +4,10 @@
  */
 
 package com.microsoft.azure.sdk.iot.provisioning.service.exceptions;
+
 /**
  * This is the subset of the Device Provisioning Service exceptions for the unknown issues.
- *
+ * <p>
  * <p> HTTP status code 300+, but not 4nn or 5nn.
  */
 public class ProvisioningServiceClientUnknownException extends ProvisioningServiceClientServiceException

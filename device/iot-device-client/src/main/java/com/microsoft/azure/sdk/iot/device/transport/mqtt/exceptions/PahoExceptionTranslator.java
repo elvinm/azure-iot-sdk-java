@@ -27,11 +27,7 @@ public class PahoExceptionTranslator
             case REASON_CODE_CLIENT_EXCEPTION:
                 // MQTT Client encountered an exception, no connect code retrieved from service, so the reason
                 // for this connection loss is in the mqttException cause
-                if (pahoException.getCause() instanceof UnknownHostException
-                        || pahoException.getCause() instanceof NoRouteToHostException
-                        || pahoException.getCause() instanceof InterruptedException
-                        || pahoException.getCause() instanceof SocketTimeoutException
-                        || pahoException.getCause() instanceof SocketException)
+                if (pahoException.getCause() instanceof UnknownHostException || pahoException.getCause() instanceof NoRouteToHostException || pahoException.getCause() instanceof InterruptedException || pahoException.getCause() instanceof SocketTimeoutException || pahoException.getCause() instanceof SocketException)
                 {
                     // Codes_SRS_PahoExceptionTranslator_34_139: [When deriving the TransportException from the provided
                     // MqttException, this function shall map all client exceptions with underlying UnknownHostException

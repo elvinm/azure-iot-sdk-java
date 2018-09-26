@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
 public class DeviceTwinDeviceTest
 {
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_003: [** The constructor shall create a new instance of twin object for this device and store the device id.**]**
+     **Tests_SRS_DEVICETWINDEVICE_25_003: [** The constructor shall create a new instance of twin object for this device and store the device id.**]**
      */
     @Test
     public void constructorCreatesNewDeviceGroup()
@@ -49,7 +49,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_003: [** The constructor shall create a new instance of twin object for this device and store the device id.**]**
+     **Tests_SRS_DEVICETWINDEVICE_25_003: [** The constructor shall create a new instance of twin object for this device and store the device id.**]**
      */
     @Test
     public void constructorCreatesNewDevice()
@@ -74,7 +74,7 @@ public class DeviceTwinDeviceTest
     /*
      **Tests_SRS_DEVICETWINDEVICE_25_002: [** The constructor shall throw IllegalArgumentException if the input string is empty or null.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorCreatesNewDeviceEmptyDeviceId()
     {
         //arrange
@@ -87,7 +87,7 @@ public class DeviceTwinDeviceTest
     /*
      **Tests_SRS_DEVICETWINDEVICE_25_002: [** The constructor shall throw IllegalArgumentException if the input string is empty or null.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorCreatesNewDeviceNullDeviceId()
     {
         //act
@@ -122,7 +122,7 @@ public class DeviceTwinDeviceTest
     /*
      **Tests_SRS_DEVICETWINDEVICE_28__005: [** The constructor shall throw IllegalArgumentException if the deviceId is empty or null.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorCreatesNewDeviceForModuleEmptyDeviceId()
     {
         //arrange
@@ -136,7 +136,7 @@ public class DeviceTwinDeviceTest
     /*
      **Tests_SRS_DEVICETWINDEVICE_28_005: [** The constructor shall throw IllegalArgumentException if the deviceId is empty or null.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorCreatesNewDeviceForModuleNullDeviceId()
     {
         //arrange
@@ -149,7 +149,7 @@ public class DeviceTwinDeviceTest
     /*
      **Tests_SRS_DEVICETWINDEVICE_28__006: [** The constructor shall throw IllegalArgumentException if the moduleId is empty or null.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorCreatesNewDeviceForModuleEmptyModuleId()
     {
         //arrange
@@ -163,7 +163,7 @@ public class DeviceTwinDeviceTest
     /*
      **Tests_SRS_DEVICETWINDEVICE_28_006: [** The constructor shall throw IllegalArgumentException if the moduleId is empty or null.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorCreatesNewDeviceForModuleNullModuleId()
     {
         //arrange
@@ -174,7 +174,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_004: [** This method shall return the device id **]**
+     **Tests_SRS_DEVICETWINDEVICE_25_004: [** This method shall return the device id **]**
      */
     @Test
     public void getDeviceIdGets()
@@ -208,7 +208,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_21_030: [** The seteTag shall store the eTag.**]**
+     **Tests_SRS_DEVICETWINDEVICE_21_030: [** The seteTag shall store the eTag.**]**
      */
     @Test
     public void setETagSets()
@@ -224,9 +224,9 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_21_029: [** The seteTag shall throw IllegalArgumentException if the input string is empty or null.**]**
+     **Tests_SRS_DEVICETWINDEVICE_21_029: [** The seteTag shall throw IllegalArgumentException if the input string is empty or null.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setETagNullThrows()
     {
         //arrange
@@ -236,7 +236,7 @@ public class DeviceTwinDeviceTest
         testDevice.setETag(null);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setETagEmptyThrows()
     {
         //arrange
@@ -247,7 +247,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_21_031: [** The geteTag shall return the stored eTag.**]**
+     **Tests_SRS_DEVICETWINDEVICE_21_031: [** The geteTag shall return the stored eTag.**]**
      */
     @Test
     public void getETagGets()
@@ -278,7 +278,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_21_032: [** The setVersion shall store the Twin version.**]**
+     **Tests_SRS_DEVICETWINDEVICE_21_032: [** The setVersion shall store the Twin version.**]**
      */
     @Test
     public void setVersionSets()
@@ -290,7 +290,7 @@ public class DeviceTwinDeviceTest
         Deencapsulation.invoke(testDevice, "setVersion", 10);
 
         //assert
-        assertEquals(10L, (long)(Integer)Deencapsulation.getField(testDevice, "version"));
+        assertEquals(10L, (long) (Integer) Deencapsulation.getField(testDevice, "version"));
     }
 
     @Test
@@ -303,7 +303,7 @@ public class DeviceTwinDeviceTest
         Deencapsulation.invoke(testDevice, "setVersion", 0);
 
         //assert
-        assertEquals(0L, (long)(Integer)Deencapsulation.getField(testDevice, "version"));
+        assertEquals(0L, (long) (Integer) Deencapsulation.getField(testDevice, "version"));
     }
 
     @Test
@@ -321,7 +321,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_21_033: [** The getVersion shall return the stored Twin version.**]**
+     **Tests_SRS_DEVICETWINDEVICE_21_033: [** The getVersion shall return the stored Twin version.**]**
      */
     @Test
     public void getVersionGets()
@@ -334,7 +334,7 @@ public class DeviceTwinDeviceTest
         Integer version = testDevice.getVersion();
 
         //assert
-        assertEquals(10L, (long)version);
+        assertEquals(10L, (long) version);
 
     }
 
@@ -352,7 +352,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_009: [** This method shall convert the tags map to a set of pairs and return with it. **]**
+     **Tests_SRS_DEVICETWINDEVICE_25_009: [** This method shall convert the tags map to a set of pairs and return with it. **]**
      */
     @Test
     public void getTagsGets()
@@ -368,7 +368,7 @@ public class DeviceTwinDeviceTest
 
         //assert
         assertEquals(testTags.size(), actualTags.size());
-        for(Pair test : actualTags)
+        for (Pair test : actualTags)
         {
             assertTrue(test.getKey().equals("testTag"));
             assertTrue(test.getValue().equals("tagObject"));
@@ -376,7 +376,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_010: [** If the tags map is null then this method shall return empty set of pairs.**]**
+     **Tests_SRS_DEVICETWINDEVICE_25_010: [** If the tags map is null then this method shall return empty set of pairs.**]**
      */
     @Test
     public void getTagsGetsEmptyIfNotPresent()
@@ -395,7 +395,7 @@ public class DeviceTwinDeviceTest
     /*
      **Codes_SRS_DEVICETWINDEVICE_21_034: [** If the tags map is null then this method shall throw IllegalArgumentException.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getTagsVersionReturnsNullIfNoTags()
     {
         //arrange
@@ -445,11 +445,11 @@ public class DeviceTwinDeviceTest
         Integer version = testDevice.getTagsVersion();
 
         //assert
-        assertEquals(5, (int)version);
+        assertEquals(5, (int) version);
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_013: [** This method shall convert the desiredProperties map to a set of pairs and return with it. **]**
+     **Tests_SRS_DEVICETWINDEVICE_25_013: [** This method shall convert the desiredProperties map to a set of pairs and return with it. **]**
      */
     @Test
     public void getDesiredPropGets()
@@ -465,7 +465,7 @@ public class DeviceTwinDeviceTest
 
         //assert
         assertEquals(testDesProp.size(), actualDesProp.size());
-        for(Pair test : actualDesProp)
+        for (Pair test : actualDesProp)
         {
             assertTrue(test.getKey().equals("testDes"));
             assertTrue(test.getValue().equals("desObject"));
@@ -490,7 +490,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_005: [** This method shall convert the reported properties map to a set of pairs and return with it. **]**
+     **Tests_SRS_DEVICETWINDEVICE_25_005: [** This method shall convert the reported properties map to a set of pairs and return with it. **]**
      */
     @Test
     public void getReportedPropGets()
@@ -507,7 +507,7 @@ public class DeviceTwinDeviceTest
 
         //assert
         assertEquals(repMap.size(), actualRepProp.size());
-        for(Pair test : actualRepProp)
+        for (Pair test : actualRepProp)
         {
             assertTrue(test.getKey().equals("testRep"));
             assertTrue(test.getValue().equals("repObject"));
@@ -515,7 +515,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_006: [** If the reported properties map is null then this method shall return empty set of pairs.**]**
+     **Tests_SRS_DEVICETWINDEVICE_25_006: [** If the reported properties map is null then this method shall return empty set of pairs.**]**
      */
     @Test
     public void getReportedPropGetsEmptyIfNotPresent()
@@ -534,7 +534,7 @@ public class DeviceTwinDeviceTest
     /*
      **Codes_SRS_DEVICETWINDEVICE_21_038: [** If the reported properties is null then this method shall throw IllegalArgumentException.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getReportedPropertiesVersionReturnsNullIfNoReportedProperties()
     {
         //arrange
@@ -591,11 +591,11 @@ public class DeviceTwinDeviceTest
         Integer version = testDevice.getReportedPropertiesVersion();
 
         //assert
-        assertEquals(5, (int)version);
+        assertEquals(5, (int) version);
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_007: [** This method shall convert the set of pairs of tags to a map and save it. **]**
+     **Tests_SRS_DEVICETWINDEVICE_25_007: [** This method shall convert the set of pairs of tags to a map and save it. **]**
      */
     @Test
     public void setTagsSets()
@@ -611,7 +611,7 @@ public class DeviceTwinDeviceTest
         //assert
         Set<Pair> actualTags = testDevice.getTags();
         assertEquals(testTags.size(), actualTags.size());
-        for(Pair test : actualTags)
+        for (Pair test : actualTags)
         {
             assertTrue(test.getKey().equals("testTag"));
             assertTrue(test.getValue().equals("tagObject"));
@@ -620,9 +620,9 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_008: [** If the tags Set is null then this method shall throw IllegalArgumentException.**]**
+     **Tests_SRS_DEVICETWINDEVICE_25_008: [** If the tags Set is null then this method shall throw IllegalArgumentException.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setTagsThrowsIsNullInput()
     {
         //arrange
@@ -634,7 +634,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_011: [** This method shall convert the set of pairs of desiredProperties to a map and save it. **]**
+     **Tests_SRS_DEVICETWINDEVICE_25_011: [** This method shall convert the set of pairs of desiredProperties to a map and save it. **]**
      */
     @Test
     public void setDesiredPropSets()
@@ -650,7 +650,7 @@ public class DeviceTwinDeviceTest
         //assert
         Set<Pair> actualDesProp = testDevice.getDesiredProperties();
         assertEquals(testDesProp.size(), actualDesProp.size());
-        for(Pair test : actualDesProp)
+        for (Pair test : actualDesProp)
         {
             assertTrue(test.getKey().equals("testDes"));
             assertTrue(test.getValue().equals("desObject"));
@@ -659,9 +659,9 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_012: [** If the desiredProperties Set is null then this method shall throw IllegalArgumentException.**]**
+     **Tests_SRS_DEVICETWINDEVICE_25_012: [** If the desiredProperties Set is null then this method shall throw IllegalArgumentException.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setDesiredThrowsIfNullInput()
     {
         //arrange
@@ -677,7 +677,7 @@ public class DeviceTwinDeviceTest
     /*
      **Codes_SRS_DEVICETWINDEVICE_21_036: [** If the desired properties is null then this method shall throw IllegalArgumentException.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getDesiredPropertiesVersionReturnsNullIfNoDesiredProperties()
     {
         //arrange
@@ -727,7 +727,7 @@ public class DeviceTwinDeviceTest
         Integer version = testDevice.getDesiredPropertiesVersion();
 
         //assert
-        assertEquals(5, (int)version);
+        assertEquals(5, (int) version);
     }
 
     @Test
@@ -744,7 +744,7 @@ public class DeviceTwinDeviceTest
         //assert
         Set<Pair> actualRepProp = testDevice.getReportedProperties();
         assertEquals(testRepProp.size(), actualRepProp.size());
-        for(Pair test : actualRepProp)
+        for (Pair test : actualRepProp)
         {
             assertTrue(test.getKey().equals("testRep"));
             assertTrue(test.getValue().equals("repObject"));
@@ -789,7 +789,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_025: [** This method shall return the tags map**]**
+     **Tests_SRS_DEVICETWINDEVICE_25_025: [** This method shall return the tags map**]**
      */
     @Test
     public void getterGetsMapsTags()
@@ -806,7 +806,7 @@ public class DeviceTwinDeviceTest
         //assert
         assertEquals(testTags.size(), actualTags.size());
 
-        for(Map.Entry<String, Object> test : actualTags.entrySet())
+        for (Map.Entry<String, Object> test : actualTags.entrySet())
         {
             assertTrue(test.getKey().equals("testTag"));
             assertTrue(test.getValue().equals("tagObject"));
@@ -814,7 +814,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_024: [** This method shall save the tags map**]**
+     **Tests_SRS_DEVICETWINDEVICE_25_024: [** This method shall save the tags map**]**
      */
     @Test
     public void setterSetsMapsTags()
@@ -831,7 +831,7 @@ public class DeviceTwinDeviceTest
         TwinCollection actualTags = Deencapsulation.invoke(testDevice, "getTagsMap");
         assertEquals(testTags.size(), actualTags.size());
 
-        for(Map.Entry<String, Object> test : actualTags.entrySet())
+        for (Map.Entry<String, Object> test : actualTags.entrySet())
         {
             assertTrue(test.getKey().equals("testTag"));
             assertTrue(test.getValue().equals("tagObject"));
@@ -858,7 +858,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_026: [** This method shall return the reportedProperties map**]**
+     **Tests_SRS_DEVICETWINDEVICE_25_026: [** This method shall return the reportedProperties map**]**
      */
     @Test
     public void getterGetsMapsRep()
@@ -875,7 +875,7 @@ public class DeviceTwinDeviceTest
         //assert
         assertEquals(testRep.size(), actualTags.size());
 
-        for(Map.Entry<String, Object> test : actualTags.entrySet())
+        for (Map.Entry<String, Object> test : actualTags.entrySet())
         {
             assertTrue(test.getKey().equals("testRep"));
             assertTrue(test.getValue().equals("repObject"));
@@ -883,7 +883,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_022: [** This method shall save the reportedProperties map**]**
+     **Tests_SRS_DEVICETWINDEVICE_25_022: [** This method shall save the reportedProperties map**]**
      */
     @Test
     public void setterSetsMapsRep()
@@ -901,7 +901,7 @@ public class DeviceTwinDeviceTest
 
         assertEquals(testRep.size(), actualTags.size());
 
-        for(Map.Entry<String, Object> test : actualTags.entrySet())
+        for (Map.Entry<String, Object> test : actualTags.entrySet())
         {
             assertTrue(test.getKey().equals("testRep"));
             assertTrue(test.getValue().equals("repObject"));
@@ -918,7 +918,10 @@ public class DeviceTwinDeviceTest
         DeviceTwinDevice testDevice = new DeviceTwinDevice("testDevice");
         ConfigurationInfo info = new ConfigurationInfo();
         info.setStatus(ConfigurationStatus.TARGETED);
-        Map<String, ConfigurationInfo> configs = new HashMap<String, ConfigurationInfo>(){{put("abc",info);}};
+        Map<String, ConfigurationInfo> configs = new HashMap<String, ConfigurationInfo>()
+        {{
+            put("abc", info);
+        }};
         Deencapsulation.setField(testDevice, "configurations", configs);
 
         //act
@@ -927,7 +930,7 @@ public class DeviceTwinDeviceTest
         //assert
         assertEquals(1, actual.size());
 
-        for(Map.Entry<String, ConfigurationInfo> test : actual.entrySet())
+        for (Map.Entry<String, ConfigurationInfo> test : actual.entrySet())
         {
             assertTrue(test.getKey().equals("abc"));
             assertTrue(test.getValue().equals(info));
@@ -972,7 +975,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_027: [** This method shall return the desiredProperties map**]**
+     **Tests_SRS_DEVICETWINDEVICE_25_027: [** This method shall return the desiredProperties map**]**
      */
     @Test
     public void getterGetsMapsDes()
@@ -989,7 +992,7 @@ public class DeviceTwinDeviceTest
         //assert
         assertEquals(testRep.size(), actualTags.size());
 
-        for(Map.Entry<String, Object> test : actualTags.entrySet())
+        for (Map.Entry<String, Object> test : actualTags.entrySet())
         {
             assertTrue(test.getKey().equals("testRep"));
             assertTrue(test.getValue().equals("repObject"));
@@ -997,7 +1000,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_023: [** This method shall save the desiredProperties map**]**
+     **Tests_SRS_DEVICETWINDEVICE_25_023: [** This method shall save the desiredProperties map**]**
      */
     @Test
     public void setterSetsMapsDes()
@@ -1015,7 +1018,7 @@ public class DeviceTwinDeviceTest
 
         assertEquals(testRep.size(), actualTags.size());
 
-        for(Map.Entry<String, Object> test : actualTags.entrySet())
+        for (Map.Entry<String, Object> test : actualTags.entrySet())
         {
             assertTrue(test.getKey().equals("testRep"));
             assertTrue(test.getValue().equals("repObject"));
@@ -1068,8 +1071,8 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_015: [** This method shall append device id, etag, version, tags, desired and reported properties to string (if present) and return **]**
-    */
+     **Tests_SRS_DEVICETWINDEVICE_25_015: [** This method shall append device id, etag, version, tags, desired and reported properties to string (if present) and return **]**
+     */
     @Test
     public void toStringReturnsAllNoETag()
     {
@@ -1142,7 +1145,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_016: [** This method shall convert the tags map to string (if present) and return **]**
+     **Tests_SRS_DEVICETWINDEVICE_25_016: [** This method shall convert the tags map to string (if present) and return **]**
      */
     @Test
     public void tagsToStringReturnsTags()
@@ -1166,7 +1169,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_017: [** This method shall return an empty string if tags map is empty or null and return **]**
+     **Tests_SRS_DEVICETWINDEVICE_25_017: [** This method shall return an empty string if tags map is empty or null and return **]**
      */
     @Test
     public void tagsToStringReturnsEmptyIfTagsEmpty()
@@ -1182,7 +1185,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_018: [** This method shall convert the desiredProperties map to string (if present) and return **]**
+     **Tests_SRS_DEVICETWINDEVICE_25_018: [** This method shall convert the desiredProperties map to string (if present) and return **]**
      */
     @Test
     public void desiredToStringReturnsDesired()
@@ -1207,7 +1210,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_019: [** This method shall return an empty string if desiredProperties map is empty or null and return **]**
+     **Tests_SRS_DEVICETWINDEVICE_25_019: [** This method shall return an empty string if desiredProperties map is empty or null and return **]**
      */
     @Test
     public void desToStringReturnsEmptyIfTagsEmpty()
@@ -1223,7 +1226,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_020: [** This method shall convert the reportedProperties map to string (if present) and return **]**
+     **Tests_SRS_DEVICETWINDEVICE_25_020: [** This method shall convert the reportedProperties map to string (if present) and return **]**
      */
     @Test
     public void reportedToStringReturnsReported()
@@ -1249,7 +1252,7 @@ public class DeviceTwinDeviceTest
     }
 
     /*
-    **Tests_SRS_DEVICETWINDEVICE_25_021: [** This method shall return an empty string if reportedProperties map is empty or null and return **]**
+     **Tests_SRS_DEVICETWINDEVICE_25_021: [** This method shall return an empty string if reportedProperties map is empty or null and return **]**
      */
     @Test
     public void repToStringReturnsEmptyIfTagsEmpty()

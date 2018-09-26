@@ -31,16 +31,12 @@ public class ServiceEnrollmentSample
         System.out.println("Starting sample...");
 
         // *********************************** Create a Provisioning Service Client ************************************
-        ProvisioningServiceClient provisioningServiceClient =
-                ProvisioningServiceClient.createFromConnectionString(PROVISIONING_CONNECTION_STRING);
+        ProvisioningServiceClient provisioningServiceClient = ProvisioningServiceClient.createFromConnectionString(PROVISIONING_CONNECTION_STRING);
 
         // ******************************** Create a new individualEnrollment config **********************************
         System.out.println("\nCreate a new individualEnrollment...");
         Attestation attestation = new TpmAttestation(TPM_ENDORSEMENT_KEY);
-        IndividualEnrollment individualEnrollment =
-                new IndividualEnrollment(
-                        REGISTRATION_ID,
-                        attestation);
+        IndividualEnrollment individualEnrollment = new IndividualEnrollment(REGISTRATION_ID, attestation);
 
         // The following parameters are optional. Remove it if you don't need.
         individualEnrollment.setDeviceId(DEVICE_ID);
@@ -49,7 +45,7 @@ public class ServiceEnrollmentSample
 
         // ************************************ Create the individualEnrollment *************************************
         System.out.println("\nAdd new individualEnrollment...");
-        IndividualEnrollment individualEnrollmentResult =  provisioningServiceClient.createOrUpdateIndividualEnrollment(individualEnrollment);
+        IndividualEnrollment individualEnrollmentResult = provisioningServiceClient.createOrUpdateIndividualEnrollment(individualEnrollment);
         System.out.println("\nIndividualEnrollment created with success...");
         System.out.println(individualEnrollmentResult);
 
@@ -60,12 +56,10 @@ public class ServiceEnrollmentSample
 
         // ************************************ Query info of individualEnrollment ************************************
         System.out.println("\nCreate a query for enrollments...");
-        QuerySpecification querySpecification =
-                new QuerySpecificationBuilder("*", QuerySpecificationBuilder.FromType.ENROLLMENTS)
-                        .createSqlQuery();
+        QuerySpecification querySpecification = new QuerySpecificationBuilder("*", QuerySpecificationBuilder.FromType.ENROLLMENTS).createSqlQuery();
         Query query = provisioningServiceClient.createIndividualEnrollmentQuery(querySpecification);
 
-        while(query.hasNext())
+        while (query.hasNext())
         {
             System.out.println("\nQuery the next enrollments...");
             QueryResult queryResult = query.next();

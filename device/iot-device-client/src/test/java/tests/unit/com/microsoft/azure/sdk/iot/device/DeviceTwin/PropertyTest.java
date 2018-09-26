@@ -19,7 +19,7 @@ import static org.junit.Assert.assertNotNull;
 public class PropertyTest
 {
     /*
-    **Tests_SRS_Property_25_001: [**The constructor shall save the key and value representing this property.**]**
+     **Tests_SRS_Property_25_001: [**The constructor shall save the key and value representing this property.**]**
      */
     @Test
     public void constructorSetsKeyAndValue()
@@ -37,9 +37,7 @@ public class PropertyTest
     public void constructorWithMetadataSetsKeyAndValue()
     {
         //act
-        Property testProp = Deencapsulation.newInstance(Property.class,
-                new Class[]{String.class, Object.class, Integer.class, boolean.class, Date.class, Integer.class},
-                "TestProp", 1, null, false, null, null);
+        Property testProp = Deencapsulation.newInstance(Property.class, new Class[]{String.class, Object.class, Integer.class, boolean.class, Date.class, Integer.class}, "TestProp", 1, null, false, null, null);
 
         //assert
         assertNotNull(testProp);
@@ -48,9 +46,9 @@ public class PropertyTest
     }
 
     /*
-    **Tests_SRS_Property_25_002: [**If the key is null, the constructor shall throw an IllegalArgumentException.**]
+     **Tests_SRS_Property_25_002: [**If the key is null, the constructor shall throw an IllegalArgumentException.**]
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullKey()
     {
         //act
@@ -58,20 +56,18 @@ public class PropertyTest
 
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithMetadataThrowsOnNullKey()
     {
         //act
-        Property testProp = Deencapsulation.newInstance(Property.class,
-                new Class[]{String.class, Object.class, Integer.class, boolean.class},
-                null, 1, 1, false);
+        Property testProp = Deencapsulation.newInstance(Property.class, new Class[]{String.class, Object.class, Integer.class, boolean.class}, null, 1, 1, false);
 
     }
 
     /*
-    **Tests_SRS_Property_25_006: [**If the key contains illegal unicode control characters i.e ' ', '.', '$', the constructor shall throw an IllegalArgumentException.**]**
+     **Tests_SRS_Property_25_006: [**If the key contains illegal unicode control characters i.e ' ', '.', '$', the constructor shall throw an IllegalArgumentException.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnInvalidKey()
     {
         //act
@@ -79,7 +75,7 @@ public class PropertyTest
 
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnInvalidKey_2()
     {
         //act
@@ -87,7 +83,7 @@ public class PropertyTest
 
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnInvalidKey_3()
     {
         //act
@@ -95,7 +91,7 @@ public class PropertyTest
 
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnInvalidKey_4()
     {
         //act
@@ -103,44 +99,36 @@ public class PropertyTest
 
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithMetadataThrowsOnInvalidKey()
     {
         //act
-        Property testProp = Deencapsulation.newInstance(Property.class,
-                new Class[]{String.class, Object.class, Integer.class, boolean.class},
-                "Key with space", 1, 1, true);
+        Property testProp = Deencapsulation.newInstance(Property.class, new Class[]{String.class, Object.class, Integer.class, boolean.class}, "Key with space", 1, 1, true);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithMetadataThrowsOnInvalidKey_2()
     {
         //act
-        Property testProp = Deencapsulation.newInstance(Property.class,
-                new Class[]{String.class, Object.class, Integer.class, boolean.class},
-                "KeyWith$", 1, 1, true);
+        Property testProp = Deencapsulation.newInstance(Property.class, new Class[]{String.class, Object.class, Integer.class, boolean.class}, "KeyWith$", 1, 1, true);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithMetadataThrowsOnInvalidKey_3()
     {
         //act
-        Property testProp = Deencapsulation.newInstance(Property.class,
-                new Class[]{String.class, Object.class, Integer.class, boolean.class},
-                "KeyWith.", 1, 1, true);
+        Property testProp = Deencapsulation.newInstance(Property.class, new Class[]{String.class, Object.class, Integer.class, boolean.class}, "KeyWith.", 1, 1, true);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithMetadataThrowsOnInvalidKey_4()
     {
         //act
-        Property testProp = Deencapsulation.newInstance(Property.class,
-                new Class[]{String.class, Object.class, Integer.class, boolean.class},
-                "", 1, 1, true);
+        Property testProp = Deencapsulation.newInstance(Property.class, new Class[]{String.class, Object.class, Integer.class, boolean.class}, "", 1, 1, true);
     }
 
     /*
-    **Tests_SRS_Property_25_003: [**The function shall return the value of the key corresponding to this property.**]**
+     **Tests_SRS_Property_25_003: [**The function shall return the value of the key corresponding to this property.**]**
      */
     @Test
     public void getKeyGets()
@@ -154,8 +142,8 @@ public class PropertyTest
     }
 
     /*
-    **Tests_SRS_Property_25_004: [**The function shall return the value for this property.**]**
-    */
+     **Tests_SRS_Property_25_004: [**The function shall return the value for this property.**]**
+     */
     @Test
     public void getValueGets()
     {
@@ -169,7 +157,7 @@ public class PropertyTest
     }
 
     /*
-    **Tests_SRS_Property_25_005: [**The function shall overwrite the new value for old and return old value.**]**
+     **Tests_SRS_Property_25_005: [**The function shall overwrite the new value for old and return old value.**]**
      */
     @Test
     public void setValueSets()
@@ -199,15 +187,13 @@ public class PropertyTest
         //arrange
         final Date expectedLastUpdate = new Date();
         final Integer expectedLastUpdatedVersion = 123;
-        
+
         //act
-        Property testProp = Deencapsulation.newInstance(Property.class,
-                new Class[]{String.class, Object.class, Integer.class, boolean.class, Date.class, Integer.class},
-                "TestProp", 1, 5, true, expectedLastUpdate, expectedLastUpdatedVersion);
+        Property testProp = Deencapsulation.newInstance(Property.class, new Class[]{String.class, Object.class, Integer.class, boolean.class, Date.class, Integer.class}, "TestProp", 1, 5, true, expectedLastUpdate, expectedLastUpdatedVersion);
 
         //assert
         assertNotNull(testProp);
-        assertEquals((int)testProp.getVersion(), 5);
+        assertEquals((int) testProp.getVersion(), 5);
         assertEquals(true, testProp.getIsReported());
         assertEquals(expectedLastUpdatedVersion, testProp.getLastUpdatedVersion());
         assertEquals(expectedLastUpdate, testProp.getLastUpdated());

@@ -17,14 +17,9 @@ import java.nio.charset.StandardCharsets;
 
 public class UrlPathBuilder
 {
-    private String scope;
-    private ProvisioningDeviceClientTransportProtocol provisioningDeviceClientTransportProtocol;
-    private StringBuilder url;
-
     private static final String SLASH = "/";
     private static final String QUESTION = "?";
     private static final String EQUALS = "=";
-
     /*
      * Service Contract specific strings
      */
@@ -33,9 +28,13 @@ public class UrlPathBuilder
     private static final String REGISTER = "register";
     private static final String OPERATIONS = "operations";
     private static final String API_VERSION_STRING = "api-version";
+    private String scope;
+    private ProvisioningDeviceClientTransportProtocol provisioningDeviceClientTransportProtocol;
+    private StringBuilder url;
 
     /**
      * Constructor for Url Path builder
+     *
      * @param idScope scope id for Provisioning service which cannot be {@code null} or empty
      * @throws IllegalArgumentException is thrown when invalid parameters are given
      */
@@ -52,8 +51,9 @@ public class UrlPathBuilder
 
     /**
      * Constructor for Url Path builder
+     *
      * @param hostName HostName for Provisioning service which cannot be {@code null} or empty
-     * @param idScope scope id for Provisioning service which cannot be {@code null} or empty
+     * @param idScope  scope id for Provisioning service which cannot be {@code null} or empty
      * @param protocol One of the valid protocols. Cannot be {@code null}
      * @throws IllegalArgumentException is thrown when invalid parameters are given
      */
@@ -123,6 +123,7 @@ public class UrlPathBuilder
 
     /**
      * Generates URL Encoded SAS Token
+     *
      * @param registrationId Id for the registration. Cannot be {@code null} or empty
      * @return A string of format
      * @throws UnsupportedEncodingException if the string could not be encoded.
@@ -146,6 +147,7 @@ public class UrlPathBuilder
 
     /**
      * Generates Register URL/Path for the specified protocol
+     *
      * @param registrationId Id for the registration. Cannot be {@code null} or empty
      * @return A string of format for the specified protocol
      * @throws IOException If string could not be generated
@@ -179,8 +181,9 @@ public class UrlPathBuilder
 
     /**
      * Generates Request URL/Path for the specififed protocol
+     *
      * @param registrationId Id for the registration. Cannot be {@code null} or empty
-     * @param operationsId Id for the Operation. Cannot be {@code null} or empty
+     * @param operationsId   Id for the Operation. Cannot be {@code null} or empty
      * @return A string of format for the specified protocol
      * @throws IOException If string could not be generated
      */

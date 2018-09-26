@@ -25,8 +25,7 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
             // TPMI_ALG_HASH	nameAlg
             TPM_ALG_ID.SHA256,
             // TPMA_OBJECT  objectAttributes
-            new TPMA_OBJECT(TPMA_OBJECT.restricted, TPMA_OBJECT.decrypt, TPMA_OBJECT.fixedTPM, TPMA_OBJECT.fixedParent,
-                            TPMA_OBJECT.adminWithPolicy, TPMA_OBJECT.sensitiveDataOrigin),
+            new TPMA_OBJECT(TPMA_OBJECT.restricted, TPMA_OBJECT.decrypt, TPMA_OBJECT.fixedTPM, TPMA_OBJECT.fixedParent, TPMA_OBJECT.adminWithPolicy, TPMA_OBJECT.sensitiveDataOrigin),
             // TPM2B_DIGEST authPolicy
             javax.xml.bind.DatatypeConverter.parseHexBinary("837197674484b3f81a90cc8d46a5d724fd52d76e06520b64f2a1da1b331469aa"),
             // TPMU_PUBLIC_PARMS    parameters
@@ -37,8 +36,7 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
             // TPMI_ALG_HASH	nameAlg
             TPM_ALG_ID.SHA256,
             // TPMA_OBJECT  objectAttributes
-            new TPMA_OBJECT(TPMA_OBJECT.restricted, TPMA_OBJECT.decrypt, TPMA_OBJECT.fixedTPM, TPMA_OBJECT.fixedParent,
-                            TPMA_OBJECT.noDA, TPMA_OBJECT.userWithAuth, TPMA_OBJECT.sensitiveDataOrigin),
+            new TPMA_OBJECT(TPMA_OBJECT.restricted, TPMA_OBJECT.decrypt, TPMA_OBJECT.fixedTPM, TPMA_OBJECT.fixedParent, TPMA_OBJECT.noDA, TPMA_OBJECT.userWithAuth, TPMA_OBJECT.sensitiveDataOrigin),
             // TPM2B_DIGEST authPolicy
             new byte[0],
             // TPMU_PUBLIC_PARMS    parameters
@@ -53,6 +51,7 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
 
     /**
      * Constructor for creating a Security Provider on TPM hardware
+     *
      * @throws SecurityProviderException If the constructor could not start the TPM
      */
     public SecurityProviderTPMHsm() throws SecurityProviderException
@@ -69,6 +68,7 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
 
     /**
      * Constructor for creating a Security Provider on TPM hardware with the supplied Registration ID
+     *
      * @param registrationId A non {@code null} or empty value tied to this registration
      * @throws SecurityProviderException If the constructor could not start the TPM
      */
@@ -97,6 +97,7 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
 
     /**
      * Getter for the Registration ID if it was provided. Default is returned otherwise.
+     *
      * @return The registration ID tied to this registration instance
      * @throws SecurityProviderException If registration ID could not be extracted
      */
@@ -122,7 +123,7 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
         {
             throw new SecurityProviderException("ReadPublicResponse cannot be null");
         }
-        TPM_RC	rc = tpm._getLastResponseCode();
+        TPM_RC rc = tpm._getLastResponseCode();
 
         if (rc == TPM_RC.SUCCESS)
         {
@@ -131,12 +132,11 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
         }
         if (rc != TPM_RC.HANDLE)
         {
-            throw new SecurityProviderException("Unexpected failure {" +  rc.name() + "} of TPM2_ReadPublic for {" + primaryRole + "}");
+            throw new SecurityProviderException("Unexpected failure {" + rc.name() + "} of TPM2_ReadPublic for {" + primaryRole + "}");
         }
 
         TPMS_SENSITIVE_CREATE sens = new TPMS_SENSITIVE_CREATE(new byte[0], new byte[0]);
-        CreatePrimaryResponse cpResp = tpm.CreatePrimary(TPM_HANDLE.from(hierarchy), sens, inPub,
-                                                         new byte[0], new TPMS_PCR_SELECTION[0]);
+        CreatePrimaryResponse cpResp = tpm.CreatePrimary(TPM_HANDLE.from(hierarchy), sens, inPub, new byte[0], new TPMS_PCR_SELECTION[0]);
 
         if (cpResp == null)
         {
@@ -151,7 +151,7 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
     private void clearPersistent(Tpm tpm, TPM_HANDLE hPersistent, String keyRole) throws SecurityProviderException
     {
         tpm._allowErrors().ReadPublic(hPersistent);
-        TPM_RC	rc = tpm._getLastResponseCode();
+        TPM_RC rc = tpm._getLastResponseCode();
         if (rc == TPM_RC.SUCCESS)
         {
             tpm.EvictControl(TPM_HANDLE.from(TPM_RH.OWNER), hPersistent, hPersistent);
@@ -165,8 +165,8 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
     // NOTE: For now only HMAC signing is supported.
     private byte[] signData(Tpm tpm, TPMT_PUBLIC idKeyPub, byte[] tokenData) throws SecurityProviderException
     {
-        TPM_ALG_ID	idKeyHashAlg = ((TPMS_SCHEME_HMAC)((TPMS_KEYEDHASH_PARMS)idKeyPub.parameters).scheme).hashAlg;
-        int 		MaxInputBuffer = TpmHelpers.getTpmProperty(tpm, TPM_PT.INPUT_BUFFER);
+        TPM_ALG_ID idKeyHashAlg = ((TPMS_SCHEME_HMAC) ((TPMS_KEYEDHASH_PARMS) idKeyPub.parameters).scheme).hashAlg;
+        int MaxInputBuffer = TpmHelpers.getTpmProperty(tpm, TPM_PT.INPUT_BUFFER);
 
         if (tokenData.length <= MaxInputBuffer)
         {
@@ -176,7 +176,7 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
         int curPos = 0;
         int bytesLeft = tokenData.length;
 
-        TPM_HANDLE  hSeq = tpm.HMAC_Start(ID_KEY_PERSISTENT_HANDLE, new byte[0], idKeyHashAlg);
+        TPM_HANDLE hSeq = tpm.HMAC_Start(ID_KEY_PERSISTENT_HANDLE, new byte[0], idKeyHashAlg);
 
         if (hSeq == null)
         {
@@ -195,6 +195,7 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
 
     /**
      * Activates the Identity with the nonce provided from the service
+     *
      * @param key Key for activating the TPM
      * @return {@code null} value is returned. Place holder for eventual returns.
      * @throws SecurityProviderException If activation was not successful.
@@ -204,12 +205,12 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
     {
         InByteBuf actBlob = new InByteBuf(Arrays.copyOfRange(key, 0, key.length));
 
-        TPM2B_ID_OBJECT         credBlob = TPM2B_ID_OBJECT.fromTpm(actBlob);
-        TPM2B_ENCRYPTED_SECRET  encSecret = TPM2B_ENCRYPTED_SECRET.fromTpm(actBlob);
-        TPM2B_PRIVATE           idKeyDupBlob = TPM2B_PRIVATE.fromTpm(actBlob);
-        TPM2B_ENCRYPTED_SECRET  encWrapKey = TPM2B_ENCRYPTED_SECRET.fromTpm(actBlob);
+        TPM2B_ID_OBJECT credBlob = TPM2B_ID_OBJECT.fromTpm(actBlob);
+        TPM2B_ENCRYPTED_SECRET encSecret = TPM2B_ENCRYPTED_SECRET.fromTpm(actBlob);
+        TPM2B_PRIVATE idKeyDupBlob = TPM2B_PRIVATE.fromTpm(actBlob);
+        TPM2B_ENCRYPTED_SECRET encWrapKey = TPM2B_ENCRYPTED_SECRET.fromTpm(actBlob);
         idKeyPub = TPM2B_PUBLIC.fromTpm(actBlob);
-        TPM2B_DATA				encUriData = TPM2B_DATA.fromTpm(actBlob);
+        TPM2B_DATA encUriData = TPM2B_DATA.fromTpm(actBlob);
 
         if (idKeyPub == null)
         {
@@ -221,9 +222,7 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
         // Prepare a policy session to be used with ActivateCredential()
         //
         //SRS_SecurityProviderTPMHsm_25_009: [ This method shall start Authorization session with TPM. ]
-        StartAuthSessionResponse sasResp = tpm.StartAuthSession(TPM_HANDLE.NULL, TPM_HANDLE.NULL,
-                                                                Helpers.getRandom(20), new byte[0], TPM_SE.POLICY,
-                                                                new TPMT_SYM_DEF(TPM_ALG_ID.NULL, 0, TPM_ALG_ID.NULL), TPM_ALG_ID.SHA256);
+        StartAuthSessionResponse sasResp = tpm.StartAuthSession(TPM_HANDLE.NULL, TPM_HANDLE.NULL, Helpers.getRandom(20), new byte[0], TPM_SE.POLICY, new TPMT_SYM_DEF(TPM_ALG_ID.NULL, 0, TPM_ALG_ID.NULL), TPM_ALG_ID.SHA256);
 
         if (sasResp == null)
         {
@@ -232,14 +231,12 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
         }
 
         //SRS_SecurityProviderTPMHsm_25_011: [ This method shall set the policy secret on to TPM using the endorsement. ]
-        tpm.PolicySecret(TPM_HANDLE.from(TPM_RH.ENDORSEMENT), sasResp.handle,
-                         new byte[0], new byte[0], new byte[0], 0);
+        tpm.PolicySecret(TPM_HANDLE.from(TPM_RH.ENDORSEMENT), sasResp.handle, new byte[0], new byte[0], new byte[0], 0);
 
         // Use ActivateCredential() to decrypt symmetric key that is used as an inner protector
         // of the duplication blob of the new Device ID key generated by Service.
         //SRS_SecurityProviderTPMHsm_25_012: [ This method shall activate the credential for the session. ]
-        byte[] innerWrapKey = tpm._withSessions(TPM_HANDLE.pwSession(new byte[0]), sasResp.handle)
-                .ActivateCredential(SRK_PERSISTENT_HANDLE, EK_PERSISTENT_HANDLE, credBlob.credential, encSecret.secret);
+        byte[] innerWrapKey = tpm._withSessions(TPM_HANDLE.pwSession(new byte[0]), sasResp.handle).ActivateCredential(SRK_PERSISTENT_HANDLE, EK_PERSISTENT_HANDLE, credBlob.credential, encSecret.secret);
 
         if (innerWrapKey == null)
         {
@@ -311,7 +308,7 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
                 new TPM2B_DIGEST_Symcipher());
 
         // URI data are encrypted with the same symmetric key used as the inner protector of the new Device ID key duplication blob.
-        TPMS_SENSITIVE_CREATE sensCreate = new TPMS_SENSITIVE_CREATE (new byte[0], innerWrapKey);
+        TPMS_SENSITIVE_CREATE sensCreate = new TPMS_SENSITIVE_CREATE(new byte[0], innerWrapKey);
         //SRS_SecurityProviderTPMHsm_25_022: [ This method shall create TPMS_SENSITIVE_CREATE for the inner wrap key . ]
         CreateResponse crResp = tpm.Create(SRK_PERSISTENT_HANDLE, sensCreate, symTemplate, new byte[0], new TPMS_PCR_SELECTION[0]);
 
@@ -335,7 +332,7 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
 
         //SRS_SecurityProviderTPMHsm_25_026: [ This method shall Encrypt Decrypt the symmetric Key. ]
         //TODO : Use software encryption/decryption using AES instead of TPM command to support international markets.
-        EncryptDecrypt2Response edResp = tpm.EncryptDecrypt2(hSymKey, encUriData.buffer, (byte)1, TPM_ALG_ID.CFB, iv);
+        EncryptDecrypt2Response edResp = tpm.EncryptDecrypt2(hSymKey, encUriData.buffer, (byte) 1, TPM_ALG_ID.CFB, iv);
 
         if (edResp == null)
         {
@@ -350,6 +347,7 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
 
     /**
      * This method signs the TPM with the provided device ID
+     *
      * @param deviceIdData A non {@code null} or empty value for the device ID
      * @return The signature after signing data.
      * @throws SecurityProviderException If signing was not successful
@@ -377,6 +375,7 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
 
     /**
      * Getter for extracting EndorsementKey from TPM
+     *
      * @return The Endorsement Key from TPM
      * @throws SecurityProviderException If endorsement key could not be extracted.
      */
@@ -389,6 +388,7 @@ public class SecurityProviderTPMHsm extends SecurityProviderTpm
 
     /**
      * Getter for extracting StorageRootKey from TPM
+     *
      * @return The StorageRootKey from TPM
      * @throws SecurityProviderException If StorageRootKey could not be extracted.
      */

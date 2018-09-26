@@ -61,51 +61,6 @@ public class SecurityProviderTpmTest
     @Mocked
     UUID mockedUUID;
 
-    class SecurityProviderTPMTestImpl extends SecurityProviderTpm
-    {
-        byte[] ek;
-        SecurityProviderTPMTestImpl(byte[] ek)
-        {
-            this.ek = ek;
-        }
-
-        @Override
-        public byte[] activateIdentityKey(byte[] key) throws SecurityProviderException
-        {
-            return TEST_ACTIVATION;
-        }
-
-        @Override
-        public byte[] getEndorsementKey() throws SecurityProviderException
-        {
-            return ek;
-        }
-
-        @Override
-        public byte[] getStorageRootKey() throws SecurityProviderException
-        {
-            return STORAGE_ROOT_KEY;
-        }
-
-        @Override
-        public byte[] signWithIdentity(byte[] data) throws SecurityProviderException
-        {
-            return TEST_SIGN_DATA;
-        }
-
-        @Override
-        public String getRegistrationId() throws SecurityProviderException
-        {
-            return super.getRegistrationId();
-        }
-
-        @Override
-        public SSLContext getSSLContext() throws SecurityProviderException
-        {
-            return super.getSSLContext();
-        }
-    }
-
     //SRS_SecurityClientTpm_25_001: [ This method shall retrieve the EnrollmentKey from the implementation of this abstract class. ]
     //SRS_SecurityClientTpm_25_002: [ This method shall hash the EnrollmentKey using SHA-256. ]
     //SRS_SecurityClientTpm_25_003: [ This method shall convert the resultant hash to Base32 to convert all the data to be case agnostic and remove "=" from the string. ]
@@ -132,7 +87,7 @@ public class SecurityProviderTpmTest
     }
 
     //SRS_SecurityClientTpm_25_008: [ This method shall throw SecurityProviderException if any of the underlying API's in generating registration Id. ]
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void getRegistrationIdThrowsSecurityClientException() throws SecurityProviderException, NoSuchAlgorithmException
     {
         //arrange
@@ -176,7 +131,7 @@ public class SecurityProviderTpmTest
     }
 
     //SRS_SecurityClientTpm_25_005: [ This method shall throw SecurityProviderException if any of the underlying API's in generating SSL context fails. ]
-    @Test (expected = SecurityProviderException.class)
+    @Test(expected = SecurityProviderException.class)
     public void getSSLContextThrowsUnderlyingException() throws SecurityProviderException, KeyStoreException
     {
         //arrange
@@ -191,5 +146,51 @@ public class SecurityProviderTpmTest
 
         //act
         securityClientTpm.getSSLContext();
+    }
+
+    class SecurityProviderTPMTestImpl extends SecurityProviderTpm
+    {
+        byte[] ek;
+
+        SecurityProviderTPMTestImpl(byte[] ek)
+        {
+            this.ek = ek;
+        }
+
+        @Override
+        public byte[] activateIdentityKey(byte[] key) throws SecurityProviderException
+        {
+            return TEST_ACTIVATION;
+        }
+
+        @Override
+        public byte[] getEndorsementKey() throws SecurityProviderException
+        {
+            return ek;
+        }
+
+        @Override
+        public byte[] getStorageRootKey() throws SecurityProviderException
+        {
+            return STORAGE_ROOT_KEY;
+        }
+
+        @Override
+        public byte[] signWithIdentity(byte[] data) throws SecurityProviderException
+        {
+            return TEST_SIGN_DATA;
+        }
+
+        @Override
+        public String getRegistrationId() throws SecurityProviderException
+        {
+            return super.getRegistrationId();
+        }
+
+        @Override
+        public SSLContext getSSLContext() throws SecurityProviderException
+        {
+            return super.getSSLContext();
+        }
     }
 }

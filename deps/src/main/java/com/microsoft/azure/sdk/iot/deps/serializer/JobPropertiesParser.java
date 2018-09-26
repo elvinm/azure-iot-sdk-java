@@ -12,56 +12,46 @@ import java.util.Date;
 
 public class JobPropertiesParser
 {
-    private transient static Gson gson = new Gson();
-
     private static final String JOB_ID_NAME = "jobId";
+    private static final String START_TIME_UTC_NAME = "startTimeUtc";
+    private static final String END_TIME_UTC_NAME = "endTimeUtc";
+    private static final String TYPE_NAME = "type";
+    private static final String STATUS_NAME = "status";
+    private static final String PROGRESS_NAME = "progress";
+    private static final String INPUT_BLOB_CONTAINER_URI_NAME = "inputBlobContainerUri";
+    private static final String OUTPUT_BLOB_CONTAINER_URI_NAME = "outputBlobContainerUri";
+    private static final String EXCLUDE_KEYS_IN_EXPORT_NAME = "excludeKeysInExport";
+    private static final String FAILURE_REASON_NAME = "failureReason";
+    private transient static Gson gson = new Gson();
     @Expose(serialize = true, deserialize = true)
     @SerializedName(JOB_ID_NAME)
     private String jobId;
-
-    private static final String START_TIME_UTC_NAME = "startTimeUtc";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(START_TIME_UTC_NAME)
     private String startTimeUtcString;
     private transient Date startTimeUtc;
-
-    private static final String END_TIME_UTC_NAME = "endTimeUtc";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(END_TIME_UTC_NAME)
     private String endTimeUtcString;
     private transient Date endTimeUtc;
-
-    private static final String TYPE_NAME = "type";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(TYPE_NAME)
     private String type;
-
-    private static final String STATUS_NAME = "status";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(STATUS_NAME)
     private String status;
-
-    private static final String PROGRESS_NAME = "progress";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(PROGRESS_NAME)
     private int progress;
-
-    private static final String INPUT_BLOB_CONTAINER_URI_NAME = "inputBlobContainerUri";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(INPUT_BLOB_CONTAINER_URI_NAME)
     private String inputBlobContainerUri;
-
-    private static final String OUTPUT_BLOB_CONTAINER_URI_NAME = "outputBlobContainerUri";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(OUTPUT_BLOB_CONTAINER_URI_NAME)
     private String outputBlobContainerUri;
-
-    private static final String EXCLUDE_KEYS_IN_EXPORT_NAME = "excludeKeysInExport";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(EXCLUDE_KEYS_IN_EXPORT_NAME)
     private boolean excludeKeysInExport;
-
-    private static final String FAILURE_REASON_NAME = "failureReason";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(FAILURE_REASON_NAME)
     private String failureReason;
@@ -76,9 +66,10 @@ public class JobPropertiesParser
 
     /**
      * Constructor for a JobPropertiesParser object that is built from the provided Json
+     *
      * @param json the json to build the JobPropertiesParser from
      * @throws IllegalArgumentException if the provided Json is null, empty, cannot be parsed,
-     * or if the provided Json is missing any of the type, inputBlobContainerUri or outputBlobContainerUri fields
+     *                                  or if the provided Json is missing any of the type, inputBlobContainerUri or outputBlobContainerUri fields
      */
     public JobPropertiesParser(String json) throws IllegalArgumentException
     {
@@ -129,6 +120,7 @@ public class JobPropertiesParser
 
     /**
      * Converts this into json and returns it
+     *
      * @return the json representation of this
      */
     public String toJson()
@@ -158,6 +150,17 @@ public class JobPropertiesParser
     }
 
     /**
+     * Setter for Type
+     *
+     * @param type the value to set Type to
+     */
+    public void setType(String type)
+    {
+        //Codes_SRS_JOB_PROPERTIES_PARSER_34_011: [This method shall set the value of this object's type equal to the provided value.]
+        this.type = type;
+    }
+
+    /**
      * Getter for inputBlobContainerUri
      *
      * @return The value of inputBlobContainerUri
@@ -169,6 +172,17 @@ public class JobPropertiesParser
     }
 
     /**
+     * Setter for InputBlobContainerUri
+     *
+     * @param inputBlobContainerUri the value to set InputBlobContainerUri to
+     */
+    public void setInputBlobContainerUri(String inputBlobContainerUri)
+    {
+        //Codes_SRS_JOB_PROPERTIES_PARSER_34_013: [This method shall set the value of this object's inputBlobContainerUri equal to the provided value.]
+        this.inputBlobContainerUri = inputBlobContainerUri;
+    }
+
+    /**
      * Getter for outputBlobContainerUri
      *
      * @return The value of outputBlobContainerUri
@@ -177,6 +191,17 @@ public class JobPropertiesParser
     {
         //Codes_SRS_JOB_PROPERTIES_PARSER_34_016: [This method shall return the value of this object's outputBlobContainerUri.]
         return outputBlobContainerUri;
+    }
+
+    /**
+     * Setter for OutputBlobContainerUri
+     *
+     * @param outputBlobContainerUri the value to set OutputBlobContainerUri to
+     */
+    public void setOutputBlobContainerUri(String outputBlobContainerUri)
+    {
+        //Codes_SRS_JOB_PROPERTIES_PARSER_34_015: [This method shall set the value of this object's outputBlobContainerUri equal to the provided value.]
+        this.outputBlobContainerUri = outputBlobContainerUri;
     }
 
     /**
@@ -192,6 +217,7 @@ public class JobPropertiesParser
 
     /**
      * Setter for jobId
+     *
      * @param jobId the value to set jobId to
      * @throws IllegalArgumentException if the provided jobId is null
      */
@@ -219,61 +245,6 @@ public class JobPropertiesParser
     }
 
     /**
-     * Getter for endTimeUtc
-     *
-     * @return The value of endTimeUtc
-     */
-    public Date getEndTimeUtc()
-    {
-        //Codes_SRS_JOB_PROPERTIES_PARSER_34_022: [This method shall return the value of this object's endTimeUtc.]
-        return endTimeUtc;
-    }
-
-    /**
-     * Getter for status
-     *
-     * @return The value of status
-     */
-    public String getStatus()
-    {
-        //Codes_SRS_JOB_PROPERTIES_PARSER_34_024: [This method shall return the value of this object's status.]
-        return status;
-    }
-
-    /**
-     * Getter for progress
-     *
-     * @return The value of progress
-     */
-    public int getProgress()
-    {
-        //Codes_SRS_JOB_PROPERTIES_PARSER_34_026: [This method shall return the value of this object's progress.]
-        return progress;
-    }
-
-    /**
-     * Getter for excludeKeysInExport
-     *
-     * @return The value of excludeKeysInExport
-     */
-    public boolean isExcludeKeysInExport()
-    {
-        //Codes_SRS_JOB_PROPERTIES_PARSER_34_028: [This method shall return the value of this object's excludeKeysInExport.]
-        return excludeKeysInExport;
-    }
-
-    /**
-     * Getter for failureReason
-     *
-     * @return The value of failureReason
-     */
-    public String getFailureReason()
-    {
-        //Codes_SRS_JOB_PROPERTIES_PARSER_34_030: [This method shall return the value of this object's failureReason.]
-        return failureReason;
-    }
-
-    /**
      * Setter for StartTimeUtc
      *
      * @param startTimeUtc the value to set StartTimeUtc to
@@ -291,6 +262,17 @@ public class JobPropertiesParser
         {
             this.startTimeUtcString = ParserUtility.getDateStringFromDate(startTimeUtc);
         }
+    }
+
+    /**
+     * Getter for endTimeUtc
+     *
+     * @return The value of endTimeUtc
+     */
+    public Date getEndTimeUtc()
+    {
+        //Codes_SRS_JOB_PROPERTIES_PARSER_34_022: [This method shall return the value of this object's endTimeUtc.]
+        return endTimeUtc;
     }
 
     /**
@@ -314,14 +296,14 @@ public class JobPropertiesParser
     }
 
     /**
-     * Setter for Type
+     * Getter for status
      *
-     * @param type the value to set Type to
+     * @return The value of status
      */
-    public void setType(String type)
+    public String getStatus()
     {
-        //Codes_SRS_JOB_PROPERTIES_PARSER_34_011: [This method shall set the value of this object's type equal to the provided value.]
-        this.type = type;
+        //Codes_SRS_JOB_PROPERTIES_PARSER_34_024: [This method shall return the value of this object's status.]
+        return status;
     }
 
     /**
@@ -336,6 +318,17 @@ public class JobPropertiesParser
     }
 
     /**
+     * Getter for progress
+     *
+     * @return The value of progress
+     */
+    public int getProgress()
+    {
+        //Codes_SRS_JOB_PROPERTIES_PARSER_34_026: [This method shall return the value of this object's progress.]
+        return progress;
+    }
+
+    /**
      * Setter for Progress
      *
      * @param progress the value to set Progress to
@@ -347,25 +340,14 @@ public class JobPropertiesParser
     }
 
     /**
-     * Setter for InputBlobContainerUri
+     * Getter for excludeKeysInExport
      *
-     * @param inputBlobContainerUri the value to set InputBlobContainerUri to
+     * @return The value of excludeKeysInExport
      */
-    public void setInputBlobContainerUri(String inputBlobContainerUri)
+    public boolean isExcludeKeysInExport()
     {
-        //Codes_SRS_JOB_PROPERTIES_PARSER_34_013: [This method shall set the value of this object's inputBlobContainerUri equal to the provided value.]
-        this.inputBlobContainerUri = inputBlobContainerUri;
-    }
-
-    /**
-     * Setter for OutputBlobContainerUri
-     *
-     * @param outputBlobContainerUri the value to set OutputBlobContainerUri to
-     */
-    public void setOutputBlobContainerUri(String outputBlobContainerUri)
-    {
-        //Codes_SRS_JOB_PROPERTIES_PARSER_34_015: [This method shall set the value of this object's outputBlobContainerUri equal to the provided value.]
-        this.outputBlobContainerUri = outputBlobContainerUri;
+        //Codes_SRS_JOB_PROPERTIES_PARSER_34_028: [This method shall return the value of this object's excludeKeysInExport.]
+        return excludeKeysInExport;
     }
 
     /**
@@ -377,6 +359,17 @@ public class JobPropertiesParser
     {
         //Codes_SRS_JOB_PROPERTIES_PARSER_34_027: [This method shall set the value of this object's excludeKeysInExport equal to the provided value.]
         this.excludeKeysInExport = excludeKeysInExport;
+    }
+
+    /**
+     * Getter for failureReason
+     *
+     * @return The value of failureReason
+     */
+    public String getFailureReason()
+    {
+        //Codes_SRS_JOB_PROPERTIES_PARSER_34_030: [This method shall return the value of this object's failureReason.]
+        return failureReason;
     }
 
     /**

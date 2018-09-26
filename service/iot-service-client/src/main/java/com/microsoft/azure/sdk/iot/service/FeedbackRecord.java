@@ -14,6 +14,12 @@ import java.time.Instant;
 public class FeedbackRecord
 {
     private Instant enqueuedTimeUtc;
+    private String originalMessageId;
+    private String correlationId;
+    private FeedbackStatusCode statusCode;
+    private String description;
+    private String deviceGenerationId;
+    private String deviceId;
 
     public Instant getEnqueuedTimeUtc()
     {
@@ -25,8 +31,6 @@ public class FeedbackRecord
         this.enqueuedTimeUtc = enqueuedTimeUtc;
     }
 
-    private String originalMessageId;
-
     public String getOriginalMessageId()
     {
         return originalMessageId;
@@ -36,8 +40,6 @@ public class FeedbackRecord
     {
         this.originalMessageId = originalMessageId;
     }
-
-    private String correlationId;
 
     public String getCorrelationId()
     {
@@ -49,8 +51,6 @@ public class FeedbackRecord
         this.correlationId = correlationId;
     }
 
-    private FeedbackStatusCode statusCode;
-
     public FeedbackStatusCode getStatusCode()
     {
         return statusCode;
@@ -60,8 +60,6 @@ public class FeedbackRecord
     {
         this.statusCode = statusCode;
     }
-
-    private String description;
 
     public String getDescription()
     {
@@ -73,8 +71,6 @@ public class FeedbackRecord
         this.description = description;
     }
 
-    private String deviceGenerationId;
-
     public String getDeviceGenerationId()
     {
         return deviceGenerationId;
@@ -84,8 +80,6 @@ public class FeedbackRecord
     {
         this.deviceGenerationId = deviceGenerationId;
     }
-
-    private String deviceId;
 
     public String getDeviceId()
     {

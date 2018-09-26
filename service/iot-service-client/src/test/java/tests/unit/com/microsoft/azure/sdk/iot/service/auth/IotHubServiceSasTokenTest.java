@@ -21,14 +21,13 @@ import java.nio.charset.StandardCharsets;
 import static org.junit.Assert.assertEquals;
 
 /**
- *
  * @author zolvarga
  */
 public class IotHubServiceSasTokenTest
 {
     // Tests_SRS_SERVICE_SDK_JAVA_IOTHUBSERVICESASTOKEN_12_001: [The constructor shall throw IllegalArgumentException if the input object is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_null()
     {
         // Arrange
@@ -65,11 +64,12 @@ public class IotHubServiceSasTokenTest
             System system;
             SecretKeySpec secretKeySpec;
             Mac mac;
+
             {
-                urlEncoder.encode(hostName.toLowerCase(),String.valueOf(StandardCharsets.UTF_8));
+                urlEncoder.encode(hostName.toLowerCase(), String.valueOf(StandardCharsets.UTF_8));
                 system.currentTimeMillis();
                 Base64.decodeBase64Local(sharedAccessKey.getBytes(charset));
-                byte[] body = { 1 };
+                byte[] body = {1};
                 secretKeySpec = new SecretKeySpec(body, cryptoProvider);
                 mac.getInstance(cryptoProvider);
             }
@@ -108,7 +108,7 @@ public class IotHubServiceSasTokenTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_IOTHUBSERVICESASTOKEN_12_007: [The constructor shall throw Exception if building the token failed]
     // Assert
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void constructor_buil_token_failed() throws Exception
     {
         // Arrange

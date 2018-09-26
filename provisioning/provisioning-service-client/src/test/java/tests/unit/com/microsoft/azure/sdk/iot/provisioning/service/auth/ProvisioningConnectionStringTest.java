@@ -19,14 +19,13 @@ import static org.junit.Assert.assertEquals;
  */
 public class ProvisioningConnectionStringTest
 {
-    @Mocked
-    AuthenticationMethod mockedAuthenticationMethod;
-
     private static final String VALID_HOST_NAME_PROPERTY_NAME = "validdeviceprovisioningservicename.azure.net";
     private static final String VALID_SHARED_ACCESS_KEY_NAME_PROPERTY_NAME = "SharedAccessKeyName";
     private static final String VALID_SHARED_ACCESS_KEY_PROPERTY_NAME = "SharedAccessKey";
     private static final String VALID_SHARED_ACCESS_SIGNATURE_PROPERTY_NAME = "SharedAccessSignature";
     private static final String VALID_DEVICE_PROVISIONING_SERVICE_NAME = "validdeviceprovisioningservicename";
+    @Mocked
+    AuthenticationMethod mockedAuthenticationMethod;
 
     ProvisioningConnectionString buildProvisioningConnectionString()
     {
@@ -67,11 +66,7 @@ public class ProvisioningConnectionStringTest
         String result = provisioningConnectionString.toString();
 
         // assert
-        assertEquals(
-                "HostName=" + VALID_HOST_NAME_PROPERTY_NAME +
-                ";SharedAccessKeyName=" + VALID_SHARED_ACCESS_KEY_NAME_PROPERTY_NAME +
-                ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY_PROPERTY_NAME +
-                ";SharedAccessSignature=" + VALID_SHARED_ACCESS_SIGNATURE_PROPERTY_NAME, result);
+        assertEquals("HostName=" + VALID_HOST_NAME_PROPERTY_NAME + ";SharedAccessKeyName=" + VALID_SHARED_ACCESS_KEY_NAME_PROPERTY_NAME + ";SharedAccessKey=" + VALID_SHARED_ACCESS_KEY_PROPERTY_NAME + ";SharedAccessSignature=" + VALID_SHARED_ACCESS_SIGNATURE_PROPERTY_NAME, result);
     }
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_21_003: [The getDeviceProvisioningServiceName shall return the stored deviceProvisioningServiceName.] */

@@ -13,7 +13,8 @@ import org.junit.runner.Description;
 public class MethodNameLoggingIntegrationTest
 {
     @Rule
-    public TestRule watcher = new TestWatcher() {
+    public TestRule watcher = new TestWatcher()
+    {
         protected void starting(Description description) {
             System.out.println("Starting test: " + description.getMethodName());
         }

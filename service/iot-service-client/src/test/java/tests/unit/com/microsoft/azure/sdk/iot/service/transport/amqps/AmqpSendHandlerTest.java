@@ -51,35 +51,59 @@ import java.util.concurrent.LinkedBlockingQueue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/** Unit tests for AmqpSendHandler */
+/**
+ * Unit tests for AmqpSendHandler
+ */
 @RunWith(JMockit.class)
 public class AmqpSendHandlerTest
 {
+    @Mocked
+    Handshaker handshaker;
+    @Mocked
+    Proton proton;
+    @Mocked
+    Message message;
+    @Mocked
+    Message messageWithException;
+    @Mocked
+    Properties properties;
+    @Mocked
+    Binary binary;
+    @Mocked
+    Section section;
+    @Mocked
+    Data data;
+    @Mocked
+    Event event;
+    @Mocked
+    Transport transport;
+    @Mocked
+    TransportInternal transportInternal;
+    @Mocked
+    Connection connection;
+    @Mocked
+    WebSocketImpl webSocket;
+    @Mocked
+    Sasl sasl;
+    @Mocked
+    SslDomain sslDomain;
+    @Mocked
+    Session session;
+    @Mocked
+    Sender sender;
+    @Mocked
+    Link link;
+    @Mocked
+    Target target;
+    @Mocked
+    Delivery delivery;
+    @Mocked
+    Disposition disposition;
+    @Mocked
+    AmqpResponseVerification responseVerification;
+    @Mocked
+    IotHubSSLContext mockedIotHubSSLContext;
     private Integer exceptionCount = 0;
-
-    @Mocked Handshaker handshaker;
-    @Mocked Proton proton;
-    @Mocked Message message;
-    @Mocked Message messageWithException;
-    @Mocked Properties properties;
-    @Mocked Binary binary;
-    @Mocked Section section;
-    @Mocked Data data;
-    @Mocked Event event;
-    @Mocked Transport transport;
-    @Mocked TransportInternal transportInternal;
-    @Mocked Connection connection;
-    @Mocked WebSocketImpl webSocket;
-    @Mocked Sasl sasl;
-    @Mocked SslDomain sslDomain;
-    @Mocked Session session;
-    @Mocked Sender sender;
-    @Mocked Link link;
-    @Mocked Target target;
-    @Mocked Delivery delivery;
-    @Mocked Disposition disposition;
-    @Mocked AmqpResponseVerification responseVerification;
-    @Mocked IotHubSSLContext mockedIotHubSSLContext;
 
     // Test_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_12_001: [The constructor shall copy all input parameters to private member variables for event processing]
     // Test_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_12_002: [The constructor shall concatenate the host name with the port]
@@ -113,7 +137,7 @@ public class AmqpSendHandlerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_12_001: [The constructor shall throw IllegalArgumentException if any of the input parameter is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_checks_if_hostName_null()
     {
         // Arrange
@@ -127,7 +151,7 @@ public class AmqpSendHandlerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_12_001: [The constructor shall throw IllegalArgumentException if any of the input parameter is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_checks_if_hostName_empty()
     {
         // Arrange
@@ -141,7 +165,7 @@ public class AmqpSendHandlerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_12_001: [The constructor shall throw IllegalArgumentException if any of the input parameter is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_checks_if_userName_null()
     {
         // Arrange
@@ -155,7 +179,7 @@ public class AmqpSendHandlerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_12_001: [The constructor shall throw IllegalArgumentException if any of the input parameter is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_checks_if_userName_empty()
     {
         // Arrange
@@ -169,7 +193,7 @@ public class AmqpSendHandlerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_12_001: [The constructor shall throw IllegalArgumentException if any of the input parameter is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_checks_if_sasToken_null()
     {
         // Arrange
@@ -183,7 +207,7 @@ public class AmqpSendHandlerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_12_001: [The constructor shall throw IllegalArgumentException if any of the input parameter is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_checks_if_sasToken_empty()
     {
         // Arrange
@@ -194,10 +218,10 @@ public class AmqpSendHandlerTest
         // Act
         AmqpSendHandler amqpSend = new AmqpSendHandler(hostName, userName, sasToken, iotHubServiceClientProtocol);
     }
-    
-     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_12_001: [The constructor shall throw IllegalArgumentException if any of the input parameter is null or empty]
+
+    // Tests_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_12_001: [The constructor shall throw IllegalArgumentException if any of the input parameter is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_checks_if_protocol_null()
     {
         // Arrange
@@ -504,7 +528,7 @@ public class AmqpSendHandlerTest
         AmqpSendHandler amqpSendHandler = new AmqpSendHandler(hostName, userName, sasToken, iotHubServiceClientProtocol);
         Queue<Message> testMessagesToBeSent = new LinkedBlockingQueue<>();
         testMessagesToBeSent.add(messageWithException);
-        Deencapsulation.setField(amqpSendHandler,"messagesToBeSent", testMessagesToBeSent );
+        Deencapsulation.setField(amqpSendHandler, "messagesToBeSent", testMessagesToBeSent);
         // Assert
         new Expectations()
         {
@@ -531,9 +555,7 @@ public class AmqpSendHandlerTest
     Tests_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_25_028: [** The event handler shall close the Sender, Session and Connection **]**
      */
     @Test
-    public void onDelivery_flow_ok(final @Mocked Event mockedEvent,
-                                   final @Mocked DeliveryState mockedDeliveryState,
-                                   final @Mocked Delivery mockedDelivery) throws UnsupportedEncodingException
+    public void onDelivery_flow_ok(final @Mocked Event mockedEvent, final @Mocked DeliveryState mockedDeliveryState, final @Mocked Delivery mockedDelivery) throws UnsupportedEncodingException
     {
         // Arrange
         String hostName = "aaa";
@@ -580,7 +602,7 @@ public class AmqpSendHandlerTest
         AmqpSendHandler amqpSendHandler = new AmqpSendHandler(hostName, userName, sasToken, iotHubServiceClientProtocol);
         Queue<AmqpResponseVerification> testsendStatusQueue = new LinkedBlockingQueue<>();
         testsendStatusQueue.add(mockedVerification);
-        Deencapsulation.setField(amqpSendHandler,"sendStatusQueue", testsendStatusQueue );
+        Deencapsulation.setField(amqpSendHandler, "sendStatusQueue", testsendStatusQueue);
         Deencapsulation.setField(amqpSendHandler, "connectionWasOpened", true);
 
         // Assert
@@ -596,9 +618,8 @@ public class AmqpSendHandlerTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_25_031: [** The event handler shall get the exception from the response and throw is it is not null **]**
-    @Test (expected = IotHubException.class)
-    public void sendComplete_throws_exception_if_found(final @Mocked AmqpResponseVerification mockedVerification,
-                                                       final @Mocked IotHubException mockedIotHubException) throws IotHubException, IOException
+    @Test(expected = IotHubException.class)
+    public void sendComplete_throws_exception_if_found(final @Mocked AmqpResponseVerification mockedVerification, final @Mocked IotHubException mockedIotHubException) throws IotHubException, IOException
     {
         // Arrange
         String hostName = "aaa";
@@ -608,7 +629,7 @@ public class AmqpSendHandlerTest
         AmqpSendHandler amqpSendHandler = new AmqpSendHandler(hostName, userName, sasToken, iotHubServiceClientProtocol);
         Queue<AmqpResponseVerification> testsendStatusQueue = new LinkedBlockingQueue<>();
         testsendStatusQueue.add(mockedVerification);
-        Deencapsulation.setField(amqpSendHandler,"sendStatusQueue", testsendStatusQueue );
+        Deencapsulation.setField(amqpSendHandler, "sendStatusQueue", testsendStatusQueue);
         Deencapsulation.setField(amqpSendHandler, "connectionWasOpened", true);
 
         // Assert
@@ -626,10 +647,8 @@ public class AmqpSendHandlerTest
 
 
     //Tests_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_25_031: [** The event handler shall get the exception from the response and throw is it is not null **]**
-    @Test (expected = IOException.class)
-    public void sendComplete_throws_Connection_exception_if_found(final @Mocked AmqpResponseVerification mockedVerification,
-                                                                  final @Mocked IotHubException mockedIotHubException,
-                                                                  final @Mocked Event mockedEvent) throws IotHubException, IOException
+    @Test(expected = IOException.class)
+    public void sendComplete_throws_Connection_exception_if_found(final @Mocked AmqpResponseVerification mockedVerification, final @Mocked IotHubException mockedIotHubException, final @Mocked Event mockedEvent) throws IotHubException, IOException
     {
         // Arrange
         String hostName = "aaa";
@@ -695,7 +714,7 @@ public class AmqpSendHandlerTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_34_034: [if 'connectionWasOpened' is false, or 'isConnectionError' is true, this function shall throw an IOException]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void sendCompleteChecksForSavedException() throws IOException, IotHubException
     {
         // Arrange
@@ -713,7 +732,7 @@ public class AmqpSendHandlerTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_34_034: [if 'connectionWasOpened' is false, or 'isConnectionError' is true, this function shall throw an IOException]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void sendCompleteChecksThatConnectionWasOpened() throws IOException, IotHubException
     {
         // Arrange
@@ -740,206 +759,284 @@ public class AmqpSendHandlerTest
         {
             @Override
             public boolean isDurable()
-            { return false; }
-
-            @Override
-            public long getDeliveryCount()
-            { return 0; }
-
-            @Override
-            public short getPriority()
-            { return 0; }
-
-            @Override
-            public boolean isFirstAcquirer()
-            { return false; }
-
-            @Override
-            public long getTtl()
-            { return 0; }
+            {
+                return false;
+            }
 
             @Override
             public void setDurable(boolean b)
-            { }
+            {
+            }
 
             @Override
-            public void setTtl(long l)
-            { }
-
-            @Override public void setDeliveryCount(long l)
-            { }
+            public long getDeliveryCount()
+            {
+                return 0;
+            }
 
             @Override
-            public void setFirstAcquirer(boolean b)
-            { }
+            public void setDeliveryCount(long l)
+            {
+            }
+
+            @Override
+            public short getPriority()
+            {
+                return 0;
+            }
 
             @Override
             public void setPriority(short i)
-            { }
+            {
+            }
+
+            @Override
+            public boolean isFirstAcquirer()
+            {
+                return false;
+            }
+
+            @Override
+            public void setFirstAcquirer(boolean b)
+            {
+            }
+
+            @Override
+            public long getTtl()
+            {
+                return 0;
+            }
+
+            @Override
+            public void setTtl(long l)
+            {
+            }
 
             @Override
             public Object getMessageId()
-            { return null; }
-
-            @Override
-            public long getGroupSequence()
-            { return 0; }
-
-            @Override
-            public String getReplyToGroupId()
-            { return null; }
-
-            @Override
-            public long getCreationTime()
-            { return 0; }
-
-            @Override
-            public String getAddress()
-            { return null; }
-
-            @Override
-            public byte[] getUserId()
-            { return new byte[0]; }
-
-            @Override
-            public String getReplyTo()
-            { return null; }
-
-            @Override
-            public String getGroupId()
-            { return null; }
-
-            @Override
-            public String getContentType()
-            { return null; }
-
-            @Override
-            public long getExpiryTime()
-            { return 0; }
-
-            @Override
-            public Object getCorrelationId()
-            { return null; }
-
-            @Override
-            public String getContentEncoding()
-            { return null; }
-
-            @Override
-            public String getSubject()
-            { return null; }
-
-            @Override
-            public void setGroupSequence(long l)
-            { }
-
-            @Override
-            public void setUserId(byte[] bytes)
-            { }
-
-            @Override
-            public void setCreationTime(long l)
-            { }
-
-            @Override
-            public void setSubject(String s)
-            { }
-
-            @Override
-            public void setGroupId(String s)
-            { }
-
-            @Override
-            public void setAddress(String s)
-            { }
-
-            @Override
-            public void setExpiryTime(long l)
-            { }
-
-            @Override
-            public void setReplyToGroupId(String s)
-            { }
-
-            @Override
-            public void setContentEncoding(String s)
-            { }
-
-            @Override
-            public void setContentType(String s)
-            { }
-
-            @Override
-            public void setReplyTo(String s)
-            { }
-
-            @Override
-            public void setCorrelationId(Object o)
-            { }
+            {
+                return null;
+            }
 
             @Override
             public void setMessageId(Object o)
-            { }
+            {
+            }
+
+            @Override
+            public long getGroupSequence()
+            {
+                return 0;
+            }
+
+            @Override
+            public void setGroupSequence(long l)
+            {
+            }
+
+            @Override
+            public String getReplyToGroupId()
+            {
+                return null;
+            }
+
+            @Override
+            public void setReplyToGroupId(String s)
+            {
+            }
+
+            @Override
+            public long getCreationTime()
+            {
+                return 0;
+            }
+
+            @Override
+            public void setCreationTime(long l)
+            {
+            }
+
+            @Override
+            public String getAddress()
+            {
+                return null;
+            }
+
+            @Override
+            public void setAddress(String s)
+            {
+            }
+
+            @Override
+            public byte[] getUserId()
+            {
+                return new byte[0];
+            }
+
+            @Override
+            public void setUserId(byte[] bytes)
+            {
+            }
+
+            @Override
+            public String getReplyTo()
+            {
+                return null;
+            }
+
+            @Override
+            public void setReplyTo(String s)
+            {
+            }
+
+            @Override
+            public String getGroupId()
+            {
+                return null;
+            }
+
+            @Override
+            public void setGroupId(String s)
+            {
+            }
+
+            @Override
+            public String getContentType()
+            {
+                return null;
+            }
+
+            @Override
+            public void setContentType(String s)
+            {
+            }
+
+            @Override
+            public long getExpiryTime()
+            {
+                return 0;
+            }
+
+            @Override
+            public void setExpiryTime(long l)
+            {
+            }
+
+            @Override
+            public Object getCorrelationId()
+            {
+                return null;
+            }
+
+            @Override
+            public void setCorrelationId(Object o)
+            {
+            }
+
+            @Override
+            public String getContentEncoding()
+            {
+                return null;
+            }
+
+            @Override
+            public void setContentEncoding(String s)
+            {
+            }
+
+            @Override
+            public String getSubject()
+            {
+                return null;
+            }
+
+            @Override
+            public void setSubject(String s)
+            {
+            }
 
             @Override
             public Header getHeader()
-            { return null; }
-
-            @Override
-            public DeliveryAnnotations getDeliveryAnnotations()
-            { return null; }
-
-            @Override
-            public MessageAnnotations getMessageAnnotations()
-            { return null; }
-
-            @Override
-            public Properties getProperties()
-            { return null; }
-
-            @Override
-            public ApplicationProperties getApplicationProperties()
-            { return null; }
-
-            @Override
-            public Section getBody()
-            { return null; }
-
-            @Override
-            public Footer getFooter()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public void setHeader(Header header)
-            { }
+            {
+            }
+
+            @Override
+            public DeliveryAnnotations getDeliveryAnnotations()
+            {
+                return null;
+            }
 
             @Override
             public void setDeliveryAnnotations(DeliveryAnnotations deliveryAnnotations)
-            { }
+            {
+            }
+
+            @Override
+            public MessageAnnotations getMessageAnnotations()
+            {
+                return null;
+            }
 
             @Override
             public void setMessageAnnotations(MessageAnnotations messageAnnotations)
-            { }
+            {
+            }
 
             @Override
-            public void setProperties(Properties properties)
-            { }
+            public Properties getProperties()
+            {
+                return null;
+            }
+
+            @Override
+            public ApplicationProperties getApplicationProperties()
+            {
+                return null;
+            }
 
             @Override
             public void setApplicationProperties(ApplicationProperties applicationProperties)
-            { }
+            {
+            }
+
+            @Override
+            public Section getBody()
+            {
+                return null;
+            }
 
             @Override
             public void setBody(Section section)
-            { }
+            {
+            }
+
+            @Override
+            public Footer getFooter()
+            {
+                return null;
+            }
 
             @Override
             public void setFooter(Footer footer)
-            { }
+            {
+            }
+
+            @Override
+            public void setProperties(Properties properties)
+            {
+            }
 
             @Override
             public int decode(byte[] bytes, int i, int i1)
-            { return 0; }
+            {
+                return 0;
+            }
 
             @Override
             public int encode(byte[] bytes, int i, int i1)
@@ -957,66 +1054,87 @@ public class AmqpSendHandlerTest
 
             @Override
             public void clear()
-            { }
+            {
+            }
 
             @Override
             public MessageError getError()
-            { return null; }
+            {
+                return null;
+            }
         };
 
         sender = new Sender()
         {
             @Override
             public Record attachments()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public EndpointState getLocalState()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public EndpointState getRemoteState()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public ErrorCondition getCondition()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public void setCondition(ErrorCondition errorCondition)
-            { }
+            {
+            }
 
             @Override
             public ErrorCondition getRemoteCondition()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public void free()
-            { }
+            {
+            }
 
             @Override
             public void open()
-            { }
+            {
+            }
 
             @Override
             public void close()
-            { }
-
-            @Override
-            public void setContext(Object o)
-            { }
+            {
+            }
 
             @Override
             public Object getContext()
-            { return null; }
+            {
+                return null;
+            }            @Override
+            public void setContext(Object o)
+            {
+            }
 
             @Override
             public void offer(int i)
-            { }
+            {
+            }
 
             @Override
             public int send(byte[] bytes, int i, int i1)
-            { return 0; }
+            {
+                return 0;
+            }
 
             @Override
             public int send(ReadableBuffer readableBuffer)
@@ -1026,103 +1144,147 @@ public class AmqpSendHandlerTest
 
             @Override
             public void abort()
-            { }
+            {
+            }
 
             @Override
             public String getName()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public Delivery delivery(byte[] bytes)
-            { return delivery; }
+            {
+                return delivery;
+            }
 
             @Override
             public Delivery delivery(byte[] bytes, int i, int i1)
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public Delivery head()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public Delivery current()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public boolean advance()
-            { return false; }
+            {
+                return false;
+            }
 
             @Override
             public Source getSource()
-            { return null; }
-
-            @Override
-            public org.apache.qpid.proton.amqp.transport.Target getTarget()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public void setSource(Source source)
-            { }
+            {
+            }
+
+            @Override
+            public org.apache.qpid.proton.amqp.transport.Target getTarget()
+            {
+                return null;
+            }
 
             @Override
             public void setTarget(org.apache.qpid.proton.amqp.transport.Target target)
-            { }
+            {
+            }
 
             @Override
             public Source getRemoteSource()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public org.apache.qpid.proton.amqp.transport.Target getRemoteTarget()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public Link next(EnumSet<EndpointState> enumSet, EnumSet<EndpointState> enumSet1)
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public int getCredit()
-            { return 1; }
+            {
+                return 1;
+            }
 
             @Override
             public int getQueued()
-            { return 0; }
+            {
+                return 0;
+            }
 
             @Override
             public int getUnsettled()
-            { return 0; }
+            {
+                return 0;
+            }
 
             @Override
             public Session getSession()
-            { return session; }
+            {
+                return session;
+            }
 
             @Override
             public SenderSettleMode getSenderSettleMode()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public void setSenderSettleMode(SenderSettleMode senderSettleMode)
-            { }
+            {
+            }
 
             @Override
             public SenderSettleMode getRemoteSenderSettleMode()
-            { return null; }
-
-            @Override
-            public ReceiverSettleMode getReceiverSettleMode()
-            { return null; }
-
-            @Override
-            public void setReceiverSettleMode(ReceiverSettleMode receiverSettleMode)
-            { }
-
-            @Override
-            public ReceiverSettleMode getRemoteReceiverSettleMode()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public void setRemoteSenderSettleMode(SenderSettleMode senderSettleMode)
-            { }
+            {
+            }
+
+            @Override
+            public ReceiverSettleMode getReceiverSettleMode()
+            {
+                return null;
+            }
+
+            @Override
+            public void setReceiverSettleMode(ReceiverSettleMode receiverSettleMode)
+            {
+            }
+
+            @Override
+            public ReceiverSettleMode getRemoteReceiverSettleMode()
+            {
+                return null;
+            }
 
             @Override
             public Map<Symbol, Object> getProperties()
@@ -1144,28 +1306,31 @@ public class AmqpSendHandlerTest
 
             @Override
             public int drained()
-            { return 0; }
+            {
+                return 0;
+            }
 
             @Override
             public int getRemoteCredit()
-            { return 0; }
+            {
+                return 0;
+            }
 
             @Override
             public boolean getDrain()
-            { return false; }
+            {
+                return false;
+            }
 
             @Override
             public void detach()
-            { }
+            {
+            }
 
             @Override
             public boolean detached()
-            { return false; }
-
-            @Override
-            public void setOfferedCapabilities(Symbol[] symbols)
             {
-
+                return false;
             }
 
             @Override
@@ -1175,7 +1340,19 @@ public class AmqpSendHandlerTest
             }
 
             @Override
+            public void setOfferedCapabilities(Symbol[] symbols)
+            {
+
+            }
+
+            @Override
             public Symbol[] getRemoteOfferedCapabilities()
+            {
+                return new Symbol[0];
+            }
+
+            @Override
+            public Symbol[] getDesiredCapabilities()
             {
                 return new Symbol[0];
             }
@@ -1187,21 +1364,9 @@ public class AmqpSendHandlerTest
             }
 
             @Override
-            public Symbol[] getDesiredCapabilities()
-            {
-                return new Symbol[0];
-            }
-
-            @Override
             public Symbol[] getRemoteDesiredCapabilities()
             {
                 return new Symbol[0];
-            }
-
-            @Override
-            public void setMaxMessageSize(UnsignedLong unsignedLong)
-            {
-
             }
 
             @Override
@@ -1211,10 +1376,18 @@ public class AmqpSendHandlerTest
             }
 
             @Override
+            public void setMaxMessageSize(UnsignedLong unsignedLong)
+            {
+
+            }
+
+            @Override
             public UnsignedLong getRemoteMaxMessageSize()
             {
                 return null;
             }
+
+
         };
 
         event = new Event()
@@ -1226,11 +1399,17 @@ public class AmqpSendHandlerTest
                 return null;
             }
 
-            @Override public Event.Type getType()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            @Override
+            public Event.Type getType()
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
-            @Override public Object getContext()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            @Override
+            public Object getContext()
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public Handler getRootHandler()
@@ -1238,8 +1417,11 @@ public class AmqpSendHandlerTest
                 return null;
             }
 
-            @Override public void dispatch(Handler hndlr) throws HandlerException
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            @Override
+            public void dispatch(Handler hndlr) throws HandlerException
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public void redispatch(EventType eventType, Handler handler) throws HandlerException
@@ -1253,15 +1435,23 @@ public class AmqpSendHandlerTest
 
             }
 
-            @Override public Connection getConnection()
-            { return connection; }
+            @Override
+            public Connection getConnection()
+            {
+                return connection;
+            }
 
-            @Override public Session getSession()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            @Override
+            public Session getSession()
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public Link getLink()
-            { return sender; }
+            {
+                return sender;
+            }
 
             @Override
             public Sender getSender()
@@ -1277,31 +1467,45 @@ public class AmqpSendHandlerTest
 
             @Override
             public Delivery getDelivery()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public Transport getTransport()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public Reactor getReactor()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public Selectable getSelectable()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public Task getTask()
-            { throw new UnsupportedOperationException(exceptionMessage);}
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public Event copy()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public Record attachments()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
         };
     }
 }

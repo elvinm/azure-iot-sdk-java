@@ -12,31 +12,28 @@ public class JobsStatisticsParser
 {
     // Number of devices in the job
     private static final String DEVICECOUNT_TAG = "deviceCount";
-    @SerializedName(DEVICECOUNT_TAG)
-    private int deviceCount;
-
     // The number of failed jobs
     private static final String FAILEDCOUNT_TAG = "failedCount";
-    @SerializedName(FAILEDCOUNT_TAG)
-    private int failedCount;
-
     // The number of Succeeded jobs
     private static final String SUCCEEDEDCOUNT_TAG = "succeededCount";
-    @SerializedName(SUCCEEDEDCOUNT_TAG)
-    private int succeededCount;
-
     // The number of running jobs
     private static final String RUNNINGCOUNT_TAG = "runningCount";
-    @SerializedName(RUNNINGCOUNT_TAG)
-    private int runningCount;
-
     // The number of pending (scheduled) jobs
     private static final String PENDINGCOUNT_TAG = "pendingCount";
+    @SerializedName(DEVICECOUNT_TAG)
+    private int deviceCount;
+    @SerializedName(FAILEDCOUNT_TAG)
+    private int failedCount;
+    @SerializedName(SUCCEEDEDCOUNT_TAG)
+    private int succeededCount;
+    @SerializedName(RUNNINGCOUNT_TAG)
+    private int runningCount;
     @SerializedName(PENDINGCOUNT_TAG)
     private int pendingCount;
 
     /**
      * Getter for device counter
+     *
      * @return the number of devices in the job
      */
     public int getDeviceCount()
@@ -47,6 +44,7 @@ public class JobsStatisticsParser
 
     /**
      * Getter for the failed counter
+     *
      * @return the number of failed jobs
      */
     public int getFailedCount()
@@ -57,6 +55,7 @@ public class JobsStatisticsParser
 
     /**
      * Getter for succeeded counter
+     *
      * @return the number of succeeded jobs
      */
     public int getSucceededCount()
@@ -67,6 +66,7 @@ public class JobsStatisticsParser
 
     /**
      * Getter for running counter
+     *
      * @return the number of running jobs
      */
     public int getRunningCount()
@@ -77,6 +77,7 @@ public class JobsStatisticsParser
 
     /**
      * Getter for pending counter
+     *
      * @return the number of pending jobs
      */
     public int getPendingCount()

@@ -35,6 +35,14 @@ public class QueryRequestParser
     }
 
     /**
+     * Empty constructor: Used only to keep GSON happy.
+     */
+    @SuppressWarnings("unused")
+    QueryRequestParser()
+    {
+    }
+
+    /**
      * Convert this class in a valid json.
      *
      * @return a valid json that represents the content of this class.
@@ -45,13 +53,5 @@ public class QueryRequestParser
 
         //Codes_SRS_QUERY_REQUEST_PARSER_25_004: [The toJson shall return a string with a json that represents the contents of the QueryRequestParser.]
         return gson.toJson(this);
-    }
-
-    /**
-     * Empty constructor: Used only to keep GSON happy.
-     */
-    @SuppressWarnings("unused")
-    QueryRequestParser()
-    {
     }
 }

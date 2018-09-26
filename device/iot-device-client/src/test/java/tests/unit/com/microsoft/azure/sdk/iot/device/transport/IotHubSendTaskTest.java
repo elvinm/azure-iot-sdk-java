@@ -13,7 +13,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-/** Unit tests for IotHubSendTask. */
+/**
+ * Unit tests for IotHubSendTask.
+ */
 public class IotHubSendTaskTest
 {
     @Mocked

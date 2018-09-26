@@ -22,23 +22,16 @@ public class AmqpsMessage extends MessageImpl
     private Delivery _delivery;
 
     private MessageType amqpsMessageType;
-
-    public enum ACK_TYPE
-    {
-        COMPLETE,
-        ABANDON,
-        REJECT
-    }
-
     private DeviceClientConfig deviceClientConfig;
 
     /**
      * Sends acknowledgement of this message using the provided ACK_TYPE.
+     *
      * @param ackType acknowledgement type to send
      */
     public void acknowledge(ACK_TYPE ackType)
     {
-        switch(ackType)
+        switch (ackType)
         {
             // Codes_SRS_AMQPSMESSAGE_14_001: [If the ACK_TYPE is COMPLETE, the function shall set an Accepted disposition on the private Delivery object.]
             case COMPLETE:
@@ -54,7 +47,7 @@ public class AmqpsMessage extends MessageImpl
                 break;
             default:
                 //This should never happen
-                throw new IllegalStateException("Invalid ack type given. Type "+ ackType +" does not exist.");
+                throw new IllegalStateException("Invalid ack type given. Type " + ackType + " does not exist.");
         }
         // Codes_SRS_AMQPSMESSAGE_14_005: [The function shall settle the delivery after setting the proper disposition.]
         _delivery.settle();
@@ -62,6 +55,7 @@ public class AmqpsMessage extends MessageImpl
 
     /**
      * Set this AmqpsMessage Delivery Object
+     *
      * @param _delivery the new Delivery
      */
     public void setDelivery(Delivery _delivery)
@@ -71,6 +65,7 @@ public class AmqpsMessage extends MessageImpl
 
     /**
      * Get the AmqpsMessageMessageType
+     *
      * @return The type of the message
      */
     public MessageType getAmqpsMessageType()
@@ -110,5 +105,10 @@ public class AmqpsMessage extends MessageImpl
     {
         // Codes_SRS_AMQPSMESSAGE_12_004: [Setter for the deviceClientConfig.]
         this.deviceClientConfig = deviceClientConfig;
+    }
+
+    public enum ACK_TYPE
+    {
+        COMPLETE, ABANDON, REJECT
     }
 }

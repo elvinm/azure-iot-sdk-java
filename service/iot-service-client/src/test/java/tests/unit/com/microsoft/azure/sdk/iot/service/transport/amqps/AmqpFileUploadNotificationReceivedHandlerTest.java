@@ -41,30 +41,52 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/** Unit tests for AmqpFileUploadNotificationReceivedHandler */
+/**
+ * Unit tests for AmqpFileUploadNotificationReceivedHandler
+ */
 @RunWith(JMockit.class)
 public class AmqpFileUploadNotificationReceivedHandlerTest
 {
-    @Mocked Handshaker handshaker;
-    @Mocked FlowController flowcontroller;
-    @Mocked Proton proton;
-    @Mocked Message message;
-    @Mocked Connection connection;
-    @Mocked Session session;
-    @Mocked Transport transport;
-    @Mocked TransportInternal transportInternal;
-    @Mocked WebSocketImpl webSocket;
-    @Mocked Sasl sasl;
-    @Mocked SslDomain sslDomain;
-    @Mocked Event event;
-    @Mocked Receiver receiver;
-    @Mocked Delivery delivery;
-    @Mocked Sender sender;
-    @Mocked Target target;
-    @Mocked Link link;
-    @Mocked Source source;
+    @Mocked
+    Handshaker handshaker;
+    @Mocked
+    FlowController flowcontroller;
+    @Mocked
+    Proton proton;
+    @Mocked
+    Message message;
+    @Mocked
+    Connection connection;
+    @Mocked
+    Session session;
+    @Mocked
+    Transport transport;
+    @Mocked
+    TransportInternal transportInternal;
+    @Mocked
+    WebSocketImpl webSocket;
+    @Mocked
+    Sasl sasl;
+    @Mocked
+    SslDomain sslDomain;
+    @Mocked
+    Event event;
+    @Mocked
+    Receiver receiver;
+    @Mocked
+    Delivery delivery;
+    @Mocked
+    Sender sender;
+    @Mocked
+    Target target;
+    @Mocked
+    Link link;
+    @Mocked
+    Source source;
 
-    AmqpFeedbackReceivedEvent amqpFeedbackReceivedEvent = (String feedbackJson) -> {};
+    AmqpFeedbackReceivedEvent amqpFeedbackReceivedEvent = (String feedbackJson) ->
+    {
+    };
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_25_001: [The constructor shall copy all input parameters to private member variables for event processing]
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_25_002: [The constructor shall initialize a new Handshaker (Proton) object to handle communication handshake]
@@ -100,7 +122,7 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_25_021: [** The constructor shall throw IllegalArgumentException if any of the parameters are null or empty **]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void amqpReceiveHandlerNullHostNameThrows()
     {
         // Arrange
@@ -113,7 +135,7 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
         Object amqpReceiveHandler = Deencapsulation.newInstance(AmqpFileUploadNotificationReceivedHandler.class, String.class, userName, sasToken, iotHubServiceClientProtocol, amqpFeedbackReceivedEvent);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void amqpReceiveHandlerNullUserNameThrows()
     {
         // Arrange
@@ -126,7 +148,7 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
         Object amqpReceiveHandler = Deencapsulation.newInstance(AmqpFileUploadNotificationReceivedHandler.class, hostName, String.class, sasToken, iotHubServiceClientProtocol, amqpFeedbackReceivedEvent);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void amqpReceiveHandlerNullSasTokenThrows()
     {
         // Arrange
@@ -139,7 +161,7 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
         Object amqpReceiveHandler = Deencapsulation.newInstance(AmqpFileUploadNotificationReceivedHandler.class, hostName, userName, String.class, iotHubServiceClientProtocol, amqpFeedbackReceivedEvent);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void amqpReceiveHandlerEmptyHostNameThrows()
     {
         // Arrange
@@ -152,7 +174,7 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
         Object amqpReceiveHandler = Deencapsulation.newInstance(AmqpFileUploadNotificationReceivedHandler.class, hostName, userName, sasToken, iotHubServiceClientProtocol, amqpFeedbackReceivedEvent);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void amqpReceiveHandlerEmptyUserNameThrows()
     {
         // Arrange
@@ -165,7 +187,7 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
         Object amqpReceiveHandler = Deencapsulation.newInstance(AmqpFileUploadNotificationReceivedHandler.class, hostName, userName, sasToken, iotHubServiceClientProtocol, amqpFeedbackReceivedEvent);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void amqpReceiveHandlerEmptySasTokenThrows()
     {
         // Arrange
@@ -177,6 +199,7 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
         // Act
         Object amqpReceiveHandler = Deencapsulation.newInstance(AmqpFileUploadNotificationReceivedHandler.class, hostName, userName, sasToken, iotHubServiceClientProtocol, amqpFeedbackReceivedEvent);
     }
+
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_25_004: [The event handler shall get the Link, Receiver and Delivery (Proton) objects from the event]
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_25_005: [The event handler shall read the received buffer]
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_25_006: [The event handler shall create a Message (Proton) object from the decoded buffer]
@@ -374,7 +397,7 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_34_023: [if 'connectionWasOpened' is false, or 'isConnectionError' is true, this function shall throw an IOException]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void receiveCompleteChecksForSavedException() throws IOException, IotHubException
     {
         // Arrange
@@ -392,7 +415,7 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_34_023: [if 'connectionWasOpened' is false, or 'isConnectionError' is true, this function shall throw an IOException]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void receiveCompleteChecksThatConnectionWasOpened() throws IOException, IotHubException
     {
         // Arrange
@@ -419,11 +442,14 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
         {
             @Override
             public void flow(int i)
-            { }
+            {
+            }
 
             @Override
             public int recv(byte[] bytes, int i, int i1)
-            { return 0; }
+            {
+                return 0;
+            }
 
             @Override
             public int recv(WritableBuffer writableBuffer)
@@ -433,111 +459,153 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
 
             @Override
             public void drain(int i)
-            { }
+            {
+            }
 
             @Override
             public boolean advance()
-            { return false; }
+            {
+                return false;
+            }
 
             @Override
             public boolean draining()
-            { return false; }
-
-            @Override
-            public void setDrain(boolean b)
-            { }
+            {
+                return false;
+            }
 
             @Override
             public String getName()
-            { return "filenotificationreceiver";}
+            {
+                return "filenotificationreceiver";
+            }
 
             @Override
             public Delivery delivery(byte[] bytes)
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public Delivery delivery(byte[] bytes, int i, int i1)
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public Delivery head()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public Delivery current()
-            { return delivery; }
+            {
+                return delivery;
+            }
 
             @Override
             public org.apache.qpid.proton.amqp.transport.Source getSource()
-            { return null; }
-
-            @Override
-            public org.apache.qpid.proton.amqp.transport.Target getTarget()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public void setSource(org.apache.qpid.proton.amqp.transport.Source source)
-            { }
+            {
+            }
+
+            @Override
+            public org.apache.qpid.proton.amqp.transport.Target getTarget()
+            {
+                return null;
+            }
 
             @Override
             public void setTarget(org.apache.qpid.proton.amqp.transport.Target target)
-            { }
+            {
+            }
 
             @Override
             public org.apache.qpid.proton.amqp.transport.Source getRemoteSource()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public org.apache.qpid.proton.amqp.transport.Target getRemoteTarget()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public Link next(EnumSet<EndpointState> enumSet, EnumSet<EndpointState> enumSet1)
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public int getCredit()
-            { return 0; }
+            {
+                return 0;
+            }
 
             @Override
             public int getQueued()
-            { return 0; }
+            {
+                return 0;
+            }
 
             @Override
             public int getUnsettled()
-            { return 0; }
+            {
+                return 0;
+            }
 
             @Override
             public Session getSession()
-            { return session; }
+            {
+                return session;
+            }
 
             @Override
             public SenderSettleMode getSenderSettleMode()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public void setSenderSettleMode(SenderSettleMode senderSettleMode)
-            { }
+            {
+            }
 
             @Override
             public SenderSettleMode getRemoteSenderSettleMode()
-            { return null; }
-
-            @Override
-            public ReceiverSettleMode getReceiverSettleMode()
-            { return null; }
-
-            @Override
-            public void setReceiverSettleMode(ReceiverSettleMode receiverSettleMode)
-            { }
-
-            @Override
-            public ReceiverSettleMode getRemoteReceiverSettleMode()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public void setRemoteSenderSettleMode(SenderSettleMode senderSettleMode)
-            { }
+            {
+            }
+
+            @Override
+            public ReceiverSettleMode getReceiverSettleMode()
+            {
+                return null;
+            }
+
+            @Override
+            public void setReceiverSettleMode(ReceiverSettleMode receiverSettleMode)
+            {
+            }
+
+            @Override
+            public ReceiverSettleMode getRemoteReceiverSettleMode()
+            {
+                return null;
+            }
 
             @Override
             public Map<Symbol, Object> getProperties()
@@ -559,28 +627,36 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
 
             @Override
             public int drained()
-            { return 0; }
+            {
+                return 0;
+            }
 
             @Override
             public int getRemoteCredit()
-            { return 0; }
+            {
+                return 0;
+            }
 
             @Override
             public boolean getDrain()
-            { return false; }
+            {
+                return false;
+            }
+
+            @Override
+            public void setDrain(boolean b)
+            {
+            }
 
             @Override
             public void detach()
-            { }
+            {
+            }
 
             @Override
             public boolean detached()
-            { return false; }
-
-            @Override
-            public void setOfferedCapabilities(Symbol[] symbols)
             {
-
+                return false;
             }
 
             @Override
@@ -590,7 +666,19 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
             }
 
             @Override
+            public void setOfferedCapabilities(Symbol[] symbols)
+            {
+
+            }
+
+            @Override
             public Symbol[] getRemoteOfferedCapabilities()
+            {
+                return new Symbol[0];
+            }
+
+            @Override
+            public Symbol[] getDesiredCapabilities()
             {
                 return new Symbol[0];
             }
@@ -602,27 +690,21 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
             }
 
             @Override
-            public Symbol[] getDesiredCapabilities()
-            {
-                return new Symbol[0];
-            }
-
-            @Override
             public Symbol[] getRemoteDesiredCapabilities()
             {
                 return new Symbol[0];
             }
 
             @Override
-            public void setMaxMessageSize(UnsignedLong unsignedLong)
-            {
-
-            }
-
-            @Override
             public UnsignedLong getMaxMessageSize()
             {
                 return null;
+            }
+
+            @Override
+            public void setMaxMessageSize(UnsignedLong unsignedLong)
+            {
+
             }
 
             @Override
@@ -633,47 +715,64 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
 
             @Override
             public EndpointState getLocalState()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public EndpointState getRemoteState()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public ErrorCondition getCondition()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public void setCondition(ErrorCondition errorCondition)
-            { }
+            {
+            }
 
             @Override
             public ErrorCondition getRemoteCondition()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public void free()
-            { }
+            {
+            }
 
             @Override
             public void open()
-            { }
+            {
+            }
 
             @Override
             public void close()
-            { }
+            {
+            }
 
             @Override
             public void setContext(Object o)
-            { }
+            {
+            }
 
             @Override
             public Object getContext()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public Record attachments()
-            { return null; }
+            {
+                return null;
+            }
         };
 
         event = new Event()
@@ -685,11 +784,17 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
                 return null;
             }
 
-            @Override public Type getType()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            @Override
+            public Type getType()
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
-            @Override public Object getContext()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            @Override
+            public Object getContext()
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public Handler getRootHandler()
@@ -697,8 +802,11 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
                 return null;
             }
 
-            @Override public void dispatch(Handler hndlr) throws HandlerException
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            @Override
+            public void dispatch(Handler hndlr) throws HandlerException
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public void redispatch(EventType eventType, Handler handler) throws HandlerException
@@ -712,15 +820,23 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
 
             }
 
-            @Override public Connection getConnection()
-            { return connection; }
+            @Override
+            public Connection getConnection()
+            {
+                return connection;
+            }
 
-            @Override public Session getSession()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            @Override
+            public Session getSession()
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public Link getLink()
-            { return receiver; }
+            {
+                return receiver;
+            }
 
             @Override
             public Sender getSender()
@@ -736,54 +852,84 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
 
             @Override
             public Delivery getDelivery()
-            { return delivery; }
+            {
+                return delivery;
+            }
 
             @Override
             public Transport getTransport()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public Reactor getReactor()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public Selectable getSelectable()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public Task getTask()
-            { throw new UnsupportedOperationException(exceptionMessage);}
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public Event copy()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
 
             @Override
             public Record attachments()
-            { throw new UnsupportedOperationException(exceptionMessage); }
+            {
+                throw new UnsupportedOperationException(exceptionMessage);
+            }
         };
 
         delivery = new Delivery()
         {
             @Override
             public byte[] getTag()
-            { return new byte[0]; }
+            {
+                return new byte[0];
+            }
 
             @Override
             public Link getLink()
-            { return receiver; }
+            {
+                return receiver;
+            }
 
             @Override
             public DeliveryState getLocalState()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public DeliveryState getRemoteState()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public int getMessageFormat()
-            { return 0; }
+            {
+                return 0;
+            }
+
+            @Override
+            public void setMessageFormat(int i)
+            {
+
+            }
 
             @Override
             public int available()
@@ -793,85 +939,111 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
 
             @Override
             public void disposition(DeliveryState deliveryState)
-            { }
+            {
+            }
 
             @Override
             public void settle()
-            { }
+            {
+            }
 
             @Override
             public boolean isSettled()
-            { return false; }
+            {
+                return false;
+            }
 
             @Override
             public boolean remotelySettled()
-            { return false; }
+            {
+                return false;
+            }
 
             @Override
             public void free()
-            { }
+            {
+            }
 
             @Override
             public Delivery getWorkNext()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public Delivery next()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
             public boolean isWritable()
-            { return false; }
+            {
+                return false;
+            }
 
             @Override
             public boolean isReadable()
-            { return true; }
-
-            @Override
-            public void setContext(Object o)
-            { }
+            {
+                return true;
+            }
 
             @Override
             public Object getContext()
-            { return null; }
+            {
+                return null;
+            }
+
+            @Override
+            public void setContext(Object o)
+            {
+            }
 
             @Override
             public boolean isUpdated()
-            { return false; }
+            {
+                return false;
+            }
 
             @Override
             public void clear()
-            { }
+            {
+            }
 
             @Override
             public boolean isPartial()
-            { return false; }
+            {
+                return false;
+            }
 
             @Override
             public int pending()
-            { return 0; }
+            {
+                return 0;
+            }
 
             @Override
             public boolean isBuffered()
-            { return false; }
-
-            @Override
-            public void setDefaultDeliveryState(DeliveryState deliveryState)
-            { }
+            {
+                return false;
+            }
 
             @Override
             public DeliveryState getDefaultDeliveryState()
-            { return null; }
+            {
+                return null;
+            }
 
             @Override
-            public void setMessageFormat(int i)
+            public void setDefaultDeliveryState(DeliveryState deliveryState)
             {
-
             }
 
             @Override
             public Record attachments()
-            { return null; }
+            {
+                return null;
+            }
         };
     }
 }

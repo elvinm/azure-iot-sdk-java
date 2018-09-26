@@ -12,9 +12,9 @@ import java.util.Map;
 
 /**
  * Update the information in an individual enrollment on the Microsoft Azure IoT Hub Device Provisioning Service.
- *
+ * <p>
  * <p> This sample will show how to update the information in a exited individualEnrollment. It will start creating
- *     a new individualEnrolment. This enrollment contains an initialTwin state with the following information.
+ * a new individualEnrolment. This enrollment contains an initialTwin state with the following information.
  * <pre>
  * {@code
  * {
@@ -26,7 +26,7 @@ import java.util.Map;
  * </pre>
  * <p> After that, the name of the color shall be updated to "Glace white".
  * <p> <b>Note:</b> If the device is already provisioned with the preview initialTwin state. Update the
- *     individualEnrollment will not change the Twin state in the device.
+ * individualEnrollment will not change the Twin state in the device.
  */
 public class ServiceUpdateEnrollmentSample
 {
@@ -42,8 +42,7 @@ public class ServiceUpdateEnrollmentSample
         System.out.println("Starting sample...");
 
         // *********************************** Create a Provisioning Service Client ************************************
-        ProvisioningServiceClient provisioningServiceClient =
-                ProvisioningServiceClient.createFromConnectionString(PROVISIONING_CONNECTION_STRING);
+        ProvisioningServiceClient provisioningServiceClient = ProvisioningServiceClient.createFromConnectionString(PROVISIONING_CONNECTION_STRING);
 
         // ************************************ Create a new individualEnrollment **************************************
         System.out.println("\nCreate a new individualEnrollment...");
@@ -56,24 +55,14 @@ public class ServiceUpdateEnrollmentSample
             }
         };
         Attestation attestation = new TpmAttestation(TPM_ENDORSEMENT_KEY);
-        TwinState initialTwinState = new TwinState(
-                null,
-                new TwinCollection(desiredProperties)
-                );
-        IndividualEnrollment individualEnrollment =
-                new IndividualEnrollment(
-                        REGISTRATION_ID,
-                        attestation);
+        TwinState initialTwinState = new TwinState(null, new TwinCollection(desiredProperties));
+        IndividualEnrollment individualEnrollment = new IndividualEnrollment(REGISTRATION_ID, attestation);
         individualEnrollment.setInitialTwin(initialTwinState);
-        IndividualEnrollment individualEnrollmentResult =  provisioningServiceClient.createOrUpdateIndividualEnrollment(individualEnrollment);
+        IndividualEnrollment individualEnrollmentResult = provisioningServiceClient.createOrUpdateIndividualEnrollment(individualEnrollment);
         System.out.println("\nIndividualEnrollment created with success...");
-        System.out.println(
-                "Note that there is a difference between the content of the individualEnrollment that you sent and\n" +
-                "  the individualEnrollmentResult that you received. The individualEnrollmentResult contains the eTag.");
-        System.out.println(
-                "\nindividualEnrollment:\n" + individualEnrollment);
-        System.out.println(
-                "\nindividualEnrollmentResult:\n" + individualEnrollmentResult);
+        System.out.println("Note that there is a difference between the content of the individualEnrollment that you sent and\n" + "  the individualEnrollmentResult that you received. The individualEnrollmentResult contains the eTag.");
+        System.out.println("\nindividualEnrollment:\n" + individualEnrollment);
+        System.out.println("\nindividualEnrollmentResult:\n" + individualEnrollmentResult);
 
         // ********************************* Update the info of individualEnrollment ***********************************
         /*
@@ -89,12 +78,9 @@ public class ServiceUpdateEnrollmentSample
          */
         System.out.println("\nUpdating the enrollment...");
         desiredProperties.put("Color", "Glace white");
-        initialTwinState = new TwinState(
-                null,
-                new TwinCollection(desiredProperties)
-        );
+        initialTwinState = new TwinState(null, new TwinCollection(desiredProperties));
         individualEnrollmentResult.setInitialTwin(initialTwinState);
-        individualEnrollmentResult =  provisioningServiceClient.createOrUpdateIndividualEnrollment(individualEnrollmentResult);
+        individualEnrollmentResult = provisioningServiceClient.createOrUpdateIndividualEnrollment(individualEnrollmentResult);
         System.out.println("\nIndividualEnrollment updated with success...");
         System.out.println(individualEnrollmentResult);
 

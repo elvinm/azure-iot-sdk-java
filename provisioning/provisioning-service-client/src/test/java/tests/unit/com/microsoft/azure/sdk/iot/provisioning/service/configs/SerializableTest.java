@@ -15,26 +15,7 @@ import tests.unit.com.microsoft.azure.sdk.iot.provisioning.service.Helpers;
  */
 public class SerializableTest
 {
-    final String JSON =
-            "{" +
-            "    \"prop1\":\"val1\"," +
-            "    \"prop2\":\"val2\"," +
-            "    \"prop3\":\"val3\"" +
-            "}";
-
-    final class mockedChild extends Serializable
-    {
-        protected JsonElement toJsonElement()
-        {
-            JsonObject jsonObject = new JsonObject();
-
-            jsonObject.addProperty("prop1", "val1");
-            jsonObject.addProperty("prop2", "val2");
-            jsonObject.addProperty("prop3", "val3");
-
-            return jsonObject;
-        }
-    }
+    final String JSON = "{" + "    \"prop1\":\"val1\"," + "    \"prop2\":\"val2\"," + "    \"prop3\":\"val3\"" + "}";
 
     /* SRS_SERIALIZABLE_21_001: [The toJson shall return a String with the information in the child class in a JSON format.] */
     @Test
@@ -62,6 +43,20 @@ public class SerializableTest
 
         // assert
         Helpers.assertJson(result, JSON);
+    }
+
+    final class mockedChild extends Serializable
+    {
+        protected JsonElement toJsonElement()
+        {
+            JsonObject jsonObject = new JsonObject();
+
+            jsonObject.addProperty("prop1", "val1");
+            jsonObject.addProperty("prop2", "val2");
+            jsonObject.addProperty("prop3", "val3");
+
+            return jsonObject;
+        }
     }
 
 }

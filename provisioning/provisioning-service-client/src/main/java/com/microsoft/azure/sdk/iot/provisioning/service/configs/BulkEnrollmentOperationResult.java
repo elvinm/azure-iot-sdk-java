@@ -17,13 +17,13 @@ import java.util.List;
 
 /**
  * Representation of a single Device Provisioning Service bulk operation result with a JSON deserializer.
- *
+ * <p>
  * <p> This result is returned as a result of the
- *     {@link ProvisioningServiceClient#runBulkEnrollmentOperation(BulkOperationMode, Collection)}.
- *
+ * {@link ProvisioningServiceClient#runBulkEnrollmentOperation(BulkOperationMode, Collection)}.
+ * <p>
  * <p> The provisioning service provides general bulk result in the isSuccessful, and a individual error result
- *     for each enrolment in the bulk.
- *
+ * for each enrolment in the bulk.
+ * <p>
  * <p>  The following JSON is an example of the result from a bulk operation.
  * <pre>
  * {@code
@@ -51,21 +51,20 @@ public class BulkEnrollmentOperationResult
 {
     // the is bulk operation success
     private static final String IS_SUCCESSFUL_TAG = "isSuccessful";
+    // the list of errors
+    private static final String ERRORS_TAG = "errors";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(IS_SUCCESSFUL_TAG)
     private Boolean isSuccessful;
-
-    // the list of errors
-    private static final String ERRORS_TAG = "errors";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(ERRORS_TAG)
     private BulkEnrollmentOperationError[] errors;
 
     /**
      * CONSTRUCTOR
-     *
+     * <p>
      * <p> This constructor creates an instance of the enrollment filling
-     *     the class with the information provided in the JSON.
+     * the class with the information provided in the JSON.
      *
      * @param json the {@code String} with the JSON received from the provisioning service.
      * @throws IllegalArgumentException If the provided JSON is null, empty, or invalid.
@@ -73,7 +72,7 @@ public class BulkEnrollmentOperationResult
     public BulkEnrollmentOperationResult(String json)
     {
         /* SRS_BULK_OPERATION_RESULT_21_001: [The constructor shall throw IllegalArgumentException if the JSON is null or empty.] */
-        if(Tools.isNullOrEmpty(json))
+        if (Tools.isNullOrEmpty(json))
         {
             throw new IllegalArgumentException("JSON with result is null or empty");
         }
@@ -87,7 +86,7 @@ public class BulkEnrollmentOperationResult
         ParserUtility.validateObject(result.isSuccessful);
 
         /* SRS_BULK_OPERATION_RESULT_21_005: [The constructor shall throw IllegalArgumentException if the JSON contains invalid error.] */
-        for (BulkEnrollmentOperationError error:result.errors)
+        for (BulkEnrollmentOperationError error : result.errors)
         {
             error.validateError();
         }
@@ -96,6 +95,19 @@ public class BulkEnrollmentOperationResult
         this.isSuccessful = result.isSuccessful;
         /* SRS_BULK_OPERATION_RESULT_21_007: [The constructor shall store the provided errors.] */
         this.errors = result.errors;
+    }
+
+    /**
+     * Empty constructor
+     * <p>
+     * <p>
+     * Used only by the tools that will deserialize this class.
+     * </p>
+     */
+    @SuppressWarnings("unused")
+    protected BulkEnrollmentOperationResult()
+    {
+        /* SRS_BULK_OPERATION_RESULT_21_011: [The BulkEnrollmentOperationResult shall provide an empty constructor to make GSON happy.] */
     }
 
     /**
@@ -131,18 +143,5 @@ public class BulkEnrollmentOperationResult
         /* SRS_BULK_OPERATION_RESULT_21_010: [The toString shall return a String with the information into this class in a pretty print JSON.] */
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
         return gson.toJson(this);
-    }
-
-    /**
-     * Empty constructor
-     *
-     * <p>
-     *     Used only by the tools that will deserialize this class.
-     * </p>
-     */
-    @SuppressWarnings("unused")
-    protected BulkEnrollmentOperationResult()
-    {
-        /* SRS_BULK_OPERATION_RESULT_21_011: [The BulkEnrollmentOperationResult shall provide an empty constructor to make GSON happy.] */
     }
 }

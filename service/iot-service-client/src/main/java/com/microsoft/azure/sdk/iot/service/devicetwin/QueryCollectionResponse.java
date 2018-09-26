@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package com.microsoft.azure.sdk.iot.service.devicetwin;
 
@@ -17,7 +17,7 @@ public class QueryCollectionResponse<E>
     /**
      * Constructor that takes a json string and parses it into a Collection.
      *
-     * @param jsonString The json string to parse into a Collection
+     * @param jsonString        The json string to parse into a Collection
      * @param continuationToken The continuation token to save
      * @throws IllegalArgumentException if responseElementsCollection is null or empty
      */
@@ -41,7 +41,7 @@ public class QueryCollectionResponse<E>
      * Constructor that takes a collection and a continuation token.
      *
      * @param responseElementsCollection The collection to save
-     * @param continuationToken The continuation token to save
+     * @param continuationToken          The continuation token to save
      * @throws IllegalArgumentException if responseElementsCollection is null
      */
     QueryCollectionResponse(Collection<E> responseElementsCollection, String continuationToken)
@@ -59,6 +59,7 @@ public class QueryCollectionResponse<E>
 
     /**
      * Getter for continuation token
+     *
      * @return the saved continuation token. The continuation token may be null.
      */
     public String getContinuationToken()
@@ -69,6 +70,7 @@ public class QueryCollectionResponse<E>
 
     /**
      * Getter for collection
+     *
      * @return the saved Collection
      */
     public Collection<E> getCollection()

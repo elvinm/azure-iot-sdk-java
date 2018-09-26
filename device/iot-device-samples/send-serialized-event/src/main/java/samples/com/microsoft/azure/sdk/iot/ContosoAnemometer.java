@@ -5,7 +5,8 @@ package samples.com.microsoft.azure.sdk.iot;
 
 import com.google.gson.Gson;
 
-public class ContosoAnemometer {
+public class ContosoAnemometer
+{
     public String deviceId;
     public int messageId;
     public double temperature;

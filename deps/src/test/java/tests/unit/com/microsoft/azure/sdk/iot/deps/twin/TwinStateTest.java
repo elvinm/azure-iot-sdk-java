@@ -47,45 +47,14 @@ public class TwinStateTest
         }
     };
 
-    private final static String REGISTER_MANAGER_SAMPLE =
-            "\"deviceId\":\"validDeviceId\"," +
-            "\"generationId\":\"validGenerationId\"," +
-            "\"version\":3," +
-            "\"status\":\"enabled\"," +
-            "\"statusReason\":\"validStatusReason\"," +
-            "\"statusUpdatedTime\":\"2016-06-01T21:22:41+00:00\"," +
-            "\"connectionState\":\"disconnected\"," +
-            "\"connectionStateUpdatedTime\":\"2016-06-01T21:22:41+00:00\"," +
-            "\"lastActivityTime\":\"xxx\"," +
-            "\"etag\":\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"";
+    private final static String REGISTER_MANAGER_SAMPLE = "\"deviceId\":\"validDeviceId\"," + "\"generationId\":\"validGenerationId\"," + "\"version\":3," + "\"status\":\"enabled\"," + "\"statusReason\":\"validStatusReason\"," + "\"statusUpdatedTime\":\"2016-06-01T21:22:41+00:00\"," + "\"connectionState\":\"disconnected\"," + "\"connectionStateUpdatedTime\":\"2016-06-01T21:22:41+00:00\"," + "\"lastActivityTime\":\"xxx\"," + "\"etag\":\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"";
 
-    private final static String CONFIGURATIONS_SAMPLE =
-            "\"configurations\":{\"p1\":{\"status\":\"targeted\"}," +
-                    "\"p2\":{\"status\":\"applied\"}}";
+    private final static String CONFIGURATIONS_SAMPLE = "\"configurations\":{\"p1\":{\"status\":\"targeted\"}," + "\"p2\":{\"status\":\"applied\"}}";
 
-    private final static String TAGS_SAMPLE =
-            "\"tags\":{" +
-                "\"tag1\":\"val1\"," +
-                "\"tag2\":\"val2\"," +
-                "\"tag3\":\"val3\"" +
-            "}";
-    private final static String DESIRED_PROPERTY_SAMPLE =
-            "\"desired\":{" +
-                "\"prop1\":\"val1\"," +
-                "\"prop2\":\"val2\"," +
-                "\"prop3\":\"val3\"" +
-            "}";
-    private final static String REPORTED_PROPERTY_SAMPLE =
-            "\"reported\":{" +
-                "\"prop1\":\"val1\"," +
-                "\"prop2\":\"val2\"," +
-                "\"prop3\":\"val3\"" +
-            "}";
-    private final static String PROPERTIES_SAMPLE =
-            "\"properties\":{" +
-                DESIRED_PROPERTY_SAMPLE + "," +
-                REPORTED_PROPERTY_SAMPLE +
-            "}";
+    private final static String TAGS_SAMPLE = "\"tags\":{" + "\"tag1\":\"val1\"," + "\"tag2\":\"val2\"," + "\"tag3\":\"val3\"" + "}";
+    private final static String DESIRED_PROPERTY_SAMPLE = "\"desired\":{" + "\"prop1\":\"val1\"," + "\"prop2\":\"val2\"," + "\"prop3\":\"val3\"" + "}";
+    private final static String REPORTED_PROPERTY_SAMPLE = "\"reported\":{" + "\"prop1\":\"val1\"," + "\"prop2\":\"val2\"," + "\"prop3\":\"val3\"" + "}";
+    private final static String PROPERTIES_SAMPLE = "\"properties\":{" + DESIRED_PROPERTY_SAMPLE + "," + REPORTED_PROPERTY_SAMPLE + "}";
 
     /* SRS_TWIN_STATE_21_001: [The constructor shall store the provided tags, desiredProperty, and reportedProperty.] */
     @Test
@@ -183,8 +152,7 @@ public class TwinStateTest
     public void toJsonElementReturnsProperties()
     {
         // arrange
-        final String json =
-            "{\"tags\":null,\"properties\":{\"desired\":{\"prop2\":\"val2\",\"prop1\":\"val1\",\"prop3\":\"val3\"},\"reported\":{\"prop2\":\"val2\",\"prop1\":\"val1\",\"prop3\":\"val3\"}},\"configurations\":null,\"deviceId\":null,\"moduleId\":null,\"generationId\":null,\"etag\":null,\"version\":null,\"status\":null,\"statusReason\":null,\"statusUpdatedTime\":null,\"connectionState\":null,\"connectionStateUpdatedTime\":null,\"lastActivityTime\":null,\"capabilities\":null}";
+        final String json = "{\"tags\":null,\"properties\":{\"desired\":{\"prop2\":\"val2\",\"prop1\":\"val1\",\"prop3\":\"val3\"},\"reported\":{\"prop2\":\"val2\",\"prop1\":\"val1\",\"prop3\":\"val3\"}},\"configurations\":null,\"deviceId\":null,\"moduleId\":null,\"generationId\":null,\"etag\":null,\"version\":null,\"status\":null,\"statusReason\":null,\"statusUpdatedTime\":null,\"connectionState\":null,\"connectionStateUpdatedTime\":null,\"lastActivityTime\":null,\"capabilities\":null}";
         TwinState twinState = new TwinState(null, PROPERTIES, PROPERTIES);
 
         // act
@@ -199,8 +167,7 @@ public class TwinStateTest
     public void toJsonElementReturnsTags()
     {
         // arrange
-        final String json =
-            "{\"tags\":{\"tag1\":\"val1\",\"tag2\":\"val2\",\"tag3\":\"val3\"},\"properties\":null,\"configurations\":null,\"deviceId\":null,\"moduleId\":null,\"generationId\":null,\"etag\":null,\"version\":null,\"status\":null,\"statusReason\":null,\"statusUpdatedTime\":null,\"connectionState\":null,\"connectionStateUpdatedTime\":null,\"lastActivityTime\":null,\"capabilities\":null}";
+        final String json = "{\"tags\":{\"tag1\":\"val1\",\"tag2\":\"val2\",\"tag3\":\"val3\"},\"properties\":null,\"configurations\":null,\"deviceId\":null,\"moduleId\":null,\"generationId\":null,\"etag\":null,\"version\":null,\"status\":null,\"statusReason\":null,\"statusUpdatedTime\":null,\"connectionState\":null,\"connectionStateUpdatedTime\":null,\"lastActivityTime\":null,\"capabilities\":null}";
         TwinState twinState = new TwinState(TAGS, null, null);
 
         // act
@@ -287,11 +254,7 @@ public class TwinStateTest
     public void toStringSucceed()
     {
         // arrange
-        final String json =
-            "{" +
-                TAGS_SAMPLE + "," +
-                PROPERTIES_SAMPLE +
-            "}";
+        final String json = "{" + TAGS_SAMPLE + "," + PROPERTIES_SAMPLE + "}";
         TwinState twinState = new TwinState(TAGS, PROPERTIES, PROPERTIES);
 
         // act
@@ -306,10 +269,7 @@ public class TwinStateTest
     public void toStringSucceedOnTagsNull()
     {
         // arrange
-        final String json =
-            "{" +
-                PROPERTIES_SAMPLE +
-            "}";
+        final String json = "{" + PROPERTIES_SAMPLE + "}";
         TwinState twinState = new TwinState(null, PROPERTIES, PROPERTIES);
 
         // act
@@ -324,10 +284,7 @@ public class TwinStateTest
     public void toStringSucceedOnDesiredPropertyNull()
     {
         // arrange
-        final String json =
-            "{" +
-                TAGS_SAMPLE +
-            "}";
+        final String json = "{" + TAGS_SAMPLE + "}";
         TwinState twinState = new TwinState(TAGS, null, null);
 
         // act
@@ -338,7 +295,7 @@ public class TwinStateTest
     }
 
     /* SRS_TWIN_STATE_21_011: [The factory shall throw IllegalArgumentException if the JSON is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createFromTwinJsonThrowsOnNull()
     {
         // arrange
@@ -351,7 +308,7 @@ public class TwinStateTest
     }
 
     /* SRS_TWIN_STATE_21_011: [The factory shall throw IllegalArgumentException if the JSON is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createFromTwinJsonThrowsOnEmpty()
     {
         // arrange
@@ -364,17 +321,12 @@ public class TwinStateTest
     }
 
     /* SRS_TWIN_STATE_21_012: [The factory shall throw JsonSyntaxException if the JSON is invalid.] */
-    @Test (expected = JsonSyntaxException.class)
+    @Test(expected = JsonSyntaxException.class)
     public void createFromTwinJsonThrowsOnInvalidJSON()
     {
         // arrange
-        final String json =
-                "{" +
-                    REGISTER_MANAGER_SAMPLE + //Missing comma.
-                    TAGS_SAMPLE + "," +
-                    PROPERTIES_SAMPLE + "," +
-                    CONFIGURATIONS_SAMPLE +
-                "}";
+        final String json = "{" + REGISTER_MANAGER_SAMPLE + //Missing comma.
+                TAGS_SAMPLE + "," + PROPERTIES_SAMPLE + "," + CONFIGURATIONS_SAMPLE + "}";
 
         // act
         TwinState.createFromTwinJson(json);
@@ -387,8 +339,7 @@ public class TwinStateTest
     public void createFromTwinJson()
     {
         // arrange
-        final String json =
-                "{\"tags\":{\"tag1\":\"val1\",\"tag2\":\"val2\",\"tag3\":\"val3\"},\"properties\":{\"desired\":{\"prop2\":\"val2\",\"prop1\":\"val1\",\"prop3\":\"val3\"},\"reported\":{\"prop2\":\"val2\",\"prop1\":\"val1\",\"prop3\":\"val3\"}},\"configurations\":{\"p1\":{\"status\":\"targeted\"},\"p2\":{\"status\":\"applied\"}},\"deviceId\":\"validDeviceId\",\"moduleId\":null,\"generationId\":\"validGenerationId\",\"etag\":\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",\"version\":3,\"status\":\"enabled\",\"statusReason\":\"validStatusReason\",\"statusUpdatedTime\":\"2016-06-01T21:22:41+00:00\",\"connectionState\":\"disconnected\",\"connectionStateUpdatedTime\":\"2016-06-01T21:22:41+00:00\",\"lastActivityTime\":\"xxx\",\"capabilities\":null}";
+        final String json = "{\"tags\":{\"tag1\":\"val1\",\"tag2\":\"val2\",\"tag3\":\"val3\"},\"properties\":{\"desired\":{\"prop2\":\"val2\",\"prop1\":\"val1\",\"prop3\":\"val3\"},\"reported\":{\"prop2\":\"val2\",\"prop1\":\"val1\",\"prop3\":\"val3\"}},\"configurations\":{\"p1\":{\"status\":\"targeted\"},\"p2\":{\"status\":\"applied\"}},\"deviceId\":\"validDeviceId\",\"moduleId\":null,\"generationId\":\"validGenerationId\",\"etag\":\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",\"version\":3,\"status\":\"enabled\",\"statusReason\":\"validStatusReason\",\"statusUpdatedTime\":\"2016-06-01T21:22:41+00:00\",\"connectionState\":\"disconnected\",\"connectionStateUpdatedTime\":\"2016-06-01T21:22:41+00:00\",\"lastActivityTime\":\"xxx\",\"capabilities\":null}";
 
         // act
         TwinState twinState = TwinState.createFromTwinJson(json);
@@ -402,8 +353,7 @@ public class TwinStateTest
     public void createFromTwinJsonWithTagsAndProperties()
     {
         // arrange
-        final String json =
-                "{\"tags\":{\"tag1\":\"val1\",\"tag2\":\"val2\",\"tag3\":\"val3\"},\"properties\":{\"desired\":{\"prop2\":\"val2\",\"prop1\":\"val1\",\"prop3\":\"val3\"},\"reported\":{\"prop2\":\"val2\",\"prop1\":\"val1\",\"prop3\":\"val3\"}},\"configurations\":null,\"deviceId\":null,\"moduleId\":null,\"generationId\":null,\"etag\":null,\"version\":null,\"status\":null,\"statusReason\":null,\"statusUpdatedTime\":null,\"connectionState\":null,\"connectionStateUpdatedTime\":null,\"lastActivityTime\":null,\"capabilities\":null}";
+        final String json = "{\"tags\":{\"tag1\":\"val1\",\"tag2\":\"val2\",\"tag3\":\"val3\"},\"properties\":{\"desired\":{\"prop2\":\"val2\",\"prop1\":\"val1\",\"prop3\":\"val3\"},\"reported\":{\"prop2\":\"val2\",\"prop1\":\"val1\",\"prop3\":\"val3\"}},\"configurations\":null,\"deviceId\":null,\"moduleId\":null,\"generationId\":null,\"etag\":null,\"version\":null,\"status\":null,\"statusReason\":null,\"statusUpdatedTime\":null,\"connectionState\":null,\"connectionStateUpdatedTime\":null,\"lastActivityTime\":null,\"capabilities\":null}";
 
         // act
         TwinState twinState = TwinState.createFromTwinJson(json);
@@ -413,7 +363,7 @@ public class TwinStateTest
     }
 
     /* SRS_TWIN_STATE_21_014: [The factory shall throw IllegalArgumentException if the JSON is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createFromDesiredPropertyJsonThrowsOnNull()
     {
         // arrange
@@ -426,7 +376,7 @@ public class TwinStateTest
     }
 
     /* SRS_TWIN_STATE_21_014: [The factory shall throw IllegalArgumentException if the JSON is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createFromDesiredPropertyJsonThrowsOnEmpty()
     {
         // arrange
@@ -439,14 +389,11 @@ public class TwinStateTest
     }
 
     /* SRS_TWIN_STATE_21_015: [The factory shall throw JsonSyntaxException if the JSON is invalid.] */
-    @Test (expected = JsonSyntaxException.class)
+    @Test(expected = JsonSyntaxException.class)
     public void createFromDesiredPropertyJsonThrowsOnInvalidJSON()
     {
         // arrange
-        final String json =
-                "{" +
-                        "\"desired\":," +
-                "}";
+        final String json = "{" + "\"desired\":," + "}";
 
         // act
         TwinState.createFromDesiredPropertyJson(json);
@@ -459,7 +406,7 @@ public class TwinStateTest
     public void createFromDesiredPropertyJson()
     {
         // arrange
-        final String json =  "{" + DESIRED_PROPERTY_SAMPLE + "}";
+        final String json = "{" + DESIRED_PROPERTY_SAMPLE + "}";
 
         // act
         TwinState twinState = TwinState.createFromDesiredPropertyJson(json);
@@ -469,7 +416,7 @@ public class TwinStateTest
     }
 
     /* SRS_TWIN_STATE_21_017: [The factory shall throw IllegalArgumentException if the JSON is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createFromReportedPropertyJsonThrowsOnNull()
     {
         // arrange
@@ -482,7 +429,7 @@ public class TwinStateTest
     }
 
     /* SRS_TWIN_STATE_21_017: [The factory shall throw IllegalArgumentException if the JSON is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createFromReportedPropertyJsonThrowsOnEmpty()
     {
         // arrange
@@ -495,14 +442,11 @@ public class TwinStateTest
     }
 
     /* SRS_TWIN_STATE_21_018: [The factory shall throw JsonSyntaxException if the JSON is invalid.] */
-    @Test (expected = JsonSyntaxException.class)
+    @Test(expected = JsonSyntaxException.class)
     public void createFromReportedPropertyJsonThrowsOnInvalidJSON()
     {
         // arrange
-        final String json =
-                "{" +
-                    "\"reported\":," +
-                "}";
+        final String json = "{" + "\"reported\":," + "}";
 
         // act
         TwinState.createFromReportedPropertyJson(json);
@@ -515,7 +459,7 @@ public class TwinStateTest
     public void createFromReportedPropertyJson()
     {
         // arrange
-        final String json =  "{" + REPORTED_PROPERTY_SAMPLE + "}";
+        final String json = "{" + REPORTED_PROPERTY_SAMPLE + "}";
 
         // act
         TwinState twinState = TwinState.createFromReportedPropertyJson(json);
@@ -525,7 +469,7 @@ public class TwinStateTest
     }
 
     /* SRS_TWIN_STATE_21_020: [The factory shall throw IllegalArgumentException if the JSON is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createFromPropertiesJsonThrowsOnNull()
     {
         // arrange
@@ -538,7 +482,7 @@ public class TwinStateTest
     }
 
     /* SRS_TWIN_STATE_21_020: [The factory shall throw IllegalArgumentException if the JSON is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createFromPropertiesJsonThrowsOnEmpty()
     {
         // arrange
@@ -551,14 +495,11 @@ public class TwinStateTest
     }
 
     /* SRS_TWIN_STATE_21_021: [The factory shall throw JsonSyntaxException if the JSON is invalid.] */
-    @Test (expected = JsonSyntaxException.class)
+    @Test(expected = JsonSyntaxException.class)
     public void createFromPropertiesJsonThrowsOnInvalidJSON()
     {
         // arrange
-        final String json =
-                "{" +
-                        "\"reported\":," +
-                        "}";
+        final String json = "{" + "\"reported\":," + "}";
 
         // act
         TwinState.createFromPropertiesJson(json);
@@ -571,7 +512,7 @@ public class TwinStateTest
     public void createFromPropertiesJsonSucceed()
     {
         // arrange
-        final String json =  "{\"tags\":null,\"properties\":null,\"configurations\":null,\"deviceId\":null,\"moduleId\":null,\"generationId\":null,\"etag\":null,\"version\":null,\"status\":null,\"statusReason\":null,\"statusUpdatedTime\":null,\"connectionState\":null,\"connectionStateUpdatedTime\":null,\"lastActivityTime\":null,\"capabilities\":null}";
+        final String json = "{\"tags\":null,\"properties\":null,\"configurations\":null,\"deviceId\":null,\"moduleId\":null,\"generationId\":null,\"etag\":null,\"version\":null,\"status\":null,\"statusReason\":null,\"statusUpdatedTime\":null,\"connectionState\":null,\"connectionStateUpdatedTime\":null,\"lastActivityTime\":null,\"capabilities\":null}";
 
         // act
         TwinState twinState = TwinState.createFromPropertiesJson(json);

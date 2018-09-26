@@ -28,13 +28,13 @@ public class AttestationMechanismTest
     private X509Attestation mockedX509Attestation;
 
     /* SRS_ATTESTATION_MECHANISM_21_001: [The constructor shall throw IllegalArgumentException if the provided tpm is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNull()
     {
         // arrange
 
         // act
-        Deencapsulation.newInstance(AttestationMechanism.class, new Class[] {Attestation.class}, (Attestation)null);
+        Deencapsulation.newInstance(AttestationMechanism.class, new Class[]{Attestation.class}, (Attestation) null);
 
         // assert
     }
@@ -48,7 +48,7 @@ public class AttestationMechanismTest
         // arrange
 
         // act
-        AttestationMechanism attestationMechanism = Deencapsulation.newInstance(AttestationMechanism.class, new Class[] {Attestation.class}, mockedTpmAttestation);
+        AttestationMechanism attestationMechanism = Deencapsulation.newInstance(AttestationMechanism.class, new Class[]{Attestation.class}, mockedTpmAttestation);
 
         // assert
         assertEquals("TPM", Deencapsulation.getField(attestationMechanism, "type").toString());
@@ -57,14 +57,16 @@ public class AttestationMechanismTest
     }
 
     /* SRS_ATTESTATION_MECHANISM_21_005: [The constructor shall throw IllegalArgumentException if the provided attestation is unknown.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnUnknownAttestation()
     {
         // arrange
-        final class UnknownAttestation extends Attestation {}
+        final class UnknownAttestation extends Attestation
+        {
+        }
 
         // act
-        Deencapsulation.newInstance(AttestationMechanism.class, new Class[] {Attestation.class}, new UnknownAttestation());
+        Deencapsulation.newInstance(AttestationMechanism.class, new Class[]{Attestation.class}, new UnknownAttestation());
 
         // assert
     }
@@ -78,7 +80,7 @@ public class AttestationMechanismTest
         // arrange
 
         // act
-        AttestationMechanism attestationMechanism = Deencapsulation.newInstance(AttestationMechanism.class, new Class[] {Attestation.class}, mockedX509Attestation);
+        AttestationMechanism attestationMechanism = Deencapsulation.newInstance(AttestationMechanism.class, new Class[]{Attestation.class}, mockedX509Attestation);
 
         // assert
         assertEquals("X509", Deencapsulation.getField(attestationMechanism, "type").toString());
@@ -91,7 +93,7 @@ public class AttestationMechanismTest
     public void getTypeSucceed()
     {
         // arrange
-        AttestationMechanism attestationMechanism = Deencapsulation.newInstance(AttestationMechanism.class, new Class[] {Attestation.class}, mockedX509Attestation);
+        AttestationMechanism attestationMechanism = Deencapsulation.newInstance(AttestationMechanism.class, new Class[]{Attestation.class}, mockedX509Attestation);
 
         // act - assert
         assertEquals("X509", Deencapsulation.invoke(attestationMechanism, "getType").toString());
@@ -102,7 +104,7 @@ public class AttestationMechanismTest
     public void getAttestationX509Succeed()
     {
         // arrange
-        AttestationMechanism attestationMechanism = Deencapsulation.newInstance(AttestationMechanism.class, new Class[] {Attestation.class}, mockedX509Attestation);
+        AttestationMechanism attestationMechanism = Deencapsulation.newInstance(AttestationMechanism.class, new Class[]{Attestation.class}, mockedX509Attestation);
 
         // act - assert
         assertNotNull(Deencapsulation.invoke(attestationMechanism, "getAttestation"));
@@ -113,14 +115,14 @@ public class AttestationMechanismTest
     public void getAttestationTmpSucceed()
     {
         // arrange
-        AttestationMechanism attestationMechanism = Deencapsulation.newInstance(AttestationMechanism.class, new Class[] {Attestation.class}, mockedTpmAttestation);
+        AttestationMechanism attestationMechanism = Deencapsulation.newInstance(AttestationMechanism.class, new Class[]{Attestation.class}, mockedTpmAttestation);
 
         // act - assert
         assertNotNull(Deencapsulation.invoke(attestationMechanism, "getAttestation"));
     }
 
     /* SRS_ATTESTATION_MECHANISM_21_012: [If the type is not `x509` or `tpm`, the getAttestation shall throw ProvisioningServiceClientException.] */
-    @Test (expected = ProvisioningServiceClientException.class)
+    @Test(expected = ProvisioningServiceClientException.class)
     public void getAttestationThrowsOnUnknownAttestation()
     {
         // arrange

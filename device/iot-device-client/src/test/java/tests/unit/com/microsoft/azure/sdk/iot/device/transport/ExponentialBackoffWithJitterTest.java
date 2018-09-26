@@ -25,8 +25,7 @@ public class ExponentialBackoffWithJitterTest
     public void constructorThrowsWithZeroRetryCount()
     {
         //act
-        final RetryPolicy exp = new ExponentialBackoffWithJitter(
-                0, 100, 10 * 1000, 100, true);
+        final RetryPolicy exp = new ExponentialBackoffWithJitter(0, 100, 10 * 1000, 100, true);
     }
 
     // Tests_SRS_EXPONENTIALBACKOFF_28_002: [Constructor should save retryCount, minBackoff, maxBackoff, deltaBackoff and firstFastRetry]
@@ -34,15 +33,14 @@ public class ExponentialBackoffWithJitterTest
     public void constructorSavesParameterToLocal()
     {
         //act
-        final RetryPolicy exp = new ExponentialBackoffWithJitter(
-                10, 2 * 1000, 2 * 1000, 2 * 1000, false);
+        final RetryPolicy exp = new ExponentialBackoffWithJitter(10, 2 * 1000, 2 * 1000, 2 * 1000, false);
 
         // assert
         assertEquals(10, Deencapsulation.getField(exp, "retryCount"));
         assertEquals(2 * 1000L, Deencapsulation.getField(exp, "minBackoff"));
         assertEquals(2 * 1000L, Deencapsulation.getField(exp, "maxBackoff"));
         assertEquals(2 * 1000L, Deencapsulation.getField(exp, "deltaBackoff"));
-        assertFalse((boolean)Deencapsulation.getField(exp, "firstFastRetry"));
+        assertFalse((boolean) Deencapsulation.getField(exp, "firstFastRetry"));
     }
 
     // Tests_SRS_EXPONENTIALBACKOFF_28_006: [Constructor should have default values retryCount, minBackoff, maxBackoff, deltaBackoff and firstFastRetry]
@@ -57,7 +55,7 @@ public class ExponentialBackoffWithJitterTest
         assertEquals(100L, Deencapsulation.getField(exp, "minBackoff"));
         assertEquals(10 * 1000L, Deencapsulation.getField(exp, "maxBackoff"));
         assertEquals(100L, Deencapsulation.getField(exp, "deltaBackoff"));
-        assertTrue((boolean)Deencapsulation.getField(exp, "firstFastRetry"));
+        assertTrue((boolean) Deencapsulation.getField(exp, "firstFastRetry"));
     }
 
     // Tests_SRS_EXPONENTIALBACKOFF_28_003: [The function shall indicate immediate retry on first retry if firstFastRetry is true]
@@ -65,8 +63,7 @@ public class ExponentialBackoffWithJitterTest
     public void shouldRetryResultWithFirstFastRetry()
     {
         // arrange
-        final RetryPolicy exp = new ExponentialBackoffWithJitter(
-            10, 100, 10 * 1000, 100, true);
+        final RetryPolicy exp = new ExponentialBackoffWithJitter(10, 100, 10 * 1000, 100, true);
         RetryDecision expected = new RetryDecision(true, 0);
 
         // act
@@ -82,8 +79,7 @@ public class ExponentialBackoffWithJitterTest
     public void shouldRetryResultWithNoFirstFastRetry()
     {
         // arrange
-        final RetryPolicy exp = new ExponentialBackoffWithJitter(
-                10, 100, 10 * 1000, 100, false);
+        final RetryPolicy exp = new ExponentialBackoffWithJitter(10, 100, 10 * 1000, 100, false);
 
         // act
         RetryDecision actual = exp.getRetryDecision(0, null);
@@ -99,8 +95,7 @@ public class ExponentialBackoffWithJitterTest
     public void shouldRetryResultWithOnlyCurrentRetryCount()
     {
         // arrange
-        final RetryPolicy exp = new ExponentialBackoffWithJitter(
-                10, 0, 0, 0, true);
+        final RetryPolicy exp = new ExponentialBackoffWithJitter(10, 0, 0, 0, true);
         Deencapsulation.setField(exp, "random", mockedRandom);
 
         new NonStrictExpectations()
@@ -125,8 +120,7 @@ public class ExponentialBackoffWithJitterTest
     public void shouldRetryResultWithMinMaxBackOffReturnsMinBackOff()
     {
         // arrange
-        final RetryPolicy exp = new ExponentialBackoffWithJitter(
-                10, 10, 100, 0, true);
+        final RetryPolicy exp = new ExponentialBackoffWithJitter(10, 10, 100, 0, true);
         Deencapsulation.setField(exp, "random", mockedRandom);
 
         new NonStrictExpectations()
@@ -151,8 +145,7 @@ public class ExponentialBackoffWithJitterTest
     public void shouldRetryResultWithLargeCurrentRetryCountReturnsMaxBackOff()
     {
         // arrange
-        final RetryPolicy exp = new ExponentialBackoffWithJitter(
-                10000, 10, 100, 10, true);
+        final RetryPolicy exp = new ExponentialBackoffWithJitter(10000, 10, 100, 10, true);
         Deencapsulation.setField(exp, "random", mockedRandom);
 
         new NonStrictExpectations()
@@ -177,8 +170,7 @@ public class ExponentialBackoffWithJitterTest
     public void shouldRetryResultRetry1stTime()
     {
         // arrange
-        final RetryPolicy exp = new ExponentialBackoffWithJitter(
-                10000, 10, 100, 10, true);
+        final RetryPolicy exp = new ExponentialBackoffWithJitter(10000, 10, 100, 10, true);
         final double deltaBackoffLowBound = 10 * 0.8;
         final int count = 2;
         Deencapsulation.setField(exp, "random", mockedRandom);
@@ -195,7 +187,7 @@ public class ExponentialBackoffWithJitterTest
         RetryDecision actual = exp.getRetryDecision(count, null);
 
         //assert
-        int expected = (int)((Math.pow(2.0, (double)count) - 1.0) * deltaBackoffLowBound) + 10;
+        int expected = (int) ((Math.pow(2.0, (double) count) - 1.0) * deltaBackoffLowBound) + 10;
         assertTrue(actual.shouldRetry());
         assertEquals(expected, actual.getDuration());
     }

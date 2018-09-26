@@ -33,7 +33,7 @@ public class ResponseMessageTest
     }
 
     /* Tests_SRS_RESPONSEMESSAGE_21_002: [If the message body is null, the constructor shall throw an IllegalArgumentException thrown by base constructor.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorNullBodyThrows()
     {
         // arrange
@@ -45,7 +45,7 @@ public class ResponseMessageTest
     }
 
     /* Tests_SRS_RESPONSEMESSAGE_21_004: [If the message status is null, the constructor shall throw an IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorNullStatusThrows()
     {
         // arrange

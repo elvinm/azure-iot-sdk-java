@@ -39,6 +39,7 @@ public class AmqpDeviceOperations
 
     /**
      * Retrieves a message from a link
+     *
      * @param linkName The name of the link to receive
      * @return The Amqp Message from the specified link
      */
@@ -77,8 +78,9 @@ public class AmqpDeviceOperations
 
     /**
      * Open the Session links for session
+     *
      * @param session the {@link Session} endpoint.
-     * @throws IOException if the function failed to open the links for the provided session.
+     * @throws IOException              if the function failed to open the links for the provided session.
      * @throws IllegalArgumentException if the session is {@code null}.
      */
     public void openLinks(Session session) throws IOException, IllegalArgumentException
@@ -106,6 +108,7 @@ public class AmqpDeviceOperations
 
     /**
      * Is this name a receiver Link
+     *
      * @param name Name of the link
      * @return if this is a receiver link
      */
@@ -123,9 +126,10 @@ public class AmqpDeviceOperations
 
     /**
      * Initializes the link's other endpoint according to its type
+     *
      * @param link The link which shall be initialize.
      * @throws IllegalArgumentException if link argument is null
-     * @throws IOException if Proton throws
+     * @throws IOException              if Proton throws
      */
     public synchronized void initLink(Link link) throws IOException, IllegalArgumentException
     {
@@ -158,8 +162,9 @@ public class AmqpDeviceOperations
 
     /**
      * Sends a Message on the senderLink
-     * @param tag delivery tag
-     * @param data Data to be sent on the link
+     *
+     * @param tag    delivery tag
+     * @param data   Data to be sent on the link
      * @param length Length of the data
      * @param offset Offset of the data to send
      */

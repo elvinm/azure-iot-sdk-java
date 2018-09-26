@@ -21,15 +21,12 @@ import static junit.framework.TestCase.assertEquals;
 
 public class HttpsHsmTrustBundleProviderTest
 {
-    @Mocked
-    HttpsHsmClient mockedHttpsHsmClient;
-
-    @Mocked
-    TrustBundleResponse mockedTrustBundleResponse;
-
     final static String expectedUri = "someUri";
     final static String expectedAPIVersion = "1.1.1";
-
+    @Mocked
+    HttpsHsmClient mockedHttpsHsmClient;
+    @Mocked
+    TrustBundleResponse mockedTrustBundleResponse;
 
     // Tests_SRS_TRUSTBUNDLEPROVIDER_34_001: [This function shall create an HttpsHsmClient using the provided provider uri.]
     // Tests_SRS_TRUSTBUNDLEPROVIDER_34_002: [This function shall invoke getTrustBundle on the HttpsHsmClient and return the resulting certificates.]

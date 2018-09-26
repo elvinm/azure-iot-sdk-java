@@ -189,8 +189,7 @@ public class ModuleTest
     public void constructorIllegalArgumentExceptionWhenModuleIdIsNull()
     {
         // Act
-        Deencapsulation.newInstance(Module.class, new Class[]{String.class, String.class, SymmetricKey.class},
-                "device-xxx", null, null);
+        Deencapsulation.newInstance(Module.class, new Class[]{String.class, String.class, SymmetricKey.class}, "device-xxx", null, null);
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_MODULE_28_006: [The function shall throw IllegalArgumentException if the input string is empty or null]
@@ -198,8 +197,7 @@ public class ModuleTest
     public void constructorIllegalArgumentExceptionWhenDeviceIdIsNull()
     {
         // Act
-        Deencapsulation.newInstance(Module.class, new Class[]{String.class, String.class, SymmetricKey.class},
-                null, "moduleid", null);
+        Deencapsulation.newInstance(Module.class, new Class[]{String.class, String.class, SymmetricKey.class}, null, "moduleid", null);
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_MODULE_28_007: [The constructor shall initialize all properties to default values]
@@ -213,8 +211,7 @@ public class ModuleTest
         String offsetTimeDefault = "0001-01-01T00:00:00-00:00";
 
         // Act
-        Module module = Deencapsulation.newInstance(Module.class, new Class[]{String.class, String.class, SymmetricKey.class},
-                deviceId, moduleId, null);
+        Module module = Deencapsulation.newInstance(Module.class, new Class[]{String.class, String.class, SymmetricKey.class}, deviceId, moduleId, null);
 
         // Assert
         assertEquals(deviceId, module.getDeviceId());
@@ -233,8 +230,7 @@ public class ModuleTest
     public void constructor2IllegalArgumentExceptionWhenModuleIdIsNull()
     {
         // Act
-        Deencapsulation.newInstance(Module.class, new Class[]{String.class, String.class, AuthenticationType.class},
-                "device-xxx", null, AuthenticationType.SAS);
+        Deencapsulation.newInstance(Module.class, new Class[]{String.class, String.class, AuthenticationType.class}, "device-xxx", null, AuthenticationType.SAS);
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_MODULE_28_008: [The function shall throw IllegalArgumentException if the input string is empty or null]
@@ -242,8 +238,7 @@ public class ModuleTest
     public void constructor2IllegalArgumentExceptionWhenDeviceIdIsNull()
     {
         // Act
-        Deencapsulation.newInstance(Module.class, new Class[]{String.class, String.class, AuthenticationType.class},
-                null, "moduleid", AuthenticationType.SAS);
+        Deencapsulation.newInstance(Module.class, new Class[]{String.class, String.class, AuthenticationType.class}, null, "moduleid", AuthenticationType.SAS);
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_MODULE_28_008: [The function shall throw IllegalArgumentException if the input string is empty or null]
@@ -251,8 +246,7 @@ public class ModuleTest
     public void constructor2IllegalArgumentExceptionWhenAuthTypeIsNull()
     {
         // Act
-        Deencapsulation.newInstance(Module.class, new Class[]{String.class, String.class, AuthenticationType.class},
-                "deviceId", "moduleid", null);
+        Deencapsulation.newInstance(Module.class, new Class[]{String.class, String.class, AuthenticationType.class}, "deviceId", "moduleid", null);
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_MODULE_28_009: [The constructor shall initialize all properties to default values]
@@ -266,8 +260,7 @@ public class ModuleTest
         String offsetTimeDefault = "0001-01-01T00:00:00-00:00";
 
         // Act
-        Module module = Deencapsulation.newInstance(Module.class, new Class[]{String.class, String.class, AuthenticationType.class},
-                deviceId, moduleId, AuthenticationType.SAS);
+        Module module = Deencapsulation.newInstance(Module.class, new Class[]{String.class, String.class, AuthenticationType.class}, deviceId, moduleId, AuthenticationType.SAS);
 
         // Assert
         assertEquals(deviceId, module.getDeviceId());

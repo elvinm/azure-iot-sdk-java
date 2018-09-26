@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package com.microsoft.azure.sdk.iot.service.devicetwin;
 
@@ -42,15 +42,15 @@ public class QueryCollection
     /**
      * Constructor for sql based queries
      *
-     * @param query the sql query to use
-     * @param pageSize the size of the page to return per query collection response
-     * @param requestQueryType the type of query this is
+     * @param query                  the sql query to use
+     * @param pageSize               the size of the page to return per query collection response
+     * @param requestQueryType       the type of query this is
      * @param iotHubConnectionString the connection string to connect with to query against
-     * @param url the url to query against
-     * @param httpMethod the http method to call with the query
-     * @param timeout timeout until the request expires
+     * @param url                    the url to query against
+     * @param httpMethod             the http method to call with the query
+     * @param timeout                timeout until the request expires
      * @throws IllegalArgumentException if page size is 0 or negative, or if the query type is null or unknown, of if the query string is null or empty,
-     *  or if the provided connection string is null, or if the provided url is null, or if the provided http method is null
+     *                                  or if the provided connection string is null, or if the provided url is null, or if the provided http method is null
      */
     protected QueryCollection(String query, int pageSize, QueryType requestQueryType, IotHubConnectionString iotHubConnectionString, URL url, HttpMethod httpMethod, long timeout)
     {
@@ -82,14 +82,14 @@ public class QueryCollection
     /**
      * Constructor for non-sql based queries
      *
-     * @param pageSize the size of the page to return per query collection response
-     * @param requestQueryType the type of query this is
+     * @param pageSize               the size of the page to return per query collection response
+     * @param requestQueryType       the type of query this is
      * @param iotHubConnectionString the connection string to connect with to query against
-     * @param url the url to query against
-     * @param httpMethod the http method to call with the query
-     * @param timeout timeout until the request expires
+     * @param url                    the url to query against
+     * @param httpMethod             the http method to call with the query
+     * @param timeout                timeout until the request expires
      * @throws IllegalArgumentException if page size is 0 or negative, or if the query type is null or unknown,
-     *  or if the provided connection string is null, or if the provided url is null, or if the provided http method is null
+     *                                  or if the provided connection string is null, or if the provided url is null, or if the provided http method is null
      */
     protected QueryCollection(int pageSize, QueryType requestQueryType, IotHubConnectionString iotHubConnectionString, URL url, HttpMethod httpMethod, long timeout)
     {
@@ -122,7 +122,7 @@ public class QueryCollection
      * @param options the options for the query. If a continuation token is set in these options, it shall override any
      *                previously saved tokens. The page size of these options shall override any previously saved page size
      * @return The QueryCollectionResponse containing the full page of results and the continuation token for the next query
-     * @throws IOException If an IOException occurs when calling the Service API, or if the results of that call are unexpected
+     * @throws IOException     If an IOException occurs when calling the Service API, or if the results of that call are unexpected
      * @throws IotHubException If an IotHubException occurs when calling the Service API
      */
     private QueryCollectionResponse<String> sendQueryRequest(QueryOptions options) throws IOException, IotHubException
@@ -154,8 +154,7 @@ public class QueryCollection
 
         //Codes_SRS_QUERYCOLLECTION_34_021: [The method shall create a QueryResponse object with the contents from the response body and its continuation token and return it.]
         this.isInitialQuery = false;
-        return new QueryCollectionResponse<String>(
-        		new String(httpResponse.getBody(), "UTF-8"), this.responseContinuationToken);
+        return new QueryCollectionResponse<String>(new String(httpResponse.getBody(), "UTF-8"), this.responseContinuationToken);
     }
 
     /**
@@ -179,8 +178,9 @@ public class QueryCollection
 
     /**
      * Returns the next QueryCollectionResponse object. The query shall continue with the same page size and use the internally saved continuation token.
+     *
      * @return The next QueryCollectionResponse object or null if there is not a next QueryCollectionResponse object
-     * @throws IOException If an IOException occurs when calling the Service API, or if the results of that call are unexpected
+     * @throws IOException     If an IOException occurs when calling the Service API, or if the results of that call are unexpected
      * @throws IotHubException If an IotHubException occurs when calling the Service API
      */
     protected QueryCollectionResponse<String> next() throws IOException, IotHubException
@@ -198,7 +198,7 @@ public class QueryCollection
      *
      * @param options The options for the query
      * @return The next QueryCollectionResponse object or null if there is no next QueryCollectionResponse object
-     * @throws IOException If an IOException occurs when calling the Service API, or if the results of that call are unexpected
+     * @throws IOException     If an IOException occurs when calling the Service API, or if the results of that call are unexpected
      * @throws IotHubException If an IotHubException occurs when calling the Service API
      */
     protected QueryCollectionResponse<String> next(QueryOptions options) throws IOException, IotHubException
@@ -217,6 +217,7 @@ public class QueryCollection
 
     /**
      * Getter for page size.
+     *
      * @return the page size of this
      */
     protected Integer getPageSize()

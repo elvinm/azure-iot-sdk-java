@@ -28,7 +28,7 @@ public class ServiceClientTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_SERVICECLIENT_12_001: [The constructor shall throw IllegalArgumentException if the input string is empty or null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createFromConnectionString_input_null() throws Exception
     {
         // Arrange
@@ -40,7 +40,7 @@ public class ServiceClientTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_SERVICECLIENT_12_001: [The constructor shall throw IllegalArgumentException if the input string is empty or null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createFromConnectionString_input_empty() throws Exception
     {
         // Arrange
@@ -78,14 +78,14 @@ public class ServiceClientTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_SERVICECLIENT_12_004: [The constructor shall throw IllegalArgumentException if the input object is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_input_null() throws Exception
     {
         // Arrange
         IotHubConnectionString iotHubConnectionString = null;
         IotHubServiceClientProtocol iotHubServiceClientProtocol = IotHubServiceClientProtocol.AMQPS;
         // Act
-        ServiceClient serviceClient = Deencapsulation.newInstance(ServiceClient.class, iotHubConnectionString, iotHubServiceClientProtocol); 
+        ServiceClient serviceClient = Deencapsulation.newInstance(ServiceClient.class, iotHubConnectionString, iotHubServiceClientProtocol);
     }
 
     // Tests_SRS_SERVICE_SDK_JAVA_SERVICECLIENT_12_005: [The constructor shall create a SAS token object using the IotHubConnectionString]
@@ -119,7 +119,7 @@ public class ServiceClientTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_SERVICECLIENT_12_008: [The function shall throw IOException if the member AMQP sender object has not been initialized]
     // Assert
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void open_sender_null() throws Exception
     {
         // Arrange
@@ -164,7 +164,7 @@ public class ServiceClientTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_SERVICECLIENT_12_010: [The function shall throw IOException if the member AMQP sender object has not been initialized]
     // Assert
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void close_sender_null() throws Exception
     {
         // Arrange
@@ -209,7 +209,7 @@ public class ServiceClientTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_SERVICECLIENT_12_0012: [The function shall throw IOException if the member AMQP sender object has not been initialized]
     // Assert
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void send_sender_null() throws Exception
     {
         // Arrange
@@ -259,7 +259,7 @@ public class ServiceClientTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_SERVICECLIENT_28_001: [The function shall throw IOException if the member AMQP sender object has not been initialized]
     // Assert
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void send_module_sender_null() throws Exception
     {
         // Arrange
@@ -338,7 +338,7 @@ public class ServiceClientTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_SERVICECLIENT_12_014: [The function shall create an async wrapper around the open() function call, handle the return value or delegate exception]
     // Assert
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void open_async_future_throw() throws Exception
     {
         // Arrange
@@ -393,7 +393,7 @@ public class ServiceClientTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_SERVICECLIENT_12_015: [The function shall create an async wrapper around the close() function call, handle the return value or delegate exception]
     // Assert
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void close_async_future_throw() throws Exception
     {
         // Arrange
@@ -449,7 +449,7 @@ public class ServiceClientTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_SERVICECLIENT_12_016: [The function shall create an async wrapper around the send() function call, handle the return value or delegate exception]
     // Assert
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void send_async_future_throw() throws Exception
     {
         // Arrange
@@ -504,7 +504,7 @@ public class ServiceClientTest
         // Assert
         assertNotEquals(null, feedbackReceiver);
     }
-    
+
     // Tests_SRS_SERVICE_SDK_JAVA_SERVICECLIENT_12_017: [The function shall create a FeedbackReceiver object and returns with it]
     @Test
     public void getFeedbackReceiver_good_case_without_deviceid() throws Exception

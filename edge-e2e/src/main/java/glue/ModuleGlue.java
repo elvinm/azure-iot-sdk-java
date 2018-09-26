@@ -26,6 +26,12 @@ import java.util.*;
 public class ModuleGlue
 {
 
+    HashMap<String, ModuleClient> _map = new HashMap<>();
+    int _clientCount = 0;
+    DeviceMethodCallbackImpl _methodCallback = new DeviceMethodCallbackImpl();
+    private ModuleTwinPropertyCallBack _deviceTwinPropertyCallback = new ModuleTwinPropertyCallBack();
+    private IotHubEventCallbackImpl _deviceTwinStatusCallback = new IotHubEventCallbackImpl();
+
     private IotHubClientProtocol transportFromString(String protocolStr)
     {
         IotHubClientProtocol protocol = null;
@@ -53,9 +59,6 @@ public class ModuleGlue
         return protocol;
     }
 
-    HashMap<String, ModuleClient> _map = new HashMap<>();
-    int _clientCount = 0;
-
     public void connectFromEnvironment(String transportType, Handler<AsyncResult<ConnectResponse>> handler)
     {
         System.out.printf("ConnectFromEnvironment called with transport %s%n", transportType);
@@ -80,7 +83,7 @@ public class ModuleGlue
             cr.setConnectionId(connectionId);
             handler.handle(Future.succeededFuture(cr));
         }
-        catch (IOException | ModuleClientException  e)
+        catch (IOException | ModuleClientException e)
         {
             handler.handle(Future.failedFuture(e));
         }
@@ -133,7 +136,6 @@ public class ModuleGlue
             handler.handle(Future.failedFuture(e));
         }
     }
-
 
     public void invokeDeviceMethod(String connectionId, String deviceId, Object methodInvokeParameters, Handler<AsyncResult<Object>> handler)
     {
@@ -199,6 +201,270 @@ public class ModuleGlue
         }
     }
 
+    public void enableTwin(String connectionId, Handler<AsyncResult<Void>> handler)
+    {
+        ModuleClient client = getClient(connectionId);
+        if (client == null)
+        {
+            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
+        }
+        else
+        {
+            try
+            {
+                this._deviceTwinStatusCallback.setHandler(res ->
+                {
+                    System.out.printf("startTwin completed - failed = %s%n", (res.failed() ? "true" : "false"));
+
+                    if (res.failed())
+                    {
+                        handler.handle(res);
+                    }
+                    else
+                    {
+                        try
+                        {
+                            client.subscribeToTwinDesiredProperties(null);
+                        }
+                        catch (IOException e)
+                        {
+                            this._deviceTwinStatusCallback.setHandler(null);
+                            handler.handle(Future.failedFuture(e));
+                            return;
+                        }
+                        handler.handle(Future.succeededFuture());
+                    }
+
+                });
+                System.out.println("calling startTwin");
+                client.startTwin(this._deviceTwinStatusCallback, null, this._deviceTwinPropertyCallback, null);
+            }
+            catch (IOException e)
+            {
+                handler.handle(Future.failedFuture((e)));
+            }
+        }
+    }
+
+    private void sendEventHelper(String connectionId, Message msg, Handler<AsyncResult<Void>> handler)
+    {
+        System.out.println("inside sendEventHelper");
+
+        ModuleClient client = getClient(connectionId);
+        if (client == null)
+        {
+            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
+        }
+        else
+        {
+            EventCallback callback = new EventCallback(handler);
+            System.out.printf("calling sendEventAsync%n");
+            client.sendEventAsync(msg, callback, null);
+        }
+    }
+
+    public void sendEvent(String connectionId, String eventBody, Handler<AsyncResult<Void>> handler)
+    {
+        System.out.printf("moduleConnectionIdEventPut called for %s%n", connectionId);
+        System.out.println(eventBody);
+        this.sendEventHelper(connectionId, new Message(eventBody), handler);
+    }
+
+    public void waitForInputMessage(String connectionId, String inputName, Handler<AsyncResult<String>> handler)
+    {
+        System.out.printf("waitForInputMessage with %s, %s%n", connectionId, inputName);
+
+        ModuleClient client = getClient(connectionId);
+        if (client == null)
+        {
+            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
+        }
+        else
+        {
+            MessageCallback callback = new MessageCallback(client, inputName, handler);
+            System.out.printf("calling setMessageCallback%n");
+            client.setMessageCallback(inputName, callback, null);
+        }
+    }
+
+    public void enableMethods(String connectionId, Handler<AsyncResult<Void>> handler)
+    {
+        ModuleClient client = getClient(connectionId);
+        if (client == null)
+        {
+            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
+        }
+        else
+        {
+            IotHubEventCallbackImpl callback = new IotHubEventCallbackImpl();
+            callback.setHandler(handler);
+            try
+            {
+                client.subscribeToMethod(this._methodCallback, null, callback, null);
+            }
+            catch (IOException e)
+            {
+                handler.handle(Future.failedFuture(e));
+            }
+
+        }
+    }
+
+    public void roundtripMethodCall(String connectionId, String methodName, RoundtripMethodCallBody requestAndResponse, Handler<AsyncResult<Void>> handler)
+    {
+        ModuleClient client = getClient(connectionId);
+        if (client == null)
+        {
+            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
+        }
+        else
+        {
+            _methodCallback._handler = handler;
+            _methodCallback._requestBody = (String) (((LinkedHashMap) requestAndResponse.getRequestPayload()).get("payload"));
+            _methodCallback._responseBody = Json.encode(requestAndResponse.getResponsePayload());
+            _methodCallback._statusCode = requestAndResponse.getStatusCode();
+            _methodCallback._client = client;
+            _methodCallback._methodName = methodName;
+        }
+    }
+
+    public void invokeModuleMethod(String connectionId, String deviceId, String moduleId, Object methodInvokeParameters, Handler<AsyncResult<Object>> handler)
+    {
+        ModuleClient client = getClient(connectionId);
+        if (client == null)
+        {
+            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
+        }
+        else
+        {
+            JsonObject params = (JsonObject) methodInvokeParameters;
+            String methodName = params.getString("methodName");
+            String payload = params.getString("payload");
+            int responseTimeout = params.getInteger("responseTimeoutInSeconds", 0);
+            int connectionTimeout = params.getInteger("connectTimeoutInSeconds", 0);
+            MethodRequest request = new MethodRequest(methodName, payload, responseTimeout, connectionTimeout);
+            try
+            {
+                MethodResult result = client.invokeMethod(deviceId, moduleId, request);
+                handler.handle(Future.succeededFuture(result));
+            }
+            catch (ModuleClientException e)
+            {
+                handler.handle(Future.failedFuture(e));
+            }
+        }
+    }
+
+    public void sendOutputEvent(String connectionId, String outputName, String eventBody, Handler<AsyncResult<Void>> handler)
+    {
+        System.out.printf("sendOutputEvent called for %s, %s%n", connectionId, outputName);
+        System.out.println(eventBody);
+        Message msg = new Message(eventBody);
+        msg.setOutputName(outputName);
+        this.sendEventHelper(connectionId, msg, handler);
+    }
+
+    public void waitForDesiredPropertyPatch(String connectionId, Handler<AsyncResult<Object>> handler)
+    {
+        System.out.printf("waitForDesiredPropertyPatch with %s%n", connectionId);
+
+        ModuleClient client = getClient(connectionId);
+        if (client == null)
+        {
+            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
+        }
+        else
+        {
+            this._deviceTwinPropertyCallback.setHandler(res ->
+            {
+                if (res.succeeded())
+                {
+                    JsonObject obj = (JsonObject) res.result();
+                    Object desiredProps = obj.getJsonObject("properties").getJsonObject("desired");
+                    handler.handle(Future.succeededFuture(desiredProps));
+                }
+                else
+                {
+                    handler.handle(res);
+                }
+            });
+
+        }
+    }
+
+    public void getTwin(String connectionId, Handler<AsyncResult<Object>> handler)
+    {
+        System.out.printf("getTwin with %s%n", connectionId);
+
+        ModuleClient client = getClient(connectionId);
+        if (client == null)
+        {
+            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
+        }
+        else
+        {
+            this._deviceTwinPropertyCallback.setHandler(handler);
+            try
+            {
+                client.getTwin();
+            }
+            catch (IOException e)
+            {
+                this._deviceTwinPropertyCallback.setHandler(null);
+                handler.handle(Future.failedFuture(e));
+            }
+        }
+    }
+
+    private Set<Property> objectToPropSet(JsonObject props)
+    {
+        Set<Property> propSet = new HashSet<Property>();
+        for (String key : props.fieldNames())
+        {
+            // TODO: we may need to make this function recursive.
+            propSet.add(new Property(key, props.getMap().get(key)));
+        }
+        return propSet;
+    }
+
+    public void sendTwinPatch(String connectionId, Object props, Handler<AsyncResult<Void>> handler)
+    {
+        System.out.printf("sendTwinPatch called for %s%n", connectionId);
+        System.out.println(props.toString());
+
+        ModuleClient client = getClient(connectionId);
+        if (client == null)
+        {
+            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
+        }
+        else
+        {
+            Set<Property> propSet = objectToPropSet((JsonObject) props);
+            this._deviceTwinStatusCallback.setHandler(handler);
+            try
+            {
+                client.sendReportedProperties(propSet);
+            }
+            catch (IOException e)
+            {
+                this._deviceTwinStatusCallback.setHandler(null);
+                handler.handle(Future.failedFuture(e));
+            }
+        }
+    }
+
+    public void Cleanup()
+    {
+        Set<String> keys = this._map.keySet();
+        if (!keys.isEmpty())
+        {
+            for (String key : keys)
+            {
+                this._closeConnection(key);
+            }
+        }
+    }
+
     private static class ModuleTwinPropertyCallBack implements TwinPropertyCallBack
     {
         private JsonObject _props = null;
@@ -227,11 +493,7 @@ public class ModuleGlue
         @Override
         public void TwinPropertyCallBack(Property property, Object context)
         {
-            System.out.println(
-                    "onProperty callback for " + (property.getIsReported() ? "reported" : "desired") +
-                            " property " + property.getKey() +
-                            " to " + property.getValue() +
-                            ", Properties version:" + property.getVersion());
+            System.out.println("onProperty callback for " + (property.getIsReported() ? "reported" : "desired") + " property " + property.getKey() + " to " + property.getValue() + ", Properties version:" + property.getVersion());
             if (this._props != null)
             {
                 if (property.getIsReported())
@@ -280,8 +542,6 @@ public class ModuleGlue
         }
     }
 
-    private ModuleTwinPropertyCallBack _deviceTwinPropertyCallback = new ModuleTwinPropertyCallBack();
-
     private static class IotHubEventCallbackImpl implements IotHubEventCallback
     {
         Handler<AsyncResult<Void>> _handler = null;
@@ -311,53 +571,6 @@ public class ModuleGlue
         }
     }
 
-    private IotHubEventCallbackImpl _deviceTwinStatusCallback = new IotHubEventCallbackImpl();
-
-
-    public void enableTwin(String connectionId, Handler<AsyncResult<Void>> handler)
-    {
-        ModuleClient client = getClient(connectionId);
-        if (client == null)
-        {
-            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
-        }
-        else
-        {
-            try
-            {
-                this._deviceTwinStatusCallback.setHandler(res -> {
-                    System.out.printf("startTwin completed - failed = %s%n", (res.failed() ? "true" : "false"));
-
-                    if (res.failed())
-                    {
-                        handler.handle(res);
-                    }
-                    else
-                    {
-                        try
-                        {
-                            client.subscribeToTwinDesiredProperties(null);
-                        }
-                        catch (IOException e)
-                        {
-                            this._deviceTwinStatusCallback.setHandler(null);
-                            handler.handle(Future.failedFuture(e));
-                            return;
-                        }
-                        handler.handle(Future.succeededFuture());
-                    }
-
-                });
-                System.out.println("calling startTwin");
-                client.startTwin(this._deviceTwinStatusCallback, null, this._deviceTwinPropertyCallback, null);
-            }
-            catch (IOException e)
-            {
-                handler.handle(Future.failedFuture((e)));
-            }
-        }
-    }
-
     private static class EventCallback implements IotHubEventCallback
     {
         Handler<AsyncResult<Void>> _handler;
@@ -372,30 +585,6 @@ public class ModuleGlue
             System.out.printf("EventCallback called with status %s%n", status.toString());
             this._handler.handle(Future.succeededFuture());
         }
-    }
-
-    private void sendEventHelper(String connectionId, Message msg, Handler<AsyncResult<Void>> handler)
-    {
-        System.out.println("inside sendEventHelper");
-
-        ModuleClient client = getClient(connectionId);
-        if (client == null)
-        {
-            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
-        }
-        else
-        {
-            EventCallback callback = new EventCallback(handler);
-            System.out.printf("calling sendEventAsync%n");
-            client.sendEventAsync(msg, callback, null);
-        }
-    }
-
-    public void sendEvent(String connectionId, String eventBody, Handler<AsyncResult<Void>> handler)
-    {
-        System.out.printf("moduleConnectionIdEventPut called for %s%n", connectionId);
-        System.out.println(eventBody);
-        this.sendEventHelper(connectionId, new Message(eventBody), handler);
     }
 
     protected static class MessageCallback implements com.microsoft.azure.sdk.iot.device.MessageCallback
@@ -430,23 +619,6 @@ public class ModuleGlue
 
             }
             return IotHubMessageResult.COMPLETE;
-        }
-    }
-
-    public void waitForInputMessage(String connectionId, String inputName, Handler<AsyncResult<String>> handler)
-    {
-        System.out.printf("waitForInputMessage with %s, %s%n", connectionId, inputName);
-
-        ModuleClient client = getClient(connectionId);
-        if (client == null)
-        {
-            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
-        }
-        else
-        {
-            MessageCallback callback = new MessageCallback(client, inputName, handler);
-            System.out.printf("calling setMessageCallback%n");
-            client.setMessageCallback(inputName, callback, null);
         }
     }
 
@@ -504,185 +676,6 @@ public class ModuleGlue
                 this._handler.handle(Future.failedFuture("unexpected call: " + methodName));
                 this.reset();
                 return new DeviceMethodData(404, "method " + methodName + " not handled");
-            }
-        }
-    }
-    DeviceMethodCallbackImpl _methodCallback = new DeviceMethodCallbackImpl();
-
-    public void enableMethods(String connectionId, Handler<AsyncResult<Void>> handler)
-    {
-        ModuleClient client = getClient(connectionId);
-        if (client == null)
-        {
-            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
-        }
-        else
-        {
-            IotHubEventCallbackImpl callback = new IotHubEventCallbackImpl();
-            callback.setHandler(handler);
-            try
-            {
-                client.subscribeToMethod(this._methodCallback, null, callback, null);
-            }
-            catch (IOException e)
-            {
-                handler.handle(Future.failedFuture(e));
-            }
-
-        }
-    }
-
-    public void roundtripMethodCall(String connectionId, String methodName, RoundtripMethodCallBody requestAndResponse, Handler<AsyncResult<Void>> handler)
-    {
-        ModuleClient client = getClient(connectionId);
-        if (client == null)
-        {
-            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
-        }
-        else
-        {
-            _methodCallback._handler = handler;
-            _methodCallback._requestBody = (String)(((LinkedHashMap)requestAndResponse.getRequestPayload()).get("payload"));
-            _methodCallback._responseBody = Json.encode(requestAndResponse.getResponsePayload());
-            _methodCallback._statusCode = requestAndResponse.getStatusCode();
-            _methodCallback._client = client;
-            _methodCallback._methodName = methodName;
-        }
-    }
-
-
-    public void invokeModuleMethod(String connectionId, String deviceId, String moduleId, Object methodInvokeParameters, Handler<AsyncResult<Object>> handler)
-    {
-        ModuleClient client = getClient(connectionId);
-        if (client == null)
-        {
-            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
-        }
-        else
-        {
-            JsonObject params = (JsonObject)methodInvokeParameters;
-            String methodName = params.getString("methodName");
-            String payload = params.getString("payload");
-            int responseTimeout = params.getInteger("responseTimeoutInSeconds", 0);
-            int connectionTimeout = params.getInteger("connectTimeoutInSeconds", 0);
-            MethodRequest request = new MethodRequest(methodName, payload, responseTimeout, connectionTimeout);
-            try
-            {
-                MethodResult result = client.invokeMethod(deviceId, moduleId, request);
-                handler.handle(Future.succeededFuture(result));
-            }
-            catch (ModuleClientException e)
-            {
-                handler.handle(Future.failedFuture(e));
-            }
-        }
-    }
-
-    public void sendOutputEvent(String connectionId, String outputName, String eventBody, Handler<AsyncResult<Void>> handler)
-    {
-        System.out.printf("sendOutputEvent called for %s, %s%n", connectionId, outputName);
-        System.out.println(eventBody);
-        Message msg = new Message(eventBody);
-        msg.setOutputName(outputName);
-        this.sendEventHelper(connectionId, msg, handler);
-    }
-
-    public void waitForDesiredPropertyPatch(String connectionId, Handler<AsyncResult<Object>> handler)
-    {
-        System.out.printf("waitForDesiredPropertyPatch with %s%n", connectionId);
-
-        ModuleClient client = getClient(connectionId);
-        if (client == null)
-        {
-            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
-        }
-        else
-        {
-            this._deviceTwinPropertyCallback.setHandler(res -> {
-                if (res.succeeded())
-                {
-                    JsonObject obj = (JsonObject)res.result();
-                    Object desiredProps = obj.getJsonObject("properties").getJsonObject("desired");
-                    handler.handle(Future.succeededFuture(desiredProps));
-                }
-                else
-                {
-                    handler.handle(res);
-                }
-            });
-
-        }
-    }
-
-    public void getTwin(String connectionId, Handler<AsyncResult<Object>> handler)
-    {
-        System.out.printf("getTwin with %s%n", connectionId);
-
-        ModuleClient client = getClient(connectionId);
-        if (client == null)
-        {
-            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
-        }
-        else
-        {
-            this._deviceTwinPropertyCallback.setHandler(handler);
-            try
-            {
-                client.getTwin();
-            }
-            catch(IOException e)
-            {
-                this._deviceTwinPropertyCallback.setHandler(null);
-                handler.handle(Future.failedFuture(e));
-            }
-        }
-    }
-
-    private Set<Property> objectToPropSet(JsonObject props)
-    {
-        Set<Property> propSet = new HashSet<Property>();
-        for (String key : props.fieldNames())
-        {
-            // TODO: we may need to make this function recursive.
-            propSet.add(new Property(key, props.getMap().get(key)));
-        }
-        return propSet;
-    }
-
-    public void sendTwinPatch(String connectionId, Object props, Handler<AsyncResult<Void>> handler)
-    {
-        System.out.printf("sendTwinPatch called for %s%n", connectionId);
-        System.out.println(props.toString());
-
-        ModuleClient client = getClient(connectionId);
-        if (client == null)
-        {
-            handler.handle(Future.failedFuture(new MainApiException(500, "invalid connection id")));
-        }
-        else
-        {
-            Set<Property> propSet = objectToPropSet((JsonObject)props);
-            this._deviceTwinStatusCallback.setHandler(handler);
-            try
-            {
-                client.sendReportedProperties(propSet);
-            }
-            catch(IOException e)
-            {
-                this._deviceTwinStatusCallback.setHandler(null);
-                handler.handle(Future.failedFuture(e));
-            }
-        }
-    }
-
-    public void Cleanup()
-    {
-        Set<String> keys = this._map.keySet();
-        if (!keys.isEmpty())
-        {
-            for (String key : keys)
-            {
-                this._closeConnection(key);
             }
         }
     }

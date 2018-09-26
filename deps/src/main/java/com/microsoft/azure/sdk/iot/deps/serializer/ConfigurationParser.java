@@ -13,68 +13,56 @@ import java.util.HashMap;
 public class ConfigurationParser
 {
     private static final String CONFIGURATION_ID_NAME = "id";
+    private static final String SCHEMA_VERSION_NAME = "schemaVersion";
+    private static final String LABELS_NAME = "labels";
+    private static final String CONTENT_NAME = "content";
+    private static final String CONTENT_TYPE_NAME = "contentType";
+    private static final String TARGET_CONDITION_NAME = "targetCondition";
+    private static final String CREATED_TIME_UTC_NAME = "createdTimeUtc";
+    private static final String LAST_UPDATED_TIME_UTC_NAME = "lastUpdatedTimeUtc";
+    private static final String PRIORITY_NAME = "priority";
+    private static final String SYSTEM_METRICS_NAME = "systemMetrics";
+    private static final String METRICS_NAME = "metrics";
+    private static final String E_TAG_NAME = "etag";
+    private transient static Gson gson = new GsonBuilder().enableComplexMapKeySerialization().serializeNulls().create();
     @Expose(serialize = true, deserialize = true)
     @SerializedName(CONFIGURATION_ID_NAME)
     private String id;
-
-    private static final String SCHEMA_VERSION_NAME = "schemaVersion";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(SCHEMA_VERSION_NAME)
     private String schemaVersion;
-
-    private static final String LABELS_NAME = "labels";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(LABELS_NAME)
     private HashMap<String, String> labels;
-
-    private static final String CONTENT_NAME = "content";
     @Expose(serialize = false, deserialize = true)
     @SerializedName(CONTENT_NAME)
     private ConfigurationContentParser content;
-
-    private static final String CONTENT_TYPE_NAME = "contentType";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(CONTENT_TYPE_NAME)
     private String contentType;
-
-    private static final String TARGET_CONDITION_NAME = "targetCondition";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(TARGET_CONDITION_NAME)
     private String targetCondition;
-
-    private static final String CREATED_TIME_UTC_NAME = "createdTimeUtc";
     @Expose(serialize = true, deserialize = false)
     @SerializedName(CREATED_TIME_UTC_NAME)
     private String createdTimeUtcString;
     private transient Date createdTimeUtc;
-
-    private static final String LAST_UPDATED_TIME_UTC_NAME = "lastUpdatedTimeUtc";
     @Expose(serialize = true, deserialize = false)
     @SerializedName(LAST_UPDATED_TIME_UTC_NAME)
     private String lastUpdatedTimeUtcString;
     private transient Date lastUpdatedTimeUtc;
-
-    private static final String PRIORITY_NAME = "priority";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(PRIORITY_NAME)
     private Integer priority;
-
-    private static final String SYSTEM_METRICS_NAME = "systemMetrics";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(SYSTEM_METRICS_NAME)
     private ConfigurationMetricsParser systemMetrics;
-
-    private static final String METRICS_NAME = "metrics";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(METRICS_NAME)
     private ConfigurationMetricsParser metrics;
-
-    private static final String E_TAG_NAME = "etag";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(E_TAG_NAME)
     private String eTag;
-
-    private transient static Gson gson = new GsonBuilder().enableComplexMapKeySerialization().serializeNulls().create();
 
     /**
      * Empty constructor: Used only to keep GSON happy.

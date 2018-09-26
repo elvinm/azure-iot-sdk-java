@@ -39,9 +39,7 @@ public class FileUploadInProgressTest
         final Map<String, Object> context = new HashMap<>();
 
         // act
-        FileUploadInProgress fileUploadInProgress = Deencapsulation.newInstance(FileUploadInProgress.class,
-                new Class[] {IotHubEventCallback.class, Object.class},
-                mockIotHubEventCallback, context);
+        FileUploadInProgress fileUploadInProgress = Deencapsulation.newInstance(FileUploadInProgress.class, new Class[]{IotHubEventCallback.class, Object.class}, mockIotHubEventCallback, context);
 
         // assert
         assertEquals(mockIotHubEventCallback, Deencapsulation.getField(fileUploadInProgress, "statusCallback"));
@@ -49,16 +47,14 @@ public class FileUploadInProgressTest
     }
 
     /* Codes_SRS_FILEUPLOADINPROGRESS_21_002: [If the `statusCallback` is null, the constructor shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrows()
     {
         // arrange
         final Map<String, Object> context = new HashMap<>();
 
         // act
-        Deencapsulation.newInstance(FileUploadInProgress.class,
-                new Class[] {IotHubEventCallback.class, Object.class},
-                (IotHubEventCallback)null, context);
+        Deencapsulation.newInstance(FileUploadInProgress.class, new Class[]{IotHubEventCallback.class, Object.class}, (IotHubEventCallback) null, context);
     }
 
     /* Codes_SRS_FILEUPLOADINPROGRESS_21_003: [The setTask shall sore the content of the `task`.] */
@@ -67,29 +63,25 @@ public class FileUploadInProgressTest
     {
         // arrange
         final Map<String, Object> context = new HashMap<>();
-        FileUploadInProgress fileUploadInProgress = Deencapsulation.newInstance(FileUploadInProgress.class,
-                new Class[] {IotHubEventCallback.class, Object.class},
-                mockIotHubEventCallback, context);
+        FileUploadInProgress fileUploadInProgress = Deencapsulation.newInstance(FileUploadInProgress.class, new Class[]{IotHubEventCallback.class, Object.class}, mockIotHubEventCallback, context);
 
         // act
-        Deencapsulation.invoke(fileUploadInProgress, "setTask", new Class[] {Future.class}, mockFuture);
+        Deencapsulation.invoke(fileUploadInProgress, "setTask", new Class[]{Future.class}, mockFuture);
 
         // assert
         assertEquals(mockFuture, Deencapsulation.getField(fileUploadInProgress, "task"));
     }
 
     /* Codes_SRS_FILEUPLOADINPROGRESS_21_004: [If the `task` is null, the setTask shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setTaskThrows()
     {
         // arrange
         final Map<String, Object> context = new HashMap<>();
-        FileUploadInProgress fileUploadInProgress = Deencapsulation.newInstance(FileUploadInProgress.class,
-                new Class[] {IotHubEventCallback.class, Object.class},
-                mockIotHubEventCallback, context);
+        FileUploadInProgress fileUploadInProgress = Deencapsulation.newInstance(FileUploadInProgress.class, new Class[]{IotHubEventCallback.class, Object.class}, mockIotHubEventCallback, context);
 
         // act
-        Deencapsulation.invoke(fileUploadInProgress, "setTask", new Class[] {Future.class}, (Future)null);
+        Deencapsulation.invoke(fileUploadInProgress, "setTask", new Class[]{Future.class}, (Future) null);
     }
 
     /* Codes_SRS_FILEUPLOADINPROGRESS_21_005: [The triggerCallback shall call the execute in `statusCallback` with the provided `iotHubStatusCode` and `statusCallbackContext`.] */
@@ -98,18 +90,16 @@ public class FileUploadInProgressTest
     {
         // arrange
         final Map<String, Object> context = new HashMap<>();
-        FileUploadInProgress fileUploadInProgress = Deencapsulation.newInstance(FileUploadInProgress.class,
-                new Class[] {IotHubEventCallback.class, Object.class},
-                mockIotHubEventCallback, context);
+        FileUploadInProgress fileUploadInProgress = Deencapsulation.newInstance(FileUploadInProgress.class, new Class[]{IotHubEventCallback.class, Object.class}, mockIotHubEventCallback, context);
 
         // act
-        Deencapsulation.invoke(fileUploadInProgress, "triggerCallback", new Class[] {IotHubStatusCode.class}, IotHubStatusCode.OK);
+        Deencapsulation.invoke(fileUploadInProgress, "triggerCallback", new Class[]{IotHubStatusCode.class}, IotHubStatusCode.OK);
 
         // assert
         new Verifications()
         {
             {
-                Deencapsulation.invoke(mockIotHubEventCallback, "execute", new Class[] {IotHubStatusCode.class, Object.class}, IotHubStatusCode.OK, context);
+                Deencapsulation.invoke(mockIotHubEventCallback, "execute", new Class[]{IotHubStatusCode.class, Object.class}, IotHubStatusCode.OK, context);
                 times = 1;
             }
         };
@@ -121,10 +111,8 @@ public class FileUploadInProgressTest
     {
         // arrange
         final Map<String, Object> context = new HashMap<>();
-        FileUploadInProgress fileUploadInProgress = Deencapsulation.newInstance(FileUploadInProgress.class,
-                new Class[] {IotHubEventCallback.class, Object.class},
-                mockIotHubEventCallback, context);
-        Deencapsulation.invoke(fileUploadInProgress, "setTask", new Class[] {Future.class}, mockFuture);
+        FileUploadInProgress fileUploadInProgress = Deencapsulation.newInstance(FileUploadInProgress.class, new Class[]{IotHubEventCallback.class, Object.class}, mockIotHubEventCallback, context);
+        Deencapsulation.invoke(fileUploadInProgress, "setTask", new Class[]{Future.class}, mockFuture);
         new NonStrictExpectations()
         {
             {
@@ -135,7 +123,7 @@ public class FileUploadInProgressTest
         };
 
         // act
-        boolean result = (boolean)Deencapsulation.invoke(fileUploadInProgress, "isCancelled");
+        boolean result = (boolean) Deencapsulation.invoke(fileUploadInProgress, "isCancelled");
 
         // assert
         assertTrue(result);
@@ -147,10 +135,8 @@ public class FileUploadInProgressTest
     {
         // arrange
         final Map<String, Object> context = new HashMap<>();
-        FileUploadInProgress fileUploadInProgress = Deencapsulation.newInstance(FileUploadInProgress.class,
-                new Class[] {IotHubEventCallback.class, Object.class},
-                mockIotHubEventCallback, context);
-        Deencapsulation.invoke(fileUploadInProgress, "setTask", new Class[] {Future.class}, mockFuture);
+        FileUploadInProgress fileUploadInProgress = Deencapsulation.newInstance(FileUploadInProgress.class, new Class[]{IotHubEventCallback.class, Object.class}, mockIotHubEventCallback, context);
+        Deencapsulation.invoke(fileUploadInProgress, "setTask", new Class[]{Future.class}, mockFuture);
         new NonStrictExpectations()
         {
             {
@@ -161,21 +147,19 @@ public class FileUploadInProgressTest
         };
 
         // act
-        boolean result = (boolean)Deencapsulation.invoke(fileUploadInProgress, "isCancelled");
+        boolean result = (boolean) Deencapsulation.invoke(fileUploadInProgress, "isCancelled");
 
         // assert
         assertFalse(result);
     }
 
     /* Codes_SRS_FILEUPLOADINPROGRESS_21_007: [If the `task` is null, the isCancelled shall throws IOException.] */
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void isCancelledThrows()
     {
         // arrange
         final Map<String, Object> context = new HashMap<>();
-        FileUploadInProgress fileUploadInProgress = Deencapsulation.newInstance(FileUploadInProgress.class,
-                new Class[] {IotHubEventCallback.class, Object.class},
-                mockIotHubEventCallback, context);
+        FileUploadInProgress fileUploadInProgress = Deencapsulation.newInstance(FileUploadInProgress.class, new Class[]{IotHubEventCallback.class, Object.class}, mockIotHubEventCallback, context);
 
         // act
         Deencapsulation.invoke(fileUploadInProgress, "isCancelled");

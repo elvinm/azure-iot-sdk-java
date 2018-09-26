@@ -20,23 +20,9 @@ public class RegistryStatistics
         this.disabledDeviceCount = 0;
     }
 
-    public long getDisabledDeviceCount()
-    {
-        return disabledDeviceCount;
-    }
-
-    public long getEnabledDeviceCount()
-    {
-        return enabledDeviceCount;
-    }
-
-    public long getTotalDeviceCount()
-    {
-        return totalDeviceCount;
-    }
-
     /**
      * Consructs a RegistryStatisics object based off of a RegistryStatisticsParser object
+     *
      * @param registryStatisticsParser the object to base the constructed object on
      */
     RegistryStatistics(RegistryStatisticsParser registryStatisticsParser)
@@ -53,8 +39,24 @@ public class RegistryStatistics
         this.disabledDeviceCount = registryStatisticsParser.getDisabledDeviceCount();
     }
 
+    public long getDisabledDeviceCount()
+    {
+        return disabledDeviceCount;
+    }
+
+    public long getEnabledDeviceCount()
+    {
+        return enabledDeviceCount;
+    }
+
+    public long getTotalDeviceCount()
+    {
+        return totalDeviceCount;
+    }
+
     /**
      * Converts this into a RegistryStatisticsParser object that can be used for serialization and deserialization
+     *
      * @return the created RegistryStatisticsParser object
      */
     RegistryStatisticsParser toRegistryStatisticsParser()

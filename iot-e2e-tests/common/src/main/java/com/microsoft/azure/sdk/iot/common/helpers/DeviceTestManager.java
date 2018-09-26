@@ -29,8 +29,7 @@ public class DeviceTestManager
     private DeviceEmulator deviceEmulator;
     private Thread deviceThread;
 
-    public DeviceTestManager(InternalClient client)
-            throws IOException, URISyntaxException, InterruptedException
+    public DeviceTestManager(InternalClient client) throws IOException, URISyntaxException, InterruptedException
     {
         this.client = client;
 
@@ -44,9 +43,9 @@ public class DeviceTestManager
     public void waitIotHub(int numberOfEvents, long timeoutInSeconds) throws InterruptedException, IOException
     {
         long countRetry = 0;
-        while(getStatusOk() + getStatusError() < numberOfEvents)
+        while (getStatusOk() + getStatusError() < numberOfEvents)
         {
-            if((countRetry++) >= timeoutInSeconds)
+            if ((countRetry++) >= timeoutInSeconds)
             {
                 throw new IOException("Connection timeout");
             }
@@ -82,7 +81,7 @@ public class DeviceTestManager
 
     public void restartDevice(String connectionString, IotHubClientProtocol protocol, String publicCert, String privateKey) throws InterruptedException, IOException, URISyntaxException, ModuleClientException
     {
-        if(deviceThread.getState() == Thread.State.RUNNABLE)
+        if (deviceThread.getState() == Thread.State.RUNNABLE)
         {
             deviceEmulator.stop();
         }

@@ -20,9 +20,13 @@ public abstract class SecurityProviderTpm extends SecurityProvider
 {
     private static final String SHA_256 = "SHA-256";
     private static final String EQUALS = "=";
+
     abstract public byte[] activateIdentityKey(byte[] key) throws SecurityProviderException;
+
     abstract public byte[] getEndorsementKey() throws SecurityProviderException;
+
     abstract public byte[] getStorageRootKey() throws SecurityProviderException;
+
     abstract public byte[] signWithIdentity(byte[] data) throws SecurityProviderException;
 
     @Override

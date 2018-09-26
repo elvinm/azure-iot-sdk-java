@@ -18,21 +18,21 @@ import java.util.Date;
 
 /**
  * Representation of a single Device Provisioning Service enrollment group with a JSON serializer and deserializer.
- *
+ * <p>
  * <p> This object is used to send EnrollmentGroup information to the provisioning service, or receive EnrollmentGroup
- *     information from the provisioning service.
- *
+ * information from the provisioning service.
+ * <p>
  * <p> To create or update an EnrollmentGroup on the provisioning service you should fill this object and call the
- *     public API {@link ProvisioningServiceClient#createOrUpdateEnrollmentGroup(EnrollmentGroup)}.
- *     The minimum information required by the provisioning service is the {@link #enrollmentGroupId} and the
- *     {@link #attestation}.
- *
+ * public API {@link ProvisioningServiceClient#createOrUpdateEnrollmentGroup(EnrollmentGroup)}.
+ * The minimum information required by the provisioning service is the {@link #enrollmentGroupId} and the
+ * {@link #attestation}.
+ * <p>
  * <p> To provision a device using EnrollmentGroup, it must contain a X509 chip with a signingCertificate for the
- *     {@link X509Attestation} mechanism.
- *
+ * {@link X509Attestation} mechanism.
+ * <p>
  * <p> The content of this class will be serialized in a JSON format and sent as a body of the rest API to the
- *     provisioning service.
- *
+ * provisioning service.
+ * <p>
  * <p> When serialized, an EnrollmentGroup will look like the following example:
  * <pre>
  * {@code
@@ -51,10 +51,10 @@ import java.util.Date;
  * }
  * }
  * </pre>
- *
+ * <p>
  * <p> The content of this class can be filled by a JSON, received from the provisioning service, as result of a
- *     EnrollmentGroup operation like create, update, or query EnrollmentGroup.
- *
+ * EnrollmentGroup operation like create, update, or query EnrollmentGroup.
+ * <p>
  * <p> The following JSON is a sample of the EnrollmentGroup response, received from the provisioning service.
  * <pre>
  * {@code
@@ -93,60 +93,53 @@ public class EnrollmentGroup extends Serializable
 {
     // the enrollment group identifier
     private static final String ENROLLMENT_GROUP_ID_TAG = "enrollmentGroupId";
+    // the attestation
+    private static final String ATTESTATION_TAG = "attestation";
+    // the iothub host name
+    private static final String IOTHUB_HOST_NAME_TAG = "iotHubHostName";
+    // the initial Twin state identifier (Twin is a special case and will be manually serialized).
+    private static final String INITIAL_TWIN_STATE_TAG = "initialTwin";
+    // the provisioning status
+    private static final String PROVISIONING_STATUS_TAG = "provisioningStatus";
+    // the datetime this resource was created
+    private static final String CREATED_DATETIME_UTC_TAG = "createdDateTimeUtc";
+    // the datetime this resource was last updated
+    private static final String LAST_UPDATED_DATETIME_UTC_TAG = "lastUpdatedDateTimeUtc";
+    // the eTag
+    private static final String ETAG_TAG = "etag";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(ENROLLMENT_GROUP_ID_TAG)
     private String enrollmentGroupId;
-
-    // the attestation
-    private static final String ATTESTATION_TAG = "attestation";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(ATTESTATION_TAG)
     private AttestationMechanism attestation;
-
-    // the iothub host name
-    private static final String IOTHUB_HOST_NAME_TAG = "iotHubHostName";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(IOTHUB_HOST_NAME_TAG)
     private String iotHubHostName;
-
-    // the initial Twin state identifier (Twin is a special case and will be manually serialized).
-    private static final String INITIAL_TWIN_STATE_TAG = "initialTwin";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(INITIAL_TWIN_STATE_TAG)
     private TwinState initialTwin;
-
-    // the provisioning status
-    private static final String PROVISIONING_STATUS_TAG = "provisioningStatus";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(PROVISIONING_STATUS_TAG)
     private ProvisioningStatus provisioningStatus;
-
-    // the datetime this resource was created
-    private static final String CREATED_DATETIME_UTC_TAG = "createdDateTimeUtc";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(CREATED_DATETIME_UTC_TAG)
     private String createdDateTimeUtc = null;
     private transient Date createdDateTimeUtcDate;
-
-    // the datetime this resource was last updated
-    private static final String LAST_UPDATED_DATETIME_UTC_TAG = "lastUpdatedDateTimeUtc";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(LAST_UPDATED_DATETIME_UTC_TAG)
     private String lastUpdatedDateTimeUtc = null;
     private transient Date lastUpdatedDateTimeUtcDate;
-
-    // the eTag
-    private static final String ETAG_TAG = "etag";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(ETAG_TAG)
     private String etag;
 
     /**
      * CONSTRUCTOR
-     *
+     * <p>
      * <p> This constructor creates an instance of the enrollment group with
-     *     the minimum set of information required by the provisioning service.
-     *
+     * the minimum set of information required by the provisioning service.
+     * <p>
      * <p> When serialized, an EnrollmentGroup will look like the following example:
      * <pre>
      * {@code
@@ -165,12 +158,10 @@ public class EnrollmentGroup extends Serializable
      * </pre>
      *
      * @param enrollmentGroupId the {@code String} with an unique id for this enrollment group.
-     * @param attestation the {@link Attestation} mechanism that shall be {@code signedCertificate} of {@link X509Attestation}.
+     * @param attestation       the {@link Attestation} mechanism that shall be {@code signedCertificate} of {@link X509Attestation}.
      * @throws IllegalArgumentException If one of the provided parameters is not correct.
      */
-    public EnrollmentGroup(
-            String enrollmentGroupId,
-            Attestation attestation)
+    public EnrollmentGroup(String enrollmentGroupId, Attestation attestation)
     {
         /* SRS_ENROLLMENT_GROUP_21_001: [The constructor shall judge and store the provided parameters using the EnrollmentGroup setters.] */
         this.setEnrollmentGroupId(enrollmentGroupId);
@@ -179,10 +170,10 @@ public class EnrollmentGroup extends Serializable
 
     /**
      * CONSTRUCTOR
-     *
+     * <p>
      * <p> This constructor creates an instance of the enrollment group filling
-     *     the class with the information provided in the JSON.
-     *
+     * the class with the information provided in the JSON.
+     * <p>
      * <p> The following JSON is a sample of the EnrollmentGroup response, received from the provisioning service.
      * <pre>
      * {@code
@@ -221,7 +212,7 @@ public class EnrollmentGroup extends Serializable
     public EnrollmentGroup(String json)
     {
         /* SRS_ENROLLMENT_GROUP_21_002: [The constructor shall throw IllegalArgumentException if the JSON is null or empty.] */
-        if(Tools.isNullOrEmpty(json))
+        if (Tools.isNullOrEmpty(json))
         {
             throw new IllegalArgumentException("JSON with result is null or empty");
         }
@@ -236,11 +227,11 @@ public class EnrollmentGroup extends Serializable
         this.setAttestation(result.attestation);
 
         /* SRS_ENROLLMENT_GROUP_21_006: [If the `iotHubHostName`, `initialTwin`, or `provisioningStatus` is not null, the constructor shall judge and store it using the EnrollmentGroup setter.] */
-        if(result.iotHubHostName != null)
+        if (result.iotHubHostName != null)
         {
             this.setIotHubHostName(result.iotHubHostName);
         }
-        if(result.provisioningStatus != null)
+        if (result.provisioningStatus != null)
         {
             this.setProvisioningStatus(result.provisioningStatus);
         }
@@ -250,7 +241,7 @@ public class EnrollmentGroup extends Serializable
         }
 
         /* SRS_ENROLLMENT_GROUP_21_007: [If the createdDateTimeUtc is not null, the constructor shall judge and store it using the EnrollmentGroup setter.] */
-        if(result.createdDateTimeUtc != null)
+        if (result.createdDateTimeUtc != null)
         {
             this.setCreatedDateTimeUtc(result.createdDateTimeUtc);
         }
@@ -262,23 +253,36 @@ public class EnrollmentGroup extends Serializable
         }
 
         /* SRS_ENROLLMENT_GROUP_21_009: [If the etag is not null, the constructor shall judge and store it using the EnrollmentGroup setter.] */
-        if(result.etag != null)
+        if (result.etag != null)
         {
             this.setEtag(result.etag);
         }
     }
 
     /**
-     * Serializer
-     *
+     * Empty constructor
      * <p>
-     *     Creates a {@code JsonElement}, which the content represents
-     *     the information in this class and its subclasses in a JSON format.
-     *
-     *     This is useful if the caller will integrate this JSON with jsons from
-     *     other classes to generate a consolidated JSON.
+     * <p>
+     * Used only by the tools that will deserialize this class.
      * </p>
+     */
+    @SuppressWarnings("unused")
+    EnrollmentGroup()
+    {
+        /* SRS_ENROLLMENT_GROUP_21_038: [The EnrollmentGroup shall provide an empty constructor to make GSON happy.] */
+    }
 
+    /**
+     * Serializer
+     * <p>
+     * <p>
+     * Creates a {@code JsonElement}, which the content represents
+     * the information in this class and its subclasses in a JSON format.
+     * <p>
+     * This is useful if the caller will integrate this JSON with jsons from
+     * other classes to generate a consolidated JSON.
+     * </p>
+     *
      * @return The {@code JsonElement} with the content of this class.
      */
     public JsonElement toJsonElement()
@@ -288,7 +292,7 @@ public class EnrollmentGroup extends Serializable
         JsonObject enrollmentGroupJson = gson.toJsonTree(this).getAsJsonObject();
 
         /* SRS_ENROLLMENT_GROUP_21_012: [If the initialTwin is not null, the toJsonElement shall include its content in the final JSON.] */
-        if(initialTwin != null)
+        if (initialTwin != null)
         {
             enrollmentGroupJson.add(INITIAL_TWIN_STATE_TAG, initialTwin.toJsonElement());
         }
@@ -309,12 +313,12 @@ public class EnrollmentGroup extends Serializable
 
     /**
      * Setter for the enrollmentGroupId.
-     *
      * <p>
-     *     A valid enrollment group Id shall follow this criteria.
-     *         A case-sensitive string (up to 128 char long)
-     *         of ASCII 7-bit alphanumeric chars
-     *         + {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.
+     * <p>
+     * A valid enrollment group Id shall follow this criteria.
+     * A case-sensitive string (up to 128 char long)
+     * of ASCII 7-bit alphanumeric chars
+     * + {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.
      * </p>
      *
      * @param enrollmentGroupId the {@code String} with the new enrollmentGroupId. It cannot be {@code null}, empty, or invalid.
@@ -343,21 +347,56 @@ public class EnrollmentGroup extends Serializable
 
     /**
      * Setter for the attestation.
-     *
      * <p>
-     *     Attestation mechanism is mandatory parameter that provides the mechanism
-     *     type and the necessary keys/certificates
+     * <p> Attestation mechanism is mandatory parameter that provides the mechanism
+     * type and the necessary certificates.
+     * <p>
+     * <p> EnrollmentGroup only accept {@link X509Attestation} with the RootCertificates. You can create it
+     * providing the <b>.pem</b> content to {@link X509Attestation#createFromRootCertificates(String, String)}
      *
-     *     @see AttestationMechanism
-     * </p>
+     * @param attestation the {@link Attestation} with the new attestation mechanism. It shall be {@link X509Attestation}.
+     * @throws IllegalArgumentException If the provided attestation mechanism is {@code null} or invalid.
+     * @see Attestation
+     * @see X509Attestation
+     */
+    public void setAttestation(Attestation attestation)
+    {
+        /* SRS_ENROLLMENT_GROUP_21_039: [The setAttestation shall throw IllegalArgumentException if the attestation is null.] */
+        if (attestation == null)
+        {
+            throw new IllegalArgumentException("attestation cannot be null");
+        }
+
+        /* SRS_ENROLLMENT_GROUP_21_040: [The setAttestation shall throw IllegalArgumentException if the attestation is not X509 signingCertificate.] */
+        if (!(attestation instanceof X509Attestation))
+        {
+            throw new IllegalArgumentException("attestation for EnrollmentGroup shall be X509");
+        }
+        if (((X509Attestation) attestation).getRootCertificates() == null)
+        {
+            throw new IllegalArgumentException("attestation for EnrollmentGroup shall be X509 signingCertificate");
+        }
+
+        /* SRS_ENROLLMENT_GROUP_21_041: [The setAttestation shall store the provided attestation using the AttestationMechanism object.] */
+        this.attestation = new AttestationMechanism(attestation);
+    }
+
+    /**
+     * Setter for the attestation.
+     * <p>
+     * <p>
+     * Attestation mechanism is mandatory parameter that provides the mechanism
+     * type and the necessary keys/certificates
      *
      * @param attestationMechanism the {@code AttestationMechanism} with the new attestation mechanism. It can be `tpm` or `x509`.
      * @throws IllegalArgumentException If the provided attestation mechanism is {@code null}.
+     * @see AttestationMechanism
+     * </p>
      */
     protected void setAttestation(AttestationMechanism attestationMechanism)
     {
         /* SRS_ENROLLMENT_GROUP_21_018: [The setAttestation shall throw IllegalArgumentException if the attestation is null.] */
-        if(attestationMechanism == null)
+        if (attestationMechanism == null)
         {
             throw new IllegalArgumentException("attestationMechanism cannot be null");
         }
@@ -375,43 +414,6 @@ public class EnrollmentGroup extends Serializable
     }
 
     /**
-     * Setter for the attestation.
-     *
-     * <p> Attestation mechanism is mandatory parameter that provides the mechanism
-     *     type and the necessary certificates.
-     *
-     * <p> EnrollmentGroup only accept {@link X509Attestation} with the RootCertificates. You can create it
-     *     providing the <b>.pem</b> content to {@link X509Attestation#createFromRootCertificates(String, String)}
-     *
-     * @see Attestation
-     * @see X509Attestation
-     *
-     * @param attestation the {@link Attestation} with the new attestation mechanism. It shall be {@link X509Attestation}.
-     * @throws IllegalArgumentException If the provided attestation mechanism is {@code null} or invalid.
-     */
-    public void setAttestation(Attestation attestation)
-    {
-        /* SRS_ENROLLMENT_GROUP_21_039: [The setAttestation shall throw IllegalArgumentException if the attestation is null.] */
-        if(attestation == null)
-        {
-            throw new IllegalArgumentException("attestation cannot be null");
-        }
-
-        /* SRS_ENROLLMENT_GROUP_21_040: [The setAttestation shall throw IllegalArgumentException if the attestation is not X509 signingCertificate.] */
-        if(!(attestation instanceof X509Attestation))
-        {
-            throw new IllegalArgumentException("attestation for EnrollmentGroup shall be X509");
-        }
-        if(((X509Attestation)attestation).getRootCertificates() == null)
-        {
-            throw new IllegalArgumentException("attestation for EnrollmentGroup shall be X509 signingCertificate");
-        }
-
-        /* SRS_ENROLLMENT_GROUP_21_041: [The setAttestation shall store the provided attestation using the AttestationMechanism object.] */
-        this.attestation = new AttestationMechanism(attestation);
-    }
-
-    /**
      * Getter for the iotHubHostName.
      *
      * @return The {@code String} with the iotHubHostName content. It cannot be {@code null} or empty.
@@ -424,13 +426,13 @@ public class EnrollmentGroup extends Serializable
 
     /**
      * Setter for the iotHubHostName.
-     *
      * <p>
-     *     A valid iothub host name shall follow this criteria.
-     *         A case-sensitive string (up to 128 char long)
-     *         of ASCII 7-bit alphanumeric chars
-     *         + {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.
-     *     A valid host name shall have, at least 2 parts separated by '.'.
+     * <p>
+     * A valid iothub host name shall follow this criteria.
+     * A case-sensitive string (up to 128 char long)
+     * of ASCII 7-bit alphanumeric chars
+     * + {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.
+     * A valid host name shall have, at least 2 parts separated by '.'.
      * </p>
      *
      * @param iotHubHostName the {@code String} with the new iotHubHostName. It cannot be {@code null}, empty, or invalid.
@@ -458,9 +460,9 @@ public class EnrollmentGroup extends Serializable
 
     /**
      * Setter for the initialTwin.
-     *
      * <p>
-     *     It provides a Twin precondition for the provisioned device.
+     * <p>
+     * It provides a Twin precondition for the provisioned device.
      * </p>
      *
      * @param initialTwin the {@code TwinState} with the new initialTwin. It cannot be {@code null}.
@@ -469,7 +471,7 @@ public class EnrollmentGroup extends Serializable
     public void setInitialTwin(TwinState initialTwin)
     {
         /* SRS_ENROLLMENT_GROUP_21_024: [The setInitialTwin shall throw IllegalArgumentException if the initialTwin is null.] */
-        if(initialTwin == null)
+        if (initialTwin == null)
         {
             throw new IllegalArgumentException("initialTwin cannot be null");
         }
@@ -491,9 +493,9 @@ public class EnrollmentGroup extends Serializable
 
     /**
      * Setter for the provisioningStatus.
-     *
      * <p>
-     *     It provides a Status precondition for the provisioned device.
+     * <p>
+     * It provides a Status precondition for the provisioned device.
      * </p>
      *
      * @param provisioningStatus the {@code ProvisioningStatus} with the new provisioningStatus. It cannot be {@code null}.
@@ -502,7 +504,7 @@ public class EnrollmentGroup extends Serializable
     public void setProvisioningStatus(ProvisioningStatus provisioningStatus)
     {
         /* SRS_ENROLLMENT_GROUP_21_027: [The setProvisioningStatus shall throw IllegalArgumentException if the provisioningStatus is null.] */
-        if(provisioningStatus == null)
+        if (provisioningStatus == null)
         {
             throw new IllegalArgumentException("provisioningStatus cannot be null");
         }
@@ -524,13 +526,13 @@ public class EnrollmentGroup extends Serializable
 
     /**
      * Setter for the createdDateTimeUtc.
-     *
      * <p>
-     *     This Date and Time is provided by the provisioning service. If the enrollmentGroup is not created yet,
-     *     this string can represent an invalid Date. In this case, it will be ignored.
-     *
-     *     Example of the expected format:
-     *         "2016-06-01T21:22:43.7996883Z"
+     * <p>
+     * This Date and Time is provided by the provisioning service. If the enrollmentGroup is not created yet,
+     * this string can represent an invalid Date. In this case, it will be ignored.
+     * <p>
+     * Example of the expected format:
+     * "2016-06-01T21:22:43.7996883Z"
      * </p>
      *
      * @param createdDateTimeUtc the {@code String} with the new createdDateTimeUtc. It can be {@code null}, empty or not valid.
@@ -555,13 +557,13 @@ public class EnrollmentGroup extends Serializable
 
     /**
      * Setter for the lastUpdatedDateTimeUtc.
-     *
      * <p>
-     *     This Date and Time is provided by the provisioning service. If the enrollmentGroup is not created yet,
-     *     this string can represent an invalid Date. In this case, it will be ignored.
-     *
-     *     Example of the expected format:
-     *         "2016-06-01T21:22:43.7996883Z"
+     * <p>
+     * This Date and Time is provided by the provisioning service. If the enrollmentGroup is not created yet,
+     * this string can represent an invalid Date. In this case, it will be ignored.
+     * <p>
+     * Example of the expected format:
+     * "2016-06-01T21:22:43.7996883Z"
      * </p>
      *
      * @param lastUpdatedDateTimeUtc the {@code String} with the new lastUpdatedDateTimeUtc. It can be {@code null}, empty or not valid.
@@ -597,18 +599,5 @@ public class EnrollmentGroup extends Serializable
 
         /* SRS_ENROLLMENT_GROUP_21_037: [The setEtag shall store the provided etag.] */
         this.etag = etag;
-    }
-
-    /**
-     * Empty constructor
-     *
-     * <p>
-     *     Used only by the tools that will deserialize this class.
-     * </p>
-     */
-    @SuppressWarnings("unused")
-    EnrollmentGroup()
-    {
-        /* SRS_ENROLLMENT_GROUP_21_038: [The EnrollmentGroup shall provide an empty constructor to make GSON happy.] */
     }
 }

@@ -10,19 +10,13 @@ package com.microsoft.azure.sdk.iot.service;
  */
 public enum DeviceStatus
 {
-    Enabled("enabled"),
-    Disabled("disabled");
+    Enabled("enabled"), Disabled("disabled");
 
     private final String status;
 
     DeviceStatus(String status)
     {
         this.status = status;
-    }
-
-    public String getValue()
-    {
-        return status;
     }
 
     public static DeviceStatus fromString(String status)
@@ -35,5 +29,10 @@ public enum DeviceStatus
             }
         }
         return null;
+    }
+
+    public String getValue()
+    {
+        return status;
     }
 }

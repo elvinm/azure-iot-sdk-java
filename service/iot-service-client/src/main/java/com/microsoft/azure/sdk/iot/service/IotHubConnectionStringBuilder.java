@@ -19,9 +19,8 @@ public class IotHubConnectionStringBuilder
     private static final String SHARED_ACCESS_KEY_NAME_REGEX = "^[a-zA-Z0-9_\\-@\\.]+$";
     private static final String SHARED_ACCESS_KEY_REGEX = "^.+$";
     private static final String SHARED_ACCESS_SIGNATURE_REGEX = "^.+$";
-
-    private String hostNameSuffix;
     private static final HashMap<String, String> keyValueMap = new HashMap<String, String>();
+    private String hostNameSuffix;
 
     /**
      * Static constructor to create IotHubConnectionString deserialize the given string
@@ -46,7 +45,7 @@ public class IotHubConnectionStringBuilder
     /**
      * Static constructor to create IotHubConnectionString from host name and authentication method
      *
-     * @param hostName The hostName string
+     * @param hostName             The hostName string
      * @param authenticationMethod The AuthenticationMethod object
      * @return The IotHubConnectionString object
      * @throws IOException This exception is thrown if the object creation failed
@@ -74,7 +73,7 @@ public class IotHubConnectionStringBuilder
     /**
      * Deserialize connection string
      *
-     * @param connectionString The connection string to deserialize
+     * @param connectionString       The connection string to deserialize
      * @param iotHubConnectionString The target object for deserialization
      * @throws IOException This exception is thrown if the parsing failed
      */
@@ -101,7 +100,9 @@ public class IotHubConnectionStringBuilder
 
             String[] splitString = currentToken.split(IotHubConnectionString.VALUE_PAIR_SEPARATOR, 2);
             if (splitString.length == 2)
+            {
                 keyValueMap.put(splitString[0], splitString[1]);
+            }
         }
 
         iotHubConnectionString.hostName = Tools.getValueStringByKey(keyValueMap, IotHubConnectionString.HOST_NAME_PROPERTY_NAME);
@@ -113,16 +114,12 @@ public class IotHubConnectionStringBuilder
         // Codes_SRS_SERVICE_SDK_JAVA_IOTHUBCONNECTIONSTRINGBUILDER_12_010: [The function shall create new ServiceAuthenticationWithSharedAccessPolicyToken and set the authenticationMethod if sharedAccessKey is not defined]
         if (Tools.isNullOrWhiteSpace(iotHubConnectionString.sharedAccessKey))
         {
-            iotHubConnectionString.authenticationMethod = new ServiceAuthenticationWithSharedAccessPolicyToken(
-                    iotHubConnectionString.sharedAccessKeyName,
-                    iotHubConnectionString.sharedAccessSignature);
+            iotHubConnectionString.authenticationMethod = new ServiceAuthenticationWithSharedAccessPolicyToken(iotHubConnectionString.sharedAccessKeyName, iotHubConnectionString.sharedAccessSignature);
         }
         // Codes_SRS_SERVICE_SDK_JAVA_IOTHUBCONNECTIONSTRINGBUILDER_12_011: [The function shall create new ServiceAuthenticationWithSharedAccessPolicyKey and set the authenticationMethod if the sharedAccessSignature is not defined]
         else if (Tools.isNullOrWhiteSpace(iotHubConnectionString.sharedAccessSignature))
         {
-            iotHubConnectionString.authenticationMethod = new ServiceAuthenticationWithSharedAccessPolicyKey(
-                    iotHubConnectionString.sharedAccessKeyName,
-                    iotHubConnectionString.sharedAccessKey);
+            iotHubConnectionString.authenticationMethod = new ServiceAuthenticationWithSharedAccessPolicyKey(iotHubConnectionString.sharedAccessKeyName, iotHubConnectionString.sharedAccessKey);
         }
 
         // Codes_SRS_SERVICE_SDK_JAVA_IOTHUBCONNECTIONSTRINGBUILDER_12_012: [The function shall validate the connection string object]
@@ -179,9 +176,9 @@ public class IotHubConnectionStringBuilder
     /**
      * Validate string property using given regex
      *
-     * @param value The string value to validate
+     * @param value        The string value to validate
      * @param propertyName The property name
-     * @param regex The regex used for validation
+     * @param regex        The regex used for validation
      */
     protected static void validateFormat(String value, String propertyName, String regex)
     {
@@ -197,9 +194,9 @@ public class IotHubConnectionStringBuilder
     /**
      * Validate string property using given regex if value is not null or empty
      *
-     * @param value string value to validate
+     * @param value        string value to validate
      * @param propertyName property name
-     * @param regex regex used for validation
+     * @param regex        regex used for validation
      */
     protected static void validateFormatIfSpecified(String value, String propertyName, String regex)
     {
@@ -213,7 +210,7 @@ public class IotHubConnectionStringBuilder
     /**
      * Set host name value to target IotHubConnectionString object
      *
-     * @param hostName host name string
+     * @param hostName               host name string
      * @param iotHubConnectionString target IotHubConnectionString object
      */
     protected static void setHostName(String hostName, IotHubConnectionString iotHubConnectionString)
@@ -228,7 +225,7 @@ public class IotHubConnectionStringBuilder
     /**
      * Set authentication method to target IotHubConnectionString object
      *
-     * @param authenticationMethod value to set
+     * @param authenticationMethod   value to set
      * @param iotHubConnectionString target IotHubConnectionString object
      */
     protected static void setAuthenticationMethod(AuthenticationMethod authenticationMethod, IotHubConnectionString iotHubConnectionString)

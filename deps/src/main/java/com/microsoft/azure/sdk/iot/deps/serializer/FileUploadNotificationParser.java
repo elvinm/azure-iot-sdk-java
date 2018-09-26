@@ -13,45 +13,39 @@ import java.util.Date;
 /**
  * Representation of the notification of a single File Upload, with a Json deserializer.
  * Ex of JSON format:
- *  {
- *      "deviceId":"mydevice",
- *      "blobUri":"https://{storage account}.blob.core.windows.net/{container name}/mydevice/myfile.jpg",
- *      "blobName":"mydevice/myfile.jpg",
- *      "lastUpdatedTime":"2016-06-01T21:22:41+00:00",
- *      "blobSizeInBytes":1234,
- *      "enqueuedTimeUtc":"2016-06-01T21:22:43.7996883Z"
- *  }
+ * {
+ * "deviceId":"mydevice",
+ * "blobUri":"https://{storage account}.blob.core.windows.net/{container name}/mydevice/myfile.jpg",
+ * "blobName":"mydevice/myfile.jpg",
+ * "lastUpdatedTime":"2016-06-01T21:22:41+00:00",
+ * "blobSizeInBytes":1234,
+ * "enqueuedTimeUtc":"2016-06-01T21:22:43.7996883Z"
+ * }
  */
 public class FileUploadNotificationParser
 {
     private static final String DEVICE_ID_TAG = "deviceId";
+    private static final String BLOB_URI_TAG = "blobUri";
+    private static final String BLOB_NAME_TAG = "blobName";
+    private static final String LAST_UPDATED_TIME_TAG = "lastUpdatedTime";
+    private static final String BLOB_SIZE_IN_BYTES_TAG = "blobSizeInBytes";
+    private static final String ENQUEUED_TIME_UTC_TAG = "enqueuedTimeUtc";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(DEVICE_ID_TAG)
     private String deviceId = null;
-
-    private static final String BLOB_URI_TAG = "blobUri";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(BLOB_URI_TAG)
     private String blobUri = null;
-
-    private static final String BLOB_NAME_TAG = "blobName";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(BLOB_NAME_TAG)
     private String blobName = null;
-
-    private static final String LAST_UPDATED_TIME_TAG = "lastUpdatedTime";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(LAST_UPDATED_TIME_TAG)
     private String lastUpdatedTime = null;
-
     private transient Date lastUpdatedTimeDate;
-
-    private static final String BLOB_SIZE_IN_BYTES_TAG = "blobSizeInBytes";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(BLOB_SIZE_IN_BYTES_TAG)
     private Long blobSizeInBytes = null;
-
-    private static final String ENQUEUED_TIME_UTC_TAG = "enqueuedTimeUtc";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(ENQUEUED_TIME_UTC_TAG)
     private String enqueuedTimeUtc = null;
@@ -91,11 +85,11 @@ public class FileUploadNotificationParser
         ParserUtility.validateStringUTF8(fileUploadNotificationParser.lastUpdatedTime);
 
         /* Codes_SRS_FILE_UPLOAD_NOTIFICATION_21_012: [If the provided json do not the keys `blobSizeInBytes`, the constructor shall assume the default value 0 for the blob size.] */
-        if(fileUploadNotificationParser.blobSizeInBytes == null)
+        if (fileUploadNotificationParser.blobSizeInBytes == null)
         {
             fileUploadNotificationParser.blobSizeInBytes = 0L;
         }
-        else if(fileUploadNotificationParser.blobSizeInBytes < 0)
+        else if (fileUploadNotificationParser.blobSizeInBytes < 0)
         {
             throw new IllegalArgumentException("negative size");
         }
@@ -109,6 +103,14 @@ public class FileUploadNotificationParser
         this.blobSizeInBytes = fileUploadNotificationParser.blobSizeInBytes;
         this.enqueuedTimeUtcDate = ParserUtility.getDateTimeUtc(this.enqueuedTimeUtc);
         this.lastUpdatedTimeDate = ParserUtility.stringToDateTimeOffset(this.lastUpdatedTime);
+    }
+
+    /**
+     * Empty constructor: Used only to keep GSON happy.
+     */
+    @SuppressWarnings("unused")
+    FileUploadNotificationParser()
+    {
     }
 
     /**
@@ -176,13 +178,5 @@ public class FileUploadNotificationParser
     {
         /* Codes_SRS_FILE_UPLOAD_NOTIFICATION_21_011: [The getBlobSizeInBytesTag shall return the integer stored in `blobSizeInBytes`.] */
         return this.blobSizeInBytes;
-    }
-
-    /**
-     * Empty constructor: Used only to keep GSON happy.
-     */
-    @SuppressWarnings("unused")
-    FileUploadNotificationParser()
-    {
     }
 }

@@ -143,7 +143,7 @@ public class ExportImportDeviceTest
         ExportImportDeviceParser parserSAS = new ExportImportDeviceParser();
         parserSAS.setAuthentication(Deencapsulation.newInstance(AuthenticationParser.class));
         parserSAS.getAuthentication().setType(AuthenticationTypeParser.SAS);
-        parserSAS.getAuthentication().setSymmetricKey(new SymmetricKeyParser(SAMPLE_THUMBPRINT,SAMPLE_THUMBPRINT));
+        parserSAS.getAuthentication().setSymmetricKey(new SymmetricKeyParser(SAMPLE_THUMBPRINT, SAMPLE_THUMBPRINT));
         parserSAS.setId("deviceSAS");
 
         // act
@@ -176,7 +176,7 @@ public class ExportImportDeviceTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_053: [If the provided parser does not have values for the properties deviceId or authentication, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void conversionFromDeviceParserMissingDeviceIdThrows()
     {
         // arrange
@@ -190,7 +190,7 @@ public class ExportImportDeviceTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_053: [If the provided parser does not have values for the properties deviceId or authentication, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void conversionFromDeviceParserMissingAuthenticationThrows()
     {
         // arrange
@@ -203,7 +203,7 @@ public class ExportImportDeviceTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_056: [If the provided authentication is null, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void cannotSetIdNull()
     {
         //act
@@ -211,7 +211,7 @@ public class ExportImportDeviceTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_055: [If the provided id is null, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void cannotSetAuthenticationNull()
     {
         //act
@@ -219,7 +219,7 @@ public class ExportImportDeviceTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_057: [If either the provided deviceId or authenticationType is null or empty, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorRejectsNullDeviceId()
     {
         //act
@@ -227,7 +227,7 @@ public class ExportImportDeviceTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_057: [If either the provided deviceId or authenticationType is null or empty, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorRejectsEmptyDeviceId()
     {
         //act
@@ -235,7 +235,7 @@ public class ExportImportDeviceTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_057: [If either the provided deviceId or authenticationType is null or empty, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorRejectsNullAuthenticationType()
     {
         //act
@@ -288,7 +288,7 @@ public class ExportImportDeviceTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_060: [If this device uses sas authentication, but does not have a primary and secondary symmetric key saved, an IllegalStateException shall be thrown.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void toParserIllegalStateThrownWhenUsingSASAuthenticationWithoutSymmetricKeySaved()
     {
         //arrange
@@ -303,7 +303,7 @@ public class ExportImportDeviceTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_060: [If this device uses sas authentication, but does not have a primary and secondary symmetric key saved, an IllegalStateException shall be thrown.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void toParserIllegalStateThrownWhenUsingSASAuthenticationWithoutPrimaryKeySaved()
     {
         //arrange
@@ -320,7 +320,7 @@ public class ExportImportDeviceTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_061: [If this device uses self signed authentication, but does not have a primary and secondary thumbprint saved, an IllegalStateException shall be thrown.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void toParserIllegalStateThrownWhenUsingSelfSignedAuthenticationWithoutThumbprintSaved()
     {
         //arrange
@@ -335,7 +335,7 @@ public class ExportImportDeviceTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_IMPORT_EXPORT_DEVICE_34_061: [If this device uses self signed authentication, but does not have a primary and secondary thumbprint saved, an IllegalStateException shall be thrown.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void toParserIllegalStateThrownWhenUsingSelfSignedAuthenticationWithoutPrimaryThumbprintSaved()
     {
         //arrange
@@ -353,9 +353,10 @@ public class ExportImportDeviceTest
 
     /**
      * Uses reflection to create an ExportImportDevice and sets the provided properties
+     *
      * @param authentication the authentication the device uses
-     * @param importMode the import mode the device uses
-     * @param status the status of the device
+     * @param importMode     the import mode the device uses
+     * @param status         the status of the device
      * @return the created ExportImportDevice object
      */
     private ExportImportDevice createTestDevice(AuthenticationMechanism authentication, ImportMode importMode, DeviceStatus status)
@@ -370,16 +371,18 @@ public class ExportImportDeviceTest
 
     /**
      * Uses refelection to invoke the constructor for an ExportImportDevice that takes an ExportImportDeviceParser object as the only argument
+     *
      * @param parser the parser to pass into the constructor
      * @return the created ExportImportDevice object
      */
     private ExportImportDevice reflectivelyInvokeExportImportDeviceParserConstructor(ExportImportDeviceParser parser)
     {
-        return Deencapsulation.newInstance(ExportImportDevice.class, new Class[] { ExportImportDeviceParser.class }, parser);
+        return Deencapsulation.newInstance(ExportImportDevice.class, new Class[]{ExportImportDeviceParser.class}, parser);
     }
 
     /**
      * Uses reflection to invoke the ExportImportDevice method "toExportImportDeviceParser()"
+     *
      * @param device the device to invoke this on
      * @return the returned value from the invocation.
      */

@@ -33,23 +33,12 @@ public class ServiceClientIT extends MethodNameLoggingIntegrationTest
 
     //connection string to server with untrustworthy certificates. Service should throw an exception when connecting to it
     private static String UNTRUSTWORTHY_IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME = "IOTHUB_CONN_STRING_INVALIDCERT";
+    private ServiceClientITRunner testInstance;
 
     public ServiceClientIT(IotHubServiceClientProtocol protocol)
     {
         this.testInstance = new ServiceClientITRunner(protocol);
     }
-
-    private class ServiceClientITRunner
-    {
-        private IotHubServiceClientProtocol protocol;
-
-        public ServiceClientITRunner(IotHubServiceClientProtocol protocol)
-        {
-            this.protocol = protocol;
-        }
-    }
-
-    private ServiceClientITRunner testInstance;
 
     //This function is run before even the @BeforeClass annotation, so it is used as the @BeforeClass method
     @Parameterized.Parameters(name = "{0}")
@@ -62,13 +51,7 @@ public class ServiceClientIT extends MethodNameLoggingIntegrationTest
         deviceId = deviceId.concat("-" + uuid);
 
 
-        List inputs = Arrays.asList(
-                new Object[][]
-                        {
-                                {IotHubServiceClientProtocol.AMQPS},
-                                {IotHubServiceClientProtocol.AMQPS_WS}
-                        }
-        );
+        List inputs = Arrays.asList(new Object[][]{{IotHubServiceClientProtocol.AMQPS}, {IotHubServiceClientProtocol.AMQPS_WS}});
 
         return inputs;
     }
@@ -86,7 +69,7 @@ public class ServiceClientIT extends MethodNameLoggingIntegrationTest
             // We remove and recreate the device for a clean start
             registryManager.removeDevice(deviceId);
         }
-        catch (IOException|IotHubException e)
+        catch (IOException | IotHubException e)
         {
         }
 
@@ -195,5 +178,15 @@ public class ServiceClientIT extends MethodNameLoggingIntegrationTest
         }
 
         assertTrue("Expected an exception due to service presenting invalid certificate", expectedExceptionWasCaught);
+    }
+
+    private class ServiceClientITRunner
+    {
+        private IotHubServiceClientProtocol protocol;
+
+        public ServiceClientITRunner(IotHubServiceClientProtocol protocol)
+        {
+            this.protocol = protocol;
+        }
     }
 }

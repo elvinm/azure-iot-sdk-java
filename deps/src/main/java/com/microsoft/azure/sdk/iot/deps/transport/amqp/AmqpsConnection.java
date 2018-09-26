@@ -25,7 +25,7 @@ import java.util.concurrent.*;
 
 public class AmqpsConnection extends BaseHandler
 {
-    private static final int MAX_WAIT_TO_OPEN_CLOSE_CONNECTION = 1*60*1000; // 1 minute timeout
+    private static final int MAX_WAIT_TO_OPEN_CLOSE_CONNECTION = 1 * 60 * 1000; // 1 minute timeout
     private static final int MAX_WAIT_TO_TERMINATE_EXECUTOR = 30;
 
     private static final String WEB_SOCKET_PATH = "/$iothub/websocket";
@@ -33,44 +33,34 @@ public class AmqpsConnection extends BaseHandler
     private static final int AMQP_PORT = 5671;
     private static final int AMQP_WEB_SOCKET_PORT = 443;
     private static final int THREAD_POOL_MAX_NUMBER = 1;
-
+    private final ObjectLock closeLock;
     private int linkCredit;
-
     private long nextTag;
-
     private Boolean useWebSockets;
     private Boolean isOpen;
-
     private String hostName;
     private String fullHostAddress;
-
     private Connection connection;
     private Session session;
     private ExecutorService executorService;
-
     private AmqpDeviceOperations amqpDeviceOperations;
-
     private Reactor reactor;
-
     private SaslListenerImpl saslListener;
-
     private AmqpListener msgListener;
-
     private CountDownLatch openLatch;
-    private final ObjectLock closeLock;
-
     private SSLContext sslContext;
 
     private CustomLogger logger = new CustomLogger();
 
     /**
      * Constructor for the Amqp library
-     * @param hostName Name of the AMQP Endpoint
+     *
+     * @param hostName             Name of the AMQP Endpoint
      * @param amqpDeviceOperations Object holding details of the links used in this connection
-     * @param sslContext SSL Context to be set over TLS.
-     * @param saslHandler The sasl frame handler. This may be null if no sasl frames will be exchanged (When using x509
-     *                    authentication for example)
-     * @param useWebSockets WebSockets to be used or disabled.
+     * @param sslContext           SSL Context to be set over TLS.
+     * @param saslHandler          The sasl frame handler. This may be null if no sasl frames will be exchanged (When using x509
+     *                             authentication for example)
+     * @param useWebSockets        WebSockets to be used or disabled.
      * @throws IOException This exception is thrown if for any reason constructor cannot succeed.
      */
     public AmqpsConnection(String hostName, AmqpDeviceOperations amqpDeviceOperations, SSLContext sslContext, SaslHandler saslHandler, boolean useWebSockets) throws IOException
@@ -92,11 +82,11 @@ public class AmqpsConnection extends BaseHandler
         }
 
         this.openLatch = new CountDownLatch(1);
-        this.closeLock  = new ObjectLock();
+        this.closeLock = new ObjectLock();
 
         this.sslContext = sslContext;
-        this.isOpen  = false;
-        this.fullHostAddress = String.format("%s:%d", hostName, this.useWebSockets ? AMQP_WEB_SOCKET_PORT : AMQP_PORT );
+        this.isOpen = false;
+        this.fullHostAddress = String.format("%s:%d", hostName, this.useWebSockets ? AMQP_WEB_SOCKET_PORT : AMQP_PORT);
         this.hostName = hostName;
 
         add(new Handshaker());
@@ -117,6 +107,7 @@ public class AmqpsConnection extends BaseHandler
 
     /**
      * Sets the listener for this connection.
+     *
      * @param listener Listener to be used for this connection.
      */
     public void setListener(AmqpListener listener)
@@ -130,6 +121,7 @@ public class AmqpsConnection extends BaseHandler
 
     /**
      * Returns the status of the connection
+     *
      * @return status of the connection
      */
     public boolean isConnected() throws Exception
@@ -144,18 +136,19 @@ public class AmqpsConnection extends BaseHandler
 
     /**
      * Opens the connection.
+     *
      * @throws IOException If connection could not be opened.
      */
     public void open() throws IOException
     {
         logger.LogDebug("Entered in method %s", logger.getMethodName());
-        if(!this.isOpen)
+        if (!this.isOpen)
         {
             try
             {
                 openAmqpAsync();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 logger.LogError(e);
                 this.close();
@@ -206,6 +199,7 @@ public class AmqpsConnection extends BaseHandler
 
     /**
      * Closes the connection
+     *
      * @throws IOException If connection could not be closed.
      */
     public void close() throws IOException
@@ -271,6 +265,7 @@ public class AmqpsConnection extends BaseHandler
 
     /**
      * Event handler for reactor init event.
+     *
      * @param event Proton Event object
      */
     @Override
@@ -295,6 +290,7 @@ public class AmqpsConnection extends BaseHandler
 
     /**
      * Event handler for the connection init event
+     *
      * @param event The Proton Event object.
      */
     @Override
@@ -322,6 +318,7 @@ public class AmqpsConnection extends BaseHandler
 
     /**
      * Create Proton SslDomain object from Address using the given Ssl mode
+     *
      * @return the created Ssl domain
      */
     private SslDomain makeDomain() throws IOException
@@ -351,7 +348,7 @@ public class AmqpsConnection extends BaseHandler
             {
                 WebSocketImpl webSocket = new WebSocketImpl();
                 webSocket.configure(this.hostName, WEB_SOCKET_PATH, 0, WEB_SOCKET_SUB_PROTOCOL, null, null);
-                ((TransportInternal)transport).addTransportLayer(webSocket);
+                ((TransportInternal) transport).addTransportLayer(webSocket);
             }
 
             try
@@ -378,6 +375,7 @@ public class AmqpsConnection extends BaseHandler
 
     /**
      * Event handler for the link init event. Sets the proper target address on the link.
+     *
      * @param event The Proton Event object.
      */
     @Override
@@ -399,6 +397,7 @@ public class AmqpsConnection extends BaseHandler
     /**
      * Event handler for the link remote open event. This signifies that the
      * {@link org.apache.qpid.proton.reactor.Reactor} is ready, so we set the connection to OPEN.
+     *
      * @param event The Proton Event object.
      */
     @Override
@@ -423,6 +422,7 @@ public class AmqpsConnection extends BaseHandler
 
     /**
      * Send message to the Amqp Endpoint
+     *
      * @param message Message to be sent
      * @return true if message was sent successfully, false other wise.
      * @throws IOException If message could not be sent.
@@ -459,7 +459,7 @@ public class AmqpsConnection extends BaseHandler
                 {
                     msgData = new byte[msgData.length * 2];
                 }
-            } while(!encodingComplete);
+            } while (!encodingComplete);
 
             if (length > 0)
             {
@@ -479,6 +479,7 @@ public class AmqpsConnection extends BaseHandler
 
     /**
      * Event handler for the delivery event. This method handles both sending and receiving a message.
+     *
      * @param event The Proton Event object.
      */
     @Override
@@ -513,6 +514,7 @@ public class AmqpsConnection extends BaseHandler
 
     /**
      * Event handler for the link flow event. Handles sending a single message.
+     *
      * @param event The Proton Event object.
      */
     @Override
@@ -528,6 +530,7 @@ public class AmqpsConnection extends BaseHandler
      * Event handler for the link remote close event. This triggers reconnection attempts until successful.
      * Both sender and receiver links closing trigger this event, so we only handle one of them,
      * since the other is redundant.
+     *
      * @param event The Proton Event object.
      */
     @Override
@@ -539,6 +542,7 @@ public class AmqpsConnection extends BaseHandler
 
     /**
      * Event handler for the transport error event. This triggers reconnection attempts until successful.
+     *
      * @param event The Proton Event object.
      */
     @Override

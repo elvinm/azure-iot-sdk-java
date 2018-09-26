@@ -25,15 +25,13 @@ import java.util.Map;
  */
 public class HttpsTransportManager implements IotHubTransportManager
 {
-    DeviceClientConfig config;
-    HttpsIotHubConnection httpsIotHubConnection;
-
     private static final String MODULE_ID = "x-ms-edge-moduleId";
     private final static String ModuleMethodUriFormat = "/twins/%s/modules/%s/methods";
     private final static String DeviceMethodUriFormat = "/twins/%s/methods";
-
     private static final String PATH_NOTIFICATIONS_STRING = "/files/notifications";
     private static final String PATH_FILES_STRING = "/files";
+    DeviceClientConfig config;
+    HttpsIotHubConnection httpsIotHubConnection;
 
     /**
      * Constructor
@@ -43,7 +41,7 @@ public class HttpsTransportManager implements IotHubTransportManager
      */
     public HttpsTransportManager(DeviceClientConfig config) throws IllegalArgumentException
     {
-        if(config == null)
+        if (config == null)
         {
             //Codes_SRS_HTTPSTRANSPORTMANAGER_21_002: [If the provided `config` is null, the constructor shall throws IllegalArgumentException.]
             throw new IllegalArgumentException("config is null");
@@ -51,6 +49,19 @@ public class HttpsTransportManager implements IotHubTransportManager
 
         //Codes_SRS_HTTPSTRANSPORTMANAGER_21_001: [The constructor shall store the device client configuration `config`.]
         this.config = config;
+    }
+
+    private static URI getDeviceMethodUri(String deviceId) throws UnsupportedEncodingException, URISyntaxException
+    {
+        deviceId = URLEncoder.encode(deviceId, "UTF-8");
+        return new URI(String.format(DeviceMethodUriFormat, deviceId));
+    }
+
+    private static URI getModuleMethodUri(String deviceId, String moduleId) throws UnsupportedEncodingException, URISyntaxException
+    {
+        deviceId = URLEncoder.encode(deviceId, "UTF-8");
+        moduleId = URLEncoder.encode(moduleId, "UTF-8");
+        return new URI(String.format(ModuleMethodUriFormat, deviceId, moduleId));
     }
 
     /**
@@ -110,7 +121,7 @@ public class HttpsTransportManager implements IotHubTransportManager
      *
      * @param message is the message to send.
      * @return the IotHub response with the status and payload.
-     * @throws IOException if the IotHub communication failed.
+     * @throws IOException              if the IotHub communication failed.
      * @throws IllegalArgumentException if the provided message is null, or invalid.
      */
     public ResponseMessage send(IotHubTransportMessage message, Map<String, String> additionalHeaders) throws IOException, IllegalArgumentException
@@ -119,7 +130,7 @@ public class HttpsTransportManager implements IotHubTransportManager
         //Codes_SRS_HTTPSTRANSPORTMANAGER_21_008: [If send failed to parse the message, it shall bypass the exception.]
         HttpsMessage httpsMessage = HttpsSingleMessage.parseHttpsJsonMessage(message);
 
-        if((message.getIotHubMethod() == null) || (message.getUriPath() == null))
+        if ((message.getIotHubMethod() == null) || (message.getUriPath() == null))
         {
             throw new IllegalArgumentException("method or path is null");
         }
@@ -158,6 +169,7 @@ public class HttpsTransportManager implements IotHubTransportManager
 
     /**
      * Pull the IotHub looking for new message.
+     *
      * @return New message from the IotHub. It can be {@code null} is there is no new message to read.
      * @throws IOException if the IotHub communication failed.
      */
@@ -178,11 +190,12 @@ public class HttpsTransportManager implements IotHubTransportManager
 
     /**
      * Invoke a direct method to the provided uri
+     *
      * @param methodRequest the method request to make
-     * @param deviceId the device id of the device the moduleId belongs to
-     * @param moduleId the module id of the module to invoke the method on
+     * @param deviceId      the device id of the device the moduleId belongs to
+     * @param moduleId      the module id of the module to invoke the method on
      * @return the result of that request
-     * @throws IOException if the IotHub cannot be reached
+     * @throws IOException        if the IotHub cannot be reached
      * @throws URISyntaxException if the provided deviceId and/or moduleId cannot be encoded correctly
      * @throws TransportException if any issues occur when sending the http request to its target
      */
@@ -207,8 +220,9 @@ public class HttpsTransportManager implements IotHubTransportManager
 
     /**
      * Invoke a direct method to the provided uri
+     *
      * @param methodRequest the method request to make
-     * @param uri the path to send the request to
+     * @param uri           the path to send the request to
      * @return the result of that request
      * @throws IOException if the IotHub cannot be reached
      */
@@ -252,18 +266,5 @@ public class HttpsTransportManager implements IotHubTransportManager
         //Codes_SRS_HTTPSTRANSPORTMANAGER_34_027 [If the http response doesn't contain an error code, this function return a method result with the response message body as the method result body.]
         String resultJson = new String(responseMessage.getBytes());
         return new MethodResult(resultJson);
-    }
-
-    private static URI getDeviceMethodUri(String deviceId) throws UnsupportedEncodingException, URISyntaxException
-    {
-        deviceId = URLEncoder.encode(deviceId, "UTF-8");
-        return new URI(String.format(DeviceMethodUriFormat, deviceId));
-    }
-
-    private static URI getModuleMethodUri(String deviceId, String moduleId) throws UnsupportedEncodingException, URISyntaxException
-    {
-        deviceId = URLEncoder.encode(deviceId, "UTF-8");
-        moduleId = URLEncoder.encode(moduleId, "UTF-8");
-        return new URI(String.format(ModuleMethodUriFormat, deviceId, moduleId));
     }
 }

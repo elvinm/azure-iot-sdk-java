@@ -14,7 +14,9 @@ import org.slf4j.LoggerFactory;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
-/** Unit tests for CustomLogger. */
+/**
+ * Unit tests for CustomLogger.
+ */
 public class CustomLoggerTest
 {
     @Mocked
@@ -33,7 +35,7 @@ public class CustomLoggerTest
     public void testMethodSignature()
     {
         CustomLogger logger = new CustomLogger(this.getClass());
-        
+
         String message = "This is INFO message";
         logger.LogInfo(message, logger.getMethodName());
         message = "This is DEBUG message";
@@ -68,20 +70,20 @@ public class CustomLoggerTest
         new NonStrictExpectations()
         {
             {
-                LoggerFactory.getLogger((Class)any);
+                LoggerFactory.getLogger((Class) any);
                 result = mockLogger;
                 mockLogger.isInfoEnabled();
                 result = true;
             }
         };
 
-        new CustomLogger(this.getClass()).LogInfo(message);	
+        new CustomLogger(this.getClass()).LogInfo(message);
 
         new Verifications()
         {
             {
                 mockLogger.info(anyString);
-                times = 1; 
+                times = 1;
             }
         };
     }
@@ -95,20 +97,20 @@ public class CustomLoggerTest
         new NonStrictExpectations()
         {
             {
-                LoggerFactory.getLogger((Class)any);
+                LoggerFactory.getLogger((Class) any);
                 result = mockLogger;
                 mockLogger.isDebugEnabled();
                 result = true;
             }
         };
 
-        new CustomLogger(this.getClass()).LogDebug(message);	
+        new CustomLogger(this.getClass()).LogDebug(message);
 
         new Verifications()
         {
             {
                 mockLogger.debug(anyString);
-                times = 1; 
+                times = 1;
             }
         };
     }
@@ -122,20 +124,20 @@ public class CustomLoggerTest
         new NonStrictExpectations()
         {
             {
-                LoggerFactory.getLogger((Class)any);
+                LoggerFactory.getLogger((Class) any);
                 result = mockLogger;
                 mockLogger.isTraceEnabled();
                 result = true;
             }
         };
 
-        new CustomLogger(this.getClass()).LogTrace(message);	
+        new CustomLogger(this.getClass()).LogTrace(message);
 
         new Verifications()
         {
             {
                 mockLogger.trace(anyString);
-                times = 1; 
+                times = 1;
             }
         };
     }
@@ -149,25 +151,25 @@ public class CustomLoggerTest
         new NonStrictExpectations()
         {
             {
-                LoggerFactory.getLogger((Class)any);
+                LoggerFactory.getLogger((Class) any);
                 result = mockLogger;
                 mockLogger.isWarnEnabled();
                 result = true;
             }
         };
 
-        new CustomLogger(this.getClass()).LogWarn(message);	
+        new CustomLogger(this.getClass()).LogWarn(message);
 
         new Verifications()
         {
-           {
+            {
                 mockLogger.warn(anyString);
-                times = 1; 
-           }
-       };
+                times = 1;
+            }
+        };
     }
 
-  	// Tests_SRS_CUSTOMERLOGGER_25_002: [The function shall print message for FATAL level.]
+    // Tests_SRS_CUSTOMERLOGGER_25_002: [The function shall print message for FATAL level.]
     @Test
     public void testLogFatal(@Mocked final Logger mockLogger)
     {
@@ -175,21 +177,21 @@ public class CustomLoggerTest
 
         new NonStrictExpectations()
         {
-           {
-               LoggerFactory.getLogger((Class)any);
-               result = mockLogger;
-               mockLogger.isErrorEnabled();
-               result = true;
+            {
+                LoggerFactory.getLogger((Class) any);
+                result = mockLogger;
+                mockLogger.isErrorEnabled();
+                result = true;
             }
         };
 
-        new CustomLogger(this.getClass()).LogFatal(message);	
+        new CustomLogger(this.getClass()).LogFatal(message);
 
         new Verifications()
         {
             {
                 mockLogger.error(anyString);
-                times = 1; 
+                times = 1;
             }
         };
     }
@@ -203,26 +205,26 @@ public class CustomLoggerTest
         new NonStrictExpectations()
         {
             {
-                LoggerFactory.getLogger((Class)any);
+                LoggerFactory.getLogger((Class) any);
                 result = mockLogger;
                 mockLogger.isErrorEnabled();
                 result = true;
             }
         };
 
-        new CustomLogger(this.getClass()).LogError(message);	
+        new CustomLogger(this.getClass()).LogError(message);
         new Verifications()
         {
             {
                 mockLogger.error(anyString);
-                times = 1; 
+                times = 1;
             }
         };
 
         new NonStrictExpectations()
         {
             {
-                LoggerFactory.getLogger((Class)any);
+                LoggerFactory.getLogger((Class) any);
                 result = mockLogger;
                 mockLogger.isErrorEnabled();
                 result = true;
@@ -234,7 +236,7 @@ public class CustomLoggerTest
         {
             {
                 mockLogger.error(anyString);
-                times = 1; 
+                times = 1;
             }
         };
     }

@@ -3,7 +3,9 @@
 
 package com.microsoft.azure.sdk.iot.device.transport.https;
 
-/** The HTTPS request method (i.e. GET). */
+/**
+ * The HTTPS request method (i.e. GET).
+ */
 public enum HttpsMethod
 {
     GET, POST, PUT, DELETE

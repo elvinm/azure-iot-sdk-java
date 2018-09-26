@@ -27,11 +27,11 @@ public class TwinMetadataTest
         String lastUpdated = "2017-09-21T02:07:44.238Z";
 
         // act
-        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[] {String.class, Integer.class}, lastUpdated, 5);
+        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[]{String.class, Integer.class}, lastUpdated, 5);
 
         // assert
         assertNotNull(twinMetadata);
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(twinMetadata, "lastUpdated"), lastUpdated);
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(twinMetadata, "lastUpdated"), lastUpdated);
     }
 
     /* SRS_TWIN_METADATA_21_001: [The constructor shall parse the provided `lastUpdated` String to the Date and store it as the TwinMetadata lastUpdated.] */
@@ -42,7 +42,7 @@ public class TwinMetadataTest
         String lastUpdated = null;
 
         // act
-        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[] {String.class, Integer.class}, lastUpdated, 5);
+        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[]{String.class, Integer.class}, lastUpdated, 5);
 
         // assert
         assertNotNull(twinMetadata);
@@ -57,7 +57,7 @@ public class TwinMetadataTest
         String lastUpdated = "";
 
         // act
-        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[] {String.class, Integer.class}, lastUpdated, 5);
+        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[]{String.class, Integer.class}, lastUpdated, 5);
 
         // assert
         assertNotNull(twinMetadata);
@@ -65,14 +65,14 @@ public class TwinMetadataTest
     }
 
     /* SRS_TWIN_METADATA_21_002: [The constructor shall throw IllegalArgumentException if it cannot convert the provided `lastUpdated` String to Date.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorLastUpdatedInvalidSucceed()
     {
         // arrange
         String lastUpdated = "This is a invalid date";
 
         // act
-        Deencapsulation.newInstance(TwinMetadata.class, new Class[] {String.class, Integer.class}, lastUpdated, 5);
+        Deencapsulation.newInstance(TwinMetadata.class, new Class[]{String.class, Integer.class}, lastUpdated, 5);
 
         // assert
     }
@@ -85,7 +85,7 @@ public class TwinMetadataTest
         Integer lastUpdatedVersion = 5;
 
         // act
-        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[] {String.class, Integer.class}, "2017-09-21T02:07:44.238Z", lastUpdatedVersion);
+        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[]{String.class, Integer.class}, "2017-09-21T02:07:44.238Z", lastUpdatedVersion);
 
         // assert
         assertNotNull(twinMetadata);
@@ -100,7 +100,7 @@ public class TwinMetadataTest
         Integer lastUpdatedVersion = -5;
 
         // act
-        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[] {String.class, Integer.class}, "2017-09-21T02:07:44.238Z", lastUpdatedVersion);
+        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[]{String.class, Integer.class}, "2017-09-21T02:07:44.238Z", lastUpdatedVersion);
 
         // assert
         assertNotNull(twinMetadata);
@@ -115,7 +115,7 @@ public class TwinMetadataTest
         Integer lastUpdatedVersion = null;
 
         // act
-        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[] {String.class, Integer.class}, "2017-09-21T02:07:44.238Z", lastUpdatedVersion);
+        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[]{String.class, Integer.class}, "2017-09-21T02:07:44.238Z", lastUpdatedVersion);
 
         // assert
         assertNotNull(twinMetadata);
@@ -123,14 +123,14 @@ public class TwinMetadataTest
     }
 
     /* SRS_TWIN_METADATA_21_010: [The constructor shall throw IllegalArgumentException if the provided metadata is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorCopyThrowsOnNull()
     {
         // arrange
         TwinMetadata originalTwinMetadata = null;
 
         // act - assert
-        Deencapsulation.newInstance(TwinMetadata.class, new Class[] {TwinMetadata.class}, originalTwinMetadata);
+        Deencapsulation.newInstance(TwinMetadata.class, new Class[]{TwinMetadata.class}, originalTwinMetadata);
     }
 
     /* SRS_TWIN_METADATA_21_011: [The constructor shall copy the content of the provided metadata.] */
@@ -140,19 +140,19 @@ public class TwinMetadataTest
         // arrange
         final String lastUpdated = "2017-09-21T02:07:44.238Z";
         final Integer lastUpdatedVersion = 10;
-        TwinMetadata originalTwinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[] {String.class, Integer.class}, lastUpdated, lastUpdatedVersion);
+        TwinMetadata originalTwinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[]{String.class, Integer.class}, lastUpdated, lastUpdatedVersion);
 
         // act
-        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[] {TwinMetadata.class}, originalTwinMetadata);
+        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[]{TwinMetadata.class}, originalTwinMetadata);
 
         // assert
         assertNotNull(twinMetadata);
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(twinMetadata, "lastUpdated"), lastUpdated);
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(twinMetadata, "lastUpdated"), lastUpdated);
         assertEquals(lastUpdatedVersion, Deencapsulation.getField(twinMetadata, "lastUpdatedVersion"));
     }
 
     /* SRS_TWIN_METADATA_21_012: [The constructor shall throw IllegalArgumentException if both lastUpdated and lastUpdatedVersion are null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnBothNull()
     {
         // arrange
@@ -160,10 +160,7 @@ public class TwinMetadataTest
         Integer lastUpdatedVersion = null;
 
         // act - assert
-        TwinMetadata twinMetadata = Deencapsulation.newInstance(
-                TwinMetadata.class,
-                new Class[] {String.class, Integer.class},
-                lastUpdated, lastUpdatedVersion);
+        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[]{String.class, Integer.class}, lastUpdated, lastUpdatedVersion);
     }
 
 
@@ -175,7 +172,7 @@ public class TwinMetadataTest
         Object metadata = "This is not a Map";
 
         // act
-        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[] {Object.class}, metadata);
+        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[]{Object.class}, metadata);
 
         // assert
         assertNull(twinMetadata);
@@ -197,11 +194,11 @@ public class TwinMetadataTest
         };
 
         // act
-        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[] {Object.class}, metadata);
+        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[]{Object.class}, metadata);
 
         // assert
         assertNotNull(twinMetadata);
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(twinMetadata, "lastUpdated"), lastUpdated);
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(twinMetadata, "lastUpdated"), lastUpdated);
     }
 
     /* SRS_TWIN_METADATA_21_005: [If the provide metadata contains date or version, the tryExtractFromMap shall return a new instance of TwinMetadata with this information.] */
@@ -220,7 +217,7 @@ public class TwinMetadataTest
         };
 
         // act
-        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[] {Object.class}, metadata);
+        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[]{Object.class}, metadata);
 
         // assert
         assertNotNull(twinMetadata);
@@ -245,11 +242,11 @@ public class TwinMetadataTest
         };
 
         // act
-        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[] {Object.class}, metadata);
+        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[]{Object.class}, metadata);
 
         // assert
         assertNotNull(twinMetadata);
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(twinMetadata, "lastUpdated"), lastUpdated);
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(twinMetadata, "lastUpdated"), lastUpdated);
         assertEquals(lastUpdatedVersion, Deencapsulation.getField(twinMetadata, "lastUpdatedVersion"));
     }
 
@@ -271,11 +268,11 @@ public class TwinMetadataTest
         };
 
         // act
-        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[] {Object.class}, metadata);
+        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[]{Object.class}, metadata);
 
         // assert
         assertNotNull(twinMetadata);
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(twinMetadata, "lastUpdated"), lastUpdated);
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(twinMetadata, "lastUpdated"), lastUpdated);
         assertEquals(lastUpdatedVersion, Deencapsulation.getField(twinMetadata, "lastUpdatedVersion"));
     }
 
@@ -293,14 +290,14 @@ public class TwinMetadataTest
         };
 
         // act
-        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[] {Object.class}, metadata);
+        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[]{Object.class}, metadata);
 
         // assert
         assertNull(twinMetadata);
     }
 
     /* SRS_TWIN_METADATA_21_006: [The tryExtractFromMap shall throw IllegalArgumentException if it cannot convert the provided `lastUpdated` String to Date or the version in a Number.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void tryExtractFromMapValidDateAndInvalidVersionSucceed()
     {
         // arrange
@@ -317,16 +314,16 @@ public class TwinMetadataTest
         };
 
         // act
-        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[] {Object.class}, metadata);
+        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[]{Object.class}, metadata);
 
         // assert
         assertNotNull(twinMetadata);
-        Helpers.assertDateWithError((Date)Deencapsulation.getField(twinMetadata, "lastUpdated"), lastUpdated);
+        Helpers.assertDateWithError((Date) Deencapsulation.getField(twinMetadata, "lastUpdated"), lastUpdated);
         assertNull(Deencapsulation.getField(twinMetadata, "lastUpdatedVersion"));
     }
 
     /* SRS_TWIN_METADATA_21_006: [The tryExtractFromMap shall throw IllegalArgumentException if it cannot convert the provided `lastUpdated` String to Date or the version in a Number.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void tryExtractFromMapThrowsOnInvalidDateAndValidVersion()
     {
         // arrange
@@ -343,13 +340,13 @@ public class TwinMetadataTest
         };
 
         // act
-        Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[] {Object.class}, metadata);
+        Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[]{Object.class}, metadata);
 
         // assert
     }
 
     /* SRS_TWIN_METADATA_21_006: [The tryExtractFromMap shall throw IllegalArgumentException if it cannot convert the provided `lastUpdated` String to Date or the version in a Number.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void tryExtractFromMapInvalidDateAndInvalidVersionSucceed()
     {
         // arrange
@@ -366,7 +363,7 @@ public class TwinMetadataTest
         };
 
         // act
-        Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[] {Object.class}, metadata);
+        Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[]{Object.class}, metadata);
 
         // assert
     }
@@ -378,7 +375,7 @@ public class TwinMetadataTest
         // arrange
         final String lastUpdated = null;
         final Integer lastUpdatedVersion = 10;
-        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[] {String.class, Integer.class}, lastUpdated, lastUpdatedVersion);
+        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[]{String.class, Integer.class}, lastUpdated, lastUpdatedVersion);
 
         // act - assert
         assertNull(twinMetadata.getLastUpdated());
@@ -391,7 +388,7 @@ public class TwinMetadataTest
         // arrange
         final String lastUpdated = "2017-09-21T02:07:44.238Z";
         final Integer lastUpdatedVersion = null;
-        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[] {String.class, Integer.class}, lastUpdated, lastUpdatedVersion);
+        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[]{String.class, Integer.class}, lastUpdated, lastUpdatedVersion);
 
         // act - assert
         assertNull(twinMetadata.getLastUpdatedVersion());
@@ -414,7 +411,7 @@ public class TwinMetadataTest
                 put("$lastUpdatedVersion", lastUpdatedVersion);
             }
         };
-        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[] {Object.class}, metadata);
+        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[]{Object.class}, metadata);
 
         // act - assert
         Helpers.assertDateWithError(twinMetadata.getLastUpdated(), lastUpdated);
@@ -438,7 +435,7 @@ public class TwinMetadataTest
             }
         };
         String expectedJson = "{\"$lastUpdated\":\"" + lastUpdated + "\",\"$lastUpdatedVersion\":" + lastUpdatedVersion + "}";
-        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[] {Object.class}, metadata);
+        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[]{Object.class}, metadata);
 
         // act - assert
         Helpers.assertJson(Deencapsulation.invoke(twinMetadata, "toJsonElement").toString(), expectedJson);
@@ -459,7 +456,7 @@ public class TwinMetadataTest
             }
         };
         String expectedJson = "{\"$lastUpdatedVersion\":" + lastUpdatedVersion + "}";
-        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[] {Object.class}, metadata);
+        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[]{Object.class}, metadata);
 
         // act - assert
         Helpers.assertJson(Deencapsulation.invoke(twinMetadata, "toJsonElement").toString(), expectedJson);
@@ -480,7 +477,7 @@ public class TwinMetadataTest
             }
         };
         String expectedJson = "{\"$lastUpdated\":\"" + lastUpdated + "\"}";
-        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[] {Object.class}, metadata);
+        TwinMetadata twinMetadata = Deencapsulation.invoke(TwinMetadata.class, "tryExtractFromMap", new Class[]{Object.class}, metadata);
 
         // act - assert
         Helpers.assertJson(Deencapsulation.invoke(twinMetadata, "toJsonElement").toString(), expectedJson);
@@ -493,7 +490,7 @@ public class TwinMetadataTest
         // arrange
         final String lastUpdated = "2017-09-21T02:07:44.238Z";
         final Integer lastUpdatedVersion = 10;
-        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[] {String.class, Integer.class}, lastUpdated, lastUpdatedVersion);
+        TwinMetadata twinMetadata = Deencapsulation.newInstance(TwinMetadata.class, new Class[]{String.class, Integer.class}, lastUpdated, lastUpdatedVersion);
 
         // act - assert
         Helpers.assertJson(twinMetadata.toString(), "{\"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\"$lastUpdatedVersion\":10}");

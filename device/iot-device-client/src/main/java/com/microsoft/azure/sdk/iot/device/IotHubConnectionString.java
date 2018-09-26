@@ -17,13 +17,21 @@ import java.nio.charset.StandardCharsets;
  */
 public class IotHubConnectionString
 {
-    /** The hostName attribute name in a connection string. */
+    /**
+     * The hostName attribute name in a connection string.
+     */
     private static final String HOSTNAME_ATTRIBUTE = "HostName=";
-    /** The device ID attribute name in a connection string. */
+    /**
+     * The device ID attribute name in a connection string.
+     */
     private static final String DEVICE_ID_ATTRIBUTE = "DeviceId=";
-    /** The shared access key attribute name in a connection string. */
+    /**
+     * The shared access key attribute name in a connection string.
+     */
     private static final String SHARED_ACCESS_KEY_ATTRIBUTE = "SharedAccessKey=";
-    /** The shared access signature attribute name in a connection string. */
+    /**
+     * The shared access signature attribute name in a connection string.
+     */
     private static final String SHARED_ACCESS_TOKEN_ATTRIBUTE = "SharedAccessSignature=";
 
     private static final String MODULE_ID_ATTRIBUTE = "ModuleId=";
@@ -53,8 +61,8 @@ public class IotHubConnectionString
      *
      * @param connectionString is the iothub connection string to parse.
      * @throws IllegalArgumentException if the provided connectionString is {@code null}, empty, or not valid or if the hostName in the connection string is not a valid URI.
-     * @throws SecurityException if the provided connection string contains an expired sas token
-     * @throws URISyntaxException if the hostname is not a valid URI
+     * @throws SecurityException        if the provided connection string contains an expired sas token
+     * @throws URISyntaxException       if the hostname is not a valid URI
      */
     public IotHubConnectionString(String connectionString) throws IllegalArgumentException, SecurityException, URISyntaxException
     {
@@ -129,24 +137,20 @@ public class IotHubConnectionString
     /**
      * Constructor.
      *
-     * @param hostName the IoT Hub hostname.
-     * @param deviceId the device ID.
-     * @param sharedAccessKey the device key.
+     * @param hostName          the IoT Hub hostname.
+     * @param deviceId          the device ID.
+     * @param sharedAccessKey   the device key.
      * @param sharedAccessToken the shared access token.
      * @throws IllegalArgumentException if the IoT Hub hostname does not contain
-     * a valid IoT Hub name as its prefix or if the IoT Hub hostname does not conform to RFC 3986.
-     * @throws URISyntaxException if the hostname is not a valid URI
+     *                                  a valid IoT Hub name as its prefix or if the IoT Hub hostname does not conform to RFC 3986.
+     * @throws URISyntaxException       if the hostname is not a valid URI
      */
-    public IotHubConnectionString(String hostName, String deviceId,
-                                  String sharedAccessKey, String sharedAccessToken)
-            throws IllegalArgumentException, URISyntaxException
+    public IotHubConnectionString(String hostName, String deviceId, String sharedAccessKey, String sharedAccessToken) throws IllegalArgumentException, URISyntaxException
     {
         this(hostName, deviceId, sharedAccessKey, sharedAccessToken, "");
     }
 
-    public IotHubConnectionString(String hostName, String deviceId,
-                                  String sharedAccessKey, String sharedAccessToken, String gatewayHostName)
-            throws IllegalArgumentException, URISyntaxException
+    public IotHubConnectionString(String hostName, String deviceId, String sharedAccessKey, String sharedAccessToken, String gatewayHostName) throws IllegalArgumentException, URISyntaxException
     {
         this.isUsingX509 = (sharedAccessKey == null && sharedAccessToken == null);
 
@@ -185,99 +189,7 @@ public class IotHubConnectionString
         logger.LogInfo("IotHubConnectionString object is created successfully for %s, method name is %s ", this.hostName, logger.getMethodName());
     }
 
-    /**
-     * Getter for the hostName.
-     * @return string with the hostName in the connectionString
-     */
-    public String getHostName()
-    {
-        /* Codes_SRS_IOTHUB_CONNECTIONSTRING_21_030: [The getHostName shall return the stored host name.] */
-        return this.hostName;
-    }
-
-    public String getGatewayHostName()
-    {
-        // Codes_SRS_IOTHUB_CONNECTIONSTRING_34_043: [The getGatewayHostName shall return the stored gateway host name.]
-        return this.gatewayHostName;
-    }
-
-    /**
-     * Getter for the hubName.
-     * @return string with the hubName in the connectionString
-     */
-    public String getHubName()
-    {
-        /* Codes_SRS_IOTHUB_CONNECTIONSTRING_21_031: [The getHubName shall return the stored hub name, which is the first part of the hostName.] */
-        return this.hubName;
-    }
-
-    /**
-     * Getter for the deviceId.
-     * @return string with the deviceId in the connectionString
-     */
-    public String getDeviceId()
-    {
-        /* Codes_SRS_IOTHUB_CONNECTIONSTRING_21_032: [The getDeviceId shall return the stored device id.] */
-        return this.deviceId;
-    }
-
-    /**
-     * Getter for the sharedAccessKey.
-     * @return string with the sharedAccessKey in the connectionString. It can be {@code null}.
-     */
-    public String getSharedAccessKey()
-    {
-        /* Codes_SRS_IOTHUB_CONNECTIONSTRING_21_033: [The getSharedAccessKey shall return the stored shared access key.] */
-        return this.sharedAccessKey;
-    }
-
-    /**
-     * Getter for the sharedAccessToken.
-     * @return string with the sharedAccessToken in the connectionString. It can be {@code null}.
-     */
-    public String getSharedAccessToken()
-    {
-        /* Codes_SRS_IOTHUB_CONNECTIONSTRING_21_034: [The getSharedAccessToken shall return the stored shared access token.] */
-        return this.sharedAccessToken;
-    }
-
-    public String getModuleId()
-    {
-        return this.moduleId;
-    }
-
-    /**
-     * Getter for UsingX509
-     *
-     * @return The value of UsingX509
-     */
-    public boolean isUsingX509()
-    {
-        //Codes_SRS_IOTHUB_CONNECTIONSTRING_34_039: [If the connection string passed in the constructor contains the string 'x509=true' then this function shall return true.]
-        return this.isUsingX509;
-    }
-
-    /**
-     * Setter for the shared access token
-     * @param sharedAccessToken the new token value to set
-     * @throws IllegalArgumentException if the provided value is null or empty
-     */
-    public void setSharedAccessToken(String sharedAccessToken) throws IllegalArgumentException
-    {
-        if (sharedAccessToken == null || sharedAccessToken.isEmpty())
-        {
-            //Codes_SRS_IOTHUB_CONNECTIONSTRING_34_037: [If the provided shared access token is null or empty, an IllegalArgumentException shall be thrown.]
-            throw new IllegalArgumentException("Shared access token cannot be set to null or empty");
-        }
-
-        //Codes_SRS_IOTHUB_CONNECTIONSTRING_34_038: [This function shall set the value of this object's shared access token to the provided value.]
-        this.sharedAccessToken = sharedAccessToken;
-    }
-
-
-    private static void validateTerms(String hostName, String deviceId,
-                                      String sharedAccessKey, String sharedAccessToken, boolean usingX509)
-            throws IllegalArgumentException, URISyntaxException
+    private static void validateTerms(String hostName, String deviceId, String sharedAccessKey, String sharedAccessToken, boolean usingX509) throws IllegalArgumentException, URISyntaxException
     {
         /* Codes_SRS_IOTHUB_CONNECTIONSTRING_21_001: [A valid `hostName` shall not be null or empty.] */
         if ((hostName == null) || hostName.isEmpty())
@@ -298,7 +210,7 @@ public class IotHubConnectionString
         }
 
         /* Codes_SRS_IOTHUB_CONNECTIONSTRING_21_008: [A valid connectionString shall not contain both `sharedAccessToken` and `sharedAccessKey` at the same time.] */
-        if((sharedAccessKey != null) && (sharedAccessToken != null))
+        if ((sharedAccessKey != null) && (sharedAccessToken != null))
         {
             throw new IllegalArgumentException("Either of device key or Shared Access Signature should be provided, but not both.");
         }
@@ -306,9 +218,7 @@ public class IotHubConnectionString
         /* Codes_SRS_IOTHUB_CONNECTIONSTRING_21_005: [A valid connectionString shall contain a `sharedAccessToken` or a `sharedAccessKey` unless using x509 Authentication.] */
         /* Codes_SRS_IOTHUB_CONNECTIONSTRING_21_006: [If provided, the `sharedAccessToken` shall not be null or empty.] */
         /* Codes_SRS_IOTHUB_CONNECTIONSTRING_21_007: [If provided, the `sharedAccessKey` shall not be null or empty.] */
-        if (!usingX509
-                && ((sharedAccessKey == null) || sharedAccessKey.isEmpty())
-                && ((sharedAccessToken == null) || sharedAccessToken.isEmpty()))
+        if (!usingX509 && ((sharedAccessKey == null) || sharedAccessKey.isEmpty()) && ((sharedAccessToken == null) || sharedAccessToken.isEmpty()))
         {
             throw new IllegalArgumentException("Device key and Shared Access Signature both cannot be null unless using x509 authentication.");
         }
@@ -319,13 +229,104 @@ public class IotHubConnectionString
         int iotHubNameEndIdx = hostName.indexOf(".");
         if (iotHubNameEndIdx == -1)
         {
-            String errStr = String.format(
-                    "%s did not include a valid IoT Hub name as its prefix. "
-                            + "An IoT Hub hostname has the following format: "
-                            + "[iotHubName].[valid URI chars]",
-                    hostName);
+            String errStr = String.format("%s did not include a valid IoT Hub name as its prefix. " + "An IoT Hub hostname has the following format: " + "[iotHubName].[valid URI chars]", hostName);
             throw new IllegalArgumentException(errStr);
         }
         return hostName.substring(0, iotHubNameEndIdx);
+    }
+
+    /**
+     * Getter for the hostName.
+     *
+     * @return string with the hostName in the connectionString
+     */
+    public String getHostName()
+    {
+        /* Codes_SRS_IOTHUB_CONNECTIONSTRING_21_030: [The getHostName shall return the stored host name.] */
+        return this.hostName;
+    }
+
+    public String getGatewayHostName()
+    {
+        // Codes_SRS_IOTHUB_CONNECTIONSTRING_34_043: [The getGatewayHostName shall return the stored gateway host name.]
+        return this.gatewayHostName;
+    }
+
+    /**
+     * Getter for the hubName.
+     *
+     * @return string with the hubName in the connectionString
+     */
+    public String getHubName()
+    {
+        /* Codes_SRS_IOTHUB_CONNECTIONSTRING_21_031: [The getHubName shall return the stored hub name, which is the first part of the hostName.] */
+        return this.hubName;
+    }
+
+    /**
+     * Getter for the deviceId.
+     *
+     * @return string with the deviceId in the connectionString
+     */
+    public String getDeviceId()
+    {
+        /* Codes_SRS_IOTHUB_CONNECTIONSTRING_21_032: [The getDeviceId shall return the stored device id.] */
+        return this.deviceId;
+    }
+
+    /**
+     * Getter for the sharedAccessKey.
+     *
+     * @return string with the sharedAccessKey in the connectionString. It can be {@code null}.
+     */
+    public String getSharedAccessKey()
+    {
+        /* Codes_SRS_IOTHUB_CONNECTIONSTRING_21_033: [The getSharedAccessKey shall return the stored shared access key.] */
+        return this.sharedAccessKey;
+    }
+
+    /**
+     * Getter for the sharedAccessToken.
+     *
+     * @return string with the sharedAccessToken in the connectionString. It can be {@code null}.
+     */
+    public String getSharedAccessToken()
+    {
+        /* Codes_SRS_IOTHUB_CONNECTIONSTRING_21_034: [The getSharedAccessToken shall return the stored shared access token.] */
+        return this.sharedAccessToken;
+    }
+
+    /**
+     * Setter for the shared access token
+     *
+     * @param sharedAccessToken the new token value to set
+     * @throws IllegalArgumentException if the provided value is null or empty
+     */
+    public void setSharedAccessToken(String sharedAccessToken) throws IllegalArgumentException
+    {
+        if (sharedAccessToken == null || sharedAccessToken.isEmpty())
+        {
+            //Codes_SRS_IOTHUB_CONNECTIONSTRING_34_037: [If the provided shared access token is null or empty, an IllegalArgumentException shall be thrown.]
+            throw new IllegalArgumentException("Shared access token cannot be set to null or empty");
+        }
+
+        //Codes_SRS_IOTHUB_CONNECTIONSTRING_34_038: [This function shall set the value of this object's shared access token to the provided value.]
+        this.sharedAccessToken = sharedAccessToken;
+    }
+
+    public String getModuleId()
+    {
+        return this.moduleId;
+    }
+
+    /**
+     * Getter for UsingX509
+     *
+     * @return The value of UsingX509
+     */
+    public boolean isUsingX509()
+    {
+        //Codes_SRS_IOTHUB_CONNECTIONSTRING_34_039: [If the connection string passed in the constructor contains the string 'x509=true' then this function shall return true.]
+        return this.isUsingX509;
     }
 }

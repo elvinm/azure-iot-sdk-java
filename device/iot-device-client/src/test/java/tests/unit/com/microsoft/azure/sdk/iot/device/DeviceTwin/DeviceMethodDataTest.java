@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 public class DeviceMethodDataTest
 {
     /*
-    **Tests_SRS_DEVICEMETHODDATA_25_001: [**The constructor shall save the status and response message provided by user.**]**
+     **Tests_SRS_DEVICEMETHODDATA_25_001: [**The constructor shall save the status and response message provided by user.**]**
      */
     @Test
     public void constructorSucceeds()
@@ -29,7 +29,7 @@ public class DeviceMethodDataTest
     }
 
     /*
-    **Tests_SRS_DEVICEMETHODDATA_25_003: [**This method shall return the status previously set.**]**
+     **Tests_SRS_DEVICEMETHODDATA_25_003: [**This method shall return the status previously set.**]**
      */
     @Test
     public void GetStatusGets()
@@ -46,7 +46,7 @@ public class DeviceMethodDataTest
     }
 
     /*
-    **Tests_SRS_DEVICEMETHODDATA_25_004: [**This method shall return the response message previously set.**]**
+     **Tests_SRS_DEVICEMETHODDATA_25_004: [**This method shall return the response message previously set.**]**
      */
     @Test
     public void getResponseMessageGets()
@@ -62,7 +62,7 @@ public class DeviceMethodDataTest
     }
 
     /*
-    **Tests_SRS_DEVICEMETHODDATA_25_007: [**The method shall set the status.**]**
+     **Tests_SRS_DEVICEMETHODDATA_25_007: [**The method shall set the status.**]**
      */
     @Test
     public void setStatusSets()
@@ -80,7 +80,7 @@ public class DeviceMethodDataTest
     }
 
     /*
-    **Tests_SRS_DEVICEMETHODDATA_25_005: [**This method shall save the response message provided by the user.**]**
+     **Tests_SRS_DEVICEMETHODDATA_25_005: [**This method shall save the response message provided by the user.**]**
      */
     @Test
     public void setResponseMessageSets()

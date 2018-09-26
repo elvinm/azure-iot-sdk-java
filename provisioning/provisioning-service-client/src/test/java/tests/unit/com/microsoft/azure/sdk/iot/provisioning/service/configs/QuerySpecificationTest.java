@@ -24,7 +24,7 @@ public class QuerySpecificationTest
     private static final String VALID_CONTINUATION_TOKEN = "{\"token\":\"+RID:Defghij6KLMNOPQ==#RS:1#TRC:2#FPC:AUAAAAAAAAAJQABAAAAAAAk=\",\"range\":{\"min\":\"0123456789abcd\",\"max\":\"FF\"}}";
 
     /* SRS_QUERY_SPECIFICATION_21_001: [The constructor shall throw IllegalArgumentException if the provided query is null, empty, or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullQuery()
     {
         // arrange
@@ -36,7 +36,7 @@ public class QuerySpecificationTest
     }
 
     /* SRS_QUERY_SPECIFICATION_21_001: [The constructor shall throw IllegalArgumentException if the provided query is null, empty, or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyQuery()
     {
         // arrange
@@ -48,7 +48,7 @@ public class QuerySpecificationTest
     }
 
     /* SRS_QUERY_SPECIFICATION_21_001: [The constructor shall throw IllegalArgumentException if the provided query is null, empty, or invalid.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnInvalidQuery()
     {
         // arrange

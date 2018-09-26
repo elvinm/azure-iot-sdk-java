@@ -9,9 +9,9 @@ import com.microsoft.azure.sdk.iot.provisioning.service.Tools;
 
 /**
  * Representation of a single Device Provisioning Service TPM Attestation.
- *
+ * <p>
  * <p> The provisioning service supports Trusted Platform Module, or TPM, as the device attestation mechanism.
- *     User must provide the Endorsement Key, and can, optionally, provide the Storage Root Key.
+ * User must provide the Endorsement Key, and can, optionally, provide the Storage Root Key.
  *
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iot-dps/deviceenrollment">Device Enrollment</a>
  * @see <a href="https://trustedcomputinggroup.org/work-groups/trusted-platform-module">Trusted Platform Module</a>
@@ -20,22 +20,21 @@ public class TpmAttestation extends Attestation
 {
     // the endorsement key for TPM [mandatory]
     private static final String ENDORSEMENT_KEY_TAG = "endorsementKey";
+    // the storage root key for TPM [optional]
+    private static final String STORAGE_ROOT_KEY_TAG = "storageRootKey";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(ENDORSEMENT_KEY_TAG)
     private String endorsementKey;
-
-    // the storage root key for TPM [optional]
-    private static final String STORAGE_ROOT_KEY_TAG = "storageRootKey";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(STORAGE_ROOT_KEY_TAG)
     private String storageRootKey;
 
     /**
      * CONSTRUCTOR
-     *
+     * <p>
      * <p> This function will create a new instance of the TPM attestation
-     *     with both endorsement and storage root keys. Only the endorsement
-     *     key is mandatory.
+     * with both endorsement and storage root keys. Only the endorsement
+     * key is mandatory.
      *
      * @param endorsementKey the {@code String} with the TPM endorsement key. It cannot be {@code null} or empty.
      * @param storageRootKey the {@code String} with the TPM storage root key. It can be {@code null} or empty.
@@ -52,10 +51,10 @@ public class TpmAttestation extends Attestation
 
     /**
      * CONSTRUCTOR
-     *
      * <p>
-     *     This function will create a new instance of the TPM attestation
-     *     with the endorsement key.
+     * <p>
+     * This function will create a new instance of the TPM attestation
+     * with the endorsement key.
      * </p>
      *
      * @param endorsementKey the {@code String} with the TPM endorsement key. It cannot be {@code null} or empty.
@@ -70,10 +69,10 @@ public class TpmAttestation extends Attestation
 
     /**
      * CONSTRUCTOR (COPY)
-     *
      * <p>
-     *     This function will create a new instance of the TPM attestation copying
-     *     the endorsementKey and storageRootKey from the provided attestation.
+     * <p>
+     * This function will create a new instance of the TPM attestation copying
+     * the endorsementKey and storageRootKey from the provided attestation.
      * </p>
      *
      * @param tpm the original {@code TpmAttestation} to copy. It cannot be {@code null}.
@@ -82,13 +81,26 @@ public class TpmAttestation extends Attestation
     public TpmAttestation(TpmAttestation tpm)
     {
         /* SRS_TPM_ATTESTATION_21_006: [The constructor shall throw IllegalArgumentException if the provided tpm is null.] */
-        if(tpm == null)
+        if (tpm == null)
         {
             throw new IllegalArgumentException("Tpm cannot be null");
         }
         /* SRS_TPM_ATTESTATION_21_007: [The constructor shall store the endorsementKey and storageRootKey provided in the tpm.] */
         this.setEndorsementKey(tpm.endorsementKey);
         this.storageRootKey = tpm.storageRootKey;
+    }
+
+    /**
+     * Empty constructor
+     * <p>
+     * <p>
+     * Used only by the tools that will deserialize this class.
+     * </p>
+     */
+    @SuppressWarnings("unused")
+    TpmAttestation()
+    {
+        /* SRS_TPM_ATTESTATION_21_010: [The TpmAttestation shall provide an empty constructor to make GSON happy.] */
     }
 
     /**
@@ -102,6 +114,15 @@ public class TpmAttestation extends Attestation
         return this.endorsementKey;
     }
 
+    private void setEndorsementKey(String endorsementKey)
+    {
+        if (Tools.isNullOrEmpty(endorsementKey))
+        {
+            throw new IllegalArgumentException("endorsementKey cannot be null or empty.");
+        }
+        this.endorsementKey = endorsementKey;
+    }
+
     /**
      * Getter for the storageRootKey.
      *
@@ -111,27 +132,5 @@ public class TpmAttestation extends Attestation
     {
         /* SRS_TPM_ATTESTATION_21_009: [The getStorageRootKey shall return the store storageRootKey.] */
         return storageRootKey;
-    }
-
-    private void setEndorsementKey(String endorsementKey)
-    {
-        if(Tools.isNullOrEmpty(endorsementKey))
-        {
-            throw new IllegalArgumentException("endorsementKey cannot be null or empty.");
-        }
-        this.endorsementKey = endorsementKey;
-    }
-
-    /**
-     * Empty constructor
-     *
-     * <p>
-     *     Used only by the tools that will deserialize this class.
-     * </p>
-     */
-    @SuppressWarnings("unused")
-    TpmAttestation()
-    {
-        /* SRS_TPM_ATTESTATION_21_010: [The TpmAttestation shall provide an empty constructor to make GSON happy.] */
     }
 }

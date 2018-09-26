@@ -20,9 +20,9 @@ import static com.microsoft.azure.sdk.iot.device.MessageType.DEVICE_METHODS;
 import static org.junit.Assert.*;
 
 /* Unit tests for DeviceMethod
-* 100% methods covered
-* 93% lines covered
-*/
+ * 100% methods covered
+ * 93% lines covered
+ */
 public class DeviceMethodTest
 {
     @Mocked
@@ -41,8 +41,8 @@ public class DeviceMethodTest
     DeviceMethodCallback mockedDeviceMethodCB;
 
     /*
-    **Tests_SRS_DEVICEMETHOD_25_002: [**The constructor shall save the device method messages callback callback, by calling setDeviceMethodsMessageCallback, where any further messages for device method shall be delivered.**]**
-    **Tests_SRS_DEVICEMETHOD_25_003: [**The constructor shall save all the parameters specified i.e client, config, deviceMethodStatusCallback, deviceMethodStatusCallbackContext.**]**
+     **Tests_SRS_DEVICEMETHOD_25_002: [**The constructor shall save the device method messages callback callback, by calling setDeviceMethodsMessageCallback, where any further messages for device method shall be delivered.**]**
+     **Tests_SRS_DEVICEMETHOD_25_003: [**The constructor shall save all the parameters specified i.e client, config, deviceMethodStatusCallback, deviceMethodStatusCallbackContext.**]**
      */
     @Test
     public void constructorSavesConfigSucceeds() throws IllegalArgumentException
@@ -56,7 +56,7 @@ public class DeviceMethodTest
         new Verifications()
         {
             {
-                mockedConfig.setDeviceMethodsMessageCallback((MessageCallback)any, any);
+                mockedConfig.setDeviceMethodsMessageCallback((MessageCallback) any, any);
                 times = 1;
             }
         };
@@ -75,9 +75,9 @@ public class DeviceMethodTest
     }
 
     /*
-    **Tests_SRS_DEVICEMETHOD_25_001: [**The constructor shall throw IllegalArgument Exception if any of the parameters i.e client, config, deviceMethodStatusCallback are null. **]**
+     **Tests_SRS_DEVICEMETHOD_25_001: [**The constructor shall throw IllegalArgument Exception if any of the parameters i.e client, config, deviceMethodStatusCallback are null. **]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfClientNull() throws IllegalArgumentException
     {
         //act
@@ -85,14 +85,14 @@ public class DeviceMethodTest
 
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfConfigNull() throws IllegalArgumentException
     {
         //act
         DeviceMethod testMethod = new DeviceMethod(mockedDeviceIO, null, mockedStatusCB, null);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfCallBackNull() throws IllegalArgumentException
     {
         //act
@@ -131,16 +131,16 @@ public class DeviceMethodTest
                 mockedMessage.setConnectionDeviceId(expectedDeviceId);
                 mockedMessage.setDeviceOperationType(DEVICE_OPERATION_METHOD_SUBSCRIBE_REQUEST);
                 times = 1;
-                mockedDeviceIO.sendEventAsync((Message)any, (IotHubEventCallback)any, null, null);
+                mockedDeviceIO.sendEventAsync((Message) any, (IotHubEventCallback) any, null, null);
                 times = 1;
             }
         };
     }
 
     /*
-    **Tests_SRS_DEVICEMETHOD_25_004: [**If deviceMethodCallback parameter is null then this method shall throw IllegalArgumentException**]**
+     **Tests_SRS_DEVICEMETHOD_25_004: [**If deviceMethodCallback parameter is null then this method shall throw IllegalArgumentException**]**
      */
-   @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void subscribeToMethodsThrowsIfCallBackNull() throws IllegalArgumentException
     {
         //arrange
@@ -176,20 +176,20 @@ public class DeviceMethodTest
             {
                 mockedMessage.setDeviceOperationType(DEVICE_OPERATION_METHOD_SUBSCRIBE_REQUEST);
                 maxTimes = 1;
-                mockedDeviceIO.sendEventAsync((Message)any, (IotHubEventCallback)any, null, null);
+                mockedDeviceIO.sendEventAsync((Message) any, (IotHubEventCallback) any, null, null);
                 maxTimes = 1;
             }
         };
     }
 
     /*
-    **Tests_SRS_DEVICEMETHOD_25_007: [**On receiving a message from IOTHub with for method invoke, the callback DeviceMethodResponseMessageCallback is triggered.**]**
-    **Tests_SRS_DEVICEMETHOD_25_008: [**If the message is of type DeviceMethod and DEVICE_OPERATION_METHOD_RECEIVE_REQUEST then user registered device method callback gets invoked providing the user with method name and payload along with the user context. **]**
-    **Tests_SRS_DEVICEMETHOD_25_010: [**User is expected to provide response message and status upon invoking the device method callback.**]**
-    **Tests_SRS_DEVICEMETHOD_25_011: [**If the user callback is successful and user has successfully provided the response message and status, then this method shall build a device method message of type DEVICE_OPERATION_METHOD_SEND_RESPONSE, serilize the user data by invoking Method from serializer and save the user data as payload in the message before sending it to IotHub via sendeventAsync before marking the result as complete**]**
-    **Tests_SRS_DEVICEMETHOD_25_012: [**The device method message sent to IotHub shall have same the request id as the invoking message.**]**
-    **Tests_SRS_DEVICEMETHOD_34_016: [The device method message sent to IotHub shall have the sending device's id set as the connection device id.]
-    **Tests_SRS_DEVICEMETHOD_25_013: [**The device method message sent to IotHub shall have the status provided by the user as the message status.**]**
+     **Tests_SRS_DEVICEMETHOD_25_007: [**On receiving a message from IOTHub with for method invoke, the callback DeviceMethodResponseMessageCallback is triggered.**]**
+     **Tests_SRS_DEVICEMETHOD_25_008: [**If the message is of type DeviceMethod and DEVICE_OPERATION_METHOD_RECEIVE_REQUEST then user registered device method callback gets invoked providing the user with method name and payload along with the user context. **]**
+     **Tests_SRS_DEVICEMETHOD_25_010: [**User is expected to provide response message and status upon invoking the device method callback.**]**
+     **Tests_SRS_DEVICEMETHOD_25_011: [**If the user callback is successful and user has successfully provided the response message and status, then this method shall build a device method message of type DEVICE_OPERATION_METHOD_SEND_RESPONSE, serilize the user data by invoking Method from serializer and save the user data as payload in the message before sending it to IotHub via sendeventAsync before marking the result as complete**]**
+     **Tests_SRS_DEVICEMETHOD_25_012: [**The device method message sent to IotHub shall have same the request id as the invoking message.**]**
+     **Tests_SRS_DEVICEMETHOD_34_016: [The device method message sent to IotHub shall have the sending device's id set as the connection device id.]
+     **Tests_SRS_DEVICEMETHOD_25_013: [**The device method message sent to IotHub shall have the status provided by the user as the message status.**]**
      */
     @Test
     public void deviceMethodResponseCallbackSucceeds(final @Mocked DeviceIO mockedDeviceIO, final @Mocked IotHubTransportMessage mockedTransportMessage) throws IllegalArgumentException
@@ -223,7 +223,7 @@ public class DeviceMethodTest
         };
 
         //act
-        IotHubMessageResult result =  testDeviceMethodResponseMessageCallback.execute(mockedTransportMessage, null);
+        IotHubMessageResult result = testDeviceMethodResponseMessageCallback.execute(mockedTransportMessage, null);
 
         //assert
         new Verifications()
@@ -232,7 +232,7 @@ public class DeviceMethodTest
                 mockedTransportMessage.setConnectionDeviceId(expectedDeviceId);
                 times = 1;
 
-                mockedDeviceIO.sendEventAsync((Message)any, (IotHubEventCallback)any, null, null);
+                mockedDeviceIO.sendEventAsync((Message) any, (IotHubEventCallback) any, null, null);
                 maxTimes = 1;
             }
         };
@@ -241,7 +241,7 @@ public class DeviceMethodTest
     }
 
     /*
-    **Tests_SRS_DEVICEMETHOD_25_009: [**If the received message is not of type DeviceMethod and DEVICE_OPERATION_METHOD_RECEIVE_REQUEST then user shall be notified on the status callback registered by the user as ERROR before marking the status of the sent message as Abandon **]**
+     **Tests_SRS_DEVICEMETHOD_25_009: [**If the received message is not of type DeviceMethod and DEVICE_OPERATION_METHOD_RECEIVE_REQUEST then user shall be notified on the status callback registered by the user as ERROR before marking the status of the sent message as Abandon **]**
      */
     @Test
     public void deviceMethodResponseCallbackAbandonsOnIncorrectMessage() throws IllegalArgumentException
@@ -266,7 +266,7 @@ public class DeviceMethodTest
         };
 
         //act
-        IotHubMessageResult result =  testDeviceMethodResponseMessageCallback.execute(testMessage, null);
+        IotHubMessageResult result = testDeviceMethodResponseMessageCallback.execute(testMessage, null);
 
         //assert
         assertFalse(result == IotHubMessageResult.COMPLETE);
@@ -280,7 +280,7 @@ public class DeviceMethodTest
     }
 
     /*
-    **Tests_SRS_DEVICEMETHOD_25_014: [**If the user invoked callback failed for any reason then the user shall be notified on the status callback registered by the user as ERROR before marking the status of the sent message as Rejected.**]**
+     **Tests_SRS_DEVICEMETHOD_25_014: [**If the user invoked callback failed for any reason then the user shall be notified on the status callback registered by the user as ERROR before marking the status of the sent message as Rejected.**]**
      */
     @Test
     public void deviceMethodResponseCallbackSendsResponseOnlyIfNonNull() throws IllegalArgumentException
@@ -305,7 +305,7 @@ public class DeviceMethodTest
         };
 
         //act
-        IotHubMessageResult result =  testDeviceMethodResponseMessageCallback.execute(testMessage, null);
+        IotHubMessageResult result = testDeviceMethodResponseMessageCallback.execute(testMessage, null);
 
         //assert
         assertFalse(result == IotHubMessageResult.COMPLETE);
@@ -321,7 +321,7 @@ public class DeviceMethodTest
     }
 
     /*
-    **Tests_SRS_DEVICEMETHOD_25_015: [**User can provide null response message upon invoking the device method callback which will be serialized as is, before sending it to IotHub.**]**
+     **Tests_SRS_DEVICEMETHOD_25_015: [**User can provide null response message upon invoking the device method callback which will be serialized as is, before sending it to IotHub.**]**
      */
     @Test
     public void deviceMethodResponseCallbackSendsResponseMessageEvenIfNonNull() throws IllegalArgumentException
@@ -346,7 +346,7 @@ public class DeviceMethodTest
         };
 
         //act
-        IotHubMessageResult result =  testDeviceMethodResponseMessageCallback.execute(testMessage, null);
+        IotHubMessageResult result = testDeviceMethodResponseMessageCallback.execute(testMessage, null);
 
         //assert
         assertTrue(result == IotHubMessageResult.COMPLETE);
@@ -382,7 +382,7 @@ public class DeviceMethodTest
         };
 
         //act
-        IotHubMessageResult result =  testDeviceMethodResponseMessageCallback.execute(testMessage, null);
+        IotHubMessageResult result = testDeviceMethodResponseMessageCallback.execute(testMessage, null);
 
         //assert
         assertFalse(result == IotHubMessageResult.COMPLETE);

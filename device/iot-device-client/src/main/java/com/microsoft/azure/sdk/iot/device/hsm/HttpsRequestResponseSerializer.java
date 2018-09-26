@@ -27,9 +27,9 @@ public class HttpsRequestResponseSerializer
      * Serialize the provided request
      *
      * @param httpsRequest the request to be serialized
-     * @param path the path for the request to invoke on (e.g. /trust-bundle)
-     * @param queryString the full querystring associated with the http request. Should not include the '?' character at the beginning
-     * @param host the host that the request is being made to
+     * @param path         the path for the request to invoke on (e.g. /trust-bundle)
+     * @param queryString  the full querystring associated with the http request. Should not include the '?' character at the beginning
+     * @param host         the host that the request is being made to
      * @return the serialized request
      * @throws IllegalArgumentException if the provided httpsRequest is null or has a null request url
      */
@@ -56,7 +56,7 @@ public class HttpsRequestResponseSerializer
         {
             throw new IllegalArgumentException("host cannot be null or empty");
         }
-        
+
         // Codes_SRS_HTTPREQUESTRESPONSESERIALIZER_34_003: [This function shall serialize the provided httpsRequest into the form:
         // POST /modules/<moduleName>/sign?api-version=2018-06-28 HTTP/1.1
         // Host: localhost:8081
@@ -107,6 +107,7 @@ public class HttpsRequestResponseSerializer
 
     /**
      * Deserialize a stream of bytes from an HSM party into an HttpsResponse
+     *
      * @param bufferedReader the stream to read from. Will be closed before this method returns
      * @return the deserialized response
      * @throws IOException if the stream cannot be read from
@@ -188,7 +189,7 @@ public class HttpsRequestResponseSerializer
             line = bufferedReader.readLine();
         }
 
-        for(String header : headers)
+        for (String header : headers)
         {
             if (header == null || header.isEmpty())
             {

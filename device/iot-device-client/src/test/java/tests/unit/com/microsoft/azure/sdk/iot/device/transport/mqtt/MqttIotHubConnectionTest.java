@@ -46,7 +46,7 @@ public class MqttIotHubConnectionTest
     final String publishTopic = "devices/test-deviceId/messages/events/";
     final String subscribeTopic = "devices/test-deviceId/messages/devicebound/#";
     final String expectedToken = "someToken";
-    final byte[] expectedMessageBody = { 0x61, 0x62, 0x63 };
+    final byte[] expectedMessageBody = {0x61, 0x62, 0x63};
 
     @Mocked
     private ProductInfo mockedProductInfo;
@@ -120,7 +120,8 @@ public class MqttIotHubConnectionTest
     @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIllegalArgumentExceptionIfHostNameIsEmpty() throws TransportException
     {
-        new NonStrictExpectations() {
+        new NonStrictExpectations()
+        {
             {
                 mockConfig.getIotHubHostname();
                 result = "";
@@ -139,7 +140,8 @@ public class MqttIotHubConnectionTest
     @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIllegalArgumentExceptionIfConfigIsNull() throws TransportException
     {
-        new NonStrictExpectations() {
+        new NonStrictExpectations()
+        {
             {
                 mockConfig.getIotHubHostname();
                 result = "";
@@ -289,13 +291,13 @@ public class MqttIotHubConnectionTest
         assertEquals(expectedSasToken, actualUserPassword);
 
         IotHubConnectionStatus expectedState = IotHubConnectionStatus.CONNECTED;
-        IotHubConnectionStatus actualState =  Deencapsulation.getField(connection, "state");
+        IotHubConnectionStatus actualState = Deencapsulation.getField(connection, "state");
         assertEquals(expectedState, actualState);
 
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(MqttConnection.class, new Class[] {String.class, String.class, String.class, String.class, SSLContext.class}, serverUri, deviceId, any, any, any);
+                Deencapsulation.newInstance(MqttConnection.class, new Class[]{String.class, String.class, String.class, String.class, SSLContext.class}, serverUri, deviceId, any, any, any);
                 times = 1;
             }
         };
@@ -338,14 +340,14 @@ public class MqttIotHubConnectionTest
         assertEquals(expectedToken, actualUserPassword);
 
         IotHubConnectionStatus expectedState = IotHubConnectionStatus.CONNECTED;
-        IotHubConnectionStatus actualState =  Deencapsulation.getField(connection, "state");
+        IotHubConnectionStatus actualState = Deencapsulation.getField(connection, "state");
         assertEquals(expectedState, actualState);
 
         new Verifications()
         {
             {
-               Deencapsulation.newInstance(MqttConnection.class, new Class[] {String.class, String.class, String.class, String.class, SSLContext.class}, serverUri, deviceId, any, any, any);
-               times = 1;
+                Deencapsulation.newInstance(MqttConnection.class, new Class[]{String.class, String.class, String.class, String.class, SSLContext.class}, serverUri, deviceId, any, any, any);
+                times = 1;
             }
         };
     }
@@ -373,7 +375,7 @@ public class MqttIotHubConnectionTest
         new StrictExpectations()
         {
             {
-                Deencapsulation.newInstance(MqttConnection.class, new Class[] {String.class, String.class, String.class, String.class, SSLContext.class}, serverUri, deviceId, any, any, mockSslContext);
+                Deencapsulation.newInstance(MqttConnection.class, new Class[]{String.class, String.class, String.class, String.class, SSLContext.class}, serverUri, deviceId, any, any, mockSslContext);
                 result = new IOException();
             }
         };
@@ -421,7 +423,7 @@ public class MqttIotHubConnectionTest
         new StrictExpectations()
         {
             {
-                Deencapsulation.newInstance(MqttConnection.class, new Class[] {String.class, String.class, String.class, String.class, SSLContext.class}, any, any, any, any, mockSslContext);
+                Deencapsulation.newInstance(MqttConnection.class, new Class[]{String.class, String.class, String.class, String.class, SSLContext.class}, any, any, any, any, mockSslContext);
                 result = mockedMqttConnection;
             }
         };
@@ -477,7 +479,7 @@ public class MqttIotHubConnectionTest
         new StrictExpectations()
         {
             {
-                Deencapsulation.newInstance(MqttConnection.class, new Class[] {String.class, String.class, String.class, String.class, SSLContext.class}, any, any, any, any, mockSslContext);
+                Deencapsulation.newInstance(MqttConnection.class, new Class[]{String.class, String.class, String.class, String.class, SSLContext.class}, any, any, any, any, mockSslContext);
                 result = mockedMqttConnection;
             }
         };
@@ -535,7 +537,7 @@ public class MqttIotHubConnectionTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(MqttConnection.class, new Class[] {String.class, String.class, String.class, String.class, SSLContext.class}, any, any, any, any, any);
+                Deencapsulation.newInstance(MqttConnection.class, new Class[]{String.class, String.class, String.class, String.class, SSLContext.class}, any, any, any, any, any);
                 maxTimes = 1;
             }
         };
@@ -555,7 +557,7 @@ public class MqttIotHubConnectionTest
         connection.close(false);
 
         IotHubConnectionStatus expectedState = IotHubConnectionStatus.DISCONNECTED;
-        IotHubConnectionStatus actualState =  Deencapsulation.getField(connection, "state");
+        IotHubConnectionStatus actualState = Deencapsulation.getField(connection, "state");
         assertEquals(expectedState, actualState);
 
         MqttDeviceMethod actualDeviceMethods = Deencapsulation.getField(connection, "deviceMethod");
@@ -581,7 +583,7 @@ public class MqttIotHubConnectionTest
     }
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_022: [If the list of device client configuration objects is larger than 1, this function shall throw an UnsupportedOperationException.]
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void openThrowsForMultiplexing() throws TransportException
     {
         //arrange
@@ -629,7 +631,7 @@ public class MqttIotHubConnectionTest
 
         //assert
         assertTrue(exceptionRethrown);
-        IotHubConnectionStatus actualState =  Deencapsulation.getField(connection, "state");
+        IotHubConnectionStatus actualState = Deencapsulation.getField(connection, "state");
         assertEquals(IotHubConnectionStatus.DISCONNECTED, actualState);
     }
 
@@ -643,7 +645,7 @@ public class MqttIotHubConnectionTest
         connection.close(false);
 
         IotHubConnectionStatus expectedState = IotHubConnectionStatus.DISCONNECTED;
-        IotHubConnectionStatus actualState =  Deencapsulation.getField(connection, "state");
+        IotHubConnectionStatus actualState = Deencapsulation.getField(connection, "state");
         assertEquals(expectedState, actualState);
 
         new Verifications()
@@ -696,7 +698,7 @@ public class MqttIotHubConnectionTest
         baseExpectations();
         openExpectations();
 
-        final byte[] msgBody = { 0x61, 0x62, 0x63 };
+        final byte[] msgBody = {0x61, 0x62, 0x63};
         new NonStrictExpectations()
         {
             {
@@ -793,7 +795,7 @@ public class MqttIotHubConnectionTest
     {
         baseExpectations();
 
-        final byte[] msgBody = { 0x61, 0x62, 0x63 };
+        final byte[] msgBody = {0x61, 0x62, 0x63};
         new NonStrictExpectations()
         {
             {
@@ -812,7 +814,7 @@ public class MqttIotHubConnectionTest
     {
         baseExpectations();
 
-        final byte[] msgBody = { 0x61, 0x62, 0x63 };
+        final byte[] msgBody = {0x61, 0x62, 0x63};
         new NonStrictExpectations()
         {
             {
@@ -835,7 +837,7 @@ public class MqttIotHubConnectionTest
         baseExpectations();
         openExpectations();
 
-        final byte[] msgBody = { 0x61, 0x62, 0x63 };
+        final byte[] msgBody = {0x61, 0x62, 0x63};
         new NonStrictExpectations()
         {
             {
@@ -857,7 +859,7 @@ public class MqttIotHubConnectionTest
         new Verifications()
         {
             {
-                mockDeviceMethod.send((IotHubTransportMessage)any);
+                mockDeviceMethod.send((IotHubTransportMessage) any);
                 times = 0;
                 mockDeviceMessaging.send(mockDeviceTwinMsg);
                 times = 0;
@@ -875,7 +877,7 @@ public class MqttIotHubConnectionTest
         baseExpectations();
         openExpectations();
 
-        final byte[] msgBody = { 0x61, 0x62, 0x63 };
+        final byte[] msgBody = {0x61, 0x62, 0x63};
         new NonStrictExpectations()
         {
             {
@@ -958,7 +960,7 @@ public class MqttIotHubConnectionTest
     {
         baseExpectations();
         openExpectations();
-        final byte[] expectedMessageBody = { 0x61, 0x62, 0x63 };
+        final byte[] expectedMessageBody = {0x61, 0x62, 0x63};
         new NonStrictExpectations()
         {
             {
@@ -999,7 +1001,7 @@ public class MqttIotHubConnectionTest
     {
         baseExpectations();
         openExpectations();
-        final byte[] expectedMessageBody = { 0x61, 0x62, 0x63 };
+        final byte[] expectedMessageBody = {0x61, 0x62, 0x63};
         new NonStrictExpectations()
         {
             {
@@ -1036,7 +1038,7 @@ public class MqttIotHubConnectionTest
     }
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_027: [If this function is called while using websockets and x509 authentication, an UnsupportedOperationException shall be thrown.]
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void websocketWithX509ThrowsAtOpen() throws TransportException
     {
         baseExpectations();
@@ -1134,7 +1136,7 @@ public class MqttIotHubConnectionTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(MqttConnection.class, new Class[] {String.class, String.class, String.class, String.class, SSLContext.class}, anyString, anyString, expectedUserName, anyString, any);
+                Deencapsulation.newInstance(MqttConnection.class, new Class[]{String.class, String.class, String.class, String.class, SSLContext.class}, anyString, anyString, expectedUserName, anyString, any);
                 times = 1;
             }
         };
@@ -1178,7 +1180,7 @@ public class MqttIotHubConnectionTest
 
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_049: [If the provided listener object is null, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setListenerThrowsForNullListener() throws TransportException
     {
         //arrange
@@ -1207,7 +1209,7 @@ public class MqttIotHubConnectionTest
 
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_051: [If this object has not received the provided message from the service, this function shall throw a TransportException.]
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void sendMessageResultThrowsWhenMessageNotReceivedFirst() throws TransportException, IOException
     {
         //arrange
@@ -1225,7 +1227,7 @@ public class MqttIotHubConnectionTest
     }
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_057: [If the provided message or result is null, this function shall throw a TransportException.]
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void sendMessageResultThrowsForNullMessage() throws TransportException, IOException
     {
         //arrange
@@ -1241,7 +1243,7 @@ public class MqttIotHubConnectionTest
     }
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_057: [If the provided message or result is null, this function shall throw a TransportException.]
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void sendMessageResultThrowsForNullResult() throws TransportException, IOException
     {
         //arrange
@@ -1580,11 +1582,15 @@ public class MqttIotHubConnectionTest
 
     private void baseExpectations()
     {
-        new NonStrictExpectations() {
+        new NonStrictExpectations()
+        {
             {
-                mockConfig.getIotHubHostname(); result = iotHubHostName;
-                mockConfig.getIotHubName(); result = hubName;
-                mockConfig.getDeviceId(); result = deviceId;
+                mockConfig.getIotHubHostname();
+                result = iotHubHostName;
+                mockConfig.getIotHubName();
+                result = hubName;
+                mockConfig.getDeviceId();
+                result = deviceId;
 
                 mockConfig.getProductInfo();
                 result = mockedProductInfo;
@@ -1606,7 +1612,7 @@ public class MqttIotHubConnectionTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(MqttConnection.class, new Class[] {String.class, String.class, String.class, String.class, SSLContext.class}, anyString, anyString, anyString, anyString, any);
+                Deencapsulation.newInstance(MqttConnection.class, new Class[]{String.class, String.class, String.class, String.class, SSLContext.class}, anyString, anyString, anyString, anyString, any);
                 result = mockedMqttConnection;
                 new MqttMessaging(mockedMqttConnection, anyString, (IotHubListener) any, null, null, anyString, anyBoolean);
                 result = mockDeviceMessaging;

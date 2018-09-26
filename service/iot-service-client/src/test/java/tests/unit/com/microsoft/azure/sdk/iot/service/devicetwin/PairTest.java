@@ -15,7 +15,7 @@ public class PairTest
 {
 
     /*
-    **Tests_SRS_Pair_25_001: [**The constructor shall save the key and value representing this Pair.**]**
+     **Tests_SRS_Pair_25_001: [**The constructor shall save the key and value representing this Pair.**]**
      */
     @Test
     public void constructorCreatesNewPair()
@@ -30,9 +30,9 @@ public class PairTest
     }
 
     /*
-    **Tests_SRS_Pair_25_002: [**If the key is null or empty, the constructor shall throw an IllegalArgumentException.**]**
+     **Tests_SRS_Pair_25_002: [**If the key is null or empty, the constructor shall throw an IllegalArgumentException.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfKeyNull()
     {
         //act
@@ -40,7 +40,7 @@ public class PairTest
 
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfKeyEmpty()
     {
         //act
@@ -48,38 +48,38 @@ public class PairTest
     }
 
     /*
-    **Tests_SRS_Pair_25_003: [**If the key contains illegal unicode control characters i.e ' ', '.', '$', the constructor shall throw an IllegalArgumentException.**]**
+     **Tests_SRS_Pair_25_003: [**If the key contains illegal unicode control characters i.e ' ', '.', '$', the constructor shall throw an IllegalArgumentException.**]**
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfKeyIllegalCharacters_1()
     {
         //act
         Pair testPair = new Pair("Key With Space", "TestObject");
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfKeyIllegalCharacters_2()
     {
         //act
         Pair testPair = new Pair("Key With $", "TestObject");
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfKeyIllegalCharacters_3()
     {
         //act
         Pair testPair = new Pair("Key With .", "TestObject");
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsIfKeyIllegalCharacters_4()
     {
         //act
-        Pair testPair = new Pair("Key With Length greater than 128 - 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
-                , "TestObject");
+        Pair testPair = new Pair("Key With Length greater than 128 - 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789", "TestObject");
     }
+
     /*
-    **Tests_SRS_Pair_25_005: [**The function shall return the value for this Pair.**]**
+     **Tests_SRS_Pair_25_005: [**The function shall return the value for this Pair.**]**
      */
     @Test
     public void getValueGets()
@@ -97,7 +97,7 @@ public class PairTest
     }
 
     /*
-    **Tests_SRS_Pair_25_006: [**The function shall overwrite the new value for old and return old value.**]**
+     **Tests_SRS_Pair_25_006: [**The function shall overwrite the new value for old and return old value.**]**
      */
     @Test
     public void setValueSets()
@@ -116,7 +116,7 @@ public class PairTest
     }
 
     /*
-    **Tests_SRS_Pair_25_004: [**The function shall return the value of the key corresponding to this Pair.**]**
+     **Tests_SRS_Pair_25_004: [**The function shall return the value of the key corresponding to this Pair.**]**
      */
     @Test
     public void getKeyGets()

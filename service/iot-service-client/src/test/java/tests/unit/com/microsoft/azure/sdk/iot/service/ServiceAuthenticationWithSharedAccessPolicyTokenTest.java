@@ -20,7 +20,7 @@ public class ServiceAuthenticationWithSharedAccessPolicyTokenTest
 {
     // Tests_SRS_SERVICE_SDK_JAVA_SERVICEAUTHENTICATIONWITHSHAREDACCESSTOKEN_12_002: [The function shall throw IllegalArgumentException if the input object is null]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void populate_input_null() throws Exception
     {
         // Arrange
@@ -57,7 +57,7 @@ public class ServiceAuthenticationWithSharedAccessPolicyTokenTest
         // Act
         Deencapsulation.invoke(auth, "setPolicyName", policyName);
         Deencapsulation.invoke(auth, "setToken", sharedAccessKey);
-        
+
         // Assert
         assertEquals(policyName, auth.getPolicyName());
         assertEquals(sharedAccessKey, auth.getToken());

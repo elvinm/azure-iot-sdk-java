@@ -20,9 +20,17 @@ public class TrustBundleResponse
     private String certificates;
 
     /**
+     * Empty constructor, only for gson. Don't delete
+     */
+    public TrustBundleResponse()
+    {
+    }
+
+    /**
      * Constructor that deserializes from json
+     *
      * @param json the json representation of the TrustBundleResponse
-     * @return  the created trustBundleResponse instance
+     * @return the created trustBundleResponse instance
      */
     public static TrustBundleResponse fromJson(String json)
     {
@@ -39,14 +47,8 @@ public class TrustBundleResponse
     }
 
     /**
-     * Empty constructor, only for gson. Don't delete
-     */
-    public TrustBundleResponse()
-    {
-    }
-
-    /**
      * Retreive the certificates that the HSM dictates to trust
+     *
      * @return one to many concatenated certificate strings to trust
      */
     public String getCertificates()

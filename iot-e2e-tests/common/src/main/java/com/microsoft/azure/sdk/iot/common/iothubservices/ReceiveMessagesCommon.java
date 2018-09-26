@@ -38,41 +38,36 @@ import static org.junit.Assert.fail;
 public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
 {
     private static final long DEFAULT_TEST_TIMEOUT = 3 * 60 * 1000;
-    public static Map<String, String> messageProperties = new HashMap<>(3);
-
     private final static String SET_MINIMUM_POLLING_INTERVAL = "SetMinimumPollingInterval";
     private final static Long ONE_SECOND_POLLING_INTERVAL = 1000L;
-    
     // variables used in E2E test for sending back to back messages using C2D sendAsync method
     private static final int MAX_COMMANDS_TO_SEND = 5; // maximum commands to be sent in a loop
     private static final List messageIdListStoredOnC2DSend = new ArrayList(); // store the message id list on sending C2D commands using service client
     private static final List messageIdListStoredOnReceive = new ArrayList(); // store the message id list on receiving C2D commands using device client
-
+    // How much to wait until receiving a message from the server, in milliseconds
+    private static final int RECEIVE_TIMEOUT = 2 * 60 * 1000; // 2 minutes
+    private static final int INTERTEST_GUARDIAN_DELAY_MILLISECONDS = 2000;
+    private static final long ERROR_INJECTION_RECOVERY_TIMEOUT = 1 * 60 * 1000; // 1 minute
+    public static Map<String, String> messageProperties = new HashMap<>(3);
     protected static String publicKeyCert;
     protected static String privateKey;
     protected static String x509Thumbprint;
-
-    private static String IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME = "IOTHUB_CONNECTION_STRING";
     protected static String iotHubConnectionString = "";
+    private static String IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME = "IOTHUB_CONNECTION_STRING";
     private static RegistryManager registryManager;
-
     private static Device device;
     private static Device deviceX509;
-
     private static Module module;
     private static Module moduleX509;
-
     private static ServiceClient serviceClient;
-
-    // How much to wait until receiving a message from the server, in milliseconds
-    private static final int RECEIVE_TIMEOUT = 2 * 60 * 1000; // 2 minutes
-
     private static String expectedCorrelationId = "1234";
     private static String expectedMessageId = "5678";
-    private static final int INTERTEST_GUARDIAN_DELAY_MILLISECONDS = 2000;
-    private static final long ERROR_INJECTION_RECOVERY_TIMEOUT = 1 * 60 * 1000; // 1 minute
-
     protected ReceiveMessagesITRunner testInstance;
+
+    public ReceiveMessagesCommon(InternalClient client, IotHubClientProtocol protocol, Device device, Module module, AuthenticationType authenticationType, String clientType)
+    {
+        this.testInstance = new ReceiveMessagesITRunner(client, protocol, device, module, authenticationType, clientType);
+    }
 
     public static Collection inputsCommon() throws IOException, IotHubException, GeneralSecurityException, URISyntaxException, ModuleClientException
     {
@@ -113,57 +108,18 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         serviceClient = ServiceClient.createFromConnectionString(iotHubConnectionString, IotHubServiceClientProtocol.AMQPS);
         serviceClient.open();
 
-        return Arrays.asList(
-                new Object[][]
-                {
-                    //sas token
-                    {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), HTTPS), HTTPS, device, null, SAS, "DeviceClient"},
-                    {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), MQTT), MQTT, device, null, SAS, "DeviceClient"},
-                    {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), MQTT_WS), MQTT_WS, device, null, SAS, "DeviceClient"},
-                    {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), AMQPS), AMQPS, device, null, SAS, "DeviceClient"},
-                    {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), AMQPS_WS), AMQPS_WS, device, null, SAS, "DeviceClient"},
+        return Arrays.asList(new Object[][]{
+                //sas token
+                {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), HTTPS), HTTPS, device, null, SAS, "DeviceClient"}, {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), MQTT), MQTT, device, null, SAS, "DeviceClient"}, {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), MQTT_WS), MQTT_WS, device, null, SAS, "DeviceClient"}, {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), AMQPS), AMQPS, device, null, SAS, "DeviceClient"}, {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, device), AMQPS_WS), AMQPS_WS, device, null, SAS, "DeviceClient"},
 
-                    //x509
-                    {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509), HTTPS, publicKeyCert, false, privateKey, false), HTTPS, deviceX509, null, SELF_SIGNED, "DeviceClient"},
-                    {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509), MQTT, publicKeyCert, false, privateKey, false), MQTT, deviceX509, null, SELF_SIGNED, "DeviceClient"},
-                    {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509), AMQPS, publicKeyCert, false, privateKey, false), AMQPS, deviceX509, null, SELF_SIGNED, "DeviceClient"},
+                //x509
+                {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509), HTTPS, publicKeyCert, false, privateKey, false), HTTPS, deviceX509, null, SELF_SIGNED, "DeviceClient"}, {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509), MQTT, publicKeyCert, false, privateKey, false), MQTT, deviceX509, null, SELF_SIGNED, "DeviceClient"}, {new DeviceClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509), AMQPS, publicKeyCert, false, privateKey, false), AMQPS, deviceX509, null, SELF_SIGNED, "DeviceClient"},
 
-                    //sas token module client
-                    {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), MQTT), MQTT, device, module, SAS, "ModuleClient"},
-                    {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), MQTT_WS), MQTT_WS, device, module, SAS, "ModuleClient"},
-                    {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), AMQPS), AMQPS, device, module, SAS, "ModuleClient"},
-                    {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), AMQPS_WS), AMQPS_WS, device, module, SAS, "ModuleClient"},
+                //sas token module client
+                {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), MQTT), MQTT, device, module, SAS, "ModuleClient"}, {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), MQTT_WS), MQTT_WS, device, module, SAS, "ModuleClient"}, {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), AMQPS), AMQPS, device, module, SAS, "ModuleClient"}, {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, device, module), AMQPS_WS), AMQPS_WS, device, module, SAS, "ModuleClient"},
 
-                    //x509 module client
-                    {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509, moduleX509), MQTT, publicKeyCert, false, privateKey, false), MQTT, deviceX509, moduleX509, SELF_SIGNED, "ModuleClient"},
-                    {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509, moduleX509), AMQPS, publicKeyCert, false, privateKey, false), AMQPS, deviceX509, moduleX509, SELF_SIGNED, "ModuleClient"},
-                }
-        );
-    }
-
-    public ReceiveMessagesCommon(InternalClient client, IotHubClientProtocol protocol, Device device, Module module, AuthenticationType authenticationType, String clientType)
-    {
-        this.testInstance = new ReceiveMessagesITRunner(client, protocol, device, module, authenticationType, clientType);
-    }
-
-    private class ReceiveMessagesITRunner
-    {
-        private InternalClient client;
-        private IotHubClientProtocol protocol;
-        private Device device;
-        private Module module;
-        private AuthenticationType authenticationType;
-        private String clientType;
-
-        public ReceiveMessagesITRunner(InternalClient client, IotHubClientProtocol protocol, Device device, Module module, AuthenticationType authenticationType, String clientType)
-        {
-            this.client = client;
-            this.protocol = protocol;
-            this.device = device;
-            this.module = module;
-            this.authenticationType = authenticationType;
-            this.clientType = clientType;
-        }
+                //x509 module client
+                {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509, moduleX509), MQTT, publicKeyCert, false, privateKey, false), MQTT, deviceX509, moduleX509, SELF_SIGNED, "ModuleClient"}, {new ModuleClient(DeviceConnectionString.get(iotHubConnectionString, deviceX509, moduleX509), AMQPS, publicKeyCert, false, privateKey, false), AMQPS, deviceX509, moduleX509, SELF_SIGNED, "ModuleClient"},});
     }
 
     @AfterClass
@@ -177,6 +133,35 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
             registryManager.close();
             registryManager = null;
         }
+    }
+
+    private static boolean hasExpectedProperties(Message msg, Map<String, String> messageProperties)
+    {
+        for (String key : messageProperties.keySet())
+        {
+            if (msg.getProperty(key) == null || !msg.getProperty(key).equals(messageProperties.get(key)))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static boolean hasExpectedSystemProperties(Message msg)
+    {
+        if (msg.getCorrelationId() == null || !msg.getCorrelationId().equals(expectedCorrelationId))
+        {
+            return false;
+        }
+
+        if (msg.getMessageId() == null || !msg.getMessageId().equals(expectedMessageId))
+        {
+            return false;
+        }
+
+        //all system properties are as expected
+        return true;
     }
 
     @After
@@ -196,7 +181,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         }
     }
 
-    @Test (timeout = DEFAULT_TEST_TIMEOUT)
+    @Test(timeout = DEFAULT_TEST_TIMEOUT)
     public void receiveMessagesOverIncludingProperties() throws Exception
     {
         if (testInstance.protocol == HTTPS)
@@ -239,7 +224,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         testInstance.client.closeNow();
     }
 
-    @Test (timeout = DEFAULT_TEST_TIMEOUT)
+    @Test(timeout = DEFAULT_TEST_TIMEOUT)
     public void receiveMessagesWithTCPConnectionDrop() throws IOException, IotHubException, InterruptedException
     {
         if (testInstance.protocol == HTTPS)
@@ -251,7 +236,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         this.errorInjectionTestFlow(ErrorInjectionHelper.tcpConnectionDropErrorInjectionMessage(DefaultDelayInSec, DefaultDurationInSec));
     }
 
-    @Test (timeout = DEFAULT_TEST_TIMEOUT)
+    @Test(timeout = DEFAULT_TEST_TIMEOUT)
     public void receiveMessagesWithAmqpsConnectionDrop() throws IOException, IotHubException, InterruptedException
     {
         if (testInstance.protocol != AMQPS && testInstance.protocol != AMQPS_WS)
@@ -263,7 +248,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         this.errorInjectionTestFlow(ErrorInjectionHelper.amqpsConnectionDropErrorInjectionMessage(DefaultDelayInSec, DefaultDurationInSec));
     }
 
-    @Test (timeout = DEFAULT_TEST_TIMEOUT)
+    @Test(timeout = DEFAULT_TEST_TIMEOUT)
     public void receiveMessagesWithAmqpsSessionDrop() throws IOException, IotHubException, InterruptedException
     {
         if (testInstance.protocol != AMQPS && testInstance.protocol != AMQPS_WS)
@@ -275,7 +260,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         this.errorInjectionTestFlow(ErrorInjectionHelper.amqpsSessionDropErrorInjectionMessage(DefaultDelayInSec, DefaultDurationInSec));
     }
 
-    @Test (timeout = DEFAULT_TEST_TIMEOUT)
+    @Test(timeout = DEFAULT_TEST_TIMEOUT)
     public void receiveMessagesWithAmqpsCBSReqLinkDrop() throws IOException, IotHubException, InterruptedException
     {
         if (testInstance.protocol != AMQPS && testInstance.protocol != AMQPS_WS)
@@ -293,7 +278,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         this.errorInjectionTestFlow(ErrorInjectionHelper.amqpsCBSReqLinkDropErrorInjectionMessage(DefaultDelayInSec, DefaultDurationInSec));
     }
 
-    @Test (timeout = DEFAULT_TEST_TIMEOUT)
+    @Test(timeout = DEFAULT_TEST_TIMEOUT)
     public void receiveMessagesWithAmqpsCBSRespLinkDrop() throws IOException, IotHubException, InterruptedException
     {
         if (testInstance.protocol != AMQPS && testInstance.protocol != AMQPS_WS)
@@ -311,7 +296,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         this.errorInjectionTestFlow(ErrorInjectionHelper.amqpsCBSRespLinkDropErrorInjectionMessage(DefaultDelayInSec, DefaultDurationInSec));
     }
 
-    @Test (timeout = DEFAULT_TEST_TIMEOUT)
+    @Test(timeout = DEFAULT_TEST_TIMEOUT)
     public void receiveMessagesWithAmqpsD2CLinkDrop() throws IOException, IotHubException, InterruptedException
     {
         if (testInstance.protocol != AMQPS && testInstance.protocol != AMQPS_WS)
@@ -323,7 +308,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         this.errorInjectionTestFlow(ErrorInjectionHelper.amqpsD2CTelemetryLinkDropErrorInjectionMessage(DefaultDelayInSec, DefaultDurationInSec));
     }
 
-    @Test (timeout = DEFAULT_TEST_TIMEOUT)
+    @Test(timeout = DEFAULT_TEST_TIMEOUT)
     public void receiveMessagesWithAmqpsC2DLinkDrop() throws IOException, IotHubException, InterruptedException
     {
         if (testInstance.protocol != AMQPS && testInstance.protocol != AMQPS_WS)
@@ -341,7 +326,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         this.errorInjectionTestFlow(ErrorInjectionHelper.amqpsC2DLinkDropErrorInjectionMessage(DefaultDelayInSec, DefaultDurationInSec));
     }
 
-    @Test (timeout = DEFAULT_TEST_TIMEOUT)
+    @Test(timeout = DEFAULT_TEST_TIMEOUT)
     public void receiveMessagesWithAmqpsMethodReqLinkDrop() throws IOException, IotHubException, InterruptedException
     {
         if (testInstance.protocol != AMQPS && testInstance.protocol != AMQPS_WS)
@@ -360,7 +345,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         this.errorInjectionTestFlow(ErrorInjectionHelper.amqpsMethodReqLinkDropErrorInjectionMessage(DefaultDelayInSec, DefaultDurationInSec));
     }
 
-    @Test (timeout = DEFAULT_TEST_TIMEOUT)
+    @Test(timeout = DEFAULT_TEST_TIMEOUT)
     public void receiveMessagesWithAmqpsMethodRespLinkDrop() throws IOException, IotHubException, InterruptedException
     {
         if (testInstance.protocol != AMQPS && testInstance.protocol != AMQPS_WS)
@@ -379,7 +364,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         this.errorInjectionTestFlow(ErrorInjectionHelper.amqpsMethodRespLinkDropErrorInjectionMessage(DefaultDelayInSec, DefaultDurationInSec));
     }
 
-    @Test (timeout = DEFAULT_TEST_TIMEOUT)
+    @Test(timeout = DEFAULT_TEST_TIMEOUT)
     public void receiveMessagesWithAmqpsTwinReqLinkDrop() throws IOException, IotHubException, InterruptedException
     {
         if (testInstance.protocol != AMQPS && testInstance.protocol != AMQPS_WS)
@@ -398,7 +383,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         this.errorInjectionTestFlow(ErrorInjectionHelper.amqpsTwinReqLinkDropErrorInjectionMessage(DefaultDelayInSec, DefaultDurationInSec));
     }
 
-    @Test (timeout = DEFAULT_TEST_TIMEOUT)
+    @Test(timeout = DEFAULT_TEST_TIMEOUT)
     public void receiveMessagesWithAmqpsTwinRespLinkDrop() throws IOException, IotHubException, InterruptedException
     {
         if (testInstance.protocol != AMQPS && testInstance.protocol != AMQPS_WS)
@@ -417,7 +402,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         this.errorInjectionTestFlow(ErrorInjectionHelper.amqpsTwinRespLinkDropErrorInjectionMessage(DefaultDelayInSec, DefaultDurationInSec));
     }
 
-    @Test (timeout = DEFAULT_TEST_TIMEOUT)
+    @Test(timeout = DEFAULT_TEST_TIMEOUT)
     public void receiveMessagesWithGracefulShutdownAmqp() throws IOException, IotHubException, InterruptedException
     {
         if (testInstance.protocol != AMQPS && testInstance.protocol != AMQPS_WS)
@@ -429,7 +414,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         this.errorInjectionTestFlow(ErrorInjectionHelper.amqpsGracefulShutdownErrorInjectionMessage(DefaultDelayInSec, DefaultDurationInSec));
     }
 
-    @Test (timeout = DEFAULT_TEST_TIMEOUT)
+    @Test(timeout = DEFAULT_TEST_TIMEOUT)
     public void receiveMessagesWithGracefulShutdownMqtt() throws IOException, IotHubException, InterruptedException
     {
         if (testInstance.protocol != MQTT && testInstance.protocol != MQTT_WS)
@@ -570,79 +555,6 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         assertTrue(testInstance.protocol + ", " + testInstance.authenticationType + ": Error Injection message did not cause service to drop TCP connection", connectionStatusUpdates.contains(IotHubConnectionStatus.DISCONNECTED_RETRYING));
     }
 
-    private static class MessageCallbackForBackToBackC2DMessages implements com.microsoft.azure.sdk.iot.device.MessageCallback
-    {
-        public IotHubMessageResult execute(Message msg, Object context)
-        {
-            messageIdListStoredOnReceive.add(msg.getMessageId()); // add received messsage id to messageList
-            return IotHubMessageResult.COMPLETE;
-        }
-    }
-    
-    private static class MessageCallback implements com.microsoft.azure.sdk.iot.device.MessageCallback
-    {
-        public IotHubMessageResult execute(Message msg, Object context)
-        {
-            Boolean resultValue = true;
-            HashMap<String, String> messageProperties = (HashMap<String, String>) ReceiveMessagesCommon.messageProperties;
-            Success messageReceived = (Success)context;
-            if (!hasExpectedProperties(msg, messageProperties) || !hasExpectedSystemProperties(msg))
-            {
-                resultValue = false;
-            }
-
-            messageReceived.callbackWasFired();
-            messageReceived.setResult(resultValue);
-            return IotHubMessageResult.COMPLETE;
-        }
-    }
-
-    private class MessageCallbackMqtt implements com.microsoft.azure.sdk.iot.device.MessageCallback
-    {
-        public IotHubMessageResult execute(Message msg, Object context)
-        {
-            HashMap<String, String> messageProperties = (HashMap<String, String>) ReceiveMessagesCommon.messageProperties;
-            Success messageReceived = (Success)context;
-            if (hasExpectedProperties(msg, messageProperties) && hasExpectedSystemProperties(msg))
-            {
-                messageReceived.setResult(true);
-            }
-
-            messageReceived.callbackWasFired();
-
-            return IotHubMessageResult.COMPLETE;
-        }
-    }
-
-    private static boolean hasExpectedProperties(Message msg, Map<String, String> messageProperties)
-    {
-        for (String key : messageProperties.keySet())
-        {
-            if (msg.getProperty(key) == null || !msg.getProperty(key).equals(messageProperties.get(key)))
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private static boolean hasExpectedSystemProperties(Message msg)
-    {
-        if (msg.getCorrelationId() == null || !msg.getCorrelationId().equals(expectedCorrelationId))
-        {
-            return false;
-        }
-
-        if (msg.getMessageId() == null || !msg.getMessageId().equals(expectedMessageId))
-        {
-            return false;
-        }
-
-        //all system properties are as expected
-        return true;
-    }
-
     private void sendMessageToDevice(String deviceId, String protocolName) throws IotHubException, IOException
     {
         String messageString = "Java service e2e test message to be received over " + protocolName + " protocol";
@@ -696,7 +608,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         try
         {
             long startTime = System.currentTimeMillis();
-        
+
             // check if all messages are received.
             while (messageIdListStoredOnReceive.size() != MAX_COMMANDS_TO_SEND)
             {
@@ -713,6 +625,70 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         catch (InterruptedException e)
         {
             Assert.fail(testInstance.protocol + ", " + testInstance.authenticationType + ": Receiving message failed. Unexpected interrupted exception occurred.");
+        }
+    }
+
+    private static class MessageCallbackForBackToBackC2DMessages implements com.microsoft.azure.sdk.iot.device.MessageCallback
+    {
+        public IotHubMessageResult execute(Message msg, Object context)
+        {
+            messageIdListStoredOnReceive.add(msg.getMessageId()); // add received messsage id to messageList
+            return IotHubMessageResult.COMPLETE;
+        }
+    }
+
+    private static class MessageCallback implements com.microsoft.azure.sdk.iot.device.MessageCallback
+    {
+        public IotHubMessageResult execute(Message msg, Object context)
+        {
+            Boolean resultValue = true;
+            HashMap<String, String> messageProperties = (HashMap<String, String>) ReceiveMessagesCommon.messageProperties;
+            Success messageReceived = (Success) context;
+            if (!hasExpectedProperties(msg, messageProperties) || !hasExpectedSystemProperties(msg))
+            {
+                resultValue = false;
+            }
+
+            messageReceived.callbackWasFired();
+            messageReceived.setResult(resultValue);
+            return IotHubMessageResult.COMPLETE;
+        }
+    }
+
+    private class ReceiveMessagesITRunner
+    {
+        private InternalClient client;
+        private IotHubClientProtocol protocol;
+        private Device device;
+        private Module module;
+        private AuthenticationType authenticationType;
+        private String clientType;
+
+        public ReceiveMessagesITRunner(InternalClient client, IotHubClientProtocol protocol, Device device, Module module, AuthenticationType authenticationType, String clientType)
+        {
+            this.client = client;
+            this.protocol = protocol;
+            this.device = device;
+            this.module = module;
+            this.authenticationType = authenticationType;
+            this.clientType = clientType;
+        }
+    }
+
+    private class MessageCallbackMqtt implements com.microsoft.azure.sdk.iot.device.MessageCallback
+    {
+        public IotHubMessageResult execute(Message msg, Object context)
+        {
+            HashMap<String, String> messageProperties = (HashMap<String, String>) ReceiveMessagesCommon.messageProperties;
+            Success messageReceived = (Success) context;
+            if (hasExpectedProperties(msg, messageProperties) && hasExpectedSystemProperties(msg))
+            {
+                messageReceived.setResult(true);
+            }
+
+            messageReceived.callbackWasFired();
+
+            return IotHubMessageResult.COMPLETE;
         }
     }
 }

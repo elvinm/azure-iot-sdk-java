@@ -29,14 +29,16 @@ public class ConfigurationMetricsTest
     public void getterAndSetter()
     {
         // Arrange
-        HashMap<String, Long> results = new HashMap<String, Long>() {
+        HashMap<String, Long> results = new HashMap<String, Long>()
+        {
             {
                 put("abc", new Long(3));
                 put("def", new Long(5));
             }
         };
 
-        HashMap<String, String> queries = new HashMap<String, String>() {
+        HashMap<String, String> queries = new HashMap<String, String>()
+        {
             {
                 put("c", "d");
                 put("e", "f");

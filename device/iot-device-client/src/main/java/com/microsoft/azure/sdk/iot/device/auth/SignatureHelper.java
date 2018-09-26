@@ -14,7 +14,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-/** Builds the authorization signature as a composition of functions. */
+/**
+ * Builds the authorization signature as a composition of functions.
+ */
 public final class SignatureHelper
 {
     /**
@@ -23,30 +25,34 @@ public final class SignatureHelper
      */
     private static final String RAW_SIGNATURE_FORMAT = "%s\n%s";
 
-    /** The charset used for the raw and hashed signature. */
+    /**
+     * The charset used for the raw and hashed signature.
+     */
     private static final Charset SIGNATURE_CHARSET = StandardCharsets.UTF_8;
+
+    @SuppressWarnings("unused")
+    protected SignatureHelper()
+    {
+    }
 
     /**
      * Builds the raw signature.
      *
      * @param resourceUri the resource URI.
-     * @param expiryTime the signature expiry time, as a UNIX timestamp.
-     *
+     * @param expiryTime  the signature expiry time, as a UNIX timestamp.
      * @return the raw signature.
      */
     public static byte[] buildRawSignature(String resourceUri, long expiryTime)
     {
         // Codes_SRS_SIGNATUREHELPER_11_001: [The function shall initialize the message being encoded as "<scope>\n<expiryTime>".]
         // Codes_SRS_SIGNATUREHELPER_11_002: [The function shall decode the message using the charset UTF-8.]
-        return String.format(RAW_SIGNATURE_FORMAT, resourceUri, expiryTime)
-                .getBytes(SIGNATURE_CHARSET);
+        return String.format(RAW_SIGNATURE_FORMAT, resourceUri, expiryTime).getBytes(SIGNATURE_CHARSET);
     }
 
     /**
      * Decodes the deviceKey using Base64.
      *
      * @param deviceKey the device key.
-     *
      * @return the Base64-decoded device key.
      */
     public static byte[] decodeDeviceKeyBase64(String deviceKey)
@@ -58,13 +64,11 @@ public final class SignatureHelper
     /**
      * Encrypts the signature using HMAC-SHA256.
      *
-     * @param sig the unencrypted signature.
+     * @param sig       the unencrypted signature.
      * @param deviceKey the Base64-decoded device key.
-     *
      * @return the HMAC-SHA256 encrypted signature.
      */
-    public static byte[] encryptSignatureHmacSha256(byte[] sig,
-            byte[] deviceKey)
+    public static byte[] encryptSignatureHmacSha256(byte[] sig, byte[] deviceKey)
     {
         String hmacSha256 = "HmacSHA256";
 
@@ -96,7 +100,6 @@ public final class SignatureHelper
      * encodes the resulting string using UTF-8 encoding.
      *
      * @param sig the HMAC-SHA256 encrypted signature.
-     *
      * @return the Base64-encoded signature.
      */
     public static byte[] encodeSignatureBase64(byte[] sig)
@@ -109,7 +112,6 @@ public final class SignatureHelper
      * Encodes the signature using charset UTF-8.
      *
      * @param sig the HMAC-SHA256 encrypted, Base64-encoded signature.
-     *
      * @return the signature encoded using charset UTF-8.
      */
     public static String encodeSignatureUtf8(byte[] sig)
@@ -118,15 +120,13 @@ public final class SignatureHelper
         return new String(sig, SIGNATURE_CHARSET);
     }
 
-
     /**
      * Safely escapes characters in the signature so that they can be
      * transmitted over the internet. Replaces unsafe characters with a '%'
      * followed by two hexadecimal digits (i.e. %2d).
      *
      * @param sig the HMAC-SHA256 encrypted, Base64-encoded, UTF-8 encoded
-     * signature.
-     *
+     *            signature.
      * @return the web-safe encoding of the signature.
      */
     public static String encodeSignatureWebSafe(String sig)
@@ -145,10 +145,5 @@ public final class SignatureHelper
         }
 
         return strSig;
-    }
-
-    @SuppressWarnings("unused")
-    protected SignatureHelper()
-    {
     }
 }

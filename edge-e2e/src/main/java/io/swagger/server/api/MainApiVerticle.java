@@ -20,7 +20,8 @@ import io.vertx.ext.web.RoutingContext;
 import java.nio.charset.Charset;
 import java.util.function.Function;
 
-public class MainApiVerticle extends AbstractVerticle {
+public class MainApiVerticle extends AbstractVerticle
+{
     final static Logger LOGGER = LoggerFactory.getLogger(MainApiVerticle.class);
 
     protected Router router;
@@ -35,10 +36,13 @@ public class MainApiVerticle extends AbstractVerticle {
     public void start(Future<Void> startFuture) throws Exception {
         Json.mapper.registerModule(new JavaTimeModule());
         FileSystem vertxFileSystem = vertx.fileSystem();
-        vertxFileSystem.readFile("swagger.json", readFile -> {
-            if (readFile.succeeded()) {
+        vertxFileSystem.readFile("swagger.json", readFile ->
+        {
+            if (readFile.succeeded())
+            {
                 Swagger swagger = new SwaggerParser().parse(readFile.result().toString(Charset.forName("utf-8")));
-                Router swaggerRouter = SwaggerRouter.swaggerRouter(router, swagger, vertx.eventBus(), new OperationIdServiceIdResolver(), new Function<RoutingContext, DeliveryOptions>() {
+                Router swaggerRouter = SwaggerRouter.swaggerRouter(router, swagger, vertx.eventBus(), new OperationIdServiceIdResolver(), new Function<RoutingContext, DeliveryOptions>()
+                {
                     @Override
                     public DeliveryOptions apply(RoutingContext t) {
                         return new DeliveryOptions().setSendTimeout(90000);
@@ -46,22 +50,26 @@ public class MainApiVerticle extends AbstractVerticle {
                 });
                 deployVerticles(startFuture);
 
-                vertx.createHttpServer()
-                    .requestHandler(swaggerRouter::accept)
-                    .listen(8080);
+                vertx.createHttpServer().requestHandler(swaggerRouter::accept).listen(8080);
                 startFuture.complete();
-            } else {
-            	startFuture.fail(readFile.cause());
+            }
+            else
+            {
+                startFuture.fail(readFile.cause());
             }
         });
     }
 
     public void deployVerticles(Future<Void> startFuture) {
 
-        vertx.deployVerticle("io.swagger.server.api.verticle.DeviceApiVerticle", res -> {
-            if (res.succeeded()) {
+        vertx.deployVerticle("io.swagger.server.api.verticle.DeviceApiVerticle", res ->
+        {
+            if (res.succeeded())
+            {
                 LOGGER.info("DeviceApiVerticle : Deployed");
-            } else {
+            }
+            else
+            {
                 startFuture.fail(res.cause());
                 LOGGER.error("DeviceApiVerticle : Deployment failed");
             }
@@ -84,37 +92,53 @@ public class MainApiVerticle extends AbstractVerticle {
         });
         */
 
-        vertx.deployVerticle("io.swagger.server.api.verticle.ModuleApiVerticle", res -> {
-            if (res.succeeded()) {
+        vertx.deployVerticle("io.swagger.server.api.verticle.ModuleApiVerticle", res ->
+        {
+            if (res.succeeded())
+            {
                 LOGGER.info("ModuleApiVerticle : Deployed");
-            } else {
+            }
+            else
+            {
                 startFuture.fail(res.cause());
                 LOGGER.error("ModuleApiVerticle : Deployment failed");
             }
         });
 
-        vertx.deployVerticle("io.swagger.server.api.verticle.RegistryApiVerticle", res -> {
-            if (res.succeeded()) {
+        vertx.deployVerticle("io.swagger.server.api.verticle.RegistryApiVerticle", res ->
+        {
+            if (res.succeeded())
+            {
                 LOGGER.info("RegistryApiVerticle : Deployed");
-            } else {
+            }
+            else
+            {
                 startFuture.fail(res.cause());
                 LOGGER.error("RegistryApiVerticle : Deployment failed");
             }
         });
 
-        vertx.deployVerticle("io.swagger.server.api.verticle.ServiceApiVerticle", res -> {
-            if (res.succeeded()) {
+        vertx.deployVerticle("io.swagger.server.api.verticle.ServiceApiVerticle", res ->
+        {
+            if (res.succeeded())
+            {
                 LOGGER.info("ServiceApiVerticle : Deployed");
-            } else {
+            }
+            else
+            {
                 startFuture.fail(res.cause());
                 LOGGER.error("ServiceApiVerticle : Deployment failed");
             }
         });
 
-        vertx.deployVerticle("io.swagger.server.api.verticle.WrapperApiVerticle", res -> {
-            if (res.succeeded()) {
+        vertx.deployVerticle("io.swagger.server.api.verticle.WrapperApiVerticle", res ->
+        {
+            if (res.succeeded())
+            {
                 LOGGER.info("WrapperApiVerticle : Deployed");
-            } else {
+            }
+            else
+            {
                 startFuture.fail(res.cause());
                 LOGGER.error("WrapperApiVerticle : Deployment failed");
             }

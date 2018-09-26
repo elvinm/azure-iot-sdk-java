@@ -34,7 +34,7 @@ public class RegistryStatisticsTest
         parser.setDisabledDeviceCount(5);
 
         // act
-        RegistryStatistics registryStatistics = Deencapsulation.newInstance(RegistryStatistics.class, new Class[] {RegistryStatisticsParser.class}, parser);
+        RegistryStatistics registryStatistics = Deencapsulation.newInstance(RegistryStatistics.class, new Class[]{RegistryStatisticsParser.class}, parser);
 
         // assert
         assertEquals(parser.getTotalDeviceCount(), registryStatistics.getTotalDeviceCount());
@@ -52,7 +52,7 @@ public class RegistryStatisticsTest
         expectedParser.setEnabledDeviceCount(7);
         expectedParser.setDisabledDeviceCount(3);
 
-        RegistryStatistics registryStatistics = Deencapsulation.newInstance(RegistryStatistics.class, new Class[] {});
+        RegistryStatistics registryStatistics = Deencapsulation.newInstance(RegistryStatistics.class, new Class[]{});
         Deencapsulation.setField(registryStatistics, "totalDeviceCount", 10);
         Deencapsulation.setField(registryStatistics, "enabledDeviceCount", 7);
         Deencapsulation.setField(registryStatistics, "disabledDeviceCount", 3);
@@ -97,10 +97,10 @@ public class RegistryStatisticsTest
     }
 
     //Tests_SRS_SERVICE_SDK_JAVA_REGISTRY_STATISTICS_34_003: [If the provided RegistryStatisticsParser object is null, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorRejectsNullParser()
     {
         //act
-        Deencapsulation.newInstance(RegistryStatistics.class, new Class[] {RegistryStatisticsParser.class}, null);
+        Deencapsulation.newInstance(RegistryStatistics.class, new Class[]{RegistryStatisticsParser.class}, null);
     }
 }

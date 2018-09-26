@@ -8,8 +8,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-/** An IoT Hub message property. */
-public final class MessageProperty {
+/**
+ * An IoT Hub message property.
+ */
+public final class MessageProperty
+{
     /**
      * A set of reserved property names. The reserved property names are
      * interpreted in a meaningful way by the device and the IoT Hub.
@@ -24,7 +27,8 @@ public final class MessageProperty {
     public static final String IOTHUB_CONTENT_ENCODING = "iothub-contentencoding";
     public static final String IOTHUB_CONTENT_TYPE = "iothub-contenttype";
 
-    static {
+    static
+    {
         HashSet<String> reservedPropertyNames = new HashSet<>();
         reservedPropertyNames.add("iothub-enqueuedtime");
         reservedPropertyNames.add("iothub-messagelocktoken");
@@ -55,43 +59,50 @@ public final class MessageProperty {
         RESERVED_PROPERTY_NAMES = Collections.unmodifiableSet(reservedPropertyNames);
     }
 
-    /** The property name. */
+    /**
+     * The property name.
+     */
     private String name;
-    /** The property value. */
+    /**
+     * The property value.
+     */
     private String value;
     private CustomLogger logger;
-    
+
     /**
      * Constructor.
      *
-     * @param name The IoT Hub message property name.
+     * @param name  The IoT Hub message property name.
      * @param value The IoT Hub message property value.
-     *
      * @throws IllegalArgumentException if the name and value constitute an
-     * invalid IoT Hub message property. A message property can only contain US-ASCII. 
-     * A message property name cannot be one of the reserved property names.
+     *                                  invalid IoT Hub message property. A message property can only contain US-ASCII.
+     *                                  A message property name cannot be one of the reserved property names.
      */
     public MessageProperty(String name, String value) {
         this.logger = new CustomLogger(this.getClass());
-        if (name == null) {
+        if (name == null)
+        {
             logger.LogError("Property argument 'name' cannot be null, method name is %s ", logger.getMethodName());
             throw new IllegalArgumentException("Property argument 'name' cannot be null.");
         }
 
-        if (value == null) {
+        if (value == null)
+        {
             logger.LogError("Property argument 'value' cannot be null, method name is %s ", logger.getMethodName());
             throw new IllegalArgumentException("Property argument 'value' cannot be null.");
         }
 
         // Codes_SRS_MESSAGEPROPERTY_11_002: [If the name contains a character that is not in US-ASCII, the function shall throw an IllegalArgumentException.]
-        if (!usesValidChars(name)) {
+        if (!usesValidChars(name))
+        {
             logger.LogError("%s is not a valid IoT Hub message property name, method name is %s ", name, logger.getMethodName());
             String errMsg = String.format("%s is not a valid IoT Hub message property name. %n", name);
             throw new IllegalArgumentException(errMsg);
         }
 
         // Codes_SRS_MESSAGEPROPERTY_11_008: [If the name is a reserved property name, the function shall throw an IllegalArgumentException.]
-        if (RESERVED_PROPERTY_NAMES.contains(name)) {
+        if (RESERVED_PROPERTY_NAMES.contains(name))
+        {
             logger.LogError("%s is a reserved IoT Hub message property name, method name is %s ", name, logger.getMethodName());
             String errMsg = String.format("%s is a reserved IoT Hub message property name.%n", name);
             throw new IllegalArgumentException(errMsg);
@@ -108,6 +119,68 @@ public final class MessageProperty {
         // Codes_SRS_MESSAGEPROPERTY_11_001: [The constructor shall save the property name and value.]
         this.name = name;
         this.value = value;
+    }
+
+    @SuppressWarnings("unused")
+    protected MessageProperty() {
+        this.name = null;
+        this.value = null;
+    }
+
+    /**
+     * Returns whether the property is a valid application property. The
+     * property is valid if it is not one of the reserved properties, only uses US-ASCII
+     *
+     * @param name  the property name.
+     * @param value the property value.
+     * @return whether the property is a valid application property.
+     */
+    public static boolean isValidAppProperty(String name, String value) {
+        boolean propertyIsValid = false;
+
+        // Codes_SRS_MESSAGEPROPERTY_11_007: [The function shall return true if and only if the name and value only use characters in US-ASCII and the name is not a reserved property name.]
+        if (!RESERVED_PROPERTY_NAMES.contains(name) && usesValidChars(name) && usesValidChars(value))
+        {
+            propertyIsValid = true;
+        }
+
+        return propertyIsValid;
+    }
+
+    /**
+     * Returns whether the property is a valid system property. The
+     * property is valid if it is one of the reserved properties and only uses US-ASCII
+     *
+     * @param name  the property name.
+     * @param value the property value.
+     * @return whether the property is a valid system property.
+     */
+    public static boolean isValidSystemProperty(String name, String value) {
+        boolean propertyIsValid = false;
+
+        if (RESERVED_PROPERTY_NAMES.contains(name) && usesValidChars(name) && usesValidChars(value))
+        {
+            propertyIsValid = true;
+        }
+
+        return propertyIsValid;
+    }
+
+    /**
+     * Returns true if the string only uses US-ASCII
+     *
+     * @param s the string.
+     * @return whether the string only uses US-ASCII
+     */
+    private static boolean usesValidChars(String s) {
+        boolean isValid = false;
+
+        if (s.matches("\\p{ASCII}*"))
+        {
+            isValid = true;
+        }
+
+        return isValid;
     }
 
     /**
@@ -134,84 +207,17 @@ public final class MessageProperty {
      * Equivalent to property.getName().equalsIgnoreCase(name).
      *
      * @param name the property name.
-     *
      * @return true if the given name is the property name.
      */
     public boolean hasSameName(String name) {
         boolean nameMatches = false;
 
         // Codes_SRS_MESSAGEPROPERTY_11_006: [The function shall return true if and only if the property has the given name, where the names are compared in a case-insensitive manner.]
-        if (this.getName().equalsIgnoreCase(name)) {
+        if (this.getName().equalsIgnoreCase(name))
+        {
             nameMatches = true;
         }
 
         return nameMatches;
-    }
-
-    /**
-     * Returns whether the property is a valid application property. The
-     * property is valid if it is not one of the reserved properties, only uses US-ASCII 
-     *
-     * @param name the property name.
-     * @param value the property value.
-     *
-     * @return whether the property is a valid application property.
-     */
-    public static boolean isValidAppProperty(String name, String value) {
-        boolean propertyIsValid = false;
-
-        // Codes_SRS_MESSAGEPROPERTY_11_007: [The function shall return true if and only if the name and value only use characters in US-ASCII and the name is not a reserved property name.]
-        if (!RESERVED_PROPERTY_NAMES.contains(name)
-                && usesValidChars(name)
-                && usesValidChars(value)) {
-            propertyIsValid = true;
-        }
-
-        return propertyIsValid;
-    }
-
-    /**
-     * Returns whether the property is a valid system property. The
-     * property is valid if it is one of the reserved properties and only uses US-ASCII
-     *
-     * @param name the property name.
-     * @param value the property value.
-     *
-     * @return whether the property is a valid system property.
-     */
-    public static boolean isValidSystemProperty(String name, String value) {
-        boolean propertyIsValid = false;
-
-        if (RESERVED_PROPERTY_NAMES.contains(name)
-                && usesValidChars(name)
-                && usesValidChars(value)) {
-            propertyIsValid = true;
-        }
-
-        return propertyIsValid;
-    }
-
-    /**
-     * Returns true if the string only uses US-ASCII 
-     *
-     * @param s the string.
-     *
-     * @return whether the string only uses US-ASCII 
-     */
-    private static boolean usesValidChars(String s) {
-        boolean isValid = false;
-
-        if (s.matches("\\p{ASCII}*"))
-        {
-            isValid = true;
-        }
-
-        return isValid;
-    }
-
-    @SuppressWarnings("unused")
-    protected MessageProperty() {
-        this.name = null;
-        this.value = null;
     }
 }

@@ -34,13 +34,19 @@ public final class HttpsBatchMessage implements HttpsMessage
      */
     private static final Charset BATCH_CHARSET = StandardCharsets.UTF_8;
 
-    /** The current batched message body. */
+    /**
+     * The current batched message body.
+     */
     private String batchBody;
 
-    /** The current number of messages in the batch. */
+    /**
+     * The current number of messages in the batch.
+     */
     private int numMsgs;
 
-    /** Constructor. Initializes the batch body as an empty JSON array. */
+    /**
+     * Constructor. Initializes the batch body as an empty JSON array.
+     */
     public HttpsBatchMessage()
     {
         // Codes_SRS_HTTPSBATCHMESSAGE_11_001: [The constructor shall initialize the batch message with the body as an empty JSON array.]
@@ -49,13 +55,80 @@ public final class HttpsBatchMessage implements HttpsMessage
     }
 
     /**
+     * Converts a service-bound message to a JSON object with the correct
+     * format.
+     *
+     * @param msg the message to be converted to a corresponding JSON object.
+     * @return the JSON string representation of the message.
+     */
+    private static String msgToJson(HttpsSingleMessage msg)
+    {
+        StringBuilder jsonMsg = new StringBuilder("{");
+        // Codes_SRS_HTTPSBATCHMESSAGE_11_003: [The JSON object shall have the field "body" set to the raw message encoded in Base64.]
+        jsonMsg.append("\"body\":");
+        jsonMsg.append("\"").append(Base64.encodeBase64StringLocal(msg.getBody())).append("\",");
+        // Codes_SRS_HTTPSBATCHMESSAGE_11_004: [The JSON object shall have the field "base64Encoded" set to true and always encode the body for a batch message.]
+        jsonMsg.append("\"base64Encoded\":");
+        jsonMsg.append(true);
+        // Codes_SRS_HTTPSBATCHMESSAGE_11_005: [The JSON object shall have the field "properties" set to a JSON object which has the field "content-type" set to the content type of the raw message.]
+        MessageProperty[] properties = msg.getProperties();
+        Map<String, String> allProperties = new HashMap<>(msg.getSystemProperties());
+        for (MessageProperty p : properties)
+        {
+            allProperties.put(p.getName(), p.getValue());
+        }
+
+        int numProperties = allProperties.size();
+        if (numProperties > 0)
+        {
+            jsonMsg.append(",");
+            jsonMsg.append("\"properties\":");
+            jsonMsg.append("{");
+            for (String key : allProperties.keySet())
+            {
+                jsonMsg.append("\"").append(key).append("\":");
+                jsonMsg.append("\"").append(allProperties.get(key)).append("\",");
+            }
+
+            //remove last trailing comma
+            jsonMsg.deleteCharAt(jsonMsg.length() - 1);
+
+            jsonMsg.append("}");
+        }
+
+        jsonMsg.append("}");
+
+        return jsonMsg.toString();
+    }
+
+    /**
+     * Adds a JSON object to a JSON array.
+     *
+     * @param jsonObj   the object to be added to the JSON array.
+     * @param jsonArray the JSON array.
+     * @return the JSON string representation of the JSON array with the object
+     * added.
+     */
+    private static String addJsonObjToArray(String jsonObj, String jsonArray)
+    {
+        if (jsonArray.equals("[]"))
+        {
+            return "[" + jsonObj + "]";
+        }
+
+        // removes the closing brace of the JSON array.
+        String openJsonArray = jsonArray.substring(0, jsonArray.length() - 1);
+
+        return openJsonArray + "," + jsonObj + "]";
+    }
+
+    /**
      * Adds a message to the batch.
      *
      * @param msg the message to be added.
-     *
      * @throws IotHubSizeExceededException if adding the message causes the
-     * batched message to exceed 256 kb in size. The batched message will remain
-     * as if the message was never added.
+     *                                     batched message to exceed 256 kb in size. The batched message will remain
+     *                                     as if the message was never added.
      */
     public void addMessage(HttpsSingleMessage msg) throws IotHubSizeExceededException
     {
@@ -69,8 +142,7 @@ public final class HttpsBatchMessage implements HttpsMessage
 
         if (newBatchBodyBytes.length > SERVICEBOUND_MESSAGE_MAX_SIZE_BYTES)
         {
-            String errMsg = String.format("Service-bound message size (%d bytes) cannot exceed %d bytes.",
-                    newBatchBodyBytes.length, SERVICEBOUND_MESSAGE_MAX_SIZE_BYTES);
+            String errMsg = String.format("Service-bound message size (%d bytes) cannot exceed %d bytes.", newBatchBodyBytes.length, SERVICEBOUND_MESSAGE_MAX_SIZE_BYTES);
             throw new IotHubSizeExceededException(errMsg);
         }
 
@@ -133,75 +205,5 @@ public final class HttpsBatchMessage implements HttpsMessage
     {
         // Codes_SRS_HTTPSBATCHMESSAGE_11_010: [The function shall return the number of messages currently in the batch.]
         return this.numMsgs;
-    }
-
-    /**
-     * Converts a service-bound message to a JSON object with the correct
-     * format.
-     *
-     * @param msg the message to be converted to a corresponding JSON object.
-     *
-     * @return the JSON string representation of the message.
-     */
-    private static String msgToJson(HttpsSingleMessage msg)
-    {
-        StringBuilder jsonMsg = new StringBuilder("{");
-        // Codes_SRS_HTTPSBATCHMESSAGE_11_003: [The JSON object shall have the field "body" set to the raw message encoded in Base64.]
-        jsonMsg.append("\"body\":");
-        jsonMsg.append("\"").append(Base64.encodeBase64StringLocal(msg.getBody())).append("\",");
-        // Codes_SRS_HTTPSBATCHMESSAGE_11_004: [The JSON object shall have the field "base64Encoded" set to true and always encode the body for a batch message.]
-        jsonMsg.append("\"base64Encoded\":");
-        jsonMsg.append(true);
-        // Codes_SRS_HTTPSBATCHMESSAGE_11_005: [The JSON object shall have the field "properties" set to a JSON object which has the field "content-type" set to the content type of the raw message.]
-        MessageProperty[] properties = msg.getProperties();
-        Map<String, String> allProperties = new HashMap<>(msg.getSystemProperties());
-        for (MessageProperty p : properties)
-        {
-            allProperties.put(p.getName(), p.getValue());
-        }
-
-        int numProperties = allProperties.size();
-        if (numProperties > 0)
-        {
-            jsonMsg.append(",");
-            jsonMsg.append("\"properties\":");
-            jsonMsg.append("{");
-            for (String key : allProperties.keySet())
-            {
-                jsonMsg.append("\"").append(key).append("\":");
-                jsonMsg.append("\"").append(allProperties.get(key)).append("\",");
-            }
-
-            //remove last trailing comma
-            jsonMsg.deleteCharAt(jsonMsg.length()-1);
-
-            jsonMsg.append("}");
-        }
-
-        jsonMsg.append("}");
-
-        return jsonMsg.toString();
-    }
-
-    /**
-     * Adds a JSON object to a JSON array.
-     *
-     * @param jsonObj the object to be added to the JSON array.
-     * @param jsonArray the JSON array.
-     *
-     * @return the JSON string representation of the JSON array with the object
-     * added.
-     */
-    private static String addJsonObjToArray(String jsonObj, String jsonArray)
-    {
-        if (jsonArray.equals("[]"))
-        {
-            return "[" + jsonObj + "]";
-        }
-
-        // removes the closing brace of the JSON array.
-        String openJsonArray = jsonArray.substring(0, jsonArray.length() - 1);
-
-        return openJsonArray + "," + jsonObj + "]";
     }
 }

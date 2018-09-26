@@ -10,10 +10,9 @@ import com.google.gson.annotations.SerializedName;
 public class X509ThumbprintParser
 {
     private static final String PRIMARY_THUMBPRINT_SERIALIZED_NAME = "primaryThumbprint";
+    private static final String SECONDARY_THUMBPRINT_SERIALIZED_NAME = "secondaryThumbprint";
     @SerializedName(PRIMARY_THUMBPRINT_SERIALIZED_NAME)
     private String primaryThumbprint;
-
-    private static final String SECONDARY_THUMBPRINT_SERIALIZED_NAME = "secondaryThumbprint";
     @SerializedName(SECONDARY_THUMBPRINT_SERIALIZED_NAME)
     private String secondaryThumbprint;
 
@@ -24,11 +23,13 @@ public class X509ThumbprintParser
      */
     @SuppressWarnings("unused")
     public X509ThumbprintParser()
-    {}
+    {
+    }
 
     /**
      * Construct an X509ThumbprintParser object with the provided thumbprints
-     * @param primaryThumbprint the primary thumbprint to set
+     *
+     * @param primaryThumbprint   the primary thumbprint to set
      * @param secondaryThumbprint the secondary thumbprint to set
      */
     public X509ThumbprintParser(String primaryThumbprint, String secondaryThumbprint)
@@ -40,6 +41,7 @@ public class X509ThumbprintParser
 
     /**
      * Construct an X509ThumbprintParser object from json
+     *
      * @param json the json to build with
      */
     public X509ThumbprintParser(String json) throws IllegalArgumentException
@@ -68,6 +70,7 @@ public class X509ThumbprintParser
 
     /**
      * Converts this into json format
+     *
      * @return the json representation of this
      */
     public String toJson()
@@ -89,6 +92,7 @@ public class X509ThumbprintParser
 
     /**
      * Setter for PrimaryThumbprint
+     *
      * @param primaryThumbprint the value to set the primary thumbprint to
      * @throws IllegalArgumentException if primaryThumbprint is null
      */
@@ -118,6 +122,7 @@ public class X509ThumbprintParser
 
     /**
      * Setter for SecondaryThumbprint
+     *
      * @param secondaryThumbprint the value to set the secondary thumbprint to
      * @throws IllegalArgumentException if secondaryThumbprint is null
      */

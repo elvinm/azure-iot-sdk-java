@@ -38,19 +38,17 @@ public class RegistrationStatusManagerTest
 
     RegistrationStatusManager createRegistrationStatusManager()
     {
-        return Deencapsulation.invoke(
-                RegistrationStatusManager.class, "createFromContractApiHttp",
-                new Class[]{ContractApiHttp.class}, mockedContractApiHttp);
+        return Deencapsulation.invoke(RegistrationStatusManager.class, "createFromContractApiHttp", new Class[]{ContractApiHttp.class}, mockedContractApiHttp);
 
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_001: [The constructor shall throw IllegalArgumentException if the provided ContractApiHttp is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNull()
     {
         // arrange
         // act
-        Deencapsulation.newInstance(RegistrationStatusManager.class, new Class[]{ContractApiHttp.class}, (ContractApiHttp)null);
+        Deencapsulation.newInstance(RegistrationStatusManager.class, new Class[]{ContractApiHttp.class}, (ContractApiHttp) null);
 
         // assert
     }
@@ -61,36 +59,34 @@ public class RegistrationStatusManagerTest
     {
         // arrange
         // act
-        RegistrationStatusManager registrationStatusManager = Deencapsulation.invoke(
-                RegistrationStatusManager.class, "createFromContractApiHttp",
-                new Class[]{ContractApiHttp.class}, mockedContractApiHttp);
+        RegistrationStatusManager registrationStatusManager = Deencapsulation.invoke(RegistrationStatusManager.class, "createFromContractApiHttp", new Class[]{ContractApiHttp.class}, mockedContractApiHttp);
 
         // assert
         assertNotNull(registrationStatusManager);
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_005: [The get shall throw IllegalArgumentException if the provided id is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getThrowsOnNullId() throws ProvisioningServiceClientException
     {
         // arrange
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "get", new Class[] {String.class}, (String)null);
+        Deencapsulation.invoke(registrationStatusManager, "get", new Class[]{String.class}, (String) null);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_005: [The get shall throw IllegalArgumentException if the provided id is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getThrowsOnEmptyId() throws ProvisioningServiceClientException
     {
         // arrange
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "get", new Class[] {String.class}, (String)"");
+        Deencapsulation.invoke(registrationStatusManager, "get", new Class[]{String.class}, (String) "");
 
         // assert
     }
@@ -99,9 +95,7 @@ public class RegistrationStatusManagerTest
     /* SRS_REGISTRATION_STATUS_MANAGER_21_007: [The get shall send a Http request with a Http verb `GET`.] */
     /* SRS_REGISTRATION_STATUS_MANAGER_21_010: [The get shall return a DeviceRegistrationState object created from the body of the response for the Http request .] */
     @Test
-    public void getRequestSucceed(
-            @Mocked final DeviceRegistrationState mockedDeviceRegistrationState)
-            throws ProvisioningServiceClientException
+    public void getRequestSucceed(@Mocked final DeviceRegistrationState mockedDeviceRegistrationState) throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "id-1";
@@ -124,16 +118,15 @@ public class RegistrationStatusManagerTest
         };
 
         // act
-        DeviceRegistrationState response = Deencapsulation.invoke(registrationStatusManager, "get", new Class[] {String.class}, id);
+        DeviceRegistrationState response = Deencapsulation.invoke(registrationStatusManager, "get", new Class[]{String.class}, id);
 
         // assert
         assertNotNull(response);
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_028: [The get shall throw ProvisioningServiceClientServiceException if the heepResponse contains a null body.] */
-    @Test (expected = ProvisioningServiceClientServiceException.class)
-    public void getRequestThrowsOnNullBody()
-            throws ProvisioningServiceClientException
+    @Test(expected = ProvisioningServiceClientServiceException.class)
+    public void getRequestThrowsOnNullBody() throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "id-1";
@@ -152,15 +145,14 @@ public class RegistrationStatusManagerTest
         };
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "get", new Class[] {String.class}, id);
+        Deencapsulation.invoke(registrationStatusManager, "get", new Class[]{String.class}, id);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_008: [The get shall throw ProvisioningServiceClientTransportException if the request failed. Threw by the callee.] */
-    @Test (expected = ProvisioningServiceClientTransportException.class)
-    public void getRequestTransportFailed()
-            throws ProvisioningServiceClientException
+    @Test(expected = ProvisioningServiceClientTransportException.class)
+    public void getRequestTransportFailed() throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "id-1";
@@ -176,15 +168,14 @@ public class RegistrationStatusManagerTest
         };
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "get", new Class[] {String.class}, id);
+        Deencapsulation.invoke(registrationStatusManager, "get", new Class[]{String.class}, id);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_009: [The get shall throw ProvisioningServiceClientException if the Device Provisioning Service could not successfully execute the request. Threw by the callee.] */
-    @Test (expected = ProvisioningServiceClientException.class)
-    public void getRequestServiceReportedFail()
-            throws ProvisioningServiceClientException
+    @Test(expected = ProvisioningServiceClientException.class)
+    public void getRequestServiceReportedFail() throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "id-1";
@@ -200,20 +191,20 @@ public class RegistrationStatusManagerTest
         };
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "get", new Class[] {String.class}, id);
+        Deencapsulation.invoke(registrationStatusManager, "get", new Class[]{String.class}, id);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_011: [The delete shall throw IllegalArgumentException if the provided DeviceRegistrationState is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void deleteDeviceRegistrationStatusThrowsOnNullDeviceRegistrationState() throws ProvisioningServiceClientException
     {
         // arrange
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[] {DeviceRegistrationState.class}, (DeviceRegistrationState)null);
+        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{DeviceRegistrationState.class}, (DeviceRegistrationState) null);
 
         // assert
     }
@@ -222,9 +213,7 @@ public class RegistrationStatusManagerTest
     /* SRS_REGISTRATION_STATUS_MANAGER_21_013: [If the DeviceRegistrationState contains eTag, the delete shall send a Http request with `If-Match` the eTag in the header.] */
     /* SRS_REGISTRATION_STATUS_MANAGER_21_014: [The delete shall send a Http request with a Http verb `DELETE`.] */
     @Test
-    public void deleteDeviceRegistrationStatusRequestWithEtagSucceed(
-            @Mocked final DeviceRegistrationState mockedDeviceRegistrationState)
-            throws ProvisioningServiceClientException
+    public void deleteDeviceRegistrationStatusRequestWithEtagSucceed(@Mocked final DeviceRegistrationState mockedDeviceRegistrationState) throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "id-1";
@@ -240,23 +229,21 @@ public class RegistrationStatusManagerTest
                 mockedDeviceRegistrationState.getEtag();
                 result = eTag;
                 times = 2;
-                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map)any, "");
+                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map) any, "");
                 result = mockedHttpResponse;
                 times = 1;
             }
         };
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[] {DeviceRegistrationState.class}, mockedDeviceRegistrationState);
+        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{DeviceRegistrationState.class}, mockedDeviceRegistrationState);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_013: [If the DeviceRegistrationState contains eTag, the delete shall send a Http request with `If-Match` the eTag in the header.] */
     @Test
-    public void deleteDeviceRegistrationStatusRequestWithoutEtagSucceed(
-            @Mocked final DeviceRegistrationState mockedDeviceRegistrationState)
-            throws ProvisioningServiceClientException
+    public void deleteDeviceRegistrationStatusRequestWithoutEtagSucceed(@Mocked final DeviceRegistrationState mockedDeviceRegistrationState) throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "id-1";
@@ -271,23 +258,21 @@ public class RegistrationStatusManagerTest
                 mockedDeviceRegistrationState.getEtag();
                 result = null;
                 times = 1;
-                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map)any, "");
+                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map) any, "");
                 result = mockedHttpResponse;
                 times = 1;
             }
         };
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[] {DeviceRegistrationState.class}, mockedDeviceRegistrationState);
+        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{DeviceRegistrationState.class}, mockedDeviceRegistrationState);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_015: [The delete shall throw ProvisioningServiceClientTransportException if the request failed. Threw by the callee.] */
-    @Test (expected = ProvisioningServiceClientTransportException.class)
-    public void deleteDeviceRegistrationStatusRequestTransportFailed(
-            @Mocked final DeviceRegistrationState mockedDeviceRegistrationState)
-            throws ProvisioningServiceClientException
+    @Test(expected = ProvisioningServiceClientTransportException.class)
+    public void deleteDeviceRegistrationStatusRequestTransportFailed(@Mocked final DeviceRegistrationState mockedDeviceRegistrationState) throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "id-1";
@@ -301,23 +286,21 @@ public class RegistrationStatusManagerTest
                 result = id;
                 mockedDeviceRegistrationState.getEtag();
                 result = eTag;
-                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map)any, "");
+                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map) any, "");
                 result = new ProvisioningServiceClientTransportException();
                 times = 1;
             }
         };
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[] {DeviceRegistrationState.class}, mockedDeviceRegistrationState);
+        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{DeviceRegistrationState.class}, mockedDeviceRegistrationState);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_016: [The delete shall throw ProvisioningServiceClientException if the Device Provisioning Service could not successfully execute the request. Threw by the callee.] */
-    @Test (expected = ProvisioningServiceClientException.class)
-    public void deleteRegistrationServiceReportedFail(
-            @Mocked final DeviceRegistrationState mockedDeviceRegistrationState)
-            throws ProvisioningServiceClientException
+    @Test(expected = ProvisioningServiceClientException.class)
+    public void deleteRegistrationServiceReportedFail(@Mocked final DeviceRegistrationState mockedDeviceRegistrationState) throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "id-1";
@@ -331,20 +314,20 @@ public class RegistrationStatusManagerTest
                 result = id;
                 mockedDeviceRegistrationState.getEtag();
                 result = eTag;
-                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map)any, "");
+                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map) any, "");
                 result = new ProvisioningServiceClientBadFormatException();
                 times = 1;
             }
         };
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[] {DeviceRegistrationState.class}, mockedDeviceRegistrationState);
+        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{DeviceRegistrationState.class}, mockedDeviceRegistrationState);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_017: [The delete shall throw IllegalArgumentException if the provided id is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void deleteIdAndETagThrowsOnNullId() throws ProvisioningServiceClientException
     {
         // arrange
@@ -352,13 +335,13 @@ public class RegistrationStatusManagerTest
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[] {String.class, String.class}, (String)null, eTag);
+        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{String.class, String.class}, (String) null, eTag);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_017: [The delete shall throw IllegalArgumentException if the provided id is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void deleteIdAndETagThrowsOnEmptyId() throws ProvisioningServiceClientException
     {
         // arrange
@@ -366,7 +349,7 @@ public class RegistrationStatusManagerTest
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[] {String.class, String.class}, (String)"", eTag);
+        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{String.class, String.class}, (String) "", eTag);
 
         // assert
     }
@@ -375,8 +358,7 @@ public class RegistrationStatusManagerTest
     /* SRS_REGISTRATION_STATUS_MANAGER_21_019: [If the eTag is not null or empty, the delete shall send a Http request with `If-Match` the eTag in the header.] */
     /* SRS_REGISTRATION_STATUS_MANAGER_21_020: [The delete shall send a Http request with a Http verb `DELETE`.] */
     @Test
-    public void deleteIdAndETagRequestWithEtagSucceed()
-            throws ProvisioningServiceClientException
+    public void deleteIdAndETagRequestWithEtagSucceed() throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "id-1";
@@ -386,22 +368,21 @@ public class RegistrationStatusManagerTest
         new StrictExpectations()
         {
             {
-                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map)any, "");
+                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map) any, "");
                 result = mockedHttpResponse;
                 times = 1;
             }
         };
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[] {String.class, String.class}, id, eTag);
+        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{String.class, String.class}, id, eTag);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_019: [If the eTag is not null or empty, the delete shall send a Http request with `If-Match` the eTag in the header.] */
     @Test
-    public void deleteIdAndETagRequestWithNullEtagSucceed()
-            throws ProvisioningServiceClientException
+    public void deleteIdAndETagRequestWithNullEtagSucceed() throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "id-1";
@@ -410,22 +391,21 @@ public class RegistrationStatusManagerTest
         new StrictExpectations()
         {
             {
-                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map)any, "");
+                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map) any, "");
                 result = mockedHttpResponse;
                 times = 1;
             }
         };
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[] {String.class, String.class}, id, null);
+        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{String.class, String.class}, id, null);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_019: [If the eTag is not null or empty, the delete shall send a Http request with `If-Match` the eTag in the header.] */
     @Test
-    public void deleteIdAndETagRequestWithEmptyEtagSucceed()
-            throws ProvisioningServiceClientException
+    public void deleteIdAndETagRequestWithEmptyEtagSucceed() throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "id-1";
@@ -434,22 +414,21 @@ public class RegistrationStatusManagerTest
         new StrictExpectations()
         {
             {
-                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map)any, "");
+                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map) any, "");
                 result = mockedHttpResponse;
                 times = 1;
             }
         };
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[] {String.class, String.class}, id, "");
+        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{String.class, String.class}, id, "");
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_021: [The delete shall throw ProvisioningServiceClientTransportException if the request failed. Threw by the callee.] */
-    @Test (expected = ProvisioningServiceClientTransportException.class)
-    public void deleteIdAndETagRequestTransportFailed()
-            throws ProvisioningServiceClientException
+    @Test(expected = ProvisioningServiceClientTransportException.class)
+    public void deleteIdAndETagRequestTransportFailed() throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "id-1";
@@ -459,22 +438,21 @@ public class RegistrationStatusManagerTest
         new StrictExpectations()
         {
             {
-                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map)any, "");
+                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map) any, "");
                 result = new ProvisioningServiceClientTransportException();
                 times = 1;
             }
         };
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[] {String.class, String.class}, id, eTag);
+        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{String.class, String.class}, id, eTag);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_022: [The delete shall throw ProvisioningServiceClientException if the Device Provisioning Service could not successfully execute the request. Threw by the callee.] */
-    @Test (expected = ProvisioningServiceClientException.class)
-    public void deleteIdAndETagRequestServiceReportedFail()
-            throws ProvisioningServiceClientException
+    @Test(expected = ProvisioningServiceClientException.class)
+    public void deleteIdAndETagRequestServiceReportedFail() throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "id-1";
@@ -484,20 +462,20 @@ public class RegistrationStatusManagerTest
         new StrictExpectations()
         {
             {
-                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map)any, "");
+                mockedContractApiHttp.request(HttpMethod.DELETE, registrationPath, (Map) any, "");
                 result = new ProvisioningServiceClientBadFormatException();
                 times = 1;
             }
         };
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[] {String.class, String.class}, id, eTag);
+        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{String.class, String.class}, id, eTag);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_023: [The createEnrollmentGroupQuery shall throw IllegalArgumentException if the provided querySpecification is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createEnrollmentGroupQueryThrowsOnNullQuerySpecification() throws ProvisioningServiceClientException
     {
         // arrange
@@ -505,42 +483,39 @@ public class RegistrationStatusManagerTest
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "createEnrollmentGroupQuery", new Class[] {QuerySpecification.class, String.class, Integer.class},
-                null, enrollmentGroupId, 0);
+        Deencapsulation.invoke(registrationStatusManager, "createEnrollmentGroupQuery", new Class[]{QuerySpecification.class, String.class, Integer.class}, null, enrollmentGroupId, 0);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_024: [The createEnrollmentGroupQuery shall throw IllegalArgumentException if the provided enrollmentGroupId is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createEnrollmentGroupQueryThrowsOnNullEnrollmentGroupId(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
     {
         // arrange
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "createEnrollmentGroupQuery", new Class[] {QuerySpecification.class, String.class, Integer.class},
-                mockedQuerySpecification, null, 0);
+        Deencapsulation.invoke(registrationStatusManager, "createEnrollmentGroupQuery", new Class[]{QuerySpecification.class, String.class, Integer.class}, mockedQuerySpecification, null, 0);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_024: [The createEnrollmentGroupQuery shall throw IllegalArgumentException if the provided enrollmentGroupId is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createEnrollmentGroupQueryThrowsOnEmptyEnrollmentGroupId(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
     {
         // arrange
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "createEnrollmentGroupQuery", new Class[] {QuerySpecification.class, String.class, Integer.class},
-                mockedQuerySpecification, "", 0);
+        Deencapsulation.invoke(registrationStatusManager, "createEnrollmentGroupQuery", new Class[]{QuerySpecification.class, String.class, Integer.class}, mockedQuerySpecification, "", 0);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_025: [The createEnrollmentGroupQuery shall throw IllegalArgumentException if the provided pageSize is negative.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createEnrollmentGroupQueryThrowsOnNegativePageSize(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
     {
         // arrange
@@ -548,8 +523,7 @@ public class RegistrationStatusManagerTest
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "createEnrollmentGroupQuery", new Class[] {QuerySpecification.class, String.class, Integer.class},
-                mockedQuerySpecification, enrollmentGroupId, -10);
+        Deencapsulation.invoke(registrationStatusManager, "createEnrollmentGroupQuery", new Class[]{QuerySpecification.class, String.class, Integer.class}, mockedQuerySpecification, enrollmentGroupId, -10);
 
         // assert
     }
@@ -557,9 +531,7 @@ public class RegistrationStatusManagerTest
     /* SRS_REGISTRATION_STATUS_MANAGER_21_026: [The createEnrollmentGroupQuery shall create Query iterator with a Http path `registrations/[id]`.] */
     /* SRS_REGISTRATION_STATUS_MANAGER_21_027: [The createEnrollmentGroupQuery shall create and return a new instance of the Query iterator.] */
     @Test
-    public void createEnrollmentGroupQuerySucceed(
-            @Mocked final QuerySpecification mockedQuerySpecification,
-            @Mocked final Query mockedQuery) throws ProvisioningServiceClientException
+    public void createEnrollmentGroupQuerySucceed(@Mocked final QuerySpecification mockedQuerySpecification, @Mocked final Query mockedQuery) throws ProvisioningServiceClientException
     {
         // arrange
         final String enrollmentGroupId = "enrollmentGroupId-1";
@@ -568,16 +540,14 @@ public class RegistrationStatusManagerTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                        mockedContractApiHttp, registrationPath, mockedQuerySpecification, 0);
+                Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, mockedContractApiHttp, registrationPath, mockedQuerySpecification, 0);
                 result = mockedQuery;
                 times = 1;
             }
         };
 
         // act
-        Query query = Deencapsulation.invoke(registrationStatusManager, "createEnrollmentGroupQuery", new Class[] {QuerySpecification.class, String.class, Integer.class},
-                mockedQuerySpecification, enrollmentGroupId, 0);
+        Query query = Deencapsulation.invoke(registrationStatusManager, "createEnrollmentGroupQuery", new Class[]{QuerySpecification.class, String.class, Integer.class}, mockedQuerySpecification, enrollmentGroupId, 0);
 
         // assert
         assertNotNull(query);

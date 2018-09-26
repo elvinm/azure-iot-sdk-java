@@ -17,7 +17,7 @@ public class ServiceAuthenticationWithSharedAccessPolicyKey extends Authenticati
      * Constructor to create instance from policy name and policy key
      *
      * @param policyName The policy name string
-     * @param key The policy key string
+     * @param key        The policy key string
      */
     public ServiceAuthenticationWithSharedAccessPolicyKey(String policyName, String key)
     {
@@ -55,6 +55,7 @@ public class ServiceAuthenticationWithSharedAccessPolicyKey extends Authenticati
 
     /**
      * Getter for policy name
+     *
      * @return The policy name string
      */
     public String getPolicyName()
@@ -64,6 +65,7 @@ public class ServiceAuthenticationWithSharedAccessPolicyKey extends Authenticati
 
     /**
      * Setter for policy name
+     *
      * @param policyName The string value to set
      */
     protected void setPolicyName(String policyName)
@@ -73,6 +75,7 @@ public class ServiceAuthenticationWithSharedAccessPolicyKey extends Authenticati
 
     /**
      * Getter for policy key
+     *
      * @return The policy key string
      */
     public String getKey()
@@ -82,6 +85,7 @@ public class ServiceAuthenticationWithSharedAccessPolicyKey extends Authenticati
 
     /**
      * Setter for policy key
+     *
      * @param key The string value to set
      */
     protected void setKey(String key)

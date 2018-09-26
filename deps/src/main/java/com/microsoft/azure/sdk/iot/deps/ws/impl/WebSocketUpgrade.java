@@ -109,9 +109,10 @@ public class WebSocketUpgrade
 
     /**
      * Set protocol value in protocol header
-     *
      */
-    public void setClientCertAvailable(){ _certAvailability = true; }
+    public void setClientCertAvailable() {
+        _certAvailability = true;
+    }
 
     /**
      * Utility function to create random, Base64 encoded key
@@ -143,15 +144,7 @@ public class WebSocketUpgrade
         this._webSocketKey = createWebSocketKey();
 
         String _endOfLine = "\r\n";
-        StringBuilder stringBuilder = new StringBuilder().append("GET https://").append(this._host).append(this._path)
-                        .append("?").append("iothub-no-client-cert=").append(!this._certAvailability)
-                        .append(" HTTP/1.1").append(_endOfLine)
-                        .append("Connection: Upgrade,Keep-Alive").append(_endOfLine)
-                        .append("Upgrade: websocket").append(_endOfLine)
-                        .append("Sec-WebSocket-Version: 13").append(_endOfLine)
-                        .append("Sec-WebSocket-Key: ").append(this._webSocketKey).append(_endOfLine)
-                        .append("Sec-WebSocket-Protocol: ").append(this._protocol).append(_endOfLine)
-                        .append("Host: ").append(this._host).append(_endOfLine);
+        StringBuilder stringBuilder = new StringBuilder().append("GET https://").append(this._host).append(this._path).append("?").append("iothub-no-client-cert=").append(!this._certAvailability).append(" HTTP/1.1").append(_endOfLine).append("Connection: Upgrade,Keep-Alive").append(_endOfLine).append("Upgrade: websocket").append(_endOfLine).append("Sec-WebSocket-Version: 13").append(_endOfLine).append("Sec-WebSocket-Key: ").append(this._webSocketKey).append(_endOfLine).append("Sec-WebSocket-Protocol: ").append(this._protocol).append(_endOfLine).append("Host: ").append(this._host).append(_endOfLine);
 
         if (_additionalHeaders != null)
         {
@@ -182,9 +175,7 @@ public class WebSocketUpgrade
         {
             String line = scanner.nextLine();
 
-            if ((line.toLowerCase().contains("http/1.1")) &&
-                    (line.contains("101")) &&
-                    (line.toLowerCase().contains("switching protocols")))
+            if ((line.toLowerCase().contains("http/1.1")) && (line.contains("101")) && (line.toLowerCase().contains("switching protocols")))
             {
                 isStatusLineOk = true;
 
@@ -219,7 +210,8 @@ public class WebSocketUpgrade
                 try
                 {
                     messageDigest = MessageDigest.getInstance("SHA-1");
-                } catch (NoSuchAlgorithmException e)
+                }
+                catch (NoSuchAlgorithmException e)
                 {
                     // can't happen since SHA-1 is a known digest
                     break;

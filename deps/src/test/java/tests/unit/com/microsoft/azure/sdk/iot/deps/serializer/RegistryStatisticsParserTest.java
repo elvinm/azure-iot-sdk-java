@@ -37,7 +37,7 @@ public class RegistryStatisticsParserTest
     }
 
     //Tests_SRS_REGISTRY_STATISTICS_PROPERTIES_PARSER_34_003: [If the provided json is null, empty, or cannot be parsed into a RegistryStatisticsParser object, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void nullJsonForConstructorThrows()
     {
         //act
@@ -45,7 +45,7 @@ public class RegistryStatisticsParserTest
     }
 
     //Tests_SRS_REGISTRY_STATISTICS_PROPERTIES_PARSER_34_003: [If the provided json is null, empty, or cannot be parsed into a RegistryStatisticsParser object, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void emptyJsonForConstructorThrows()
     {
         //act
@@ -53,7 +53,7 @@ public class RegistryStatisticsParserTest
     }
 
     //Tests_SRS_REGISTRY_STATISTICS_PROPERTIES_PARSER_34_003: [If the provided json is null, empty, or cannot be parsed into a RegistryStatisticsParser object, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void invalidJsonForConstructorThrows()
     {
         //act

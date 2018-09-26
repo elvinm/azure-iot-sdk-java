@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package com.microsoft.azure.sdk.iot.device.auth;
 
@@ -19,6 +19,7 @@ public class IotHubX509
 
     /**
      * Constructor that takes a public key certificate and a private key.
+     *
      * @throws IllegalArgumentException if the public key certificate or private key is null or empty
      */
     IotHubX509(String publicKeyCertificate, boolean isPathForPublic, String privateKey, boolean isPathForPrivate) throws IllegalArgumentException
@@ -60,8 +61,9 @@ public class IotHubX509
 
     /**
      * Getter for PublicKeyCertificate
-     * @throws IOException if there was an exception thrown reading the certificate or key from a file
+     *
      * @return The value of PublicKeyCertificate
+     * @throws IOException if there was an exception thrown reading the certificate or key from a file
      */
     String getPublicKeyCertificate() throws IOException
     {
@@ -77,8 +79,9 @@ public class IotHubX509
 
     /**
      * Getter for PrivateKey
-     * @throws IOException if there was an exception thrown reading the certificate or key from a file
+     *
      * @return The value of PrivateKey
+     * @throws IOException if there was an exception thrown reading the certificate or key from a file
      */
     String getPrivateKey() throws IOException
     {
@@ -94,6 +97,7 @@ public class IotHubX509
 
     /**
      * Reads from a file into a string.
+     *
      * @param path the path to the file
      * @return the contents of the file
      * @throws IOException if an IO error occurs when reading from a file

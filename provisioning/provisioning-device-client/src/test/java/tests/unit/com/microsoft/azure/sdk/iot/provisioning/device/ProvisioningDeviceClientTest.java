@@ -89,14 +89,14 @@ public class ProvisioningDeviceClientTest
     }
 
     //SRS_ProvisioningDeviceClient_25_001: [ The constructor shall throw IllegalArgumentException if globalEndpoint is null or empty. ]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullEndPoint() throws ProvisioningDeviceClientException
     {
         //act
         ProvisioningDeviceClient testProvisioningDeviceClient = ProvisioningDeviceClient.create(null, SCOPE_ID, TEST_PROTOCOL, mockedSecurityProvider);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyEndPoint() throws ProvisioningDeviceClientException
     {
         //act
@@ -104,14 +104,14 @@ public class ProvisioningDeviceClientTest
     }
 
     //SRS_ProvisioningDeviceClient_25_002: [ The constructor shall throw IllegalArgumentException if SCOPE_ID is null or empty. ]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullScopeId() throws ProvisioningDeviceClientException
     {
         //act
         ProvisioningDeviceClient testProvisioningDeviceClient = ProvisioningDeviceClient.create(END_POINT, null, TEST_PROTOCOL, mockedSecurityProvider);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnEmptyScopeId() throws ProvisioningDeviceClientException
     {
         //act
@@ -119,7 +119,7 @@ public class ProvisioningDeviceClientTest
     }
 
     //SRS_ProvisioningDeviceClient_25_003: [ The constructor shall throw IllegalArgumentException if protocol is null. ]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullProtocol() throws ProvisioningDeviceClientException
     {
         //act
@@ -127,7 +127,7 @@ public class ProvisioningDeviceClientTest
     }
 
     //SRS_ProvisioningDeviceClient_25_004: [ The constructor shall throw IllegalArgumentException if securityClient is null. ]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullSecurityClient() throws ProvisioningDeviceClientException
     {
         //act
@@ -157,7 +157,7 @@ public class ProvisioningDeviceClientTest
     }
 
     //SRS_ProvisioningDeviceClient_25_008: [ This method shall throw IllegalArgumentException if provisioningDeviceClientRegistrationCallback is null. ]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void registerThrowsOnNullCB() throws ProvisioningDeviceClientException
     {
         //arrange

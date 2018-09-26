@@ -26,6 +26,10 @@ import static org.junit.Assert.*;
 
 public class RegistryManagerIT
 {
+    private static final String primaryThumbprint = "0000000000000000000000000000000000000000";
+    private static final String secondaryThumbprint = "1111111111111111111111111111111111111111";
+    private static final String primaryThumbprint2 = "2222222222222222222222222222222222222222";
+    private static final String secondaryThumbprint2 = "3333333333333333333333333333333333333333";
     private static String IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME = "IOTHUB_CONNECTION_STRING";
     private static String iotHubConnectionString = "";
     private static String deviceId = "java-crud-e2e-test";
@@ -33,10 +37,6 @@ public class RegistryManagerIT
     private static String moduleId = "java-crud-module-e2e-test";
     private static String configId = "java-crud-adm-e2e-test";
     private static RegistryManager registryManager;
-    private static final String primaryThumbprint =   "0000000000000000000000000000000000000000";
-    private static final String secondaryThumbprint = "1111111111111111111111111111111111111111";
-    private static final String primaryThumbprint2 =   "2222222222222222222222222222222222222222";
-    private static final String secondaryThumbprint2 = "3333333333333333333333333333333333333333";
 
     @BeforeClass
     public static void setUp() throws URISyntaxException, InvalidKeyException, StorageException, IOException
@@ -279,13 +279,12 @@ public class RegistryManagerIT
         {
             {
                 put("properties.desired.chiller-water", new HashMap<String, Object>()
-                        {
-                            {
-                                put("temperature", 66);
-                                put("pressure", 28);
-                            }
-                        }
-                );
+                {
+                    {
+                        put("temperature", 66);
+                        put("pressure", 28);
+                    }
+                });
             }
         };
 
@@ -295,8 +294,10 @@ public class RegistryManagerIT
         ConfigurationContent content = new ConfigurationContent();
         content.setDeviceContent(testDeviceContent);
         configAdded.setContent(content);
-        configAdded.getMetrics().setQueries(new HashMap<String, String>(){{put("waterSettingsPending",
-                "SELECT deviceId FROM devices WHERE properties.reported.chillerWaterSettings.status=\'pending\'");}});
+        configAdded.getMetrics().setQueries(new HashMap<String, String>()
+        {{
+            put("waterSettingsPending", "SELECT deviceId FROM devices WHERE properties.reported.chillerWaterSettings.status=\'pending\'");
+        }});
         configAdded.setTargetCondition("properties.reported.chillerProperties.model=\'4000x\'");
         configAdded.setPriority(20);
         registryManager.addConfiguration(configAdded);
@@ -315,12 +316,9 @@ public class RegistryManagerIT
         // Assert
         assertEquals(configId, configAdded.getId());
         assertEquals(configId, configRetrieved.getId());
-        assertEquals("{temperature=66.0, pressure=28.0}",
-                configRetrieved.getContent().getDeviceContent().get("properties.desired.chiller-water").toString());
-        assertEquals("SELECT deviceId FROM devices WHERE properties.reported.chillerWaterSettings.status=\'pending\'",
-                configRetrieved.getMetrics().getQueries().get("waterSettingsPending"));
-        assertEquals("properties.reported.chillerProperties.model=\'4000x\'",
-                configRetrieved.getTargetCondition());
+        assertEquals("{temperature=66.0, pressure=28.0}", configRetrieved.getContent().getDeviceContent().get("properties.desired.chiller-water").toString());
+        assertEquals("SELECT deviceId FROM devices WHERE properties.reported.chillerWaterSettings.status=\'pending\'", configRetrieved.getMetrics().getQueries().get("waterSettingsPending"));
+        assertEquals("properties.reported.chillerProperties.model=\'4000x\'", configRetrieved.getTargetCondition());
         assertEquals(new Integer(20), configRetrieved.getPriority());
         assertEquals(configId, configUpdated.getId());
         assertEquals(new Integer(1), configUpdated.getPriority());
@@ -338,13 +336,12 @@ public class RegistryManagerIT
         {
             {
                 put("properties.desired.chiller-water", new HashMap<String, Object>()
-                        {
-                            {
-                                put("temperature", 66);
-                                put("pressure", 28);
-                            }
-                        }
-                );
+                {
+                    {
+                        put("temperature", 66);
+                        put("pressure", 28);
+                    }
+                });
             }
         };
         ConfigurationContent content = new ConfigurationContent();

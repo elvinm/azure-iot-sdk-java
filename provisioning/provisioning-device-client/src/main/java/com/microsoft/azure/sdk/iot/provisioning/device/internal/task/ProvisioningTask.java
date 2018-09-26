@@ -48,12 +48,12 @@ public class ProvisioningTask implements Callable
 
     /**
      * Constructor for creating a provisioning task
-     * @param provisioningDeviceClientConfig Config that contains details pertaining to Service
+     *
+     * @param provisioningDeviceClientConfig   Config that contains details pertaining to Service
      * @param provisioningDeviceClientContract Contract with the service over the specified protocol
      * @throws ProvisioningDeviceClientException If any of the input parameters are invalid then this exception is thrown
      */
-    public ProvisioningTask(ProvisioningDeviceClientConfig provisioningDeviceClientConfig,
-                            ProvisioningDeviceClientContract provisioningDeviceClientContract) throws ProvisioningDeviceClientException
+    public ProvisioningTask(ProvisioningDeviceClientConfig provisioningDeviceClientConfig, ProvisioningDeviceClientContract provisioningDeviceClientContract) throws ProvisioningDeviceClientException
     {
         if (provisioningDeviceClientContract == null)
         {
@@ -102,74 +102,62 @@ public class ProvisioningTask implements Callable
         }
     }
 
-    private RegistrationOperationStatusParser invokeRegister() throws InterruptedException, ExecutionException, TimeoutException,
-                                                                      ProvisioningDeviceClientException
+    private RegistrationOperationStatusParser invokeRegister() throws InterruptedException, ExecutionException, TimeoutException, ProvisioningDeviceClientException
     {
-        RegisterTask registerTask = new RegisterTask(this.provisioningDeviceClientConfig, securityProvider,
-                                                     provisioningDeviceClientContract, authorization);
+        RegisterTask registerTask = new RegisterTask(this.provisioningDeviceClientConfig, securityProvider, provisioningDeviceClientContract, authorization);
         FutureTask<RegistrationOperationStatusParser> futureRegisterTask = new FutureTask<RegistrationOperationStatusParser>(registerTask);
         executor.submit(futureRegisterTask);
-        RegistrationOperationStatusParser registrationOperationStatusParser =  futureRegisterTask.get(MAX_TIME_TO_WAIT_FOR_REGISTRATION,
-                                                                                                      TimeUnit.MILLISECONDS);
-       if (registrationOperationStatusParser == null)
+        RegistrationOperationStatusParser registrationOperationStatusParser = futureRegisterTask.get(MAX_TIME_TO_WAIT_FOR_REGISTRATION, TimeUnit.MILLISECONDS);
+        if (registrationOperationStatusParser == null)
         {
             this.dpsStatus = PROVISIONING_DEVICE_STATUS_ERROR;
-            throw new ProvisioningDeviceClientAuthenticationException("Registration response could not be retrieved, " +
-                    "authentication failure");
+            throw new ProvisioningDeviceClientAuthenticationException("Registration response could not be retrieved, " + "authentication failure");
         }
 
         ProvisioningStatus status = ProvisioningStatus.fromString(registrationOperationStatusParser.getStatus());
         if (status == null)
         {
             this.dpsStatus = PROVISIONING_DEVICE_STATUS_ERROR;
-            throw new ProvisioningDeviceClientAuthenticationException("Received null status for registration, " +
-                    "authentication failure");
+            throw new ProvisioningDeviceClientAuthenticationException("Received null status for registration, " + "authentication failure");
         }
 
         if (registrationOperationStatusParser.getOperationId() == null)
         {
-            throw new ProvisioningDeviceClientAuthenticationException("operation id could not be retrieved, " +
-                    "authentication failure");
+            throw new ProvisioningDeviceClientAuthenticationException("operation id could not be retrieved, " + "authentication failure");
         }
 
         return registrationOperationStatusParser;
     }
 
-    private RegistrationOperationStatusParser invokeStatus(String operationId) throws TimeoutException, InterruptedException, ExecutionException,
-                                                                                      ProvisioningDeviceClientException
+    private RegistrationOperationStatusParser invokeStatus(String operationId) throws TimeoutException, InterruptedException, ExecutionException, ProvisioningDeviceClientException
     {
         // To-Do : Add appropriate wait time retrieved from Service
         Thread.sleep(MAX_TIME_TO_WAIT_FOR_STATUS_UPDATE);
-        StatusTask statusTask = new StatusTask(securityProvider, provisioningDeviceClientContract, operationId,
-                                               this.authorization);
+        StatusTask statusTask = new StatusTask(securityProvider, provisioningDeviceClientContract, operationId, this.authorization);
         FutureTask<RegistrationOperationStatusParser> futureStatusTask = new FutureTask<RegistrationOperationStatusParser>(statusTask);
         executor.submit(futureStatusTask);
-        RegistrationOperationStatusParser statusRegistrationOperationStatusParser =  futureStatusTask.get(MAX_TIME_TO_WAIT_FOR_STATUS_UPDATE, TimeUnit.MILLISECONDS);
+        RegistrationOperationStatusParser statusRegistrationOperationStatusParser = futureStatusTask.get(MAX_TIME_TO_WAIT_FOR_STATUS_UPDATE, TimeUnit.MILLISECONDS);
 
         if (statusRegistrationOperationStatusParser == null)
         {
             this.dpsStatus = PROVISIONING_DEVICE_STATUS_ERROR;
-            throw new ProvisioningDeviceClientAuthenticationException("Status response could not be retrieved, " +
-                    "authentication failure");
+            throw new ProvisioningDeviceClientAuthenticationException("Status response could not be retrieved, " + "authentication failure");
         }
         if (statusRegistrationOperationStatusParser.getStatus() == null)
         {
             this.dpsStatus = PROVISIONING_DEVICE_STATUS_ERROR;
-            throw new ProvisioningDeviceClientAuthenticationException("Status could not be retrieved, " +
-                    "authentication failure");
+            throw new ProvisioningDeviceClientAuthenticationException("Status could not be retrieved, " + "authentication failure");
         }
 
         if (ProvisioningStatus.fromString(statusRegistrationOperationStatusParser.getStatus()) == null)
         {
             this.dpsStatus = PROVISIONING_DEVICE_STATUS_ERROR;
-            throw new ProvisioningDeviceClientAuthenticationException("Status could not be retrieved, " +
-                    "authentication failure");
+            throw new ProvisioningDeviceClientAuthenticationException("Status could not be retrieved, " + "authentication failure");
         }
         return statusRegistrationOperationStatusParser;
     }
 
-    private void executeStateMachineForStatus(RegistrationOperationStatusParser registrationOperationStatusParser)
-            throws TimeoutException, InterruptedException, ExecutionException, ProvisioningDeviceClientException, SecurityProviderException
+    private void executeStateMachineForStatus(RegistrationOperationStatusParser registrationOperationStatusParser) throws TimeoutException, InterruptedException, ExecutionException, ProvisioningDeviceClientException, SecurityProviderException
 
     {
         boolean isContinue = false;
@@ -196,25 +184,17 @@ public class ProvisioningTask implements Callable
                     this.dpsStatus = PROVISIONING_DEVICE_STATUS_ASSIGNED;
                     DeviceRegistrationResultParser registrationStatus = statusRegistrationOperationStatusParser.getRegistrationState();
 
-                    if (registrationStatus == null
-                            || registrationStatus.getAssignedHub() == null
-                            || registrationStatus.getAssignedHub().isEmpty()
-                            || registrationStatus.getDeviceId() == null
-                            || registrationStatus.getDeviceId().isEmpty())
+                    if (registrationStatus == null || registrationStatus.getAssignedHub() == null || registrationStatus.getAssignedHub().isEmpty() || registrationStatus.getDeviceId() == null || registrationStatus.getDeviceId().isEmpty())
                     {
                         //Codes_SRS_ProvisioningTask_34_018: [Upon reaching the terminal state ASSIGNED, if the registration status json is missing an assigned hub or device id, this function shall throw a ProvisioningDeviceClientException.]
                         throw new ProvisioningDeviceClientException("Could not retrieve Assigned Hub or Device ID and status changed to Assigned");
                     }
 
-                    RegistrationResult registrationInfo = new RegistrationResult(
-                                                            registrationStatus.getAssignedHub(),
-                                                            registrationStatus.getDeviceId(), PROVISIONING_DEVICE_STATUS_ASSIGNED);
+                    RegistrationResult registrationInfo = new RegistrationResult(registrationStatus.getAssignedHub(), registrationStatus.getDeviceId(), PROVISIONING_DEVICE_STATUS_ASSIGNED);
 
                     if (this.securityProvider instanceof SecurityProviderTpm)
                     {
-                        if (registrationStatus.getTpm() == null
-                                || registrationStatus.getTpm().getAuthenticationKey() == null
-                                || registrationStatus.getTpm().getAuthenticationKey().isEmpty())
+                        if (registrationStatus.getTpm() == null || registrationStatus.getTpm().getAuthenticationKey() == null || registrationStatus.getTpm().getAuthenticationKey().isEmpty())
                         {
                             //Codes_SRS_ProvisioningTask_34_017: [Upon reaching the terminal state ASSIGNED, if the saved security client is an instance of SecurityClientTpm and if the registration status json does not contain an authentication key, this function shall throw a ProvisioningDeviceClientException.]
                             throw new ProvisioningDeviceClientException("Could not retrieve Authentication key when status was assigned");
@@ -229,23 +209,20 @@ public class ProvisioningTask implements Callable
                     break;
                 case FAILED:
                     this.dpsStatus = PROVISIONING_DEVICE_STATUS_FAILED;
-                    ProvisioningDeviceHubException dpsHubException = new ProvisioningDeviceHubException(
-                            statusRegistrationOperationStatusParser.getRegistrationState().getErrorMessage());
+                    ProvisioningDeviceHubException dpsHubException = new ProvisioningDeviceHubException(statusRegistrationOperationStatusParser.getRegistrationState().getErrorMessage());
                     registrationInfo = new RegistrationResult(null, null, PROVISIONING_DEVICE_STATUS_FAILED);
                     this.invokeRegistrationCallback(registrationInfo, dpsHubException);
                     isContinue = false;
                     break;
                 case DISABLED:
                     this.dpsStatus = PROVISIONING_DEVICE_STATUS_DISABLED;
-                    dpsHubException = new ProvisioningDeviceHubException(
-                            statusRegistrationOperationStatusParser.getRegistrationState().getErrorMessage());
+                    dpsHubException = new ProvisioningDeviceHubException(statusRegistrationOperationStatusParser.getRegistrationState().getErrorMessage());
                     registrationInfo = new RegistrationResult(null, null, PROVISIONING_DEVICE_STATUS_DISABLED);
                     this.invokeRegistrationCallback(registrationInfo, dpsHubException);
                     isContinue = false;
                     break;
             }
-        }
-        while (isContinue);
+        } while (isContinue);
     }
 
     // this thread will continue to run until DPS status is assigned and registered or exit on error
@@ -253,6 +230,7 @@ public class ProvisioningTask implements Callable
 
     /**
      * This method executes the State machine with the device goes through during registration.
+     *
      * @return Returns {@code null}
      * @throws Exception This exception is thrown if any of the exception during execution is not handled.
      */

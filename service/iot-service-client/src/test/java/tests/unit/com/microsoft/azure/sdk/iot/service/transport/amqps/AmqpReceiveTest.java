@@ -26,16 +26,23 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-/** Unit tests for AmqpReceive */
+/**
+ * Unit tests for AmqpReceive
+ */
 @RunWith(JMockit.class)
 public class AmqpReceiveTest
 {
-    @Mocked Proton proton;
-    @Mocked Reactor reactor;
-    @Mocked Event event;
-    @Mocked Connection connection;
-    @Mocked Message message;
-    
+    @Mocked
+    Proton proton;
+    @Mocked
+    Reactor reactor;
+    @Mocked
+    Event event;
+    @Mocked
+    Connection connection;
+    @Mocked
+    Message message;
+
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPRECEIVE_12_001: [The constructor shall copy all input parameters to private member variables for event processing]
     @Test
     public void amqpReceive_init_ok()
@@ -107,7 +114,7 @@ public class AmqpReceiveTest
                 reactor.stop();
                 reactor.process();
                 reactor.free();
-        
+
             }
         };
         // Act
@@ -137,9 +144,8 @@ public class AmqpReceiveTest
                 reactor.stop();
                 reactor.process();
                 reactor.free();
-                
-                
-                
+
+
             }
         };
         // Act
@@ -148,7 +154,7 @@ public class AmqpReceiveTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPRECEIVE_12_008: [The function shall throw IOException if the send handler object is not initialized]
     // Assert
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void receiveException_throw() throws IOException, InterruptedException
     {
         // Arrange
@@ -178,7 +184,7 @@ public class AmqpReceiveTest
         {
             {
                 FeedbackBatchMessage.parse(jsonData);
-                
+
             }
         };
         // Act

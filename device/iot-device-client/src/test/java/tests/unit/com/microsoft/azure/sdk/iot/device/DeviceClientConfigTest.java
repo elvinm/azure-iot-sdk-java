@@ -31,6 +31,9 @@ import static org.junit.Assert.*;
  */
 public class DeviceClientConfigTest
 {
+    private static String expectedDeviceId = "deviceId";
+    private static String expectedModuleId = "moduleId";
+    private static String expectedHostname = "hostname";
     @Mocked
     IotHubAuthenticationProvider mockedIotHubAuthenticationProvider;
     @Mocked
@@ -45,18 +48,22 @@ public class DeviceClientConfigTest
     IotHubX509HardwareAuthenticationProvider mockX509HardwareAuthentication;
     @Mocked
     IotHubX509SoftwareAuthenticationProvider mockX509SoftwareAuthentication;
-    @Mocked IotHubConnectionString mockIotHubConnectionString;
-    @Mocked SecurityProvider mockSecurityProvider;
-    @Mocked SecurityProviderX509 mockSecurityProviderX509;
-    @Mocked SecurityProviderTpm mockSecurityProviderSAS;
-    @Mocked SSLContext mockSSLContext;
-    @Mocked RetryPolicy mockRetryPolicy;
-    @Mocked ProductInfo mockedProductInfo;
-    @Mocked MessageCallback mockedMessageCallback;
-
-    private static String expectedDeviceId = "deviceId";
-    private static String expectedModuleId = "moduleId";
-    private static String expectedHostname = "hostname";
+    @Mocked
+    IotHubConnectionString mockIotHubConnectionString;
+    @Mocked
+    SecurityProvider mockSecurityProvider;
+    @Mocked
+    SecurityProviderX509 mockSecurityProviderX509;
+    @Mocked
+    SecurityProviderTpm mockSecurityProviderSAS;
+    @Mocked
+    SSLContext mockSSLContext;
+    @Mocked
+    RetryPolicy mockRetryPolicy;
+    @Mocked
+    ProductInfo mockedProductInfo;
+    @Mocked
+    MessageCallback mockedMessageCallback;
 
     // Tests_SRS_DEVICECLIENTCONFIG_11_002: [The function shall return the IoT Hub hostname given in the constructor.]
     @Test
@@ -283,21 +290,13 @@ public class DeviceClientConfigTest
     // Tests_SRS_DEVICECLIENTCONFIG_11_006: [The function shall set the message callback, with its associated context.]
     // Tests_SRS_DEVICECLIENTCONFIG_11_010: [If the inputName is null, or the message callbacks map does not contain the provided inputName, this function shall return the default message callback.]
     @Test
-    public void getAndSetMessageCallbackMatch(
-            @Mocked final MessageCallback mockCallback)
-            throws URISyntaxException, IOException
+    public void getAndSetMessageCallbackMatch(@Mocked final MessageCallback mockCallback) throws URISyntaxException, IOException
     {
         final String iotHubHostname = "test.iothubhostname";
         final String deviceId = "test-deviceid";
         final String deviceKey = "test-devicekey";
         final String sharedAccessToken = null;
-        final IotHubConnectionString iotHubConnectionString =
-                Deencapsulation.newInstance(IotHubConnectionString.class,
-                        new Class[] {String.class, String.class, String.class, String.class},
-                        iotHubHostname,
-                        deviceId,
-                        deviceKey,
-                        sharedAccessToken);
+        final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, iotHubHostname, deviceId, deviceKey, sharedAccessToken);
 
         DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, iotHubConnectionString);
         Object context = new Object();
@@ -311,21 +310,13 @@ public class DeviceClientConfigTest
     // Tests_SRS_DEVICECLIENTCONFIG_11_006: [The function shall set the message callback, with its associated context.]
     // Tests_SRS_DEVICECLIENTCONFIG_11_011: [If the inputName is null, or the message callbacks map does not contain the provided inputName, this function shall return the default message callback context.]
     @Test
-    public void getAndSetMessageCallbackContextsMatch(
-            @Mocked final MessageCallback mockCallback)
-            throws URISyntaxException, IOException
+    public void getAndSetMessageCallbackContextsMatch(@Mocked final MessageCallback mockCallback) throws URISyntaxException, IOException
     {
         final String iotHubHostname = "test.iothubhostname";
         final String deviceId = "test-deviceid";
         final String deviceKey = "test-devicekey";
         final String sharedAccessToken = null;
-        final IotHubConnectionString iotHubConnectionString =
-                Deencapsulation.newInstance(IotHubConnectionString.class,
-                        new Class[] {String.class, String.class, String.class, String.class},
-                        iotHubHostname,
-                        deviceId,
-                        deviceKey,
-                        sharedAccessToken);
+        final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, iotHubHostname, deviceId, deviceKey, sharedAccessToken);
 
         DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, iotHubConnectionString);
         Object context = new Object();
@@ -339,8 +330,7 @@ public class DeviceClientConfigTest
     // Tests_SRS_DEVICECLIENTCONFIG_34_045: [If the message callbacks map contains the provided inputName, this function
     // shall return the callback associated with that inputName.]
     @Test
-    public void getMessageCallbackWithSavedInput(@Mocked final MessageCallback mockCallback)
-            throws URISyntaxException, IOException
+    public void getMessageCallbackWithSavedInput(@Mocked final MessageCallback mockCallback) throws URISyntaxException, IOException
     {
         //arrange
         String inputName = "someValidInputName";
@@ -348,13 +338,7 @@ public class DeviceClientConfigTest
         final String deviceId = "test-deviceid";
         final String deviceKey = "test-devicekey";
         final String sharedAccessToken = null;
-        final IotHubConnectionString iotHubConnectionString =
-                Deencapsulation.newInstance(IotHubConnectionString.class,
-                        new Class[] {String.class, String.class, String.class, String.class},
-                        iotHubHostname,
-                        deviceId,
-                        deviceKey,
-                        sharedAccessToken);
+        final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, iotHubHostname, deviceId, deviceKey, sharedAccessToken);
 
         DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, iotHubConnectionString);
         Object context = new Object();
@@ -370,9 +354,7 @@ public class DeviceClientConfigTest
     // Tests_SRS_DEVICECLIENTCONFIG_34_046: [If the message callbacks map contains the provided inputName, this function
     // shall return the context associated with that inputName.]
     @Test
-    public void getMessageCallbackContextWithSavedInput(
-            @Mocked final MessageCallback mockCallback)
-            throws URISyntaxException, IOException
+    public void getMessageCallbackContextWithSavedInput(@Mocked final MessageCallback mockCallback) throws URISyntaxException, IOException
     {
         //arrange
         String inputName = "someValidInputName";
@@ -380,13 +362,7 @@ public class DeviceClientConfigTest
         final String deviceId = "test-deviceid";
         final String deviceKey = "test-devicekey";
         final String sharedAccessToken = null;
-        final IotHubConnectionString iotHubConnectionString =
-                Deencapsulation.newInstance(IotHubConnectionString.class,
-                        new Class[] {String.class, String.class, String.class, String.class},
-                        iotHubHostname,
-                        deviceId,
-                        deviceKey,
-                        sharedAccessToken);
+        final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, iotHubHostname, deviceId, deviceKey, sharedAccessToken);
 
         DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, iotHubConnectionString);
         Object context = new Object();
@@ -401,27 +377,19 @@ public class DeviceClientConfigTest
     }
 
     /*
-    **Tests_SRS_DEVICECLIENTCONFIG_25_023: [**The function shall set the DEVICE_TWIN message callback.**] **
-    **Tests_SRS_DEVICECLIENTCONFIG_25_024: [**The function shall set the DEVICE_TWIN message context.**] **
-    **Tests_SRS_DEVICECLIENTCONFIG_25_025: [**The function shall return the current DEVICE_TWIN message callback.**] **
-    **Tests_SRS_DEVICECLIENTCONFIG_25_026: [**The function shall return the current DEVICE_TWIN message context.**] **
+     **Tests_SRS_DEVICECLIENTCONFIG_25_023: [**The function shall set the DEVICE_TWIN message callback.**] **
+     **Tests_SRS_DEVICECLIENTCONFIG_25_024: [**The function shall set the DEVICE_TWIN message context.**] **
+     **Tests_SRS_DEVICECLIENTCONFIG_25_025: [**The function shall return the current DEVICE_TWIN message callback.**] **
+     **Tests_SRS_DEVICECLIENTCONFIG_25_026: [**The function shall return the current DEVICE_TWIN message context.**] **
      */
     @Test
-    public void getAndSetDeviceTwinMessageCallbackAndContextsMatch(
-            @Mocked final MessageCallback mockCallback)
-            throws URISyntaxException, IOException
+    public void getAndSetDeviceTwinMessageCallbackAndContextsMatch(@Mocked final MessageCallback mockCallback) throws URISyntaxException, IOException
     {
         final String iotHubHostname = "test.iothubhostname";
         final String deviceId = "test-deviceid";
         final String deviceKey = "test-devicekey";
         final String sharedAccessToken = null;
-        final IotHubConnectionString iotHubConnectionString =
-                Deencapsulation.newInstance(IotHubConnectionString.class,
-                        new Class[] {String.class, String.class, String.class, String.class},
-                        iotHubHostname,
-                        deviceId,
-                        deviceKey,
-                        sharedAccessToken);
+        final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, iotHubHostname, deviceId, deviceKey, sharedAccessToken);
 
         DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, iotHubConnectionString);
         Object context = new Object();
@@ -434,27 +402,19 @@ public class DeviceClientConfigTest
     }
 
     /*
-    **Tests_SRS_DEVICECLIENTCONFIG_25_022: [**The function shall return the current DeviceMethod message context.**] **
-    **Tests_SRS_DEVICECLIENTCONFIG_25_023: [**The function shall set the DeviceTwin message callback.**] **
-    **Tests_SRS_DEVICECLIENTCONFIG_25_021: [**The function shall return the current DeviceMethod message callback.**] **
-    **Tests_SRS_DEVICECLIENTCONFIG_25_022: [**The function shall return the current DeviceMethod message context.**] **
+     **Tests_SRS_DEVICECLIENTCONFIG_25_022: [**The function shall return the current DeviceMethod message context.**] **
+     **Tests_SRS_DEVICECLIENTCONFIG_25_023: [**The function shall set the DeviceTwin message callback.**] **
+     **Tests_SRS_DEVICECLIENTCONFIG_25_021: [**The function shall return the current DeviceMethod message callback.**] **
+     **Tests_SRS_DEVICECLIENTCONFIG_25_022: [**The function shall return the current DeviceMethod message context.**] **
      */
     @Test
-    public void getAndSetDeviceMethodMessageCallbackAndContextsMatch(
-            @Mocked final MessageCallback mockCallback)
-            throws URISyntaxException, IOException
+    public void getAndSetDeviceMethodMessageCallbackAndContextsMatch(@Mocked final MessageCallback mockCallback) throws URISyntaxException, IOException
     {
         final String iotHubHostname = "test.iothubhostname";
         final String deviceId = "test-deviceid";
         final String deviceKey = "test-devicekey";
         final String sharedAccessToken = null;
-        final IotHubConnectionString iotHubConnectionString =
-                Deencapsulation.newInstance(IotHubConnectionString.class,
-                        new Class[] {String.class, String.class, String.class, String.class},
-                        iotHubHostname,
-                        deviceId,
-                        deviceKey,
-                        sharedAccessToken);
+        final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, iotHubHostname, deviceId, deviceKey, sharedAccessToken);
 
         DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, iotHubConnectionString);
         Object context = new Object();
@@ -468,21 +428,13 @@ public class DeviceClientConfigTest
     }
 
     @Test
-    public void getAndSetDeviceMethodAndTwinMessageCallbackAndContextsMatch(
-            @Mocked final MessageCallback mockCallback)
-            throws URISyntaxException, IOException
+    public void getAndSetDeviceMethodAndTwinMessageCallbackAndContextsMatch(@Mocked final MessageCallback mockCallback) throws URISyntaxException, IOException
     {
         final String iotHubHostname = "test.iothubhostname";
         final String deviceId = "test-deviceid";
         final String deviceKey = "test-devicekey";
         final String sharedAccessToken = null;
-        final IotHubConnectionString iotHubConnectionString =
-                Deencapsulation.newInstance(IotHubConnectionString.class,
-                        new Class[] {String.class, String.class, String.class, String.class},
-                        iotHubHostname,
-                        deviceId,
-                        deviceKey,
-                        sharedAccessToken);
+        final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, iotHubHostname, deviceId, deviceKey, sharedAccessToken);
 
         DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, iotHubConnectionString);
         Object dMContext = new Object();
@@ -502,6 +454,7 @@ public class DeviceClientConfigTest
         assertThat(testContextDM, is(expectedDMContext));
         assertEquals(config.getDeviceMethodsMessageCallback(), mockCallback);
     }
+
     // Tests_SRS_DEVICECLIENTCONFIG_11_012: [The function shall return 240000ms.]
     @Test
     public void getReadTimeoutMillisReturnsConstant() throws URISyntaxException, IOException
@@ -510,13 +463,7 @@ public class DeviceClientConfigTest
         final String deviceId = "test-deviceid";
         final String deviceKey = "test-devicekey";
         final String sharedAccessToken = null;
-        final IotHubConnectionString iotHubConnectionString =
-                Deencapsulation.newInstance(IotHubConnectionString.class,
-                        new Class[] {String.class, String.class, String.class, String.class},
-                        iotHubHostname,
-                        deviceId,
-                        deviceKey,
-                        sharedAccessToken);
+        final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, iotHubHostname, deviceId, deviceKey, sharedAccessToken);
 
         DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, iotHubConnectionString);
         int testReadTimeoutMillis = config.getReadTimeoutMillis();
@@ -533,13 +480,7 @@ public class DeviceClientConfigTest
         final String deviceId = "test-deviceid";
         final String deviceKey = "test-devicekey";
         final String sharedAccessToken = null;
-        final IotHubConnectionString iotHubConnectionString =
-                Deencapsulation.newInstance(IotHubConnectionString.class,
-                        new Class[] {String.class, String.class, String.class, String.class},
-                        iotHubHostname,
-                        deviceId,
-                        deviceKey,
-                        sharedAccessToken);
+        final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, iotHubHostname, deviceId, deviceKey, sharedAccessToken);
 
         DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, iotHubConnectionString);
         config.setUseWebsocket(true);
@@ -554,13 +495,7 @@ public class DeviceClientConfigTest
         final String deviceId = "test-deviceid";
         final String deviceKey = "test-devicekey";
         final String sharedAccessToken = null;
-        final IotHubConnectionString iotHubConnectionString =
-                Deencapsulation.newInstance(IotHubConnectionString.class,
-                        new Class[] {String.class, String.class, String.class, String.class},
-                        iotHubHostname,
-                        deviceId,
-                        deviceKey,
-                        sharedAccessToken);
+        final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, iotHubHostname, deviceId, deviceKey, sharedAccessToken);
 
         DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, iotHubConnectionString);
         config.setUseWebsocket(true);
@@ -569,27 +504,19 @@ public class DeviceClientConfigTest
 
     // Tests_SRS_DEVICECLIENTCONFIG_11_013: [The function shall return 180s.]
     @Test
-    public void getMessageLockTimeoutSecsReturnsConstant()
-            throws URISyntaxException, IOException
+    public void getMessageLockTimeoutSecsReturnsConstant() throws URISyntaxException, IOException
     {
         final String iotHubHostname = "test.iothubhostname";
         final String deviceId = "test-deviceid";
         final String deviceKey = "test-devicekey";
         final String sharedAccessToken = null;
-        final IotHubConnectionString iotHubConnectionString =
-                Deencapsulation.newInstance(IotHubConnectionString.class,
-                        new Class[] {String.class, String.class, String.class, String.class},
-                        iotHubHostname,
-                        deviceId,
-                        deviceKey,
-                        sharedAccessToken);
+        final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, iotHubHostname, deviceId, deviceKey, sharedAccessToken);
 
         DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, iotHubConnectionString);
         int testMessageLockTimeoutSecs = config.getMessageLockTimeoutSecs();
 
         final int expectedMessageLockTimeoutSecs = 180;
-        assertThat(testMessageLockTimeoutSecs,
-                is(expectedMessageLockTimeoutSecs));
+        assertThat(testMessageLockTimeoutSecs, is(expectedMessageLockTimeoutSecs));
     }
 
     // Tests_SRS_DEVICECLIENTCONFIG_21_034: [If the provided `iotHubConnectionString` is null,
@@ -617,7 +544,7 @@ public class DeviceClientConfigTest
     }
 
     //Tests_SRS_DEVICECLIENTCONFIG_34_069: [If the provided connection string is null or does not use x509 auth, and IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithNullConnStringThrows() throws IOException
     {
         //act
@@ -625,7 +552,7 @@ public class DeviceClientConfigTest
     }
 
     //Tests_SRS_DEVICECLIENTCONFIG_34_069: [If the provided connection string is null or does not use x509 auth, and IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithWrongAuthTypeConnStringThrows() throws IOException
     {
         //arrange
@@ -642,7 +569,7 @@ public class DeviceClientConfigTest
     }
 
     // Tests_SRS_DEVICECLIENTCONFIG_12_002: [If the authentication type is X509 the constructor shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithX509AuthThrows(@Mocked final IotHubConnectionString mockIotHubConnectionString) throws IOException
     {
         //act
@@ -650,7 +577,7 @@ public class DeviceClientConfigTest
     }
 
     //Tests_SRS_DEVICECLIENTCONFIG_34_076: [If the provided `iotHubConnectionString` uses x509 authentication, the constructor shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorForSasTokenRejectsX509ConnectionStrings()
     {
         //arrange
@@ -690,19 +617,19 @@ public class DeviceClientConfigTest
     }
 
     //Tests_SRS_DEVICECLIENTCONFIG_34_080: [If the provided connectionString or security provider is null, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void securityProviderConstructorThrowsForNullConnectionString()
     {
         //act
-        Deencapsulation.newInstance(DeviceClientConfig.class, new Class[] {IotHubConnectionString.class, SecurityProvider.class}, null, mockSecurityProvider);
+        Deencapsulation.newInstance(DeviceClientConfig.class, new Class[]{IotHubConnectionString.class, SecurityProvider.class}, null, mockSecurityProvider);
     }
 
     //Tests_SRS_DEVICECLIENTCONFIG_34_080: [If the provided connectionString or security provider is null, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void securityProviderConstructorThrowsForNullSecurityProvider()
     {
         //act
-        Deencapsulation.newInstance(DeviceClientConfig.class, new Class[] {IotHubConnectionString.class, SecurityProvider.class}, mockIotHubConnectionString, null);
+        Deencapsulation.newInstance(DeviceClientConfig.class, new Class[]{IotHubConnectionString.class, SecurityProvider.class}, mockIotHubConnectionString, null);
     }
 
     //Tests_SRS_DEVICECLIENTCONFIG_34_082: [If the provided security provider is a SecurityProviderX509 instance, this function shall set its auth type to X509 and create its IotHubX509AuthenticationProvider instance using the security provider's ssl context.]
@@ -734,7 +661,7 @@ public class DeviceClientConfigTest
         };
 
         //act
-        DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, new Class[] {IotHubConnectionString.class, SecurityProvider.class}, mockIotHubConnectionString, mockSecurityProviderX509);
+        DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, new Class[]{IotHubConnectionString.class, SecurityProvider.class}, mockIotHubConnectionString, mockSecurityProviderX509);
 
         //assert
         new Verifications()
@@ -772,7 +699,7 @@ public class DeviceClientConfigTest
         };
 
         //act
-        DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, new Class[] {IotHubConnectionString.class, SecurityProvider.class}, mockIotHubConnectionString, mockSecurityProviderSAS);
+        DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, new Class[]{IotHubConnectionString.class, SecurityProvider.class}, mockIotHubConnectionString, mockSecurityProviderSAS);
 
         //assert
         new Verifications()
@@ -785,7 +712,7 @@ public class DeviceClientConfigTest
     }
 
     //Tests_SRS_DEVICECLIENTCONFIG_34_084: [If the provided security provider is neither a SecurityProviderX509 instance nor a SecurityProviderTpm instance, this function shall throw an UnsupportedOperationException.]
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void securityProviderConstructorThrowsForUnknownSecurityProviderImplementation() throws SecurityProviderException
     {
         //arrange
@@ -801,7 +728,7 @@ public class DeviceClientConfigTest
         };
 
         //act
-        DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, new Class[] {IotHubConnectionString.class, SecurityProvider.class}, mockIotHubConnectionString, mockSecurityProvider);
+        DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, new Class[]{IotHubConnectionString.class, SecurityProvider.class}, mockIotHubConnectionString, mockSecurityProvider);
     }
 
     //Tests_SRS_DEVICECLIENTCONFIG_28_001: [The class shall have ExponentialBackOff as the default retryPolicy.]
@@ -816,7 +743,7 @@ public class DeviceClientConfigTest
     }
 
     //Tests_SRS_DEVICECLIENTCONFIG_28_002: [This function shall throw IllegalArgumentException retryPolicy is null.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setRetryPolicyThrowsIfNull()
     {
         //arrange
@@ -856,25 +783,25 @@ public class DeviceClientConfigTest
     }
 
     //Tests_SRS_DEVICECLIENTCONFIG_34_030: [If the provided timeout is 0 or negative, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setOperationTimeoutThrowsForNegativeTimeout()
     {
         //arrange
         DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, mockIotHubConnectionString);
 
         //act
-        Deencapsulation.invoke(config, "setOperationTimeout", new Class[] {long.class}, -1);
+        Deencapsulation.invoke(config, "setOperationTimeout", new Class[]{long.class}, -1);
     }
 
     //Tests_SRS_DEVICECLIENTCONFIG_34_030: [If the provided timeout is 0 or negative, this function shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setOperationTimeoutThrowsForZeroTimeout()
     {
         //arrange
         DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, mockIotHubConnectionString);
 
         //act
-        Deencapsulation.invoke(config, "setOperationTimeout", new Class[] {long.class}, 0);
+        Deencapsulation.invoke(config, "setOperationTimeout", new Class[]{long.class}, 0);
     }
 
 
@@ -887,7 +814,7 @@ public class DeviceClientConfigTest
         DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, mockIotHubConnectionString);
 
         //act
-        Deencapsulation.invoke(config, "setOperationTimeout", new Class[] {long.class}, expectedOperationTimeout);
+        Deencapsulation.invoke(config, "setOperationTimeout", new Class[]{long.class}, expectedOperationTimeout);
 
         //assert
         long actualTimeout = Deencapsulation.getField(config, "operationTimeout");

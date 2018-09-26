@@ -39,7 +39,7 @@ public class TransportClientTest
     RetryPolicy mockRetryPolicy;
 
     // Tests_SRS_TRANSPORTCLIENT_12_001: [If the `protocol` is not valid, the constructor shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsProtocolMQTT()
     {
         // arrange
@@ -50,7 +50,7 @@ public class TransportClientTest
     }
 
     // Tests_SRS_TRANSPORTCLIENT_12_001: [If the `protocol` is not valid, the constructor shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsProtocolMQTT_WS()
     {
         // arrange
@@ -61,7 +61,7 @@ public class TransportClientTest
     }
 
     // Tests_SRS_TRANSPORTCLIENT_12_001: [If the `protocol` is not valid, the constructor shall throw an IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsProtocolHTTPS()
     {
         // arrange
@@ -94,7 +94,7 @@ public class TransportClientTest
     }
 
     // Tests_SRS_TRANSPORTCLIENT_12_008: [The function shall throw  IllegalStateException if the connection is already open.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void openThrowsIfConnectionIsAlreadyOpen() throws IOException
     {
         // arrange
@@ -175,7 +175,7 @@ public class TransportClientTest
 
         // assert
         final ArrayList<DeviceClient> actualDeviceClientList = Deencapsulation.getField(transportClient, "deviceClientList");
-        final DeviceIO actualDeviceIO =  Deencapsulation.getField(transportClient, "deviceIO");
+        final DeviceIO actualDeviceIO = Deencapsulation.getField(transportClient, "deviceIO");
 
         assertNotNull(actualDeviceIO);
         new Verifications()
@@ -248,7 +248,7 @@ public class TransportClientTest
     }
 
     // Tests_SRS_TRANSPORTCLIENT_12_017: [The function shall throw IllegalArgumentException if the newIntervalInMilliseconds parameter is less or equql to zero.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setSendIntervalThrowsNegativeNumber() throws IOException
     {
         // arrange
@@ -261,7 +261,7 @@ public class TransportClientTest
     }
 
     // Tests_SRS_TRANSPORTCLIENT_12_023: [The function shall throw  IllegalStateException if the connection is already open.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void setSendIntervalThrowsAlreadyOpenState() throws IOException
     {
         // arrange
@@ -276,7 +276,7 @@ public class TransportClientTest
     }
 
     // Tests_SRS_TRANSPORTCLIENT_12_023: [The function shall throw  IllegalStateException if the connection is already open.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void setSendIntervalThrowsAlreadyOpenIO() throws IOException
     {
         // arrange
@@ -312,7 +312,7 @@ public class TransportClientTest
     }
 
     // Tests_SRS_TRANSPORTCLIENT_12_005: [The function shall throw  IllegalArgumentException if the deviceClient parameter is null.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void registerDeviceClientThrowsDeviceClientNull()
     {
         // arrange
@@ -320,11 +320,11 @@ public class TransportClientTest
         TransportClient transportClient = new TransportClient(iotHubClientProtocol);
 
         // act
-        Deencapsulation.invoke(transportClient, "registerDeviceClient", (DeviceClient)null);
+        Deencapsulation.invoke(transportClient, "registerDeviceClient", (DeviceClient) null);
     }
 
     // Tests_SRS_TRANSPORTCLIENT_12_006: [The function shall throw  IllegalStateException if the connection is already open.]
-    @Test (expected = IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void registerDeviceClientThrowsOpen()
     {
         // arrange
@@ -379,7 +379,7 @@ public class TransportClientTest
     }
 
     // Tests_SRS_TRANSPORTCLIENT_28_001: [The function shall throw UnsupportedOperationException if there is no registered device client]
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void setRetryPolicyDoNothingIfNoRegisteredDeviceClient()
     {
         // arrange

@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class PairTest
 {
     /*
-    **Tests_SRS_Pair_25_001: [**The constructor shall save the key and value representing this Pair.**]**
+     **Tests_SRS_Pair_25_001: [**The constructor shall save the key and value representing this Pair.**]**
      */
     @Test
     public void constructorSetsKeyAndValue()
@@ -25,7 +25,7 @@ public class PairTest
     }
 
     /*
-    **Tests_SRS_Pair_25_002: [**The function shall return the value of the key corresponding to this Pair.**]**
+     **Tests_SRS_Pair_25_002: [**The function shall return the value of the key corresponding to this Pair.**]**
      */
     @Test
     public void getKeyGets()
@@ -38,7 +38,7 @@ public class PairTest
     }
 
     /*
-    **Tests_SRS_Pair_25_003: [**The function shall return the value for this Pair.**]**
+     **Tests_SRS_Pair_25_003: [**The function shall return the value for this Pair.**]**
      */
     @Test
     public void getValueGets()
@@ -51,7 +51,7 @@ public class PairTest
     }
 
     /*
-    **Tests_SRS_Pair_25_004: [**The function shall overwrite the new value for old and return old value.**]**
+     **Tests_SRS_Pair_25_004: [**The function shall overwrite the new value for old and return old value.**]**
      */
     @Test
     public void setValueSets()

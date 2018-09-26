@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package tests.unit.com.microsoft.azure.sdk.iot.device.auth;
 
@@ -42,7 +42,12 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
     private static final String gatewayHostname = "gateway";
     private static final String deviceId = "deviceId";
     private static final String moduleId = "moduleId";
-
+    @Mocked
+    IotHubSSLContext mockIotHubSSLContext;
+    @Mocked
+    IotHubX509 mockIotHubX509;
+    @Mocked
+    SSLContext mockSSLContext;
 
     private void commonExpectations() throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyManagementException, KeyStoreException, IOException
     {
@@ -57,10 +62,6 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
         };
     }
 
-    @Mocked IotHubSSLContext mockIotHubSSLContext;
-    @Mocked IotHubX509 mockIotHubX509;
-    @Mocked SSLContext mockSSLContext;
-
     //Tests_SRS_IOTHUBX509AUTHENTICATION_34_002: [This constructor will create and save an IotHubX509 object using the provided public key certificate and private key.]
     @Test
     public void constructorSuccessCertStringKeyString() throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, IOException, KeyManagementException, KeyStoreException
@@ -72,7 +73,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(IotHubX509.class, new Class[] {String.class, boolean.class, String.class, boolean.class}, publicKeyCertificate, false, privateKey, false);
+                Deencapsulation.newInstance(IotHubX509.class, new Class[]{String.class, boolean.class, String.class, boolean.class}, publicKeyCertificate, false, privateKey, false);
                 times = 1;
             }
         };
@@ -89,7 +90,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(IotHubX509.class, new Class[] {String.class, boolean.class, String.class, boolean.class}, publicKeyCertificate, true, privateKey, false);
+                Deencapsulation.newInstance(IotHubX509.class, new Class[]{String.class, boolean.class, String.class, boolean.class}, publicKeyCertificate, true, privateKey, false);
                 times = 1;
             }
         };
@@ -106,7 +107,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(IotHubX509.class, new Class[] {String.class, boolean.class, String.class, boolean.class}, publicKeyCertificate, false, privateKey, true);
+                Deencapsulation.newInstance(IotHubX509.class, new Class[]{String.class, boolean.class, String.class, boolean.class}, publicKeyCertificate, false, privateKey, true);
                 times = 1;
             }
         };
@@ -123,7 +124,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(IotHubX509.class, new Class[] {String.class, boolean.class, String.class, boolean.class}, publicKeyCertificate, true, privateKey, true);
+                Deencapsulation.newInstance(IotHubX509.class, new Class[]{String.class, boolean.class, String.class, boolean.class}, publicKeyCertificate, true, privateKey, true);
                 times = 1;
             }
         };
@@ -168,7 +169,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {String.class, String.class, String.class, boolean.class}, publicKeyCertificate, privateKey, expectedCert, false);
+                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{String.class, String.class, String.class, boolean.class}, publicKeyCertificate, privateKey, expectedCert, false);
                 times = 1;
             }
         };
@@ -191,7 +192,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {String.class, String.class, String.class, boolean.class}, publicKeyCertificate, privateKey, expectedCertPath, true);
+                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{String.class, String.class, String.class, boolean.class}, publicKeyCertificate, privateKey, expectedCertPath, true);
                 times = 1;
             }
         };
@@ -212,7 +213,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {String.class, String.class}, publicKeyCertificate, privateKey);
+                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{String.class, String.class}, publicKeyCertificate, privateKey);
                 times = 1;
             }
         };
@@ -257,7 +258,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
     }
 
     //Tests_SRS_IOTHUBX509SOFTWAREAUTHENTICATION_34_004: [If the security provider throws a SecurityProviderException while generating an SSLContext, this function shall throw an IOException.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void getSSLContextThrowsIOExceptionIfExceptionEncountered() throws SecurityProviderException, IOException, TransportException
     {
         //arrange
@@ -266,7 +267,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {String.class, String.class});
+                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{String.class, String.class});
                 result = mockIotHubSSLContext;
 
                 Deencapsulation.invoke(mockIotHubSSLContext, "getSSLContext");
@@ -289,7 +290,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
         new NonStrictExpectations()
         {
             {
-                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[] {String.class, String.class});
+                Deencapsulation.newInstance(IotHubSSLContext.class, new Class[]{String.class, String.class});
                 result = mockIotHubSSLContext;
 
                 Deencapsulation.invoke(mockIotHubSSLContext, "getSSLContext");

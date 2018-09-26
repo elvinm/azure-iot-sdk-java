@@ -11,9 +11,9 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Representation of a single File Upload request with a Json serializer.
  * Ex of JSON format:
- *  {
- *      "blobName": "{name of the file for which a SAS URI will be generated}"
- *  }
+ * {
+ * "blobName": "{name of the file for which a SAS URI will be generated}"
+ * }
  */
 public class FileUploadRequestParser
 {
@@ -40,6 +40,14 @@ public class FileUploadRequestParser
     }
 
     /**
+     * Empty constructor: Used only to keep GSON happy.
+     */
+    @SuppressWarnings("unused")
+    FileUploadRequestParser()
+    {
+    }
+
+    /**
      * Convert this class in a valid json.
      *
      * @return a valid json that represents the content of this class.
@@ -50,13 +58,5 @@ public class FileUploadRequestParser
 
         /* Codes_SRS_FILE_UPLOAD_REQUEST_21_004: [The toJson shall return a string with a json that represents the contend of the FileUploadResponseParser.] */
         return gson.toJson(this);
-    }
-
-    /**
-     * Empty constructor: Used only to keep GSON happy.
-     */
-    @SuppressWarnings("unused")
-    FileUploadRequestParser()
-    {
     }
 }

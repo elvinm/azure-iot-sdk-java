@@ -20,26 +20,26 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Service client example for:
- *  - sending message to the device
- *  - waiting and receive feedback from the device
+ * - sending message to the device
+ * - waiting and receive feedback from the device
  */
 public class ServiceClientSample
 {
 
     private static final String connectionString = "[Connection string goes here]";
     private static final String deviceId = "[Device name goes here]";
-    
-    /** Choose iotHubServiceClientProtocol */
-    private static final IotHubServiceClientProtocol protocol = IotHubServiceClientProtocol.AMQPS;
-//  private static final IotHubServiceClientProtocol protocol = IotHubServiceClientProtocol.AMQPS_WS;
 
+    /**
+     * Choose iotHubServiceClientProtocol
+     */
+    private static final IotHubServiceClientProtocol protocol = IotHubServiceClientProtocol.AMQPS;
+    //  private static final IotHubServiceClientProtocol protocol = IotHubServiceClientProtocol.AMQPS_WS;
+    private static final int MAX_COMMANDS_TO_SEND = 5; // maximum commands to send in a loop
+    private static final int RECEIVER_TIMEOUT = 10000; // Timeout in ms
     private static ServiceClient serviceClient = null;
     private static FeedbackReceiver feedbackReceiver = null;
     private static FileUploadNotificationReceiver fileUploadNotificationReceiver = null;
-    
-    private static final int MAX_COMMANDS_TO_SEND = 5; // maximum commands to send in a loop
-    private static final int RECEIVER_TIMEOUT = 10000; // Timeout in ms
- 
+
     /**
      * @param args
      * @throws IOException
@@ -58,13 +58,15 @@ public class ServiceClientSample
         {
             sendMultipleCommandsAndReadFromTheFeedbackReceiver();
         }
-        catch(UnsupportedEncodingException e)
-        {
-           System.out.println("Exception:" + e.getMessage());
-        } catch (InterruptedException e) 
+        catch (UnsupportedEncodingException e)
         {
             System.out.println("Exception:" + e.getMessage());
-        } catch (ExecutionException e) 
+        }
+        catch (InterruptedException e)
+        {
+            System.out.println("Exception:" + e.getMessage());
+        }
+        catch (ExecutionException e)
         {
             System.out.println("Exception:" + e.getMessage());
         }
@@ -164,13 +166,13 @@ public class ServiceClientSample
         fileUploadNotificationReceiver = null;
         System.out.println("********* Successfully closed fileUploadNotificationReceiver.");
     }
-    
-     protected static void sendMultipleCommandsAndReadFromTheFeedbackReceiver() throws ExecutionException, InterruptedException, UnsupportedEncodingException
-     {
+
+    protected static void sendMultipleCommandsAndReadFromTheFeedbackReceiver() throws ExecutionException, InterruptedException, UnsupportedEncodingException
+    {
         List<CompletableFuture<Void>> futureList = new ArrayList<CompletableFuture<Void>>();
         Map<String, String> propertiesToSend = new HashMap<String, String>();
-        String commandMessage = "Cloud to Device Message: "; 
-        
+        String commandMessage = "Cloud to Device Message: ";
+
         System.out.println("sendMultipleCommandsAndReadFromTheFeedbackReceiver: Send count is : " + MAX_COMMANDS_TO_SEND);
 
         for (int i = 0; i < MAX_COMMANDS_TO_SEND; i++)
@@ -202,7 +204,7 @@ public class ServiceClientSample
             }
             catch (ExecutionException e)
             {
-                if (e.getCause() instanceof  IotHubDeviceMaximumQueueDepthExceededException)
+                if (e.getCause() instanceof IotHubDeviceMaximumQueueDepthExceededException)
                 {
                     System.out.println("Maximum queue depth reached");
                 }
@@ -216,14 +218,14 @@ public class ServiceClientSample
 
         System.out.println("Waiting for the feedback...");
         CompletableFuture<FeedbackBatch> future = feedbackReceiver.receiveAsync(); // Default timeout is 60 seconds. [DEFAULT_TIMEOUT_MS = 60000]
-        FeedbackBatch feedbackBatch = future.get(); 
+        FeedbackBatch feedbackBatch = future.get();
 
         if (feedbackBatch != null) // check if any feedback was received
         {
             System.out.println(" Feedback received, feedback time: " + feedbackBatch.getEnqueuedTimeUtc());
             System.out.println(" Record size: " + feedbackBatch.getRecords().size());
-            
-            for (int i=0; i < feedbackBatch.getRecords().size(); i++)
+
+            for (int i = 0; i < feedbackBatch.getRecords().size(); i++)
             {
                 System.out.println(" Messsage id : " + feedbackBatch.getRecords().get(i).getOriginalMessageId());
                 System.out.println(" Device id : " + feedbackBatch.getRecords().get(i).getDeviceId());

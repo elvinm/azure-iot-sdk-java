@@ -29,6 +29,27 @@ public abstract class IotHubAuthenticationProvider
     protected String iotHubTrustedCert;
     protected String pathToIotHubTrustedCert;
 
+    public IotHubAuthenticationProvider(String hostname, String gatewayHostname, String deviceId, String moduleId)
+    {
+        if (hostname == null || hostname.isEmpty())
+        {
+            // Codes_SRS_AUTHENTICATIONPROVIDER_34_006: [If the provided hostname is null, this function shall throw an IllegalArgumentException.]
+            throw new IllegalArgumentException("hostname cannot be null");
+        }
+
+        if (deviceId == null || deviceId.isEmpty())
+        {
+            // Codes_SRS_AUTHENTICATIONPROVIDER_34_007: [If the provided device id is null, this function shall throw an IllegalArgumentException.]
+            throw new IllegalArgumentException("deviceId cannot be null");
+        }
+
+        // Codes_SRS_AUTHENTICATIONPROVIDER_34_001: [The constructor shall save the provided hostname, gatewayhostname, deviceid and moduleid.]
+        this.hostname = hostname;
+        this.gatewayHostname = gatewayHostname;
+        this.deviceId = deviceId;
+        this.moduleId = moduleId;
+    }
+
     public SSLContext getSSLContext() throws IOException
     {
         try
@@ -51,60 +72,8 @@ public abstract class IotHubAuthenticationProvider
     }
 
     /**
-     * Setter for the providing trusted certificate.
-     * @param pathToCertificate path to the certificate for one way authentication.
-     */
-    public void setPathToIotHubTrustedCert(String pathToCertificate)
-    {
-        if (this.pathToIotHubTrustedCert == null || !this.pathToIotHubTrustedCert.equals(pathToCertificate))
-        {
-            //Codes_SRS_AUTHENTICATIONPROVIDER_34_030: [If the provided pathToCertificate is different than the saved path, this function shall set sslContextNeedsRenewal to true.]
-            this.sslContextNeedsUpdate = true;
-        }
-
-        //Codes_SRS_AUTHENTICATIONPROVIDER_34_059: [This function shall save the provided iotHubTrustedCert.]
-        this.pathToIotHubTrustedCert = pathToCertificate;
-    }
-
-    /**
-     * Setter for the user trusted certificate
-     * @param certificate valid user trusted certificate string
-     */
-    public void setIotHubTrustedCert(String certificate)
-    {
-        if (this.iotHubTrustedCert == null || !this.iotHubTrustedCert.equals(certificate))
-        {
-            //Codes_SRS_AUTHENTICATIONPROVIDER_34_031: [If the provided certificate is different than the saved certificate, this function shall set sslContextNeedsRenewal to true.]
-            this.sslContextNeedsUpdate = true;
-        }
-
-        // Codes_SRS_AUTHENTICATIONPROVIDER_34_064: [This function shall save the provided pathToIotHubTrustedCert.]
-        this.iotHubTrustedCert = certificate;
-    }
-
-    public IotHubAuthenticationProvider(String hostname, String gatewayHostname, String deviceId, String moduleId)
-    {
-        if (hostname == null || hostname.isEmpty())
-        {
-            // Codes_SRS_AUTHENTICATIONPROVIDER_34_006: [If the provided hostname is null, this function shall throw an IllegalArgumentException.]
-            throw new IllegalArgumentException("hostname cannot be null");
-        }
-
-        if (deviceId == null || deviceId.isEmpty())
-        {
-            // Codes_SRS_AUTHENTICATIONPROVIDER_34_007: [If the provided device id is null, this function shall throw an IllegalArgumentException.]
-            throw new IllegalArgumentException("deviceId cannot be null");
-        }
-
-        // Codes_SRS_AUTHENTICATIONPROVIDER_34_001: [The constructor shall save the provided hostname, gatewayhostname, deviceid and moduleid.]
-        this.hostname = hostname;
-        this.gatewayHostname = gatewayHostname;
-        this.deviceId = deviceId;
-        this.moduleId = moduleId;
-    }
-
-    /**
      * Get the hostname
+     *
      * @return the saved hostname
      */
     public String getHostname()
@@ -115,6 +84,7 @@ public abstract class IotHubAuthenticationProvider
 
     /**
      * Get the gatewayHostname
+     *
      * @return the saved gatewayHostname
      */
     public String getGatewayHostname()
@@ -125,6 +95,7 @@ public abstract class IotHubAuthenticationProvider
 
     /**
      * Get the deviceId
+     *
      * @return the saved deviceId
      */
     public String getDeviceId()
@@ -135,6 +106,7 @@ public abstract class IotHubAuthenticationProvider
 
     /**
      * Get the module id
+     *
      * @return the saved module id
      */
     public String getModuleId()
@@ -149,10 +121,44 @@ public abstract class IotHubAuthenticationProvider
         return this.iotHubTrustedCert;
     }
 
+    /**
+     * Setter for the user trusted certificate
+     *
+     * @param certificate valid user trusted certificate string
+     */
+    public void setIotHubTrustedCert(String certificate)
+    {
+        if (this.iotHubTrustedCert == null || !this.iotHubTrustedCert.equals(certificate))
+        {
+            //Codes_SRS_AUTHENTICATIONPROVIDER_34_031: [If the provided certificate is different than the saved certificate, this function shall set sslContextNeedsRenewal to true.]
+            this.sslContextNeedsUpdate = true;
+        }
+
+        // Codes_SRS_AUTHENTICATIONPROVIDER_34_064: [This function shall save the provided pathToIotHubTrustedCert.]
+        this.iotHubTrustedCert = certificate;
+    }
+
     public String getPathToIotHubTrustedCert()
     {
         // Codes_SRS_AUTHENTICATIONPROVIDER_34_009: [This function shall return the saved pathToIotHubTrustedCert.]
         return this.pathToIotHubTrustedCert;
+    }
+
+    /**
+     * Setter for the providing trusted certificate.
+     *
+     * @param pathToCertificate path to the certificate for one way authentication.
+     */
+    public void setPathToIotHubTrustedCert(String pathToCertificate)
+    {
+        if (this.pathToIotHubTrustedCert == null || !this.pathToIotHubTrustedCert.equals(pathToCertificate))
+        {
+            //Codes_SRS_AUTHENTICATIONPROVIDER_34_030: [If the provided pathToCertificate is different than the saved path, this function shall set sslContextNeedsRenewal to true.]
+            this.sslContextNeedsUpdate = true;
+        }
+
+        //Codes_SRS_AUTHENTICATIONPROVIDER_34_059: [This function shall save the provided iotHubTrustedCert.]
+        this.pathToIotHubTrustedCert = pathToCertificate;
     }
 
     private IotHubSSLContext generateSSLContext() throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException

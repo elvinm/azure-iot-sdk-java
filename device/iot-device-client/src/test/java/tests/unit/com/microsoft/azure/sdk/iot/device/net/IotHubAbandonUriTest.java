@@ -15,19 +15,21 @@ import java.net.URISyntaxException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/** Unit tests for IotHubAbandonUri. */
+/**
+ * Unit tests for IotHubAbandonUri.
+ */
 public class IotHubAbandonUriTest
 {
-    @Mocked IotHubUri mockIotHubUri;
-
-    /** The e-tag will be interpolated where the '%s' is placed. */
-    protected static String ABANDON_PATH_FORMAT =
-            "/messages/devicebound/%s/abandon";
+    /**
+     * The e-tag will be interpolated where the '%s' is placed.
+     */
+    protected static String ABANDON_PATH_FORMAT = "/messages/devicebound/%s/abandon";
+    @Mocked
+    IotHubUri mockIotHubUri;
 
     // Tests_SRS_IOTHUBABANDONURI_11_001: [The constructor returns a URI with the format "[iotHubHostname]/devices/[deviceId]/messages/devicebound/[eTag]/abandon?api-version=2016-02-03".]
     @Test
-    public void constructorConstructsIotHubUriCorrectly()
-            throws URISyntaxException
+    public void constructorConstructsIotHubUriCorrectly() throws URISyntaxException
     {
         final String iotHubHostname = "test.iothub";
         final String deviceId = "test-deviceid";
@@ -59,8 +61,7 @@ public class IotHubAbandonUriTest
                 result = uriStr;
             }
         };
-        IotHubAbandonUri abandonUri =
-                new IotHubAbandonUri(iotHubHostname, deviceId, eTag, null);
+        IotHubAbandonUri abandonUri = new IotHubAbandonUri(iotHubHostname, deviceId, eTag, null);
 
         String testUriStr = abandonUri.toString();
 
@@ -83,8 +84,7 @@ public class IotHubAbandonUriTest
                 result = hostname;
             }
         };
-        IotHubAbandonUri abandonUri =
-                new IotHubAbandonUri(iotHubHostname, deviceId, eTag, null);
+        IotHubAbandonUri abandonUri = new IotHubAbandonUri(iotHubHostname, deviceId, eTag, null);
 
         String testHostname = abandonUri.getHostname();
 
@@ -107,8 +107,7 @@ public class IotHubAbandonUriTest
                 result = path;
             }
         };
-        IotHubAbandonUri abandonUri =
-                new IotHubAbandonUri(iotHubHostname, deviceId, eTag, null);
+        IotHubAbandonUri abandonUri = new IotHubAbandonUri(iotHubHostname, deviceId, eTag, null);
 
         String testPath = abandonUri.getPath();
 

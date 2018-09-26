@@ -25,21 +25,17 @@ import static org.junit.Assert.assertNotNull;
  */
 public class ProvisioningServiceClientTest
 {
+    private static final String PROVISIONING_CONNECTION_STRING = "HostName=valid-host-name.azure-devices-provisioning.net;SharedAccessKeyName=valid-key-name;SharedAccessKey=0000000000000000000000000000000000000000000=";
     @Mocked
     private ProvisioningConnectionString mockedProvisioningConnectionString;
-
     @Mocked
     private ContractApiHttp mockedContractApiHttp;
-
     @Mocked
     private ProvisioningConnectionStringBuilder mockedProvisioningConnectionStringBuilder;
-
     @Mocked
     private IndividualEnrollmentManager mockedIndividualEnrollmentManager;
-
     @Mocked
     private EnrollmentGroupManager mockedEnrollmentGroupManager;
-
     @Mocked
     private RegistrationStatusManager mockedRegistrationStatusManager;
 
@@ -63,8 +59,6 @@ public class ProvisioningServiceClientTest
 
         return ProvisioningServiceClient.createFromConnectionString(PROVISIONING_CONNECTION_STRING);
     }
-
-    private static final String PROVISIONING_CONNECTION_STRING = "HostName=valid-host-name.azure-devices-provisioning.net;SharedAccessKeyName=valid-key-name;SharedAccessKey=0000000000000000000000000000000000000000000=";
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_001: [The createFromConnectionString shall create a new instance of this class using the provided connectionString.] */
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_004: [The constructor shall create a new instance of the contractApiHttp class using the provided connectionString.] */
@@ -104,7 +98,7 @@ public class ProvisioningServiceClientTest
     }
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_002: [The constructor shall throw IllegalArgumentException if the provided connectionString is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void factoryThrowsOnConnectionStringNull()
     {
         // arrange
@@ -115,7 +109,7 @@ public class ProvisioningServiceClientTest
     }
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_002: [The constructor shall throw IllegalArgumentException if the provided connectionString is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void factoryThrowsOnConnectionStringEmpty()
     {
         // arrange
@@ -126,7 +120,7 @@ public class ProvisioningServiceClientTest
     }
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_003: [The constructor shall throw IllegalArgumentException if the ProvisioningConnectionString or one of the inner Managers failed to create a new instance.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void factoryThrowsOnProvisioningConnectionStringFail()
     {
         // arrange
@@ -147,7 +141,7 @@ public class ProvisioningServiceClientTest
     }
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_003: [The constructor shall throw IllegalArgumentException if the ProvisioningConnectionString or one of the inner Managers failed to create a new instance.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void factoryThrowsOnContractApiHttpFail()
     {
         // arrange
@@ -171,7 +165,7 @@ public class ProvisioningServiceClientTest
     }
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_003: [The constructor shall throw IllegalArgumentException if the ProvisioningConnectionString or one of the inner Managers failed to create a new instance.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void factoryThrowsOnIndividualEnrollmentManagerFail()
     {
         // arrange
@@ -198,7 +192,7 @@ public class ProvisioningServiceClientTest
     }
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_003: [The constructor shall throw IllegalArgumentException if the ProvisioningConnectionString or one of the inner Managers failed to create a new instance.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void factoryThrowsOnEnrollmentGroupManagerFail()
     {
         // arrange
@@ -228,7 +222,7 @@ public class ProvisioningServiceClientTest
     }
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_003: [The constructor shall throw IllegalArgumentException if the ProvisioningConnectionString or one of the inner Managers failed to create a new instance.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void factoryThrowsOnRegistrationStatusManagerFail()
     {
         // arrange
@@ -262,9 +256,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_008: [The createOrUpdateIndividualEnrollment shall create a new Provisioning enrollment by calling the createOrUpdate in the individualEnrollmentManager.] */
     @Test
-    public void createOrUpdateIndividualEnrollmentSucceed(
-            @Mocked final IndividualEnrollment mockedIndividualEnrollment)
-            throws ProvisioningServiceClientException
+    public void createOrUpdateIndividualEnrollmentSucceed(@Mocked final IndividualEnrollment mockedIndividualEnrollment) throws ProvisioningServiceClientException
     {
         // arrange
         ProvisioningServiceClient provisioningServiceClient = createClient();
@@ -286,10 +278,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_009: [The runBulkEnrollmentOperation shall do a Provisioning operation over individualEnrollment by calling the bulkOperation in the individualEnrollmentManager.] */
     @Test
-    public void runBulkEnrollmentOperationSucceed(
-            @Mocked final IndividualEnrollment mockedIndividualEnrollment,
-            @Mocked final BulkEnrollmentOperationResult mockedBulkEnrollmentOperationResult)
-            throws ProvisioningServiceClientException
+    public void runBulkEnrollmentOperationSucceed(@Mocked final IndividualEnrollment mockedIndividualEnrollment, @Mocked final BulkEnrollmentOperationResult mockedBulkEnrollmentOperationResult) throws ProvisioningServiceClientException
     {
         // arrange
         final List<IndividualEnrollment> individualEnrollments = new LinkedList<>();
@@ -313,9 +302,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_010: [The getIndividualEnrollment shall retrieve the individualEnrollment information for the provided registrationId by calling the get in the individualEnrollmentManager.] */
     @Test
-    public void getIndividualEnrollmentSucceed(
-            @Mocked final IndividualEnrollment mockedIndividualEnrollment)
-            throws ProvisioningServiceClientException
+    public void getIndividualEnrollmentSucceed(@Mocked final IndividualEnrollment mockedIndividualEnrollment) throws ProvisioningServiceClientException
     {
         // arrange
         final String registrationId = "valid-registration-id";
@@ -338,9 +325,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_011: [The deleteIndividualEnrollment shall delete the individualEnrollment for the provided enrollment by calling the delete in the individualEnrollmentManager.] */
     @Test
-    public void deleteIndividualEnrollmentWithEnrollmentSucceed(
-            @Mocked final IndividualEnrollment mockedIndividualEnrollment)
-            throws ProvisioningServiceClientException
+    public void deleteIndividualEnrollmentWithEnrollmentSucceed(@Mocked final IndividualEnrollment mockedIndividualEnrollment) throws ProvisioningServiceClientException
     {
         // arrange
         ProvisioningServiceClient provisioningServiceClient = createClient();
@@ -360,8 +345,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_012: [The deleteIndividualEnrollment shall delete the individualEnrollment for the provided registrationId by calling the delete in the individualEnrollmentManager.] */
     @Test
-    public void deleteIndividualEnrollmentWithRegistrationIdSucceed()
-            throws ProvisioningServiceClientException
+    public void deleteIndividualEnrollmentWithRegistrationIdSucceed() throws ProvisioningServiceClientException
     {
         // arrange
         final String registrationId = "valid-registration-id";
@@ -382,8 +366,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_013: [The deleteIndividualEnrollment shall delete the individualEnrollment for the provided registrationId and etag by calling the delete in the individualEnrollmentManager.] */
     @Test
-    public void deleteIndividualEnrollmentWithRegistrationIdAndEtagSucceed()
-            throws ProvisioningServiceClientException
+    public void deleteIndividualEnrollmentWithRegistrationIdAndEtagSucceed() throws ProvisioningServiceClientException
     {
         // arrange
         final String registrationId = "valid-registration-id";
@@ -405,9 +388,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_014: [The createIndividualEnrollmentQuery shall create a new individual enrolment query by calling the createQuery in the individualEnrollmentManager.] */
     @Test
-    public void createIndividualEnrollmentQuerySucceed(
-            @Mocked final QuerySpecification mockedQuerySpecification)
-            throws ProvisioningServiceClientException
+    public void createIndividualEnrollmentQuerySucceed(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
     {
         // arrange
         ProvisioningServiceClient provisioningServiceClient = createClient();
@@ -428,9 +409,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_015: [The createIndividualEnrollmentQuery shall create a new individual enrolment query by calling the createQuery in the individualEnrollmentManager.] */
     @Test
-    public void createIndividualEnrollmentQueryWithPageSizeSucceed(
-            @Mocked final QuerySpecification mockedQuerySpecification)
-            throws ProvisioningServiceClientException
+    public void createIndividualEnrollmentQueryWithPageSizeSucceed(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
     {
         // arrange
         ProvisioningServiceClient provisioningServiceClient = createClient();
@@ -451,9 +430,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_016: [The createOrUpdateEnrollmentGroup shall create a new Provisioning enrollmentGroup by calling the createOrUpdate in the enrollmentGroupManager.] */
     @Test
-    public void createOrUpdateEnrollmentGroupSucceed(
-            @Mocked final EnrollmentGroup mockedEnrollmentGroup)
-            throws ProvisioningServiceClientException
+    public void createOrUpdateEnrollmentGroupSucceed(@Mocked final EnrollmentGroup mockedEnrollmentGroup) throws ProvisioningServiceClientException
     {
         // arrange
         ProvisioningServiceClient provisioningServiceClient = createClient();
@@ -475,9 +452,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_017: [The getEnrollmentGroup shall retrieve the enrollmentGroup information for the provided enrollmentGroupId by calling the get in the enrollmentGroupManager.] */
     @Test
-    public void getEnrollmentGroupSucceed(
-            @Mocked final EnrollmentGroup mockedEnrollmentGroup)
-            throws ProvisioningServiceClientException
+    public void getEnrollmentGroupSucceed(@Mocked final EnrollmentGroup mockedEnrollmentGroup) throws ProvisioningServiceClientException
     {
         // arrange
         final String enrollmentGroupId = "valid-enrollmentGroupId";
@@ -500,9 +475,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_018: [The deleteEnrollmentGroup shall delete the enrollmentGroup for the provided enrollmentGroup by calling the delete in the enrollmentGroupManager.] */
     @Test
-    public void deleteEnrollmentGroupWithEnrollmentGroupSucceed(
-            @Mocked final EnrollmentGroup mockedEnrollmentGroup)
-            throws ProvisioningServiceClientException
+    public void deleteEnrollmentGroupWithEnrollmentGroupSucceed(@Mocked final EnrollmentGroup mockedEnrollmentGroup) throws ProvisioningServiceClientException
     {
         // arrange
         ProvisioningServiceClient provisioningServiceClient = createClient();
@@ -522,8 +495,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_019: [The deleteEnrollmentGroup shall delete the enrollmentGroup for the provided enrollmentGroupId by calling the delete in the enrollmentGroupManager.] */
     @Test
-    public void deleteEnrollmentGroupWithEnrollmentGroupIdSucceed()
-            throws ProvisioningServiceClientException
+    public void deleteEnrollmentGroupWithEnrollmentGroupIdSucceed() throws ProvisioningServiceClientException
     {
         // arrange
         final String enrollmentGroupId = "valid-enrollmentGroupId";
@@ -544,8 +516,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_020: [The deleteEnrollmentGroup shall delete the enrollmentGroup for the provided enrollmentGroupId and eTag by calling the delete in the enrollmentGroupManager.] */
     @Test
-    public void deleteEnrollmentGroupWithEnrollmentGroupIdAndEtagSucceed()
-            throws ProvisioningServiceClientException
+    public void deleteEnrollmentGroupWithEnrollmentGroupIdAndEtagSucceed() throws ProvisioningServiceClientException
     {
         // arrange
         final String enrollmentGroupId = "valid-enrollmentGroupId";
@@ -567,9 +538,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_021: [The createEnrollmentGroupQuery shall create a new enrolmentGroup query by calling the createQuery in the enrollmentGroupManager.] */
     @Test
-    public void createEnrollmentGroupQuerySucceed(
-            @Mocked final QuerySpecification mockedQuerySpecification)
-            throws ProvisioningServiceClientException
+    public void createEnrollmentGroupQuerySucceed(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
     {
         // arrange
         ProvisioningServiceClient provisioningServiceClient = createClient();
@@ -590,9 +559,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_022: [The createEnrollmentGroupQuery shall create a new enrolmentGroup query by calling the createQuery in the enrollmentGroupManager.] */
     @Test
-    public void createEnrollmentGroupQueryWithPageSizeSucceed(
-            @Mocked final QuerySpecification mockedQuerySpecification)
-            throws ProvisioningServiceClientException
+    public void createEnrollmentGroupQueryWithPageSizeSucceed(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
     {
         // arrange
         ProvisioningServiceClient provisioningServiceClient = createClient();
@@ -613,9 +580,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_023: [The getDeviceRegistrationState shall retrieve the deviceRegistrationState information for the provided id by calling the get in the registrationStatusManager.] */
     @Test
-    public void getDeviceRegistrationStateSucceed(
-            @Mocked final DeviceRegistrationState mockedDeviceRegistrationState)
-            throws ProvisioningServiceClientException
+    public void getDeviceRegistrationStateSucceed(@Mocked final DeviceRegistrationState mockedDeviceRegistrationState) throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "valid-id";
@@ -638,9 +603,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_024: [The deleteDeviceRegistrationState shall delete the deviceRegistrationState for the provided DeviceRegistrationState by calling the delete in the registrationStatusManager.] */
     @Test
-    public void deleteDeviceRegistrationStateWithDeviceRegistrationStateSucceed(
-            @Mocked final DeviceRegistrationState mockedDeviceRegistrationState)
-            throws ProvisioningServiceClientException
+    public void deleteDeviceRegistrationStateWithDeviceRegistrationStateSucceed(@Mocked final DeviceRegistrationState mockedDeviceRegistrationState) throws ProvisioningServiceClientException
     {
         // arrange
         ProvisioningServiceClient provisioningServiceClient = createClient();
@@ -660,8 +623,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_025: [The deleteDeviceRegistrationState shall delete the deviceRegistrationState for the provided id by calling the delete in the registrationStatusManager.] */
     @Test
-    public void deleteDeviceRegistrationStateWithIdSucceed()
-            throws ProvisioningServiceClientException
+    public void deleteDeviceRegistrationStateWithIdSucceed() throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "valid-id";
@@ -682,8 +644,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_026: [The deleteDeviceRegistrationState shall delete the deviceRegistrationState for the provided id and eTag by calling the delete in the registrationStatusManager.] */
     @Test
-    public void deleteDeviceRegistrationStateWithIdAndEtagSucceed()
-            throws ProvisioningServiceClientException
+    public void deleteDeviceRegistrationStateWithIdAndEtagSucceed() throws ProvisioningServiceClientException
     {
         // arrange
         final String id = "valid-id";
@@ -705,9 +666,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_027: [The createEnrollmentGroupRegistrationStateQuery shall create a new deviceRegistrationState query by calling the createQuery in the registrationStatusManager.] */
     @Test
-    public void createRegistrationStateQuerySucceed(
-            @Mocked final QuerySpecification mockedQuerySpecification)
-            throws ProvisioningServiceClientException
+    public void createRegistrationStateQuerySucceed(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
     {
         // arrange
         final String enrollmentGroupId = "valid-enrollmentGroupId";
@@ -729,9 +688,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_028: [The createEnrollmentGroupRegistrationStateQuery shall create a new deviceRegistrationState query by calling the createQuery in the registrationStatusManager.] */
     @Test
-    public void createRegistrationStateQueryWithPageSizeSucceed(
-            @Mocked final QuerySpecification mockedQuerySpecification)
-            throws ProvisioningServiceClientException
+    public void createRegistrationStateQueryWithPageSizeSucceed(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
     {
         // arrange
         final String enrollmentGroupId = "valid-enrollmentGroupId";
@@ -745,7 +702,7 @@ public class ProvisioningServiceClientTest
         };
 
         // act
-        Query query = provisioningServiceClient.createEnrollmentGroupRegistrationStateQuery(mockedQuerySpecification, enrollmentGroupId,10);
+        Query query = provisioningServiceClient.createEnrollmentGroupRegistrationStateQuery(mockedQuerySpecification, enrollmentGroupId, 10);
 
         // assert
         assertNotNull(query);

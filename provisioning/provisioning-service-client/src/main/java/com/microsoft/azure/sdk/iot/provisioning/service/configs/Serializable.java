@@ -16,10 +16,10 @@ public abstract class Serializable implements java.io.Serializable
 {
     /**
      * Serializer
-     *
      * <p>
-     *     Creates a {@code String}, which the content represents the
-     *     information in the child class and its subclasses in a JSON format.
+     * <p>
+     * Creates a {@code String}, which the content represents the
+     * information in the child class and its subclasses in a JSON format.
      * </p>
      *
      * @return The {@code String} with the JSON.

@@ -23,6 +23,7 @@ public interface IotHubTransportConnection
 {
     /**
      * Opens the transport connection object
+     *
      * @param deviceClientConfigs The list of configs to use. If more than 1 configs are in this list, multiplexing
      *                            will be used
      * @throws TransportException If any exceptions are encountered while opening the connection
@@ -32,6 +33,7 @@ public interface IotHubTransportConnection
     /**
      * Sets a listener into the Transport Connection object. This listener updates the Transport layer of connection status
      * updates, message arrivals, and message acknowledgements
+     *
      * @param listener the listener for connection status updates, message arrivals, and message acknowledgements
      * @throws TransportException If the provided listener is null
      */
@@ -39,6 +41,7 @@ public interface IotHubTransportConnection
 
     /**
      * Closes the transport connection.
+     *
      * @param isReconnecting if the caller is in the process of reconnecting or not
      * @throws TransportException If any exceptions are encountered while closing.
      */
@@ -46,6 +49,7 @@ public interface IotHubTransportConnection
 
     /**
      * Send a single message to the IotHub over the Transport Connection
+     *
      * @param message the message to send
      * @return the status code from the service
      * @throws TransportException if any exception is encountered while sending the message
@@ -54,8 +58,9 @@ public interface IotHubTransportConnection
 
     /**
      * Send an acknowledgement to the IotHub for a message that the Transport layer received
+     *
      * @param message the message to acknowledge
-     * @param result the acknowledgement value to notify the service of
+     * @param result  the acknowledgement value to notify the service of
      * @return true if the acknowledgement was sent successfully, and false otherwise
      * @throws TransportException if an exception occurred while sending the acknowledgement
      */

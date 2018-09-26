@@ -16,46 +16,36 @@ import com.google.gson.annotations.SerializedName;
 public class DeviceRegistrationResultParser
 {
     private static final String REGISTRATION_ID = "registrationId";
+    private static final String CREATED_DATE_TIME_UTC = "createdDateTimeUtc";
+    private static final String ASSIGNED_HUB = "assignedHub";
+    private static final String DEVICE_ID = "deviceId";
+    private static final String STATUS = "status";
+    private static final String ETAG = "etag";
+    private static final String LAST_UPDATES_DATE_TIME_UTC = "lastUpdatedDateTimeUtc";
+    private static final String ERROR_CODE = "errorCode";
+    private static final String ERROR_MESSAGE = "errorMessage";
+    private static final String TPM = "tpm";
+    private static final String X509 = "x509";
     @SerializedName(REGISTRATION_ID)
     private String registrationId;
-
-    private static final String CREATED_DATE_TIME_UTC = "createdDateTimeUtc";
     @SerializedName(CREATED_DATE_TIME_UTC)
     private String createdDateTimeUtc;
-
-    private static final String ASSIGNED_HUB = "assignedHub";
     @SerializedName(ASSIGNED_HUB)
     private String assignedHub;
-
-    private static final String DEVICE_ID = "deviceId";
     @SerializedName(DEVICE_ID)
     private String deviceId;
-
-    private static final String STATUS = "status";
     @SerializedName(STATUS)
     private String status;
-
-    private static final String ETAG = "etag";
     @SerializedName(ETAG)
     private String eTag;
-
-    private static final String LAST_UPDATES_DATE_TIME_UTC = "lastUpdatedDateTimeUtc";
     @SerializedName(LAST_UPDATES_DATE_TIME_UTC)
     private String lastUpdatesDateTimeUtc;
-
-    private static final String ERROR_CODE = "errorCode";
     @SerializedName(ERROR_CODE)
     private Integer errorCode;
-
-    private static final String ERROR_MESSAGE = "errorMessage";
     @SerializedName(ERROR_MESSAGE)
     private String errorMessage;
-
-    private static final String TPM = "tpm";
     @SerializedName(TPM)
     private TpmRegistrationResultParser tpm;
-
-    private static final String X509 = "x509";
     @SerializedName(X509)
     private X509RegistrationResultParser x509;
 
@@ -66,6 +56,7 @@ public class DeviceRegistrationResultParser
 
     /**
      * Getter for Registration Id
+     *
      * @return Getter for Registration Id
      */
     public String getRegistrationId()
@@ -76,6 +67,7 @@ public class DeviceRegistrationResultParser
 
     /**
      * Getter for CreatedDateTimeUtc
+     *
      * @return Getter for CreatedDateTimeUtc
      */
     public String getCreatedDateTimeUtc()
@@ -86,6 +78,7 @@ public class DeviceRegistrationResultParser
 
     /**
      * Getter for Assigned Iot Hub
+     *
      * @return Getter for Assigned Iot Hub
      */
     public String getAssignedHub()
@@ -96,6 +89,7 @@ public class DeviceRegistrationResultParser
 
     /**
      * Getter for Device Id
+     *
      * @return Getter for Device Id
      */
     public String getDeviceId()
@@ -106,6 +100,7 @@ public class DeviceRegistrationResultParser
 
     /**
      * Getter for Status
+     *
      * @return Getter for Status
      */
     public String getStatus()
@@ -116,6 +111,7 @@ public class DeviceRegistrationResultParser
 
     /**
      * Getter for Etag
+     *
      * @return Getter for Etag
      */
     public String getEtag()
@@ -126,6 +122,7 @@ public class DeviceRegistrationResultParser
 
     /**
      * Getter for LastUpdatesDateTimeUtc
+     *
      * @return Getter for LastUpdatesDateTimeUtc
      */
     public String getLastUpdatesDateTimeUtc()
@@ -137,6 +134,7 @@ public class DeviceRegistrationResultParser
     /**
      * Getter for the object TpmRegistrationResultParser
      * https://docs.microsoft.com/en-us/rest/api/iot-dps/RuntimeRegistration/RegisterDevice#definitions_tpmregistrationresult
+     *
      * @return Getter for the object TpmRegistrationResultParser
      */
     public TpmRegistrationResultParser getTpm()
@@ -148,7 +146,8 @@ public class DeviceRegistrationResultParser
     /**
      * Getter for the object X509RegistrationResultParser
      * https://docs.microsoft.com/en-us/rest/api/iot-dps/RuntimeRegistration/RegisterDevice#definitions_x509registrationresult
-     * @return   Getter for the object X509RegistrationResultParser
+     *
+     * @return Getter for the object X509RegistrationResultParser
      */
     public X509RegistrationResultParser getX509()
     {
@@ -158,6 +157,7 @@ public class DeviceRegistrationResultParser
 
     /**
      * Getter for Error Code
+     *
      * @return Getter for Error Code
      */
     public Integer getErrorCode()
@@ -168,6 +168,7 @@ public class DeviceRegistrationResultParser
 
     /**
      * Getter for Error Message
+     *
      * @return Getter for Error Message
      */
     public String getErrorMessage()

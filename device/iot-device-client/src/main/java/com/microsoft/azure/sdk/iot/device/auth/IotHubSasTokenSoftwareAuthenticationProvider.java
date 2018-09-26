@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package com.microsoft.azure.sdk.iot.device.auth;
 
@@ -16,13 +16,13 @@ public class IotHubSasTokenSoftwareAuthenticationProvider extends IotHubSasToken
     /**
      * Constructor that takes a connection string containing a sas token or a device key
      *
-     * @param hostname the IotHub host name
-     * @param gatewayHostname The gateway hostname to use, or null if connecting to an IotHub
-     * @param deviceId the IotHub device id
-     * @param moduleId the module id. May be null if not using a module
-     * @param deviceKey the device key for the device. Must be null if the provided sharedAccessToken is not
-     * @param sharedAccessToken the sas token string for accessing the device. Must be null if the provided deviceKey is not.
-     * @param tokenValidSecs the number of seconds that the token will be valid for
+     * @param hostname             the IotHub host name
+     * @param gatewayHostname      The gateway hostname to use, or null if connecting to an IotHub
+     * @param deviceId             the IotHub device id
+     * @param moduleId             the module id. May be null if not using a module
+     * @param deviceKey            the device key for the device. Must be null if the provided sharedAccessToken is not
+     * @param sharedAccessToken    the sas token string for accessing the device. Must be null if the provided deviceKey is not.
+     * @param tokenValidSecs       the number of seconds that the token will be valid for
      * @param timeBufferPercentage the percent of the sas token's life that will be exhausted before renewal is attempted
      * @throws SecurityException if the provided sas token has expired
      */
@@ -40,11 +40,12 @@ public class IotHubSasTokenSoftwareAuthenticationProvider extends IotHubSasToken
 
     /**
      * Constructor that takes a connection string containing a sas token or a device key and uses the default token valid seconds and timeBufferPercentage
-     * @param hostname the IotHub host name
-     * @param gatewayHostname The gateway hostname to use, or null if connecting to an IotHub
-     * @param deviceId the IotHub device id
-     * @param moduleId the module id. May be null if not using a module
-     * @param deviceKey the device key for the device. Must be null if the provided sharedAccessToken is not
+     *
+     * @param hostname          the IotHub host name
+     * @param gatewayHostname   The gateway hostname to use, or null if connecting to an IotHub
+     * @param deviceId          the IotHub device id
+     * @param moduleId          the module id. May be null if not using a module
+     * @param deviceKey         the device key for the device. Must be null if the provided sharedAccessToken is not
      * @param sharedAccessToken the sas token string for accessing the device. Must be null if the provided deviceKey is not.
      * @throws SecurityException if the provided sas token has expired
      */
@@ -61,6 +62,7 @@ public class IotHubSasTokenSoftwareAuthenticationProvider extends IotHubSasToken
 
     /**
      * Returns true if the saved sas token has expired and cannot be auto-renewed through the device key
+     *
      * @return if the sas token needs manual renewal
      */
     @Override

@@ -12,17 +12,21 @@ package com.microsoft.azure.sdk.iot.service.transport.http;
  */
 public interface HttpMessage
 {
-    /** The prefix to be added to an HTTPS application-defined property. */
+    /**
+     * The prefix to be added to an HTTPS application-defined property.
+     */
     String HTTPS_APP_PROPERTY_PREFIX = "iothub-app-";
 
     /**
      * Gets the message body.
+     *
      * @return The message body.
      */
     byte[] getBody();
 
     /**
      * Gets the content type string.
+     *
      * @return The message content-type.
      */
     String getContentType();

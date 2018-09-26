@@ -26,12 +26,12 @@ public class QuerySpecification extends Serializable
 
     /**
      * CONSTRUCTOR
-     *
+     * <p>
      * <p> This constructor creates an instance of the query specification.
-     *
+     * <p>
      * <p> The <b>query</b> must follow the provisioning service
-     *     <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language">Query Language</a>
-     *
+     * <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language">Query Language</a>
+     * <p>
      * <p> When serialized, this class will look like the following example:
      * <pre>
      * {@code
@@ -54,16 +54,29 @@ public class QuerySpecification extends Serializable
     }
 
     /**
-     * Serializer
-     *
+     * Empty constructor
      * <p>
-     *     Creates a {@code JsonElement}, which the content represents
-     *     the information in this class and its subclasses in a JSON format.
-     *
-     *     This is useful if the caller will integrate this JSON with jsons from
-     *     other classes to generate a consolidated JSON.
+     * <p>
+     * Used only by the tools that will deserialize this class.
      * </p>
+     */
+    @SuppressWarnings("unused")
+    QuerySpecification()
+    {
+        /* SRS_QUERY_SPECIFICATION_21_005: [The QuerySpecification shall provide an empty constructor to make GSON happy.] */
+    }
 
+    /**
+     * Serializer
+     * <p>
+     * <p>
+     * Creates a {@code JsonElement}, which the content represents
+     * the information in this class and its subclasses in a JSON format.
+     * <p>
+     * This is useful if the caller will integrate this JSON with jsons from
+     * other classes to generate a consolidated JSON.
+     * </p>
+     *
      * @return The {@code JsonElement} with the content of this class.
      */
     public JsonElement toJsonElement()
@@ -82,18 +95,5 @@ public class QuerySpecification extends Serializable
     {
         /* SRS_QUERY_SPECIFICATION_21_004: [The getQuery shall return a String with the stored query.] */
         return this.query;
-    }
-
-    /**
-     * Empty constructor
-     *
-     * <p>
-     *     Used only by the tools that will deserialize this class.
-     * </p>
-     */
-    @SuppressWarnings("unused")
-    QuerySpecification()
-    {
-        /* SRS_QUERY_SPECIFICATION_21_005: [The QuerySpecification shall provide an empty constructor to make GSON happy.] */
     }
 }

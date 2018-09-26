@@ -23,6 +23,61 @@ public class FileUploadStatusParserTest
     private static final String INVALID_STATUS_DESCRIPTION = "some\u1234 description of status";
     private static final Boolean VALID_IS_SUCCESS = true;
     private static final Integer VALID_STATUS_CODE = 200;
+    private static final TestParameters[] tests = new TestParameters[]{new TestParameters()
+    {{
+        correlationId = null;
+        isSuccess = true;
+        statusCode = 200;
+        statusDescription = VALID_STATUS_DESCRIPTION;
+    }}, new TestParameters()
+    {{
+        correlationId = "";
+        isSuccess = true;
+        statusCode = 200;
+        statusDescription = VALID_STATUS_DESCRIPTION;
+    }}, new TestParameters()
+    {{
+        correlationId = INVALID_CORRELATION_ID;
+        isSuccess = true;
+        statusCode = 200;
+        statusDescription = VALID_STATUS_DESCRIPTION;
+    }},
+
+            new TestParameters()
+            {{
+                correlationId = VALID_CORRELATION_ID;
+                isSuccess = null;
+                statusCode = 200;
+                statusDescription = VALID_STATUS_DESCRIPTION;
+            }},
+
+            new TestParameters()
+            {{
+                correlationId = VALID_CORRELATION_ID;
+                isSuccess = true;
+                statusCode = null;
+                statusDescription = VALID_STATUS_DESCRIPTION;
+            }},
+
+            new TestParameters()
+            {{
+                correlationId = VALID_CORRELATION_ID;
+                isSuccess = true;
+                statusCode = 200;
+                statusDescription = null;
+            }}, new TestParameters()
+    {{
+        correlationId = VALID_CORRELATION_ID;
+        isSuccess = true;
+        statusCode = 200;
+        statusDescription = "";
+    }}, new TestParameters()
+    {{
+        correlationId = VALID_CORRELATION_ID;
+        isSuccess = true;
+        statusCode = 200;
+        statusDescription = INVALID_STATUS_DESCRIPTION;
+    }},};
 
     private static void assertFileUploadStatus(FileUploadStatusParser fileUploadStatusParser, String expectedCorrelationId, Boolean expectedIsSuccess, Integer expectedStatusCode, String expectedStatusDescription)
     {
@@ -41,36 +96,9 @@ public class FileUploadStatusParserTest
 
     private static String createJson(String correlationId, Boolean isSuccess, Integer statusCode, String statusDescription)
     {
-        return "{\n" +
-                "    \"correlationId\": " + (correlationId == null ? "null" : "\"" + correlationId + "\"") + ",\n" +
-                "    \"isSuccess\": " + isSuccess + ",\n" +
-                "    \"statusCode\": " + statusCode + ",\n" +
-                "    \"statusDescription\": " + (statusDescription == null ? "null" : "\"" + statusDescription + "\"") + "\n" +
-                "}";
+        return "{\n" + "    \"correlationId\": " + (correlationId == null ? "null" : "\"" + correlationId + "\"") + ",\n" + "    \"isSuccess\": " + isSuccess + ",\n" + "    \"statusCode\": " + statusCode + ",\n" + "    \"statusDescription\": " + (statusDescription == null ? "null" : "\"" + statusDescription + "\"") + "\n" + "}";
     }
 
-    private static class TestParameters
-    {
-        String correlationId;
-        Boolean isSuccess;
-        Integer statusCode;
-        String statusDescription;
-    }
-    private static final TestParameters[] tests = new TestParameters[]
-    {
-            new TestParameters(){{ correlationId = null; isSuccess = true; statusCode = 200;  statusDescription = VALID_STATUS_DESCRIPTION; }},
-            new TestParameters(){{ correlationId = ""; isSuccess = true; statusCode = 200;  statusDescription = VALID_STATUS_DESCRIPTION; }},
-            new TestParameters(){{ correlationId = INVALID_CORRELATION_ID; isSuccess = true; statusCode = 200; statusDescription = VALID_STATUS_DESCRIPTION; }},
-
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; isSuccess = null; statusCode = 200; statusDescription = VALID_STATUS_DESCRIPTION; }},
-
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; isSuccess = true; statusCode = null; statusDescription = VALID_STATUS_DESCRIPTION; }},
-
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; isSuccess = true; statusCode = 200; statusDescription = null; }},
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; isSuccess = true; statusCode = 200; statusDescription = ""; }},
-            new TestParameters(){{ correlationId = VALID_CORRELATION_ID; isSuccess = true; statusCode = 200; statusDescription = INVALID_STATUS_DESCRIPTION; }},
-    };
-    
     /* Tests_SRS_FILE_UPLOAD_STATUS_21_001: [The constructor shall create an instance of the FileUploadStatusParser.] */
     /* Tests_SRS_FILE_UPLOAD_STATUS_21_002: [The constructor shall set the `correlationId`, `isSuccess`, `statusCode`, and `statusDescription` in the new class with the provided parameters.] */
     @Test
@@ -87,14 +115,13 @@ public class FileUploadStatusParserTest
     @Test
     public void constructor_failed()
     {
-        for (TestParameters test:tests)
+        for (TestParameters test : tests)
         {
             // act
             try
             {
                 new FileUploadStatusParser(test.correlationId, test.isSuccess, test.statusCode, test.statusDescription);
-                System.out.println("Test failed: correlationId=" + test.correlationId + ", isSuccess=" + test.isSuccess +
-                        ", statusCode=" + test.statusCode + ", statusDescription=" + test.statusDescription);
+                System.out.println("Test failed: correlationId=" + test.correlationId + ", isSuccess=" + test.isSuccess + ", statusCode=" + test.statusCode + ", statusDescription=" + test.statusDescription);
                 assert false;
             }
             catch (IllegalArgumentException expected)
@@ -117,5 +144,13 @@ public class FileUploadStatusParserTest
 
         // assert
         Helpers.assertJson(json, expectedJson);
+    }
+
+    private static class TestParameters
+    {
+        String correlationId;
+        Boolean isSuccess;
+        Integer statusCode;
+        String statusDescription;
     }
 }

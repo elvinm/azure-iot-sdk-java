@@ -20,28 +20,23 @@ import static com.microsoft.azure.sdk.iot.device.MessageType.DEVICE_TWIN;
 
 public class MqttIotHubConnection implements IotHubTransportConnection, MqttMessageListener
 {
-    /** The MQTT connection lock. */
-    private final Object MQTT_CONNECTION_LOCK = new Object();
-
-    private final DeviceClientConfig config;
-    private IotHubConnectionStatus state = IotHubConnectionStatus.DISCONNECTED;
-
-    private String iotHubUserName;
-    private String iotHubUserPassword;
-    private MqttConnection mqttConnection;
-
     //string constants
     private static final String WS_SSL_PREFIX = "wss://";
     private static final String WS_SSL_PORT_SUFFIX = ":443";
-
     private static final String WEBSOCKET_RAW_PATH = "/$iothub/websocket";
     private static final String WEBSOCKET_QUERY = "?iothub-no-client-cert=true";
-
     private static final String SSL_PREFIX = "ssl://";
     private static final String SSL_PORT_SUFFIX = ":8883";
-
     private static final String API_VERSION = "?api-version=" + TransportUtils.IOTHUB_API_VERSION;
-
+    /**
+     * The MQTT connection lock.
+     */
+    private final Object MQTT_CONNECTION_LOCK = new Object();
+    private final DeviceClientConfig config;
+    private IotHubConnectionStatus state = IotHubConnectionStatus.DISCONNECTED;
+    private String iotHubUserName;
+    private String iotHubUserPassword;
+    private MqttConnection mqttConnection;
     private String connectionId = UUID.randomUUID().toString();
 
     private IotHubListener listener;
@@ -155,19 +150,17 @@ public class MqttIotHubConnection implements IotHubTransportConnection, MqttMess
                 {
                     host = this.config.getIotHubHostname();
                 }
-                 if (this.config.isUseWebsocket())
+                if (this.config.isUseWebsocket())
                 {
                     //Codes_SRS_MQTTIOTHUBCONNECTION_25_018: [The function shall establish an MQTT WS connection with a server uri as wss://<hostName>/$iothub/websocket?iothub-no-client-cert=true if websocket was enabled.]
-                    final String wsServerUri = WS_SSL_PREFIX + host + WEBSOCKET_RAW_PATH + WEBSOCKET_QUERY ;
-                    mqttConnection = new MqttConnection(wsServerUri,
-                            clientId, this.iotHubUserName, this.iotHubUserPassword, sslContext);
+                    final String wsServerUri = WS_SSL_PREFIX + host + WEBSOCKET_RAW_PATH + WEBSOCKET_QUERY;
+                    mqttConnection = new MqttConnection(wsServerUri, clientId, this.iotHubUserName, this.iotHubUserPassword, sslContext);
                 }
                 else
                 {
                     //Codes_SRS_MQTTIOTHUBCONNECTION_25_019: [The function shall establish an MQTT connection with a server uri as ssl://<hostName>:8883 if websocket was not enabled.]
                     final String serverUri = SSL_PREFIX + host + SSL_PORT_SUFFIX;
-                    mqttConnection = new MqttConnection(serverUri,
-                            clientId, this.iotHubUserName, this.iotHubUserPassword, sslContext);
+                    mqttConnection = new MqttConnection(serverUri, clientId, this.iotHubUserName, this.iotHubUserPassword, sslContext);
                 }
 
                 //Codes_SRS_MQTTIOTHUBCONNECTION_34_030: [This function shall instantiate this object's MqttMessaging object with this object as the listener.]
@@ -191,7 +184,7 @@ public class MqttIotHubConnection implements IotHubTransportConnection, MqttMess
                 {
                     this.deviceMethod.stop();
                 }
-                if (this.deviceTwin != null )
+                if (this.deviceTwin != null)
                 {
                     this.deviceTwin.stop();
                 }
@@ -251,9 +244,7 @@ public class MqttIotHubConnection implements IotHubTransportConnection, MqttMess
      * Sends an event message.
      *
      * @param message the event message.
-     *
      * @return the status code from sending the event message.
-     *
      * @throws IllegalStateException if the MqttIotHubConnection is not open
      */
     public IotHubStatusCode sendEvent(Message message) throws IllegalStateException
@@ -262,11 +253,7 @@ public class MqttIotHubConnection implements IotHubTransportConnection, MqttMess
         {
             // Codes_SRS_MQTTIOTHUBCONNECTION_15_010: [If the message is null or empty,
             // the function shall return status code BAD_FORMAT.]
-            if (message == null || message.getBytes() == null ||
-                    (
-                            (message.getMessageType() != MessageType.DEVICE_TWIN
-                                    && message.getMessageType() != MessageType.DEVICE_METHODS)
-                                    && message.getBytes().length == 0))
+            if (message == null || message.getBytes() == null || ((message.getMessageType() != MessageType.DEVICE_TWIN && message.getMessageType() != MessageType.DEVICE_METHODS) && message.getBytes().length == 0))
             {
                 return IotHubStatusCode.BAD_FORMAT;
             }
@@ -317,7 +304,6 @@ public class MqttIotHubConnection implements IotHubTransportConnection, MqttMess
      * Receives a message, if one exists.
      *
      * @return the message received, or null if none exists.
-     *
      * @throws TransportException if the connection state is currently closed.
      */
     private IotHubTransportMessage receiveMessage() throws TransportException
@@ -355,9 +341,7 @@ public class MqttIotHubConnection implements IotHubTransportConnection, MqttMess
      * Sends an event message.
      *
      * @param message the event message.
-     *
      * @return the status code from sending the event message.
-     *
      * @throws TransportException if the MqttIotHubConnection is not open
      */
     @Override
@@ -367,11 +351,7 @@ public class MqttIotHubConnection implements IotHubTransportConnection, MqttMess
         {
             // Codes_SRS_MQTTIOTHUBCONNECTION_15_010: [If the message is null or empty,
             // the function shall return status code BAD_FORMAT.]
-            if (message == null || message.getBytes() == null ||
-                    (
-                            (message.getMessageType() != DEVICE_TWIN
-                                    && message.getMessageType() != DEVICE_METHODS)
-                                    && message.getBytes().length == 0))
+            if (message == null || message.getBytes() == null || ((message.getMessageType() != DEVICE_TWIN && message.getMessageType() != DEVICE_METHODS) && message.getBytes().length == 0))
             {
                 return IotHubStatusCode.BAD_FORMAT;
             }
@@ -410,8 +390,9 @@ public class MqttIotHubConnection implements IotHubTransportConnection, MqttMess
 
     /**
      * Sends an ACK to the service for the provided message
+     *
      * @param message the message to acknowledge to the service
-     * @param result Ignored. The only ack that can be sent in MQTT is COMPLETE
+     * @param result  Ignored. The only ack that can be sent in MQTT is COMPLETE
      * @return true if the ACK was sent successfully and false otherwise
      * @throws TransportException if the ACK could not be sent successfully
      */

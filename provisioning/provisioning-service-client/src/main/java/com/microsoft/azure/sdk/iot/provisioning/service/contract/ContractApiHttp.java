@@ -22,14 +22,14 @@ import java.util.Map;
 
 /**
  * This client handles the Device Provisioning Service HTTP communication.
- *
+ * <p>
  * <p> This class implements the HTTPS contract between the Provisioning Service Client and the
- *     Device Provisioning Service. It is called by the Managers that implement the Provisioning
- *     Service Client public APIs. To access the public APIs, please see the
- *     {@link ProvisioningServiceClient}.
- *
+ * Device Provisioning Service. It is called by the Managers that implement the Provisioning
+ * Service Client public APIs. To access the public APIs, please see the
+ * {@link ProvisioningServiceClient}.
+ * <p>
  * <p> The follow diagram describe the relation between these 3 layers of the Service Client:
- *
+ * <p>
  * <pre>
  * {@code
  *           +-------------------------------------------------------------------+           +------------+
@@ -53,7 +53,6 @@ import java.util.Map;
  *            +--------------------------------------------------------------------------------+
  * }
  * </pre>
- *
  */
 public class ContractApiHttp
 {
@@ -83,8 +82,7 @@ public class ContractApiHttp
      * @param provisioningConnectionString is the Device Provisioning Service service connection string.
      * @throws IllegalArgumentException if there is a problem with the provided connection string.
      */
-    private ContractApiHttp(ProvisioningConnectionString provisioningConnectionString)
-            throws IllegalArgumentException
+    private ContractApiHttp(ProvisioningConnectionString provisioningConnectionString) throws IllegalArgumentException
     {
         if (provisioningConnectionString == null)
         {
@@ -102,8 +100,7 @@ public class ContractApiHttp
      * @return an instance of {@code ContractApiHttp}.
      * @throws IllegalArgumentException if there is a problem with the provided connection string.
      */
-    public static ContractApiHttp createFromConnectionString(
-            ProvisioningConnectionString provisioningConnectionString)
+    public static ContractApiHttp createFromConnectionString(ProvisioningConnectionString provisioningConnectionString)
     {
         /* SRS_HTTP_DEVICE_REGISTRATION_CLIENT_21_003: [The createFromConnectionString shall throw IllegalArgumentException if the input string is null, threw by the constructor.] */
         /* SRS_HTTP_DEVICE_REGISTRATION_CLIENT_21_004: [The createFromConnectionString shall create a new ContractApiHttp instance and return it.] */
@@ -113,27 +110,22 @@ public class ContractApiHttp
     /**
      * This function sends a raw information to the Device Provisioning Service service using http protocol.
      * <p>
-     *    The purpose of this function is be the base communication between the controllers and the
-     *    Service, and should be used only if you have full understanding of the Device Provisioning Service rest APIs.
-     *    We highly recommend that you uses the APis under <b>{@link ProvisioningServiceClient}</b>
-     *    instead of directly access the rest API using this class.
+     * The purpose of this function is be the base communication between the controllers and the
+     * Service, and should be used only if you have full understanding of the Device Provisioning Service rest APIs.
+     * We highly recommend that you uses the APis under <b>{@link ProvisioningServiceClient}</b>
+     * instead of directly access the rest API using this class.
      * </p>
      *
-     * @param httpMethod is the http verb in the request (GET, POST, PUT, DELETE, PATCH).
-     * @param path is the path to the resource in the service that will compose the URL.
+     * @param httpMethod       is the http verb in the request (GET, POST, PUT, DELETE, PATCH).
+     * @param path             is the path to the resource in the service that will compose the URL.
      * @param headerParameters is a list of pairs key values that contains optional parameters in the http header.
-     * @param payload is the body of the message.
+     * @param payload          is the body of the message.
      * @return the {@code HttpResponse} that contains the response of the request.
      * @throws ProvisioningServiceClientTransportException if the Service Client failed to exchange http messages with the Provisioning Service.
-     * @throws ProvisioningServiceClientException if the Provisioning Service response contains an error message.
-     * @throws IllegalArgumentException if the provided parameters are not correct.
+     * @throws ProvisioningServiceClientException          if the Provisioning Service response contains an error message.
+     * @throws IllegalArgumentException                    if the provided parameters are not correct.
      */
-    public synchronized HttpResponse request(
-            HttpMethod httpMethod,
-            String path,
-            Map<String, String> headerParameters,
-            String payload)
-            throws ProvisioningServiceClientException
+    public synchronized HttpResponse request(HttpMethod httpMethod, String path, Map<String, String> headerParameters, String payload) throws ProvisioningServiceClientException
     {
         /* SRS_HTTP_DEVICE_REGISTRATION_CLIENT_21_005: [The request shall create a SAS token based on the connection string.*/
         /* SRS_HTTP_DEVICE_REGISTRATION_CLIENT_21_006: [If the request get problem to create the SAS token, it shall throw IllegalArgumentException.*/
@@ -185,9 +177,9 @@ public class ContractApiHttp
         request.setHeaderField(HEADER_FIELD_NAME_CHARSET, HEADER_FIELD_VALUE_CHARSET);
 
         /* SRS_HTTP_DEVICE_REGISTRATION_CLIENT_21_013: [The request shall add the headerParameters to the http header, if provided.] */
-        if(headerParameters != null)
+        if (headerParameters != null)
         {
-            for (Map.Entry<String, String> entry: headerParameters.entrySet())
+            for (Map.Entry<String, String> entry : headerParameters.entrySet())
             {
                 request.setHeaderField(entry.getKey(), entry.getValue());
             }
@@ -198,7 +190,7 @@ public class ContractApiHttp
 
     private URL getUrlForPath(String path)
     {
-        if(Tools.isNullOrEmpty(path))
+        if (Tools.isNullOrEmpty(path))
         {
             /* SRS_HTTP_DEVICE_REGISTRATION_CLIENT_21_008: [If the provided path is null or empty, the request shall throw IllegalArgumentException.*/
             throw new IllegalArgumentException("path cannot be null or empty");

@@ -35,19 +35,10 @@ import static org.junit.Assert.assertTrue;
  */
 public class DeviceMethodTest
 {
-    @Mocked
-    IotHubConnectionString mockedIotHubConnectionString;
-
-    @Mocked
-    IotHubConnectionStringBuilder mockedConnectionStringBuilder;
-
     private static final String STANDARD_HOSTNAME = "testHostName.azure.net";
     private static final String STANDARD_SHAREDACCESSKEYNAME = "testKeyName";
     private static final String STANDARD_SHAREDACCESSKEY = "1234567890ABCDEFGHIJKLMNOPQRESTUVWXYZ=";
-    private static final String STANDARD_CONNECTIONSTRING =
-            "HostName=" + STANDARD_HOSTNAME +
-            ";SharedAccessKeyName=" + STANDARD_SHAREDACCESSKEYNAME +
-            ";SharedAccessKey=" + STANDARD_SHAREDACCESSKEY;
+    private static final String STANDARD_CONNECTIONSTRING = "HostName=" + STANDARD_HOSTNAME + ";SharedAccessKeyName=" + STANDARD_SHAREDACCESSKEYNAME + ";SharedAccessKey=" + STANDARD_SHAREDACCESSKEY;
     private static final String STANDARD_DEVICEID = "validDeviceId";
     private static final String STANDARD_MODULEID = "validModuleId";
     private static final String STANDARD_METHODNAME = "validMethodName";
@@ -58,123 +49,90 @@ public class DeviceMethodTest
         put("myPar2", "myVal2");
     }};
     private static final String STANDARD_PAYLOAD_STR = "testPayload";
-    private static final String STANDARD_JSON =
-            "{" +
-                "\"methodName\":\"" + STANDARD_METHODNAME + "\"," +
-                "\"responseTimeoutInSeconds\":" + STANDARD_TIMEOUT_SECONDS.toString() + "," +
-                "\"connectTimeoutInSeconds\":" + STANDARD_TIMEOUT_SECONDS.toString() + "," +
-                "\"payload\":" +
-                "{" +
-                    "\"myPar1\": \"myVal1\"," +
-                    "\"myPar2\": \"myVal2\"" +
-                "}" +
-            "}";
-    private static final String STANDARD_URL = "https://" + STANDARD_HOSTNAME + "/twins/" + STANDARD_DEVICEID + "/methods/" ;
-    private static class TestMethod
-    {
-        String deviceId;
-        String moduleId;
-        String methodName;
-        Long responseTimeoutInSeconds;
-        Long connectTimeoutInSeconds;
-        Object payload;
-    }
-
-    private static final TestMethod[] illegalParameter = new TestMethod[]
-            {
-                    new TestMethod()
-                    {{
-                        deviceId = null;
-                        methodName = STANDARD_METHODNAME;
-                        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        payload = STANDARD_PAYLOAD_MAP;
-                    }},
-                    new TestMethod()
-                    {{
-                        deviceId = "";
-                        methodName = STANDARD_METHODNAME;
-                        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        payload = STANDARD_PAYLOAD_MAP;
-                    }},
-                    new TestMethod()
-                    {{
-                        deviceId = STANDARD_DEVICEID;
-                        methodName = null;
-                        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        payload = STANDARD_PAYLOAD_MAP;
-                    }},
-                    new TestMethod()
-                    {{
-                        deviceId = STANDARD_DEVICEID;
-                        methodName = "";
-                        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        payload = STANDARD_PAYLOAD_MAP;
-                    }},
-            };
-
-    private static final TestMethod[] illegalParameterModule = new TestMethod[]
-            {
-                    new TestMethod()
-                    {{
-                        deviceId = null;
-                        moduleId = STANDARD_MODULEID;
-                        methodName = STANDARD_METHODNAME;
-                        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        payload = STANDARD_PAYLOAD_MAP;
-                    }},
-                    new TestMethod()
-                    {{
-                        deviceId = "";
-                        moduleId = STANDARD_MODULEID;
-                        methodName = STANDARD_METHODNAME;
-                        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        payload = STANDARD_PAYLOAD_MAP;
-                    }},
-                    new TestMethod()
-                    {{
-                        deviceId = STANDARD_DEVICEID;
-                        moduleId = null;
-                        methodName = STANDARD_METHODNAME;
-                        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        payload = STANDARD_PAYLOAD_MAP;
-                    }},
-                    new TestMethod()
-                    {{
-                        deviceId = STANDARD_DEVICEID;
-                        moduleId = "";
-                        methodName = STANDARD_METHODNAME;
-                        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        payload = STANDARD_PAYLOAD_MAP;
-                    }},
-                    new TestMethod()
-                    {{
-                        deviceId = STANDARD_DEVICEID;
-                        moduleId = STANDARD_MODULEID;
-                        methodName = null;
-                        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        payload = STANDARD_PAYLOAD_MAP;
-                    }},
-                    new TestMethod()
-                    {{
-                        deviceId = STANDARD_DEVICEID;
-                        moduleId = STANDARD_MODULEID;
-                        methodName = "";
-                        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
-                        payload = STANDARD_PAYLOAD_MAP;
-                    }},
-            };
-
-
+    private static final String STANDARD_JSON = "{" + "\"methodName\":\"" + STANDARD_METHODNAME + "\"," + "\"responseTimeoutInSeconds\":" + STANDARD_TIMEOUT_SECONDS.toString() + "," + "\"connectTimeoutInSeconds\":" + STANDARD_TIMEOUT_SECONDS.toString() + "," + "\"payload\":" + "{" + "\"myPar1\": \"myVal1\"," + "\"myPar2\": \"myVal2\"" + "}" + "}";
+    private static final String STANDARD_URL = "https://" + STANDARD_HOSTNAME + "/twins/" + STANDARD_DEVICEID + "/methods/";
+    private static final TestMethod[] illegalParameter = new TestMethod[]{new TestMethod()
+    {{
+        deviceId = null;
+        methodName = STANDARD_METHODNAME;
+        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        payload = STANDARD_PAYLOAD_MAP;
+    }}, new TestMethod()
+    {{
+        deviceId = "";
+        methodName = STANDARD_METHODNAME;
+        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        payload = STANDARD_PAYLOAD_MAP;
+    }}, new TestMethod()
+    {{
+        deviceId = STANDARD_DEVICEID;
+        methodName = null;
+        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        payload = STANDARD_PAYLOAD_MAP;
+    }}, new TestMethod()
+    {{
+        deviceId = STANDARD_DEVICEID;
+        methodName = "";
+        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        payload = STANDARD_PAYLOAD_MAP;
+    }},};
+    private static final TestMethod[] illegalParameterModule = new TestMethod[]{new TestMethod()
+    {{
+        deviceId = null;
+        moduleId = STANDARD_MODULEID;
+        methodName = STANDARD_METHODNAME;
+        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        payload = STANDARD_PAYLOAD_MAP;
+    }}, new TestMethod()
+    {{
+        deviceId = "";
+        moduleId = STANDARD_MODULEID;
+        methodName = STANDARD_METHODNAME;
+        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        payload = STANDARD_PAYLOAD_MAP;
+    }}, new TestMethod()
+    {{
+        deviceId = STANDARD_DEVICEID;
+        moduleId = null;
+        methodName = STANDARD_METHODNAME;
+        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        payload = STANDARD_PAYLOAD_MAP;
+    }}, new TestMethod()
+    {{
+        deviceId = STANDARD_DEVICEID;
+        moduleId = "";
+        methodName = STANDARD_METHODNAME;
+        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        payload = STANDARD_PAYLOAD_MAP;
+    }}, new TestMethod()
+    {{
+        deviceId = STANDARD_DEVICEID;
+        moduleId = STANDARD_MODULEID;
+        methodName = null;
+        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        payload = STANDARD_PAYLOAD_MAP;
+    }}, new TestMethod()
+    {{
+        deviceId = STANDARD_DEVICEID;
+        moduleId = STANDARD_MODULEID;
+        methodName = "";
+        responseTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        connectTimeoutInSeconds = STANDARD_TIMEOUT_SECONDS;
+        payload = STANDARD_PAYLOAD_MAP;
+    }},};
+    @Mocked
+    IotHubConnectionString mockedIotHubConnectionString;
+    @Mocked
+    IotHubConnectionStringBuilder mockedConnectionStringBuilder;
 
     /* Tests_SRS_DEVICEMETHOD_21_002: [The constructor shall create an IotHubConnectionStringBuilder object from the given connection string.] */
     /* Tests_SRS_DEVICEMETHOD_21_003: [The constructor shall create a new DeviceMethod instance and return it.] */
@@ -191,7 +149,7 @@ public class DeviceMethodTest
     }
 
     /* Tests_SRS_DEVICEMETHOD_21_001: [The constructor shall throw IllegalArgumentException if the input string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowOnNullCSFailed() throws Exception
     {
         //arrange
@@ -203,7 +161,7 @@ public class DeviceMethodTest
     }
 
     /* Tests_SRS_DEVICEMETHOD_21_001: [The constructor shall throw IllegalArgumentException if the input string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowOnEmptyCSFailed() throws Exception
     {
         //arrange
@@ -215,7 +173,7 @@ public class DeviceMethodTest
     }
 
     /* Tests_SRS_DEVICEMETHOD_21_001: [The constructor shall throw IllegalArgumentException if the input string is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowOnImproperCSFailed() throws Exception
     {
         //arrange
@@ -234,24 +192,18 @@ public class DeviceMethodTest
     /* Tests_SRS_DEVICEMETHOD_21_004: [The invoke shall throw IllegalArgumentException if the provided deviceId is null or empty.] */
     /* Tests_SRS_DEVICEMETHOD_21_005: [The invoke shall throw IllegalArgumentException if the provided methodName is null, empty, or not valid.] */
     @Test
-    public void invokeIllegalParametersFailed()
-            throws Exception
+    public void invokeIllegalParametersFailed() throws Exception
     {
         //arrange
         DeviceMethod testMethod = DeviceMethod.createFromConnectionString(STANDARD_CONNECTIONSTRING);
 
         //act
-        for (TestMethod testCase: illegalParameter)
+        for (TestMethod testCase : illegalParameter)
         {
             try
             {
                 testMethod.invoke(testCase.deviceId, testCase.methodName, testCase.responseTimeoutInSeconds, testCase.connectTimeoutInSeconds, testCase.payload);
-                assertTrue(
-                        "Negative case> DeviceId=" + testCase.deviceId +
-                        " MethodName=" + testCase.methodName +
-                        " responseTimeoutInSeconds=" + testCase.responseTimeoutInSeconds +
-                        " connectTimeoutInSeconds=" + testCase.connectTimeoutInSeconds +
-                        " payload=" + testCase.payload, true);
+                assertTrue("Negative case> DeviceId=" + testCase.deviceId + " MethodName=" + testCase.methodName + " responseTimeoutInSeconds=" + testCase.responseTimeoutInSeconds + " connectTimeoutInSeconds=" + testCase.connectTimeoutInSeconds + " payload=" + testCase.payload, true);
             }
             catch (IllegalArgumentException expected)
             {
@@ -264,25 +216,18 @@ public class DeviceMethodTest
     /* Tests_SRS_DEVICEMETHOD_28_002: [The invoke shall throw IllegalArgumentException if the provided moduleId is null or empty.] */
     /* Tests_SRS_DEVICEMETHOD_28_003: [The invoke shall throw IllegalArgumentException if the provided methodName is null, empty, or not valid.] */
     @Test
-    public void invokeModuleIllegalParametersFailed()
-            throws Exception
+    public void invokeModuleIllegalParametersFailed() throws Exception
     {
         //arrange
         DeviceMethod testMethod = DeviceMethod.createFromConnectionString(STANDARD_CONNECTIONSTRING);
 
         //act
-        for (TestMethod testCase: illegalParameterModule)
+        for (TestMethod testCase : illegalParameterModule)
         {
             try
             {
                 testMethod.invoke(testCase.deviceId, testCase.moduleId, testCase.methodName, testCase.responseTimeoutInSeconds, testCase.connectTimeoutInSeconds, testCase.payload);
-                assertTrue(
-                        "Negative case> DeviceId=" + testCase.deviceId +
-                                " ModuleName=" + testCase.moduleId +
-                                " MethodName=" + testCase.methodName +
-                                " responseTimeoutInSeconds=" + testCase.responseTimeoutInSeconds +
-                                " connectTimeoutInSeconds=" + testCase.connectTimeoutInSeconds +
-                                " payload=" + testCase.payload, true);
+                assertTrue("Negative case> DeviceId=" + testCase.deviceId + " ModuleName=" + testCase.moduleId + " MethodName=" + testCase.methodName + " responseTimeoutInSeconds=" + testCase.responseTimeoutInSeconds + " connectTimeoutInSeconds=" + testCase.connectTimeoutInSeconds + " payload=" + testCase.payload, true);
             }
             catch (IllegalArgumentException expected)
             {
@@ -292,10 +237,8 @@ public class DeviceMethodTest
     }
 
     /* Codes_SRS_DEVICEMETHOD_28_004: [The invoke shall build the Method URL `{iot hub}/twins/{device id}/modules/{module id}/methods/` by calling getUrlModuleMethod.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void invokeModuleThrowOnGetUrlMethodFailed(
-            @Mocked final MethodParser methodParser)
-            throws Exception
+    @Test(expected = IllegalArgumentException.class)
+    public void invokeModuleThrowOnGetUrlMethodFailed(@Mocked final MethodParser methodParser) throws Exception
     {
         //arrange
         DeviceMethod testMethod = DeviceMethod.createFromConnectionString(STANDARD_CONNECTIONSTRING);
@@ -317,13 +260,14 @@ public class DeviceMethodTest
     /* Tests_SRS_DEVICEMETHOD_21_006: [The invoke shall throw IllegalArgumentException if the provided responseTimeoutInSeconds is negative.] */
     /* Tests_SRS_DEVICEMETHOD_21_007: [The invoke shall throw IllegalArgumentException if the provided connectTimeoutInSeconds is negative.] */
     /* Tests_SRS_DEVICEMETHOD_21_014: [The invoke shall bypass the Exception if one of the functions called by invoke failed.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void invokeThrowOnCreateMethodFailed() throws Exception
     {
         //arrange
         new MockUp<MethodParser>()
         {
-            @Mock void $init(String name, Long responseTimeoutInSeconds, Long connectTimeoutInSeconds, Object payload) throws IllegalArgumentException
+            @Mock
+            void $init(String name, Long responseTimeoutInSeconds, Long connectTimeoutInSeconds, Object payload) throws IllegalArgumentException
             {
                 throw new IllegalArgumentException();
             }
@@ -337,10 +281,8 @@ public class DeviceMethodTest
     }
 
     /* Tests_SRS_DEVICEMETHOD_21_011: [The invoke shall add a HTTP body with Json created by the `serializer.MethodParser`.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void invokeThrowOnToJsonFailed(
-            @Mocked final MethodParser methodParser)
-            throws Exception
+    @Test(expected = IllegalArgumentException.class)
+    public void invokeThrowOnToJsonFailed(@Mocked final MethodParser methodParser) throws Exception
     {
         //arrange
         DeviceMethod testMethod = DeviceMethod.createFromConnectionString(STANDARD_CONNECTIONSTRING);
@@ -358,10 +300,8 @@ public class DeviceMethodTest
     }
 
     /* Tests_SRS_DEVICEMETHOD_21_012: [If `MethodParser` return a null Json, the invoke shall throw IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void invokeThrowOnNullJsonFailed(
-            @Mocked final MethodParser methodParser)
-            throws Exception
+    @Test(expected = IllegalArgumentException.class)
+    public void invokeThrowOnNullJsonFailed(@Mocked final MethodParser methodParser) throws Exception
     {
         //arrange
         DeviceMethod testMethod = DeviceMethod.createFromConnectionString(STANDARD_CONNECTIONSTRING);
@@ -379,10 +319,8 @@ public class DeviceMethodTest
     }
 
     /* Tests_SRS_DEVICEMETHOD_21_008: [The invoke shall build the Method URL `{iot hub}/twins/{device id}/methods/` by calling getUrlMethod.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void invokeThrowOnGetUrlMethodFailed(
-            @Mocked final MethodParser methodParser)
-            throws Exception
+    @Test(expected = IllegalArgumentException.class)
+    public void invokeThrowOnGetUrlMethodFailed(@Mocked final MethodParser methodParser) throws Exception
     {
         //arrange
         DeviceMethod testMethod = DeviceMethod.createFromConnectionString(STANDARD_CONNECTIONSTRING);
@@ -402,10 +340,8 @@ public class DeviceMethodTest
 
     /* Tests_SRS_DEVICEMETHOD_21_009: [The invoke shall send the created request and get the response using the HttpRequester.] */
     /* Tests_SRS_DEVICEMETHOD_21_010: [The invoke shall create a new HttpRequest with http method as `POST`.] */
-    @Test (expected = IotHubException.class)
-    public void invokeThrowOnHttpRequesterFailed(
-            @Mocked final MethodParser methodParser)
-            throws Exception
+    @Test(expected = IotHubException.class)
+    public void invokeThrowOnHttpRequesterFailed(@Mocked final MethodParser methodParser) throws Exception
     {
         //arrange
         DeviceMethod testMethod = DeviceMethod.createFromConnectionString(STANDARD_CONNECTIONSTRING);
@@ -421,14 +357,8 @@ public class DeviceMethodTest
         };
         new MockUp<DeviceOperations>()
         {
-            @Mock HttpResponse request(
-                    IotHubConnectionString mockedIotHubConnectionString,
-                    URL url,
-                    HttpMethod method,
-                    byte[] payload,
-                    String requestId,
-                    long timeoutInMs)
-                    throws IOException, IotHubException, IllegalArgumentException
+            @Mock
+            HttpResponse request(IotHubConnectionString mockedIotHubConnectionString, URL url, HttpMethod method, byte[] payload, String requestId, long timeoutInMs) throws IOException, IotHubException, IllegalArgumentException
             {
                 throw new IotHubException();
             }
@@ -439,11 +369,8 @@ public class DeviceMethodTest
     }
 
     /* Tests_SRS_DEVICEMETHOD_21_013: [The invoke shall deserialize the payload using the `serializer.MethodParser`.] */
-    @Test (expected = IllegalArgumentException.class)
-    public void invokeThrowOnCreateMethodResponseFailed(
-            @Mocked final DeviceOperations request,
-            @Mocked final IotHubServiceSasToken iotHubServiceSasToken)
-            throws Exception
+    @Test(expected = IllegalArgumentException.class)
+    public void invokeThrowOnCreateMethodResponseFailed(@Mocked final DeviceOperations request, @Mocked final IotHubServiceSasToken iotHubServiceSasToken) throws Exception
     {
         //arrange
         DeviceMethod testMethod = DeviceMethod.createFromConnectionString(STANDARD_CONNECTIONSTRING);
@@ -456,20 +383,24 @@ public class DeviceMethodTest
         };
         new MockUp<MethodParser>()
         {
-            @Mock void $init(String name, Long responseTimeoutInSeconds, Long connectTimeoutInSeconds, Object payload) throws IllegalArgumentException
+            @Mock
+            void $init(String name, Long responseTimeoutInSeconds, Long connectTimeoutInSeconds, Object payload) throws IllegalArgumentException
             {
             }
 
-            @Mock void $init()
+            @Mock
+            void $init()
             {
             }
 
-            @Mock String toJson()
+            @Mock
+            String toJson()
             {
                 return STANDARD_JSON;
             }
 
-            @Mock void fromJson(String json)
+            @Mock
+            void fromJson(String json)
             {
                 throw new IllegalArgumentException();
             }
@@ -481,11 +412,7 @@ public class DeviceMethodTest
 
     /* Tests_SRS_DEVICEMETHOD_21_015: [If the HttpStatus represents success, the invoke shall return the status and payload using the `MethodResult` class.] */
     @Test
-    public void invokeSucceed(
-            @Mocked final MethodParser methodParser,
-            @Mocked final DeviceOperations request,
-            @Mocked final IotHubServiceSasToken iotHubServiceSasToken)
-            throws Exception
+    public void invokeSucceed(@Mocked final MethodParser methodParser, @Mocked final DeviceOperations request, @Mocked final IotHubServiceSasToken iotHubServiceSasToken) throws Exception
     {
         //arrange
         DeviceMethod testMethod = DeviceMethod.createFromConnectionString(STANDARD_CONNECTIONSTRING);
@@ -525,7 +452,7 @@ public class DeviceMethodTest
     }
 
     /* Tests_SRS_DEVICEMETHOD_21_016: [If the methodName is null or empty, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowOnMethodNameNull() throws IOException, IotHubException
     {
         //arrange
@@ -540,7 +467,7 @@ public class DeviceMethodTest
     }
 
     /* Tests_SRS_DEVICEMETHOD_21_016: [If the methodName is null or empty, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowOnEmptyMethodName() throws IOException, IotHubException
     {
         //arrange
@@ -555,7 +482,7 @@ public class DeviceMethodTest
     }
 
     /* Tests_SRS_DEVICEMETHOD_21_017: [If the startTimeUtc is null, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowOnStartTimeUtcNull() throws IOException, IotHubException
     {
         //arrange
@@ -569,7 +496,7 @@ public class DeviceMethodTest
     }
 
     /* Tests_SRS_DEVICEMETHOD_21_018: [If the maxExecutionTimeInSeconds is negative, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void scheduleDeviceMethodThrowOnInvalidMaxExecutionTimeInSeconds() throws IOException, IotHubException
     {
         //arrange
@@ -612,7 +539,7 @@ public class DeviceMethodTest
     }
 
     /* Tests_SRS_DEVICEMETHOD_21_020: [If the scheduleDeviceMethod failed to create a new instance of the Job class, it shall throws IOException. Threw by the Jobs constructor.] */
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void scheduleDeviceMethodCreateJobThrow(@Mocked Job mockedJob) throws IOException, IotHubException
     {
         //arrange
@@ -670,7 +597,7 @@ public class DeviceMethodTest
     }
 
     /* Tests_SRS_DEVICEMETHOD_21_022: [If scheduleDeviceMethod failed, the scheduleDeviceMethod shall throws IotHubException. Threw by the scheduleUpdateTwin.] */
-    @Test (expected = IotHubException.class)
+    @Test(expected = IotHubException.class)
     public void scheduleDeviceMethodScheduleDeviceMethodThrow(@Mocked Job mockedJob) throws IOException, IotHubException
     {
         //arrange
@@ -694,6 +621,16 @@ public class DeviceMethodTest
 
         //act
         testMethod.scheduleDeviceMethod(queryCondition, STANDARD_METHODNAME, STANDARD_TIMEOUT_SECONDS, STANDARD_TIMEOUT_SECONDS, STANDARD_PAYLOAD_MAP, now, maxExecutionTimeInSeconds);
+    }
+
+    private static class TestMethod
+    {
+        String deviceId;
+        String moduleId;
+        String methodName;
+        Long responseTimeoutInSeconds;
+        Long connectTimeoutInSeconds;
+        Object payload;
     }
 
 }

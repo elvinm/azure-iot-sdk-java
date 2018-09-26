@@ -27,12 +27,16 @@ public class Tools
         Boolean retVal;
 
         if (value == null)
-            // Codes_SRS_SERVICE_SDK_JAVA_TOOLS_12_001: [The function shall return true if the input is null]
+        // Codes_SRS_SERVICE_SDK_JAVA_TOOLS_12_001: [The function shall return true if the input is null]
+        {
             retVal = true;
+        }
         else
-            // Codes_SRS_SERVICE_SDK_JAVA_TOOLS_12_002: [The function shall return true if the input string’s length is zero]
-            // Codes_SRS_SERVICE_SDK_JAVA_TOOLS_12_003: [The function shall return false otherwise]
+        // Codes_SRS_SERVICE_SDK_JAVA_TOOLS_12_002: [The function shall return true if the input string’s length is zero]
+        // Codes_SRS_SERVICE_SDK_JAVA_TOOLS_12_003: [The function shall return false otherwise]
+        {
             retVal = value.length() == 0;
+        }
 
         return retVal;
     }
@@ -63,7 +67,7 @@ public class Tools
     /**
      * Helper function to get a value from the given Map if the key name exists
      *
-     * @param map The Map object to get the value from
+     * @param map     The Map object to get the value from
      * @param keyName The name of the key
      * @return The value of the given key if exists otherwise empty string
      */
@@ -81,11 +85,15 @@ public class Tools
             // Codes_SRS_SERVICE_SDK_JAVA_TOOLS_12_007: [The function shall get the value of the given key from the map]
             Object val = map.get(keyName);
             if (val != null)
-                // Codes_SRS_SERVICE_SDK_JAVA_TOOLS_12_008: [The function shall return with trimmed string if the value of the key is not null]
+            // Codes_SRS_SERVICE_SDK_JAVA_TOOLS_12_008: [The function shall return with trimmed string if the value of the key is not null]
+            {
                 retVal = val.toString().trim();
+            }
             else
-                // Codes_SRS_SERVICE_SDK_JAVA_TOOLS_12_009: [The function shall return with empty string if the value of the key is null]
+            // Codes_SRS_SERVICE_SDK_JAVA_TOOLS_12_009: [The function shall return with empty string if the value of the key is null]
+            {
                 retVal = "";
+            }
         }
 
         return retVal;
@@ -95,7 +103,7 @@ public class Tools
      * Helper function to get a value from the given JsonObject if the key name exists
      *
      * @param jsonObject The JsonObject object to get the value from
-     * @param key The name of the key
+     * @param key        The name of the key
      * @return The value of the given key if exists otherwise empty string
      */
     public static String getValueFromJsonObject(JsonObject jsonObject, String key)
@@ -150,7 +158,7 @@ public class Tools
             }
             if (retVal.endsWith("\""))
             {
-                retVal = retVal.substring(0, retVal.length()-1);
+                retVal = retVal.substring(0, retVal.length() - 1);
             }
         }
         return retVal;
@@ -160,7 +168,7 @@ public class Tools
      * Helper function to get numeric value from a JsonObject
      *
      * @param jsonObject The JsonObject object to get the value from
-     * @param key The name of the key
+     * @param key        The name of the key
      * @return The numeric value
      */
     public static long getNumberValueFromJsonObject(JsonObject jsonObject, String key)
@@ -202,10 +210,10 @@ public class Tools
      * Helper function to properly craft Json string of key-value pair
      *
      * @param strBuilder The StringBuilder to work on
-     * @param name The name of the key
-     * @param value The value of the key
-     * @param isQuoted If true leading and trailing quotes will be added
-     * @param isLast If false trailing comma will added
+     * @param name       The name of the key
+     * @param value      The value of the key
+     * @param isQuoted   If true leading and trailing quotes will be added
+     * @param isLast     If false trailing comma will added
      */
     public static void appendJsonAttribute(StringBuilder strBuilder, String name, String value, Boolean isQuoted, Boolean isLast)
     {
@@ -216,9 +224,13 @@ public class Tools
             strBuilder.append("\"");
 
             if (Tools.isNullOrEmpty(name))
+            {
                 strBuilder.append("");
+            }
             else
+            {
                 strBuilder.append(name);
+            }
 
             strBuilder.append("\"");
             strBuilder.append(":");
@@ -253,6 +265,7 @@ public class Tools
     /**
      * Equality check for objects that accounts for null value comparisons. If both objects are null, this will return false.
      * Both objects must have .equals(...) implemented correctly for this method to work properly.
+     *
      * @param a the first object
      * @param b the seconds object
      * @return if the two are equal

@@ -45,9 +45,7 @@ public final class AmqpsDeviceMethods extends AmqpsDeviceOperations
     AmqpsDeviceMethods(DeviceClientConfig deviceClientConfig) throws IllegalArgumentException
     {
         // Codes_SRS_AMQPSDEVICEMETHODS_34_050: [This constructor shall call super with the provided user agent string.]
-        super(deviceClientConfig, SENDER_LINK_ENDPOINT_PATH, RECEIVER_LINK_ENDPOINT_PATH,
-                SENDER_LINK_ENDPOINT_PATH_MODULES, RECEIVER_LINK_ENDPOINT_PATH_MODULES,
-                SENDER_LINK_TAG_PREFIX, RECEIVER_LINK_TAG_PREFIX);
+        super(deviceClientConfig, SENDER_LINK_ENDPOINT_PATH, RECEIVER_LINK_ENDPOINT_PATH, SENDER_LINK_ENDPOINT_PATH_MODULES, RECEIVER_LINK_ENDPOINT_PATH_MODULES, SENDER_LINK_TAG_PREFIX, RECEIVER_LINK_TAG_PREFIX);
 
         this.deviceClientConfig = deviceClientConfig;
 
@@ -55,12 +53,12 @@ public final class AmqpsDeviceMethods extends AmqpsDeviceOperations
         if (moduleId != null && !moduleId.isEmpty())
         {
             // Codes_SRS_AMQPSDEVICEMETHODS_34_037: [If a moduleId is present, the constructor shall add correlation ID key and a UUID value to the amqpProperties.]
-            this.amqpProperties.put(Symbol.getSymbol(CORRELATION_ID_KEY), Symbol.getSymbol(CORRELATION_ID_KEY_PREFIX +  UUID.randomUUID().toString()));
+            this.amqpProperties.put(Symbol.getSymbol(CORRELATION_ID_KEY), Symbol.getSymbol(CORRELATION_ID_KEY_PREFIX + UUID.randomUUID().toString()));
         }
         else
         {
             // Codes_SRS_AMQPSDEVICEMETHODS_12_007: [The constructor shall add correlation ID key and deviceId value to the amqpProperties.]
-            this.amqpProperties.put(Symbol.getSymbol(CORRELATION_ID_KEY), Symbol.getSymbol(CORRELATION_ID_KEY_PREFIX +  UUID.randomUUID().toString()));
+            this.amqpProperties.put(Symbol.getSymbol(CORRELATION_ID_KEY), Symbol.getSymbol(CORRELATION_ID_KEY_PREFIX + UUID.randomUUID().toString()));
         }
 
         // Codes_SRS_AMQPSDEVICEMETHODS_12_006: [The constructor shall add API version key and API version value to the amqpProperties.]
@@ -96,12 +94,12 @@ public final class AmqpsDeviceMethods extends AmqpsDeviceOperations
     /**
      * Sends the given message and returns with the delivery hash if the message type is methods
      *
-     * @param msgData The binary array of the bytes to send
-     * @param offset The start offset to copy the bytes from
-     * @param length The number of bytes to be send related to the offset
+     * @param msgData     The binary array of the bytes to send
+     * @param offset      The start offset to copy the bytes from
+     * @param length      The number of bytes to be send related to the offset
      * @param deliveryTag The unique identfier of the delivery
      * @return delivery tag
-     * @throws IllegalStateException if sender link has not been initialized
+     * @throws IllegalStateException    if sender link has not been initialized
      * @throws IllegalArgumentException if deliveryTag's length is 0
      */
     @Override
@@ -146,15 +144,14 @@ public final class AmqpsDeviceMethods extends AmqpsDeviceOperations
     /**
      * Convert Proton message to IoTHubMessage if the message type is methods
      *
-     * @param amqpsMessage The Proton message to convert
+     * @param amqpsMessage       The Proton message to convert
      * @param deviceClientConfig The device client configuration
      * @return the converted message
      */
     @Override
     protected AmqpsConvertFromProtonReturnValue convertFromProton(AmqpsMessage amqpsMessage, DeviceClientConfig deviceClientConfig) throws TransportException
     {
-        if ((amqpsMessage.getAmqpsMessageType() == MessageType.DEVICE_METHODS) &&
-            (this.deviceClientConfig.getDeviceId() == deviceClientConfig.getDeviceId()))
+        if ((amqpsMessage.getAmqpsMessageType() == MessageType.DEVICE_METHODS) && (this.deviceClientConfig.getDeviceId() == deviceClientConfig.getDeviceId()))
         {
             // Codes_SRS_AMQPSDEVICEMETHODS_12_016: [The function shall convert the amqpsMessage to IoTHubTransportMessage.]
             Message message = protonMessageToIoTHubMessage(amqpsMessage);
@@ -203,8 +200,8 @@ public final class AmqpsDeviceMethods extends AmqpsDeviceOperations
      * Converts an AMQPS message to a corresponding IoT Hub message.
      *
      * @param protonMsg the AMQPS message.
-     * @throws TransportException if the conversion fails
      * @return the corresponding IoT Hub message.
+     * @throws TransportException if the conversion fails
      */
     @Override
     protected IotHubTransportMessage protonMessageToIoTHubMessage(MessageImpl protonMsg) throws TransportException
@@ -237,15 +234,16 @@ public final class AmqpsDeviceMethods extends AmqpsDeviceOperations
 
     /**
      * Creates a proton message from the IoTHub message.
+     *
      * @param message the IoTHub input message.
-     * @throws TransportException if the conversion fails
      * @return the proton message.
+     * @throws TransportException if the conversion fails
      */
     @Override
     protected MessageImpl iotHubMessageToProtonMessage(Message message) throws TransportException
     {
         MessageImpl protonMessage = super.iotHubMessageToProtonMessage(message);
-        IotHubTransportMessage deviceMethodMessage = (IotHubTransportMessage)message;
+        IotHubTransportMessage deviceMethodMessage = (IotHubTransportMessage) message;
 
         // Codes_SRS_AMQPSDEVICEMETHODS_12_031: [The function shall copy the correlationId, messageId properties to the Proton message properties.]
         Properties properties;

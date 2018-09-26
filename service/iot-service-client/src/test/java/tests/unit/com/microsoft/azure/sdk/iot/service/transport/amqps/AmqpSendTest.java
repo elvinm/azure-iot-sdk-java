@@ -26,15 +26,22 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-/** Unit tests for AmqpSend */
+/**
+ * Unit tests for AmqpSend
+ */
 @RunWith(JMockit.class)
 public class AmqpSendTest
 {
-    @Mocked Proton proton;
-    @Mocked Reactor reactor;
-    @Mocked Event event;
-    @Mocked Connection connection;
-    @Mocked Session session;
+    @Mocked
+    Proton proton;
+    @Mocked
+    Reactor reactor;
+    @Mocked
+    Event event;
+    @Mocked
+    Connection connection;
+    @Mocked
+    Session session;
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSEND_12_002: [The constructor shall copy all input parameters to private member variables for event processing]
     @Test
@@ -82,7 +89,7 @@ public class AmqpSendTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSEND_12_001: [The constructor shall throw IllegalArgumentException if any of the input parameter is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_checks_if_hostName_null()
     {
         // Arrange
@@ -96,7 +103,7 @@ public class AmqpSendTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSEND_12_001: [The constructor shall throw IllegalArgumentException if any of the input parameter is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_checks_if_hostName_empty()
     {
         // Arrange
@@ -110,7 +117,7 @@ public class AmqpSendTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSEND_12_001: [The constructor shall throw IllegalArgumentException if any of the input parameter is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_checks_if_userName_null()
     {
         // Arrange
@@ -124,7 +131,7 @@ public class AmqpSendTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSEND_12_001: [The constructor shall throw IllegalArgumentException if any of the input parameter is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_checks_if_userName_empty()
     {
         // Arrange
@@ -138,7 +145,7 @@ public class AmqpSendTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSEND_12_001: [The constructor shall throw IllegalArgumentException if any of the input parameter is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_checks_if_sasToken_null()
     {
         // Arrange
@@ -152,7 +159,7 @@ public class AmqpSendTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSEND_12_001: [The constructor shall throw IllegalArgumentException if any of the input parameter is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_checks_if_sasToken_empty()
     {
         // Arrange
@@ -163,17 +170,17 @@ public class AmqpSendTest
         // Act
         AmqpSend amqpSend = new AmqpSend(hostName, userName, sasToken, iotHubServiceClientProtocol);
     }
-    
+
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSEND_12_001: [The constructor shall throw IllegalArgumentException if any of the input parameter is null or empty]
     // Assert
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructor_checks_if_protocol_null()
     {
         // Arrange
         String hostName = "aaa";
         String userName = "bbb";
         String sasToken = "ccc";
-        
+
         IotHubServiceClientProtocol iotHubServiceClientProtocol = null;
         // Act
         AmqpSend amqpSend = new AmqpSend(hostName, userName, sasToken, iotHubServiceClientProtocol);
@@ -242,8 +249,7 @@ public class AmqpSendTest
         new Expectations()
         {
             {
-                Deencapsulation.invoke(handler, "createProtonMessage"
-                        , deviceId, message);
+                Deencapsulation.invoke(handler, "createProtonMessage", deviceId, message);
             }
         };
         // Act
@@ -271,8 +277,7 @@ public class AmqpSendTest
         new Expectations()
         {
             {
-                Deencapsulation.invoke(handler, "createProtonMessage"
-                        , deviceId, moduleId, message);
+                Deencapsulation.invoke(handler, "createProtonMessage", deviceId, moduleId, message);
             }
         };
         // Act
@@ -309,7 +314,7 @@ public class AmqpSendTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSEND_28_005: [The event handler shall throw IOException if the send handler object is not initialized]
     // Assert
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void sendToModule_throwsIOException_when_open_has_not_been_called() throws Exception
     {
         // Arrange

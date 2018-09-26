@@ -42,7 +42,7 @@ public class QueryTest
     private HttpResponse mockedHttpResponse;
 
     /* SRS_QUERY_21_001: [The constructor shall throw IllegalArgumentException if the provided contractApiHttp is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnContractApiHttpNull()
     {
         // arrange
@@ -52,14 +52,13 @@ public class QueryTest
         final int pageSize = 10;
 
         // act
-        Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, pageSize);
+        Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, pageSize);
 
         // assert
     }
 
     /* SRS_QUERY_21_002: [The constructor shall throw IllegalArgumentException if the provided targetPath is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnTargetPathNull()
     {
         // arrange
@@ -69,14 +68,13 @@ public class QueryTest
         final int pageSize = 10;
 
         // act
-        Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, pageSize);
+        Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, pageSize);
 
         // assert
     }
 
     /* SRS_QUERY_21_002: [The constructor shall throw IllegalArgumentException if the provided targetPath is null or empty.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnTargetPathEmpty()
     {
         // arrange
@@ -86,14 +84,13 @@ public class QueryTest
         final int pageSize = 10;
 
         // act
-        Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, pageSize);
+        Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, pageSize);
 
         // assert
     }
 
     /* SRS_QUERY_21_003: [The constructor shall throw IllegalArgumentException if the provided querySpecification is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnQuerySpecificationNull()
     {
         // arrange
@@ -103,14 +100,13 @@ public class QueryTest
         final int pageSize = 10;
 
         // act
-        Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, pageSize);
+        Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, pageSize);
 
         // assert
     }
 
     /* SRS_QUERY_21_004: [The constructor shall throw IllegalArgumentException if the provided pageSize is negative.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnPageSizeNegative()
     {
         // arrange
@@ -120,8 +116,7 @@ public class QueryTest
         final int pageSize = -10;
 
         // act
-        Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, pageSize);
+        Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, pageSize);
 
         // assert
     }
@@ -152,12 +147,11 @@ public class QueryTest
         };
 
         // act
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, pageSize);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, pageSize);
 
         // assert
         assertEquals(contractApiHttp, Deencapsulation.getField(query, "contractApiHttp"));
-        assertEquals(pageSize, (int)Deencapsulation.getField(query, "pageSize"));
+        assertEquals(pageSize, (int) Deencapsulation.getField(query, "pageSize"));
         assertEquals(querySpecificationJson, Deencapsulation.getField(query, "querySpecificationJson"));
         assertEquals(queryPath, Deencapsulation.getField(query, "queryPath"));
         assertNull(Deencapsulation.getField(query, "continuationToken"));
@@ -182,8 +176,7 @@ public class QueryTest
                 result = querySpecificationJson;
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, pageSize);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, pageSize);
 
         // act - assert
         assertTrue(query.hasNext());
@@ -212,7 +205,7 @@ public class QueryTest
             {
                 mockedQuerySpecification.toJson();
                 result = querySpecificationJson;
-                mockedContractApiHttp.request(HttpMethod.POST, queryPath, (Map)any, querySpecificationJson);
+                mockedContractApiHttp.request(HttpMethod.POST, queryPath, (Map) any, querySpecificationJson);
                 result = mockedHttpResponse;
                 mockedHttpResponse.getBody();
                 result = "result".getBytes();
@@ -220,8 +213,7 @@ public class QueryTest
                 result = headersResult;
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, pageSize);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, pageSize);
 
         query.next();
 
@@ -230,7 +222,7 @@ public class QueryTest
     }
 
     /* SRS_QUERY_21_011: [The next shall throw NoSuchElementException if the hasNext is false.] */
-    @Test (expected = NoSuchElementException.class)
+    @Test(expected = NoSuchElementException.class)
     public void nextThrowsOnFalseHasNext() throws ProvisioningServiceClientException
     {
         // arrange
@@ -252,7 +244,7 @@ public class QueryTest
             {
                 mockedQuerySpecification.toJson();
                 result = querySpecificationJson;
-                mockedContractApiHttp.request(HttpMethod.POST, queryPath, (Map)any, querySpecificationJson);
+                mockedContractApiHttp.request(HttpMethod.POST, queryPath, (Map) any, querySpecificationJson);
                 result = mockedHttpResponse;
                 mockedHttpResponse.getBody();
                 result = "result".getBytes();
@@ -260,8 +252,7 @@ public class QueryTest
                 result = headersResult;
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, pageSize);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, pageSize);
 
         query.next();
         assertFalse(query.hasNext());
@@ -315,8 +306,7 @@ public class QueryTest
                 times = 1;
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, pageSize);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, pageSize);
 
         // act
         query.next(continuationToken);
@@ -358,8 +348,7 @@ public class QueryTest
                 times = 1;
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, 0);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, 0);
 
         // act
         query.next();
@@ -368,7 +357,7 @@ public class QueryTest
     }
 
     /* SRS_QUERY_21_015: [The next shall throw IllegalArgumentException if the Http request throws any ProvisioningServiceClientException.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void nextThrowsOnRequestFailed() throws ProvisioningServiceClientException
     {
         // arrange
@@ -383,13 +372,12 @@ public class QueryTest
             {
                 mockedQuerySpecification.toJson();
                 result = querySpecificationJson;
-                mockedContractApiHttp.request(HttpMethod.POST, queryPath, (Map)any, querySpecificationJson);
+                mockedContractApiHttp.request(HttpMethod.POST, queryPath, (Map) any, querySpecificationJson);
                 result = new ProvisioningServiceClientBadFormatException();
                 times = 1;
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, 0);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, 0);
 
         // act
         query.next();
@@ -434,8 +422,7 @@ public class QueryTest
                 Deencapsulation.newInstance(QueryResult.class, type, bodyResult, continuationToken);
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, 0);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, 0);
 
         // act
         QueryResult queryResult = query.next();
@@ -481,8 +468,7 @@ public class QueryTest
                 Deencapsulation.newInstance(QueryResult.class, new Class[]{String.class, String.class, String.class}, null, bodyResult, continuationToken);
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, 0);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, 0);
 
         // act
         QueryResult queryResult = query.next();
@@ -529,8 +515,7 @@ public class QueryTest
                 Deencapsulation.newInstance(QueryResult.class, new Class[]{String.class, String.class, String.class}, type, bodyResult, null);
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, 0);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, 0);
 
         // act
         QueryResult queryResult = query.next();
@@ -541,7 +526,7 @@ public class QueryTest
     }
 
     /* SRS_QUERY_21_024: [The next shall throw IllegalArgumentException if the heepResponse contains a null body.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void nextThrowsOnNullBody() throws ProvisioningServiceClientException
     {
         // arrange
@@ -564,8 +549,7 @@ public class QueryTest
                 times = 1;
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, 0);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, 0);
 
         // act
         query.next();
@@ -608,8 +592,7 @@ public class QueryTest
                 Deencapsulation.newInstance(QueryResult.class, new Class[]{String.class, String.class, String.class}, type, bodyResult, null);
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, 0);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, 0);
 
         // act
         QueryResult queryResult = query.next();
@@ -620,7 +603,7 @@ public class QueryTest
     }
 
     /* SRS_QUERY_21_018: [The next shall throw NoSuchElementException if the provided continuationToken is null or empty.] */
-    @Test (expected = NoSuchElementException.class)
+    @Test(expected = NoSuchElementException.class)
     public void nextThrowsOnNullContinuationToken() throws ProvisioningServiceClientException
     {
         // arrange
@@ -636,8 +619,7 @@ public class QueryTest
                 result = querySpecificationJson;
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, 0);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, 0);
 
         // act
         query.next(null);
@@ -646,7 +628,7 @@ public class QueryTest
     }
 
     /* SRS_QUERY_21_018: [The next shall throw NoSuchElementException if the provided continuationToken is null or empty.] */
-    @Test (expected = NoSuchElementException.class)
+    @Test(expected = NoSuchElementException.class)
     public void nextThrowsOnEmptyContinuationToken() throws ProvisioningServiceClientException
     {
         // arrange
@@ -662,8 +644,7 @@ public class QueryTest
                 result = querySpecificationJson;
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, 0);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, 0);
 
         // act
         query.next("");
@@ -732,15 +713,14 @@ public class QueryTest
                 result = querySpecificationJson;
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, pageSize);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, pageSize);
 
         // act - assert
         assertEquals(pageSize, query.getPageSize());
     }
 
     /* SRS_QUERY_21_022: [The setPageSize shall throw IllegalArgumentException if the provided pageSize is negative.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setPageSizeThrowsOnNegativePageSize()
     {
         // arrange
@@ -757,8 +737,7 @@ public class QueryTest
                 result = querySpecificationJson;
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, pageSize);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, pageSize);
 
         // act
         query.setPageSize(-10);
@@ -784,13 +763,12 @@ public class QueryTest
                 result = querySpecificationJson;
             }
         };
-        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class},
-                contractApiHttp, targetPath, querySpecification, pageSize);
+        Query query = Deencapsulation.newInstance(Query.class, new Class[]{ContractApiHttp.class, String.class, QuerySpecification.class, Integer.class}, contractApiHttp, targetPath, querySpecification, pageSize);
 
         // act
         query.setPageSize(20);
 
         // assert
-        assertEquals(20, (int)Deencapsulation.getField(query, "pageSize"));
+        assertEquals(20, (int) Deencapsulation.getField(query, "pageSize"));
     }
 }

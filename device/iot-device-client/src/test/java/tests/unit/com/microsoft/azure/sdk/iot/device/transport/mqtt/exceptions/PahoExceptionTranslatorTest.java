@@ -22,7 +22,7 @@ public class PahoExceptionTranslatorTest
 {
     @Mocked
     MqttException mockedMqttException;
-    
+
     // Tests_SRS_PahoExceptionTranslator_34_141: [When deriving the TransportException from the provided MqttException, this function shall map REASON_CODE_INVALID_PROTOCOL_VERSION to MqttRejectedProtocolVersionException.]
     @Test
     public void onConnectionLostMapsInvalidProtocolVersionException()

@@ -25,15 +25,15 @@ import static org.junit.Assert.*;
  */
 public class MessageTest
 {
-    protected static Charset UTF8 = StandardCharsets.UTF_8;
     private static final String IOTHUB_CONNECTION_STRING_CLASS = "com.microsoft.azure.sdk.iot.device.IotHubConnectionString";
+    protected static Charset UTF8 = StandardCharsets.UTF_8;
 
     // Tests_SRS_MESSAGE_11_024: [The constructor shall save the message body.]
     // Tests_SRS_MESSAGE_11_002: [The function shall return the message body.]
     @Test
     public void constructorSavesBody()
     {
-        final byte[] body = { 1, 2, 3 };
+        final byte[] body = {1, 2, 3};
 
         Message msg = new Message(body);
         byte[] testBody = msg.getBytes();
@@ -55,7 +55,7 @@ public class MessageTest
     @Test
     public void getBodyAsStringReturnsUtf8Body()
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
 
         Message msg = new Message(body);
         String testBody = new String(msg.getBytes(), Message.DEFAULT_IOTHUB_MESSAGE_CHARSET);
@@ -67,10 +67,9 @@ public class MessageTest
     // Tests_SRS_MESSAGE_11_026: [The function shall set the message property to the given value.]
     // Tests_SRS_MESSAGE_11_032: [The function shall return the value associated with the message property name, where the name can be either the HTTPS or AMQPS property name.]
     @Test
-    public void setPropertyAndGetPropertyMatch(
-            @Mocked final MessageProperty mockProperty)
+    public void setPropertyAndGetPropertyMatch(@Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
         final String name = "test-name";
         final String value1 = "test-value1";
         final String value2 = "test-value2";
@@ -117,7 +116,7 @@ public class MessageTest
     @Test(expected = IllegalArgumentException.class)
     public void setPropertyRejectsNullName()
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
         final String value = "test-value";
 
         Message msg = new Message(body);
@@ -128,7 +127,7 @@ public class MessageTest
     @Test(expected = IllegalArgumentException.class)
     public void setPropertyRejectsNullValue()
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
         final String name = "test-name";
 
         Message msg = new Message(body);
@@ -137,10 +136,9 @@ public class MessageTest
 
     // Tests_SRS_MESSAGE_11_030: [If name contains a character not specified in RFC 2047, the function shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void setPropertyRejectsIllegalName(
-            @Mocked final MessageProperty mockProperty)
+    public void setPropertyRejectsIllegalName(@Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
         final String invalidName = "  ";
         final String value = "test-value";
         new NonStrictExpectations()
@@ -157,10 +155,9 @@ public class MessageTest
 
     // Tests_SRS_MESSAGE_11_031: [If value name contains a character not specified in RFC 2047, the function shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void setPropertyRejectsIllegalValue(
-            @Mocked final MessageProperty mockProperty)
+    public void setPropertyRejectsIllegalValue(@Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
         final String name = "test-name";
         final String invalidValue = "test-value@";
         new NonStrictExpectations()
@@ -177,24 +174,22 @@ public class MessageTest
 
     // Tests_SRS_MESSAGE_11_034: [If no value associated with the property name is found, the function shall return null.]
     @Test
-    public void getPropertyRejectsNonexistentProperty(
-            @Mocked final MessageProperty mockProperty)
+    public void getPropertyRejectsNonexistentProperty(@Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
         final String name = "test-name";
 
         Message msg = new Message(body);
-        String testValue= msg.getProperty(name);
-		String expectedValue = null; // expected is null since test-name property doesn't exist
+        String testValue = msg.getProperty(name);
+        String expectedValue = null; // expected is null since test-name property doesn't exist
         assertThat(testValue, is(expectedValue));
     }
 
     // Tests_SRS_MESSAGE_11_033: [The function shall return a copy of the message properties.]
     @Test
-    public void getPropertiesReturnsCopyOfProperties(
-            @Mocked final MessageProperty mockProperty)
+    public void getPropertiesReturnsCopyOfProperties(@Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
         final String name = "test-name";
         final String value = "test-value";
         final String httpsName = "test-https-name";
@@ -225,7 +220,7 @@ public class MessageTest
     @Test
     public void isExpiredReturnsTrueIfExpiryIsNotSet()
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
 
         Message msg = new Message(body);
 
@@ -239,7 +234,7 @@ public class MessageTest
     @Test
     public void isExpiredReturnsTrueIfCurrentTimeIsGreaterThanExpiryTime() throws InterruptedException
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
 
         Message msg = new Message(body);
         msg.setExpiryTime(9);
@@ -256,7 +251,7 @@ public class MessageTest
     @Test
     public void isExpiredReturnsFalseIfCurrentTimeIsSmallerThanExpiryTime() throws InterruptedException
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
 
         Message msg = new Message(body);
         msg.setExpiryTime(1000);
@@ -283,7 +278,7 @@ public class MessageTest
     }
 
     // Tests_SRS_MESSAGE_34_038: [If the provided absolute expiry time is negative, an IllegalArgumentException shall be thrown.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setAbsoluteTimeWithNegativeTimeThrowsIllegalArgumentException()
     {
         Message msg = new Message("body");
@@ -333,13 +328,7 @@ public class MessageTest
         final String contentType = "json";
         final String contentEncoding = "utf-8";
         final String sharedAccessToken = null;
-        final IotHubConnectionString iotHubConnectionString =
-                Deencapsulation.newInstance(IotHubConnectionString.class,
-                        new Class[] {String.class, String.class, String.class, String.class},
-                        iotHubHostname,
-                        deviceId,
-                        deviceKey,
-                        sharedAccessToken);
+        final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, iotHubHostname, deviceId, deviceKey, sharedAccessToken);
 
         //act
         msg.setMessageType(type);

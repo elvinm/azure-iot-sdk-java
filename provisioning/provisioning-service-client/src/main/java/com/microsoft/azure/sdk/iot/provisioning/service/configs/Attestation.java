@@ -5,7 +5,7 @@ package com.microsoft.azure.sdk.iot.provisioning.service.configs;
 
 /**
  * This is the abstract class that unifies all possible types of attestation that Device Provisioning Service supports.
- *
+ * <p>
  * <p> For now, the provisioning service supports {@link TpmAttestation} or {@link X509Attestation}.
  *
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iot-dps/deviceenrollment">Device Enrollment</a>

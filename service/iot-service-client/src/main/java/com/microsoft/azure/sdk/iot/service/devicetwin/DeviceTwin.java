@@ -20,10 +20,10 @@ import java.util.*;
 
 public class DeviceTwin
 {
-    private IotHubConnectionString iotHubConnectionString = null;
-    private Integer requestId = 0;
     private final long USE_DEFAULT_TIMEOUT = 0;
     private final int DEFAULT_PAGE_SIZE = 100;
+    private IotHubConnectionString iotHubConnectionString = null;
+    private Integer requestId = 0;
 
     /**
      * Static constructor to create instance from connection string
@@ -37,16 +37,16 @@ public class DeviceTwin
         if (connectionString == null || connectionString.length() == 0)
         {
             /*
-            **Codes_SRS_DEVICETWIN_25_001: [** The constructor shall throw IllegalArgumentException if the input string is null or empty **]**
+             **Codes_SRS_DEVICETWIN_25_001: [** The constructor shall throw IllegalArgumentException if the input string is null or empty **]**
              */
             throw new IllegalArgumentException("Connection string cannot be null or empty");
         }
         /*
-        **Codes_SRS_DEVICETWIN_25_003: [** The constructor shall create a new DeviceTwin instance and return it **]**
+         **Codes_SRS_DEVICETWIN_25_003: [** The constructor shall create a new DeviceTwin instance and return it **]**
          */
         DeviceTwin deviceTwin = new DeviceTwin();
         /*
-        **Codes_SRS_DEVICETWIN_25_002: [** The constructor shall create an IotHubConnectionStringBuilder object from the given connection string **]**
+         **Codes_SRS_DEVICETWIN_25_002: [** The constructor shall create an IotHubConnectionStringBuilder object from the given connection string **]**
          */
         deviceTwin.iotHubConnectionString = IotHubConnectionStringBuilder.createConnectionString(connectionString);
         return deviceTwin;
@@ -56,7 +56,7 @@ public class DeviceTwin
      * This method retrieves device twin for the specified device.
      *
      * @param device The device with a valid id for which device twin is to be retrieved.
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public void getTwin(DeviceTwinDevice device) throws IotHubException, IOException
@@ -70,7 +70,7 @@ public class DeviceTwin
         }
 
         URL url = null;
-        if ((device.getModuleId() == null) || device.getModuleId().length() ==0)
+        if ((device.getModuleId() == null) || device.getModuleId().length() == 0)
         {
             /*
              **Codes_SRS_DEVICETWIN_25_005: [** The function shall build the URL for this operation by calling getUrlTwin **]**
@@ -108,12 +108,12 @@ public class DeviceTwin
         String twin = new String(response.getBody(), StandardCharsets.UTF_8);
 
         /*
-        **Codes_SRS_DEVICETWIN_25_011: [** The function shall deserialize the payload by calling updateTwin Api on the twin object **]**
+         **Codes_SRS_DEVICETWIN_25_011: [** The function shall deserialize the payload by calling updateTwin Api on the twin object **]**
          */
         TwinState twinState = TwinState.createFromTwinJson(twin);
 
         /*
-        **Codes_SRS_DEVICETWIN_25_012: [** The function shall set eTag, tags, desired property map, reported property map on the user device **]**
+         **Codes_SRS_DEVICETWIN_25_012: [** The function shall set eTag, tags, desired property map, reported property map on the user device **]**
          */
         device.setETag(twinState.getETag());
         device.setTags(twinState.getTags());
@@ -127,7 +127,7 @@ public class DeviceTwin
      * This method updates device twin for the specified device.
      *
      * @param device The device with a valid id for which device twin is to be updated.
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public synchronized void updateTwin(DeviceTwinDevice device) throws IotHubException, IOException
@@ -135,22 +135,21 @@ public class DeviceTwin
         if (device == null || device.getDeviceId() == null || device.getDeviceId().length() == 0)
         {
             /*
-            **Codes_SRS_DEVICETWIN_25_013: [** The function shall throw IllegalArgumentException if the input device is null or if deviceId is null or empty **]**
+             **Codes_SRS_DEVICETWIN_25_013: [** The function shall throw IllegalArgumentException if the input device is null or if deviceId is null or empty **]**
              */
             throw new IllegalArgumentException("Instantiate a device and set device id to be used");
         }
 
-        if ((device.getDesiredMap() == null || device.getDesiredMap().isEmpty()) &&
-                (device.getTagsMap() == null || device.getTagsMap().isEmpty()))
+        if ((device.getDesiredMap() == null || device.getDesiredMap().isEmpty()) && (device.getTagsMap() == null || device.getTagsMap().isEmpty()))
         {
             /*
-            **Codes_SRS_DEVICETWIN_25_045: [** The function shall throw IllegalArgumentException if the both desired and tags maps are either empty or null **]**
+             **Codes_SRS_DEVICETWIN_25_045: [** The function shall throw IllegalArgumentException if the both desired and tags maps are either empty or null **]**
              */
             throw new IllegalArgumentException("Set either desired properties or tags for the device to be updated with");
         }
 
         URL url;
-        if ((device.getModuleId() == null) || device.getModuleId().length() ==0)
+        if ((device.getModuleId() == null) || device.getModuleId().length() == 0)
         {
             /*
              **Codes_SRS_DEVICETWIN_25_005: [** The function shall build the URL for this operation by calling getUrlTwin**]**
@@ -166,7 +165,7 @@ public class DeviceTwin
         }
 
         /*
-        **Codes_SRS_DEVICETWIN_25_015: [** The function shall serialize the twin map by calling updateTwin Api on the twin object for the device provided by the user**]**
+         **Codes_SRS_DEVICETWIN_25_015: [** The function shall serialize the twin map by calling updateTwin Api on the twin object for the device provided by the user**]**
          */
         TwinState twinState = new TwinState(device.getTagsMap(), device.getDesiredMap(), null);
         String twinJson = twinState.toJsonElement().toString();
@@ -189,7 +188,7 @@ public class DeviceTwin
 
         **Codes_SRS_DEVICETWIN_25_020: [** The function shall verify the response status and throw proper Exception **]**
          */
-        HttpResponse response = DeviceOperations.request(this.iotHubConnectionString, url, HttpMethod.PATCH, twinJson.getBytes(StandardCharsets.UTF_8), String.valueOf(requestId++),0);
+        HttpResponse response = DeviceOperations.request(this.iotHubConnectionString, url, HttpMethod.PATCH, twinJson.getBytes(StandardCharsets.UTF_8), String.valueOf(requestId++), 0);
     }
 
     /**
@@ -234,11 +233,12 @@ public class DeviceTwin
 
     /**
      * Sql style query for twin
+     *
      * @param sqlQuery Sql query string to query IotHub for Twin
      * @param pageSize Size to limit query response by
      * @return Query Object to be used for looking up responses for this query
      * @throws IotHubException If Query request was not successful at the IotHub
-     * @throws IOException If input parameters are invalid
+     * @throws IOException     If input parameters are invalid
      */
     public synchronized Query queryTwin(String sqlQuery, Integer pageSize) throws IotHubException, IOException
     {
@@ -265,10 +265,11 @@ public class DeviceTwin
 
     /**
      * Sql style query for twin
+     *
      * @param sqlQuery Sql query string to query IotHub for Twin
      * @return Query Object to be used for looking up responses for this query
      * @throws IotHubException If Query request was not successful at the IotHub
-     * @throws IOException If input parameters are invalid
+     * @throws IOException     If input parameters are invalid
      */
     public synchronized Query queryTwin(String sqlQuery) throws IotHubException, IOException
     {
@@ -309,10 +310,11 @@ public class DeviceTwin
      * Returns the availability of next twin element upon query. If non was found,
      * Query is sent over again and response is updated accordingly until no response
      * for the query was found.
+     *
      * @param deviceTwinQuery Query object returned upon creation of query
      * @return True if next is available and false other wise.
      * @throws IotHubException If IotHub could not respond back to the query successfully
-     * @throws IOException If input parameter is incorrect
+     * @throws IOException     If input parameter is incorrect
      */
     public synchronized boolean hasNextDeviceTwin(Query deviceTwinQuery) throws IotHubException, IOException
     {
@@ -328,10 +330,11 @@ public class DeviceTwin
 
     /**
      * Returns the next device twin document
+     *
      * @param deviceTwinQuery Object corresponding to the query in request
      * @return Returns the next device twin document
-     * @throws IOException If input parameter is incorrect
-     * @throws IotHubException If a non successful response from IotHub is received
+     * @throws IOException            If input parameter is incorrect
+     * @throws IotHubException        If a non successful response from IotHub is received
      * @throws NoSuchElementException If no additional element was found
      */
     public synchronized DeviceTwinDevice getNextDeviceTwin(Query deviceTwinQuery) throws IOException, IotHubException, NoSuchElementException
@@ -359,6 +362,7 @@ public class DeviceTwin
 
     /**
      * Returns if the provided deviceTwinQueryCollection has a next page to query.
+     *
      * @param deviceTwinQueryCollection the query to check
      * @return True if the provided deviceTwinQueryCollection has a next page to query, false otherwise
      * @throws IllegalArgumentException if the provided deviceTwinQueryCollection is null
@@ -377,14 +381,14 @@ public class DeviceTwin
 
     /**
      * Returns the next DeviceTwinDevice collection for the given query alongside the continuation token needed for querying the next page.
-     *
+     * <p>
      * <p>This function shall update a local continuation token continuously to continue the query so you don't need to re-supply the returned
      * continuation token.</p>
      *
      * @param deviceTwinQueryCollection the query to run
      * @return The page of query results and the continuation token for the next page of results. Return value shall be {@code null} if there is no next collection
      * @throws IotHubException If an IotHubException occurs when querying the service.
-     * @throws IOException If an IotHubException occurs when querying the service or if the results of that query don't match expectations.
+     * @throws IOException     If an IotHubException occurs when querying the service or if the results of that query don't match expectations.
      */
     public synchronized QueryCollectionResponse<DeviceTwinDevice> next(QueryCollection deviceTwinQueryCollection) throws IOException, IotHubException
     {
@@ -396,18 +400,18 @@ public class DeviceTwin
 
     /**
      * Returns the next DeviceTwinDevice collection for the given query alongside the continuation token needed for querying the next page.
-     *
+     * <p>
      * <p>This function shall update a local continuation token continuously to continue the query so you don't need to re-supply the returned
      * continuation token unless you want to continue the query from a different starting point. To do that, set your new continuation token in the query options object.</p>
-     *
+     * <p>
      * <p>The provided option's page size shall override any previously saved page size.</p>
      *
      * @param deviceTwinQueryCollection the query to run
-     * @param options the query options to run the query with. If the continuation token in these options is null, the internally saved continuation token shall be used.
-     *                The page size set in the options will override any previously set page size.
+     * @param options                   the query options to run the query with. If the continuation token in these options is null, the internally saved continuation token shall be used.
+     *                                  The page size set in the options will override any previously set page size.
      * @return The page of query results and the continuation token for the next page of results. Return value shall be {@code null} if there is no next collection.
      * @throws IotHubException If an IotHubException occurs when querying the service.
-     * @throws IOException If an IotHubException occurs when querying the service or if the results of that query don't match expectations.
+     * @throws IOException     If an IotHubException occurs when querying the service or if the results of that query don't match expectations.
      */
     public synchronized QueryCollectionResponse<DeviceTwinDevice> next(QueryCollection deviceTwinQueryCollection, QueryOptions options) throws IOException, IotHubException
     {
@@ -440,33 +444,30 @@ public class DeviceTwin
     /**
      * Creates a new Job to update twin tags and desired properties on one or multiple devices
      *
-     * @param queryCondition Query condition to evaluate which devices to run the job on. It can be {@code null} or empty
-     * @param updateTwin Twin object to use for the update
-     * @param startTimeUtc Date time in Utc to start the job
+     * @param queryCondition            Query condition to evaluate which devices to run the job on. It can be {@code null} or empty
+     * @param updateTwin                Twin object to use for the update
+     * @param startTimeUtc              Date time in Utc to start the job
      * @param maxExecutionTimeInSeconds Max execution time in seconds, i.e., ttl duration the job can run
      * @return a Job class that represent this job on IotHub
-     * @throws IOException if the function contains invalid parameters
+     * @throws IOException     if the function contains invalid parameters
      * @throws IotHubException if the http request failed
      */
-    public Job scheduleUpdateTwin(String queryCondition,
-                                  DeviceTwinDevice updateTwin,
-                                  Date startTimeUtc,
-                                  long maxExecutionTimeInSeconds) throws IOException, IotHubException
+    public Job scheduleUpdateTwin(String queryCondition, DeviceTwinDevice updateTwin, Date startTimeUtc, long maxExecutionTimeInSeconds) throws IOException, IotHubException
     {
         // Codes_SRS_DEVICETWIN_21_061: [If the updateTwin is null, the scheduleUpdateTwin shall throws IllegalArgumentException ]
-        if(updateTwin == null)
+        if (updateTwin == null)
         {
             throw new IllegalArgumentException("null updateTwin");
         }
 
         // Codes_SRS_DEVICETWIN_21_062: [If the startTimeUtc is null, the scheduleUpdateTwin shall throws IllegalArgumentException ]
-        if(startTimeUtc == null)
+        if (startTimeUtc == null)
         {
             throw new IllegalArgumentException("null startTimeUtc");
         }
 
         // Codes_SRS_DEVICETWIN_21_063: [If the maxExecutionTimeInSeconds is negative, the scheduleUpdateTwin shall throws IllegalArgumentException ]
-        if(maxExecutionTimeInSeconds < 0)
+        if (maxExecutionTimeInSeconds < 0)
         {
             throw new IllegalArgumentException("negative maxExecutionTimeInSeconds");
         }

@@ -16,14 +16,15 @@ import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertTrue;
 
-/** Integration tests for HttpsBatchMessage. */
+/**
+ * Integration tests for HttpsBatchMessage.
+ */
 public class HttpsBatchMessageIT
 {
     protected Charset UTF8 = StandardCharsets.UTF_8;
 
     @Test
-    public void batchMessageSetsFieldsCorrectly() throws
-            IotHubSizeExceededException
+    public void batchMessageSetsFieldsCorrectly() throws IotHubSizeExceededException
     {
         String msgBytes0 = "abc";
         Message msg0 = new Message(msgBytes0);
@@ -31,7 +32,7 @@ public class HttpsBatchMessageIT
         msg0.setProperty("prop-0", "value-0");
         HttpsSingleMessage httpsMsg0 = HttpsSingleMessage.parseHttpsMessage(msg0);
 
-        byte[] msgBytes1 = { 48, 49, 50 };
+        byte[] msgBytes1 = {48, 49, 50};
         Message msg1 = new Message(msgBytes1);
         String messageid1 = msg1.getMessageId();
         msg1.setProperty("prop-1", "value-1");
@@ -44,20 +45,9 @@ public class HttpsBatchMessageIT
         // JSON body with whitespace removed.
         String testBatchBody = new String(batch.getBody(), UTF8).replaceAll("\\s", "");
 
-        String expectedBatchBody = "["
-                + "{\"body\":\"abc\","
-                + "\"base64Encoded\":false,"
-                + "\"properties\":{"
+        String expectedBatchBody = "[" + "{\"body\":\"abc\"," + "\"base64Encoded\":false," + "\"properties\":{"
 
-                +   "\"iothub-messageid\":\"" + messageid0 + "\"},"
-                +   "\"iothub-app-prop-0\":\"value-0\","
-                + "},"
-                + "{\"body\":\"012\","
-                + "\"base64Encoded\":false,"
-                + "\"properties\":{"
-                +   "\"iothub-app-prop-1\":\"value-1\","
-                +   "\"iothub-messageid\":\"" + messageid1 + "\"}}"
-                + "]";
+                + "\"iothub-messageid\":\"" + messageid0 + "\"}," + "\"iothub-app-prop-0\":\"value-0\"," + "}," + "{\"body\":\"012\"," + "\"base64Encoded\":false," + "\"properties\":{" + "\"iothub-app-prop-1\":\"value-1\"," + "\"iothub-messageid\":\"" + messageid1 + "\"}}" + "]";
 
         assertTrue(testBatchBody.contains("\"iothub-messageid\":\"" + messageid0));
         assertTrue(testBatchBody.contains("\"iothub-messageid\":\"" + messageid1));

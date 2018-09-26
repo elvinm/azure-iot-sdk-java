@@ -37,41 +37,11 @@ public class TwinStateTest
         }
     };
 
-    private final static String JSON =
-            "{" +
-                "\"tags\":{" +
-                    "\"tag1\":\"val1\"," +
-                    "\"tag2\":\"val2\"," +
-                    "\"tag3\":\"val3\"" +
-                "}," +
-                "\"properties\":{" +
-                    "\"desired\":{" +
-                        "\"prop1\":\"val1\"," +
-                        "\"prop2\":\"val2\"," +
-                        "\"prop3\":\"val3\"" +
-                    "}" +
-                "}" +
-            "}";
+    private final static String JSON = "{" + "\"tags\":{" + "\"tag1\":\"val1\"," + "\"tag2\":\"val2\"," + "\"tag3\":\"val3\"" + "}," + "\"properties\":{" + "\"desired\":{" + "\"prop1\":\"val1\"," + "\"prop2\":\"val2\"," + "\"prop3\":\"val3\"" + "}" + "}" + "}";
 
-    private final static String JSON_ONLY_TAGS =
-            "{" +
-                "\"tags\":{" +
-                    "\"tag1\":\"val1\"," +
-                    "\"tag2\":\"val2\"," +
-                    "\"tag3\":\"val3\"" +
-                "}" +
-            "}";
+    private final static String JSON_ONLY_TAGS = "{" + "\"tags\":{" + "\"tag1\":\"val1\"," + "\"tag2\":\"val2\"," + "\"tag3\":\"val3\"" + "}" + "}";
 
-    private final static String JSON_ONLY_PROPERTIES =
-            "{" +
-                "\"properties\":{" +
-                    "\"desired\":{" +
-                        "\"prop1\":\"val1\"," +
-                        "\"prop2\":\"val2\"," +
-                        "\"prop3\":\"val3\"" +
-                    "}" +
-                "}" +
-            "}";
+    private final static String JSON_ONLY_PROPERTIES = "{" + "\"properties\":{" + "\"desired\":{" + "\"prop1\":\"val1\"," + "\"prop2\":\"val2\"," + "\"prop3\":\"val3\"" + "}" + "}" + "}";
 
     /* SRS_TWIN_STATE_21_001: [The constructor shall store the provided tags and desiredProperty.] */
     @Test

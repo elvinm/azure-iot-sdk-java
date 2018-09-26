@@ -64,7 +64,7 @@ public class AmqpsDeviceAuthentication extends AmqpsDeviceOperations
      * Prototype (empty) function for set the SslDomain
      *
      * @param deviceClientConfig The deviceClientConfig to use for authentication
-     * @param correlationId the authentication message's correlationId.
+     * @param correlationId      the authentication message's correlationId.
      * @throws TransportException if authentication fails
      */
     protected void authenticate(DeviceClientConfig deviceClientConfig, UUID correlationId) throws TransportException
@@ -75,7 +75,7 @@ public class AmqpsDeviceAuthentication extends AmqpsDeviceOperations
     /**
      * Prototype (empty) function for evaluation function of received message.
      *
-     * @param amqpsMessage the message to evaluate.
+     * @param amqpsMessage                the message to evaluate.
      * @param authenticationCorrelationId the expected correlation ID.
      * @return true if the message acknowledge the authentication, false otherwise.
      */

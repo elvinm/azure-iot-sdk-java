@@ -22,32 +22,24 @@ public class JobQueryResponseErrorTest
     @Test
     public void fromJsonSucceeds() throws IOException
     {
-        final String errorJson =
-                "{" +
-                    "\"code\":\"JobRunPreconditionFailed\"," +
-                    "\"description\":\"The job did not start within specified period: either device did not come online or invalid endTime specified.\"" +
-                 "}";
+        final String errorJson = "{" + "\"code\":\"JobRunPreconditionFailed\"," + "\"description\":\"The job did not start within specified period: either device did not come online or invalid endTime specified.\"" + "}";
 
 
         JobQueryResponseError jobQueryResponseError = new JobQueryResponseError().fromJson(errorJson);
     }
 
     //Tests_SRS_JOB_QUERY_RESPONSE_ERROR_25_006: [This method shall throw IOException if parsing of json fails for any reason.]
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void fromJsonThrowsOnInvalidJson() throws IOException
     {
-        final String errorJson =
-                "" +
-                        "\"code\":\"JobRunPreconditionFailed\"," +
-                        "\"description\":\"The job did not start within specified period: either device did not come online or invalid endTime specified.\"" +
-                        "}";
+        final String errorJson = "" + "\"code\":\"JobRunPreconditionFailed\"," + "\"description\":\"The job did not start within specified period: either device did not come online or invalid endTime specified.\"" + "}";
 
 
         JobQueryResponseError jobQueryResponseError = new JobQueryResponseError().fromJson(errorJson);
     }
 
     //Tests_SRS_JOB_QUERY_RESPONSE_ERROR_25_007: [If the input json is null or empty then this method shall throw IllegalArgumentException.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void fromJsonThrowsNullJson() throws IOException
     {
         final String errorJson = null;
@@ -55,7 +47,7 @@ public class JobQueryResponseErrorTest
         JobQueryResponseError jobQueryResponseError = new JobQueryResponseError().fromJson(errorJson);
     }
 
-    @Test  (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void fromJsonThrowsEmptyJson() throws IOException
     {
         final String errorJson = "";
@@ -64,22 +56,18 @@ public class JobQueryResponseErrorTest
     }
 
     //Tests_SRS_JOB_QUERY_RESPONSE_ERROR_25_005: [This method shall throw IOException if either code and description is not present in the json.]
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void fromJsonThrowsOnNoCode() throws IOException
     {
-        final String errorJson = "{" +
-                "\"description\":\"The job did not start within specified period: either device did not come online or invalid endTime specified.\"" +
-                "}";
+        final String errorJson = "{" + "\"description\":\"The job did not start within specified period: either device did not come online or invalid endTime specified.\"" + "}";
 
         JobQueryResponseError jobQueryResponseError = new JobQueryResponseError().fromJson(errorJson);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void fromJsonThrowsOnNoDescription() throws IOException
     {
-        final String errorJson = "{" +
-                "\"code\":\"JobRunPreconditionFailed\"" +
-                "}";
+        final String errorJson = "{" + "\"code\":\"JobRunPreconditionFailed\"" + "}";
 
         JobQueryResponseError jobQueryResponseError = new JobQueryResponseError().fromJson(errorJson);
     }
@@ -88,11 +76,7 @@ public class JobQueryResponseErrorTest
     @Test
     public void toJsonSucceeds() throws IOException
     {
-        final String errorJson =
-                "{" +
-                        "\"code\":\"JobRunPreconditionFailed\"," +
-                        "\"description\":\"The job did not start within specified period: either device did not come online or invalid endTime specified.\"" +
-                        "}";
+        final String errorJson = "{" + "\"code\":\"JobRunPreconditionFailed\"," + "\"description\":\"The job did not start within specified period: either device did not come online or invalid endTime specified.\"" + "}";
 
         JobQueryResponseError jobQueryResponseError = new JobQueryResponseError().fromJson(errorJson);
 
@@ -104,11 +88,7 @@ public class JobQueryResponseErrorTest
     @Test
     public void gettersSucceeds() throws IOException
     {
-        final String errorJson =
-                "{" +
-                        "\"code\":\"JobRunPreconditionFailed\"," +
-                        "\"description\":\"The job did not start within specified period: either device did not come online or invalid endTime specified.\"" +
-                        "}";
+        final String errorJson = "{" + "\"code\":\"JobRunPreconditionFailed\"," + "\"description\":\"The job did not start within specified period: either device did not come online or invalid endTime specified.\"" + "}";
 
         JobQueryResponseError jobQueryResponseError = new JobQueryResponseError().fromJson(errorJson);
         assertNotNull(jobQueryResponseError.getCode());

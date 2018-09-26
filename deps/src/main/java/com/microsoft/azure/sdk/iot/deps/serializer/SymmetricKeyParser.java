@@ -15,13 +15,11 @@ import com.google.gson.annotations.SerializedName;
  */
 public class SymmetricKeyParser
 {
-    private transient Gson gson = new Gson();
-
     private static final String PRIMARY_KEY_SERIALIZED_NAME = "primaryKey";
+    private static final String SECONDARY_KEY_SERIALIZED_NAME = "secondaryKey";
+    private transient Gson gson = new Gson();
     @SerializedName(PRIMARY_KEY_SERIALIZED_NAME)
     private String primaryKey;
-
-    private static final String SECONDARY_KEY_SERIALIZED_NAME = "secondaryKey";
     @SerializedName(SECONDARY_KEY_SERIALIZED_NAME)
     private String secondaryKey;
 
@@ -30,7 +28,8 @@ public class SymmetricKeyParser
      */
     @SuppressWarnings("unused")
     public SymmetricKeyParser()
-    {}
+    {
+    }
 
     public SymmetricKeyParser(String primaryKey, String secondaryKey)
     {
@@ -59,10 +58,7 @@ public class SymmetricKeyParser
             throw new IllegalArgumentException("The provided json could not be parsed");
         }
 
-        if (parser.getPrimaryKey() == null
-                || parser.getPrimaryKey().isEmpty()
-                || parser.getSecondaryKey() == null
-                || parser.getSecondaryKey().isEmpty())
+        if (parser.getPrimaryKey() == null || parser.getPrimaryKey().isEmpty() || parser.getSecondaryKey() == null || parser.getSecondaryKey().isEmpty())
         {
             //Codes_SRS_SYMMETRIC_KEY_PARSER_34_010: [If the provided json is missing the field for either PrimaryKey or SecondaryKey, or either is missing a value, an IllegalArgumentException shall be thrown.]
             throw new IllegalArgumentException("Both the primary key and secondary key must be present and have a value in the provided json.");
@@ -74,6 +70,7 @@ public class SymmetricKeyParser
 
     /**
      * Converts this into json and returns it
+     *
      * @return the json representation of this
      */
     public String toJson()
@@ -95,6 +92,7 @@ public class SymmetricKeyParser
 
     /**
      * Setter for PrimaryKey
+     *
      * @param primaryKey the value to set the primary key to
      * @throws IllegalArgumentException if primaryKey is null
      */
@@ -123,6 +121,7 @@ public class SymmetricKeyParser
 
     /**
      * Setter for SecondaryKey
+     *
      * @param secondaryKey the value to set the secondary key to
      * @throws IllegalArgumentException if secondaryKey is null
      */

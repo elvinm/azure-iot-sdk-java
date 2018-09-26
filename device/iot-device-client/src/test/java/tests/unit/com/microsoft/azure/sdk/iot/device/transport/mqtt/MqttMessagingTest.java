@@ -68,7 +68,7 @@ public class MqttMessagingTest
         MqttMessaging testMqttMessaging = new MqttMessaging(mockedMqttConnection, expectedDeviceId, mockedIotHubListener, null, "", expectedModuleId, false);
 
         String actualPublishTopic = Deencapsulation.getField(testMqttMessaging, "publishTopic");
-        assertEquals("devices/" + expectedDeviceId + "/modules/" + expectedModuleId +"/messages/events/", actualPublishTopic);
+        assertEquals("devices/" + expectedDeviceId + "/modules/" + expectedModuleId + "/messages/events/", actualPublishTopic);
         String actualInputsSubscribeTopic = Deencapsulation.getField(testMqttMessaging, "inputsSubscribeTopic");
         assertEquals("devices/" + expectedDeviceId + "/modules/" + expectedModuleId + "/inputs/#", actualInputsSubscribeTopic);
         String actualEventsSubscribeTopic = Deencapsulation.getField(testMqttMessaging, "eventsSubscribeTopic");
@@ -76,34 +76,34 @@ public class MqttMessagingTest
     }
 
     /*
-    **Tests_SRS_MqttMessaging_25_001: [The constructor shall throw IllegalArgumentException if any of the parameters are null or empty .]
+     **Tests_SRS_MqttMessaging_25_001: [The constructor shall throw IllegalArgumentException if any of the parameters are null or empty .]
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorFailsIfMqttConnectionIsNull() throws TransportException
     {
         MqttMessaging testMqttMessaging = new MqttMessaging(null, CLIENT_ID, mockedIotHubListener, null, "", "", false);
     }
 
     /*
-    **Tests_SRS_MqttMessaging_25_001: [The constructor shall throw IllegalArgumentException if any of the parameters are null or empty .]
+     **Tests_SRS_MqttMessaging_25_001: [The constructor shall throw IllegalArgumentException if any of the parameters are null or empty .]
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorFailsIfDeviceIDIsEmpty() throws TransportException
     {
         MqttMessaging testMqttMessaging = new MqttMessaging(mockedMqttConnection, "", mockedIotHubListener, null, "", "", false);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorFailsIfDeviceIDIsNull() throws TransportException
     {
         MqttMessaging testMqttMessaging = new MqttMessaging(mockedMqttConnection, null, mockedIotHubListener, null, "", "", false);
     }
 
     /*
-    **Tests_SRS_MqttMessaging_25_020: [start method shall be call connect to establish a connection to IOT Hub with the given configuration.]
+     **Tests_SRS_MqttMessaging_25_020: [start method shall be call connect to establish a connection to IOT Hub with the given configuration.]
      */
     @Test
-    public  void startCallsConnectAndSubscribe(@Mocked final Mqtt mockMqtt) throws TransportException
+    public void startCallsConnectAndSubscribe(@Mocked final Mqtt mockMqtt) throws TransportException
     {
 
         new NonStrictExpectations()
@@ -129,7 +129,7 @@ public class MqttMessagingTest
 
     }
 
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void startThrowsIoExceptionIfConnectFails(@Mocked final Mqtt mockMqtt) throws TransportException
     {
         new StrictExpectations()
@@ -156,7 +156,7 @@ public class MqttMessagingTest
 
     }
 
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void startThrowsIoExceptionIfSubscribeFails(@Mocked final Mqtt mockMqtt) throws TransportException
     {
         new StrictExpectations()
@@ -185,9 +185,9 @@ public class MqttMessagingTest
     }
 
     /*
-    **Tests_SRS_MqttMessaging_25_022: [stop method shall be call disconnect to tear down a connection to IOT Hub with the given configuration.]
+     **Tests_SRS_MqttMessaging_25_022: [stop method shall be call disconnect to tear down a connection to IOT Hub with the given configuration.]
 
-    **Tests_SRS_MqttMessaging_25_023: [stop method shall be call restartBaseMqtt to tear down a the base class even if disconnect fails.]
+     **Tests_SRS_MqttMessaging_25_023: [stop method shall be call restartBaseMqtt to tear down a the base class even if disconnect fails.]
      */
     @Test
     public void stopCallsDisconnect(@Mocked final Mqtt mockMqtt) throws TransportException
@@ -212,7 +212,7 @@ public class MqttMessagingTest
         };
     }
 
-    @Test (expected = TransportException.class)
+    @Test(expected = TransportException.class)
     public void stopIfDisconnectFailsThrowsIOException(@Mocked final Mqtt mockMqtt) throws TransportException
     {
         new StrictExpectations()
@@ -239,7 +239,7 @@ public class MqttMessagingTest
     }
 
     /*
-    **Tests_SRS_MqttMessaging_25_024: [send method shall publish a message to the IOT Hub on the publish topic by calling method publish().]
+     **Tests_SRS_MqttMessaging_25_024: [send method shall publish a message to the IOT Hub on the publish topic by calling method publish().]
      */
     @Test
     public void sendShallMessageToLowerLayer(@Mocked final Mqtt mockMqtt) throws TransportException
@@ -250,7 +250,7 @@ public class MqttMessagingTest
             {
                 mockedMessage.getBytes();
                 result = messageBody;
-                Deencapsulation.invoke(mockMqtt, "publish", new Class[] {String.class, Message.class}, anyString, (Message) any);
+                Deencapsulation.invoke(mockMqtt, "publish", new Class[]{String.class, Message.class}, anyString, (Message) any);
             }
         };
 
@@ -271,7 +271,7 @@ public class MqttMessagingTest
     }
 
     //Tests_SRS_MqttMessaging_25_025: [send method shall throw an IllegalArgumentException if the message is null.]
-    @Test (expected =  IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void sendShallThrowIllegalArgumentExceptionIfMessageIsEmpty(@Mocked final Mqtt mockMqtt) throws TransportException
     {
         final byte[] messageBody = {};
@@ -298,9 +298,9 @@ public class MqttMessagingTest
     }
 
     /*
-    **Tests_SRS_MqttMessaging_25_025: [send method shall throw an IllegalArgumentException if the message is null.]
+     **Tests_SRS_MqttMessaging_25_025: [send method shall throw an IllegalArgumentException if the message is null.]
      */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void sendShallThrowTransportExceptionIfMessageIsNull(@Mocked final Mqtt mockMqtt) throws TransportException
     {
 
@@ -327,11 +327,7 @@ public class MqttMessagingTest
         final String propertyValue1 = "value1";
         final String propertyName2 = "key2";
         final String propertyValue2 = "value2";
-        final MessageProperty[] messageProperties = new MessageProperty[]
-                {
-                        new MessageProperty(propertyName1, propertyValue1),
-                        new MessageProperty(propertyName2, propertyValue2)
-                };
+        final MessageProperty[] messageProperties = new MessageProperty[]{new MessageProperty(propertyName1, propertyValue1), new MessageProperty(propertyName2, propertyValue2)};
         new NonStrictExpectations()
         {
             {
@@ -343,8 +339,7 @@ public class MqttMessagingTest
         };
 
         MqttMessaging testMqttMessaging = new MqttMessaging(mockedMqttConnection, CLIENT_ID, mockedIotHubListener, null, "", "", false);
-        final String publishTopicWithCustomProperties = String.format(
-                "devices/%s/messages/events/%s=%s&%s=%s", CLIENT_ID, propertyName1, propertyValue1, propertyName2, propertyValue2);
+        final String publishTopicWithCustomProperties = String.format("devices/%s/messages/events/%s=%s&%s=%s", CLIENT_ID, propertyName1, propertyValue1, propertyName2, propertyValue2);
 
         // act
         testMqttMessaging.send(mockedMessage);
@@ -415,7 +410,7 @@ public class MqttMessagingTest
             }
         };
 
-        MqttMessaging testMqttMessaging = new MqttMessaging(mockedMqttConnection, CLIENT_ID, mockedIotHubListener, null,"",  "", false);
+        MqttMessaging testMqttMessaging = new MqttMessaging(mockedMqttConnection, CLIENT_ID, mockedIotHubListener, null, "", "", false);
 
         //act
         testMqttMessaging.send(mockedMessage);
@@ -526,11 +521,7 @@ public class MqttMessagingTest
         final String contentType = "application/json";
         final String contentTypeEncoded = URLEncoder.encode(contentType, StandardCharsets.UTF_8.name());
         final String contentEncoding = "utf-8";
-        final MessageProperty[] messageProperties = new MessageProperty[]
-                {
-                        new MessageProperty(propertyName1, propertyValue1),
-                        new MessageProperty(propertyName2, propertyValue2)
-                };
+        final MessageProperty[] messageProperties = new MessageProperty[]{new MessageProperty(propertyName1, propertyValue1), new MessageProperty(propertyName2, propertyValue2)};
         new NonStrictExpectations()
         {
             {
@@ -556,8 +547,7 @@ public class MqttMessagingTest
         };
 
         MqttMessaging testMqttMessaging = new MqttMessaging(mockedMqttConnection, CLIENT_ID, mockedIotHubListener, null, "", "", false);
-        final String publishTopicWithAllSystemAndCustomProperties = String.format(
-                "devices/%s/messages/events/$.mid=%s&$.cid=%s&$.uid=%s&$.to=%s&$.on=%s&$.ce=%s&$.ct=%s&%s=%s&%s=%s", CLIENT_ID, messageId, correlationId, userId, to, outputName, contentEncoding, contentTypeEncoded, propertyName1, propertyValue1, propertyName2, propertyValue2);
+        final String publishTopicWithAllSystemAndCustomProperties = String.format("devices/%s/messages/events/$.mid=%s&$.cid=%s&$.uid=%s&$.to=%s&$.on=%s&$.ce=%s&$.ct=%s&%s=%s&%s=%s", CLIENT_ID, messageId, correlationId, userId, to, outputName, contentEncoding, contentTypeEncoded, propertyName1, propertyValue1, propertyName2, propertyValue2);
 
         // act
         testMqttMessaging.send(mockedMessage);
@@ -565,7 +555,7 @@ public class MqttMessagingTest
         new Verifications()
         {
             {
-                Deencapsulation.invoke(mockMqtt, "publish", publishTopicWithAllSystemAndCustomProperties,  mockedMessage);
+                Deencapsulation.invoke(mockMqtt, "publish", publishTopicWithAllSystemAndCustomProperties, mockedMessage);
                 times = 1;
             }
         };

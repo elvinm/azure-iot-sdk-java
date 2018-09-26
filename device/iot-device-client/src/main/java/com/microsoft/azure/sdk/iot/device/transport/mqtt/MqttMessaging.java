@@ -41,9 +41,9 @@ public class MqttMessaging extends Mqtt
         else
         {
             //Codes_SRS_MqttMessaging_34_031: [The constructor construct publishTopic and eventsSubscribeTopic from deviceId and moduleId.]
-            this.publishTopic = "devices/" + deviceId + "/modules/" + moduleId +"/messages/events/";
+            this.publishTopic = "devices/" + deviceId + "/modules/" + moduleId + "/messages/events/";
             this.eventsSubscribeTopic = "devices/" + deviceId + "/modules/" + moduleId + "/messages/devicebound/#";
-            this.inputsSubscribeTopic = "devices/" + deviceId + "/modules/" + moduleId +"/inputs/#";
+            this.inputsSubscribeTopic = "devices/" + deviceId + "/modules/" + moduleId + "/inputs/#";
         }
 
         this.moduleId = moduleId;
@@ -129,10 +129,11 @@ public class MqttMessaging extends Mqtt
 
     /**
      * Appends the property to the provided stringbuilder if the property value is not null.
-     * @param stringBuilder the builder to build upon
+     *
+     * @param stringBuilder   the builder to build upon
      * @param separatorNeeded if a seperator should precede the new property
-     * @param propertyKey the mqtt topic string property key
-     * @param propertyValue the property value (message id, correlation id, etc.)
+     * @param propertyKey     the mqtt topic string property key
+     * @param propertyValue   the property value (message id, correlation id, etc.)
      * @return true if a separator will be needed for any later properties appended on
      */
     private boolean appendPropertyIfPresent(StringBuilder stringBuilder, boolean separatorNeeded, String propertyKey, String propertyValue) throws TransportException

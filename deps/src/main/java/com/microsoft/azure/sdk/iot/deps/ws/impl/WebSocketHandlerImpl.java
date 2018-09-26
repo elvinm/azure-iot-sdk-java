@@ -241,7 +241,7 @@ public class WebSocketHandlerImpl implements WebSocketHandler
                 {
                     retVal = WebSocketMessageType.WEB_SOCKET_MESSAGE_TYPE_CLOSE;
                 }
-                else if(opcode == WebSocketHeader.OPCODE_CONTINUATION)
+                else if (opcode == WebSocketHeader.OPCODE_CONTINUATION)
                 {
                     retVal = WebSocketMessageType.WEB_SOCKET_MESSAGE_TYPE_CHUNK;
                 }

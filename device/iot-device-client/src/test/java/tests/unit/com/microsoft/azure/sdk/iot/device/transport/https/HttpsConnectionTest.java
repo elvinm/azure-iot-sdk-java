@@ -28,7 +28,9 @@ import java.util.Map;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
-/** Unit tests for HttpsConnection. */
+/**
+ * Unit tests for HttpsConnection.
+ */
 public class HttpsConnectionTest
 {
     @Mocked
@@ -162,7 +164,7 @@ public class HttpsConnectionTest
     public void connectStreamsRequestBody() throws IOException, TransportException
     {
         final HttpsMethod httpsMethod = HttpsMethod.PUT;
-        byte[] body = { 1, 2, 3 };
+        byte[] body = {1, 2, 3};
         new NonStrictExpectations()
         {
             {
@@ -180,7 +182,7 @@ public class HttpsConnectionTest
         body[0] = 5;
         conn.connect();
 
-        final byte[] expectedBody = { 1, 2, 3 };
+        final byte[] expectedBody = {1, 2, 3};
         new Verifications()
         {
             {
@@ -246,7 +248,7 @@ public class HttpsConnectionTest
     {
         final HttpsMethod httpsMethod = HttpsMethod.POST;
         final HttpsMethod illegalHttpsMethod = HttpsMethod.DELETE;
-        final byte[] body = { 1, 2, 3 };
+        final byte[] body = {1, 2, 3};
         new NonStrictExpectations()
         {
             {
@@ -359,7 +361,7 @@ public class HttpsConnectionTest
     }
 
     //Tests_SRS_HTTPSCONNECTION_34_026: [If this object uses HTTP, this function shall throw an UnsupportedOperationException.]
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void setSSLContextThrowsIfHttp(@Mocked final SSLContext mockedContext) throws IOException, TransportException
     {
         final HttpsMethod httpsMethod = HttpsMethod.POST;
@@ -384,7 +386,7 @@ public class HttpsConnectionTest
 
 
     //Tests_SRS_HTTPSCONNECTION_25_025: [The function shall throw IllegalArgumentException if the context is null value.**]**
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void setSSLContextThrowsOnNullContext(@Mocked final SSLContext mockedContext) throws IOException, TransportException
     {
         final HttpsMethod httpsMethod = HttpsMethod.POST;
@@ -412,7 +414,7 @@ public class HttpsConnectionTest
     public void writeOutputFailsWhenMethodIsNotPostOrPut() throws IOException, TransportException
     {
         final HttpsMethod httpsMethod = HttpsMethod.GET;
-        final byte[] body = { 1, 2 };
+        final byte[] body = {1, 2};
         new NonStrictExpectations()
         {
             {
@@ -453,8 +455,7 @@ public class HttpsConnectionTest
 
     // Tests_SRS_HTTPSCONNECTION_11_011: [The function shall read from the input stream (response stream) and return the response.]
     @Test
-    public void readInputCompletelyReadsInputStream(
-            @Mocked final InputStream mockIs) throws IOException, TransportException
+    public void readInputCompletelyReadsInputStream(@Mocked final InputStream mockIs) throws IOException, TransportException
     {
         final HttpsMethod httpsMethod = HttpsMethod.GET;
         new NonStrictExpectations()
@@ -477,7 +478,7 @@ public class HttpsConnectionTest
 
         byte[] testResponse = conn.readInput();
 
-        byte[] expectedResponse = { 1, 2, 3 };
+        byte[] expectedResponse = {1, 2, 3};
         assertThat(testResponse, is(expectedResponse));
     }
 
@@ -578,8 +579,7 @@ public class HttpsConnectionTest
 
     // Tests_SRS_HTTPSCONNECTION_11_013: [The function shall read from the error stream and return the response.]
     @Test
-    public void readErrorCompletelyReadsErrorStream(
-            @Mocked final InputStream mockIs) throws IOException, TransportException
+    public void readErrorCompletelyReadsErrorStream(@Mocked final InputStream mockIs) throws IOException, TransportException
     {
         final HttpsMethod httpsMethod = HttpsMethod.GET;
         new NonStrictExpectations()
@@ -602,7 +602,7 @@ public class HttpsConnectionTest
 
         byte[] testError = conn.readError();
 
-        byte[] expectedError = { 1, 2, 3 };
+        byte[] expectedError = {1, 2, 3};
         assertThat(testError, is(expectedError));
     }
 
@@ -692,8 +692,7 @@ public class HttpsConnectionTest
 
     // Tests_SRS_HTTPSCONNECTION_11_015: [The function shall return the response status code.]
     @Test
-    public void getResponseStatusReturnsResponseStatus(
-            @Mocked final InputStream mockIs) throws IOException, TransportException
+    public void getResponseStatusReturnsResponseStatus(@Mocked final InputStream mockIs) throws IOException, TransportException
     {
         final HttpsMethod httpsMethod = HttpsMethod.GET;
         final int status = 204;
@@ -721,8 +720,7 @@ public class HttpsConnectionTest
 
     // Tests_SRS_HTTPSCONNECTION_11_016: [The function shall throw a TransportException if no response was received.]
     @Test(expected = TransportException.class)
-    public void getResponseStatusFailsIfDidNotReceiveResponse(
-            @Mocked final InputStream mockIs) throws IOException, TransportException
+    public void getResponseStatusFailsIfDidNotReceiveResponse(@Mocked final InputStream mockIs) throws IOException, TransportException
     {
         final HttpsMethod httpsMethod = HttpsMethod.GET;
         new NonStrictExpectations()
@@ -776,19 +774,14 @@ public class HttpsConnectionTest
         HttpsConnection conn = new HttpsConnection(mockUrl, httpsMethod);
         conn.connect();
 
-        Map<String, List<String>> testResponseHeaders =
-                conn.getResponseHeaders();
+        Map<String, List<String>> testResponseHeaders = conn.getResponseHeaders();
 
-        final Map<String, List<String>> expectedResponseHeaders =
-                responseHeaders;
-        assertThat(testResponseHeaders.size(),
-                is(expectedResponseHeaders.size()));
+        final Map<String, List<String>> expectedResponseHeaders = responseHeaders;
+        assertThat(testResponseHeaders.size(), is(expectedResponseHeaders.size()));
         // the list of values for each field is of size 1, so the lists
         // can be directly compared.
-        assertThat(testResponseHeaders.get(field0),
-                is(expectedResponseHeaders.get(field0)));
-        assertThat(testResponseHeaders.get(field1),
-                is(expectedResponseHeaders.get(field1)));
+        assertThat(testResponseHeaders.get(field0), is(expectedResponseHeaders.get(field0)));
+        assertThat(testResponseHeaders.get(field1), is(expectedResponseHeaders.get(field1)));
     }
 
     // Tests_SRS_HTTPSCONNECTION_11_018: [The function shall throw an IOException if no response was received.]

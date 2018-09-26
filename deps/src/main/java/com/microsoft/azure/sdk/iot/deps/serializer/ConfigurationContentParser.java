@@ -13,16 +13,14 @@ import java.util.Map;
 public class ConfigurationContentParser
 {
     private static final String MODULES_CONTENT_NAME = "modulesContent";
+    private static final String DEVICE_CONTENT_NAME = "deviceContent";
+    private transient static Gson gson = new Gson();
     @Expose(serialize = false, deserialize = true)
     @SerializedName(MODULES_CONTENT_NAME)
     private Map<String, Map<String, Object>> modulesContent;
-
-    private static final String DEVICE_CONTENT_NAME = "deviceContent";
     @Expose(serialize = false, deserialize = true)
     @SerializedName(DEVICE_CONTENT_NAME)
     private Map<String, Object> deviceContent;
-
-    private transient static Gson gson = new Gson();
 
     /**
      * Empty constructor: Used only to keep GSON happy.
@@ -33,6 +31,7 @@ public class ConfigurationContentParser
 
     /**
      * Constructor for an ConfigurationContentParser that is built using the provided json
+     *
      * @param json the json string to build the ConfigurationContentParser out of
      */
     public ConfigurationContentParser(String json)
@@ -79,6 +78,7 @@ public class ConfigurationContentParser
 
     /**
      * Setter for modulesContent
+     *
      * @param modulesContent the value to set results to
      */
     public void setModulesContent(Map<String, Map<String, Object>> modulesContent)
@@ -100,6 +100,7 @@ public class ConfigurationContentParser
 
     /**
      * Setter for deviceContent
+     *
      * @param deviceContent the value to set deviceContent to
      */
     public void setDeviceContent(Map<String, Object> deviceContent)
@@ -113,10 +114,10 @@ public class ConfigurationContentParser
         JsonObject contentJson = new JsonObject();
 
         /* Codes_SRS_CONFIGURATION_METRICS_PARSER_28_009: [If the modulesContent is null, the toJsonElement shall not include the `modulesContent` in the final JSON.] */
-        if(this.modulesContent != null)
+        if (this.modulesContent != null)
         {
             Map<String, Object> map = new HashMap<>();
-            for (Map.Entry<String, Map<String, Object>> entry: this.modulesContent.entrySet())
+            for (Map.Entry<String, Map<String, Object>> entry : this.modulesContent.entrySet())
             {
                 map.put(entry.getKey(), entry.getValue());
             }
@@ -124,7 +125,7 @@ public class ConfigurationContentParser
         }
 
         /* Codes_SRS_CONFIGURATION_METRICS_PARSER_28_010: [If the deviceContent is null, the toJsonElement shall not include the `deviceContent` in the final JSON.]*/
-        if(this.deviceContent != null)
+        if (this.deviceContent != null)
         {
             contentJson.add(DEVICE_CONTENT_NAME, ParserUtility.mapToJsonElement(this.deviceContent));
         }

@@ -12,15 +12,15 @@ import com.microsoft.azure.sdk.iot.service.Tools;
  */
 public class AuthenticationMechanism
 {
+    private static final String ILLEGAL_SYMMETRIC_KEY_STRING = "The provided symmetric key cannot be null";
+    private static final String ILLEGAL_AUTHENTICATION_TYPE = "The provided authentication type cannot be null";
     private SymmetricKey symmetricKey;
     private X509Thumbprint thumbprint;
     private AuthenticationType type;
 
-    private static final String ILLEGAL_SYMMETRIC_KEY_STRING = "The provided symmetric key cannot be null";
-    private static final String ILLEGAL_AUTHENTICATION_TYPE = "The provided authentication type cannot be null";
-
     /**
      * Constructor that saves a symmetric key used for SAS authentication
+     *
      * @param symmetricKey the key to use for authentication
      * @throws IllegalArgumentException if the provided symmetricKey is null
      */
@@ -39,7 +39,8 @@ public class AuthenticationMechanism
 
     /**
      * Constructor that saves a thumbprint used for self signed authentication
-     * @param primaryThumbprint the primary thumbprint to use for authentication
+     *
+     * @param primaryThumbprint   the primary thumbprint to use for authentication
      * @param secondaryThumbprint the secondary thumbprint to use for authentication
      */
     public AuthenticationMechanism(String primaryThumbprint, String secondaryThumbprint)
@@ -51,6 +52,7 @@ public class AuthenticationMechanism
 
     /**
      * Constructor that is used for certificate authority authentication. Necessary keys will be generated automatically, and can be overwritten later as well.
+     *
      * @param authenticationType the type of authentication for this to use.
      */
     public AuthenticationMechanism(AuthenticationType authenticationType)
@@ -77,6 +79,7 @@ public class AuthenticationMechanism
 
     /**
      * Getter for symmetric key.
+     *
      * @return The symmetric key.
      */
     public SymmetricKey getSymmetricKey()
@@ -86,37 +89,8 @@ public class AuthenticationMechanism
     }
 
     /**
-     * Returns the primary thumbprint
-     * @return the primary thumbprint. It may be {@code null}
-     */
-    public String getPrimaryThumbprint()
-    {
-        if (this.thumbprint == null)
-        {
-            return null;
-        }
-
-        //Codes_SRS_AUTHENTICATION_MECHANISM_34_020: [This function shall return the primary thumbprint of this object.]
-        return this.thumbprint.getPrimaryThumbprint();
-    }
-
-    /**
-     * Returns the secondary thumbprint
-     * @return the secondary thumbprint. It may be {@code null}
-     */
-    public String getSecondaryThumbprint()
-    {
-        if (this.thumbprint == null)
-        {
-            return null;
-        }
-
-        //Codes_SRS_AUTHENTICATION_MECHANISM_34_021: [This function shall return the secondary thumbprint of this object.]
-        return this.thumbprint.getSecondaryThumbprint();
-    }
-
-    /**
      * Setter for symmetric key.
+     *
      * @param symmetricKey the symmetric key to set
      * @throws IllegalArgumentException if the provided symmetricKey is null
      */
@@ -133,6 +107,22 @@ public class AuthenticationMechanism
 
         //Codes_SRS_AUTHENTICATION_MECHANISM_34_019: [This function shall set this object's authentication type to SAS.]
         this.type = AuthenticationType.SAS;
+    }
+
+    /**
+     * Returns the primary thumbprint
+     *
+     * @return the primary thumbprint. It may be {@code null}
+     */
+    public String getPrimaryThumbprint()
+    {
+        if (this.thumbprint == null)
+        {
+            return null;
+        }
+
+        //Codes_SRS_AUTHENTICATION_MECHANISM_34_020: [This function shall return the primary thumbprint of this object.]
+        return this.thumbprint.getPrimaryThumbprint();
     }
 
     /**
@@ -155,7 +145,24 @@ public class AuthenticationMechanism
     }
 
     /**
+     * Returns the secondary thumbprint
+     *
+     * @return the secondary thumbprint. It may be {@code null}
+     */
+    public String getSecondaryThumbprint()
+    {
+        if (this.thumbprint == null)
+        {
+            return null;
+        }
+
+        //Codes_SRS_AUTHENTICATION_MECHANISM_34_021: [This function shall return the secondary thumbprint of this object.]
+        return this.thumbprint.getSecondaryThumbprint();
+    }
+
+    /**
      * Setter for the secondary thumbprint
+     *
      * @param secondaryThumbprint the value to set
      */
     public void setSecondaryThumbprint(String secondaryThumbprint)
@@ -174,6 +181,7 @@ public class AuthenticationMechanism
 
     /**
      * Getter for authentication type.
+     *
      * @return The authentication type.
      */
     public AuthenticationType getAuthenticationType()
@@ -184,6 +192,7 @@ public class AuthenticationMechanism
 
     /**
      * Setter for the authentication type of this object
+     *
      * @param type the type of authentication to set
      * @throws IllegalArgumentException if the provided type is null
      */

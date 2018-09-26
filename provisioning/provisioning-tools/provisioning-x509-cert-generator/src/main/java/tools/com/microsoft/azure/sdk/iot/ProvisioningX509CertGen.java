@@ -70,8 +70,7 @@ public class ProvisioningX509CertGen
             catch (SecurityProviderException e)
             {
                 e.printStackTrace();
-            }
-            finally
+            } finally
             {
                 scanner.close();
             }

@@ -22,6 +22,7 @@ import java.io.IOException;
  */
 public class AmqpReceive extends BaseHandler implements AmqpFeedbackReceivedEvent
 {
+    private static final int REACTOR_TIMEOUT = 3141; // reactor timeout in milliseconds
     private final String hostName;
     private final String userName;
     private final String sasToken;
@@ -29,13 +30,13 @@ public class AmqpReceive extends BaseHandler implements AmqpFeedbackReceivedEven
     private IotHubServiceClientProtocol iotHubServiceClientProtocol;
     private Reactor reactor = null;
     private FeedbackBatch feedbackBatch;
-    private static final int REACTOR_TIMEOUT = 3141; // reactor timeout in milliseconds
 
     /**
      * Constructor to set up connection parameters
-     * @param hostName The address string of the service (example: AAA.BBB.CCC)
-     * @param userName The username string to use SASL authentication (example: user@sas.service)
-     * @param sasToken The SAS token string
+     *
+     * @param hostName                    The address string of the service (example: AAA.BBB.CCC)
+     * @param userName                    The username string to use SASL authentication (example: user@sas.service)
+     * @param sasToken                    The SAS token string
      * @param iotHubServiceClientProtocol protocol to use
      */
     public AmqpReceive(String hostName, String userName, String sasToken, IotHubServiceClientProtocol iotHubServiceClientProtocol)
@@ -49,6 +50,7 @@ public class AmqpReceive extends BaseHandler implements AmqpFeedbackReceivedEven
 
     /**
      * Event handler for the reactor init event
+     *
      * @param event The proton event object
      */
     @Override
@@ -85,35 +87,39 @@ public class AmqpReceive extends BaseHandler implements AmqpFeedbackReceivedEven
     /**
      * Synchronized call to receive feedback batch
      * Hide the event based receiving mechanism from the user API
+     *
      * @param timeoutMs The timeout in milliseconds to wait for the feedback
      * @return The received feedback batch
-     * @throws IOException This exception is thrown if the input AmqpReceive object is null
+     * @throws IOException          This exception is thrown if the input AmqpReceive object is null
      * @throws InterruptedException This exception is thrown if the receive process has been interrupted
      */
     public synchronized FeedbackBatch receive(long timeoutMs) throws IOException, InterruptedException
     {
         feedbackBatch = null;
-        if  (amqpReceiveHandler != null)
+        if (amqpReceiveHandler != null)
         {
             // Codes_SRS_SERVICE_SDK_JAVA_AMQPRECEIVE_12_005: [The function shall initialize the Proton reactor object]
             this.reactor = Proton.reactor(this);
             // Codes_SRS_SERVICE_SDK_JAVA_AMQPRECEIVE_12_006: [The function shall start the Proton reactor object]
             this.reactor.setTimeout(REACTOR_TIMEOUT);
             this.reactor.start();
-            
+
             // Codes_SRS_SERVICE_SDK_JAVA_AMQPRECEIVE_12_007: [The function shall wait for specified timeout to check for any feedback message]
             long startTime = System.currentTimeMillis();
             long endTime = startTime + timeoutMs;
-            
-            while(this.reactor.process())
+
+            while (this.reactor.process())
             {
-                if (System.currentTimeMillis() > endTime) break;
+                if (System.currentTimeMillis() > endTime)
+                {
+                    break;
+                }
             }
-            
+
             // Codes_SRS_SERVICE_SDK_JAVA_AMQPRECEIVE_12_008: [The function shall stop and free the Proton reactor object]
             this.reactor.stop();
             this.reactor.process();
-            this.reactor.free();   
+            this.reactor.free();
             this.amqpReceiveHandler.receiveComplete();
         }
         else
@@ -128,13 +134,14 @@ public class AmqpReceive extends BaseHandler implements AmqpFeedbackReceivedEven
      * Handle on feedback received Proton event
      * Parse received json and save result to a member variable
      * Release semaphore for wait function
+     *
      * @param feedbackJson Received Json string to process
      */
     public void onFeedbackReceived(String feedbackJson)
     {
         // Codes_SRS_SERVICE_SDK_JAVA_AMQPRECEIVE_12_010: [The function shall parse the received Json string to FeedbackBath object]
         feedbackBatch = FeedbackBatchMessage.parse(feedbackJson);
-    
+
     }
 
 }

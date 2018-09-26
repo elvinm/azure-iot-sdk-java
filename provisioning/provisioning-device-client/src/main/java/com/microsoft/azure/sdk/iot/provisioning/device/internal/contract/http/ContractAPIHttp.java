@@ -31,9 +31,6 @@ import java.util.Map;
 
 public class ContractAPIHttp extends ProvisioningDeviceClientContract
 {
-    private String idScope;
-    private String hostName;
-
     /*
      *  Values for Http header
      */
@@ -45,21 +42,12 @@ public class ContractAPIHttp extends ProvisioningDeviceClientContract
     private static final String CONTENT_TYPE = "Content-Type";
     private static final Integer DEFAULT_HTTP_TIMEOUT_MS = Integer.MAX_VALUE;
     private static final Integer ACCEPTABLE_NONCE_HTTP_STATUS = 401;
-
-    @Override
-    public void open(RequestData requestData) throws ProvisioningDeviceConnectionException
-    {
-        // dummy call for Http
-    }
-
-    @Override
-    public void close() throws ProvisioningDeviceConnectionException
-    {
-        // dummy call for Http
-    }
+    private String idScope;
+    private String hostName;
 
     /**
      * Constructor for Contract API HTTP
+     *
      * @param provisioningDeviceClientConfig Config used for provisioning Cannot be {@code null}.
      * @throws ProvisioningDeviceClientException is thrown when any of the input parameters are invalid
      */
@@ -82,14 +70,19 @@ public class ContractAPIHttp extends ProvisioningDeviceClientContract
         this.hostName = hostName;
     }
 
-    private HttpRequest prepareRequest(
-            URL url,
-            HttpMethod method,
-            byte[] payload,
-            Integer timeoutInMs,
-            Map<String, String> headersMap,
-            String userAgentValue)
-            throws IllegalArgumentException, IOException
+    @Override
+    public void open(RequestData requestData) throws ProvisioningDeviceConnectionException
+    {
+        // dummy call for Http
+    }
+
+    @Override
+    public void close() throws ProvisioningDeviceConnectionException
+    {
+        // dummy call for Http
+    }
+
+    private HttpRequest prepareRequest(URL url, HttpMethod method, byte[] payload, Integer timeoutInMs, Map<String, String> headersMap, String userAgentValue) throws IllegalArgumentException, IOException
     {
         HttpRequest request = null;
 
@@ -143,12 +136,13 @@ public class ContractAPIHttp extends ProvisioningDeviceClientContract
 
     /**
      * Requests hub to provide a device key to begin authentication over HTTP (Only for TPM)
-     * @param responseCallback A non {@code null} value for the callback
+     *
+     * @param responseCallback                A non {@code null} value for the callback
      * @param dpsAuthorizationCallbackContext An object for context. Can be {@code null}
-     * @param requestData A non {@code null} value with all the required request data
-     * @throws ProvisioningDeviceClientException If any of the parameters are invalid ({@code null} or empty)
+     * @param requestData                     A non {@code null} value with all the required request data
+     * @throws ProvisioningDeviceClientException    If any of the parameters are invalid ({@code null} or empty)
      * @throws ProvisioningDeviceTransportException If any of the API calls to transport fail
-     * @throws ProvisioningDeviceHubException If hub responds back with status other than 300 or less
+     * @throws ProvisioningDeviceHubException       If hub responds back with status other than 300 or less
      */
     public synchronized void requestNonceForTPM(RequestData requestData, ResponseCallback responseCallback, Object dpsAuthorizationCallbackContext) throws ProvisioningDeviceClientException
     {
@@ -224,12 +218,13 @@ public class ContractAPIHttp extends ProvisioningDeviceClientContract
 
     /**
      * Requests hub to authenticate this connection and start the registration process over HTTP
-     * @param requestData A non {@code null} value with all the required request data
-     * @param responseCallback A non {@code null} value for the callback
+     *
+     * @param requestData                     A non {@code null} value with all the required request data
+     * @param responseCallback                A non {@code null} value for the callback
      * @param dpsAuthorizationCallbackContext An object for context. Can be {@code null}
-     * @throws ProvisioningDeviceClientException If any of the parameters are invalid ({@code null} or empty)
+     * @throws ProvisioningDeviceClientException    If any of the parameters are invalid ({@code null} or empty)
      * @throws ProvisioningDeviceTransportException If any of the API calls to transport fail
-     * @throws ProvisioningDeviceHubException If hub responds back with status other than 300 or less
+     * @throws ProvisioningDeviceHubException       If hub responds back with status other than 300 or less
      */
     public synchronized void authenticateWithProvisioningService(RequestData requestData, ResponseCallback responseCallback, Object dpsAuthorizationCallbackContext) throws ProvisioningDeviceClientException
     {
@@ -254,7 +249,7 @@ public class ContractAPIHttp extends ProvisioningDeviceClientContract
             //SRS_ContractAPIHttp_25_012: [This method shall retrieve the Url by calling 'generateRegisterUrl' on an object for UrlPathBuilder.]
             String url = new UrlPathBuilder(this.hostName, this.idScope, ProvisioningDeviceClientTransportProtocol.HTTPS).generateRegisterUrl(requestData.getRegistrationId());
             Map<String, String> headersMap = null;
-            if(requestData.getSasToken() != null)
+            if (requestData.getSasToken() != null)
             {
                 headersMap = new HashMap<>();
                 headersMap.put(AUTHORIZATION, requestData.getSasToken());
@@ -291,12 +286,13 @@ public class ContractAPIHttp extends ProvisioningDeviceClientContract
 
     /**
      * Gets the registration status over HTTP
-     * @param requestData A non {@code null} value with all the request data
-     * @param responseCallback A non {@code null} value for the callback
+     *
+     * @param requestData                     A non {@code null} value with all the request data
+     * @param responseCallback                A non {@code null} value for the callback
      * @param dpsAuthorizationCallbackContext An object for context. Can be {@code null}
-     * @throws ProvisioningDeviceClientException If any of the parameters are invalid ({@code null} or empty)
+     * @throws ProvisioningDeviceClientException    If any of the parameters are invalid ({@code null} or empty)
      * @throws ProvisioningDeviceTransportException If any of the API calls to transport fail
-     * @throws ProvisioningDeviceHubException If hub responds back with status other than 300 or less.
+     * @throws ProvisioningDeviceHubException       If hub responds back with status other than 300 or less.
      */
     public synchronized void getRegistrationStatus(RequestData requestData, ResponseCallback responseCallback, Object dpsAuthorizationCallbackContext) throws ProvisioningDeviceClientException
     {
@@ -339,7 +335,7 @@ public class ContractAPIHttp extends ProvisioningDeviceClientContract
             //SRS_ContractAPIHttp_25_024: [If service return any other status other than < 300 then this method shall throw ProvisioningDeviceHubException.]
             HttpResponse httpResponse = this.sendRequest(httpRequest);
             //SRS_ContractAPIHttp_25_023: [If service return a status as < 300 then this method shall trigger the callback to the user with the response message.]
-            responseCallback.run(new ResponseData(httpResponse.getBody(),ContractState.DPS_REGISTRATION_RECEIVED, 0), dpsAuthorizationCallbackContext);
+            responseCallback.run(new ResponseData(httpResponse.getBody(), ContractState.DPS_REGISTRATION_RECEIVED, 0), dpsAuthorizationCallbackContext);
         }
         catch (IOException e)
         {

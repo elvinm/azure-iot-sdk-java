@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * Implement a fake device to the end to end test.
  */
-public class DeviceEmulator  implements Runnable
+public class DeviceEmulator implements Runnable
 {
     public static final String METHOD_RESET = "reset";
     public static final String METHOD_LOOPBACK = "loopback";
@@ -34,9 +34,7 @@ public class DeviceEmulator  implements Runnable
     public static final int METHOD_NOT_DEFINED = 404;
 
     private static final int STOP_DEVICE_INTERVAL_IN_MILLISECONDS = 10000;
-
-    private enum LIGHTS{ ON, OFF, DISABLED }
-
+    private final static String THREAD_NAME = "azure-iot-sdk-DeviceEmulator";
     private InternalClient client;
     private DeviceStatus deviceStatus = new DeviceStatus();
     private ConcurrentMap<String, ConcurrentLinkedQueue<Object>> twinChanges = new ConcurrentHashMap<>();
@@ -47,15 +45,13 @@ public class DeviceEmulator  implements Runnable
     private IotHubEventCallback deviceMethodStatusCallback;
     private Object deviceMethodStatusCallbackContext;
 
-    private final static String THREAD_NAME = "azure-iot-sdk-DeviceEmulator";
-
     /**
      * CONSTRUCTOR
      * Creates a new instance of the device emulator, and connect it to the IoTHub using the provided connectionString
      * and protocol.
      *
-     * @throws URISyntaxException if the DeviceClient cannot resolve the URI.
-     * @throws IOException if the DeviceClient cannot open the connection with the IoTHub.
+     * @throws URISyntaxException   if the DeviceClient cannot resolve the URI.
+     * @throws IOException          if the DeviceClient cannot open the connection with the IoTHub.
      * @throws InterruptedException if the thread had issue to wait for the open connection.
      */
     DeviceEmulator(InternalClient client) throws URISyntaxException, IOException, InterruptedException
@@ -68,7 +64,7 @@ public class DeviceEmulator  implements Runnable
     {
         Thread.currentThread().setName(THREAD_NAME);
 
-        while(!stopDevice)
+        while (!stopDevice)
         {
             try
             {
@@ -104,6 +100,7 @@ public class DeviceEmulator  implements Runnable
 
     /**
      * Ends the DeviceClient connection and destroy the thread.
+     *
      * @throws IOException if the DeviceClient cannot close the connection with the IoTHub.
      */
     void stop() throws IOException
@@ -117,6 +114,7 @@ public class DeviceEmulator  implements Runnable
 
     /**
      * Enable device method on this device using the local callbacks.
+     *
      * @throws IOException if the client failed to subscribe on the device method.
      */
     void enableDeviceMethod() throws IOException
@@ -126,23 +124,21 @@ public class DeviceEmulator  implements Runnable
 
     /**
      * Enable device method on this device.
-     * @param deviceMethodCallback is the callback called when a service invoke a method on this device. If it is null,
-     *                             the DeviceEmulator will take care of it using the MethodInvokeCallback.
-     * @param deviceMethodCallbackContext is the context for the deviceMethodCallback. Only used if the
-     *                                    deviceMethodCallback is not null.
-     * @param deviceMethodStatusCallback is the callback called when the service receive the response for the invoked
-     *                                   method. If it is null, the DeviceEmulator will take care of it using
-     *                                   DeviceStatusCallback.
+     *
+     * @param deviceMethodCallback              is the callback called when a service invoke a method on this device. If it is null,
+     *                                          the DeviceEmulator will take care of it using the MethodInvokeCallback.
+     * @param deviceMethodCallbackContext       is the context for the deviceMethodCallback. Only used if the
+     *                                          deviceMethodCallback is not null.
+     * @param deviceMethodStatusCallback        is the callback called when the service receive the response for the invoked
+     *                                          method. If it is null, the DeviceEmulator will take care of it using
+     *                                          DeviceStatusCallback.
      * @param deviceMethodStatusCallbackContext is the context for the deviceMethodStatusCallback.Only used if the
-     *                                    deviceMethodStatusCallback is not null.
+     *                                          deviceMethodStatusCallback is not null.
      * @throws IOException if the client failed to subscribe on the device method.
      */
-    void enableDeviceMethod(
-            DeviceMethodCallback deviceMethodCallback, Object deviceMethodCallbackContext,
-            IotHubEventCallback deviceMethodStatusCallback, Object deviceMethodStatusCallbackContext)
-            throws IOException
+    void enableDeviceMethod(DeviceMethodCallback deviceMethodCallback, Object deviceMethodCallbackContext, IotHubEventCallback deviceMethodStatusCallback, Object deviceMethodStatusCallbackContext) throws IOException
     {
-        if(deviceMethodCallback == null)
+        if (deviceMethodCallback == null)
         {
             this.deviceMethodCallback = new MethodInvokeCallback();
             this.deviceMethodCallbackContext = null;
@@ -153,7 +149,7 @@ public class DeviceEmulator  implements Runnable
             this.deviceMethodCallbackContext = deviceMethodCallbackContext;
         }
 
-        if(deviceMethodStatusCallback == null)
+        if (deviceMethodStatusCallback == null)
         {
             this.deviceMethodStatusCallback = new DeviceStatusCallback();
             this.deviceMethodStatusCallbackContext = deviceStatus;
@@ -166,24 +162,20 @@ public class DeviceEmulator  implements Runnable
 
         if (client instanceof DeviceClient)
         {
-            ((DeviceClient)client).subscribeToDeviceMethod(
-                    this.deviceMethodCallback, this.deviceMethodCallbackContext,
-                    this.deviceMethodStatusCallback, this.deviceMethodStatusCallbackContext);
+            ((DeviceClient) client).subscribeToDeviceMethod(this.deviceMethodCallback, this.deviceMethodCallbackContext, this.deviceMethodStatusCallback, this.deviceMethodStatusCallbackContext);
         }
         else if (client instanceof ModuleClient)
         {
-            ((ModuleClient)client).subscribeToMethod(
-                    this.deviceMethodCallback, this.deviceMethodCallbackContext,
-                    this.deviceMethodStatusCallback, this.deviceMethodStatusCallbackContext);
+            ((ModuleClient) client).subscribeToMethod(this.deviceMethodCallback, this.deviceMethodCallbackContext, this.deviceMethodStatusCallback, this.deviceMethodStatusCallbackContext);
         }
     }
 
     /**
      * Enable device twin on the emulator using the standard values.
-     *
+     * <p>
      * For standard values, getTwinChanges will provide a Map with desired
-     *  properties reported in the callback, and getStatusOK and getStatusError
-     *  will replace the status callback.
+     * properties reported in the callback, and getStatusOK and getStatusError
+     * will replace the status callback.
      *
      * @throws IOException if failed to start the Device Twin.
      */
@@ -195,25 +187,24 @@ public class DeviceEmulator  implements Runnable
     /**
      * Enable device twin on the emulated device.
      *
-     * @param deviceTwinStatusCallBack callback to twin status. If {@code null}, use the local status callback.
-     * @param deviceTwinStatusCallbackContext context for status callback. Used only if deviceTwinStatusCallBack is not {@code null}.
-     * @param deviceTwin is the device twin including the properties callback. If {@code null}, use the local device with standard properties.
-     * @param propertyCallBackContext context for the properties callback. Used only if deviceTwin is not {@code null}.
+     * @param deviceTwinStatusCallBack         callback to twin status. If {@code null}, use the local status callback.
+     * @param deviceTwinStatusCallbackContext  context for status callback. Used only if deviceTwinStatusCallBack is not {@code null}.
+     * @param deviceTwin                       is the device twin including the properties callback. If {@code null}, use the local device with standard properties.
+     * @param propertyCallBackContext          context for the properties callback. Used only if deviceTwin is not {@code null}.
      * @param mustSubscribeToDesiredProperties is a boolean to define if it should or not subscribe to the desired properties.
      * @throws IOException if failed to start the Device Twin.
      */
-    void enableDeviceTwin(IotHubEventCallback deviceTwinStatusCallBack, Object deviceTwinStatusCallbackContext,
-                          Device deviceTwin, Object propertyCallBackContext, boolean mustSubscribeToDesiredProperties) throws IOException
+    void enableDeviceTwin(IotHubEventCallback deviceTwinStatusCallBack, Object deviceTwinStatusCallbackContext, Device deviceTwin, Object propertyCallBackContext, boolean mustSubscribeToDesiredProperties) throws IOException
     {
         // If user do not provide any status callback, use the local one.
-        if(deviceTwinStatusCallBack == null)
+        if (deviceTwinStatusCallBack == null)
         {
             deviceTwinStatusCallBack = new DeviceStatusCallback();
             deviceTwinStatusCallbackContext = deviceStatus;
         }
 
         // If user do not provide any deviceTwin, use the local one.
-        if(deviceTwin == null)
+        if (deviceTwin == null)
         {
             deviceTwin = new DeviceTwinProperty();
             propertyCallBackContext = twinChanges;
@@ -221,14 +212,14 @@ public class DeviceEmulator  implements Runnable
 
         if (client instanceof DeviceClient)
         {
-            ((DeviceClient)client).startDeviceTwin(deviceTwinStatusCallBack, deviceTwinStatusCallbackContext, deviceTwin, propertyCallBackContext);
+            ((DeviceClient) client).startDeviceTwin(deviceTwinStatusCallBack, deviceTwinStatusCallbackContext, deviceTwin, propertyCallBackContext);
         }
         else if (client instanceof ModuleClient)
         {
-            ((ModuleClient)client).startTwin(deviceTwinStatusCallBack, deviceTwinStatusCallbackContext, deviceTwin, propertyCallBackContext);
+            ((ModuleClient) client).startTwin(deviceTwinStatusCallBack, deviceTwinStatusCallbackContext, deviceTwin, propertyCallBackContext);
         }
 
-        if(mustSubscribeToDesiredProperties)
+        if (mustSubscribeToDesiredProperties)
         {
             client.subscribeToDesiredProperties(null);
         }
@@ -257,6 +248,7 @@ public class DeviceEmulator  implements Runnable
 
     /**
      * Get the number of invoke answers with success since the last cleaning.
+     *
      * @return Number of invoke answers with success.
      */
     int getStatusOk()
@@ -266,6 +258,7 @@ public class DeviceEmulator  implements Runnable
 
     /**
      * Get the number of failed invoke answers since the last cleaning.
+     *
      * @return Number of failed invoke answers.
      */
     int getStatusError()
@@ -273,7 +266,28 @@ public class DeviceEmulator  implements Runnable
         return deviceStatus.statusError;
     }
 
-    InternalClient getClient() {return client;}
+    InternalClient getClient() {
+        return client;
+    }
+
+    private String loopback(Object methodData) throws UnsupportedEncodingException
+    {
+        String payload = new String((byte[]) methodData, "UTF-8").replace("\"", "");
+        return METHOD_LOOPBACK + ":" + payload;
+    }
+
+    private String delayInMilliseconds(Object methodData) throws UnsupportedEncodingException, InterruptedException
+    {
+        String payload = new String((byte[]) methodData, "UTF-8").replace("\"", "");
+        long delay = Long.parseLong(payload);
+        Thread.sleep(delay);
+        return METHOD_DELAY_IN_MILLISECONDS + ":succeed";
+    }
+
+    private enum LIGHTS
+    {
+        ON, OFF, DISABLED
+    }
 
     private class DeviceStatus
     {
@@ -286,8 +300,8 @@ public class DeviceEmulator  implements Runnable
         @Override
         public synchronized void execute(IotHubStatusCode status, Object context)
         {
-            DeviceStatus deviceStatus = (DeviceStatus)context;
-            switch(status)
+            DeviceStatus deviceStatus = (DeviceStatus) context;
+            switch (status)
             {
                 case OK:
                 case OK_EMPTY:
@@ -308,8 +322,8 @@ public class DeviceEmulator  implements Runnable
         public synchronized void PropertyCall(String propertyKey, Object propertyValue, Object context)
         {
             System.out.println("Device updated " + propertyKey + " to " + propertyValue.toString());
-            ConcurrentMap<String, ConcurrentLinkedQueue<Object>> twinChanges = (ConcurrentMap<String, ConcurrentLinkedQueue<Object>>)context;
-            if(!twinChanges.containsKey(propertyKey))
+            ConcurrentMap<String, ConcurrentLinkedQueue<Object>> twinChanges = (ConcurrentMap<String, ConcurrentLinkedQueue<Object>>) context;
+            if (!twinChanges.containsKey(propertyKey))
             {
                 twinChanges.put(propertyKey, new ConcurrentLinkedQueue<>());
             }
@@ -358,20 +372,6 @@ public class DeviceEmulator  implements Runnable
 
             return deviceMethodData;
         }
-    }
-
-    private String loopback(Object methodData) throws UnsupportedEncodingException
-    {
-        String payload = new String((byte[])methodData, "UTF-8").replace("\"", "");
-        return METHOD_LOOPBACK + ":" + payload;
-    }
-
-    private String delayInMilliseconds(Object methodData) throws UnsupportedEncodingException, InterruptedException
-    {
-        String payload = new String((byte[])methodData, "UTF-8").replace("\"", "");
-        long delay = Long.parseLong(payload);
-        Thread.sleep(delay);
-        return METHOD_DELAY_IN_MILLISECONDS + ":succeed";
     }
 
 }

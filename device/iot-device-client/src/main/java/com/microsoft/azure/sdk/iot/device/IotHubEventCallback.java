@@ -5,7 +5,7 @@ package com.microsoft.azure.sdk.iot.device;
 
 /**
  * An interface for an IoT Hub event callback.
- *
+ * <p>
  * Developers are expected to create an implementation of this interface,
  * and the transport will call {@link IotHubEventCallback#execute(IotHubStatusCode, Object)}
  * upon receiving a response from an IoT Hub.
@@ -15,7 +15,7 @@ public interface IotHubEventCallback
     /**
      * Executes the callback.
      *
-     * @param responseStatus the response status code.
+     * @param responseStatus  the response status code.
      * @param callbackContext a custom context given by the developer.
      */
     void execute(IotHubStatusCode responseStatus, Object callbackContext);

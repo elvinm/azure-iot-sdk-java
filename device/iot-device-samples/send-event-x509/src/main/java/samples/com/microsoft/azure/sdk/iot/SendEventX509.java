@@ -10,73 +10,34 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Sends a number of event messages to an IoT Hub. */
+/**
+ * Sends a number of event messages to an IoT Hub.
+ */
 public class SendEventX509
 {
+    private static final int D2C_MESSAGE_TIMEOUT = 2000; // 2 seconds
     //PEM encoded representation of the public key certificate
-    private static String publicKeyCertificateString =
-            "-----BEGIN CERTIFICATE-----\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "-----END CERTIFICATE-----\n";
-
+    private static String publicKeyCertificateString = "-----BEGIN CERTIFICATE-----\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "-----END CERTIFICATE-----\n";
     //PEM encoded representation of the private key
-    private static String privateKeyString =
-            "-----BEGIN EC PRIVATE KEY-----\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-            "-----END EC PRIVATE KEY-----\n";
-
-    private  static final int D2C_MESSAGE_TIMEOUT = 2000; // 2 seconds
-    private  static List failedMessageListOnClose = new ArrayList(); // List of messages that failed on close
-  
-    protected static class EventCallback implements IotHubEventCallback
-    {
-        public void execute(IotHubStatusCode status, Object context)
-        {
-            Message msg = (Message) context;
-            
-            System.out.println("IoT Hub responded to message "+ msg.getMessageId()  + " with status " + status.name());
-            
-            if (status== IotHubStatusCode.MESSAGE_CANCELLED_ONCLOSE)
-            {
-                failedMessageListOnClose.add(msg.getMessageId());
-            }
-        }
-    }
+    private static String privateKeyString = "-----BEGIN EC PRIVATE KEY-----\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" + "-----END EC PRIVATE KEY-----\n";
+    private static List failedMessageListOnClose = new ArrayList(); // List of messages that failed on close
 
     /**
-     * Sends a number of messages to an IoT Hub. Default protocol is to 
+     * Sends a number of messages to an IoT Hub. Default protocol is to
      * use MQTT transport.
      *
-     * @param args
-     * args[0] = IoT Hub connection string
-     * args[1] = number of requests to send
-     * args[2] = IoT Hub protocol to use, optional and defaults to MQTT
+     * @param args args[0] = IoT Hub connection string
+     *             args[1] = number of requests to send
+     *             args[2] = IoT Hub protocol to use, optional and defaults to MQTT
      */
     public static void main(String[] args) throws IOException, URISyntaxException
     {
         System.out.println("Starting...");
         System.out.println("Beginning setup.");
- 
+
         if (!(args.length == 2 || args.length == 3))
         {
-            System.out.format(
-                    "Expected 2 or 3 arguments but received: %d.\n"
-                            + "The program should be called with the following args: \n"
-                            + "1. [Device connection string] - String containing Hostname, Device Id & Device Key in one of the following formats: HostName=<host_name>;DeviceId=<device_id>;x509=true\n"
-                            + "2. [number of requests to send]\n"
-                            + "3. (mqtt | https | amqps | amqps_ws | mqtt_ws)\n",
-                    args.length);
+            System.out.format("Expected 2 or 3 arguments but received: %d.\n" + "The program should be called with the following args: \n" + "1. [Device connection string] - String containing Hostname, Device Id & Device Key in one of the following formats: HostName=<host_name>;DeviceId=<device_id>;x509=true\n" + "2. [number of requests to send]\n" + "3. (mqtt | https | amqps | amqps_ws | mqtt_ws)\n", args.length);
             return;
         }
 
@@ -89,9 +50,7 @@ public class SendEventX509
         }
         catch (NumberFormatException e)
         {
-            System.out.format(
-                    "Could not parse the number of requests to send. "
-                            + "Expected an int but received:\n%s.\n", args[1]);
+            System.out.format("Could not parse the number of requests to send. " + "Expected an int but received:\n%s.\n", args[1]);
             return;
         }
 
@@ -138,8 +97,8 @@ public class SendEventX509
             temperature = 20 + Math.random() * 10;
             humidity = 30 + Math.random() * 20;
 
-            String msgStr = "{\"deviceId\":\"" + deviceId +"\",\"messageId\":" + i + ",\"temperature\":"+ temperature +",\"humidity\":"+ humidity +"}";
-            
+            String msgStr = "{\"deviceId\":\"" + deviceId + "\",\"messageId\":" + i + ",\"temperature\":" + temperature + ",\"humidity\":" + humidity + "}";
+
             try
             {
                 Message msg = new Message(msgStr);
@@ -154,31 +113,46 @@ public class SendEventX509
             }
             catch (Exception e)
             {
-                 e.printStackTrace();
+                e.printStackTrace();
             }
         }
-        
+
         System.out.println("Wait for " + D2C_MESSAGE_TIMEOUT / 1000 + " second(s) for response from the IoT Hub...");
-        
+
         // Wait for IoT Hub to respond.
         try
         {
-          Thread.sleep(D2C_MESSAGE_TIMEOUT);
+            Thread.sleep(D2C_MESSAGE_TIMEOUT);
         }
         catch (InterruptedException e)
         {
-          e.printStackTrace();
+            e.printStackTrace();
         }
 
-        // close the connection        
-        System.out.println("Closing"); 
+        // close the connection
+        System.out.println("Closing");
         client.closeNow();
-        
+
         if (!failedMessageListOnClose.isEmpty())
         {
-            System.out.println("List of messages that were cancelled on close:" + failedMessageListOnClose.toString()); 
+            System.out.println("List of messages that were cancelled on close:" + failedMessageListOnClose.toString());
         }
 
         System.out.println("Shutting down...");
+    }
+
+    protected static class EventCallback implements IotHubEventCallback
+    {
+        public void execute(IotHubStatusCode status, Object context)
+        {
+            Message msg = (Message) context;
+
+            System.out.println("IoT Hub responded to message " + msg.getMessageId() + " with status " + status.name());
+
+            if (status == IotHubStatusCode.MESSAGE_CANCELLED_ONCLOSE)
+            {
+                failedMessageListOnClose.add(msg.getMessageId());
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 /*
-*  Copyright (c) Microsoft. All rights reserved.
-*  Licensed under the MIT license. See LICENSE file in the project root for full license information.
-*/
+ *  Copyright (c) Microsoft. All rights reserved.
+ *  Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ */
 
 package com.microsoft.azure.sdk.iot.device.auth;
 
@@ -33,8 +33,9 @@ public class IotHubX509HardwareAuthenticationProvider extends IotHubAuthenticati
 
     /**
      * Getter for IotHubSSLContext
-     * @throws IOException if an error occurs when generating the SSLContext
+     *
      * @return The value of IotHubSSLContext
+     * @throws IOException if an error occurs when generating the SSLContext
      */
     @Override
     public SSLContext getSSLContext() throws IOException
@@ -59,6 +60,7 @@ public class IotHubX509HardwareAuthenticationProvider extends IotHubAuthenticati
 
     /**
      * Setter for the providing trusted certificate.
+     *
      * @param pathToCertificate path to the certificate for one way authentication.
      */
     @Override
@@ -70,6 +72,7 @@ public class IotHubX509HardwareAuthenticationProvider extends IotHubAuthenticati
 
     /**
      * Setter for the user trusted certificate
+     *
      * @param certificate valid user trusted certificate string
      */
     @Override

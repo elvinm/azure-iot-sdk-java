@@ -16,20 +16,20 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class DeviceTwinIT extends DeviceTwinCommon
 {
+    public DeviceTwinIT(String deviceId, String moduleId, IotHubClientProtocol protocol, AuthenticationType authenticationType, String clientType)
+    {
+        super(deviceId, moduleId, protocol, authenticationType, clientType);
+    }
+
     //This function is run before even the @BeforeClass annotation, so it is used as the @BeforeClass method
     @Parameterized.Parameters(name = "{2} with {3} auth using {4}")
     public static Collection inputsCommons() throws IOException, GeneralSecurityException
     {
         iotHubConnectionString = Tools.retrieveEnvironmentVariableValue(TestConstants.IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME);
-        X509Cert cert = new X509Cert(0,false, "TestLeaf", "TestRoot");
-        privateKey =  cert.getPrivateKeyLeafPem();
+        X509Cert cert = new X509Cert(0, false, "TestLeaf", "TestRoot");
+        privateKey = cert.getPrivateKeyLeafPem();
         publicKeyCert = cert.getPublicCertLeafPem();
         x509Thumbprint = cert.getThumbPrintLeaf();
         return DeviceTwinCommon.inputsCommon();
-    }
-
-    public DeviceTwinIT(String deviceId, String moduleId, IotHubClientProtocol protocol, AuthenticationType authenticationType, String clientType)
-    {
-        super(deviceId, moduleId, protocol, authenticationType, clientType);
     }
 }

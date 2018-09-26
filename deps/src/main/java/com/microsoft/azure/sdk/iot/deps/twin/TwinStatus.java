@@ -10,9 +10,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public enum TwinStatus
 {
-    @SerializedName("enabled")
-    ENABLED,
+    @SerializedName("enabled") ENABLED,
 
-    @SerializedName("disabled")
-    DISABLED
+    @SerializedName("disabled") DISABLED
 }

@@ -21,9 +21,13 @@ import java.util.Map;
  */
 public final class DeviceClientConfig
 {
-    /** The default value for readTimeoutMillis. */
+    /**
+     * The default value for readTimeoutMillis.
+     */
     private static final int DEFAULT_READ_TIMEOUT_MILLIS = 240000;
-    /** The default value for messageLockTimeoutSecs. */
+    /**
+     * The default value for messageLockTimeoutSecs.
+     */
     private static final int DEFAULT_MESSAGE_LOCK_TIMEOUT_SECS = 180;
 
     private static final long DEFAULT_OPERATION_TIMEOUT = 4 * 60 * 1000; //4 minutes
@@ -36,21 +40,27 @@ public final class DeviceClientConfig
      * The callback to be invoked if a message of Device Method type received.
      */
     private MessageCallback deviceMethodsMessageCallback;
-    /** The context to be passed in to the device method type message callback. */
+    /**
+     * The context to be passed in to the device method type message callback.
+     */
     private Object deviceMethodsMessageContext;
 
     /**
      * The callback to be invoked if a message of Device Twin type received.
      */
     private MessageCallback deviceTwinMessageCallback;
-    /** The context to be passed in to the device twin type message callback. */
+    /**
+     * The context to be passed in to the device twin type message callback.
+     */
     private Object deviceTwinMessageContext;
 
     /**
      * The callback to be invoked if a message is received.
      */
     private MessageCallback defaultDeviceTelemetryMessageCallback;
-    /** The context to be passed in to the message callback. */
+    /**
+     * The context to be passed in to the message callback.
+     */
     private Object defaultDeviceTelemetryMessageContext;
 
     private Map<String, Pair<MessageCallback, Object>> inputChannelMessageCallbacks = new HashMap<>();
@@ -58,16 +68,8 @@ public final class DeviceClientConfig
     private CustomLogger logger;
 
     private ProductInfo productInfo;
-
-    public enum AuthType
-    {
-        X509_CERTIFICATE,
-        SAS_TOKEN
-    }
-
     private long operationTimeout = DEFAULT_OPERATION_TIMEOUT;
     private IotHubClientProtocol protocol;
-
     // Codes_SRS_DEVICECLIENTCONFIG_28_001: [The class shall have ExponentialBackOff as the default retryPolicy.]
     private RetryPolicy retryPolicy = new ExponentialBackoffWithJitter();
 
@@ -77,15 +79,14 @@ public final class DeviceClientConfig
      * @param iotHubConnectionString is the string with the hostname, deviceId, and
      *                               deviceKey or token, which identify the device in
      *                               the Azure IotHub.
-     *
      * @throws IllegalArgumentException if the IoT Hub hostname does not contain
-     * a valid IoT Hub name as its prefix.
+     *                                  a valid IoT Hub name as its prefix.
      */
     public DeviceClientConfig(IotHubConnectionString iotHubConnectionString) throws IllegalArgumentException
     {
         // Codes_SRS_DEVICECLIENTCONFIG_21_034: [If the provided `iotHubConnectionString` is null,
         // the constructor shall throw IllegalArgumentException.]
-        if(iotHubConnectionString == null)
+        if (iotHubConnectionString == null)
         {
             throw new IllegalArgumentException("connection string cannot be null");
         }
@@ -98,20 +99,13 @@ public final class DeviceClientConfig
 
         this.useWebsocket = false;
 
-        this.authenticationProvider = new IotHubSasTokenSoftwareAuthenticationProvider(
-                iotHubConnectionString.getHostName(),
-                iotHubConnectionString.getGatewayHostName(),
-                iotHubConnectionString.getDeviceId(),
-                iotHubConnectionString.getModuleId(),
-                iotHubConnectionString.getSharedAccessKey(),
-                iotHubConnectionString.getSharedAccessToken());
+        this.authenticationProvider = new IotHubSasTokenSoftwareAuthenticationProvider(iotHubConnectionString.getHostName(), iotHubConnectionString.getGatewayHostName(), iotHubConnectionString.getDeviceId(), iotHubConnectionString.getModuleId(), iotHubConnectionString.getSharedAccessKey(), iotHubConnectionString.getSharedAccessToken());
 
         //Codes_SRS_DEVICECLIENTCONFIG_34_041: [This function shall save a new default product info.]
         this.productInfo = new ProductInfo();
 
         this.logger = new CustomLogger(this.getClass());
-        logger.LogInfo("DeviceClientConfig object is created successfully with IotHubName=%s, deviceID=%s , method name is %s ",
-                iotHubConnectionString.getHostName(), iotHubConnectionString.getDeviceId(), logger.getMethodName());
+        logger.LogInfo("DeviceClientConfig object is created successfully with IotHubName=%s, deviceID=%s , method name is %s ", iotHubConnectionString.getHostName(), iotHubConnectionString.getDeviceId(), logger.getMethodName());
     }
 
     public DeviceClientConfig(IotHubAuthenticationProvider authenticationProvider) throws IllegalArgumentException
@@ -128,22 +122,21 @@ public final class DeviceClientConfig
         this.productInfo = new ProductInfo();
 
         this.logger = new CustomLogger(this.getClass());
-        logger.LogInfo("DeviceClientConfig object is created successfully with IotHubName=%s, deviceID=%s , method name is %s ",
-                this.authenticationProvider.getHostname(), authenticationProvider.getDeviceId(), logger.getMethodName());
+        logger.LogInfo("DeviceClientConfig object is created successfully with IotHubName=%s, deviceID=%s , method name is %s ", this.authenticationProvider.getHostname(), authenticationProvider.getDeviceId(), logger.getMethodName());
     }
 
     /**
      * Constructor for device configs that use x509 authentication
      *
      * @param iotHubConnectionString The connection string for the device. (format: "HostName=...;deviceId=...;x509=true")
-     * @param publicKeyCertificate The PEM encoded public key certificate or the path to the PEM encoded public key certificate file
-     * @param isPathForPublic If the provided publicKeyCertificate is a path to the actual public key certificate
-     * @param privateKey The PEM encoded private key or the path to the PEM encoded private key file
-     * @param isPathForPrivate If the provided privateKey is a path to the actual private key
+     * @param publicKeyCertificate   The PEM encoded public key certificate or the path to the PEM encoded public key certificate file
+     * @param isPathForPublic        If the provided publicKeyCertificate is a path to the actual public key certificate
+     * @param privateKey             The PEM encoded private key or the path to the PEM encoded private key file
+     * @param isPathForPrivate       If the provided privateKey is a path to the actual private key
      */
     public DeviceClientConfig(IotHubConnectionString iotHubConnectionString, String publicKeyCertificate, boolean isPathForPublic, String privateKey, boolean isPathForPrivate)
     {
-        if(iotHubConnectionString == null)
+        if (iotHubConnectionString == null)
         {
             //Codes_SRS_DEVICECLIENTCONFIG_34_069: [If the provided connection string is null or does not use x509 auth, and IllegalArgumentException shall be thrown.]
             throw new IllegalArgumentException("connection string cannot be null");
@@ -161,20 +154,15 @@ public final class DeviceClientConfig
         this.useWebsocket = false;
 
         //Codes_SRS_DEVICECLIENTCONFIG_34_069: [This function shall generate a new SSLContext and set this to using X509 authentication.]
-        this.authenticationProvider = new IotHubX509SoftwareAuthenticationProvider(
-                iotHubConnectionString.getHostName(),
-                iotHubConnectionString.getGatewayHostName(),
-                iotHubConnectionString.getDeviceId(),
-                iotHubConnectionString.getModuleId(),
-                publicKeyCertificate, isPathForPublic, privateKey, isPathForPrivate);
+        this.authenticationProvider = new IotHubX509SoftwareAuthenticationProvider(iotHubConnectionString.getHostName(), iotHubConnectionString.getGatewayHostName(), iotHubConnectionString.getDeviceId(), iotHubConnectionString.getModuleId(), publicKeyCertificate, isPathForPublic, privateKey, isPathForPrivate);
 
         this.logger = new CustomLogger(this.getClass());
-        logger.LogInfo("DeviceClientConfig object is created successfully with IotHubName=%s, deviceID=%s , method name is %s ",
-                iotHubConnectionString.getHostName(), iotHubConnectionString.getDeviceId(), logger.getMethodName());
+        logger.LogInfo("DeviceClientConfig object is created successfully with IotHubName=%s, deviceID=%s , method name is %s ", iotHubConnectionString.getHostName(), iotHubConnectionString.getDeviceId(), logger.getMethodName());
     }
 
     /**
      * Constructor for a device client config that retrieves the authentication method from a security provider instance
+     *
      * @param connectionString The connection string for the iot hub to connect with
      * @param securityProvider The security provider instance to be used for authentication of this device
      * @throws IOException if the provided security provider throws an exception while authenticating
@@ -196,22 +184,12 @@ public final class DeviceClientConfig
         if (securityProvider instanceof SecurityProviderTpm)
         {
             //Codes_SRS_DEVICECLIENTCONFIG_34_083: [If the provided security provider is a SecurityProviderTpm instance, this function shall set its auth type to SAS and create its IotHubSasTokenAuthenticationProvider instance using the security provider.]
-            this.authenticationProvider = new IotHubSasTokenHardwareAuthenticationProvider(
-                    connectionString.getHostName(),
-                    connectionString.getGatewayHostName(),
-                    connectionString.getDeviceId(),
-                    connectionString.getModuleId(),
-                    securityProvider);
+            this.authenticationProvider = new IotHubSasTokenHardwareAuthenticationProvider(connectionString.getHostName(), connectionString.getGatewayHostName(), connectionString.getDeviceId(), connectionString.getModuleId(), securityProvider);
         }
         else if (securityProvider instanceof SecurityProviderX509)
         {
             //Codes_SRS_DEVICECLIENTCONFIG_34_082: [If the provided security provider is a SecurityProviderX509 instance, this function shall set its auth type to X509 and create its IotHubX509AuthenticationProvider instance using the security provider's ssl context.]
-            this.authenticationProvider = new IotHubX509HardwareAuthenticationProvider(
-                    connectionString.getHostName(),
-                    connectionString.getGatewayHostName(),
-                    connectionString.getDeviceId(),
-                    connectionString.getModuleId(),
-                    securityProvider);
+            this.authenticationProvider = new IotHubX509HardwareAuthenticationProvider(connectionString.getHostName(), connectionString.getGatewayHostName(), connectionString.getDeviceId(), connectionString.getModuleId(), securityProvider);
         }
         else
         {
@@ -225,8 +203,21 @@ public final class DeviceClientConfig
         this.productInfo = new ProductInfo();
 
         this.logger = new CustomLogger(this.getClass());
-        logger.LogInfo("DeviceClientConfig object is created successfully with IotHubName=%s, deviceID=%s , method name is %s ",
-                connectionString.getHostName(), connectionString.getDeviceId(), logger.getMethodName());
+        logger.LogInfo("DeviceClientConfig object is created successfully with IotHubName=%s, deviceID=%s , method name is %s ", connectionString.getHostName(), connectionString.getDeviceId(), logger.getMethodName());
+    }
+
+    @SuppressWarnings("unused")
+    protected DeviceClientConfig()
+    {
+        this.authenticationProvider = null;
+        this.deviceMethodsMessageCallback = null;
+        this.defaultDeviceTelemetryMessageCallback = null;
+        this.deviceTwinMessageCallback = null;
+        this.deviceMethodsMessageContext = null;
+        this.defaultDeviceTelemetryMessageContext = null;
+        this.deviceTwinMessageContext = null;
+        this.logger = null;
+        this.useWebsocket = false;
     }
 
     public IotHubClientProtocol getProtocol()
@@ -239,6 +230,17 @@ public final class DeviceClientConfig
     {
         // Codes_SRS_DEVICECLIENTCONFIG_34_048: [This function shall save the provided protocol.]
         this.protocol = protocol;
+    }
+
+    /**
+     * Getter for RetryPolicy
+     *
+     * @return The value of RetryPolicy
+     */
+    public RetryPolicy getRetryPolicy()
+    {
+        // Codes_SRS_DEVICECLIENTCONFIG_28_004: [This function shall return the saved RetryPolicy object.]
+        return this.retryPolicy;
     }
 
     /**
@@ -257,17 +259,6 @@ public final class DeviceClientConfig
 
         // Codes_SRS_DEVICECLIENTCONFIG_28_003: [This function shall set retryPolicy.]
         this.retryPolicy = retryPolicy;
-    }
-
-    /**
-     * Getter for RetryPolicy
-     *
-     * @return The value of RetryPolicy
-     */
-    public RetryPolicy getRetryPolicy()
-    {
-        // Codes_SRS_DEVICECLIENTCONFIG_28_004: [This function shall return the saved RetryPolicy object.]
-        return this.retryPolicy;
     }
 
     /**
@@ -295,6 +286,7 @@ public final class DeviceClientConfig
 
     /**
      * Getter for Websocket
+     *
      * @return true if set, false otherwise
      */
     public boolean isUseWebsocket()
@@ -305,6 +297,7 @@ public final class DeviceClientConfig
 
     /**
      * Setter for Websocket
+     *
      * @param useWebsocket true if to be set, false otherwise
      */
     public void setUseWebsocket(boolean useWebsocket)
@@ -315,8 +308,9 @@ public final class DeviceClientConfig
 
     /**
      * Setter for the message callback. Can be {@code null}.
+     *
      * @param callback the message callback. Can be {@code null}.
-     * @param context the context to be passed in to the callback.
+     * @param context  the context to be passed in to the callback.
      */
     public void setMessageCallback(MessageCallback callback, Object context)
     {
@@ -333,6 +327,7 @@ public final class DeviceClientConfig
 
     /**
      * Getter for the IoT Hub hostname.
+     *
      * @return the IoT Hub hostname.
      */
     public String getIotHubHostname()
@@ -343,6 +338,7 @@ public final class DeviceClientConfig
 
     /**
      * Getter for the IoT Hub name.
+     *
      * @return the IoT Hub name.
      */
     public String getIotHubName()
@@ -353,9 +349,10 @@ public final class DeviceClientConfig
 
     /**
      * Getter for the Gateway host name.
+     *
      * @return the name of the gateway host
      */
-    public String getGatewayHostname() 
+    public String getGatewayHostname()
     {
         // Codes_SRS_DEVICECLIENTCONFIG_34_057: [The function shall return the gateway hostname, or null if this connection string does not contain a gateway hostname.]
         return this.authenticationProvider.getGatewayHostname();
@@ -395,7 +392,6 @@ public final class DeviceClientConfig
      * Getter for the message callback.
      *
      * @param inputName the inputName that the desired callback is tied to, or null for the default callback
-     *
      * @return the message callback.
      */
     public MessageCallback getDeviceTelemetryMessageCallback(String inputName)
@@ -418,7 +414,6 @@ public final class DeviceClientConfig
      * Getter for the context to be passed in to the message callback.
      *
      * @param inputName the inputName that the desired callback context is tied to, or null for the default callback context
-     *
      * @return the message context.
      */
     public Object getDeviceTelemetryMessageContext(String inputName)
@@ -441,7 +436,7 @@ public final class DeviceClientConfig
      * Setter for the device method message callback.
      *
      * @param callback Callback for device method messages.
-     * @param context is the context for the callback.
+     * @param context  is the context for the callback.
      */
     public void setDeviceMethodsMessageCallback(MessageCallback callback, Object context)
     {
@@ -486,7 +481,7 @@ public final class DeviceClientConfig
      * Setter for the device twin message callback.
      *
      * @param callback callback to be invoked for device twin messages.
-     * @param context is the context for the callback.
+     * @param context  is the context for the callback.
      */
     public void setDeviceTwinMessageCallback(MessageCallback callback, Object context)
     {
@@ -558,7 +553,19 @@ public final class DeviceClientConfig
     }
 
     /**
+     * Getter for the device operation timeout
+     *
+     * @return the amount of time, in milliseconds, before any device operation expires
+     */
+    public long getOperationTimeout()
+    {
+        //Codes_SRS_DEVICECLIENTCONFIG_34_032: [This function shall return the saved operation timeout.]
+        return this.operationTimeout;
+    }
+
+    /**
      * Sets the device operation timeout
+     *
      * @param timeout the amount of time, in milliseconds, that a given device operation can last before expiring
      * @throws IllegalArgumentException if timeout is 0 or negative
      */
@@ -574,33 +581,14 @@ public final class DeviceClientConfig
         this.operationTimeout = timeout;
     }
 
-    /**
-     * Getter for the device operation timeout
-     * @return the amount of time, in milliseconds, before any device operation expires
-     */
-    public long getOperationTimeout()
-    {
-        //Codes_SRS_DEVICECLIENTCONFIG_34_032: [This function shall return the saved operation timeout.]
-        return this.operationTimeout;
-    }
-
     public ProductInfo getProductInfo()
     {
         //Codes_SRS_DEVICECLIENTCONFIG_34_040: [This function shall return the saved product info.]
         return this.productInfo;
     }
 
-    @SuppressWarnings("unused")
-    protected DeviceClientConfig()
+    public enum AuthType
     {
-        this.authenticationProvider = null;
-        this.deviceMethodsMessageCallback = null;
-        this.defaultDeviceTelemetryMessageCallback = null;
-        this.deviceTwinMessageCallback = null;
-        this.deviceMethodsMessageContext = null;
-        this.defaultDeviceTelemetryMessageContext = null;
-        this.deviceTwinMessageContext = null;
-        this.logger = null;
-        this.useWebsocket = false;
+        X509_CERTIFICATE, SAS_TOKEN
     }
 }

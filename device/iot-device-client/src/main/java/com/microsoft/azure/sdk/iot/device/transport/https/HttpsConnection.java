@@ -34,7 +34,9 @@ import java.util.Map;
  */
 public class HttpsConnection
 {
-    /** The underlying HTTP/HTTPS connection. */
+    /**
+     * The underlying HTTP/HTTPS connection.
+     */
     private final HttpURLConnection connection;
 
     /**
@@ -49,9 +51,8 @@ public class HttpsConnection
     /**
      * Constructor. Opens a connection to the given URL. Can be HTTPS or HTTP
      *
-     * @param url the URL for the HTTP/HTTPS connection.
+     * @param url    the URL for the HTTP/HTTPS connection.
      * @param method the HTTP method (i.e. GET).
-     *
      * @throws TransportException if the connection could not be opened.
      */
     public HttpsConnection(URL url, HttpsMethod method) throws TransportException
@@ -62,10 +63,7 @@ public class HttpsConnection
         String protocol = url.getProtocol();
         if (!protocol.equalsIgnoreCase("HTTPS") && !protocol.equalsIgnoreCase("HTTP"))
         {
-            String errMsg = String.format("Expected URL that uses protocol "
-                            + "HTTPS or HTTP but received one that uses "
-                            + "protocol '%s'.%n",
-                    protocol);
+            String errMsg = String.format("Expected URL that uses protocol " + "HTTPS or HTTP but received one that uses " + "protocol '%s'.%n", protocol);
             throw new IllegalArgumentException(errMsg);
         }
 
@@ -85,11 +83,64 @@ public class HttpsConnection
         }
     }
 
+    @SuppressWarnings("unused")
+    protected HttpsConnection()
+    {
+        this.connection = null;
+    }
+
+    /**
+     * Reads the input stream until the stream is empty.
+     *
+     * @param stream the input stream.
+     * @return the content of the input stream.
+     * @throws TransportException if the input stream could not be read from.
+     */
+    private static byte[] readInputStream(InputStream stream) throws TransportException
+    {
+        try
+        {
+            ArrayList<Byte> byteBuffer = new ArrayList<>();
+            int nextByte = -1;
+            // read(byte[]) reads the byte into the buffer and returns the number
+            // of bytes read, or -1 if the end of the stream has been reached.
+            while ((nextByte = stream.read()) > -1)
+            {
+                byteBuffer.add((byte) nextByte);
+            }
+
+            int bufferSize = byteBuffer.size();
+            byte[] byteArray = new byte[bufferSize];
+            for (int i = 0; i < bufferSize; ++i)
+            {
+                byteArray[i] = byteBuffer.get(i);
+            }
+
+            return byteArray;
+        }
+        catch (IOException e)
+        {
+            throw HttpsConnection.buildTransportException(e);
+        }
+    }
+
+    private static TransportException buildTransportException(IOException e)
+    {
+        TransportException transportException = new TransportException(e);
+
+        if (e instanceof NoRouteToHostException || e instanceof UnknownHostException)
+        {
+            transportException.setRetryable(true);
+        }
+
+        return transportException;
+    }
+
     /**
      * Sends the request to the URL given in the constructor.
      *
      * @throws TransportException if the connection could not be established, or the
-     * server responded with a bad status code.
+     *                            server responded with a bad status code.
      */
     public void connect() throws TransportException
     {
@@ -115,11 +166,10 @@ public class HttpsConnection
      * Sets the request method (i.e. POST).
      *
      * @param method the request method.
-     *
      * @throws TransportException if the request currently has a non-empty
-     * body and the new method is not a POST or a PUT. This is because Java's
-     * {@link HttpsURLConnection} silently converts the HTTPS method to POST or PUT if a
-     * body is written to the request.
+     *                            body and the new method is not a POST or a PUT. This is because Java's
+     *                            {@link HttpsURLConnection} silently converts the HTTPS method to POST or PUT if a
+     *                            body is written to the request.
      */
     public void setRequestMethod(HttpsMethod method) throws TransportException
     {
@@ -128,9 +178,7 @@ public class HttpsConnection
         {
             if (this.body.length > 0)
             {
-                throw new IllegalArgumentException(
-                        "Cannot change the request method from POST "
-                        + "or PUT when the request body is non-empty.");
+                throw new IllegalArgumentException("Cannot change the request method from POST " + "or PUT when the request body is non-empty.");
             }
         }
 
@@ -179,24 +227,20 @@ public class HttpsConnection
      * Saves the body to be sent with the request.
      *
      * @param body the request body.
-     *
      * @throws TransportException if the request does not currently use
-     * method POST or PUT and the body is non-empty. This is because Java's
-     * {@link HttpsURLConnection} silently converts the HTTPS method to POST or PUT if a
-     * body is written to the request.
+     *                            method POST or PUT and the body is non-empty. This is because Java's
+     *                            {@link HttpsURLConnection} silently converts the HTTPS method to POST or PUT if a
+     *                            body is written to the request.
      */
     public void writeOutput(byte[] body) throws TransportException
     {
         // Codes_SRS_HTTPSCONNECTION_11_010: [The function shall throw an IllegalArgumentException if the request does not currently use method POST or PUT and the body is non-empty.]
-        HttpsMethod method = HttpsMethod.valueOf(
-                this.connection.getRequestMethod());
+        HttpsMethod method = HttpsMethod.valueOf(this.connection.getRequestMethod());
         if (method != HttpsMethod.POST && method != HttpsMethod.PUT)
         {
             if (body.length > 0)
             {
-                throw new IllegalArgumentException(
-                        "Cannot write a body to a request that "
-                        + "is not a POST or a PUT request.");
+                throw new IllegalArgumentException("Cannot write a body to a request that " + "is not a POST or a PUT request.");
             }
         }
         else
@@ -210,9 +254,8 @@ public class HttpsConnection
      * Reads from the input stream (response stream) and returns the response.
      *
      * @return the response body.
-     *
      * @throws TransportException if the input stream could not be accessed, for
-     * example if the server could not be reached.
+     *                            example if the server could not be reached.
      */
     public byte[] readInput() throws TransportException
     {
@@ -238,9 +281,8 @@ public class HttpsConnection
      * Reads from the error stream and returns the error reason.
      *
      * @return the error reason.
-     *
      * @throws TransportException if the input stream could not be accessed, for
-     * example if the server could not be reached.
+     *                            example if the server could not be reached.
      */
     public byte[] readError() throws TransportException
     {
@@ -271,7 +313,6 @@ public class HttpsConnection
      * Returns the response status code.
      *
      * @return the response status code.
-     *
      * @throws TransportException if no response was received.
      */
     public int getResponseStatus() throws TransportException
@@ -294,49 +335,11 @@ public class HttpsConnection
      * header field name.
      *
      * @return the response headers.
-     *
      */
     public Map<String, List<String>> getResponseHeaders()
     {
         // Codes_SRS_HTTPSCONNECTION_11_017: [The function shall return a mapping of header field names to the values associated with the header field name.]
         return this.connection.getHeaderFields();
-    }
-
-    /**
-     * Reads the input stream until the stream is empty.
-     *
-     * @param stream the input stream.
-     *
-     * @return the content of the input stream.
-     *
-     * @throws TransportException if the input stream could not be read from.
-     */
-    private static byte[] readInputStream(InputStream stream) throws TransportException
-    {
-        try
-        {
-            ArrayList<Byte> byteBuffer = new ArrayList<>();
-            int nextByte = -1;
-            // read(byte[]) reads the byte into the buffer and returns the number
-            // of bytes read, or -1 if the end of the stream has been reached.
-            while ((nextByte = stream.read()) > -1)
-            {
-                byteBuffer.add((byte) nextByte);
-            }
-
-            int bufferSize = byteBuffer.size();
-            byte[] byteArray = new byte[bufferSize];
-            for (int i = 0; i < bufferSize; ++i)
-            {
-                byteArray[i] = byteBuffer.get(i);
-            }
-
-            return byteArray;
-        }
-        catch (IOException e)
-        {
-            throw HttpsConnection.buildTransportException(e);
-        }
     }
 
     void setSSLContext(SSLContext sslContext) throws IllegalArgumentException
@@ -349,7 +352,7 @@ public class HttpsConnection
         if (this.connection instanceof HttpsURLConnection)
         {
             //Codes_SRS_HTTPSCONNECTION_25_024: [The function shall set the the SSL context with the given value.]
-            ((HttpsURLConnection)this.connection).setSSLSocketFactory(sslContext.getSocketFactory());
+            ((HttpsURLConnection) this.connection).setSSLSocketFactory(sslContext.getSocketFactory());
         }
         else
         {
@@ -358,26 +361,9 @@ public class HttpsConnection
         }
     }
 
-    @SuppressWarnings("unused")
-    protected HttpsConnection()
-    {
-        this.connection = null;
-    }
-
-    private static TransportException buildTransportException(IOException e)
-    {
-        TransportException transportException = new TransportException(e);
-
-        if (e instanceof NoRouteToHostException || e instanceof UnknownHostException)
-        {
-            transportException.setRetryable(true);
-        }
-
-        return transportException;
-    }
-
     /**
      * Get the body being used in the http connection
+     *
      * @return the body being used in the http connection
      */
     byte[] getBody()

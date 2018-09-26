@@ -8,7 +8,9 @@ import com.microsoft.azure.sdk.iot.device.net.IotHubUri;
 import java.util.HashMap;
 import java.util.Map;
 
-/** Grants device access to an IoT Hub for the specified amount of time. */
+/**
+ * Grants device access to an IoT Hub for the specified amount of time.
+ */
 public final class IotHubSasToken
 {
     /**
@@ -17,18 +19,6 @@ public final class IotHubSasToken
      * resource URI.
      */
     private static final String TOKEN_FORMAT = "SharedAccessSignature sig=%s&se=%s&sr=%s";
-    private String sasToken = null;
-
-    /** Components of the SAS token. */
-    private String signature = null;
-    /** The time, as a UNIX timestamp, before which the token is valid. */
-    private long expiryTime = 0L;
-    /**
-     * The URI for a connection from a device to an IoT Hub. Does not include a
-     * protocol.
-     */
-    private String scope = null;
-
     /**
      * The following strings are all expected to be in a correct SAS Token
      * SharedAccessSignature sig=<signature >&se=<expiryTime>&sr=<resourceURI>
@@ -39,37 +29,49 @@ public final class IotHubSasToken
     private static final String ExpiryTimeFieldKey = "se";
     private static final String SignatureFieldKey = "sig";
     private static final String ResourceURIFieldKey = "sr";
-
     /**
-     *  KeyValue pairs are extracted from the second segment of the SAS token by finding strings in the
-     *  format <key>=<value>. These values are further split around the equals sign into arrays. The below
-     *  indices represent which index in each of those arrays represent the key and which represents the value
+     * KeyValue pairs are extracted from the second segment of the SAS token by finding strings in the
+     * format <key>=<value>. These values are further split around the equals sign into arrays. The below
+     * indices represent which index in each of those arrays represent the key and which represents the value
      */
     private static final int ExpectedNumberOfFieldParts = 2;
     private static final int KeyValuePairKeyIndex = 0;
     private static final int KeyValuePairValueIndex = 1;
-
     /**
      * In a correctly formatted SAS token, there are two segments separated by a space:
-     *      SharedAccessSignature
+     * SharedAccessSignature
      * and
-     *      sig=<signature >&se=<expiryTime>&sr=<resourceURI>
+     * sig=<signature >&se=<expiryTime>&sr=<resourceURI>
      */
     private static final int SASTokenConstantSegmentIndex = 0;
     private static final int SASTokenFieldSegmentIndex = 1;
     private static final int ExpectedSASTokenSegments = 2;
     private static final String SASTokenSegmentSeparator = " ";
+    private String sasToken = null;
+    /**
+     * Components of the SAS token.
+     */
+    private String signature = null;
+    /**
+     * The time, as a UNIX timestamp, before which the token is valid.
+     */
+    private long expiryTime = 0L;
+    /**
+     * The URI for a connection from a device to an IoT Hub. Does not include a
+     * protocol.
+     */
+    private String scope = null;
 
     /**
      * Constructor. Generates a SAS token that grants access to an IoT Hub for
      * the specified amount of time.
      *
-     * @param hostname the hostname of the hub the token is for
-     * @param deviceId The id of the device the token is for
-     * @param deviceKey The device key for connecting the device to the hub with. May be null if sharedAccessToken is not.
+     * @param hostname          the hostname of the hub the token is for
+     * @param deviceId          The id of the device the token is for
+     * @param deviceKey         The device key for connecting the device to the hub with. May be null if sharedAccessToken is not.
      * @param sharedAccessToken The sas token for connecting the device to the hub with. May be null if deviceKey is not.
-     * @param moduleId the module id. May be null if the sas token is not for a module
-     * @param expiryTime the time, as a UNIX timestamp, after which the token will become invalid
+     * @param moduleId          the module id. May be null if the sas token is not for a module
+     * @param expiryTime        the time, as a UNIX timestamp, after which the token will become invalid
      */
     public IotHubSasToken(String hostname, String deviceId, String deviceKey, String sharedAccessToken, String moduleId, long expiryTime)
     {
@@ -84,7 +86,7 @@ public final class IotHubSasToken
             this.signature = sig.toString();
         }
         // Codes_SRS_IOTHUBSASTOKEN_25_007: [**If device key is not provided in config then the SASToken from config shall be used.**]**
-        else if(sharedAccessToken != null)
+        else if (sharedAccessToken != null)
         {
             this.sasToken = sharedAccessToken;
             this.expiryTime = getExpiryTimeFromToken(this.sasToken);
@@ -109,11 +111,21 @@ public final class IotHubSasToken
         }
     }
 
+    @SuppressWarnings("unused")
+    protected IotHubSasToken()
+    {
+        this.signature = null;
+        this.expiryTime = 0L;
+        this.scope = null;
+        this.sasToken = null;
+    }
+
     /**
      * Creates a shared access token from the provided audience, signature and expiry time
-     * @param audience the audience of the token
+     *
+     * @param audience  the audience of the token
      * @param signature the signature of the token
-     * @param expiry when the token will expire, in seconds since the epoch
+     * @param expiry    when the token will expire, in seconds since the epoch
      * @return the shared access token string
      */
     public static String buildSharedAccessToken(String audience, String signature, long expiry)
@@ -131,74 +143,7 @@ public final class IotHubSasToken
         }
 
         // Codes_SRS_IOTHUBSASTOKEN_34_013: [This function shall return a string in the format "SharedAccessSignature sr=<audience>&sig=<signature>&se=<expiry>".]
-        return String.format("%s %s=%s&%s=%s&%s=%d",
-                SharedAccessSignature,
-                ResourceURIFieldKey,
-                audience,
-                SignatureFieldKey,
-                signature,
-                ExpiryTimeFieldKey,
-                expiry);
-    }
-
-    /**
-     * Returns the string representation of the SAS token.
-     *
-     * @return the string representation of the SAS token.
-     */
-    @Override
-    public String toString()
-    {
-        // Codes_SRS_IOTHUBSASTOKEN_25_009: [**If SAS Token was provided by config it should be returned as string **]**
-        if (this.sasToken != null)
-        {
-            if(isSasFormat())
-            {
-                return this.sasToken;
-            }
-            else
-            {
-                throw new IllegalArgumentException("SasToken format is invalid");
-            }
-        }
-        else if(this.signature != null && this.expiryTime != 0L && this.scope!= null)
-        {
-            //Codes_SRS_IOTHUBSASTOKEN_25_010: [**If SAS Token was not provided by config it should be built and returned as string **]**
-            return buildSasToken();
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    public String getSasToken()
-    {
-        // Codes_SRS_IOTHUBSASTOKEN_34_011: [This function shall return the saved sas token.]
-        return this.sasToken;
-    }
-
-    private boolean isSasFormat()
-    {
-        /*
-          The SAS token format. The parameters to be interpolated are, in any order:
-          the signature, the expiry time, and the resource URI.
-         */
-
-        if (this.sasToken != null)
-        {
-            if(this.sasToken.startsWith("SharedAccessSignature"))
-            {
-                Map<String, String> fieldValues = extractFieldValues(this.sasToken);
-                if(fieldValues.containsKey(ExpiryTimeFieldKey)
-                        && fieldValues.containsKey(SignatureFieldKey)
-                        && fieldValues.containsKey(ResourceURIFieldKey))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return String.format("%s %s=%s&%s=%s&%s=%d", SharedAccessSignature, ResourceURIFieldKey, audience, SignatureFieldKey, signature, ExpiryTimeFieldKey, expiry);
     }
 
     /**
@@ -214,17 +159,6 @@ public final class IotHubSasToken
         Long currentTime = System.currentTimeMillis() / 1000;
         Long expiryTime = getExpiryTimeFromToken(sasToken);
         return (currentTime >= expiryTime);
-    }
-
-    /**
-     * Returns if this token has expired yet or not
-     *
-     * @return a boolean true if the SasToken is still valid,
-     * or false if it is expired.
-     */
-    boolean isExpired()
-    {
-        return (System.currentTimeMillis() / 1000) >= this.expiryTime ;
     }
 
     /**
@@ -271,18 +205,78 @@ public final class IotHubSasToken
         return parsedFields;
     }
 
+    /**
+     * Returns the string representation of the SAS token.
+     *
+     * @return the string representation of the SAS token.
+     */
+    @Override
+    public String toString()
+    {
+        // Codes_SRS_IOTHUBSASTOKEN_25_009: [**If SAS Token was provided by config it should be returned as string **]**
+        if (this.sasToken != null)
+        {
+            if (isSasFormat())
+            {
+                return this.sasToken;
+            }
+            else
+            {
+                throw new IllegalArgumentException("SasToken format is invalid");
+            }
+        }
+        else if (this.signature != null && this.expiryTime != 0L && this.scope != null)
+        {
+            //Codes_SRS_IOTHUBSASTOKEN_25_010: [**If SAS Token was not provided by config it should be built and returned as string **]**
+            return buildSasToken();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public String getSasToken()
+    {
+        // Codes_SRS_IOTHUBSASTOKEN_34_011: [This function shall return the saved sas token.]
+        return this.sasToken;
+    }
+
+    private boolean isSasFormat()
+    {
+        /*
+          The SAS token format. The parameters to be interpolated are, in any order:
+          the signature, the expiry time, and the resource URI.
+         */
+
+        if (this.sasToken != null)
+        {
+            if (this.sasToken.startsWith("SharedAccessSignature"))
+            {
+                Map<String, String> fieldValues = extractFieldValues(this.sasToken);
+                if (fieldValues.containsKey(ExpiryTimeFieldKey) && fieldValues.containsKey(SignatureFieldKey) && fieldValues.containsKey(ResourceURIFieldKey))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns if this token has expired yet or not
+     *
+     * @return a boolean true if the SasToken is still valid,
+     * or false if it is expired.
+     */
+    boolean isExpired()
+    {
+        return (System.currentTimeMillis() / 1000) >= this.expiryTime;
+    }
+
     private String buildSasToken()
     {
         // Codes_SRS_IOTHUBSASTOKEN_11_001: [The SAS token shall have the format "SharedAccessSignature sig=<signature >&se=<expiryTime>&sr=<resourceURI>". The params can be in any order.]
         return String.format(TOKEN_FORMAT, this.signature, this.expiryTime, this.scope);
-    }
-
-    @SuppressWarnings("unused")
-    protected IotHubSasToken()
-    {
-        this.signature = null;
-        this.expiryTime = 0L;
-        this.scope = null;
-        this.sasToken = null;
     }
 }

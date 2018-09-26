@@ -3,13 +3,13 @@ package com.microsoft.azure.sdk.iot.device.transport.amqps;
 public class AmqpsSendReturnValue
 {
     private boolean deliverySuccessful;
-    private int  deliveryHash;
+    private int deliveryHash;
 
     /**
      * Create a return value object containing the delivery status and the delivery hash
      *
      * @param deliverySuccessful the delivery state
-     * @param deliveryHash the delivery hash
+     * @param deliveryHash       the delivery hash
      */
     AmqpsSendReturnValue(boolean deliverySuccessful, int deliveryHash)
     {

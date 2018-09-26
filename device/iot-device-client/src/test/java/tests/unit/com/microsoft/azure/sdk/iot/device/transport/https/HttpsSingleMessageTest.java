@@ -23,19 +23,46 @@ import static org.junit.Assert.*;
 
 
 /* Unit tests for HttpsSingleMessage.
-* 100% methods covered
-* 98% lines covered
-*/
+ * 100% methods covered
+ * 98% lines covered
+ */
 public class HttpsSingleMessageTest
 {
+    private static boolean propertyAssignedCorrectly(MessageProperty[] properties, String name, String value)
+    {
+        for (int i = 0; i < properties.length; i++)
+        {
+            if (properties[i].getName().equals(name))
+            {
+                if (properties[i].getValue().equals(value))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private static boolean systemPropertyAssignedCorrectly(Map<String, String> systemProperties, String name, String value)
+    {
+        for (String key : systemProperties.keySet())
+        {
+            if (key.equals(name))
+            {
+                return systemProperties.get(key).equals(value);
+            }
+        }
+
+        return false;
+    }
+
     // Tests_SRS_HTTPSSINGLEMESSAGE_11_001: [The parsed HttpsSingleMessage shall have a copy of the original message body as its body.]
     @Test
-    public void parseHttpsMessageFromMessageCopiesBody(
-            @Mocked final Message mockMsg,
-            @Mocked final MessageProperty mockProperty)
+    public void parseHttpsMessageFromMessageCopiesBody(@Mocked final Message mockMsg, @Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
-        final MessageProperty[] properties = { mockProperty };
+        final byte[] body = {0x61, 0x62, 0x63};
+        final MessageProperty[] properties = {mockProperty};
         final String propertyName = "test-property-name";
         final String propertyValue = "test-property-value";
         new NonStrictExpectations()
@@ -52,8 +79,7 @@ public class HttpsSingleMessageTest
             }
         };
 
-        HttpsSingleMessage httpsMsg =
-                HttpsSingleMessage.parseHttpsMessage(mockMsg);
+        HttpsSingleMessage httpsMsg = HttpsSingleMessage.parseHttpsMessage(mockMsg);
         byte[] testBody = httpsMsg.getBody();
 
         byte[] expectedBody = body;
@@ -65,13 +91,11 @@ public class HttpsSingleMessageTest
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_21_002: [The parsed HttpsSingleMessage shall set the contentType as `binary/octet-stream`.]
     @Test
-    public void parseHttpsMessageFromMessageSetContentType(
-            @Mocked final Message mockMsg,
-            @Mocked final MessageProperty mockProperty)
+    public void parseHttpsMessageFromMessageSetContentType(@Mocked final Message mockMsg, @Mocked final MessageProperty mockProperty)
     {
         // arrange
-        final byte[] body = { 0x61, 0x62, 0x63 };
-        final MessageProperty[] properties = { mockProperty };
+        final byte[] body = {0x61, 0x62, 0x63};
+        final MessageProperty[] properties = {mockProperty};
         final String propertyName = "test-property-name";
         final String propertyValue = "test-property-value";
         new NonStrictExpectations()
@@ -89,8 +113,7 @@ public class HttpsSingleMessageTest
         };
 
         // act
-        HttpsSingleMessage httpsMsg =
-                HttpsSingleMessage.parseHttpsMessage(mockMsg);
+        HttpsSingleMessage httpsMsg = HttpsSingleMessage.parseHttpsMessage(mockMsg);
 
         // assert
         String testContentType = httpsMsg.getContentType();
@@ -99,12 +122,10 @@ public class HttpsSingleMessageTest
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_11_003: [The parsed HttpsSingleMessage shall add the prefix 'iothub-app-' to each of the message properties.]
     @Test
-    public void parseHttpsMessageFromMessageSavesPropertiesWithPrefix(
-            @Mocked final Message mockMsg,
-            @Mocked final MessageProperty mockProperty)
+    public void parseHttpsMessageFromMessageSavesPropertiesWithPrefix(@Mocked final Message mockMsg, @Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
-        final MessageProperty[] properties = { mockProperty };
+        final byte[] body = {0x61, 0x62, 0x63};
+        final MessageProperty[] properties = {mockProperty};
         final String propertyName = "test-property-name";
         final String propertyValue = "test-property-value";
         new NonStrictExpectations()
@@ -129,19 +150,16 @@ public class HttpsSingleMessageTest
         new Verifications()
         {
             {
-                new MessageProperty(expectedPropertyName,
-                        expectedPropertyValue);
+                new MessageProperty(expectedPropertyName, expectedPropertyValue);
             }
         };
     }
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_11_004: [The parsed HttpsSingleMessage shall have a copy of the original response body as its body.]
     @Test
-    public void parseHttpsMessageFromResponseCopiesBody(
-            @Mocked final HttpsResponse mockResponse,
-            @Mocked final MessageProperty mockProperty)
+    public void parseHttpsMessageFromResponseCopiesBody(@Mocked final HttpsResponse mockResponse, @Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
         final Map<String, String> headerFields = new HashMap<>();
         final String propertyName = "test-property-name";
         final String propertyValue = "test-property-value";
@@ -156,8 +174,7 @@ public class HttpsSingleMessageTest
             }
         };
 
-        HttpsSingleMessage httpsMsg =
-                HttpsSingleMessage.parseHttpsMessage(mockResponse);
+        HttpsSingleMessage httpsMsg = HttpsSingleMessage.parseHttpsMessage(mockResponse);
         byte[] testBody = httpsMsg.getBody();
 
         byte[] expectedBody = body;
@@ -169,12 +186,10 @@ public class HttpsSingleMessageTest
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_34_014: [If the message contains a system property, the parsed HttpsSingleMessage shall add the corresponding property with property value]
     @Test
-    public void parseHttpsMessageFromMessageWithMessageId(
-            @Mocked final Message mockMsg,
-            @Mocked final MessageProperty mockProperty)
+    public void parseHttpsMessageFromMessageWithMessageId(@Mocked final Message mockMsg, @Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
-        final MessageProperty[] properties = { mockProperty };
+        final byte[] body = {0x61, 0x62, 0x63};
+        final MessageProperty[] properties = {mockProperty};
         final String messageidName = HTTPS_SYSTEM_PROPERTY_PREFIX + "messageid";
         final String messageidValue = "test_messageid-value";
         final String correlationidName = HTTPS_SYSTEM_PROPERTY_PREFIX + "correlationid";
@@ -218,13 +233,11 @@ public class HttpsSingleMessageTest
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_21_016: [The parsed HttpsSingleMessage shall have a copy of the original message body as its body.]
     @Test
-    public void parseHttpsJsonMessageFromMessageCopiesBody(
-            @Mocked final Message mockMsg,
-            @Mocked final MessageProperty mockProperty)
+    public void parseHttpsJsonMessageFromMessageCopiesBody(@Mocked final Message mockMsg, @Mocked final MessageProperty mockProperty)
     {
         // arrange
-        final byte[] body = { 0x61, 0x62, 0x63 };
-        final MessageProperty[] properties = { mockProperty };
+        final byte[] body = {0x61, 0x62, 0x63};
+        final MessageProperty[] properties = {mockProperty};
         final String propertyName = "test-property-name";
         final String propertyValue = "test-property-value";
         new NonStrictExpectations()
@@ -242,8 +255,7 @@ public class HttpsSingleMessageTest
         };
 
         // act
-        HttpsSingleMessage httpsMsg =
-                HttpsSingleMessage.parseHttpsJsonMessage(mockMsg);
+        HttpsSingleMessage httpsMsg = HttpsSingleMessage.parseHttpsJsonMessage(mockMsg);
 
         // assert
         byte[] testBody = httpsMsg.getBody();
@@ -257,13 +269,11 @@ public class HttpsSingleMessageTest
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_21_017: [The parsed HttpsSingleMessage shall set the contentType as `application/json;charset=utf-8`.]
     @Test
-    public void parseHttpsJsonMessageFromMessageSetContentType(
-            @Mocked final Message mockMsg,
-            @Mocked final MessageProperty mockProperty)
+    public void parseHttpsJsonMessageFromMessageSetContentType(@Mocked final Message mockMsg, @Mocked final MessageProperty mockProperty)
     {
         // arrange
-        final byte[] body = { 0x61, 0x62, 0x63 };
-        final MessageProperty[] properties = { mockProperty };
+        final byte[] body = {0x61, 0x62, 0x63};
+        final MessageProperty[] properties = {mockProperty};
         final String propertyName = "test-property-name";
         final String propertyValue = "test-property-value";
         new NonStrictExpectations()
@@ -281,8 +291,7 @@ public class HttpsSingleMessageTest
         };
 
         // act
-        HttpsSingleMessage httpsMsg =
-                HttpsSingleMessage.parseHttpsJsonMessage(mockMsg);
+        HttpsSingleMessage httpsMsg = HttpsSingleMessage.parseHttpsJsonMessage(mockMsg);
 
         // assert
         String testContentType = httpsMsg.getContentType();
@@ -291,13 +300,11 @@ public class HttpsSingleMessageTest
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_21_018: [The parsed HttpsSingleMessage shall add the prefix 'iothub-app-' to each of the message properties.]
     @Test
-    public void parseHttpsJsonMessageFromMessageSavesPropertiesWithPrefix(
-            @Mocked final Message mockMsg,
-            @Mocked final MessageProperty mockProperty)
+    public void parseHttpsJsonMessageFromMessageSavesPropertiesWithPrefix(@Mocked final Message mockMsg, @Mocked final MessageProperty mockProperty)
     {
         // arrange
-        final byte[] body = { 0x61, 0x62, 0x63 };
-        final MessageProperty[] properties = { mockProperty };
+        final byte[] body = {0x61, 0x62, 0x63};
+        final MessageProperty[] properties = {mockProperty};
         final String propertyName = "test-property-name";
         final String propertyValue = "test-property-value";
         new NonStrictExpectations()
@@ -324,21 +331,18 @@ public class HttpsSingleMessageTest
         new Verifications()
         {
             {
-                new MessageProperty(expectedPropertyName,
-                        expectedPropertyValue);
+                new MessageProperty(expectedPropertyName, expectedPropertyValue);
             }
         };
     }
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_34_019: [If the message contains a system property, the parsed HttpsSingleMessage shall add the corresponding property with property value.]
     @Test
-    public void parseHttpsJsonMessageFromMessageWithMessageId(
-            @Mocked final Message mockMsg,
-            @Mocked final MessageProperty mockProperty)
+    public void parseHttpsJsonMessageFromMessageWithMessageId(@Mocked final Message mockMsg, @Mocked final MessageProperty mockProperty)
     {
         // arrange
-        final byte[] body = { 0x61, 0x62, 0x63 };
-        final MessageProperty[] properties = { mockProperty };
+        final byte[] body = {0x61, 0x62, 0x63};
+        final MessageProperty[] properties = {mockProperty};
         final String messageidName = HTTPS_SYSTEM_PROPERTY_PREFIX + "messageid";
         final String messageidValue = "test_messageid-value";
         final String correlationidName = HTTPS_SYSTEM_PROPERTY_PREFIX + "correlationid";
@@ -393,11 +397,9 @@ public class HttpsSingleMessageTest
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_11_005: [The parsed HttpsSingleMessage shall not be Base64-encoded.]
     @Test
-    public void parseHttpsMessageFromResponseDoesNotBase64EncodeBody(
-            @Mocked final HttpsResponse mockResponse,
-            @Mocked final MessageProperty mockProperty)
+    public void parseHttpsMessageFromResponseDoesNotBase64EncodeBody(@Mocked final HttpsResponse mockResponse, @Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
         final Map<String, String> headerFields = new HashMap<>();
         final String propertyName = "test-property-name";
         final String propertyValue = "test-property-value";
@@ -412,8 +414,7 @@ public class HttpsSingleMessageTest
             }
         };
 
-        HttpsSingleMessage httpsMsg =
-                HttpsSingleMessage.parseHttpsMessage(mockResponse);
+        HttpsSingleMessage httpsMsg = HttpsSingleMessage.parseHttpsMessage(mockResponse);
         boolean testBase64Encoded = httpsMsg.isBase64Encoded();
 
         boolean expectedBase64Encoded = false;
@@ -422,11 +423,9 @@ public class HttpsSingleMessageTest
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_11_006: [The parsed HttpsSingleMessage shall include all valid HTTPS application-defined properties in the response header as message properties.]
     @Test
-    public void parseHttpsMessageFromResponseDoesNotIncludeNonAppProperties(
-            @Mocked final HttpsResponse mockResponse,
-            @Mocked final MessageProperty mockProperty)
+    public void parseHttpsMessageFromResponseDoesNotIncludeNonAppProperties(@Mocked final HttpsResponse mockResponse, @Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
         final Map<String, String> headerFields = new HashMap<>();
         final String propertyName = "test-property-name";
         final String propertyValue = "test-property-value";
@@ -441,8 +440,7 @@ public class HttpsSingleMessageTest
             }
         };
 
-        HttpsSingleMessage httpsMsg =
-                HttpsSingleMessage.parseHttpsMessage(mockResponse);
+        HttpsSingleMessage httpsMsg = HttpsSingleMessage.parseHttpsMessage(mockResponse);
         MessageProperty[] testProperties = httpsMsg.getProperties();
 
         MessageProperty[] expectedProperties = {};
@@ -451,11 +449,9 @@ public class HttpsSingleMessageTest
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_11_006: [The parsed HttpsSingleMessage shall include all valid HTTPS application-defined properties in the response header as message properties.]
     @Test
-    public void parseHttpsMessageFromResponseIncludesAppProperties(
-            @Mocked final HttpsResponse mockResponse,
-            @Mocked final MessageProperty mockProperty)
+    public void parseHttpsMessageFromResponseIncludesAppProperties(@Mocked final HttpsResponse mockResponse, @Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
         final Map<String, String> headerFields = new HashMap<>();
         final String propertyName = "iothub-app-test-property-name";
         final String propertyValue = "test-property-value";
@@ -467,8 +463,7 @@ public class HttpsSingleMessageTest
                 result = body;
                 mockResponse.getHeaderFields();
                 result = headerFields;
-                MessageProperty.isValidAppProperty(
-                        propertyName, propertyValue);
+                MessageProperty.isValidAppProperty(propertyName, propertyValue);
                 result = true;
             }
         };
@@ -485,11 +480,9 @@ public class HttpsSingleMessageTest
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_11_007: [The function shall return an IoT Hub message with a copy of the message body as its body.]
     @Test
-    public void toMessageCopiesBody(@Mocked final HttpsResponse mockResponse,
-            @Mocked final MessageProperty mockProperty,
-            @Mocked final Message mockMsg)
+    public void toMessageCopiesBody(@Mocked final HttpsResponse mockResponse, @Mocked final MessageProperty mockProperty, @Mocked final Message mockMsg)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
         final Map<String, String> headerFields = new HashMap<>();
         final String propertyName = "iothub-app-test-property-name";
         final String propertyValue = "test-property-value";
@@ -501,8 +494,7 @@ public class HttpsSingleMessageTest
                 result = body;
                 mockResponse.getHeaderFields();
                 result = headerFields;
-                MessageProperty.isValidAppProperty(
-                        propertyName, propertyValue);
+                MessageProperty.isValidAppProperty(propertyName, propertyValue);
                 result = true;
                 new MessageProperty(propertyName, propertyValue);
                 result = mockProperty;
@@ -515,8 +507,7 @@ public class HttpsSingleMessageTest
             }
         };
 
-        HttpsSingleMessage httpsMsg =
-                HttpsSingleMessage.parseHttpsMessage(mockResponse);
+        HttpsSingleMessage httpsMsg = HttpsSingleMessage.parseHttpsMessage(mockResponse);
         httpsMsg.toMessage();
 
         final byte[] expectedBody = body;
@@ -530,12 +521,9 @@ public class HttpsSingleMessageTest
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_11_008: [The function shall return an IoT Hub message with application-defined properties that have the prefix 'iothub-app' removed.]
     @Test
-    public void toMessageRemovesPrefixFromProperties(
-            @Mocked final HttpsResponse mockResponse,
-            @Mocked final MessageProperty mockProperty,
-            @Mocked final Message mockMsg)
+    public void toMessageRemovesPrefixFromProperties(@Mocked final HttpsResponse mockResponse, @Mocked final MessageProperty mockProperty, @Mocked final Message mockMsg)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
         final Map<String, String> headerFields = new HashMap<>();
         final String propertyName = "iothub-app-test-property-name";
         final String propertyValue = "test-property-value";
@@ -547,8 +535,7 @@ public class HttpsSingleMessageTest
                 result = body;
                 mockResponse.getHeaderFields();
                 result = headerFields;
-                MessageProperty.isValidAppProperty(
-                        propertyName, propertyValue);
+                MessageProperty.isValidAppProperty(propertyName, propertyValue);
                 result = true;
                 new MessageProperty(propertyName, propertyValue);
                 result = mockProperty;
@@ -561,8 +548,7 @@ public class HttpsSingleMessageTest
             }
         };
 
-        HttpsSingleMessage httpsMsg =
-                HttpsSingleMessage.parseHttpsMessage(mockResponse);
+        HttpsSingleMessage httpsMsg = HttpsSingleMessage.parseHttpsMessage(mockResponse);
         httpsMsg.toMessage();
 
         final String expectedPropertyName = "test-property-name";
@@ -570,20 +556,17 @@ public class HttpsSingleMessageTest
         new Verifications()
         {
             {
-                mockMsg.setProperty(expectedPropertyName,
-                        expectedPropertyValue);
+                mockMsg.setProperty(expectedPropertyName, expectedPropertyValue);
             }
         };
     }
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_11_009: [The function shall return a copy of the message body.]
     @Test
-    public void getBodyReturnsCopyOfBody(
-            @Mocked final Message mockMsg,
-            @Mocked final MessageProperty mockProperty)
+    public void getBodyReturnsCopyOfBody(@Mocked final Message mockMsg, @Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
-        final MessageProperty[] properties = { mockProperty };
+        final byte[] body = {0x61, 0x62, 0x63};
+        final MessageProperty[] properties = {mockProperty};
         final String propertyName = "test-property-name";
         final String propertyValue = "test-property-value";
         new NonStrictExpectations()
@@ -600,8 +583,7 @@ public class HttpsSingleMessageTest
             }
         };
 
-        HttpsSingleMessage httpsMsg =
-                HttpsSingleMessage.parseHttpsMessage(mockMsg);
+        HttpsSingleMessage httpsMsg = HttpsSingleMessage.parseHttpsMessage(mockMsg);
         byte[] testBody = httpsMsg.getBody();
 
         byte[] expectedBody = body;
@@ -614,12 +596,10 @@ public class HttpsSingleMessageTest
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_11_010: [The function shall return the message body as a string encoded using charset UTF-8.]
     @Test
-    public void getBodyAsStringsReturnsUtf8Body(
-            @Mocked final Message mockMsg,
-            @Mocked final MessageProperty mockProperty)
+    public void getBodyAsStringsReturnsUtf8Body(@Mocked final Message mockMsg, @Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
-        final MessageProperty[] properties = { mockProperty };
+        final byte[] body = {0x61, 0x62, 0x63};
+        final MessageProperty[] properties = {mockProperty};
         final String propertyName = "test-property-name";
         final String propertyValue = "test-property-value";
         new NonStrictExpectations()
@@ -636,8 +616,7 @@ public class HttpsSingleMessageTest
             }
         };
 
-        HttpsSingleMessage httpsMsg =
-                HttpsSingleMessage.parseHttpsMessage(mockMsg);
+        HttpsSingleMessage httpsMsg = HttpsSingleMessage.parseHttpsMessage(mockMsg);
         String testBody = httpsMsg.getBodyAsString();
 
         String expectedBody = "abc";
@@ -646,13 +625,11 @@ public class HttpsSingleMessageTest
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_11_011: [The function shall return the message content-type as 'binary/octet-stream'.]
     @Test
-    public void getContentTypeReturnsCorrectContentType(
-            @Mocked final Message mockMsg,
-            @Mocked final MessageProperty mockProperty)
+    public void getContentTypeReturnsCorrectContentType(@Mocked final Message mockMsg, @Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
+        final byte[] body = {0x61, 0x62, 0x63};
         final boolean base64Encoded = false;
-        final MessageProperty[] properties = { mockProperty };
+        final MessageProperty[] properties = {mockProperty};
         final String propertyName = "test-property-name";
         final String propertyValue = "test-property-value";
         new NonStrictExpectations()
@@ -669,8 +646,7 @@ public class HttpsSingleMessageTest
             }
         };
 
-        HttpsSingleMessage httpsMsg =
-                HttpsSingleMessage.parseHttpsMessage(mockMsg);
+        HttpsSingleMessage httpsMsg = HttpsSingleMessage.parseHttpsMessage(mockMsg);
         String testContentType = httpsMsg.getContentType();
 
         String expectedContentType = "binary/octet-stream";
@@ -679,12 +655,10 @@ public class HttpsSingleMessageTest
 
     // Tests_SRS_HTTPSSINGLEMESSAGE_11_013: [The function shall return a copy of the message properties.]
     @Test
-    public void getPropertiesReturnsCopyOfProperties(
-            @Mocked final Message mockMsg,
-            @Mocked final MessageProperty mockProperty)
+    public void getPropertiesReturnsCopyOfProperties(@Mocked final Message mockMsg, @Mocked final MessageProperty mockProperty)
     {
-        final byte[] body = { 0x61, 0x62, 0x63 };
-        final MessageProperty[] properties = { mockProperty };
+        final byte[] body = {0x61, 0x62, 0x63};
+        final MessageProperty[] properties = {mockProperty};
         final String propertyName = "test-property-name";
         final String httpsPropertyName = "iothub-app-test-property-name";
         final String propertyValue = "test-property-value";
@@ -760,7 +734,7 @@ public class HttpsSingleMessageTest
 
         // assert (parseHttpMessage)
         assertEquals(1, actualHttpMessage.getProperties().length);
-        assertTrue(propertyAssignedCorrectly(actualHttpMessage.getProperties(),HTTPS_APP_PROPERTY_PREFIX + appPropertyKey, appProperty));
+        assertTrue(propertyAssignedCorrectly(actualHttpMessage.getProperties(), HTTPS_APP_PROPERTY_PREFIX + appPropertyKey, appProperty));
 
         assertTrue(systemPropertyAssignedCorrectly(actualHttpMessage.getSystemProperties(), correlationIdKey, correlationId));
         assertTrue(systemPropertyAssignedCorrectly(actualHttpMessage.getSystemProperties(), messageIdKey, messageId));
@@ -778,34 +752,5 @@ public class HttpsSingleMessageTest
         assertTrue(propertyAssignedCorrectly(actualMessage.getProperties(), appPropertyKey, appProperty));
         assertTrue(propertyAssignedCorrectly(actualMessage.getProperties(), HTTPS_APP_PROPERTY_PREFIX + userIdKey, userId));
         assertTrue(propertyAssignedCorrectly(actualMessage.getProperties(), HTTPS_APP_PROPERTY_PREFIX + toKey, to));
-    }
-
-    private static boolean propertyAssignedCorrectly(MessageProperty[] properties, String name, String value)
-    {
-        for (int i = 0; i < properties.length; i++)
-        {
-            if (properties[i].getName().equals(name))
-            {
-                if (properties[i].getValue().equals(value))
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private static boolean systemPropertyAssignedCorrectly(Map<String, String> systemProperties, String name, String value)
-    {
-        for (String key : systemProperties.keySet())
-        {
-            if (key.equals(name))
-            {
-                return systemProperties.get(key).equals(value);
-            }
-        }
-
-        return false;
     }
 }

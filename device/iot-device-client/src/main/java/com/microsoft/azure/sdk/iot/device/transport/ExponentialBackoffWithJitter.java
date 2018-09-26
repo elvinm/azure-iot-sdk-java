@@ -19,7 +19,7 @@ public class ExponentialBackoffWithJitter implements RetryPolicy
     // Codes_SRS_EXPONENTIALBACKOFF_28_006: [Constructor should have default values retryCount, minBackoff, maxBackoff, deltaBackoff and firstFastRetry]
     private int retryCount = Integer.MAX_VALUE;
     private long minBackoff = 100;
-    private long maxBackoff = 10*1000; //10 seconds
+    private long maxBackoff = 10 * 1000; //10 seconds
     private long deltaBackoff = 100;
     private boolean firstFastRetry = true;
 
@@ -36,10 +36,10 @@ public class ExponentialBackoffWithJitter implements RetryPolicy
     /**
      * Constructor.
      *
-     * @param retryCount the max number of retries allowed in the policies.
-     * @param minBackoff the min interval between each retry.
-     * @param maxBackoff the max interval between each retry.
-     * @param deltaBackoff the max delta allowed between retries.
+     * @param retryCount     the max number of retries allowed in the policies.
+     * @param minBackoff     the min interval between each retry.
+     * @param maxBackoff     the max interval between each retry.
+     * @param deltaBackoff   the max delta allowed between retries.
      * @param firstFastRetry indicates whether the first retry should be immediate.
      */
     public ExponentialBackoffWithJitter(int retryCount, long minBackoff, long maxBackoff, long deltaBackoff, boolean firstFastRetry)
@@ -67,7 +67,8 @@ public class ExponentialBackoffWithJitter implements RetryPolicy
     public RetryDecision getRetryDecision(int currentRetryCount, TransportException lastException)
     {
         // Codes_SRS_EXPONENTIALBACKOFF_28_003: [The function shall indicate immediate retry on first retry if firstFastRetry is true]
-        if (currentRetryCount == 0 && this.firstFastRetry) {
+        if (currentRetryCount == 0 && this.firstFastRetry)
+        {
             return new RetryDecision(true, 0);
         }
 
@@ -76,11 +77,11 @@ public class ExponentialBackoffWithJitter implements RetryPolicy
         // F(x) = min(Cmin+ (2^(x-1)-1) * rand(C * (1 – Jd), C*(1-Ju)), Cmax) where  x is the xth retry.]
         if (currentRetryCount < this.retryCount)
         {
-            int deltaBackoffLowbound = (int)(this.deltaBackoff * 0.8);
-            int deltaBackoffUpperbound = (int)(this.deltaBackoff * 1.2);
+            int deltaBackoffLowbound = (int) (this.deltaBackoff * 0.8);
+            int deltaBackoffUpperbound = (int) (this.deltaBackoff * 1.2);
             long randomDeltaBackOff = random.nextInt(deltaBackoffUpperbound - deltaBackoffLowbound);
-            long exponentialBackOffWithJitter = (int)((Math.pow(2.0, (double)currentRetryCount) - 1.0) * (randomDeltaBackOff + deltaBackoffLowbound));
-            long finalWaitTimeUntilNextRetry = (int)Math.min(this.minBackoff + (double)exponentialBackOffWithJitter, this.maxBackoff);
+            long exponentialBackOffWithJitter = (int) ((Math.pow(2.0, (double) currentRetryCount) - 1.0) * (randomDeltaBackOff + deltaBackoffLowbound));
+            long finalWaitTimeUntilNextRetry = (int) Math.min(this.minBackoff + (double) exponentialBackOffWithJitter, this.maxBackoff);
             return new RetryDecision(true, finalWaitTimeUntilNextRetry);
         }
 

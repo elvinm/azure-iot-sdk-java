@@ -27,6 +27,11 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class SendMessagesIT extends SendMessagesCommon
 {
+    public SendMessagesIT(InternalClient client, IotHubClientProtocol protocol, Device device, AuthenticationType authenticationType, String clientType)
+    {
+        super(client, protocol, device, authenticationType, clientType);
+    }
+
     //This function is run before even the @BeforeClass annotation, so it is used as the @BeforeClass method
     @Parameterized.Parameters(name = "{1} with {3} auth using {4}")
     public static Collection inputs() throws IOException, IotHubException, GeneralSecurityException, URISyntaxException, ModuleClientException
@@ -38,10 +43,5 @@ public class SendMessagesIT extends SendMessagesCommon
         x509Thumbprint = Tools.retrieveEnvironmentVariableValue("IOTHUB_E2E_X509_THUMBPRINT", bundle);
 
         return SendMessagesCommon.inputsCommon();
-    }
-
-    public SendMessagesIT(InternalClient client, IotHubClientProtocol protocol, Device device, AuthenticationType authenticationType, String clientType)
-    {
-        super(client, protocol, device, authenticationType, clientType);
     }
 }

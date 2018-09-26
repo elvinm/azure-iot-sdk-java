@@ -36,8 +36,8 @@ import java.util.concurrent.Executors;
  */
 public class RegistryManager
 {
-    private final Integer DEFAULT_HTTP_TIMEOUT_MS = 24000;
     private static final int EXECUTOR_THREAD_POOL_SIZE = 10;
+    private final Integer DEFAULT_HTTP_TIMEOUT_MS = 24000;
     private ExecutorService executor;
     private IotHubConnectionString iotHubConnectionString;
 
@@ -95,7 +95,7 @@ public class RegistryManager
      *
      * @param device The device object to add
      * @return The future object for the requested operation
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public Device addDevice(Device device) throws IOException, IotHubException, JsonSyntaxException
@@ -136,7 +136,7 @@ public class RegistryManager
      *
      * @param device The device object to add
      * @return The future object for the requested operation
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public CompletableFuture<Device> addDeviceAsync(Device device) throws IOException, IotHubException
@@ -169,7 +169,7 @@ public class RegistryManager
      *
      * @param deviceId The id of requested device
      * @return The device object of requested device
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public Device getDevice(String deviceId) throws IOException, IotHubException, JsonSyntaxException
@@ -206,7 +206,7 @@ public class RegistryManager
      *
      * @param deviceId The id of requested device
      * @return The future object for the requested operation
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public CompletableFuture<Device> getDeviceAsync(String deviceId) throws IOException, IotHubException
@@ -236,14 +236,14 @@ public class RegistryManager
 
     /**
      * Get list of devices
-     * @deprecated as of release 1.12.0. Please use
-     * {@link com.microsoft.azure.sdk.iot.service.devicetwin.DeviceTwin#queryTwin(String sqlQuery, Integer pageSize)}
-     * to query for all devices.
      *
      * @param maxCount The requested count of devices
      * @return The array of requested device objects
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
+     * @deprecated as of release 1.12.0. Please use
+     * {@link com.microsoft.azure.sdk.iot.service.devicetwin.DeviceTwin#queryTwin(String sqlQuery, Integer pageSize)}
+     * to query for all devices.
      */
     @Deprecated
     public ArrayList<Device> getDevices(Integer maxCount) throws IOException, IotHubException, JsonSyntaxException
@@ -274,7 +274,7 @@ public class RegistryManager
         {
             ArrayList<Device> deviceList = new ArrayList<>();
             JsonArray deviceArray = jsonReader.readArray();
-            
+
             for (int i = 0; i < deviceArray.size(); i++)
             {
                 JsonObject jsonObject = deviceArray.getJsonObject(i);
@@ -288,14 +288,13 @@ public class RegistryManager
     /**
      * Async wrapper for getDevices() operation
      *
+     * @param maxCount The requested count of devices
+     * @return The future object for the requested operation
+     * @throws IOException     This exception is thrown if the IO operation failed
+     * @throws IotHubException This exception is thrown if the response verification failed
      * @deprecated as of release 1.12.0. Please use
      * {@link com.microsoft.azure.sdk.iot.service.devicetwin.DeviceTwin#queryTwin(String sqlQuery, Integer pageSize)}
      * to query for all devices.
-     *
-     * @param maxCount The requested count of devices
-     * @return The future object for the requested operation
-     * @throws IOException This exception is thrown if the IO operation failed
-     * @throws IotHubException This exception is thrown if the response verification failed
      */
     @Deprecated
     public CompletableFuture<ArrayList<Device>> getDevicesAsync(Integer maxCount) throws IOException, IotHubException
@@ -325,6 +324,7 @@ public class RegistryManager
 
     /**
      * Return the iothub device connection string for a provided device.
+     *
      * @param device The device object to get the connectionString
      * @return The iothub device connection string
      */
@@ -336,7 +336,7 @@ public class RegistryManager
             throw new IllegalArgumentException("device cannot be null");
         }
 
-        if(Tools.isNullOrEmpty(device.getDeviceId()) || (Tools.isNullOrEmpty(device.getPrimaryKey())) && Tools.isNullOrEmpty(device.getPrimaryThumbprint()))
+        if (Tools.isNullOrEmpty(device.getDeviceId()) || (Tools.isNullOrEmpty(device.getPrimaryKey())) && Tools.isNullOrEmpty(device.getPrimaryThumbprint()))
         {
             throw new IllegalArgumentException("device is not valid");
         }
@@ -362,7 +362,7 @@ public class RegistryManager
      *
      * @param device The device object containing updated data
      * @return The updated device object
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public Device updateDevice(Device device) throws IOException, IotHubException
@@ -379,10 +379,10 @@ public class RegistryManager
     /**
      * Update device with forceUpdate input parameter
      *
-     * @param device The device object containing updated data
+     * @param device      The device object containing updated data
      * @param forceUpdate True if the update has to be forced regardless of the device state
      * @return The updated device object
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public Device updateDevice(Device device, Boolean forceUpdate) throws IOException, IotHubException, JsonSyntaxException
@@ -423,7 +423,7 @@ public class RegistryManager
      *
      * @param device The device object containing updated data
      * @return The future object for the requested operation
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public CompletableFuture<Device> updateDeviceAsync(Device device) throws IOException, IotHubException
@@ -453,10 +453,10 @@ public class RegistryManager
     /**
      * Async wrapper for forced updateDevice() operation
      *
-     * @param device The device object containing updated data
+     * @param device      The device object containing updated data
      * @param forceUpdate True is the update has to be forced regardless if the device state
      * @return The future object for the requested operation
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public CompletableFuture<Device> updateDeviceAsync(Device device, Boolean forceUpdate) throws IOException, IotHubException
@@ -487,7 +487,7 @@ public class RegistryManager
      * Remove device
      *
      * @param deviceId The device name to remove
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public void removeDevice(String deviceId) throws IOException, IotHubException
@@ -500,8 +500,8 @@ public class RegistryManager
      * Remove device
      *
      * @param device The device name to remove
-     * @throws IOException This exception is thrown if the IO operation failed
-     * @throws IotHubException This exception is thrown if the response verification failed
+     * @throws IOException              This exception is thrown if the IO operation failed
+     * @throws IotHubException          This exception is thrown if the response verification failed
      * @throws IllegalArgumentException This exception is thrown if the device is null
      */
     public void removeDevice(Device device) throws IOException, IotHubException, IllegalArgumentException
@@ -520,8 +520,8 @@ public class RegistryManager
      * send remove device request and verify response
      *
      * @param deviceId The device name to remove
-     * @param etag The etag associated with the device to remove
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @param etag     The etag associated with the device to remove
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     private void removeDeviceOperation(String deviceId, String etag) throws IOException, IotHubException
@@ -562,7 +562,7 @@ public class RegistryManager
      *
      * @param deviceId The device object to remove
      * @return The future object for the requested operation
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public CompletableFuture<Boolean> removeDeviceAsync(String deviceId) throws IOException, IotHubException
@@ -595,7 +595,7 @@ public class RegistryManager
      * Get device statistics
      *
      * @return RegistryStatistics object containing the requested data
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public RegistryStatistics getStatistics() throws IOException, IotHubException, JsonSyntaxException
@@ -625,7 +625,7 @@ public class RegistryManager
      * Async wrapper for getStatistics() operation
      *
      * @return The future object for the requested operation
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public CompletableFuture<RegistryStatistics> getStatisticsAsync() throws IOException, IotHubException
@@ -651,16 +651,13 @@ public class RegistryManager
      * Create a bulk export job.
      *
      * @param exportBlobContainerUri URI containing SAS token to a blob container where export data will be placed
-     * @param excludeKeys Whether the devices keys should be excluded from the exported data or not
-     *
+     * @param excludeKeys            Whether the devices keys should be excluded from the exported data or not
      * @return A JobProperties object for the newly created bulk export job
-     *
      * @throws IllegalArgumentException This exception is thrown if the exportBlobContainerUri or excludeKeys parameters are null
-     * @throws IOException This exception is thrown if the IO operation failed
-     * @throws IotHubException This exception is thrown if the response verification failed
+     * @throws IOException              This exception is thrown if the IO operation failed
+     * @throws IotHubException          This exception is thrown if the response verification failed
      */
-    public JobProperties exportDevices(String exportBlobContainerUri, Boolean excludeKeys)
-            throws IllegalArgumentException, IOException, IotHubException, JsonSyntaxException
+    public JobProperties exportDevices(String exportBlobContainerUri, Boolean excludeKeys) throws IllegalArgumentException, IOException, IotHubException, JsonSyntaxException
     {
         // CODES_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_15_061: [The function shall throw IllegalArgumentException
         // if any of the input parameters is null]
@@ -689,16 +686,15 @@ public class RegistryManager
 
     /**
      * Async wrapper for exportDevices() operation
-     * @param excludeKeys if to exclude keys or not
+     *
+     * @param excludeKeys            if to exclude keys or not
      * @param exportBlobContainerUri the blob storage container URI to store at.
      * @return The future object for the requested operation
-     *
      * @throws IllegalArgumentException This exception is thrown if the exportBlobContainerUri or excludeKeys parameters are null
-     * @throws IOException This exception is thrown if the IO operation failed
-     * @throws IotHubException This exception is thrown if the response verification failed
+     * @throws IOException              This exception is thrown if the IO operation failed
+     * @throws IotHubException          This exception is thrown if the response verification failed
      */
-    public CompletableFuture<JobProperties> exportDevicesAsync(String exportBlobContainerUri, Boolean excludeKeys)
-            throws IllegalArgumentException, IOException, IotHubException, JsonSyntaxException
+    public CompletableFuture<JobProperties> exportDevicesAsync(String exportBlobContainerUri, Boolean excludeKeys) throws IllegalArgumentException, IOException, IotHubException, JsonSyntaxException
     {
         // CODES_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_15_068: [The function shall create an async wrapper around the
         // exportDevices() function call, handle the return value or delegate exception]
@@ -723,15 +719,12 @@ public class RegistryManager
      *
      * @param importBlobContainerUri URI containing SAS token to a blob container that contains registry data to sync
      * @param outputBlobContainerUri URI containing SAS token to a blob container where the result of the bulk import operation will be placed
-     *
      * @return A JobProperties object for the newly created bulk import job
-     *
      * @throws IllegalArgumentException This exception is thrown if the importBlobContainerUri or outputBlobContainerUri parameters are null
-     * @throws IOException This exception is thrown if the IO operation failed
-     * @throws IotHubException This exception is thrown if the response verification failed
+     * @throws IOException              This exception is thrown if the IO operation failed
+     * @throws IotHubException          This exception is thrown if the response verification failed
      */
-    public JobProperties importDevices(String importBlobContainerUri, String outputBlobContainerUri)
-            throws IllegalArgumentException, IOException, IotHubException, JsonSyntaxException
+    public JobProperties importDevices(String importBlobContainerUri, String outputBlobContainerUri) throws IllegalArgumentException, IOException, IotHubException, JsonSyntaxException
     {
         // CODES_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_15_069: [The function shall throw IllegalArgumentException if any of the input parameters is null]
         if (importBlobContainerUri == null || outputBlobContainerUri == null)
@@ -763,13 +756,11 @@ public class RegistryManager
      * @param importBlobContainerUri Uri for importBlobContainer
      * @param outputBlobContainerUri Uri for outputBlobContainer
      * @return The future object for the requested operation
-     *
      * @throws IllegalArgumentException This exception is thrown if the exportBlobContainerUri or excludeKeys parameters are null
-     * @throws IOException This exception is thrown if the IO operation failed
-     * @throws IotHubException This exception is thrown if the response verification failed
+     * @throws IOException              This exception is thrown if the IO operation failed
+     * @throws IotHubException          This exception is thrown if the response verification failed
      */
-    public CompletableFuture<JobProperties> importDevicesAsync(String importBlobContainerUri, String outputBlobContainerUri)
-            throws IllegalArgumentException, IOException, IotHubException, JsonSyntaxException
+    public CompletableFuture<JobProperties> importDevicesAsync(String importBlobContainerUri, String outputBlobContainerUri) throws IllegalArgumentException, IOException, IotHubException, JsonSyntaxException
     {
         // CODES_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_15_076: [The function shall create an async wrapper around
         // the importDevices() function call, handle the return value or delegate exception]
@@ -793,12 +784,10 @@ public class RegistryManager
      * Get the properties of an existing job.
      *
      * @param jobId The id of the job to be retrieved.
-     *
      * @return A JobProperties object for the requested job id
-     *
      * @throws IllegalArgumentException This exception is thrown if the jobId parameter is null
-     * @throws IOException This exception is thrown if the IO operation failed
-     * @throws IotHubException This exception is thrown if the response verification failed
+     * @throws IOException              This exception is thrown if the IO operation failed
+     * @throws IotHubException          This exception is thrown if the response verification failed
      */
     public JobProperties getJob(String jobId) throws IllegalArgumentException, IOException, IotHubException, JsonSyntaxException
     {
@@ -827,15 +816,14 @@ public class RegistryManager
 
     /**
      * Async wrapper for getJob() operation
+     *
      * @param jobId jobID as String
      * @return The future object for the requested operation
-     *
      * @throws IllegalArgumentException This exception is thrown if the jobId parameter is null
-     * @throws IOException This exception is thrown if the IO operation failed
-     * @throws IotHubException This exception is thrown if the response verification failed
+     * @throws IOException              This exception is thrown if the IO operation failed
+     * @throws IotHubException          This exception is thrown if the response verification failed
      */
-    public CompletableFuture<JobProperties> getJobAsync(
-            String jobId) throws IllegalArgumentException, IOException, IotHubException
+    public CompletableFuture<JobProperties> getJobAsync(String jobId) throws IllegalArgumentException, IOException, IotHubException
     {
         // CODES_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_15_084: [The function shall create an async wrapper around
         // the getJob() function call, handle the return value or delegate exception]
@@ -861,7 +849,7 @@ public class RegistryManager
      *
      * @param module The module object to add
      * @return The module object for the requested operation
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public Module addModule(Module module) throws IOException, IotHubException, JsonSyntaxException
@@ -903,7 +891,7 @@ public class RegistryManager
      * @param deviceId The id of requested device
      * @param moduleId The id of requested module
      * @return The module object of requested module on the specific device
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public Module getModule(String deviceId, String moduleId) throws IOException, IotHubException, JsonSyntaxException
@@ -946,7 +934,7 @@ public class RegistryManager
      *
      * @param deviceId The id of requested device
      * @return The module objects on the specific device
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public List<Module> getModulesOnDevice(String deviceId) throws IOException, IotHubException, JsonSyntaxException
@@ -993,7 +981,7 @@ public class RegistryManager
      *
      * @param module The module object containing updated data
      * @return The updated module object
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public Module updateModule(Module module) throws IOException, IotHubException
@@ -1010,10 +998,10 @@ public class RegistryManager
     /**
      * Update module with forceUpdate input parameter
      *
-     * @param module The module object containing updated data
+     * @param module      The module object containing updated data
      * @param forceUpdate True if the update has to be forced regardless of the module state
      * @return The updated module object
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public Module updateModule(Module module, Boolean forceUpdate) throws IOException, IotHubException, JsonSyntaxException
@@ -1054,7 +1042,7 @@ public class RegistryManager
      *
      * @param deviceId The device name associated with the module to be removed
      * @param moduleId The module name to be removed
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public void removeModule(String deviceId, String moduleId) throws IOException, IotHubException
@@ -1067,8 +1055,8 @@ public class RegistryManager
      * Remove module
      *
      * @param module The module to be removed
-     * @throws IOException This exception is thrown if the IO operation failed
-     * @throws IotHubException This exception is thrown if the response verification failed
+     * @throws IOException              This exception is thrown if the IO operation failed
+     * @throws IotHubException          This exception is thrown if the response verification failed
      * @throws IllegalArgumentException This exception is thrown if the input module is null
      */
     public void removeModule(Module module) throws IOException, IotHubException, IllegalArgumentException
@@ -1088,8 +1076,8 @@ public class RegistryManager
      *
      * @param deviceId The device name associated with the module to be removed
      * @param moduleId The module name to be removed
-     * @param etag The etag of the module to be removed, "*" as wildcard.
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @param etag     The etag of the module to be removed, "*" as wildcard.
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     private void removeModuleOperation(String deviceId, String moduleId, String etag) throws IOException, IotHubException
@@ -1137,7 +1125,7 @@ public class RegistryManager
      *
      * @param configuration The configuration object to add
      * @return The configuration object for the requested operation
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public Configuration addConfiguration(Configuration configuration) throws IOException, IotHubException, JsonSyntaxException
@@ -1178,7 +1166,7 @@ public class RegistryManager
      *
      * @param configurationId The id of requested configuration
      * @return The configuration object of requested configuration on the specific device
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public Configuration getConfiguration(String configurationId) throws IOException, IotHubException, JsonSyntaxException
@@ -1215,7 +1203,7 @@ public class RegistryManager
      *
      * @param maxCount The requested count of configurations
      * @return The array of requested configuration objects
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public List<Configuration> getConfigurations(Integer maxCount) throws IOException, IotHubException, JsonSyntaxException
@@ -1262,7 +1250,7 @@ public class RegistryManager
      *
      * @param configuration The configuration object containing updated data
      * @return The updated configuration object
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public Configuration updateConfiguration(Configuration configuration) throws IOException, IotHubException
@@ -1280,9 +1268,9 @@ public class RegistryManager
      * Update configuration with forceUpdate input parameter
      *
      * @param configuration The configuration object containing updated data
-     * @param forceUpdate True if the update has to be forced regardless of the configuration state
+     * @param forceUpdate   True if the update has to be forced regardless of the configuration state
      * @return The updated configuration object
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public Configuration updateConfiguration(Configuration configuration, Boolean forceUpdate) throws IOException, IotHubException, JsonSyntaxException
@@ -1322,7 +1310,7 @@ public class RegistryManager
      * Send remove configuration request and verify response
      *
      * @param configurationId The configuration to be removed
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     public void removeConfiguration(String configurationId) throws IOException, IotHubException
@@ -1335,8 +1323,8 @@ public class RegistryManager
      * Send remove configuration request and verify response
      *
      * @param config The configuration to be removed
-     * @throws IOException This exception is thrown if the IO operation failed
-     * @throws IotHubException This exception is thrown if the response verification failed
+     * @throws IOException              This exception is thrown if the IO operation failed
+     * @throws IotHubException          This exception is thrown if the response verification failed
      * @throws IllegalArgumentException This exception is thrown if the input configuration is null
      */
     public void removeConfiguration(Configuration config) throws IOException, IotHubException, IllegalArgumentException
@@ -1355,8 +1343,8 @@ public class RegistryManager
      * Send remove configuration request and verify response
      *
      * @param configurationId The configuration to be removed
-     * @param etag The etag of the configuration to be removed. "*" as wildcard
-     * @throws IOException This exception is thrown if the IO operation failed
+     * @param etag            The etag of the configuration to be removed. "*" as wildcard
+     * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
     private void removeConfigurationOperation(String configurationId, String etag) throws IOException, IotHubException
@@ -1394,9 +1382,10 @@ public class RegistryManager
 
     /**
      * Apply the provided configuration content to the provided device
+     *
      * @param deviceId The device to apply the configuration to
-     * @param content The configuration content to apply to the device
-     * @throws IOException If the iot hub cannot be reached
+     * @param content  The configuration content to apply to the device
+     * @throws IOException     If the iot hub cannot be reached
      * @throws IotHubException If the response from the hub was an error code. This exception will contain that code
      */
     public void applyConfigurationContentOnDevice(String deviceId, ConfigurationContent content) throws IOException, IotHubException

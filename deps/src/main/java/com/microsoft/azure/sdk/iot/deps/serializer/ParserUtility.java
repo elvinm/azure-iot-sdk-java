@@ -44,7 +44,7 @@ public class ParserUtility
     public static void validateStringUTF8(String str) throws IllegalArgumentException
     {
         /* Codes_SRS_PARSER_UTILITY_21_002: [The validateStringUTF8 shall throw IllegalArgumentException if the provided string is null or empty.] */
-        if((str == null) || str.isEmpty())
+        if ((str == null) || str.isEmpty())
         {
             throw new IllegalArgumentException("parameter is null or empty");
         }
@@ -52,12 +52,12 @@ public class ParserUtility
         /* Codes_SRS_PARSER_UTILITY_21_003: [The validateStringUTF8 shall throw IllegalArgumentException if the provided string contains at least one not UTF-8 character.] */
         try
         {
-            if(str.getBytes("UTF-8").length != str.length())
+            if (str.getBytes("UTF-8").length != str.length())
             {
                 throw new IllegalArgumentException("parameter contains non UTF-8 character");
             }
         }
-        catch(UnsupportedEncodingException e)
+        catch (UnsupportedEncodingException e)
         {
             throw new IllegalArgumentException("parameter contains non UTF-8 character");
         }
@@ -66,8 +66,8 @@ public class ParserUtility
     }
 
     /**
-     *
      * Validates if query contains select and from keywords and also if it is a valid utf-8 string
+     *
      * @param query query to be validated
      * @throws IllegalArgumentException if query does not contain "select" or "from" or is not a valid utf-8 string
      */
@@ -114,7 +114,7 @@ public class ParserUtility
         }
 
         /* Codes_SRS_PARSER_UTILITY_21_007: [The validateBlobName shall throw IllegalArgumentException if the provided blob name contains more than 1024 characters.] */
-        if(blobName.length() > 1024)
+        if (blobName.length() > 1024)
         {
             throw new IllegalArgumentException("The provided blob name exceed maximum size of 1024 characters");
         }
@@ -138,7 +138,7 @@ public class ParserUtility
     {
         /* Codes_SRS_PARSER_UTILITY_21_009: [The validateObject shall do nothing if the object is valid.] */
         /* Codes_SRS_PARSER_UTILITY_21_010: [The validateObject shall throw IllegalArgumentException if the provided object is null.] */
-        if(val == null)
+        if (val == null)
         {
             throw new IllegalArgumentException("parameter is null");
         }
@@ -147,7 +147,7 @@ public class ParserUtility
     /**
      * Helper to validate if the provided string is a valid json key.
      *
-     * @param key is the string to be validated.
+     * @param key        is the string to be validated.
      * @param isMetadata defines if the key belongs to a metadata, which allows character `$`.
      * @throws IllegalArgumentException if the string do not fit the criteria.
      */
@@ -165,7 +165,7 @@ public class ParserUtility
         }
 
         /* Codes_SRS_PARSER_UTILITY_21_016: [The validateKey shall throw IllegalArgumentException if the provided string contains more than 128 characters.] */
-        if(key.length() > 128)
+        if (key.length() > 128)
         {
             throw new IllegalArgumentException("The provided key is bigger than 128 characters");
         }
@@ -173,7 +173,7 @@ public class ParserUtility
         /* Codes_SRS_PARSER_UTILITY_21_017: [The validateKey shall throw IllegalArgumentException if the provided string contains an illegal character (`$`,`.`, space).] */
         /* Codes_SRS_PARSER_UTILITY_21_018: [If `isMetadata` is `true`, the validateKey shall accept the character `$` as valid.] */
         /* Codes_SRS_PARSER_UTILITY_21_019: [If `isMetadata` is `false`, the validateKey shall not accept the character `$` as valid.] */
-        if((key.contains(".") || key.contains(" ") || (key.contains("$") && ! isMetadata)))
+        if ((key.contains(".") || key.contains(" ") || (key.contains("$") && !isMetadata)))
         {
             throw new IllegalArgumentException("The provided key is not valid");
         }
@@ -185,8 +185,8 @@ public class ParserUtility
      * Helper to validate if the provided map in terms of maximum
      * levels and optionally if the keys ar not metadata.
      *
-     * @param map the {@code Map} to be validate. It can be {@code null}, and it will succeed in this case.
-     * @param maxLevel the max number of level allowed in the map.
+     * @param map           the {@code Map} to be validate. It can be {@code null}, and it will succeed in this case.
+     * @param maxLevel      the max number of level allowed in the map.
      * @param allowMetadata the {@code boolean} that indicates if the key can contain metadata `$` or not.
      * @throws IllegalArgumentException If the Map contains more than maxLevel levels or do not allow metadata
      *                                  but contains metadata key.
@@ -194,12 +194,12 @@ public class ParserUtility
     public static void validateMap(Map<String, Object> map, int maxLevel, boolean allowMetadata) throws IllegalArgumentException
     {
         /* Codes_SRS_PARSER_UTILITY_21_046: [The validateMap shall throws IllegalArgumentException if the maxLevel is `0` or negative.] */
-        if(maxLevel <= 0)
+        if (maxLevel <= 0)
         {
             throw new IllegalArgumentException("maxLevel cannot be zero or negative");
         }
         /* Codes_SRS_PARSER_UTILITY_21_048: [The validateMap shall do nothing if the map is null.] */
-        if(map != null)
+        if (map != null)
         {
             /* Codes_SRS_PARSER_UTILITY_21_047: [The validateMap shall do nothing if the map is a valid Map.] */
             validateMapInternal(map, 1, maxLevel, allowMetadata);
@@ -208,9 +208,9 @@ public class ParserUtility
 
     private static void validateMapInternal(Map<String, Object> map, int level, int maxLevel, boolean allowMetadata) throws IllegalArgumentException
     {
-        level ++;
+        level++;
 
-        for(Map.Entry<String, Object> entry : map.entrySet())
+        for (Map.Entry<String, Object> entry : map.entrySet())
         {
             String key = entry.getKey();
             Object value = entry.getValue();
@@ -220,15 +220,15 @@ public class ParserUtility
             ParserUtility.validateKey(key, allowMetadata);
 
             /* Codes_SRS_PARSER_UTILITY_21_051: [The validateMap shall throws IllegalArgumentException if any value contains illegal type (array or invalid class).] */
-            if((value != null) && ((value.getClass().isArray()) || (value.getClass().isLocalClass())))
+            if ((value != null) && ((value.getClass().isArray()) || (value.getClass().isLocalClass())))
             {
                 throw new IllegalArgumentException("Map contains illegal value type " + value.getClass().getName());
             }
 
-            if((value != null) && (value instanceof Map))
+            if ((value != null) && (value instanceof Map))
             {
                 /* Codes_SRS_PARSER_UTILITY_21_052: [The validateMap shall throws IllegalArgumentException if the provided map contains more than maxLevel levels.] */
-                if(level <= maxLevel)
+                if (level <= maxLevel)
                 {
                     validateMapInternal((Map<String, Object>) value, level, maxLevel, allowMetadata);
                 }
@@ -263,18 +263,16 @@ public class ParserUtility
         }
 
         /* Codes_SRS_PARSER_UTILITY_21_028: [The validateId shall throw IllegalArgumentException if the provided string contains more than 128 characters.] */
-        if(id.length() > 128)
+        if (id.length() > 128)
         {
             throw new IllegalArgumentException("The provided ID is bigger than 128 characters");
         }
 
         /* Codes_SRS_PARSER_UTILITY_21_029: [The validateId shall throw IllegalArgumentException if the provided string contains an illegal character.] */
         byte[] chars = id.getBytes();
-        for (byte c:chars)
+        for (byte c : chars)
         {
-            if(!(((c>='A') && (c<='Z')) || ((c>='a') && (c<='z')) || ((c>='0') && (c<='9')) ||
-                    (c=='-') || (c==':') || (c=='.') || (c=='+') || (c=='%') || (c=='_') || (c=='#') || (c=='*') || (c=='?') ||
-                    (c=='!') || (c=='(') || (c==')') || (c==',') || (c=='=') || (c=='@') || (c==';') || (c=='$') || (c=='\'')))
+            if (!(((c >= 'A') && (c <= 'Z')) || ((c >= 'a') && (c <= 'z')) || ((c >= '0') && (c <= '9')) || (c == '-') || (c == ':') || (c == '.') || (c == '+') || (c == '%') || (c == '_') || (c == '#') || (c == '*') || (c == '?') || (c == '!') || (c == '(') || (c == ')') || (c == ',') || (c == '=') || (c == '@') || (c == ';') || (c == '$') || (c == '\'')))
             {
                 throw new IllegalArgumentException("The provided ID is not valid");
             }
@@ -286,8 +284,8 @@ public class ParserUtility
     /**
      * Validate if a provided host name is valid using the follow criteria.
      * A case-sensitive string (up to 128 char long)
-     *   of ASCII 7-bit alphanumeric chars
-     *   + {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.
+     * of ASCII 7-bit alphanumeric chars
+     * + {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.
      * Contains at least one separator '.'
      *
      * @param hostName is the host name to test
@@ -307,7 +305,7 @@ public class ParserUtility
     /**
      * Helper to convert the provided string in a UTC Date.
      * Expected format:
-     *      "2016-06-01T21:22:43.7996883Z"
+     * "2016-06-01T21:22:43.7996883Z"
      *
      * @param dataTime is the string with the date and time
      * @return Date parsed from the string
@@ -322,7 +320,7 @@ public class ParserUtility
         dateFormat.setTimeZone(TimeZone.getTimeZone(TIMEZONE));
 
         /* Codes_SRS_PARSER_UTILITY_21_022: [If the provide string is null, empty or contains an invalid data format, the getDateTimeUtc shall throw IllegalArgumentException.] */
-        if((dataTime == null) || dataTime.isEmpty())
+        if ((dataTime == null) || dataTime.isEmpty())
         {
             throw new IllegalArgumentException("date is null, empty, or invalid");
         }
@@ -332,27 +330,26 @@ public class ParserUtility
             /* Codes_SRS_PARSER_UTILITY_21_040: [If the provide string contains more than 3 digits for milliseconds, the getDateTimeUtc shall reduce the milliseconds to 3 digits.] */
             String[] splitDateTime = dataTime.split(MILLISECONDS_REGEX);
             int milliseconds;
-            if(splitDateTime.length > EXPECTED_PARTS_IN_DATE)
+            if (splitDateTime.length > EXPECTED_PARTS_IN_DATE)
             {
                 throw new IllegalArgumentException("invalid time:" + dataTime);
             }
-            else if((splitDateTime.length == EXPECTED_PARTS_IN_DATE) && !splitDateTime[MILLISECONDS_IN_DATE].isEmpty())
+            else if ((splitDateTime.length == EXPECTED_PARTS_IN_DATE) && !splitDateTime[MILLISECONDS_IN_DATE].isEmpty())
             {
                 int millisecondsLength = splitDateTime[MILLISECONDS_IN_DATE].length();
-                if(millisecondsLength > MAX_MILLISECONDS_LENGTH_IN_DATE)
+                if (millisecondsLength > MAX_MILLISECONDS_LENGTH_IN_DATE)
                 {
                     millisecondsLength = MAX_MILLISECONDS_LENGTH_IN_DATE;
                 }
 
-                milliseconds = Integer.parseInt(splitDateTime[MILLISECONDS_IN_DATE].substring(0, millisecondsLength)) *
-                        (int)Math.pow(MILLISECONDS_NUMERIC_BASE, (MAX_MILLISECONDS_LENGTH_IN_DATE - millisecondsLength));
+                milliseconds = Integer.parseInt(splitDateTime[MILLISECONDS_IN_DATE].substring(0, millisecondsLength)) * (int) Math.pow(MILLISECONDS_NUMERIC_BASE, (MAX_MILLISECONDS_LENGTH_IN_DATE - millisecondsLength));
             }
             else
             {
                 /* Codes_SRS_PARSER_UTILITY_21_041: [The getDateTimeUtc shall accept date without milliseconds.] */
                 milliseconds = NO_MILLISECONDS_IN_DATE;
             }
-            dateTimeUtc =  new Date(dateFormat.parse(splitDateTime[DATE_AND_TIME_IN_DATE]).getTime() + milliseconds);
+            dateTimeUtc = new Date(dateFormat.parse(splitDateTime[DATE_AND_TIME_IN_DATE]).getTime() + milliseconds);
         }
         catch (ParseException e)
         {
@@ -365,7 +362,7 @@ public class ParserUtility
     /**
      * Helper to convert the provided string in a offset Date.
      * Expected format:
-     *      "2016-06-01T21:22:41+00:00"
+     * "2016-06-01T21:22:41+00:00"
      *
      * @param dateTime is the string with the date and time
      * @return Date parsed from the string
@@ -381,7 +378,7 @@ public class ParserUtility
         dateFormat.setTimeZone(TimeZone.getTimeZone(TIMEZONE));
 
         /* Codes_SRS_PARSER_UTILITY_21_025: [If the provide string is null, empty or contains an invalid data format, the stringToDateTimeOffset shall throw IllegalArgumentException.] */
-        if((dateTime == null) || dateTime.isEmpty())
+        if ((dateTime == null) || dateTime.isEmpty())
         {
             throw new IllegalArgumentException("date is null or empty");
         }
@@ -401,7 +398,7 @@ public class ParserUtility
     /**
      * Helper to convert the provided Date UTC into String.
      * Expected result:
-     *      "2016-06-01T21:22:43.799Z"
+     * "2016-06-01T21:22:43.799Z"
      *
      * @param date is the {@code Date} with the date and time
      * @return the {@code String} with the date and time using the UTC format.
@@ -410,7 +407,7 @@ public class ParserUtility
     public static String dateTimeUtcToString(Date date) throws IllegalArgumentException
     {
         /* Codes_SRS_PARSER_UTILITY_21_053: [The dateTimeUtcToString shall throws IllegalArgumentException if the provided Date is null.] */
-        if(date == null)
+        if (date == null)
         {
             throw new IllegalArgumentException("date cannot be null");
         }
@@ -421,7 +418,7 @@ public class ParserUtility
         StringBuilder dateStr = new StringBuilder();
         dateStr.append(dateFormat.format(date));
         dateStr.append(".");
-        int milliseconds = (int)(date.getTime() % 1000L);
+        int milliseconds = (int) (date.getTime() % 1000L);
         milliseconds = milliseconds < 0 ? milliseconds + 1000 : milliseconds;
         dateStr.append(milliseconds);
         dateStr.append("Z");
@@ -431,11 +428,11 @@ public class ParserUtility
     /**
      * Convert from a date object back into a string representation
      * Expected format of returned string:
-     *      "2016-01-21T11:05:21"
+     * "2016-01-21T11:05:21"
      *
      * @param date the date to convert into a string
-     * @throws IllegalArgumentException if the provided date is null
      * @return the date represented as a string
+     * @throws IllegalArgumentException if the provided date is null
      */
     public static String getDateStringFromDate(Date date) throws IllegalArgumentException
     {
@@ -465,7 +462,7 @@ public class ParserUtility
         /* Codes_SRS_PARSER_UTILITY_21_038: [If the map is empty, the mapToJsonElement shall return a empty JsonElement.] */
         JsonObject json = new JsonObject();
 
-        if(map == null)
+        if (map == null)
         {
             /* Codes_SRS_PARSER_UTILITY_21_039: [If the map is null, the mapToJsonElement shall throw IllegalArgumentException.] */
             throw new IllegalArgumentException("null map to parse");
@@ -475,9 +472,9 @@ public class ParserUtility
         {
             if (entry.getValue() == null)
             {
-                json.addProperty(entry.getKey(), (String)null);
+                json.addProperty(entry.getKey(), (String) null);
             }
-            else if(entry.getValue() instanceof Map)
+            else if (entry.getValue() instanceof Map)
             {
                 /* Codes_SRS_PARSER_UTILITY_21_037: [If the value is a map, the mapToJsonElement shall include it as a submap in the JsonElement.] */
                 json.add(entry.getKey(), mapToJsonElement((Map<String, Object>) entry.getValue()));

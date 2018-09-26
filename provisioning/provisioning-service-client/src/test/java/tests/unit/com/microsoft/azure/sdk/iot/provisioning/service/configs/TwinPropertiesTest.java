@@ -31,63 +31,17 @@ public class TwinPropertiesTest
             put("prop3", "val3");
         }
     };
-    private final static String JSON_ONLY_PROPERTIES =
-            "{" +
-                "\"desired\":{" +
-                    "\"prop1\":\"val1\"," +
-                    "\"prop2\":\"val2\"," +
-                    "\"prop3\":\"val3\"" +
-                "}" +
-            "}";
+    private final static String JSON_ONLY_PROPERTIES = "{" + "\"desired\":{" + "\"prop1\":\"val1\"," + "\"prop2\":\"val2\"," + "\"prop3\":\"val3\"" + "}" + "}";
 
-    private static final String JSON_FULL_SAMPLE =
-            "    {  \n" +
-            "      \"Brand\":\"NiceCar\",\n" +
-            "      \"MaxSpeed\":{  \n" +
-            "        \"Value\":500,\n" +
-            "        \"NewValue\":300,\n" +
-            "        \"Inner1\":{" +
-            "          \"Inner2\":\"FinalInnerValue\"" +
-            "        }\n" +
-            "      },\n" +
-            "      \"$metadata\":{  \n" +
-            "        \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-            "        \"$lastUpdatedVersion\":1,\n" +
-            "        \"Brand\":{" +
-            "          \"$lastUpdated\":\"2017-08-09T02:07:44.238Z\",\n" +
-            "          \"$lastUpdatedVersion\":2" +
-            "        },\n" +
-            "        \"MaxSpeed\":{  \n" +
-            "          \"$lastUpdated\":\"2017-10-21T02:07:44.238Z\",\n" +
-            "          \"$lastUpdatedVersion\":3,\n" +
-            "          \"Value\":{  \n" +
-            "            \"$lastUpdated\":\"2017-11-21T02:07:44.238Z\",\n" +
-            "            \"$lastUpdatedVersion\":4\n" +
-            "          },\n" +
-            "          \"NewValue\":{  \n" +
-            "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-            "            \"$lastUpdatedVersion\":5\n" +
-            "          },\n" +
-            "          \"Inner1\":{  \n" +
-            "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-            "            \"$lastUpdatedVersion\":6,\n" +
-            "            \"Inner2\":{  \n" +
-            "              \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" +
-            "              \"$lastUpdatedVersion\":7\n" +
-            "            }\n" +
-            "          }\n" +
-            "        }\n" +
-            "      },\n" +
-            "      \"$version\":" + VERSION + "\n" +
-            "    }\n";
+    private static final String JSON_FULL_SAMPLE = "    {  \n" + "      \"Brand\":\"NiceCar\",\n" + "      \"MaxSpeed\":{  \n" + "        \"Value\":500,\n" + "        \"NewValue\":300,\n" + "        \"Inner1\":{" + "          \"Inner2\":\"FinalInnerValue\"" + "        }\n" + "      },\n" + "      \"$metadata\":{  \n" + "        \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "        \"$lastUpdatedVersion\":1,\n" + "        \"Brand\":{" + "          \"$lastUpdated\":\"2017-08-09T02:07:44.238Z\",\n" + "          \"$lastUpdatedVersion\":2" + "        },\n" + "        \"MaxSpeed\":{  \n" + "          \"$lastUpdated\":\"2017-10-21T02:07:44.238Z\",\n" + "          \"$lastUpdatedVersion\":3,\n" + "          \"Value\":{  \n" + "            \"$lastUpdated\":\"2017-11-21T02:07:44.238Z\",\n" + "            \"$lastUpdatedVersion\":4\n" + "          },\n" + "          \"NewValue\":{  \n" + "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "            \"$lastUpdatedVersion\":5\n" + "          },\n" + "          \"Inner1\":{  \n" + "            \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "            \"$lastUpdatedVersion\":6,\n" + "            \"Inner2\":{  \n" + "              \"$lastUpdated\":\"2017-09-21T02:07:44.238Z\",\n" + "              \"$lastUpdatedVersion\":7\n" + "            }\n" + "          }\n" + "        }\n" + "      },\n" + "      \"$version\":" + VERSION + "\n" + "    }\n";
 
     /* SRS_TWIN_PROPERTIES_21_001: [The constructor shall throw IllegalArgumentException if the provided desired property is null.] */
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsOnNullDesiredProperty()
     {
         // arrange
         // act
-        Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class}, (TwinCollection)null);
+        Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class}, (TwinCollection) null);
 
         // assert
     }

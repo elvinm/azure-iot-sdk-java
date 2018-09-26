@@ -14,6 +14,7 @@ public class IotHubTooManyRequestsException extends IotHubException
     {
         this(null);
     }
+
     public IotHubTooManyRequestsException(String message)
     {
         super("Too many requests (throttled)!" + (((message == null) || message.isEmpty()) ? "" : " " + message));

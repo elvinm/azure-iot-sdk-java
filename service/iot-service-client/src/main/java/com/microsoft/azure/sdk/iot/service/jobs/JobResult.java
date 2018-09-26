@@ -93,17 +93,18 @@ public class JobResult
 
     // The error message of the job in query, if any.
     private String error = null;
+
     /**
      * CONSTRUCTOR
      *
      * @param body is a array of bytes that contains the response message for jobs
-     * @throws JsonParseException if the content of body is a invalid json
+     * @throws JsonParseException       if the content of body is a invalid json
      * @throws IllegalArgumentException if the provided body is null
      */
     JobResult(byte[] body) throws JsonParseException, IllegalArgumentException
     {
         /* Codes_SRS_JOBRESULT_21_001: [The constructor shall throw IllegalArgumentException if the input body is null.] */
-        if(body == null)
+        if (body == null)
         {
             throw new IllegalArgumentException("null body");
         }
@@ -124,7 +125,7 @@ public class JobResult
         this.jobType = JobType.valueOf(jobsResponseParser.getType());
         this.jobStatus = JobStatus.valueOf(jobsResponseParser.getJobsStatus());
 
-        if(jobsResponseParser.getCloudToDeviceMethod() != null)
+        if (jobsResponseParser.getCloudToDeviceMethod() != null)
         {
             this.cloudToDeviceMethod = jobsResponseParser.getCloudToDeviceMethod().toJson();
         }
@@ -152,10 +153,9 @@ public class JobResult
         }
 
         TwinState twinState = jobsResponseParser.getUpdateTwinState();
-        if(twinState != null)
+        if (twinState != null)
         {
-            this.updateTwin = twinState.getDeviceId() == null || twinState.getDeviceId().isEmpty() ?
-                new DeviceTwinDevice() : new DeviceTwinDevice(twinState.getDeviceId());
+            this.updateTwin = twinState.getDeviceId() == null || twinState.getDeviceId().isEmpty() ? new DeviceTwinDevice() : new DeviceTwinDevice(twinState.getDeviceId());
             this.updateTwin.setETag(twinState.getETag());
             this.updateTwin.setTags(mapToSet(twinState.getTags()));
             this.updateTwin.setDesiredProperties(mapToSet(twinState.getDesiredProperty()));
@@ -163,7 +163,7 @@ public class JobResult
         this.failureReason = jobsResponseParser.getFailureReason();
         this.statusMessage = jobsResponseParser.getStatusMessage();
         JobsStatisticsParser jobsStatisticsParser = jobsResponseParser.getJobStatistics();
-        if(jobsStatisticsParser != null)
+        if (jobsStatisticsParser != null)
         {
             this.jobStatistics = new JobStatistics(jobsStatisticsParser);
         }
@@ -344,6 +344,7 @@ public class JobResult
 
     /**
      * Getter for last updated time in UTC
+     *
      * @return System generated last updated time in UTC
      */
     public Date getLastUpdatedDateTime()
@@ -354,8 +355,9 @@ public class JobResult
 
     /**
      * Outcome for the device method job
-     * @deprecated As of release 1.7.23, replaced by {@link #getOutcomeResult()}
+     *
      * @return outcome for device method job
+     * @deprecated As of release 1.7.23, replaced by {@link #getOutcomeResult()}
      */
     @Deprecated
     public String getOutcome()
@@ -366,6 +368,7 @@ public class JobResult
 
     /**
      * Outcome for the device method job
+     *
      * @return outcome for device method job
      */
     public MethodResult getOutcomeResult()
@@ -376,6 +379,7 @@ public class JobResult
 
     /**
      * getter for the error
+     *
      * @return returns the json formatted error as string
      */
     public String getError()

@@ -25,17 +25,16 @@ import java.nio.charset.StandardCharsets;
 
 public class HttpsHsmClient
 {
-    private String baseUrl;
-    private String scheme;
-
     private static final String HTTPS_SCHEME = "https";
     private static final String HTTP_SCHEME = "http";
     private static final String UNIX_SCHEME = "unix";
-
     private static final String API_VERSION_QUERY_STRING_PREFIX = "api-version=";
+    private String baseUrl;
+    private String scheme;
 
     /**
      * Client object for sending sign requests to an HSM unit
+     *
      * @param baseUrl The base url of the HSM
      * @throws URISyntaxException if the provided base url cannot be converted to a URI
      */
@@ -74,27 +73,28 @@ public class HttpsHsmClient
                 }
             };
 
-			try
+            try
             {
-				URL.setURLStreamHandlerFactory(fac);	
-			}
-			catch (Error e)
+                URL.setURLStreamHandlerFactory(fac);
+            }
+            catch (Error e)
             {
-				//this function only throws if the factory has already been set, so we can ignore this error
-			}
+                //this function only throws if the factory has already been set, so we can ignore this error
+            }
         }
     }
 
     /**
      * Send a sign request to the HSM using the provided parameters and return the HSM's response
-     * @param apiVersion the api version to use
-     * @param moduleName The name of the module for which the sign request is requesting access to
-     * @param signRequest the request to send
+     *
+     * @param apiVersion   the api version to use
+     * @param moduleName   The name of the module for which the sign request is requesting access to
+     * @param signRequest  the request to send
      * @param generationId the generation id
      * @return The response from the HSM
-     * @throws IOException If the HSM cannot be reached
+     * @throws IOException        If the HSM cannot be reached
      * @throws TransportException If the HSM cannot be reached
-     * @throws HsmException If there was a problem interacting with the HSM
+     * @throws HsmException       If there was a problem interacting with the HSM
      */
     public SignResponse sign(String apiVersion, String moduleName, SignRequest signRequest, String generationId) throws IOException, TransportException, HsmException
     {
@@ -107,8 +107,8 @@ public class HttpsHsmClient
         pathBuilder.append("/sign");
 
         byte[] body = signRequest.toJson().getBytes();
-        
-        HttpsResponse response = sendRequestBasedOnScheme(HttpsMethod.POST, body, uri,pathBuilder.toString(), API_VERSION_QUERY_STRING_PREFIX + apiVersion);
+
+        HttpsResponse response = sendRequestBasedOnScheme(HttpsMethod.POST, body, uri, pathBuilder.toString(), API_VERSION_QUERY_STRING_PREFIX + apiVersion);
 
         int responseCode = response.getStatus();
         String responseBody = new String(response.getBody());
@@ -133,11 +133,12 @@ public class HttpsHsmClient
 
     /**
      * Retrieve a trust bundle from an hsm
+     *
      * @param apiVersion the api version to use
      * @return the trust bundle response from the hsm, contains the certificates to be trusted
-     * @throws TransportException if the HSM cannot be reached
+     * @throws TransportException    if the HSM cannot be reached
      * @throws MalformedURLException if a proper URL cannot be constructed due to the provided api version
-     * @throws HsmException if the hsm rejects the request for any reason
+     * @throws HsmException          if the hsm rejects the request for any reason
      */
     public TrustBundleResponse getTrustBundle(String apiVersion) throws IOException, TransportException, HsmException
     {
@@ -180,14 +181,15 @@ public class HttpsHsmClient
 
     /**
      * Send a given httpsRequest using the appropriate means based on the scheme (http vs unix) of the baseUrl
+     *
      * @param httpsMethod the type of https method to call
-     * @param body the body of the https call
-     * @param baseUri the base uri to send the request to
-     * @param path the relative path of the request
+     * @param body        the body of the https call
+     * @param baseUri     the base uri to send the request to
+     * @param path        the relative path of the request
      * @param queryString the query string for the https request. Do not include the ? character
      * @return the http response to the request
      * @throws TransportException if the hsm cannot be reached
-     * @throws IOException if the hsm cannot be reached
+     * @throws IOException        if the hsm cannot be reached
      */
     private HttpsResponse sendRequestBasedOnScheme(HttpsMethod httpsMethod, byte[] body, String baseUri, String path, String queryString) throws TransportException, IOException
     {
@@ -234,6 +236,7 @@ public class HttpsHsmClient
 
     /**
      * Send an HTTP request over a unix domain socket
+     *
      * @param httpsRequest the request to send
      * @return the response from the HSM unit
      * @throws IOException If the unix socket cannot be reached
@@ -259,8 +262,7 @@ public class HttpsHsmClient
             //read response
             String responseString = readResponseFromChannel(channel);
             response = HttpsRequestResponseSerializer.deserializeResponse(new BufferedReader(new StringReader(responseString)));
-        }
-        finally
+        } finally
         {
             if (channel != null)
             {
@@ -293,9 +295,9 @@ public class HttpsHsmClient
 
             // Read bytes from ByteBuffer; see also
             // e159 Getting Bytes from a ByteBuffer
-            for (int i=0; i<numRead; i++)
+            for (int i = 0; i < numRead; i++)
             {
-                response = response + new String(new byte[] {buf.get()}, StandardCharsets.US_ASCII);
+                response = response + new String(new byte[]{buf.get()}, StandardCharsets.US_ASCII);
             }
         }
 

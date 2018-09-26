@@ -8,37 +8,27 @@ import java.util.ArrayList;
 /**
  * <p>
  * The public-facing API. Allows user to create a transport client
- * abstracton object to use it for multiple devices to connect 
- * to an IoT Hub using the same connection (multiplexing). 
+ * abstracton object to use it for multiple devices to connect
+ * to an IoT Hub using the same connection (multiplexing).
  * Handle to register devices to transport client and open / closeNow
- * the connection. 
+ * the connection.
  * </p>
  * The multiplexed connection is supported with AMQPS / AMQPS_WS protocols.
  */
 public class TransportClient
 {
-    public enum TransportClientState
-    {
-        CLOSED,
-        OPENED
-    }
-
     public static long SEND_PERIOD_MILLIS = 10L;
     public static long RECEIVE_PERIOD_MILLIS_AMQPS = 10L;
-
     private IotHubClientProtocol iotHubClientProtocol;
     private DeviceIO deviceIO;
     private TransportClientState transportClientState;
-
     private ArrayList<DeviceClient> deviceClientList;
-
     private CustomLogger logger;
 
     /**
      * Constructor that takes a protocol as an argument.
      *
      * @param protocol the communication protocol used (i.e. AMQPS or AMQPS_WS).
-     *
      * @throws IllegalArgumentException if other protocol given.
      */
     public TransportClient(IotHubClientProtocol protocol)
@@ -55,8 +45,7 @@ public class TransportClient
                 throw new IllegalArgumentException("Multiplexing is only supported for AMQPS and AMQPS_WS");
             default:
                 // should never happen.
-                throw new IllegalStateException(
-                        "Invalid client protocol specified.");
+                throw new IllegalStateException("Invalid client protocol specified.");
         }
         // Codes_SRS_TRANSPORTCLIENT_12_002: [The constructor shall store the provided protocol.]
         this.iotHubClientProtocol = protocol;
@@ -80,7 +69,7 @@ public class TransportClient
      * Opens the transport client connection.
      *
      * @throws IllegalStateException if the connection is already open.
-     * @throws IOException if the connection to an IoT Hub cannot be opened.
+     * @throws IOException           if the connection to an IoT Hub cannot be opened.
      */
     public void open() throws IllegalStateException, IOException
     {
@@ -172,7 +161,8 @@ public class TransportClient
      * Sets the given retry policy on the underlying transport
      * Sets the given retry policy on the underlying transport
      * <a href="https://github.com/Azure/azure-iot-sdk-java/blob/master/device/iot-device-client/devdoc/requirement_docs/com/microsoft/azure/iothub/retryPolicy.md">
-     *     See more details about the default retry policy and about using custom retry policies here</a>
+     * See more details about the default retry policy and about using custom retry policies here</a>
+     *
      * @param retryPolicy the new interval in milliseconds
      * @throws UnsupportedOperationException if no device client has been registered yet.
      */
@@ -197,7 +187,7 @@ public class TransportClient
      * Registers the given device into the transport client.
      *
      * @throws IllegalArgumentException if the deviceClient parameter is null.
-     * @throws IllegalStateException if the connection is open.
+     * @throws IllegalStateException    if the connection is open.
      */
     void registerDeviceClient(DeviceClient deviceClient) throws IllegalArgumentException, IllegalStateException
     {
@@ -221,6 +211,7 @@ public class TransportClient
 
     /**
      * Getter for the iotHubClientProtocol
+     *
      * @return the current protocol for the iotHubClient
      */
     IotHubClientProtocol getIotHubClientProtocol()
@@ -230,11 +221,17 @@ public class TransportClient
 
     /**
      * Getter for the transportClientState
+     *
      * @return the current transportClientState
      */
     TransportClientState getTransportClientState()
     {
         // Codes_SRS_TRANSPORTCLIENT_12_019: [The getter shall return with the value of the transportClientState.]
         return this.transportClientState;
+    }
+
+    public enum TransportClientState
+    {
+        CLOSED, OPENED
     }
 }
