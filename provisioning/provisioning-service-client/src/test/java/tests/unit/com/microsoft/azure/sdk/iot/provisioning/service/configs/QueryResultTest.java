@@ -109,7 +109,7 @@ public class QueryResultTest
         // assert
         assertEquals(QueryResultType.ENROLLMENT, Deencapsulation.getField(queryResult, "type"));
         assertEquals(VALID_CONTINUATION_TOKEN, Deencapsulation.getField(queryResult, "continuationToken"));
-        IndividualEnrollment[] items = (IndividualEnrollment[]) Deencapsulation.getField(queryResult, "items");
+        IndividualEnrollment[] items = Deencapsulation.getField(queryResult, "items");
         assertEquals(2, items.length);
     }
 
@@ -126,7 +126,7 @@ public class QueryResultTest
         // assert
         assertEquals(QueryResultType.ENROLLMENT_GROUP, Deencapsulation.getField(queryResult, "type"));
         assertEquals(VALID_CONTINUATION_TOKEN, Deencapsulation.getField(queryResult, "continuationToken"));
-        EnrollmentGroup[] items = (EnrollmentGroup[]) Deencapsulation.getField(queryResult, "items");
+        EnrollmentGroup[] items = Deencapsulation.getField(queryResult, "items");
         assertEquals(2, items.length);
     }
 
@@ -143,7 +143,7 @@ public class QueryResultTest
         // assert
         assertEquals(QueryResultType.DEVICE_REGISTRATION, Deencapsulation.getField(queryResult, "type"));
         assertEquals(VALID_CONTINUATION_TOKEN, Deencapsulation.getField(queryResult, "continuationToken"));
-        DeviceRegistrationState[] items = (DeviceRegistrationState[]) Deencapsulation.getField(queryResult, "items");
+        DeviceRegistrationState[] items = Deencapsulation.getField(queryResult, "items");
         assertEquals(2, items.length);
     }
 
@@ -174,7 +174,7 @@ public class QueryResultTest
         // assert
         assertEquals(QueryResultType.UNKNOWN, Deencapsulation.getField(queryResult, "type"));
         assertEquals(VALID_CONTINUATION_TOKEN, Deencapsulation.getField(queryResult, "continuationToken"));
-        JsonObject[] items = (JsonObject[]) Deencapsulation.getField(queryResult, "items");
+        JsonObject[] items = Deencapsulation.getField(queryResult, "items");
         assertEquals(3, items.length);
     }
 
@@ -190,7 +190,7 @@ public class QueryResultTest
         // assert
         assertEquals(QueryResultType.UNKNOWN, Deencapsulation.getField(queryResult, "type"));
         assertEquals(VALID_CONTINUATION_TOKEN, Deencapsulation.getField(queryResult, "continuationToken"));
-        JsonPrimitive[] items = (JsonPrimitive[]) Deencapsulation.getField(queryResult, "items");
+        JsonPrimitive[] items = Deencapsulation.getField(queryResult, "items");
         assertEquals(3, items.length);
     }
 
@@ -207,7 +207,7 @@ public class QueryResultTest
         // assert
         assertEquals(QueryResultType.UNKNOWN, Deencapsulation.getField(queryResult, "type"));
         assertEquals(VALID_CONTINUATION_TOKEN, Deencapsulation.getField(queryResult, "continuationToken"));
-        String[] items = (String[]) Deencapsulation.getField(queryResult, "items");
+        String[] items = Deencapsulation.getField(queryResult, "items");
         assertEquals(1, items.length);
         assertEquals(body, items[0]);
     }
@@ -225,7 +225,7 @@ public class QueryResultTest
         // assert
         assertEquals(QueryResultType.UNKNOWN, Deencapsulation.getField(queryResult, "type"));
         assertNull(Deencapsulation.getField(queryResult, "continuationToken"));
-        String[] items = (String[]) Deencapsulation.getField(queryResult, "items");
+        String[] items = Deencapsulation.getField(queryResult, "items");
         assertEquals(1, items.length);
         assertEquals(body, items[0]);
     }
@@ -243,7 +243,7 @@ public class QueryResultTest
         // assert
         assertEquals(QueryResultType.UNKNOWN, Deencapsulation.getField(queryResult, "type"));
         assertEquals("", Deencapsulation.getField(queryResult, "continuationToken"));
-        String[] items = (String[]) Deencapsulation.getField(queryResult, "items");
+        String[] items = Deencapsulation.getField(queryResult, "items");
         assertEquals(1, items.length);
         assertEquals(body, items[0]);
     }

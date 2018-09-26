@@ -276,7 +276,7 @@ public class AmqpsDeviceMethodsTest
 
     // Tests_SRS_AMQPSDEVICEMETHODS_12_010: [The function shall call the super function if the MessageType is DEVICE_METHODS, and return with it's return value.]
     @Test
-    public void sendMessageAndGetDeliveryHashCallsSuper() throws IOException
+    public void sendMessageAndGetDeliveryHashCallsSuper()
     {
         //arrange
         String deviceId = "deviceId";
@@ -297,7 +297,7 @@ public class AmqpsDeviceMethodsTest
 
     // Tests_SRS_AMQPSDEVICEMETHODS_12_011: [The function shall return with AmqpsSendReturnValue with false success and -1 delivery hash.]
     @Test
-    public void sendMessageAndGetDeliveryHashReturnsFalse() throws IOException
+    public void sendMessageAndGetDeliveryHashReturnsFalse()
     {
         //arrange
         String deviceId = "deviceId";
@@ -320,7 +320,7 @@ public class AmqpsDeviceMethodsTest
     // Tests_SRS_AMQPSDEVICEMETHODS_12_013: [The function shall set the MessageType to DEVICE_METHODS if the super function returned not null.]
     // Tests_SRS_AMQPSDEVICEMETHODS_12_014: [The function shall return the super function return value.]
     @Test
-    public void getMessageFromReceiverLinkSuccess() throws IOException
+    public void getMessageFromReceiverLinkSuccess()
     {
         //arrange
         String deviceId = "deviceId";
@@ -369,7 +369,7 @@ public class AmqpsDeviceMethodsTest
 
     // Tests_SRS_AMQPSDEVICEMETHODS_12_014: [The function shall return the super function return value.]
     @Test
-    public void getMessageFromReceiverLinkSuperFailed() throws IOException
+    public void getMessageFromReceiverLinkSuperFailed()
     {
         //arrange
         String deviceId = "deviceId";
@@ -551,9 +551,9 @@ public class AmqpsDeviceMethodsTest
         //assert
         assertNotNull(actualMessage);
         assertEquals(correlationId, (actualMessage).getRequestId());
-        assertEquals(messageId, ((IotHubTransportMessage) actualMessage).getMessageId());
-        assertEquals(to, ((IotHubTransportMessage) actualMessage).getProperty(AMQPS_APP_PROPERTY_PREFIX + TO_KEY));
-        assertEquals(userId.toString(), ((IotHubTransportMessage) actualMessage).getProperty(AMQPS_APP_PROPERTY_PREFIX + USER_ID_KEY));
+        assertEquals(messageId, actualMessage.getMessageId());
+        assertEquals(to, actualMessage.getProperty(AMQPS_APP_PROPERTY_PREFIX + TO_KEY));
+        assertEquals(userId.toString(), actualMessage.getProperty(AMQPS_APP_PROPERTY_PREFIX + USER_ID_KEY));
 
         assertEquals(bytes.length, actualMessage.getBytes().length);
         assertEquals(mockMessageCallback, actualMessageCallback);
@@ -613,7 +613,7 @@ public class AmqpsDeviceMethodsTest
 
         //assert
         assertNotNull(actualMessage);
-        assertEquals(null, ((IotHubTransportMessage) actualMessage).getProperty(propertyKey));
+        assertEquals(null, actualMessage.getProperty(propertyKey));
 
         assertEquals(bytes.length, actualMessage.getBytes().length);
         assertEquals(mockMessageCallback, actualMessageCallback);
@@ -728,7 +728,7 @@ public class AmqpsDeviceMethodsTest
 
         //assert
         assertNotNull(actualMessage);
-        assertEquals(propertyValue, ((IotHubTransportMessage) actualMessage).getProperty(propertyKey));
+        assertEquals(propertyValue, actualMessage.getProperty(propertyKey));
 
         assertEquals(bytes.length, actualMessage.getBytes().length);
         assertEquals(mockMessageCallback, actualMessageCallback);
@@ -785,7 +785,7 @@ public class AmqpsDeviceMethodsTest
 
         //assert
         assertNotNull(actualMessage);
-        assertEquals(null, ((IotHubTransportMessage) actualMessage).getProperty(propertyKey));
+        assertEquals(null, actualMessage.getProperty(propertyKey));
         assertEquals(propertyValue, ((IotHubTransportMessage) actualMessage).getMethodName());
 
         assertEquals(bytes.length, actualMessage.getBytes().length);

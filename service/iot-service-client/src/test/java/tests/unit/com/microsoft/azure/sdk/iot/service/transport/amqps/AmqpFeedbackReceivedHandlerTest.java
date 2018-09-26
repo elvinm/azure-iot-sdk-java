@@ -313,7 +313,7 @@ public class AmqpFeedbackReceivedHandlerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPFEEDBACKRECEIVEDHANDLER_34_019: [if 'connectionWasOpened' is false, or 'isConnectionError' is true, this function shall throw an IOException]
     @Test(expected = IOException.class)
-    public void receiveCompleteChecksForSavedException() throws IOException, IotHubException
+    public void receiveCompleteChecksForSavedException()
     {
         // Arrange
         String hostName = "aaa";
@@ -331,7 +331,7 @@ public class AmqpFeedbackReceivedHandlerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPFEEDBACKRECEIVEDHANDLER_34_019: [if 'connectionWasOpened' is false, or 'isConnectionError' is true, this function shall throw an IOException]
     @Test(expected = IOException.class)
-    public void receiveCompleteChecksThatConnectionWasOpened() throws IOException, IotHubException
+    public void receiveCompleteChecksThatConnectionWasOpened()
     {
         // Arrange
         String hostName = "aaa";

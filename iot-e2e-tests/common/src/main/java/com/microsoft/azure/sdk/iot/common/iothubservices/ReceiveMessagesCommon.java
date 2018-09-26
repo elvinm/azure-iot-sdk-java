@@ -69,7 +69,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
         this.testInstance = new ReceiveMessagesITRunner(client, protocol, device, module, authenticationType, clientType);
     }
 
-    public static Collection inputsCommon() throws IOException, IotHubException, GeneralSecurityException, URISyntaxException, ModuleClientException
+    public static Collection inputsCommon() throws IOException, IotHubException, URISyntaxException, ModuleClientException
     {
         registryManager = RegistryManager.createFromConnectionString(iotHubConnectionString);
         String uuid = UUID.randomUUID().toString();
@@ -155,13 +155,7 @@ public class ReceiveMessagesCommon extends MethodNameLoggingIntegrationTest
             return false;
         }
 
-        if (msg.getMessageId() == null || !msg.getMessageId().equals(expectedMessageId))
-        {
-            return false;
-        }
-
-        //all system properties are as expected
-        return true;
+        return msg.getMessageId() != null && msg.getMessageId().equals(expectedMessageId);
     }
 
     @After

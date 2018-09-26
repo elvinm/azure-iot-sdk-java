@@ -71,7 +71,7 @@ public class ServiceClientTest
             }
         };
         // Act
-        ServiceClient iotHubServiceClient = (ServiceClient) ServiceClient.createFromConnectionString(connectionString, iotHubServiceClientProtocol);
+        ServiceClient iotHubServiceClient = ServiceClient.createFromConnectionString(connectionString, iotHubServiceClientProtocol);
         // Assert
         assertNotEquals(null, iotHubServiceClient);
     }
@@ -79,7 +79,7 @@ public class ServiceClientTest
     // Tests_SRS_SERVICE_SDK_JAVA_SERVICECLIENT_12_004: [The constructor shall throw IllegalArgumentException if the input object is null]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_null() throws Exception
+    public void constructor_input_null()
     {
         // Arrange
         IotHubConnectionString iotHubConnectionString = null;

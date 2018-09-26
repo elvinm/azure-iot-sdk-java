@@ -139,7 +139,7 @@ public class RegistryManager
      * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
-    public CompletableFuture<Device> addDeviceAsync(Device device) throws IOException, IotHubException
+    public CompletableFuture<Device> addDeviceAsync(Device device)
     {
         // Codes_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_012: [The constructor shall throw IllegalArgumentException if the input device is null]
         if (device == null)
@@ -209,7 +209,7 @@ public class RegistryManager
      * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
-    public CompletableFuture<Device> getDeviceAsync(String deviceId) throws IOException, IotHubException
+    public CompletableFuture<Device> getDeviceAsync(String deviceId)
     {
         // Codes_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_021: [The constructor shall throw IllegalArgumentException if the input device is null]
         if (Tools.isNullOrEmpty(deviceId))
@@ -297,7 +297,7 @@ public class RegistryManager
      * to query for all devices.
      */
     @Deprecated
-    public CompletableFuture<ArrayList<Device>> getDevicesAsync(Integer maxCount) throws IOException, IotHubException
+    public CompletableFuture<ArrayList<Device>> getDevicesAsync(Integer maxCount)
     {
         // Codes_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_030: [The function shall throw IllegalArgumentException if the input count number is less than 1]
         if (maxCount < 1)
@@ -426,7 +426,7 @@ public class RegistryManager
      * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
-    public CompletableFuture<Device> updateDeviceAsync(Device device) throws IOException, IotHubException
+    public CompletableFuture<Device> updateDeviceAsync(Device device)
     {
         // Codes_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_042: [The function shall throw IllegalArgumentException if the input device is null]
         if (device == null)
@@ -459,7 +459,7 @@ public class RegistryManager
      * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
-    public CompletableFuture<Device> updateDeviceAsync(Device device, Boolean forceUpdate) throws IOException, IotHubException
+    public CompletableFuture<Device> updateDeviceAsync(Device device, Boolean forceUpdate)
     {
         // Codes_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_044: [The function shall throw IllegalArgumentException if the input device is null]
         if (device == null)
@@ -565,7 +565,7 @@ public class RegistryManager
      * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
-    public CompletableFuture<Boolean> removeDeviceAsync(String deviceId) throws IOException, IotHubException
+    public CompletableFuture<Boolean> removeDeviceAsync(String deviceId)
     {
 
         // Codes_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_052: [The function shall throw IllegalArgumentException if the input string is null or empty]
@@ -628,7 +628,7 @@ public class RegistryManager
      * @throws IOException     This exception is thrown if the IO operation failed
      * @throws IotHubException This exception is thrown if the response verification failed
      */
-    public CompletableFuture<RegistryStatistics> getStatisticsAsync() throws IOException, IotHubException
+    public CompletableFuture<RegistryStatistics> getStatisticsAsync()
     {
         // Codes_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_12_060: [The function shall create an async wrapper around the getStatistics() function call, handle the return value or delegate exception]
         final CompletableFuture<RegistryStatistics> future = new CompletableFuture<>();
@@ -694,7 +694,7 @@ public class RegistryManager
      * @throws IOException              This exception is thrown if the IO operation failed
      * @throws IotHubException          This exception is thrown if the response verification failed
      */
-    public CompletableFuture<JobProperties> exportDevicesAsync(String exportBlobContainerUri, Boolean excludeKeys) throws IllegalArgumentException, IOException, IotHubException, JsonSyntaxException
+    public CompletableFuture<JobProperties> exportDevicesAsync(String exportBlobContainerUri, Boolean excludeKeys) throws IllegalArgumentException, JsonSyntaxException
     {
         // CODES_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_15_068: [The function shall create an async wrapper around the
         // exportDevices() function call, handle the return value or delegate exception]
@@ -760,7 +760,7 @@ public class RegistryManager
      * @throws IOException              This exception is thrown if the IO operation failed
      * @throws IotHubException          This exception is thrown if the response verification failed
      */
-    public CompletableFuture<JobProperties> importDevicesAsync(String importBlobContainerUri, String outputBlobContainerUri) throws IllegalArgumentException, IOException, IotHubException, JsonSyntaxException
+    public CompletableFuture<JobProperties> importDevicesAsync(String importBlobContainerUri, String outputBlobContainerUri) throws IllegalArgumentException, JsonSyntaxException
     {
         // CODES_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_15_076: [The function shall create an async wrapper around
         // the importDevices() function call, handle the return value or delegate exception]
@@ -823,7 +823,7 @@ public class RegistryManager
      * @throws IOException              This exception is thrown if the IO operation failed
      * @throws IotHubException          This exception is thrown if the response verification failed
      */
-    public CompletableFuture<JobProperties> getJobAsync(String jobId) throws IllegalArgumentException, IOException, IotHubException
+    public CompletableFuture<JobProperties> getJobAsync(String jobId) throws IllegalArgumentException
     {
         // CODES_SRS_SERVICE_SDK_JAVA_REGISTRYMANAGER_15_084: [The function shall create an async wrapper around
         // the getJob() function call, handle the return value or delegate exception]

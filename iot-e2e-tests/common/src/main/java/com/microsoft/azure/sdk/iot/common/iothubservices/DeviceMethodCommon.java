@@ -71,7 +71,7 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
         this.testInstance = new DeviceMethodITRunner(deviceTestManager, protocol, authenticationType, clientType, device, module);
     }
 
-    public static Collection inputsCommon() throws IOException, IotHubException, GeneralSecurityException, URISyntaxException, InterruptedException, ModuleClientException
+    public static Collection inputsCommon() throws IOException, IotHubException, URISyntaxException, InterruptedException, ModuleClientException
     {
         methodServiceClient = DeviceMethod.createFromConnectionString(iotHubConnectionString);
         registryManager = RegistryManager.createFromConnectionString(iotHubConnectionString);

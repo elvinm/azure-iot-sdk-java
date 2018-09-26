@@ -321,7 +321,7 @@ public class ProvisioningAmqpOperationsTest
 
     // SRS_ProvisioningAmqpOperations_07_015: [sendStatusMessage shall throw ProvisioningDeviceClientException if either operationId or responseCallback are null or empty.]
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void sendStatusThrowsOnOperationIdNull() throws ProvisioningDeviceClientException, IOException, InterruptedException
+    public void sendStatusThrowsOnOperationIdNull() throws ProvisioningDeviceClientException
     {
         //arrange
         ProvisioningAmqpOperations provisioningAmqpOperations = new ProvisioningAmqpOperations(TEST_SCOPE_ID, TEST_HOST_NAME);
@@ -334,7 +334,7 @@ public class ProvisioningAmqpOperationsTest
 
     // SRS_ProvisioningAmqpOperations_07_015: [sendStatusMessage shall throw ProvisioningDeviceClientException if either operationId or responseCallback are null or empty.]
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void sendStatusThrowsOnOperationIdEmpty() throws ProvisioningDeviceClientException, IOException, InterruptedException
+    public void sendStatusThrowsOnOperationIdEmpty() throws ProvisioningDeviceClientException
     {
         //arrange
         ProvisioningAmqpOperations provisioningAmqpOperations = new ProvisioningAmqpOperations(TEST_SCOPE_ID, TEST_HOST_NAME);
@@ -347,7 +347,7 @@ public class ProvisioningAmqpOperationsTest
 
     // SRS_ProvisioningAmqpOperations_07_015: [sendStatusMessage shall throw ProvisioningDeviceClientException if either operationId or responseCallback are null or empty.]
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void sendStatusThrowsOnResponseCallbackNull() throws ProvisioningDeviceClientException, IOException, InterruptedException
+    public void sendStatusThrowsOnResponseCallbackNull() throws ProvisioningDeviceClientException
     {
         //arrange
         ProvisioningAmqpOperations provisioningAmqpOperations = new ProvisioningAmqpOperations(TEST_SCOPE_ID, TEST_HOST_NAME);
@@ -418,7 +418,7 @@ public class ProvisioningAmqpOperationsTest
 
     // SRS_ProvisioningAmqpOperations_07_018: [This method shall throw ProvisioningDeviceClientException if any failure is encountered.]
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void sendStatusMessageThrowsOnSendAmqpMessage() throws ProvisioningDeviceClientException, IOException, InterruptedException
+    public void sendStatusMessageThrowsOnSendAmqpMessage() throws ProvisioningDeviceClientException, IOException
     {
         //arrange
         ProvisioningAmqpOperations provisioningAmqpOperations = new ProvisioningAmqpOperations(TEST_SCOPE_ID, TEST_HOST_NAME);
@@ -447,7 +447,7 @@ public class ProvisioningAmqpOperationsTest
 
     // SRS_ProvisioningAmqpOperations_07_009: [sendRegisterMessage shall throw ProvisioningDeviceClientException if either responseCallback is null.]
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void sendRegisterMessageThrowsOnResponseCallbackNull() throws ProvisioningDeviceClientException, IOException, InterruptedException
+    public void sendRegisterMessageThrowsOnResponseCallbackNull() throws ProvisioningDeviceClientException
     {
         //arrange
         ProvisioningAmqpOperations provisioningAmqpOperations = new ProvisioningAmqpOperations(TEST_SCOPE_ID, TEST_HOST_NAME);
@@ -518,7 +518,7 @@ public class ProvisioningAmqpOperationsTest
     // SRS_ProvisioningAmqpOperations_07_013: [This method shall add the message to a message queue.]
     // SRS_ProvisioningAmqpOperations_07_014: [This method shall then Notify the receiveLock.]
     @Test
-    public void MessageReceivedSucceeds() throws ProvisioningDeviceClientException, IOException, InterruptedException
+    public void MessageReceivedSucceeds() throws ProvisioningDeviceClientException
     {
         //arrange
         ProvisioningAmqpOperations provisioningAmqpOperations = new ProvisioningAmqpOperations(TEST_SCOPE_ID, TEST_HOST_NAME);

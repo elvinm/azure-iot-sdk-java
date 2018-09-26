@@ -358,7 +358,7 @@ public class MqttDeviceTwinTest
                 result = mockVersion;
                 mockMessage.getRequestId();
                 result = "some request id";
-                Deencapsulation.invoke(mockMqtt, "publish", new Class[]{String.class, Message.class}, anyString, (Message) any);
+                Deencapsulation.invoke(mockMqtt, "publish", new Class[]{String.class, Message.class}, anyString, any);
             }
         };
 
@@ -517,7 +517,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "requestMap", requestMap);
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
 
         } finally
         {
@@ -557,7 +557,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "requestMap", requestMap);
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
         } finally
         {
             //assert
@@ -591,7 +591,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "allReceivedMessages", testAllReceivedMessages);
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
         } finally
         {
             //assert
@@ -625,7 +625,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "allReceivedMessages", testAllReceivedMessages);
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
         } finally
         {
             //assert
@@ -654,7 +654,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "mqttLock", new Object());
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
         } finally
         {
             //assert
@@ -688,7 +688,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "requestMap", requestMap);
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
 
         } finally
         {
@@ -723,7 +723,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "mqttLock", new Object());
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
         } finally
         {
             //assert
@@ -760,7 +760,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "requestMap", requestMap);
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
 
         } finally
         {
@@ -798,7 +798,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "requestMap", requestMap);
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
         } finally
         {
             //assert
@@ -835,7 +835,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "requestMap", requestMap);
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
         } finally
         {
             //assert
@@ -885,7 +885,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "mqttLock", new Object());
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
         } finally
         {
             //assert
@@ -921,7 +921,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "allReceivedMessages", testAllReceivedMessages);
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
 
         } finally
         {
@@ -962,7 +962,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "allReceivedMessages", testAllReceivedMessages);
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
         } finally
         {
             //assert
@@ -1002,7 +1002,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "mqttLock", new Object());
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
         } finally
         {
             //assert
@@ -1042,7 +1042,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "mqttLock", new Object());
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
         } finally
         {
             //assert
@@ -1070,7 +1070,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "mqttLock", new Object());
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
         } finally
         {
             //assert
@@ -1095,7 +1095,7 @@ public class MqttDeviceTwinTest
             Deencapsulation.setField(testTwin, "mqttLock", new Object());
 
             //act
-            receivedMessage = (IotHubTransportMessage) testTwin.receive();
+            receivedMessage = testTwin.receive();
         } finally
         {
             //assert

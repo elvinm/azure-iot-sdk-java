@@ -250,7 +250,7 @@ public class MqttMessagingTest
             {
                 mockedMessage.getBytes();
                 result = messageBody;
-                Deencapsulation.invoke(mockMqtt, "publish", new Class[]{String.class, Message.class}, anyString, (Message) any);
+                Deencapsulation.invoke(mockMqtt, "publish", new Class[]{String.class, Message.class}, anyString, any);
             }
         };
 

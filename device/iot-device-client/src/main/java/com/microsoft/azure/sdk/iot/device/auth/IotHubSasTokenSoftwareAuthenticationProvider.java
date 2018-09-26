@@ -96,7 +96,7 @@ public class IotHubSasTokenSoftwareAuthenticationProvider extends IotHubSasToken
      * @return The value of SasToken
      */
     @Override
-    public String getRenewedSasToken() throws IOException, TransportException
+    public String getRenewedSasToken()
     {
         if (this.sasToken.isExpired())
         {

@@ -95,7 +95,7 @@ public class IotHubSasTokenHardwareAuthenticationProvider extends IotHubSasToken
      * @throws IOException if an error occurs when generating the SSLContext
      */
     @Override
-    public SSLContext getSSLContext() throws IOException
+    public SSLContext getSSLContext()
     {
         //Codes_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_008: [This function shall return the generated IotHubSSLContext.]
         return this.iotHubSSLContext.getSSLContext();

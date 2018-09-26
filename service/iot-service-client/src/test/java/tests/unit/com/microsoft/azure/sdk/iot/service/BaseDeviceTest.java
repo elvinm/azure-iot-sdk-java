@@ -80,7 +80,7 @@ public class BaseDeviceTest
     // Tests_SRS_SERVICE_SDK_JAVA_BASEDEVICE_12_004: [The constructor shall throw IllegalArgumentException if the input string is empty or null]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_string_empty() throws NoSuchAlgorithmException
+    public void constructor_string_empty()
     {
         // Arrange
         String deviceId = "";
@@ -115,7 +115,7 @@ public class BaseDeviceTest
     // Tests_SRS_SERVICE_SDK_JAVA_BASEDEVICE_15_007: [The constructor shall store
     // the input device status and symmetric key into a member variable]
     @Test
-    public void constructor_sets_status_and_symmetrickey() throws NoSuchAlgorithmException
+    public void constructor_sets_status_and_symmetrickey()
     {
         // Arrange
         String deviceId = "xxx-device";

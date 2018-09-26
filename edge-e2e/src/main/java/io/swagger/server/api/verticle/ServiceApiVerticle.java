@@ -33,7 +33,7 @@ public class ServiceApiVerticle extends AbstractVerticle
     }
 
     @Override
-    public void start() throws Exception {
+    public void start() {
 
         //Consumer for PUT_service_connect
         vertx.eventBus().<JsonObject>consumer(PUT_SERVICE_CONNECT_SERVICE_ID).handler(message ->

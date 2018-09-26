@@ -38,7 +38,7 @@ public class RequestDataTest
 
     //SRS_RequestData_25_001: [ Constructor shall save all the parameters and ignore the null parameters. ]
     @Test
-    public void constructorOneSucceeds() throws Exception
+    public void constructorOneSucceeds()
     {
         //act
         RequestData testRequestData = newInstance(RequestData.class, new Class[]{byte[].class, byte[].class, String.class, SSLContext.class, String.class}, TEST_EK, TEST_SRK, TEST_REG, mockedSslContext, TEST_SASTOKEN);
@@ -55,7 +55,7 @@ public class RequestDataTest
 
     //SRS_RequestData_25_001: [ Constructor shall save all the parameters and ignore the null parameters. ]
     @Test
-    public void constructorTwoSucceeds() throws Exception
+    public void constructorTwoSucceeds()
     {
         //act
         RequestData testRequestData = newInstance(RequestData.class, new Class[]{String.class, SSLContext.class, String.class}, TEST_REG, mockedSslContext, TEST_SASTOKEN);
@@ -72,7 +72,7 @@ public class RequestDataTest
 
     //SRS_RequestData_25_001: [ Constructor shall save all the parameters and ignore the null parameters. ]
     @Test
-    public void constructorThreeSucceeds() throws Exception
+    public void constructorThreeSucceeds()
     {
         //act
         RequestData testRequestData = newInstance(RequestData.class, new Class[]{String.class, String.class, SSLContext.class, String.class}, TEST_REG, TEST_OP, mockedSslContext, TEST_SASTOKEN);
@@ -89,7 +89,7 @@ public class RequestDataTest
 
     //SRS_RequestData_25_001: [ Constructor shall save all the parameters and ignore the null parameters. ]
     @Test
-    public void constructorFourSucceeds() throws Exception
+    public void constructorFourSucceeds()
     {
         //act
         RequestData testRequestData = newInstance(RequestData.class, new Class[]{String.class, SSLContext.class, boolean.class}, TEST_REG, mockedSslContext, true);
@@ -118,7 +118,7 @@ public class RequestDataTest
     //SRS_RequestData_25_012: [ This method shall retrieve sasToken. ]
     //SRS_RequestData_25_013: [ This method shall set sasToken. ]
     @Test
-    public void setAndGetEkAndSRKSucceeds() throws Exception
+    public void setAndGetEkAndSRKSucceeds()
     {
         String random = new Random().toString();
         //act
@@ -140,7 +140,7 @@ public class RequestDataTest
     }
 
     @Test
-    public void setAndGetWithOpIdSucceeds() throws Exception
+    public void setAndGetWithOpIdSucceeds()
     {
         String random = new Random().toString();
         //act
@@ -162,7 +162,7 @@ public class RequestDataTest
     }
 
     @Test
-    public void setAndGetWithRegIdSucceeds() throws Exception
+    public void setAndGetWithRegIdSucceeds()
     {
         String random = new Random().toString();
         //act

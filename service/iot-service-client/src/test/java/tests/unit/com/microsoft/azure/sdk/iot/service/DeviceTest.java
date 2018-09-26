@@ -178,7 +178,7 @@ public class DeviceTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_DEVICE_28_001: [The constructor shall set the deviceId, status and symmetricKey.]
     @Test
-    public void constructor_sets_status_and_symmetrickey() throws NoSuchAlgorithmException
+    public void constructor_sets_status_and_symmetrickey()
     {
         // Arrange
         String deviceId = "xxx-device";

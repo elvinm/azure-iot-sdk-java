@@ -77,7 +77,7 @@ public class AmqpsSessionManager
      *
      * @param deviceClientConfig the device to register.
      */
-    void addDeviceOperationSession(DeviceClientConfig deviceClientConfig) throws TransportException
+    void addDeviceOperationSession(DeviceClientConfig deviceClientConfig)
     {
         // Codes_SRS_AMQPSESSIONMANAGER_12_008: [The function shall throw IllegalArgumentException if the deviceClientConfig parameter is null.]
         if (deviceClientConfig == null)
@@ -349,7 +349,7 @@ public class AmqpsSessionManager
      *                               find the sender.
      * @return Integer
      */
-    Integer sendMessage(org.apache.qpid.proton.message.Message message, MessageType messageType, String deviceId) throws TransportException
+    Integer sendMessage(org.apache.qpid.proton.message.Message message, MessageType messageType, String deviceId)
     {
         Integer deliveryHash = -1;
 

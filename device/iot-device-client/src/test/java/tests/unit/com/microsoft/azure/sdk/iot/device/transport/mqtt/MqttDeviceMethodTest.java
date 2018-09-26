@@ -121,7 +121,7 @@ public class MqttDeviceMethodTest
     Tests_SRS_MqttDeviceMethod_25_020: [**send method shall subscribe to topic from spec ($iothub/methods/POST/#) if the operation is of type DEVICE_OPERATION_METHOD_SUBSCRIBE_REQUEST.**]**
      */
     @Test
-    public void sendSucceedsCallsSubscribe(@Mocked final Mqtt mockMqtt) throws IOException, TransportException
+    public void sendSucceedsCallsSubscribe(@Mocked final Mqtt mockMqtt) throws TransportException
     {
         //arrange
         final String actualSubscribeTopic = "$iothub/methods/POST/#";
@@ -148,7 +148,7 @@ public class MqttDeviceMethodTest
     Tests_SRS_MqttDeviceMethod_25_022: [**send method shall build the publish topic of the format mentioned in spec ($iothub/methods/res/{status}/?$rid={request id}) and publish if the operation is of type DEVICE_OPERATION_METHOD_SEND_RESPONSE.**]**
      */
     @Test
-    public void sendSucceedsCallsPublish(@Mocked final Mqtt mockMqtt) throws IOException, TransportException
+    public void sendSucceedsCallsPublish(@Mocked final Mqtt mockMqtt) throws TransportException
     {
         final byte[] actualPayload = "TestMessage".getBytes();
         final IotHubTransportMessage testMessage = new IotHubTransportMessage(actualPayload, MessageType.DEVICE_METHODS);

@@ -457,7 +457,7 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_21_042: [The function shall send a `httpsMethod` request.]
     @Test
-    public void sendHttpsMessageSendsPostRequest(@Mocked final IotHubUri mockUri) throws IOException, TransportException
+    public void sendHttpsMessageSendsPostRequest(@Mocked final IotHubUri mockUri) throws TransportException
     {
         HttpsIotHubConnection conn = new HttpsIotHubConnection(mockConfig);
         final String uriPath = "/files";
@@ -475,7 +475,7 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_21_043: [The function shall set the request body to the message body.]
     @Test
-    public void sendHttpsMessageSendsMessageBody(@Mocked final IotHubUri mockUri) throws IOException, TransportException
+    public void sendHttpsMessageSendsMessageBody(@Mocked final IotHubUri mockUri) throws TransportException
     {
         final byte[] body = {0x61, 0x62};
         final String uriPath = "/files";
@@ -536,7 +536,7 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_21_045: [The function shall set the request read timeout to be the configuration parameter readTimeoutMillis.]
     @Test
-    public void sendHttpsMessageSetsReadTimeout(@Mocked final IotHubUri mockUri) throws IOException, TransportException
+    public void sendHttpsMessageSetsReadTimeout(@Mocked final IotHubUri mockUri) throws TransportException
     {
         final int readTimeoutMillis = 10;
         final String uriPath = "/files";
@@ -627,7 +627,7 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_21_048: [The function shall set the header field 'iothub-to' to be '/devices/[deviceId]/[path]'.]
     @Test
-    public void sendHttpsMessageSetsIotHubToToPath(@Mocked final IotHubUri mockUri) throws IOException, TransportException
+    public void sendHttpsMessageSetsIotHubToToPath(@Mocked final IotHubUri mockUri) throws TransportException
     {
         final HttpsMethod httpsMethod = HttpsMethod.POST;
         final String path = "test-path";
@@ -655,7 +655,7 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_34_072: [The function shall set the additional header fields provided.]
     @Test
-    public void sendHttpsMessageSetsAdditionalHeaders(@Mocked final IotHubUri mockUri) throws IOException, TransportException
+    public void sendHttpsMessageSetsAdditionalHeaders(@Mocked final IotHubUri mockUri) throws TransportException
     {
         final HttpsMethod httpsMethod = HttpsMethod.POST;
         final String path = "test-path";
@@ -699,7 +699,7 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_21_049: [The function shall set the header field 'content-type' to be the message content type.]
     @Test
-    public void sendHttpsMessageSetsContentTypeCorrectly(@Mocked final IotHubUri mockUri) throws IOException, TransportException
+    public void sendHttpsMessageSetsContentTypeCorrectly(@Mocked final IotHubUri mockUri) throws TransportException
     {
         final String contentType = "test-content-type";
         final String uriPath = "/files";
@@ -728,7 +728,7 @@ public class HttpsIotHubConnectionTest
 
     // Tests_SRS_HTTPSIOTHUBCONNECTION_21_050: [The function shall return a ResponseMessage with the status and payload.]
     @Test
-    public void sendHttpsMessageReturnsCorrectResponse(@Mocked final IotHubUri mockUri, final @Mocked IotHubStatusCode mockStatus) throws IOException, TransportException
+    public void sendHttpsMessageReturnsCorrectResponse(@Mocked final IotHubUri mockUri, final @Mocked IotHubStatusCode mockStatus) throws TransportException
     {
         final byte[] body = {'A', 'B', 'C', '\0'};
         final int statusVal = 200;
@@ -1956,7 +1956,7 @@ public class HttpsIotHubConnectionTest
 
     //Just for code coverage over dummy methods
     @Test
-    public void openAndCloseDoNothing() throws IOException, TransportException
+    public void openAndCloseDoNothing()
     {
         HttpsIotHubConnection connection = new HttpsIotHubConnection(mockConfig);
         connection.open(null);

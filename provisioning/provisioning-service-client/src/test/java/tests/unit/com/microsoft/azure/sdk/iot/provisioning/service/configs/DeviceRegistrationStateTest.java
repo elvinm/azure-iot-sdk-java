@@ -469,8 +469,8 @@ public class DeviceRegistrationStateTest
         // assert
         assertEquals(VALID_REGISTRATION_ID, deviceRegistrationState.getRegistrationId());
         assertEquals(VALID_DEVICE_ID, deviceRegistrationState.getDeviceId());
-        Helpers.assertDateWithError((Date) deviceRegistrationState.getCreatedDateTimeUtc(), VALID_DATE_AS_STRING);
-        Helpers.assertDateWithError((Date) deviceRegistrationState.getLastUpdatedDateTimeUtc(), VALID_DATE_AS_STRING);
+        Helpers.assertDateWithError(deviceRegistrationState.getCreatedDateTimeUtc(), VALID_DATE_AS_STRING);
+        Helpers.assertDateWithError(deviceRegistrationState.getLastUpdatedDateTimeUtc(), VALID_DATE_AS_STRING);
         assertEquals(VALID_ASSIGNED_HUB, deviceRegistrationState.getAssignedHub());
         assertEquals(EnrollmentStatus.ASSIGNED, deviceRegistrationState.getStatus());
         assertEquals(VALID_ERROR_CODE, deviceRegistrationState.getErrorCode());

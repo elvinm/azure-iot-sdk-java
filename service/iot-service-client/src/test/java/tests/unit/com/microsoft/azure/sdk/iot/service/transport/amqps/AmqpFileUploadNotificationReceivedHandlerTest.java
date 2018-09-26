@@ -398,7 +398,7 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_34_023: [if 'connectionWasOpened' is false, or 'isConnectionError' is true, this function shall throw an IOException]
     @Test(expected = IOException.class)
-    public void receiveCompleteChecksForSavedException() throws IOException, IotHubException
+    public void receiveCompleteChecksForSavedException()
     {
         // Arrange
         String hostName = "aaa";
@@ -416,7 +416,7 @@ public class AmqpFileUploadNotificationReceivedHandlerTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVEDHANDLER_34_023: [if 'connectionWasOpened' is false, or 'isConnectionError' is true, this function shall throw an IOException]
     @Test(expected = IOException.class)
-    public void receiveCompleteChecksThatConnectionWasOpened() throws IOException, IotHubException
+    public void receiveCompleteChecksThatConnectionWasOpened()
     {
         // Arrange
         String hostName = "aaa";

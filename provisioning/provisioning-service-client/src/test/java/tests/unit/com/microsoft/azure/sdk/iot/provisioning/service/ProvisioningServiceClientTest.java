@@ -388,7 +388,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_014: [The createIndividualEnrollmentQuery shall create a new individual enrolment query by calling the createQuery in the individualEnrollmentManager.] */
     @Test
-    public void createIndividualEnrollmentQuerySucceed(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
+    public void createIndividualEnrollmentQuerySucceed(@Mocked final QuerySpecification mockedQuerySpecification)
     {
         // arrange
         ProvisioningServiceClient provisioningServiceClient = createClient();
@@ -409,7 +409,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_015: [The createIndividualEnrollmentQuery shall create a new individual enrolment query by calling the createQuery in the individualEnrollmentManager.] */
     @Test
-    public void createIndividualEnrollmentQueryWithPageSizeSucceed(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
+    public void createIndividualEnrollmentQueryWithPageSizeSucceed(@Mocked final QuerySpecification mockedQuerySpecification)
     {
         // arrange
         ProvisioningServiceClient provisioningServiceClient = createClient();
@@ -538,7 +538,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_021: [The createEnrollmentGroupQuery shall create a new enrolmentGroup query by calling the createQuery in the enrollmentGroupManager.] */
     @Test
-    public void createEnrollmentGroupQuerySucceed(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
+    public void createEnrollmentGroupQuerySucceed(@Mocked final QuerySpecification mockedQuerySpecification)
     {
         // arrange
         ProvisioningServiceClient provisioningServiceClient = createClient();
@@ -559,7 +559,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_022: [The createEnrollmentGroupQuery shall create a new enrolmentGroup query by calling the createQuery in the enrollmentGroupManager.] */
     @Test
-    public void createEnrollmentGroupQueryWithPageSizeSucceed(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
+    public void createEnrollmentGroupQueryWithPageSizeSucceed(@Mocked final QuerySpecification mockedQuerySpecification)
     {
         // arrange
         ProvisioningServiceClient provisioningServiceClient = createClient();
@@ -666,7 +666,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_027: [The createEnrollmentGroupRegistrationStateQuery shall create a new deviceRegistrationState query by calling the createQuery in the registrationStatusManager.] */
     @Test
-    public void createRegistrationStateQuerySucceed(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
+    public void createRegistrationStateQuerySucceed(@Mocked final QuerySpecification mockedQuerySpecification)
     {
         // arrange
         final String enrollmentGroupId = "valid-enrollmentGroupId";
@@ -688,7 +688,7 @@ public class ProvisioningServiceClientTest
 
     /* SRS_PROVISIONING_SERVICE_CLIENT_21_028: [The createEnrollmentGroupRegistrationStateQuery shall create a new deviceRegistrationState query by calling the createQuery in the registrationStatusManager.] */
     @Test
-    public void createRegistrationStateQueryWithPageSizeSucceed(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
+    public void createRegistrationStateQueryWithPageSizeSucceed(@Mocked final QuerySpecification mockedQuerySpecification)
     {
         // arrange
         final String enrollmentGroupId = "valid-enrollmentGroupId";

@@ -21,7 +21,7 @@ public class ServiceAuthenticationWithSharedAccessPolicyKeyTest
     // Tests_SRS_SERVICE_SDK_JAVA_SERVICEAUTHENTICATIONWITHSHAREDACCESSKEY_12_002: [The function shall throw IllegalArgumentException if the input object is null]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void populate_input_null() throws Exception
+    public void populate_input_null()
     {
         // Arrange
         String newPolicyName = "XXX";

@@ -133,7 +133,7 @@ public class IotHubSasTokenWithRefreshAuthenticationProviderTest
             super(hostname, gatewayHostName, deviceId, moduleId, sharedAccessToken, suggestedTimeToLiveSeconds, timeBufferPercentage);
         }
 
-        public void refreshSasToken() throws IOException, TransportException
+        public void refreshSasToken()
         {
             this.sasToken = nextToken;
         }

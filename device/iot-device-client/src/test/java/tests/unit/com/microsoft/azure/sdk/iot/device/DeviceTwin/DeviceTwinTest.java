@@ -1096,9 +1096,9 @@ public class DeviceTwinTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(Property.class, new Class[]{String.class, Object.class, Integer.class, boolean.class, Date.class, Integer.class}, desiredProp1, desiredValue2, desiredVersion, false, (Date) any, lastUpdatedVersion);
+                Deencapsulation.newInstance(Property.class, new Class[]{String.class, Object.class, Integer.class, boolean.class, Date.class, Integer.class}, desiredProp1, desiredValue2, desiredVersion, false, any, lastUpdatedVersion);
                 times = 1;
-                Deencapsulation.newInstance(Property.class, new Class[]{String.class, Object.class, Integer.class, boolean.class, Date.class, Integer.class}, reportedProp1, reportedVal2, reportedVersion, true, (Date) any, lastUpdatedVersion);
+                Deencapsulation.newInstance(Property.class, new Class[]{String.class, Object.class, Integer.class, boolean.class, Date.class, Integer.class}, reportedProp1, reportedVal2, reportedVersion, true, any, lastUpdatedVersion);
                 times = 1;
                 mockedGenericTwinPropertyCB.TwinPropertyCallBack((Property) any, null);
                 times = 2;

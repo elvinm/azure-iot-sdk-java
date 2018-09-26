@@ -54,7 +54,7 @@ public class JobClientIT
     private static Device testDevice;
 
     //@BeforeClass
-    public static void setUp() throws NoSuchAlgorithmException, IotHubException, IOException, URISyntaxException, InterruptedException
+    public static void setUp() throws IotHubException, IOException, URISyntaxException, InterruptedException
     {
         iotHubConnectionString = Tools.retrieveEnvironmentVariableValue(IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME);
 
@@ -119,7 +119,7 @@ public class JobClientIT
     }
 
     //@Before
-    public void cleanToStart() throws IOException, IotHubException
+    public void cleanToStart()
     {
         for (DeviceTestManager device : devices)
         {
@@ -129,7 +129,7 @@ public class JobClientIT
 
     @Ignore
     @Test
-    public void scheduleUpdateTwinSucceed() throws IOException, IotHubException, InterruptedException
+    public void scheduleUpdateTwinSucceed() throws InterruptedException
     {
         // Arrange
         ExecutorService executor = Executors.newFixedThreadPool(MAX_NUMBER_JOBS);
@@ -216,7 +216,7 @@ public class JobClientIT
 
     @Ignore
     @Test
-    public void scheduleDeviceMethodSucceed() throws IOException, IotHubException, InterruptedException
+    public void scheduleDeviceMethodSucceed() throws InterruptedException
     {
         // Arrange
         ExecutorService executor = Executors.newFixedThreadPool(MAX_NUMBER_JOBS);
@@ -292,7 +292,7 @@ public class JobClientIT
 
     @Ignore
     @Test
-    public void mixScheduleInFutureSucceed() throws IOException, IotHubException, InterruptedException
+    public void mixScheduleInFutureSucceed() throws InterruptedException
     {
         // Arrange
         ExecutorService executor = Executors.newFixedThreadPool(MAX_NUMBER_JOBS);
@@ -410,7 +410,7 @@ public class JobClientIT
 
     @Ignore
     @Test
-    public void cancelScheduleDeviceMethodSucceed() throws IOException, IotHubException, InterruptedException
+    public void cancelScheduleDeviceMethodSucceed() throws InterruptedException
     {
         // Arrange
         ExecutorService executor = Executors.newFixedThreadPool(MAX_NUMBER_JOBS);

@@ -87,7 +87,7 @@ public abstract class SecurityProviderX509 extends SecurityProvider
         throw new SecurityProviderException("Could not retrieve X509 Key Manager");
     }
 
-    private SSLContext generateSSLContext(X509Certificate leafCertificate, Key leafPrivateKey, Collection<X509Certificate> signerCertificates) throws NoSuchProviderException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException, CertificateException, SecurityProviderException
+    private SSLContext generateSSLContext(X509Certificate leafCertificate, Key leafPrivateKey, Collection<X509Certificate> signerCertificates) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException, CertificateException, SecurityProviderException
     {
         if (leafCertificate == null || leafPrivateKey == null || signerCertificates == null)
         {

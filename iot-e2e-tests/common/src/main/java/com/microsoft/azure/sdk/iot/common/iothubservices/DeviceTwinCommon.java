@@ -138,7 +138,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
     }
 
     @AfterClass
-    public static void tearDown() throws IOException, IotHubException
+    public static void tearDown()
     {
         if (registryManager != null)
         {
@@ -150,7 +150,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         internalClient = null;
     }
 
-    private void addMultipleDevices(int numberOfDevices) throws IOException, InterruptedException, IotHubException, NoSuchAlgorithmException, URISyntaxException, ModuleClientException
+    private void addMultipleDevices(int numberOfDevices) throws IOException, InterruptedException, IotHubException, URISyntaxException, ModuleClientException
     {
         devicesUnderTest = new DeviceState[numberOfDevices];
 
@@ -614,7 +614,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
     }
 
     @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
-    public void testSubscribeToDesiredPropertiesMultiThreaded() throws IOException, InterruptedException, IotHubException
+    public void testSubscribeToDesiredPropertiesMultiThreaded() throws IOException, InterruptedException
     {
         // arrange
         ExecutorService executor = Executors.newFixedThreadPool(MAX_PROPERTIES_TO_TEST);
@@ -1854,7 +1854,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             }
         };
 
-        this.internalClient.registerConnectionStatusChangeCallback(connectionStatusUpdateCallback, null);
+        internalClient.registerConnectionStatusChangeCallback(connectionStatusUpdateCallback, null);
     }
 
     private void errorInjectionSendReportedPropertiesFlow(Message errorInjectionMessage) throws Exception

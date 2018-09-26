@@ -62,7 +62,7 @@ public class AmqpsDeviceAuthenticationTest
         new NonStrictExpectations()
         {
             {
-                mockProton.sslDomain();
+                Proton.sslDomain();
                 result = mockDomain;
             }
         };

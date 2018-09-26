@@ -72,7 +72,7 @@ public class HttpsHsmClientTest
 
     // Tests_SRS_HSMHTTPCLIENT_34_001: [This constructor shall save the provided baseUrl.]
     @Test
-    public void constructorSavesBaseUrl(@Mocked final URI mockedURI) throws TransportException, UnsupportedEncodingException, MalformedURLException, URISyntaxException
+    public void constructorSavesBaseUrl(@Mocked final URI mockedURI) throws URISyntaxException
     {
         //act
         new NonStrictExpectations()
@@ -94,7 +94,7 @@ public class HttpsHsmClientTest
     // Tests_SRS_HSMHTTPCLIENT_34_012: [If the provided baseUrl uses the unix scheme, this constructor shall set
     // a stub url stream handler factory to handle that unix scheme.]
     @Test
-    public void constructorWithUnixScheme(@Mocked final URI mockedURI) throws TransportException, UnsupportedEncodingException, MalformedURLException, URISyntaxException
+    public void constructorWithUnixScheme(@Mocked final URI mockedURI) throws URISyntaxException
     {
         //act
         new NonStrictExpectations()
@@ -256,7 +256,7 @@ public class HttpsHsmClientTest
 
     // Tests_SRS_HSMHTTPCLIENT_34_005: [If the response from the http call is not 200, this function shall throw an HsmException.]
     @Test
-    public void signThrowsIfResponseIsNot200(@Mocked final URI mockedURI) throws UnsupportedEncodingException, MalformedURLException, TransportException, URISyntaxException
+    public void signThrowsIfResponseIsNot200(@Mocked final URI mockedURI) throws UnsupportedEncodingException, TransportException, URISyntaxException
     {
         //arrange
         final String expectedUrl = expectedBaseUrl + "/modules/" + URLEncoder.encode(expectedName, "UTF-8") + "/sign?api-version=" + URLEncoder.encode(expectedApiVersion, "UTF-8");
@@ -387,7 +387,7 @@ public class HttpsHsmClientTest
 
     // Tests_SRS_HSMHTTPCLIENT_34_011: [If the response from the http request is not 200, this function shall throw an HSMException.]
     @Test
-    public void getTrustBundleThrowsIfResponseNot200(final @Mocked URI mockedURI) throws URISyntaxException, TransportException, MalformedURLException, HsmException, UnsupportedEncodingException
+    public void getTrustBundleThrowsIfResponseNot200(final @Mocked URI mockedURI) throws URISyntaxException, TransportException, MalformedURLException
     {
         //assert
         final String expectedUrl = expectedBaseUrl + "/trust-bundle?api-version=" + expectedApiVersion;

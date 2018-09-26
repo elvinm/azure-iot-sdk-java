@@ -484,7 +484,7 @@ public class DeviceTwin
         return job;
     }
 
-    private DeviceTwinDevice jsonToDeviceTwinDevice(String json) throws IOException
+    private DeviceTwinDevice jsonToDeviceTwinDevice(String json)
     {
         TwinState twinState = TwinState.createFromTwinJson(json);
 

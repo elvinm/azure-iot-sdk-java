@@ -527,7 +527,7 @@ public class ContractAPIHttpTest
     }
 
     @Test(expected = ProvisioningDeviceTransportException.class)
-    public void requestNonceWithDPSTPMThrowsTransportExceptionIfAnyOfTheTransportCallsFails() throws IOException, ProvisioningDeviceClientException
+    public void requestNonceWithDPSTPMThrowsTransportExceptionIfAnyOfTheTransportCallsFails() throws ProvisioningDeviceClientException
     {
         final byte[] expectedPayload = "testByte".getBytes();
         ContractAPIHttp contractAPIHttp = createContractClass();

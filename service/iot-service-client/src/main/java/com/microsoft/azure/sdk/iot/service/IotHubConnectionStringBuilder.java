@@ -50,7 +50,7 @@ public class IotHubConnectionStringBuilder
      * @return The IotHubConnectionString object
      * @throws IOException This exception is thrown if the object creation failed
      */
-    public static IotHubConnectionString createConnectionString(String hostName, AuthenticationMethod authenticationMethod) throws IOException
+    public static IotHubConnectionString createConnectionString(String hostName, AuthenticationMethod authenticationMethod)
     {
         // Codes_SRS_SERVICE_SDK_JAVA_IOTHUBCONNECTIONSTRINGBUILDER_12_003: [The function shall throw IllegalArgumentException if the input string is empty or null]
         if (Tools.isNullOrEmpty(hostName))
@@ -77,7 +77,7 @@ public class IotHubConnectionStringBuilder
      * @param iotHubConnectionString The target object for deserialization
      * @throws IOException This exception is thrown if the parsing failed
      */
-    protected static void parse(String connectionString, IotHubConnectionString iotHubConnectionString) throws IOException
+    protected static void parse(String connectionString, IotHubConnectionString iotHubConnectionString)
     {
         // Codes_SRS_SERVICE_SDK_JAVA_IOTHUBCONNECTIONSTRINGBUILDER_12_006: [The function shall throw IllegalArgumentException if the input string is empty or null]
         if (Tools.isNullOrEmpty(connectionString))

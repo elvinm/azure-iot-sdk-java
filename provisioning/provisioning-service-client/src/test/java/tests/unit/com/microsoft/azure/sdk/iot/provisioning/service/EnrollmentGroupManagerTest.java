@@ -65,7 +65,7 @@ public class EnrollmentGroupManagerTest
 
     /* SRS_ENROLLMENT_GROUP_MANAGER_21_005: [The createOrUpdate shall throw IllegalArgumentException if the provided enrollmentGroup is null.] */
     @Test(expected = IllegalArgumentException.class)
-    public void createOrUpdateThrowsOnNullEnrollment() throws ProvisioningServiceClientException
+    public void createOrUpdateThrowsOnNullEnrollment()
     {
         // arrange
         EnrollmentGroupManager enrollmentGroupManager = createEnrollmentGroupManager();
@@ -268,7 +268,7 @@ public class EnrollmentGroupManagerTest
 
     /* SRS_ENROLLMENT_GROUP_MANAGER_21_020: [The get shall throw IllegalArgumentException if the provided enrollmentGroupId is null or empty.] */
     @Test(expected = IllegalArgumentException.class)
-    public void getThrowsOnNullEnrollmentGroupId() throws ProvisioningServiceClientException
+    public void getThrowsOnNullEnrollmentGroupId()
     {
         // arrange
         EnrollmentGroupManager enrollmentGroupManager = createEnrollmentGroupManager();
@@ -281,7 +281,7 @@ public class EnrollmentGroupManagerTest
 
     /* SRS_ENROLLMENT_GROUP_MANAGER_21_020: [The get shall throw IllegalArgumentException if the provided enrollmentGroupId is null or empty.] */
     @Test(expected = IllegalArgumentException.class)
-    public void getThrowsOnEmptyEnrollmentGroupId() throws ProvisioningServiceClientException
+    public void getThrowsOnEmptyEnrollmentGroupId()
     {
         // arrange
         EnrollmentGroupManager enrollmentGroupManager = createEnrollmentGroupManager();
@@ -399,7 +399,7 @@ public class EnrollmentGroupManagerTest
 
     /* SRS_ENROLLMENT_GROUP_MANAGER_21_026: [The delete shall throw IllegalArgumentException if the provided enrollmentGroup is null.] */
     @Test(expected = IllegalArgumentException.class)
-    public void deleteEnrollmentThrowsOnNullEnrollment() throws ProvisioningServiceClientException
+    public void deleteEnrollmentThrowsOnNullEnrollment()
     {
         // arrange
         EnrollmentGroupManager enrollmentGroupManager = createEnrollmentGroupManager();
@@ -535,28 +535,28 @@ public class EnrollmentGroupManagerTest
 
     /* SRS_ENROLLMENT_GROUP_MANAGER_21_032: [The delete shall throw IllegalArgumentException if the provided enrollmentGroupId is null or empty.] */
     @Test(expected = IllegalArgumentException.class)
-    public void deleteEnrollmentGroupIdAndETagThrowsOnNullEnrollmentGroupId() throws ProvisioningServiceClientException
+    public void deleteEnrollmentGroupIdAndETagThrowsOnNullEnrollmentGroupId()
     {
         // arrange
         final String eTag = "validEtag";
         EnrollmentGroupManager enrollmentGroupManager = createEnrollmentGroupManager();
 
         // act
-        Deencapsulation.invoke(enrollmentGroupManager, "delete", new Class[]{String.class, String.class}, (String) null, eTag);
+        Deencapsulation.invoke(enrollmentGroupManager, "delete", new Class[]{String.class, String.class}, null, eTag);
 
         // assert
     }
 
     /* SRS_ENROLLMENT_GROUP_MANAGER_21_032: [The delete shall throw IllegalArgumentException if the provided enrollmentGroupId is null or empty.] */
     @Test(expected = IllegalArgumentException.class)
-    public void deleteEnrollmentGroupIdAndETagThrowsOnEmptyEnrollmentGroupId() throws ProvisioningServiceClientException
+    public void deleteEnrollmentGroupIdAndETagThrowsOnEmptyEnrollmentGroupId()
     {
         // arrange
         final String eTag = "validEtag";
         EnrollmentGroupManager enrollmentGroupManager = createEnrollmentGroupManager();
 
         // act
-        Deencapsulation.invoke(enrollmentGroupManager, "delete", new Class[]{String.class, String.class}, (String) "", eTag);
+        Deencapsulation.invoke(enrollmentGroupManager, "delete", new Class[]{String.class, String.class}, "", eTag);
 
         // assert
     }
@@ -683,7 +683,7 @@ public class EnrollmentGroupManagerTest
 
     /* SRS_ENROLLMENT_GROUP_MANAGER_21_038: [The createQuery shall throw IllegalArgumentException if the provided querySpecification is null.] */
     @Test(expected = IllegalArgumentException.class)
-    public void createQueryThrowsOnNullQuerySpecification() throws ProvisioningServiceClientException
+    public void createQueryThrowsOnNullQuerySpecification()
     {
         // arrange
         EnrollmentGroupManager enrollmentGroupManager = createEnrollmentGroupManager();
@@ -696,7 +696,7 @@ public class EnrollmentGroupManagerTest
 
     /* SRS_ENROLLMENT_GROUP_MANAGER_21_039: [The createQuery shall throw IllegalArgumentException if the provided pageSize is negative.] */
     @Test(expected = IllegalArgumentException.class)
-    public void createQueryThrowsOnNegativePageSize(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
+    public void createQueryThrowsOnNegativePageSize(@Mocked final QuerySpecification mockedQuerySpecification)
     {
         // arrange
         EnrollmentGroupManager enrollmentGroupManager = createEnrollmentGroupManager();
@@ -710,7 +710,7 @@ public class EnrollmentGroupManagerTest
     /* SRS_ENROLLMENT_GROUP_MANAGER_21_040: [The createQuery shall create Query iterator with a Http path `enrollmentGroups`.] */
     /* SRS_ENROLLMENT_GROUP_MANAGER_21_041: [The createQuery shall create and return a new instance of the Query iterator.] */
     @Test
-    public void createQuerySucceed(@Mocked final QuerySpecification mockedQuerySpecification, @Mocked final Query mockedQuery) throws ProvisioningServiceClientException
+    public void createQuerySucceed(@Mocked final QuerySpecification mockedQuerySpecification, @Mocked final Query mockedQuery)
     {
         // arrange
         final String enrollmentGroupPath = "enrollmentGroups";

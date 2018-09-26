@@ -249,7 +249,7 @@ public class MessageTest
 
     // Tests_SRS_MESSAGE_15_036: [The function shall return true if the current time is greater than the expiry time and false otherwise.]
     @Test
-    public void isExpiredReturnsFalseIfCurrentTimeIsSmallerThanExpiryTime() throws InterruptedException
+    public void isExpiredReturnsFalseIfCurrentTimeIsSmallerThanExpiryTime()
     {
         final byte[] body = {0x61, 0x62, 0x63};
 

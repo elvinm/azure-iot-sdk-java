@@ -58,7 +58,7 @@ public class DeviceTestManager
         this.deviceEmulator.clearStatistics();
     }
 
-    public void start() throws IOException, InterruptedException
+    public void start() throws IOException
     {
         this.deviceEmulator.start();
 

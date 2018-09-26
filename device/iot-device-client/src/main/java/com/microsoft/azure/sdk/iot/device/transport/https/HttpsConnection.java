@@ -232,7 +232,7 @@ public class HttpsConnection
      *                            {@link HttpsURLConnection} silently converts the HTTPS method to POST or PUT if a
      *                            body is written to the request.
      */
-    public void writeOutput(byte[] body) throws TransportException
+    public void writeOutput(byte[] body)
     {
         // Codes_SRS_HTTPSCONNECTION_11_010: [The function shall throw an IllegalArgumentException if the request does not currently use method POST or PUT and the body is non-empty.]
         HttpsMethod method = HttpsMethod.valueOf(this.connection.getRequestMethod());

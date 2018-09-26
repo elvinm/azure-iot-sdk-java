@@ -1034,7 +1034,7 @@ public class AmqpsIotHubConnectionTest
             {
                 mockEvent.getReactor();
                 times = 1;
-                mockReactor.connectionToHost(anyString, anyInt, (Handler) connection);
+                mockReactor.connectionToHost(anyString, anyInt, connection);
                 times = 1;
             }
         };
@@ -1066,7 +1066,7 @@ public class AmqpsIotHubConnectionTest
             {
                 mockEvent.getReactor();
                 times = 1;
-                mockReactor.connectionToHost(anyString, anyInt, (Handler) connection);
+                mockReactor.connectionToHost(anyString, anyInt, connection);
                 times = 1;
             }
         };

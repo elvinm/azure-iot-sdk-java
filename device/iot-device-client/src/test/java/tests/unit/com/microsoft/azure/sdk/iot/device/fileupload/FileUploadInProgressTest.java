@@ -54,7 +54,7 @@ public class FileUploadInProgressTest
         final Map<String, Object> context = new HashMap<>();
 
         // act
-        Deencapsulation.newInstance(FileUploadInProgress.class, new Class[]{IotHubEventCallback.class, Object.class}, (IotHubEventCallback) null, context);
+        Deencapsulation.newInstance(FileUploadInProgress.class, new Class[]{IotHubEventCallback.class, Object.class}, null, context);
     }
 
     /* Codes_SRS_FILEUPLOADINPROGRESS_21_003: [The setTask shall sore the content of the `task`.] */
@@ -123,7 +123,7 @@ public class FileUploadInProgressTest
         };
 
         // act
-        boolean result = (boolean) Deencapsulation.invoke(fileUploadInProgress, "isCancelled");
+        boolean result = Deencapsulation.invoke(fileUploadInProgress, "isCancelled");
 
         // assert
         assertTrue(result);
@@ -147,7 +147,7 @@ public class FileUploadInProgressTest
         };
 
         // act
-        boolean result = (boolean) Deencapsulation.invoke(fileUploadInProgress, "isCancelled");
+        boolean result = Deencapsulation.invoke(fileUploadInProgress, "isCancelled");
 
         // assert
         assertFalse(result);

@@ -36,7 +36,7 @@ public class X509Cert
     private CertKeyPair leaf;
     private Collection<String> intermediatesPem;
     private boolean useDice;
-    public X509Cert(int intermediatesCount, boolean useDice, String cNLeaf, String cNRoot) throws NoSuchAlgorithmException
+    public X509Cert(int intermediatesCount, boolean useDice, String cNLeaf, String cNRoot)
     {
         intermediatesPem = new ArrayList<>(intermediatesCount);
         intermediates = new ArrayList<>(intermediatesCount);
@@ -147,7 +147,7 @@ public class X509Cert
         return pem.toString();
     }
 
-    public String getPublicCertLeafPem() throws IOException, GeneralSecurityException
+    public String getPublicCertLeafPem() throws GeneralSecurityException
     {
         StringBuilder pem = new StringBuilder();
         pem.append(BEGIN_CERT);
@@ -156,7 +156,7 @@ public class X509Cert
         return pem.toString();
     }
 
-    public String getPublicCertRootPem() throws IOException, GeneralSecurityException
+    public String getPublicCertRootPem() throws GeneralSecurityException
     {
         StringBuilder pem = new StringBuilder();
         pem.append(BEGIN_CERT);

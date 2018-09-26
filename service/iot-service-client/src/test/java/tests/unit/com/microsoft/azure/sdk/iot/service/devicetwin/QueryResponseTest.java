@@ -42,7 +42,7 @@ public class QueryResponseTest
 
     //Tests_SRS__QUERY_RESPONSE_25_001: [The constructor shall parse the json response using QueryResponseParser and set the iterator.]
     @Test
-    public void constructorSucceeds() throws IOException
+    public void constructorSucceeds()
     {
         //arrange
         final String json = "testJson";
@@ -66,7 +66,7 @@ public class QueryResponseTest
 
     //**SRS_QUERY_RESPONSE_25_002: [**If the jsonString is null or empty, the constructor shall throw an IllegalArgumentException.**]**
     @Test(expected = IllegalArgumentException.class)
-    public void constructorThrowsOnNullString() throws IOException
+    public void constructorThrowsOnNullString()
     {
         //arrange
         final String json = null;
@@ -76,7 +76,7 @@ public class QueryResponseTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void constructorThrowsOnEmptyString() throws IOException
+    public void constructorThrowsOnEmptyString()
     {
         //arrange
         final String json = "";
@@ -86,7 +86,7 @@ public class QueryResponseTest
     }
 
     @Test(expected = IOException.class)
-    public void constructorThrowsWhenParserThrows() throws IOException
+    public void constructorThrowsWhenParserThrows()
     {
         //arrange
         final String json = "testJson";
@@ -107,7 +107,7 @@ public class QueryResponseTest
 
     //Tests_SRS__QUERY_RESPONSE_25_003: [The method shall return true if next element from QueryResponse is available and false otherwise.]
     @Test
-    public void hasNextReturnsTrue() throws IOException
+    public void hasNextReturnsTrue()
     {
         //arrange
         final String json = "testJson";
@@ -131,7 +131,7 @@ public class QueryResponseTest
     }
 
     @Test
-    public void hasNextReturnsFalse() throws IOException
+    public void hasNextReturnsFalse()
     {
         //arrange
         final String json = "testJson";
@@ -152,7 +152,7 @@ public class QueryResponseTest
 
     //Tests_SRS__QUERY_RESPONSE_25_004: [The method shall return the next element for this QueryResponse.]
     @Test
-    public void nextReturnsWhenFound() throws IOException
+    public void nextReturnsWhenFound()
     {
         //arrange
         final String json = "testJson";
@@ -174,7 +174,7 @@ public class QueryResponseTest
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void nextThrowsWhenNotFound() throws IOException
+    public void nextThrowsWhenNotFound()
     {
         //arrange
         final String json = "testJson";

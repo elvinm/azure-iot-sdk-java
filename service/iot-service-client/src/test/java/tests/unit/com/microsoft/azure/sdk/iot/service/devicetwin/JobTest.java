@@ -197,7 +197,7 @@ public class JobTest
 
     /* Tests_SRS_JOB_21_006: [If the updateTwin is null, the scheduleUpdateTwin shall throws IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void scheduleUpdateTwinThrowOnNullDeviceTwinDevice() throws IOException
+    public void scheduleUpdateTwinThrowOnNullDeviceTwinDevice()
     {
         // arrange
         final String queryCondition = "validQueryCondition";
@@ -213,7 +213,7 @@ public class JobTest
 
     /* Tests_SRS_JOB_21_007: [If the startTimeUtc is null, the scheduleUpdateTwin shall throws IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void scheduleUpdateTwinThrowOnNullStartTimeUTC() throws IOException
+    public void scheduleUpdateTwinThrowOnNullStartTimeUTC()
     {
         // arrange
         final String queryCondition = "validQueryCondition";
@@ -229,7 +229,7 @@ public class JobTest
 
     /* Tests_SRS_JOB_21_008: [If the maxExecutionTimeInSeconds is negative, the scheduleUpdateTwin shall throws IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void scheduleUpdateTwinThrowOnInvalidMaxExecutionTimeInSeconds() throws IOException
+    public void scheduleUpdateTwinThrowOnInvalidMaxExecutionTimeInSeconds()
     {
         // arrange
         final String queryCondition = "validQueryCondition";
@@ -336,7 +336,7 @@ public class JobTest
 
     /* Tests_SRS_JOB_21_012: [If the methodName is null or empty, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void scheduleDeviceMethodThrowOnNullMethodName() throws IOException
+    public void scheduleDeviceMethodThrowOnNullMethodName()
     {
         // arrange
         final String queryCondition = "validQueryCondition";
@@ -353,7 +353,7 @@ public class JobTest
 
     /* Tests_SRS_JOB_21_012: [If the methodName is null or empty, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void scheduleDeviceMethodThrowOnEmptyMethodName() throws IOException
+    public void scheduleDeviceMethodThrowOnEmptyMethodName()
     {
         // arrange
         final String queryCondition = "validQueryCondition";
@@ -370,7 +370,7 @@ public class JobTest
 
     /* Tests_SRS_JOB_21_013: [If the startTimeUtc is null, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void scheduleDeviceMethodThrowOnNullStartTimeUtc() throws IOException
+    public void scheduleDeviceMethodThrowOnNullStartTimeUtc()
     {
         // arrange
         final String queryCondition = "validQueryCondition";
@@ -387,7 +387,7 @@ public class JobTest
 
     /* Tests_SRS_JOB_21_014: [If the maxExecutionTimeInSeconds is negative, the scheduleDeviceMethod shall throws IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void scheduleDeviceMethodThrowOnInvalidMaxExecutionTimeInSeconds() throws IOException
+    public void scheduleDeviceMethodThrowOnInvalidMaxExecutionTimeInSeconds()
     {
         // arrange
         final String queryCondition = "validQueryCondition";
@@ -603,7 +603,7 @@ public class JobTest
 
     /* Tests_SRS_JOB_21_022: [The getJobId shall return the store value of jobId.] */
     @Test
-    public void getJobIdSucceed() throws IOException, IotHubException
+    public void getJobIdSucceed()
     {
         // arrange
         final String jobId = "validJobId";

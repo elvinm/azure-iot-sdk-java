@@ -66,12 +66,12 @@ public class ProvisioningServiceSasTokenTest
             Mac mac;
 
             {
-                urlEncoder.encode(hostName.toLowerCase(), String.valueOf(StandardCharsets.UTF_8));
-                system.currentTimeMillis();
+                URLEncoder.encode(hostName.toLowerCase(), String.valueOf(StandardCharsets.UTF_8));
+                System.currentTimeMillis();
                 Base64.decodeBase64Local(sharedAccessKey.getBytes(charset));
                 byte[] body = {1};
                 secretKeySpec = new SecretKeySpec(body, cryptoProvider);
-                mac.getInstance(cryptoProvider);
+                Mac.getInstance(cryptoProvider);
             }
         };
         // Act
@@ -85,7 +85,7 @@ public class ProvisioningServiceSasTokenTest
     // Tests_SRS_PROVISIONING_SERVICE_SASTOKEN_12_006: [The constructor shall concatenate the target uri, the signature, the expiry time and the key name using the format: "SharedAccessSignature sr=%s&sig=%s&se=%s&skn=%s"]
     // Tests_SRS_PROVISIONING_SERVICE_SASTOKEN_12_008: [The function shall return with the generated token]
     @Test
-    public void constructorCheckFormatSucceeded() throws Exception
+    public void constructorCheckFormatSucceeded()
     {
         // Arrange
         String deviceProvisioningServiceName = "b.c.d";
@@ -108,7 +108,7 @@ public class ProvisioningServiceSasTokenTest
 
     // Tests_SRS_PROVISIONING_SERVICE_SASTOKEN_12_007: [The constructor shall throw Exception if building the token failed]
     @Test(expected = Exception.class)
-    public void constructorThrowsOnBuildToken() throws Exception
+    public void constructorThrowsOnBuildToken()
     {
         // Arrange
         String deviceProvisioningServiceName = "b.c.d";

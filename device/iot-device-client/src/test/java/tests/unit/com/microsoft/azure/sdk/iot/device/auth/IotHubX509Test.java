@@ -45,7 +45,7 @@ public class IotHubX509Test
 
     //Tests_SRS_IOTHUBX509_34_001: [If the provided public key certificate or private key is null or empty, an IllegalArgumentException shall be thrown.]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorThrowsForEmptyPublicKey() throws IOException
+    public void constructorThrowsForEmptyPublicKey()
     {
         //act
         Deencapsulation.newInstance(IotHubX509.class, new Class[]{String.class, boolean.class, String.class, boolean.class}, "", false, someKey, false);
@@ -53,7 +53,7 @@ public class IotHubX509Test
 
     //Tests_SRS_IOTHUBX509_34_001: [If the provided public key certificate or private key is null or empty, an IllegalArgumentException shall be thrown.]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorThrowsForEmptyPrivateKey() throws IOException
+    public void constructorThrowsForEmptyPrivateKey()
     {
         //act
         Deencapsulation.newInstance(IotHubX509.class, new Class[]{String.class, boolean.class, String.class, boolean.class}, someCert, false, "", false);
@@ -61,7 +61,7 @@ public class IotHubX509Test
 
     //Tests_SRS_IOTHUBX509_34_001: [If the provided public key certificate or private key is null or empty, an IllegalArgumentException shall be thrown.]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorThrowsForNullPublicKey() throws IOException
+    public void constructorThrowsForNullPublicKey()
     {
         //act
         Deencapsulation.newInstance(IotHubX509.class, new Class[]{String.class, boolean.class, String.class, boolean.class}, null, false, someKey, false);
@@ -69,7 +69,7 @@ public class IotHubX509Test
 
     //Tests_SRS_IOTHUBX509_34_001: [If the provided public key certificate or private key is null or empty, an IllegalArgumentException shall be thrown.]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorThrowsForNullPrivateKey() throws IOException
+    public void constructorThrowsForNullPrivateKey()
     {
         //act
         Deencapsulation.newInstance(IotHubX509.class, new Class[]{String.class, boolean.class, String.class, boolean.class}, someCert, false, null, false);

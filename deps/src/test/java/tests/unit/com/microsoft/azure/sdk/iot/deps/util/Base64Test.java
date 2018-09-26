@@ -18,7 +18,7 @@ public class Base64Test
 {
     /* Tests_SRS_BASE64_21_001: [The decodeBase64Local shall decode the provided `base64Values` in a byte array using the Base64 format define in the RFC2045.] */
     @Test
-    public void decodeBase64WithMultipleOf4CharactersSuccess() throws UnsupportedEncodingException, IllegalArgumentException
+    public void decodeBase64WithMultipleOf4CharactersSuccess() throws IllegalArgumentException
     {
         // arrange
         String base64ToDecode = "VGhpcyBpcyBhIHZhbGlkIHRlc3Q+Pj4+Pz8/PyhhQmNEZUZnSGlKS0xtbm9QcVJzdHVWV1h5eikwMTIzNDU2Nzg5";
@@ -33,7 +33,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_001: [The decodeBase64Local shall decode the provided `base64Values` in a byte array using the Base64 format define in the RFC2045.] */
     @Test
-    public void decodeBase64WithMultipleOf4Minus1CharactersSuccess() throws UnsupportedEncodingException, IllegalArgumentException
+    public void decodeBase64WithMultipleOf4Minus1CharactersSuccess() throws IllegalArgumentException
     {
         // arrange
         String base64ToDecode = "VGhpcyBpcyBhIHZhbGlkIHRlc3QgKGFCY0RlRmdIaUpLTG1ub1BxUnN0dVZXWHl6KS0wMTIzNDU2Nzg=";
@@ -48,7 +48,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_001: [The decodeBase64Local shall decode the provided `base64Values` in a byte array using the Base64 format define in the RFC2045.] */
     @Test
-    public void decodeBase64WithMultipleOf4Minus2CharactersSuccess() throws UnsupportedEncodingException, IllegalArgumentException
+    public void decodeBase64WithMultipleOf4Minus2CharactersSuccess() throws IllegalArgumentException
     {
         // arrange
         String base64ToDecode = "VGhpcyBpcyBhIHZhbGlkIHRlc3QgKGFCY0RlRmdIaUpLTG1ub1BxUnN0dVZXWHl6KS0wMTIzNDU2Nw==";
@@ -63,7 +63,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_002: [If the `base64Values` is null, the decodeBase64Local shall throw IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void decodeBase64ThrowsOnNullByteArray() throws UnsupportedEncodingException, IllegalArgumentException
+    public void decodeBase64ThrowsOnNullByteArray() throws IllegalArgumentException
     {
         // arrange
         byte[] base64ToDecode = null;
@@ -74,7 +74,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_003: [If the `base64Values` is empty, the decodeBase64Local shall return a empty byte array.] */
     @Test
-    public void decodeBase64WithEmptyByteArraySuccess() throws UnsupportedEncodingException, IllegalArgumentException
+    public void decodeBase64WithEmptyByteArraySuccess() throws IllegalArgumentException
     {
         // arrange
         String base64ToDecode = "";
@@ -89,7 +89,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_004: [If the `base64Values` length is not multiple of 4, the decodeBase64Local shall throw IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void decodeBase64ThrowsOnInvalidByteArrayLength() throws UnsupportedEncodingException, IllegalArgumentException
+    public void decodeBase64ThrowsOnInvalidByteArrayLength() throws IllegalArgumentException
     {
         // arrange
         String base64ToDecode = "VGhpcyBpcyBhIHZhbGlkIHRlc3QgKGFCY0RlRmdIaUpLTG1ub1BxUnN0dVZXWHl6KS0wMTIzNDU2Nw";
@@ -100,7 +100,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_004: [If the `base64Values` length is not multiple of 4, the decodeBase64Local shall throw IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void decodeBase64ThrowsOnLostPad() throws UnsupportedEncodingException, IllegalArgumentException
+    public void decodeBase64ThrowsOnLostPad() throws IllegalArgumentException
     {
         // arrange
         String base64ToDecode = "VGhpcyBpcyBhIHZhbGlkIHRlc3QgKGFCY0RlRmdIaUpLTG1ub1BxUnN0dVZXWHl6KS0wMTIzNDU2Nw=";
@@ -111,7 +111,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_004: [If the `base64Values` length is not multiple of 4, the decodeBase64Local shall throw IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void decodeBase64ThrowsOnExtraPad() throws UnsupportedEncodingException, IllegalArgumentException
+    public void decodeBase64ThrowsOnExtraPad() throws IllegalArgumentException
     {
         // arrange
         String base64ToDecode = "VGhpcyBpcyBhIHZhbGlkIHRlc3QgKGFCY0RlRmdIaUpLTG1ub1BxUnN0dVZXWHl6KS0wMTIzNDU2N===";
@@ -122,7 +122,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_004: [If the `base64Values` length is not multiple of 4, the decodeBase64Local shall throw IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void decodeBase64ThrowsOnInvalidPad() throws UnsupportedEncodingException, IllegalArgumentException
+    public void decodeBase64ThrowsOnInvalidPad() throws IllegalArgumentException
     {
         // arrange
         String base64ToDecode = "VGhpcyBpcyBhIHZhbGlkIHRlc3QgKGFCY0RlRmdIaUpLTG1ub1BxUnN0dVZXWHl6KS0wMTIzNDU2Nw=*";
@@ -134,7 +134,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_005: [The encodeBase64Local shall encoded the provided `dataValues` in a byte array using the Base64 format define in the RFC2045.] */
     @Test
-    public void encodeBase64WithMultipleOf4CharactersSuccess() throws UnsupportedEncodingException, IllegalArgumentException
+    public void encodeBase64WithMultipleOf4CharactersSuccess() throws IllegalArgumentException
     {
         // arrange
         String textToEncode = "This is a valid test>>>>????(aBcDeFgHiJKLmnoPqRstuVWXyz)0123456789";
@@ -149,7 +149,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_005: [The encodeBase64Local shall encoded the provided `dataValues` in a byte array using the Base64 format define in the RFC2045.] */
     @Test
-    public void encodeBase64MultipleOf4Minus1CharactersSuccess() throws UnsupportedEncodingException, IllegalArgumentException
+    public void encodeBase64MultipleOf4Minus1CharactersSuccess() throws IllegalArgumentException
     {
         // arrange
         String textToEncode = "This is a valid test (aBcDeFgHiJKLmnoPqRstuVWXyz)-012345678";
@@ -164,7 +164,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_005: [The encodeBase64Local shall encoded the provided `dataValues` in a byte array using the Base64 format define in the RFC2045.] */
     @Test
-    public void encodeBase64MultipleOf4Minus2CharactersSuccess() throws UnsupportedEncodingException, IllegalArgumentException
+    public void encodeBase64MultipleOf4Minus2CharactersSuccess() throws IllegalArgumentException
     {
         // arrange
         String textToEncode = "This is a valid test (aBcDeFgHiJKLmnoPqRstuVWXyz)-01234567";
@@ -179,7 +179,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_006: [If the `dataValues` is null, the encodeBase64Local shall throw IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void encodeBase64ThrowsOnNullDataValues() throws UnsupportedEncodingException, IllegalArgumentException
+    public void encodeBase64ThrowsOnNullDataValues() throws IllegalArgumentException
     {
         // arrange
         byte[] textToEncode = null;
@@ -190,7 +190,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_007: [If the `dataValues` is empty, the encodeBase64Local shall return a empty byte array.] */
     @Test
-    public void encodeBase64EmptyCharactersSuccess() throws UnsupportedEncodingException, IllegalArgumentException
+    public void encodeBase64EmptyCharactersSuccess() throws IllegalArgumentException
     {
         // arrange
         String textToEncode = "";
@@ -206,7 +206,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_008: [The encodeBase64StringLocal shall encoded the provided `dataValues` in a string using the Base64 format define in the RFC2045.] */
     @Test
-    public void encodeBase64StringMultipleOf4CharactersSuccess() throws UnsupportedEncodingException, IllegalArgumentException
+    public void encodeBase64StringMultipleOf4CharactersSuccess() throws IllegalArgumentException
     {
         // arrange
         String textToEncode = "This is a valid test>>>>????(aBcDeFgHiJKLmnoPqRstuVWXyz)0123456789";
@@ -221,7 +221,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_008: [The encodeBase64StringLocal shall encoded the provided `dataValues` in a string using the Base64 format define in the RFC2045.] */
     @Test
-    public void encodeBase64StringMultipleOf4Minus1CharactersSuccess() throws UnsupportedEncodingException, IllegalArgumentException
+    public void encodeBase64StringMultipleOf4Minus1CharactersSuccess() throws IllegalArgumentException
     {
         // arrange
         String textToEncode = "This is a valid test (aBcDeFgHiJKLmnoPqRstuVWXyz)-012345678";
@@ -236,7 +236,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_008: [The encodeBase64StringLocal shall encoded the provided `dataValues` in a string using the Base64 format define in the RFC2045.] */
     @Test
-    public void encodeBase64StringMultipleOf4Minus2CharactersSuccess() throws UnsupportedEncodingException, IllegalArgumentException
+    public void encodeBase64StringMultipleOf4Minus2CharactersSuccess() throws IllegalArgumentException
     {
         // arrange
         String textToEncode = "This is a valid test (aBcDeFgHiJKLmnoPqRstuVWXyz)-01234567";
@@ -251,7 +251,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_009: [If the `dataValues` is null, the encodeBase64StringLocal shall throw IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void encodeBase64StringThrowsOnNullDataValues() throws UnsupportedEncodingException, IllegalArgumentException
+    public void encodeBase64StringThrowsOnNullDataValues() throws IllegalArgumentException
     {
         // arrange
         byte[] textToEncode = null;
@@ -262,7 +262,7 @@ public class Base64Test
 
     /* Tests_SRS_BASE64_21_010: [If the `dataValues` is empty, the encodeBase64StringLocal shall return a empty string.] */
     @Test
-    public void encodeBase64StringEmptyCharactersSuccess() throws UnsupportedEncodingException, IllegalArgumentException
+    public void encodeBase64StringEmptyCharactersSuccess() throws IllegalArgumentException
     {
         // arrange
         String textToEncode = "";

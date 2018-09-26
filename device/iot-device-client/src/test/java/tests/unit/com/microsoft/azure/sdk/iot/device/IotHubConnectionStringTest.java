@@ -479,7 +479,7 @@ public class IotHubConnectionStringTest
         new NonStrictExpectations()
         {
             {
-                iotHubSasToken.isExpired(anyString);
+                IotHubSasToken.isExpired(anyString);
                 result = true;
             }
         };
@@ -496,7 +496,7 @@ public class IotHubConnectionStringTest
         new NonStrictExpectations()
         {
             {
-                iotHubSasToken.isExpired(anyString);
+                IotHubSasToken.isExpired(anyString);
                 result = true;
             }
         };

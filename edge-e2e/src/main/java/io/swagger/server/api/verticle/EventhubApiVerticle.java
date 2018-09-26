@@ -33,7 +33,7 @@ public class EventhubApiVerticle extends AbstractVerticle
     }
 
     @Override
-    public void start() throws Exception {
+    public void start() {
 
         //Consumer for PUT_eventhub_connect
         vertx.eventBus().<JsonObject>consumer(PUT_EVENTHUB_CONNECT_SERVICE_ID).handler(message ->

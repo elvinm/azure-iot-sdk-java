@@ -54,7 +54,7 @@ public class DeviceEmulator implements Runnable
      * @throws IOException          if the DeviceClient cannot open the connection with the IoTHub.
      * @throws InterruptedException if the thread had issue to wait for the open connection.
      */
-    DeviceEmulator(InternalClient client) throws URISyntaxException, IOException, InterruptedException
+    DeviceEmulator(InternalClient client)
     {
         this.client = client;
     }

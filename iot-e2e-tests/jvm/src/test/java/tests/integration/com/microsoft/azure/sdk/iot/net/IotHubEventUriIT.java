@@ -20,7 +20,7 @@ import static org.junit.Assert.assertThat;
 public class IotHubEventUriIT
 {
     @Test
-    public void eventUriIsCorrect() throws URISyntaxException
+    public void eventUriIsCorrect()
     {
         String iotHubName = "test.iothub";
         String deviceId = "test-deviceid";

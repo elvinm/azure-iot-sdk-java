@@ -89,7 +89,7 @@ public class DeviceTwinWithVersionCommon extends MethodNameLoggingIntegrationTes
     }
 
     @AfterClass
-    public static void tearDown() throws Exception
+    public static void tearDown()
     {
         // Destroy the service client
         sCDeviceTwin = null;

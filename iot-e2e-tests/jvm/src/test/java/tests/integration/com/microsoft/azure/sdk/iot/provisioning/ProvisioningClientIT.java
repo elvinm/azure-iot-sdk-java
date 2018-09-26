@@ -492,70 +492,70 @@ public class ProvisioningClientIT
     // Following test are defined by Provisioning Spec (currently not implemented)
     @Ignore
     @Test
-    public void updateRegistrationAndReRegisterTPM() throws Exception
+    public void updateRegistrationAndReRegisterTPM()
     {
 
     }
 
     @Ignore
     @Test
-    public void updateRegistrationAndReRegisterX509() throws Exception
+    public void updateRegistrationAndReRegisterX509()
     {
 
     }
 
     @Ignore
     @Test
-    public void individualEnrollmentTPMHardware() throws Exception
+    public void individualEnrollmentTPMHardware()
     {
 
     }
 
     @Ignore
     @Test
-    public void groupEnrollmentX509WithZeroIntermediate() throws Exception
+    public void groupEnrollmentX509WithZeroIntermediate()
     {
 
     }
 
     @Ignore
     @Test
-    public void groupEnrollmentX509WithOneIntermediate() throws Exception
+    public void groupEnrollmentX509WithOneIntermediate()
     {
 
     }
 
     @Ignore
     @Test
-    public void groupEnrollmentX509WithTwoIntermediate() throws Exception
+    public void groupEnrollmentX509WithTwoIntermediate()
     {
 
     }
 
     @Ignore
     @Test
-    public void groupEnrollmentDiceWithOneIntermediateEmulator() throws Exception
+    public void groupEnrollmentDiceWithOneIntermediateEmulator()
     {
 
     }
 
     @Ignore
     @Test
-    public void individualEnrollmentDiceEmulator() throws Exception
+    public void individualEnrollmentDiceEmulator()
     {
 
     }
 
     @Ignore
     @Test
-    public void groupEnrollmentDiceWithOneIntermediate() throws Exception
+    public void groupEnrollmentDiceWithOneIntermediate()
     {
 
     }
 
     @Ignore
     @Test
-    public void individualEnrollmentDice() throws Exception
+    public void individualEnrollmentDice()
     {
 
     }

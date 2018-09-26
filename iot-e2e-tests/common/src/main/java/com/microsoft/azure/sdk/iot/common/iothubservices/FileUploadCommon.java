@@ -74,7 +74,7 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
     }
 
     @AfterClass
-    public static void tearDown() throws IotHubException, IOException, InterruptedException
+    public static void tearDown() throws IOException, InterruptedException
     {
         // flush all the notifications caused by this test suite to avoid failures running on different test suite attempt
         assertNotNull(fileUploadNotificationReceiver);
@@ -239,7 +239,7 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
     }
 
     @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
-    public void uploadToBlobAsyncMultipleFilesParallel() throws URISyntaxException, IOException, InterruptedException, ExecutionException, TimeoutException
+    public void uploadToBlobAsyncMultipleFilesParallel() throws URISyntaxException, IOException, InterruptedException
     {
         // arrange
         setUpDeviceClient(IotHubClientProtocol.MQTT);
@@ -288,7 +288,7 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
     }
 
     @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
-    public void uploadToBlobAsyncAndTelemetryOnMQTT() throws URISyntaxException, IOException, InterruptedException, ExecutionException, TimeoutException
+    public void uploadToBlobAsyncAndTelemetryOnMQTT() throws URISyntaxException, IOException, InterruptedException
     {
         // arrange
         setUpDeviceClient(IotHubClientProtocol.MQTT);
@@ -362,7 +362,7 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
     }
 
     @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
-    public void uploadToBlobAsyncSingleFileAndTelemetryOnAMQP() throws URISyntaxException, IOException, InterruptedException, ExecutionException, TimeoutException
+    public void uploadToBlobAsyncSingleFileAndTelemetryOnAMQP() throws URISyntaxException, IOException, InterruptedException
     {
         // arrange
         setUpDeviceClient(IotHubClientProtocol.AMQPS);
@@ -421,7 +421,7 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
     }
 
     @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
-    public void uploadToBlobAsyncSingleFileAndTelemetryOnAMQPWS() throws URISyntaxException, IOException, InterruptedException, ExecutionException, TimeoutException
+    public void uploadToBlobAsyncSingleFileAndTelemetryOnAMQPWS() throws URISyntaxException, IOException, InterruptedException
     {
         // arrange
         setUpDeviceClient(IotHubClientProtocol.AMQPS_WS);
@@ -480,7 +480,7 @@ public class FileUploadCommon extends MethodNameLoggingIntegrationTest
     }
 
     @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
-    public void uploadToBlobAsyncSingleFileAndTelemetryOnHttp() throws URISyntaxException, IOException, InterruptedException, ExecutionException, TimeoutException
+    public void uploadToBlobAsyncSingleFileAndTelemetryOnHttp() throws URISyntaxException, IOException, InterruptedException
     {
         // arrange
         setUpDeviceClient(IotHubClientProtocol.HTTPS);

@@ -64,7 +64,7 @@ public class IotHubSasTokenAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBSASTOKENAUTHENTICATION_34_012: [This function shall save the provided tokenValidSecs as the number of seconds that created sas tokens are valid for.]
     @Test
-    public void setTokenValidSecsSets() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException
+    public void setTokenValidSecsSets()
     {
         //arrange
         long newTokenValidSecs = 5000L;
@@ -259,13 +259,13 @@ public class IotHubSasTokenAuthenticationProviderTest
         }
 
         @Override
-        public SSLContext getSSLContext() throws IOException
+        public SSLContext getSSLContext()
         {
             return null;
         }
 
         @Override
-        public String getRenewedSasToken() throws IOException
+        public String getRenewedSasToken()
         {
             return null;
         }

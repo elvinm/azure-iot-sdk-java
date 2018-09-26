@@ -80,7 +80,7 @@ public class IotHubCertificateManagerTests
 
     //Tests_SRS_IOTHUBCERTIFICATEMANAGER_25_002: [**This method shall throw IllegalArgumentException if parameter is null.**]**
     @Test(expected = IllegalArgumentException.class)
-    public void setValidPathThrowsIfNull() throws IOException
+    public void setValidPathThrowsIfNull()
     {
         //arrange
         IotHubCertificateManager testCertManager = Deencapsulation.newInstance(IotHubCertificateManager.class);
@@ -101,7 +101,7 @@ public class IotHubCertificateManagerTests
 
     //Tests_SRS_IOTHUBCERTIFICATEMANAGER_25_005: [**This method shall throw FileNotFoundException if it could not be found or does not exist.**]**
     @Test(expected = FileNotFoundException.class)
-    public void setValidPathThrowsIfCertIsDir() throws IOException
+    public void setValidPathThrowsIfCertIsDir()
     {
         //arrange
         File testCertFile = null;

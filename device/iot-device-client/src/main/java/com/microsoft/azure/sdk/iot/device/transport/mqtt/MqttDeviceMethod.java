@@ -32,7 +32,7 @@ public class MqttDeviceMethod extends Mqtt
     private String responseTopic;
     private boolean isStarted = false;
 
-    public MqttDeviceMethod(MqttConnection mqttConnection, String connectionId) throws TransportException
+    public MqttDeviceMethod(MqttConnection mqttConnection, String connectionId)
     {
         //Codes_SRS_MqttDeviceMethod_25_001: [The constructor shall instantiate super class without any parameters.]
         super(mqttConnection, null, null, connectionId);

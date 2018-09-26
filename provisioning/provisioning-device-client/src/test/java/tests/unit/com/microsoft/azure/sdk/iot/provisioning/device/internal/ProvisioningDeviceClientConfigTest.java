@@ -36,7 +36,7 @@ public class ProvisioningDeviceClientConfigTest
     //SRS_ProvisioningDeviceClientConfig_25_008: [ This method shall retrieve ProvisioningDeviceClientTransportProtocol. ]
     //SRS_ProvisioningDeviceClientConfig_25_009: [ This method shall set ProvisioningDeviceClientTransportProtocol. ]
     @Test
-    public void setterAndGetterForProtocolSucceeds() throws Exception
+    public void setterAndGetterForProtocolSucceeds()
     {
         //arrange
         ProvisioningDeviceClientConfig testConfig = new ProvisioningDeviceClientConfig();
@@ -51,7 +51,7 @@ public class ProvisioningDeviceClientConfigTest
     //SRS_ProvisioningDeviceClientConfig_25_004: [ This method shall retrieve provisioningServiceGlobalEndpoint. ]
     //SRS_ProvisioningDeviceClientConfig_25_005: [ This method shall set provisioningServiceGlobalEndpoint. ]
     @Test
-    public void setterAndGetterForEndpointCBSucceeds() throws Exception
+    public void setterAndGetterForEndpointCBSucceeds()
     {
         //arrange
         ProvisioningDeviceClientConfig testConfig = new ProvisioningDeviceClientConfig();
@@ -66,7 +66,7 @@ public class ProvisioningDeviceClientConfigTest
     //SRS_ProvisioningDeviceClientConfig_25_006: [ This method shall retrieve scopeId. ]
     //SRS_ProvisioningDeviceClientConfig_25_007: [ This method shall set scopeId. ]
     @Test
-    public void setterAndGetterForScopeIdSucceeds() throws Exception
+    public void setterAndGetterForScopeIdSucceeds()
     {
         //arrange
         ProvisioningDeviceClientConfig testConfig = new ProvisioningDeviceClientConfig();
@@ -81,7 +81,7 @@ public class ProvisioningDeviceClientConfigTest
     //SRS_ProvisioningDeviceClientConfig_25_010: [ This method shall retrieve securityClient. ]
     //SRS_ProvisioningDeviceClientConfig_25_011: [ This method shall set securityClient. ]
     @Test
-    public void setterAndGetterForSecurityClientSucceeds() throws Exception
+    public void setterAndGetterForSecurityClientSucceeds()
     {
         //arrange
         ProvisioningDeviceClientConfig testConfig = new ProvisioningDeviceClientConfig();
@@ -97,7 +97,7 @@ public class ProvisioningDeviceClientConfigTest
     //SRS_ProvisioningDeviceClientConfig_25_002: [ This method shall retrieve registrationCallback. ]
     //SRS_ProvisioningDeviceClientConfig_25_003: [ This method shall retrieve registrationCallbackContext. ]
     @Test
-    public void setterAndGetterForRegistrationCBSucceeds() throws Exception
+    public void setterAndGetterForRegistrationCBSucceeds()
     {
         //arrange
         ProvisioningDeviceClientConfig testConfig = new ProvisioningDeviceClientConfig();

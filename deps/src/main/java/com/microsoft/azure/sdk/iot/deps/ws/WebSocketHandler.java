@@ -21,12 +21,12 @@ public interface WebSocketHandler
 
     int calculateHeaderSize(int payloadSize);
 
-    public enum WebSocketMessageType
+    enum WebSocketMessageType
     {
         WEB_SOCKET_MESSAGE_TYPE_UNKNOWN, WEB_SOCKET_MESSAGE_TYPE_CHUNK, WEB_SOCKET_MESSAGE_TYPE_HEADER_CHUNK, WEB_SOCKET_MESSAGE_TYPE_AMQP, WEB_SOCKET_MESSAGE_TYPE_PING, WEB_SOCKET_MESSAGE_TYPE_CLOSE,
     }
 
-    public class WebsocketTuple
+    class WebsocketTuple
     {
 
         private long length;

@@ -122,7 +122,7 @@ public class TwinCollectionTest
     {
         // arrange
         // act
-        TwinCollection twinCollection = new TwinCollection((TwinCollection) null);
+        TwinCollection twinCollection = new TwinCollection(null);
 
         // assert
         assertNotNull(twinCollection);

@@ -67,7 +67,7 @@ public class MqttConnectionTest
     private Throwable mockedThrowable;
 
     @Test(expected = IllegalArgumentException.class)
-    public void mqttConnectionConstructorThrowsWhenHostnameNULL() throws IOException, MqttException
+    public void mqttConnectionConstructorThrowsWhenHostnameNULL() throws IOException
     {
         // Arrange
         new NonStrictExpectations()
@@ -83,7 +83,7 @@ public class MqttConnectionTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void mqttConnectionConstructorThrowsWhenHostnameEmpty() throws IOException, MqttException
+    public void mqttConnectionConstructorThrowsWhenHostnameEmpty() throws IOException
     {
         // Arrange
         new NonStrictExpectations()
@@ -99,7 +99,7 @@ public class MqttConnectionTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void mqttConnectionConstructorThrowsWhenClientIdNULL() throws IOException, MqttException
+    public void mqttConnectionConstructorThrowsWhenClientIdNULL() throws IOException
     {
         // Arrange
         new NonStrictExpectations()
@@ -115,7 +115,7 @@ public class MqttConnectionTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void mqttConnectionConstructorThrowsWhenClientIdEmpty() throws IOException, MqttException
+    public void mqttConnectionConstructorThrowsWhenClientIdEmpty() throws IOException
     {
         // Arrange
         new NonStrictExpectations()
@@ -131,7 +131,7 @@ public class MqttConnectionTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void MqttConnectionConstructorThrowsWhenUsernameNULL() throws IOException, MqttException
+    public void MqttConnectionConstructorThrowsWhenUsernameNULL() throws IOException
     {
         // Arrange
         new NonStrictExpectations()
@@ -147,7 +147,7 @@ public class MqttConnectionTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void mqttConnectionConstructorThrowsWhenUsernameEmpty() throws IOException, MqttException
+    public void mqttConnectionConstructorThrowsWhenUsernameEmpty() throws IOException
     {
         // Arrange
         new NonStrictExpectations()
@@ -163,7 +163,7 @@ public class MqttConnectionTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void MqttConnectionConstructorThrowsWhenSslContextNULL() throws IOException, MqttException
+    public void MqttConnectionConstructorThrowsWhenSslContextNULL() throws IOException
     {
         // Arrange
         new NonStrictExpectations()
@@ -240,7 +240,7 @@ public class MqttConnectionTest
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void mqttConnectionConstructorThrowsOnListenerNullFail() throws IOException, MqttException
+    public void mqttConnectionConstructorThrowsOnListenerNullFail() throws IOException
     {
         // Arrange
 

@@ -256,7 +256,7 @@ public class AmqpsDeviceTelemetryTest
      **Tests_SRS_AMQPSDEVICETELEMETRY_12_006: [**The function shall return an AmqpsSendReturnValue object with false and -1 if the message type is not telemetry.**]**
      */
     @Test
-    public void sendMessageAndGetDeliveryHashReturnsFalseIfMessageTypeIsNotDeviceTelemetry() throws IOException
+    public void sendMessageAndGetDeliveryHashReturnsFalseIfMessageTypeIsNotDeviceTelemetry()
     {
         //arrange
         AmqpsDeviceTelemetry amqpsDeviceTelemetry = Deencapsulation.newInstance(AmqpsDeviceTelemetry.class, mockDeviceClientConfig);
@@ -280,7 +280,7 @@ public class AmqpsDeviceTelemetryTest
      **Tests_SRS_AMQPSDEVICETELEMETRY_12_007: [**The function shall call the ssuper function with the arguments and return with it's return value.**]**
      */
     @Test
-    public void sendMessageAndGetDeliveryHashReturnsWithSuperResult() throws IOException
+    public void sendMessageAndGetDeliveryHashReturnsWithSuperResult()
     {
         //arrange
         AmqpsDeviceTelemetry amqpsDeviceTelemetry = Deencapsulation.newInstance(AmqpsDeviceTelemetry.class, mockDeviceClientConfig);
@@ -357,7 +357,7 @@ public class AmqpsDeviceTelemetryTest
     // Codes_SRS_AMQPSDEVICETELEMETRY_12_021: [The function shall set the MessageType to DEVICE_TELEMETRY if the super function returned not null.]
     // Codes_SRS_AMQPSDEVICETELEMETRY_12_022: [The function shall return the super function return value.]
     @Test
-    public void getMessageFromReceiverLinkSuccess() throws IOException
+    public void getMessageFromReceiverLinkSuccess()
     {
         //arrange
         String deviceId = "deviceId";
@@ -403,7 +403,7 @@ public class AmqpsDeviceTelemetryTest
 
     // Codes_SRS_AMQPSDEVICETELEMETRY_12_022: [The function shall return the super function return value.]
     @Test
-    public void getMessageFromReceiverLinkSuperFailed() throws IOException
+    public void getMessageFromReceiverLinkSuperFailed()
     {
         //arrange
         String deviceId = "deviceId";

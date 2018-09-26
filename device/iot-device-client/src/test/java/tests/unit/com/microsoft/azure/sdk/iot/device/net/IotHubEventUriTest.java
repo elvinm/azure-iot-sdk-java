@@ -27,7 +27,7 @@ public class IotHubEventUriTest
 
     // Tests_SRS_IOTHUBEVENTURI_11_001: [The constructor returns a URI with the format "[iotHubHostname]/devices/[deviceId]/messages/events?api-version=2016-02-03".]
     @Test
-    public void constructorConstructsIotHubUriCorrectly() throws URISyntaxException
+    public void constructorConstructsIotHubUriCorrectly()
     {
         final String iotHubHostname = "test.iothub";
         final String deviceId = "test-deviceid";
@@ -44,7 +44,7 @@ public class IotHubEventUriTest
 
     // Tests_SRS_IOTHUBEVENTURI_11_002: [The string representation of the IoT Hub event URI shall be constructed with the format '[iotHubHostname]/devices/[deviceId]/messages/events?api-version=2016-02-03 '.]
     @Test
-    public void toStringIsCorrect() throws URISyntaxException
+    public void toStringIsCorrect()
     {
         final String iotHubHostname = "test.iothub";
         final String deviceId = "test-deviceid";
@@ -66,7 +66,7 @@ public class IotHubEventUriTest
 
     // Tests_SRS_IOTHUBEVENTURI_11_003: [The function shall return the hostname given in the constructor.]
     @Test
-    public void getHostnameIsCorrect() throws URISyntaxException
+    public void getHostnameIsCorrect()
     {
         final String iotHubHostname = "test.iothub";
         final String deviceId = "test-deviceid";
@@ -88,7 +88,7 @@ public class IotHubEventUriTest
 
     // Tests_SRS_IOTHUBEVENTURI_11_004: [The function shall return a URI with the format '/devices/[deviceId]/messages/events'.]
     @Test
-    public void getPathIsCorrect() throws URISyntaxException
+    public void getPathIsCorrect()
     {
         final String iotHubHostname = "test.iothub";
         final String deviceId = "test-deviceid";

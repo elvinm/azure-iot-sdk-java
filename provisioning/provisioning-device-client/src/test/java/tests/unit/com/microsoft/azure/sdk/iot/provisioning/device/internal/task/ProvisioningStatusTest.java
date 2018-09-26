@@ -22,35 +22,35 @@ public class ProvisioningStatusTest
     //SRS_ProvisioningStatus_25_001: [ Constructor to create an enum ]
     //SRS_ProvisioningStatus_25_002: [ This method shall return the enum corresponding to the type. ]
     @Test
-    public void fromStringReturnsUnassigned() throws Exception
+    public void fromStringReturnsUnassigned()
     {
         ProvisioningStatus status = Deencapsulation.invoke(ProvisioningStatus.class, "fromString", "Unassigned");
         assertEquals(UNASSIGNED, status);
     }
 
     @Test
-    public void fromStringReturnsAssigned() throws Exception
+    public void fromStringReturnsAssigned()
     {
         ProvisioningStatus status = Deencapsulation.invoke(ProvisioningStatus.class, "fromString", "Assigned");
         assertEquals(ASSIGNED, status);
     }
 
     @Test
-    public void fromStringReturnsAssigning() throws Exception
+    public void fromStringReturnsAssigning()
     {
         ProvisioningStatus status = Deencapsulation.invoke(ProvisioningStatus.class, "fromString", "assigning");
         assertEquals(ASSIGNING, status);
     }
 
     @Test
-    public void fromStringReturnsFailed() throws Exception
+    public void fromStringReturnsFailed()
     {
         ProvisioningStatus status = Deencapsulation.invoke(ProvisioningStatus.class, "fromString", "failed");
         assertEquals(FAILED, status);
     }
 
     @Test
-    public void fromStringReturnsDisabled() throws Exception
+    public void fromStringReturnsDisabled()
     {
         ProvisioningStatus status = Deencapsulation.invoke(ProvisioningStatus.class, "fromString", "disabled");
         assertEquals(DISABLED, status);
@@ -58,7 +58,7 @@ public class ProvisioningStatusTest
 
     //SRS_ProvisioningStatus_25_003: [ If none of the enum's match the type it shall return null. ]
     @Test
-    public void fromStringReturnsUnknown() throws Exception
+    public void fromStringReturnsUnknown()
     {
         ProvisioningStatus status = Deencapsulation.invoke(ProvisioningStatus.class, "fromString", "unknown");
         assertEquals(null, status);

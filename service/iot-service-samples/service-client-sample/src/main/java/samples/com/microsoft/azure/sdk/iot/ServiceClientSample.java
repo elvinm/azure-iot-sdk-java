@@ -45,7 +45,7 @@ public class ServiceClientSample
      * @throws IOException
      * @throws URISyntaxException
      */
-    public static void main(String[] args) throws IOException, URISyntaxException, Exception
+    public static void main(String[] args) throws Exception
     {
         System.out.println("********* Starting ServiceClient sample...");
 

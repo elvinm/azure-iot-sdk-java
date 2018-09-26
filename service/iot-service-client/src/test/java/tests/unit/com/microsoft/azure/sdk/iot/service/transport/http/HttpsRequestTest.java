@@ -149,7 +149,7 @@ public class HttpsRequestTest
             }
 
             @Mock
-            public void connect() throws IOException
+            public void connect()
             {
                 assertThat(testMethod, is(expectedMethod));
             }
@@ -174,25 +174,25 @@ public class HttpsRequestTest
             }
 
             @Mock
-            public byte[] readInput() throws IOException
+            public byte[] readInput()
             {
                 return new byte[0];
             }
 
             @Mock
-            public byte[] readError() throws IOException
+            public byte[] readError()
             {
                 return new byte[0];
             }
 
             @Mock
-            public int getResponseStatus() throws IOException
+            public int getResponseStatus()
             {
                 return 0;
             }
 
             @Mock
-            public Map<String, List<String>> getResponseHeaders() throws IOException
+            public Map<String, List<String>> getResponseHeaders()
             {
                 return new HashMap<>();
             }
@@ -233,7 +233,7 @@ public class HttpsRequestTest
             }
 
             @Mock
-            public void connect() throws IOException
+            public void connect()
             {
                 assertThat(testHeaderFields.size(), is(3));
                 assertThat(testHeaderFields.get(field0), is(value0));
@@ -261,25 +261,25 @@ public class HttpsRequestTest
             }
 
             @Mock
-            public byte[] readInput() throws IOException
+            public byte[] readInput()
             {
                 return new byte[0];
             }
 
             @Mock
-            public byte[] readError() throws IOException
+            public byte[] readError()
             {
                 return new byte[0];
             }
 
             @Mock
-            public int getResponseStatus() throws IOException
+            public int getResponseStatus()
             {
                 return 0;
             }
 
             @Mock
-            public Map<String, List<String>> getResponseHeaders() throws IOException
+            public Map<String, List<String>> getResponseHeaders()
             {
                 return new HashMap<>();
             }
@@ -316,7 +316,7 @@ public class HttpsRequestTest
             }
 
             @Mock
-            public void connect() throws IOException
+            public void connect()
             {
                 assertThat(testBody, is(expectedBody));
             }
@@ -341,25 +341,25 @@ public class HttpsRequestTest
             }
 
             @Mock
-            public byte[] readInput() throws IOException
+            public byte[] readInput()
             {
                 return new byte[0];
             }
 
             @Mock
-            public byte[] readError() throws IOException
+            public byte[] readError()
             {
                 return new byte[0];
             }
 
             @Mock
-            public int getResponseStatus() throws IOException
+            public int getResponseStatus()
             {
                 return 0;
             }
 
             @Mock
-            public Map<String, List<String>> getResponseHeaders() throws IOException
+            public Map<String, List<String>> getResponseHeaders()
             {
                 return new HashMap<>();
             }

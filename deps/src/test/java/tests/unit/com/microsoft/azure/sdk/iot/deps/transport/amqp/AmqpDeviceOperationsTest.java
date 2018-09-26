@@ -60,7 +60,7 @@ public class AmqpDeviceOperationsTest
     }
 
     @Test
-    public void ReceiverMessageFromLinkReturnNullOnLinkNameNull() throws IOException
+    public void ReceiverMessageFromLinkReturnNullOnLinkNameNull()
     {
         // Arrange
         AmqpDeviceOperations amqpDeviceOperation = new AmqpDeviceOperations();
@@ -79,7 +79,7 @@ public class AmqpDeviceOperationsTest
     }
 
     @Test
-    public void ReceiverMessageFromLinkReturnNullOnLinkNameEmpty() throws IOException
+    public void ReceiverMessageFromLinkReturnNullOnLinkNameEmpty()
     {
         // Arrange
         AmqpDeviceOperations amqpDeviceOperation = new AmqpDeviceOperations();
@@ -98,7 +98,7 @@ public class AmqpDeviceOperationsTest
     }
 
     @Test
-    public void ReceiverMessageFromLinkReceiverLinkNull() throws IOException
+    public void ReceiverMessageFromLinkReceiverLinkNull()
     {
         // Arrange
         AmqpDeviceOperations amqpDeviceOperation = new AmqpDeviceOperations();
@@ -117,7 +117,7 @@ public class AmqpDeviceOperationsTest
     }
 
     @Test
-    public void ReceiverMessageFromLinkWrongName() throws IOException
+    public void ReceiverMessageFromLinkWrongName()
     {
         // Arrange
         AmqpDeviceOperations amqpDeviceOperation = new AmqpDeviceOperations();
@@ -151,7 +151,7 @@ public class AmqpDeviceOperationsTest
     }
 
     @Test
-    public void ReceiverMessageFromLinkSucceeds() throws IOException
+    public void ReceiverMessageFromLinkSucceeds()
     {
         // Arrange
         AmqpDeviceOperations amqpDeviceOperation = new AmqpDeviceOperations();
@@ -252,7 +252,7 @@ public class AmqpDeviceOperationsTest
     }
 
     @Test
-    public void isRecieverLinkTagFalseSucceeds() throws IOException, IllegalArgumentException
+    public void isRecieverLinkTagFalseSucceeds() throws IllegalArgumentException
     {
         // Arrange
         AmqpDeviceOperations amqpDeviceOperation = new AmqpDeviceOperations();
@@ -265,7 +265,7 @@ public class AmqpDeviceOperationsTest
     }
 
     @Test
-    public void isRecieverLinkTagTrueSucceeds() throws IOException, IllegalArgumentException
+    public void isRecieverLinkTagTrueSucceeds() throws IllegalArgumentException
     {
         // Arrange
         AmqpDeviceOperations amqpDeviceOperation = new AmqpDeviceOperations();
@@ -364,7 +364,7 @@ public class AmqpDeviceOperationsTest
     }
 
     @Test
-    public void sendMessageSuccess() throws IOException, IllegalArgumentException
+    public void sendMessageSuccess() throws IllegalArgumentException
     {
         // Arrange
         AmqpDeviceOperations amqpDeviceOperation = new AmqpDeviceOperations();
@@ -388,7 +388,7 @@ public class AmqpDeviceOperationsTest
     }
 
     @Test
-    public void closeLinksSuccess() throws IOException, IllegalArgumentException
+    public void closeLinksSuccess() throws IllegalArgumentException
     {
         // Arrange
         AmqpDeviceOperations amqpDeviceOperation = new AmqpDeviceOperations();

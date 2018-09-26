@@ -555,7 +555,7 @@ public class AmqpSendHandlerTest
     Tests_SRS_SERVICE_SDK_JAVA_AMQPSENDHANDLER_25_028: [** The event handler shall close the Sender, Session and Connection **]**
      */
     @Test
-    public void onDelivery_flow_ok(final @Mocked Event mockedEvent, final @Mocked DeliveryState mockedDeliveryState, final @Mocked Delivery mockedDelivery) throws UnsupportedEncodingException
+    public void onDelivery_flow_ok(final @Mocked Event mockedEvent, final @Mocked DeliveryState mockedDeliveryState, final @Mocked Delivery mockedDelivery)
     {
         // Arrange
         String hostName = "aaa";

@@ -290,7 +290,7 @@ public class DeviceClientConfigTest
     // Tests_SRS_DEVICECLIENTCONFIG_11_006: [The function shall set the message callback, with its associated context.]
     // Tests_SRS_DEVICECLIENTCONFIG_11_010: [If the inputName is null, or the message callbacks map does not contain the provided inputName, this function shall return the default message callback.]
     @Test
-    public void getAndSetMessageCallbackMatch(@Mocked final MessageCallback mockCallback) throws URISyntaxException, IOException
+    public void getAndSetMessageCallbackMatch(@Mocked final MessageCallback mockCallback)
     {
         final String iotHubHostname = "test.iothubhostname";
         final String deviceId = "test-deviceid";
@@ -310,7 +310,7 @@ public class DeviceClientConfigTest
     // Tests_SRS_DEVICECLIENTCONFIG_11_006: [The function shall set the message callback, with its associated context.]
     // Tests_SRS_DEVICECLIENTCONFIG_11_011: [If the inputName is null, or the message callbacks map does not contain the provided inputName, this function shall return the default message callback context.]
     @Test
-    public void getAndSetMessageCallbackContextsMatch(@Mocked final MessageCallback mockCallback) throws URISyntaxException, IOException
+    public void getAndSetMessageCallbackContextsMatch(@Mocked final MessageCallback mockCallback)
     {
         final String iotHubHostname = "test.iothubhostname";
         final String deviceId = "test-deviceid";
@@ -330,7 +330,7 @@ public class DeviceClientConfigTest
     // Tests_SRS_DEVICECLIENTCONFIG_34_045: [If the message callbacks map contains the provided inputName, this function
     // shall return the callback associated with that inputName.]
     @Test
-    public void getMessageCallbackWithSavedInput(@Mocked final MessageCallback mockCallback) throws URISyntaxException, IOException
+    public void getMessageCallbackWithSavedInput(@Mocked final MessageCallback mockCallback)
     {
         //arrange
         String inputName = "someValidInputName";
@@ -354,7 +354,7 @@ public class DeviceClientConfigTest
     // Tests_SRS_DEVICECLIENTCONFIG_34_046: [If the message callbacks map contains the provided inputName, this function
     // shall return the context associated with that inputName.]
     @Test
-    public void getMessageCallbackContextWithSavedInput(@Mocked final MessageCallback mockCallback) throws URISyntaxException, IOException
+    public void getMessageCallbackContextWithSavedInput(@Mocked final MessageCallback mockCallback)
     {
         //arrange
         String inputName = "someValidInputName";
@@ -383,7 +383,7 @@ public class DeviceClientConfigTest
      **Tests_SRS_DEVICECLIENTCONFIG_25_026: [**The function shall return the current DEVICE_TWIN message context.**] **
      */
     @Test
-    public void getAndSetDeviceTwinMessageCallbackAndContextsMatch(@Mocked final MessageCallback mockCallback) throws URISyntaxException, IOException
+    public void getAndSetDeviceTwinMessageCallbackAndContextsMatch(@Mocked final MessageCallback mockCallback)
     {
         final String iotHubHostname = "test.iothubhostname";
         final String deviceId = "test-deviceid";
@@ -408,7 +408,7 @@ public class DeviceClientConfigTest
      **Tests_SRS_DEVICECLIENTCONFIG_25_022: [**The function shall return the current DeviceMethod message context.**] **
      */
     @Test
-    public void getAndSetDeviceMethodMessageCallbackAndContextsMatch(@Mocked final MessageCallback mockCallback) throws URISyntaxException, IOException
+    public void getAndSetDeviceMethodMessageCallbackAndContextsMatch(@Mocked final MessageCallback mockCallback)
     {
         final String iotHubHostname = "test.iothubhostname";
         final String deviceId = "test-deviceid";
@@ -428,7 +428,7 @@ public class DeviceClientConfigTest
     }
 
     @Test
-    public void getAndSetDeviceMethodAndTwinMessageCallbackAndContextsMatch(@Mocked final MessageCallback mockCallback) throws URISyntaxException, IOException
+    public void getAndSetDeviceMethodAndTwinMessageCallbackAndContextsMatch(@Mocked final MessageCallback mockCallback)
     {
         final String iotHubHostname = "test.iothubhostname";
         final String deviceId = "test-deviceid";
@@ -457,7 +457,7 @@ public class DeviceClientConfigTest
 
     // Tests_SRS_DEVICECLIENTCONFIG_11_012: [The function shall return 240000ms.]
     @Test
-    public void getReadTimeoutMillisReturnsConstant() throws URISyntaxException, IOException
+    public void getReadTimeoutMillisReturnsConstant()
     {
         final String iotHubHostname = "test.iothubhostname";
         final String deviceId = "test-deviceid";
@@ -474,7 +474,7 @@ public class DeviceClientConfigTest
 
     //Tests_SRS_DEVICECLIENTCONFIG_25_038: [The function shall save useWebsocket.]
     @Test
-    public void setWebsocketEnabledSets() throws URISyntaxException, IOException
+    public void setWebsocketEnabledSets()
     {
         final String iotHubHostname = "test.iothubhostname";
         final String deviceId = "test-deviceid";
@@ -489,7 +489,7 @@ public class DeviceClientConfigTest
 
     //Tests_SRS_DEVICECLIENTCONFIG_25_037: [The function shall return the true if websocket is enabled, false otherwise.]
     @Test
-    public void getWebsocketEnabledGets() throws URISyntaxException, IOException
+    public void getWebsocketEnabledGets()
     {
         final String iotHubHostname = "test.iothubhostname";
         final String deviceId = "test-deviceid";
@@ -504,7 +504,7 @@ public class DeviceClientConfigTest
 
     // Tests_SRS_DEVICECLIENTCONFIG_11_013: [The function shall return 180s.]
     @Test
-    public void getMessageLockTimeoutSecsReturnsConstant() throws URISyntaxException, IOException
+    public void getMessageLockTimeoutSecsReturnsConstant()
     {
         final String iotHubHostname = "test.iothubhostname";
         final String deviceId = "test-deviceid";
@@ -529,7 +529,7 @@ public class DeviceClientConfigTest
 
     //Tests_SRS_DEVICECLIENTCONFIG_34_039: [This function shall return the type of authentication that the config is set up to use.]
     @Test
-    public void getAuthenticationTypeWorks() throws IOException
+    public void getAuthenticationTypeWorks()
     {
         //arrange
         DeviceClientConfig config = Deencapsulation.newInstance(DeviceClientConfig.class, mockSasTokenSoftwareAuthentication);
@@ -545,7 +545,7 @@ public class DeviceClientConfigTest
 
     //Tests_SRS_DEVICECLIENTCONFIG_34_069: [If the provided connection string is null or does not use x509 auth, and IllegalArgumentException shall be thrown.]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorWithNullConnStringThrows() throws IOException
+    public void constructorWithNullConnStringThrows()
     {
         //act
         new DeviceClientConfig(null, "", false, "", false);
@@ -553,7 +553,7 @@ public class DeviceClientConfigTest
 
     //Tests_SRS_DEVICECLIENTCONFIG_34_069: [If the provided connection string is null or does not use x509 auth, and IllegalArgumentException shall be thrown.]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorWithWrongAuthTypeConnStringThrows() throws IOException
+    public void constructorWithWrongAuthTypeConnStringThrows()
     {
         //arrange
         new NonStrictExpectations()
@@ -570,7 +570,7 @@ public class DeviceClientConfigTest
 
     // Tests_SRS_DEVICECLIENTCONFIG_12_002: [If the authentication type is X509 the constructor shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorWithX509AuthThrows(@Mocked final IotHubConnectionString mockIotHubConnectionString) throws IOException
+    public void constructorWithX509AuthThrows(@Mocked final IotHubConnectionString mockIotHubConnectionString)
     {
         //act
         new DeviceClientConfig((IotHubConnectionString) null);
@@ -713,7 +713,7 @@ public class DeviceClientConfigTest
 
     //Tests_SRS_DEVICECLIENTCONFIG_34_084: [If the provided security provider is neither a SecurityProviderX509 instance nor a SecurityProviderTpm instance, this function shall throw an UnsupportedOperationException.]
     @Test(expected = UnsupportedOperationException.class)
-    public void securityProviderConstructorThrowsForUnknownSecurityProviderImplementation() throws SecurityProviderException
+    public void securityProviderConstructorThrowsForUnknownSecurityProviderImplementation()
     {
         //arrange
         new NonStrictExpectations()

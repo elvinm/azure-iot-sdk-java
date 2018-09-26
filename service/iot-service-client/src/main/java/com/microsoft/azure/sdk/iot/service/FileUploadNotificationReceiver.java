@@ -67,7 +67,7 @@ public class FileUploadNotificationReceiver extends Receiver
      *
      * @throws IOException This exception is thrown if the input AmqpReceive object is null
      */
-    public void close() throws IOException
+    public void close()
     {
         // Codes_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATIONRECEIVER_25_006: [** The function shall call close() on the member AmqpFileUploadNotificationReceive object **]**
         this.amqpFileUploadNotificationReceive.close();

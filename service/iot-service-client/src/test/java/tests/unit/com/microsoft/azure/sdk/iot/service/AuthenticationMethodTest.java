@@ -21,7 +21,7 @@ public class AuthenticationMethodTest
      * Create and get
      */
     @Test
-    public void ServiceAuthenticationWithSharedAccessPolicyKey() throws Exception
+    public void ServiceAuthenticationWithSharedAccessPolicyKey()
     {
         // Arrange
         String policyName = "SharedAccessKey";
@@ -38,7 +38,7 @@ public class AuthenticationMethodTest
      * Create and get
      */
     @Test
-    public void getAuthenticationMethodSharedAccessToken() throws Exception
+    public void getAuthenticationMethodSharedAccessToken()
     {
         // Arrange
         String policyName = "SharedAccessKey";

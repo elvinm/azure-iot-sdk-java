@@ -29,7 +29,7 @@ public class IotHubAbandonUriTest
 
     // Tests_SRS_IOTHUBABANDONURI_11_001: [The constructor returns a URI with the format "[iotHubHostname]/devices/[deviceId]/messages/devicebound/[eTag]/abandon?api-version=2016-02-03".]
     @Test
-    public void constructorConstructsIotHubUriCorrectly() throws URISyntaxException
+    public void constructorConstructsIotHubUriCorrectly()
     {
         final String iotHubHostname = "test.iothub";
         final String deviceId = "test-deviceid";
@@ -48,7 +48,7 @@ public class IotHubAbandonUriTest
 
     // Tests_SRS_IOTHUBABANDONURI_11_002: [The string representation of the IoT Hub event URI shall be constructed with the format "[iotHubHostname]/devices/[deviceId]/messages/devicebound/[eTag]/abandon?api-version=2016-02-03".]
     @Test
-    public void toStringIsCorrect() throws URISyntaxException
+    public void toStringIsCorrect()
     {
         final String iotHubHostname = "test.iothub";
         final String deviceId = "test-deviceid";
@@ -71,7 +71,7 @@ public class IotHubAbandonUriTest
 
     // Tests_SRS_IOTHUBABANDONURI_11_003: [The function shall return the hostname given in the constructor.] 
     @Test
-    public void getHostnameIsCorrect() throws URISyntaxException
+    public void getHostnameIsCorrect()
     {
         final String iotHubHostname = "test.iothub";
         final String deviceId = "test-deviceid";
@@ -94,7 +94,7 @@ public class IotHubAbandonUriTest
 
     // Tests_SRS_IOTHUBABANDONURI_11_004: [The function shall return a URI with the format '/devices/[deviceId]/messages/devicebound/[eTag]/abandon'.]
     @Test
-    public void getPathIsCorrect() throws URISyntaxException
+    public void getPathIsCorrect()
     {
         final String iotHubHostname = "test.iothub";
         final String deviceId = "test-deviceid";

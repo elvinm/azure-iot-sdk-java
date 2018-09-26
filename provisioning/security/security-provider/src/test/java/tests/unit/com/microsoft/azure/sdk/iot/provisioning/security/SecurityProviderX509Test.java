@@ -123,7 +123,7 @@ public class SecurityProviderX509Test
 
     //SRS_SecurityClientX509_25_006: [ This method shall throw IllegalArgumentException if input parameters are null. ]
     @Test(expected = IllegalArgumentException.class)
-    public void getSslContextThrowsOnNullLeaf() throws SecurityProviderException, KeyManagementException, KeyStoreException
+    public void getSslContextThrowsOnNullLeaf() throws SecurityProviderException
     {
         //arrange
         Collection<X509Certificate> certificates = new LinkedList<>();
@@ -136,7 +136,7 @@ public class SecurityProviderX509Test
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void getSslContextThrowsOnNullPrivateKey() throws SecurityProviderException, KeyManagementException, KeyStoreException
+    public void getSslContextThrowsOnNullPrivateKey() throws SecurityProviderException
     {
         //arrange
         Collection<X509Certificate> certificates = new LinkedList<>();
@@ -149,7 +149,7 @@ public class SecurityProviderX509Test
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void getSslContextThrowsOnNullIntermediates() throws SecurityProviderException, KeyManagementException, KeyStoreException
+    public void getSslContextThrowsOnNullIntermediates() throws SecurityProviderException
     {
         //arrange
         SecurityProviderX509 securityClientX509Test = new SecurityProviderX509TestImpl(TEST_COMMON_NAME, mockedX509Certificate, mockedKey, null);
@@ -161,7 +161,7 @@ public class SecurityProviderX509Test
 
     //SRS_SecurityClientX509_25_005: [ This method shall throw SecurityProviderException if X509 Key Manager is not found. ]
     @Test(expected = SecurityProviderException.class)
-    public void getSslContextThrowsIfX509KeyManagerNotFound() throws SecurityProviderException, KeyManagementException, KeyStoreException
+    public void getSslContextThrowsIfX509KeyManagerNotFound() throws SecurityProviderException
     {
 
         //arrange
@@ -183,7 +183,7 @@ public class SecurityProviderX509Test
 
     //SRS_SecurityClientX509_25_004: [ This method shall throw SecurityProviderException if X509 Trust Manager is not found. ]
     @Test(expected = SecurityProviderException.class)
-    public void getSslContextThrowsIfX509TrustManagerNotFound() throws SecurityProviderException, KeyManagementException, KeyStoreException
+    public void getSslContextThrowsIfX509TrustManagerNotFound() throws SecurityProviderException
     {
         //arrange
         Collection<X509Certificate> certificates = new LinkedList<>();
@@ -206,7 +206,7 @@ public class SecurityProviderX509Test
 
     //SRS_SecurityClientX509_25_003: [ This method shall throw SecurityProviderException chained with the exception thrown from underlying API calls to SSL library. ]
     @Test(expected = SecurityProviderException.class)
-    public void getSslContextThrowsIfAnyOfTheUnderlyingAPIFails() throws SecurityProviderException, KeyManagementException, KeyStoreException
+    public void getSslContextThrowsIfAnyOfTheUnderlyingAPIFails() throws SecurityProviderException, KeyManagementException
     {
         //arrange
         Collection<X509Certificate> certificates = new LinkedList<>();

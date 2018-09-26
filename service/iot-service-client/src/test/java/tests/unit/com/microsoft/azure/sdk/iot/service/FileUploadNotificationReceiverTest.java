@@ -25,7 +25,7 @@ public class FileUploadNotificationReceiverTest
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATIONRECEIVER_25_001: [** The constructor shall throw IllegalArgumentException if any the input string is null or empty **]**
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructorInputHostNameNull() throws Exception
+    public void constructorInputHostNameNull()
     {
         // Arrange
         final String hostName = null;
@@ -38,7 +38,7 @@ public class FileUploadNotificationReceiverTest
 
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructorInputUserNameNull() throws Exception
+    public void constructorInputUserNameNull()
     {
         // Arrange
         final String hostName = "xxx";
@@ -51,7 +51,7 @@ public class FileUploadNotificationReceiverTest
 
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructorInputSasTokenNull() throws Exception
+    public void constructorInputSasTokenNull()
     {
         // Arrange
         final String hostName = "xxx";
@@ -64,7 +64,7 @@ public class FileUploadNotificationReceiverTest
 
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructorInputProtocolNull() throws Exception
+    public void constructorInputProtocolNull()
     {
         // Arrange
         final String hostName = "xxx";
@@ -78,7 +78,7 @@ public class FileUploadNotificationReceiverTest
 
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructorInputHostNameEmpty() throws Exception
+    public void constructorInputHostNameEmpty()
     {
         // Arrange
         final String hostName = "";
@@ -91,7 +91,7 @@ public class FileUploadNotificationReceiverTest
 
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructorInputUserNameEmpty() throws Exception
+    public void constructorInputUserNameEmpty()
     {
         // Arrange
         final String hostName = "xxx";
@@ -104,7 +104,7 @@ public class FileUploadNotificationReceiverTest
 
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructorInputSasTokenEmpty() throws Exception
+    public void constructorInputSasTokenEmpty()
     {
         // Arrange
         final String hostName = "xxx";
@@ -117,7 +117,7 @@ public class FileUploadNotificationReceiverTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_FILEUPLOADNOTIFICATIONRECEIVER_25_002: [** The constructor shall create a new instance of AmqpFileUploadNotificationReceive object **]**
     @Test
-    public void constructorSaveProperties() throws Exception
+    public void constructorSaveProperties()
     {
         // Arrange
         final String hostName = "aaa";

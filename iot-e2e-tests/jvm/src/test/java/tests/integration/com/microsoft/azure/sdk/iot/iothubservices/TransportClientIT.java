@@ -174,13 +174,7 @@ public class TransportClientIT extends MethodNameLoggingIntegrationTest
             return false;
         }
 
-        if (msg.getMessageId() == null || !msg.getMessageId().equals(expectedMessageId))
-        {
-            return false;
-        }
-
-        //all system properties are as expected
-        return true;
+        return msg.getMessageId() != null && msg.getMessageId().equals(expectedMessageId);
     }
 
     @After

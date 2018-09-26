@@ -269,7 +269,7 @@ public class MethodParserTest
         }
         else if (actualPayload instanceof ArrayList)
         {
-            assertEquals((ArrayList<Double>) actualPayload, Arrays.asList((Double[]) expectedPayload));
+            assertEquals(actualPayload, Arrays.asList((Double[]) expectedPayload));
         }
         else
         {

@@ -177,7 +177,7 @@ public class FileUploadTest
                 Deencapsulation.newInstance(FileUploadInProgress.class, new Class[]{IotHubEventCallback.class, Object.class}, mockIotHubEventCallback, context);
                 result = mockFileUploadInProgress;
                 times = 1;
-                Deencapsulation.newInstance(FileUploadTask.class, new Class[]{String.class, InputStream.class, long.class, HttpsTransportManager.class, IotHubEventCallback.class, Object.class}, blobName, mockInputStream, streamLength, mockHttpsTransportManager, (IotHubEventCallback) any, mockFileUploadInProgress);
+                Deencapsulation.newInstance(FileUploadTask.class, new Class[]{String.class, InputStream.class, long.class, HttpsTransportManager.class, IotHubEventCallback.class, Object.class}, blobName, mockInputStream, streamLength, mockHttpsTransportManager, any, mockFileUploadInProgress);
                 result = mockFileUploadTask;
                 times = 1;
                 mockScheduler.submit(mockFileUploadTask);

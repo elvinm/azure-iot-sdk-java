@@ -151,7 +151,7 @@ public class IotHubSasTokenSoftwareIotHubAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBSASTOKENSOFTWAREAUTHENTICATION_34_005: [This function shall return the saved sas token.]
     @Test
-    public void getSasTokenReturnsSavedValue() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException
+    public void getSasTokenReturnsSavedValue()
     {
         //arrange
         new Expectations()
@@ -177,7 +177,7 @@ public class IotHubSasTokenSoftwareIotHubAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBSASTOKENAUTHENTICATION_34_017: [If the saved sas token has expired and cannot be renewed, this function shall return true.]
     @Test
-    public void isRenewalNecessaryReturnsTrueWhenTokenHasExpiredAndNoDeviceKeyIsPresent() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException
+    public void isRenewalNecessaryReturnsTrueWhenTokenHasExpiredAndNoDeviceKeyIsPresent()
     {
         //arrange
         new NonStrictExpectations()
@@ -199,7 +199,7 @@ public class IotHubSasTokenSoftwareIotHubAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBSASTOKENAUTHENTICATION_34_017: [If the saved sas token has expired and cannot be renewed, this function shall return true.]
     @Test
-    public void isRenewalNecessaryReturnsFalseDeviceKeyPresent() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException
+    public void isRenewalNecessaryReturnsFalseDeviceKeyPresent()
     {
         //arrange
         new StrictExpectations()
@@ -223,7 +223,7 @@ public class IotHubSasTokenSoftwareIotHubAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBSASTOKENAUTHENTICATION_34_017: [If the saved sas token has expired and cannot be renewed, this function shall return true.]
     @Test
-    public void isRenewalNecessaryReturnsFalseWhenTokenHasNotExpired() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException
+    public void isRenewalNecessaryReturnsFalseWhenTokenHasNotExpired()
     {
         //arrange
         new NonStrictExpectations()

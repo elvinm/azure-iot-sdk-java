@@ -56,7 +56,7 @@
 
      // Tests_SRS_SecurityClientDiceEmulator_34_001: [This function shall return a Private Key instance created by the provided PEM formatted privateKeyString.]
      @Test
-     public void parsePrivateKeySuccess() throws CertificateException, IOException
+     public void parsePrivateKeySuccess() throws IOException
      {
          //arrange
          new NonStrictExpectations(SecurityProviderX509Cert.class)
@@ -85,7 +85,7 @@
      }
 
      @Test
-     public void parsePrivateKeyType2Success() throws CertificateException, IOException
+     public void parsePrivateKeyType2Success() throws IOException
      {
          //arrange
          new NonStrictExpectations(SecurityProviderX509Cert.class)
@@ -115,7 +115,7 @@
 
      // Tests_SRS_SecurityClientDiceEmulator_34_002: [If any exception is encountered while attempting to create the private key instance, this function shall throw a CertificateException.]
      @Test(expected = CertificateException.class)
-     public void parsePrivateKeyExceptionsWrappedInCertificateException() throws CertificateException, IOException
+     public void parsePrivateKeyExceptionsWrappedInCertificateException()
      {
          //arrange
          new NonStrictExpectations()
@@ -161,7 +161,7 @@
 
      // Tests_SRS_SecurityClientDiceEmulator_34_004: [If any exception is encountered while attempting to create the public key certificate instance, this function shall throw a CertificateException.]
      @Test(expected = CertificateException.class)
-     public void parsePublicKeyCertificateExceptionsWrappedInCertificateException() throws CertificateException, IOException
+     public void parsePublicKeyCertificateExceptionsWrappedInCertificateException()
      {
          //arrange
          new NonStrictExpectations()

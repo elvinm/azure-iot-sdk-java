@@ -45,7 +45,7 @@ public class MqttDeviceTwin extends Mqtt
     private String subscribeTopic;
     private boolean isStarted = false;
 
-    public MqttDeviceTwin(MqttConnection mqttConnection, String connectionId) throws TransportException
+    public MqttDeviceTwin(MqttConnection mqttConnection, String connectionId)
     {
         //Codes_SRS_MQTTDEVICETWIN_25_001: [The constructor shall instantiate super class without any parameters.]
         super(mqttConnection, null, null, connectionId);
@@ -74,7 +74,7 @@ public class MqttDeviceTwin extends Mqtt
         }
     }
 
-    private String buildTopic(final IotHubTransportMessage message) throws TransportException
+    private String buildTopic(final IotHubTransportMessage message)
     {
         StringBuilder topic = new StringBuilder();
         switch (message.getDeviceOperationType())

@@ -618,14 +618,14 @@ public class DeviceOperationsTest
 
     //Tests_SRS_DEVICE_OPERATIONS_25_021: [If the headers map is null or empty then this method shall throw IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void setCustomHeadersThrowsOnNull() throws Exception
+    public void setCustomHeadersThrowsOnNull()
     {
         //act/assert
         DeviceOperations.setHeaders(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void setCustomHeadersThrowsOnEmpty() throws Exception
+    public void setCustomHeadersThrowsOnEmpty()
     {
         //act/assert
         DeviceOperations.setHeaders(new HashMap<>());

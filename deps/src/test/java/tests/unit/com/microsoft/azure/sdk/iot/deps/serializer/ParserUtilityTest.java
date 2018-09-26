@@ -278,7 +278,7 @@ public class ParserUtilityTest
     public void validateKeyNullKeyThrows() throws ClassNotFoundException
     {
         // act
-        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateKey", new Class[]{String.class, Boolean.class}, (String) null, false);
+        Deencapsulation.invoke(Class.forName("com.microsoft.azure.sdk.iot.deps.serializer.ParserUtility"), "validateKey", new Class[]{String.class, Boolean.class}, null, false);
     }
 
     /* Tests_SRS_PARSER_UTILITY_21_014: [The validateKey shall throw IllegalArgumentException if the provided string is null or empty.] */
@@ -346,7 +346,7 @@ public class ParserUtilityTest
 
     /* Tests_SRS_PARSER_UTILITY_21_046: [The validateMap shall throws IllegalArgumentException if the maxLevel is `0` or negative.] */
     @Test(expected = IllegalArgumentException.class)
-    public void validateMapThrowsOnZeroMaxLevel() throws ClassNotFoundException
+    public void validateMapThrowsOnZeroMaxLevel()
     {
         // act
         ParserUtility.validateMap(new HashMap<String, Object>(), 0, false);
@@ -354,7 +354,7 @@ public class ParserUtilityTest
 
     /* Tests_SRS_PARSER_UTILITY_21_046: [The validateMap shall throws IllegalArgumentException if the maxLevel is `0` or negative.] */
     @Test(expected = IllegalArgumentException.class)
-    public void validateMapThrowsOnNegativeMaxLevel() throws ClassNotFoundException
+    public void validateMapThrowsOnNegativeMaxLevel()
     {
         // act
         ParserUtility.validateMap(new HashMap<String, Object>(), -1, false);
@@ -362,7 +362,7 @@ public class ParserUtilityTest
 
     /* Tests_SRS_PARSER_UTILITY_21_047: [The validateMap shall do nothing if the map is a valid Map.] */
     @Test
-    public void validateMapLowerThanMaxLevelSucceed() throws ClassNotFoundException
+    public void validateMapLowerThanMaxLevelSucceed()
     {
         // arrange
         final Map<String, Object> mapSample = new HashMap<String, Object>()
@@ -400,7 +400,7 @@ public class ParserUtilityTest
 
     /* Tests_SRS_PARSER_UTILITY_21_048: [The validateMap shall do nothing if the map is null.] */
     @Test
-    public void validateMapNullMapSucceed() throws ClassNotFoundException
+    public void validateMapNullMapSucceed()
     {
         // act
         ParserUtility.validateMap(null, 4, false);
@@ -408,7 +408,7 @@ public class ParserUtilityTest
 
     /* Tests_SRS_PARSER_UTILITY_21_049: [The validateMap shall throws IllegalArgumentException if any key in the map is null, empty, contains more than 128 characters, or illegal characters (`$`,`.`, space).] */
     @Test(expected = IllegalArgumentException.class)
-    public void validateMapThrowsOnNullKey() throws ClassNotFoundException
+    public void validateMapThrowsOnNullKey()
     {
         // arrange
         final Map<String, Object> mapSample = new HashMap<String, Object>()
@@ -424,7 +424,7 @@ public class ParserUtilityTest
 
     /* Tests_SRS_PARSER_UTILITY_21_049: [The validateMap shall throws IllegalArgumentException if any key in the map is null, empty, contains more than 128 characters, or illegal characters (`$`,`.`, space).] */
     @Test(expected = IllegalArgumentException.class)
-    public void validateMapThrowsOnEmptyKey() throws ClassNotFoundException
+    public void validateMapThrowsOnEmptyKey()
     {
         // arrange
         final Map<String, Object> mapSample = new HashMap<String, Object>()
@@ -440,7 +440,7 @@ public class ParserUtilityTest
 
     /* Tests_SRS_PARSER_UTILITY_21_049: [The validateMap shall throws IllegalArgumentException if any key in the map is null, empty, contains more than 128 characters, or illegal characters (`$`,`.`, space).] */
     @Test(expected = IllegalArgumentException.class)
-    public void validateMapThrowsOnMoreThan128CharKey() throws ClassNotFoundException
+    public void validateMapThrowsOnMoreThan128CharKey()
     {
         // arrange
         final String bigKey = "1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890" + "1234567890123456789012345678901234567890" + "123456789";
@@ -457,7 +457,7 @@ public class ParserUtilityTest
 
     /* Tests_SRS_PARSER_UTILITY_21_049: [The validateMap shall throws IllegalArgumentException if any key in the map is null, empty, contains more than 128 characters, or illegal characters (`$`,`.`, space).] */
     @Test(expected = IllegalArgumentException.class)
-    public void validateMapThrowsOnInvalidKey() throws ClassNotFoundException
+    public void validateMapThrowsOnInvalidKey()
     {
         // arrange
         final Map<String, Object> mapSample = new HashMap<String, Object>()
@@ -473,7 +473,7 @@ public class ParserUtilityTest
 
     /* Tests_SRS_PARSER_UTILITY_21_050: [If `isMetadata` is `true`, the validateMap shall accept the character `$` in the key.] */
     @Test
-    public void validateMapWithValidMetadataSucceed() throws ClassNotFoundException
+    public void validateMapWithValidMetadataSucceed()
     {
         // arrange
         final Map<String, Object> mapSample = new HashMap<String, Object>()
@@ -489,7 +489,7 @@ public class ParserUtilityTest
 
     /* Tests_SRS_PARSER_UTILITY_21_051: [The validateMap shall throws IllegalArgumentException if any value contains illegal type (array or invalid class).] */
     @Test(expected = IllegalArgumentException.class)
-    public void validateMapThrowsOnArrayValue() throws ClassNotFoundException
+    public void validateMapThrowsOnArrayValue()
     {
         // arrange
         final Map<String, Object> mapSample = new HashMap<String, Object>()
@@ -505,14 +505,13 @@ public class ParserUtilityTest
 
     /* Tests_SRS_PARSER_UTILITY_21_051: [The validateMap shall throws IllegalArgumentException if any value contains illegal type (array or invalid class).] */
     @Test(expected = IllegalArgumentException.class)
-    public void validateMapThrowsOnInvalidClassValue() throws ClassNotFoundException
+    public void validateMapThrowsOnInvalidClassValue()
     {
         // arrange
         final class localClass
         {
             int a;
         }
-        ;
         final Map<String, Object> mapSample = new HashMap<String, Object>()
         {
             {
@@ -526,7 +525,7 @@ public class ParserUtilityTest
 
     /* Tests_SRS_PARSER_UTILITY_21_052: [The validateMap shall throws IllegalArgumentException if the provided map contains more than maxLevel levels.] */
     @Test(expected = IllegalArgumentException.class)
-    public void validateMapThrowsOnBiggerThanMaxLevel() throws ClassNotFoundException
+    public void validateMapThrowsOnBiggerThanMaxLevel()
     {
         // arrange
         final Map<String, Object> mapSample = new HashMap<String, Object>()

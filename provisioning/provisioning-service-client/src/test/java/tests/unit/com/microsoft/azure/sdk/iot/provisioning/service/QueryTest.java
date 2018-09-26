@@ -604,7 +604,7 @@ public class QueryTest
 
     /* SRS_QUERY_21_018: [The next shall throw NoSuchElementException if the provided continuationToken is null or empty.] */
     @Test(expected = NoSuchElementException.class)
-    public void nextThrowsOnNullContinuationToken() throws ProvisioningServiceClientException
+    public void nextThrowsOnNullContinuationToken()
     {
         // arrange
         final ContractApiHttp contractApiHttp = mockedContractApiHttp;
@@ -629,7 +629,7 @@ public class QueryTest
 
     /* SRS_QUERY_21_018: [The next shall throw NoSuchElementException if the provided continuationToken is null or empty.] */
     @Test(expected = NoSuchElementException.class)
-    public void nextThrowsOnEmptyContinuationToken() throws ProvisioningServiceClientException
+    public void nextThrowsOnEmptyContinuationToken()
     {
         // arrange
         final ContractApiHttp contractApiHttp = mockedContractApiHttp;
@@ -655,7 +655,7 @@ public class QueryTest
     /* SRS_QUERY_21_019: [The next shall store the provided continuationToken.] */
     /* SRS_QUERY_21_020: [The next shall return the next page of results by calling the next().] */
     @Test
-    public void nextStoreContinuationToken() throws ProvisioningServiceClientException
+    public void nextStoreContinuationToken()
     {
         // arrange
         final ContractApiHttp contractApiHttp = mockedContractApiHttp;

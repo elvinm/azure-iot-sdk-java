@@ -23,7 +23,7 @@ public class ProvisioningDeviceClientRegistrationResultTest
     //SRS_ProvisioningDeviceClientRegistrationResult_25_003: [ This method shall retrieve deviceId. ]
     //SRS_ProvisioningDeviceClientRegistrationResult_25_004: [ This method shall retrieve provisioningDeviceClientStatus. ]
     @Test
-    public void constructorResultsInNullGetters() throws Exception
+    public void constructorResultsInNullGetters()
     {
         //act
         ProvisioningDeviceClientRegistrationResult testResult = new ProvisioningDeviceClientRegistrationResult();

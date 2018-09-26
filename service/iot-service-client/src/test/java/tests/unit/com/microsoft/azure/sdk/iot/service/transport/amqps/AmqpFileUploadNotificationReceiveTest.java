@@ -116,7 +116,7 @@ public class AmqpFileUploadNotificationReceiveTest
         new Expectations()
         {
             {
-                reactor = proton.reactor(amqpFileUploadNotificationReceive);
+                reactor = Proton.reactor(amqpFileUploadNotificationReceive);
                 reactor.start();
                 reactor.stop();
                 reactor.process();
@@ -146,7 +146,7 @@ public class AmqpFileUploadNotificationReceiveTest
         new Expectations()
         {
             {
-                reactor = proton.reactor(amqpFileUploadNotificationReceive);
+                reactor = Proton.reactor(amqpFileUploadNotificationReceive);
                 reactor.start();
                 reactor.stop();
                 reactor.process();

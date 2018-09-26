@@ -28,7 +28,7 @@ public class AuthorizationTest
 {
     //SRS_Authorization_25_001: [ Constructor shall create null SasToken and null SSL Context ]
     @Test
-    public void constructorSucceeds() throws Exception
+    public void constructorSucceeds()
     {
         //act
         Authorization testAuth = Deencapsulation.newInstance(Authorization.class);
@@ -41,7 +41,7 @@ public class AuthorizationTest
     //SRS_Authorization_25_002: [ This method shall save the value of SSLContext. ]
     //SRS_Authorization_25_003: [ This method shall return the saved value of SSLContext. ]
     @Test
-    public void setAndGetSSL(@Mocked SSLContext mockedSslContext) throws Exception
+    public void setAndGetSSL(@Mocked SSLContext mockedSslContext)
     {
         //arrange
         Authorization testAuth = Deencapsulation.newInstance(Authorization.class);
@@ -55,7 +55,7 @@ public class AuthorizationTest
     //SRS_Authorization_25_004: [ This method shall save the value of sasToken. ]
     //SRS_Authorization_25_005: [ This method shall return the saved value of sasToken. ]
     @Test
-    public void setAndGetSasToken() throws Exception
+    public void setAndGetSasToken()
     {
         //arrange
         Authorization testAuth = Deencapsulation.newInstance(Authorization.class);

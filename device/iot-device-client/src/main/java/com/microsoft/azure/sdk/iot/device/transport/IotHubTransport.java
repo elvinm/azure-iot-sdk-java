@@ -799,7 +799,7 @@ public class IotHubTransport implements IotHubListener
                 //Codes_SRS_IOTHUBTRANSPORT_34_063: [If the provided transportException is retryable, the packet has not
                 // timed out, and the retry policy allows, this function shall schedule a task to add the provided
                 // packet to the waiting list after the amount of time determined by the retry policy.]
-                this.taskScheduler.schedule(new MessageRetryRunnable(this.waitingPacketsQueue, packet), (long) retryDecision.getDuration(), MILLISECONDS);
+                this.taskScheduler.schedule(new MessageRetryRunnable(this.waitingPacketsQueue, packet), retryDecision.getDuration(), MILLISECONDS);
                 return;
             }
         }

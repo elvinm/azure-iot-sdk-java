@@ -257,7 +257,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_014: [The function shall do nothing if the authentication is not open.]
     @Test
-    public void authenticateDoesNothing() throws IllegalArgumentException, InterruptedException, TransportException
+    public void authenticateDoesNothing() throws IllegalArgumentException, TransportException
     {
         // arrange
         final AmqpsSessionManager amqpsSessionManager = new AmqpsSessionManager(mockDeviceClientConfig);
@@ -277,7 +277,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_015: [The function shall call authenticate on all session list members.]
     @Test
-    public void authenticateSuccess() throws IllegalArgumentException, InterruptedException, TransportException
+    public void authenticateSuccess() throws IllegalArgumentException, TransportException
     {
         // arrange
         final AmqpsSessionManager amqpsSessionManager = new AmqpsSessionManager(mockDeviceClientConfig);
@@ -315,7 +315,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_018: [The function shall do nothing if the session is not open.]
     @Test
-    public void openDeviceOperationLinksDoesNothing() throws IllegalArgumentException, InterruptedException, TransportException
+    public void openDeviceOperationLinksDoesNothing() throws IllegalArgumentException, TransportException
     {
         // arrange
         final AmqpsSessionManager amqpsSessionManager = new AmqpsSessionManager(mockDeviceClientConfig);
@@ -397,7 +397,7 @@ public class AmqpsSessionManagerTest
     // Tests_SRS_AMQPSESSIONMANAGER_12_023: [The function shall initialize the session member variable from the connection if the session is null.]
     // Tests_SRS_AMQPSESSIONMANAGER_12_024: [The function shall open the initialized session.]
     @Test
-    public void onConnectionInitOpensSession() throws IllegalArgumentException, InterruptedException, TransportException
+    public void onConnectionInitOpensSession() throws IllegalArgumentException, TransportException
     {
         // arrange
         final AmqpsSessionManager amqpsSessionManager = new AmqpsSessionManager(mockDeviceClientConfig);
@@ -429,7 +429,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_025: [The function shall call authentication's openLink if the session is not null and the authentication is not open.]
     @Test
-    public void onConnectionInitCallsAuthOpenLinks() throws IllegalArgumentException, InterruptedException, TransportException
+    public void onConnectionInitCallsAuthOpenLinks() throws IllegalArgumentException, TransportException
     {
         // arrange
         final AmqpsSessionManager amqpsSessionManager = new AmqpsSessionManager(mockDeviceClientConfig);
@@ -452,7 +452,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_042: [The function shall call openLinks on all device sessions if the session is not null and the authentication is open.]
     @Test
-    public void onConnectionInitCallsDeviceSessionsOpenLinks() throws IllegalArgumentException, InterruptedException, TransportException
+    public void onConnectionInitCallsDeviceSessionsOpenLinks() throws IllegalArgumentException, TransportException
     {
         // arrange
         final AmqpsSessionManager amqpsSessionManager = new AmqpsSessionManager(mockDeviceClientConfig);
@@ -489,7 +489,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_026: [The function shall call setSslDomain on authentication if the session is not null.]
     @Test
-    public void onConnectionBoundCallsAuthSetSslDomain() throws IllegalArgumentException, InterruptedException, TransportException
+    public void onConnectionBoundCallsAuthSetSslDomain() throws IllegalArgumentException, TransportException
     {
         // arrange
         final AmqpsSessionManager amqpsSessionManager = new AmqpsSessionManager(mockDeviceClientConfig);
@@ -512,7 +512,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_027: [The function shall call authentication initLink on all session list member if the authentication is open and the session is not null.]
     @Test
-    public void onLinkInitCallsDeviceSessionInitLink() throws IllegalArgumentException, InterruptedException, TransportException
+    public void onLinkInitCallsDeviceSessionInitLink() throws IllegalArgumentException, TransportException
     {
         // arrange
         final AmqpsSessionManager amqpsSessionManager = new AmqpsSessionManager(mockDeviceClientConfig);
@@ -549,7 +549,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_028: [The function shall call authentication initLink if the authentication is not open and the session is not null.]
     @Test
-    public void onLinkInitCallsAuthInitLink() throws IllegalArgumentException, InterruptedException, TransportException
+    public void onLinkInitCallsAuthInitLink() throws IllegalArgumentException, TransportException
     {
         // arrange
         final AmqpsSessionManager amqpsSessionManager = new AmqpsSessionManager(mockDeviceClientConfig);
@@ -579,7 +579,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_029: [The function shall call authentication isLinkFound if the authentication is not open and return true if both links are open]
     @Test
-    public void onLinkRemoteOpenCallsAuthOneLinkIsOpen() throws IllegalArgumentException, InterruptedException, TransportException
+    public void onLinkRemoteOpenCallsAuthOneLinkIsOpen() throws IllegalArgumentException, TransportException
     {
         // arrange
         final String linkName = "linkName";
@@ -616,7 +616,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_030: [The function shall call authentication isLinkFound if the authentication is not open and return false if only one link is open]
     @Test
-    public void onLinkRemoteOpenCallsAuthBothLinkAreOpen() throws IllegalArgumentException, InterruptedException, TransportException
+    public void onLinkRemoteOpenCallsAuthBothLinkAreOpen() throws IllegalArgumentException, TransportException
     {
         // arrange
         final String linkName = "linkName";
@@ -661,7 +661,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_031: [The function shall call all all device session's isLinkFound, and if both links are opened notify the lock.]
     @Test
-    public void onLinkRemoteOpenNotify() throws IllegalArgumentException, InterruptedException, TransportException
+    public void onLinkRemoteOpenNotify() throws IllegalArgumentException, TransportException
     {
         // arrange
         final String linkName = "linkName";
@@ -713,7 +713,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_032: [The function shall call sendMessage on all session list member and if there is a successful send return with the deliveryHash, otherwise return -1.]
     @Test
-    public void sendMessageNoSender() throws IllegalArgumentException, InterruptedException, TransportException
+    public void sendMessageNoSender() throws IllegalArgumentException, TransportException
     {
         // arrange
         final String linkName = "linkName";
@@ -745,7 +745,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_032: [The function shall call sendMessage on all session list member and if there is a successful send return with the deliveryHash, otherwise return -1.]
     @Test
-    public void sendMessageSuccess() throws IllegalArgumentException, InterruptedException, TransportException
+    public void sendMessageSuccess() throws IllegalArgumentException, TransportException
     {
         // arrange
         final String linkName = "linkName";
@@ -777,7 +777,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_033: [The function shall do nothing and return null if the session is not open.]
     @Test
-    public void getMessageFromReceiverLinkDoesNothing() throws IllegalArgumentException, InterruptedException, TransportException
+    public void getMessageFromReceiverLinkDoesNothing() throws IllegalArgumentException, TransportException
     {
         // arrange
         String linkName = "linkName";
@@ -794,7 +794,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_034: [The function shall call authentication getMessageFromReceiverLink if the authentication is not open.]
     @Test
-    public void getMessageFromReceiverLinkCallsAuth() throws IllegalArgumentException, InterruptedException, TransportException
+    public void getMessageFromReceiverLinkCallsAuth() throws IllegalArgumentException, TransportException
     {
         // arrange
         final String linkName = "linkName";
@@ -822,7 +822,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_035: [The function shall call device sessions getMessageFromReceiverLink if the authentication is open.]
     @Test
-    public void getMessageFromReceiverLinkCallsDeviceSessionsAuthenticated() throws IllegalArgumentException, InterruptedException, TransportException
+    public void getMessageFromReceiverLinkCallsDeviceSessionsAuthenticated() throws IllegalArgumentException, TransportException
     {
         // arrange
         final String linkName = "linkName";
@@ -862,7 +862,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_037: [The function shall return with the authentication isLinkFound's return value if the authentication is not open.]
     @Test
-    public void isLinkFoundCallsAuth() throws IllegalArgumentException, InterruptedException, TransportException
+    public void isLinkFoundCallsAuth() throws IllegalArgumentException, TransportException
     {
         // arrange
         final String linkName = "linkName";
@@ -894,7 +894,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_038: [The function shall call all device session's isLinkFound, and if any of them true return true otherwise return false.]
     @Test
-    public void isLinkFoundCallsDeviceSessions() throws IllegalArgumentException, InterruptedException, TransportException
+    public void isLinkFoundCallsDeviceSessions() throws IllegalArgumentException, TransportException
     {
         // arrange
         final String linkName = "linkName";
@@ -926,7 +926,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_039: [The function shall return with the return value of authentication.operationLinksOpened.]
     @Test
-    public void isAuthenticationOpenedTrue() throws IllegalArgumentException, InterruptedException, TransportException
+    public void isAuthenticationOpenedTrue() throws IllegalArgumentException, TransportException
     {
         // arrange
         final String linkName = "linkName";
@@ -951,7 +951,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_039: [The function shall return with the return value of authentication.operationLinksOpened.]
     @Test
-    public void isAuthenticationOpenedFalse() throws IllegalArgumentException, InterruptedException, TransportException
+    public void isAuthenticationOpenedFalse() throws IllegalArgumentException, TransportException
     {
         // arrange
         final String linkName = "linkName";
@@ -975,7 +975,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_040: [The function shall call all device session's convertToProton, and if any of them not null return with the value.]
     @Test
-    public void convertToProtonSuccess() throws IllegalArgumentException, InterruptedException, TransportException
+    public void convertToProtonSuccess() throws IllegalArgumentException, TransportException
     {
         // arrange
         final String linkName = "linkName";
@@ -1014,7 +1014,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_040: [The function shall call all device session's convertToProton, and if any of them not null return with the value.]
     @Test
-    public void convertToProtonNull() throws IllegalArgumentException, InterruptedException, TransportException
+    public void convertToProtonNull() throws IllegalArgumentException, TransportException
     {
         // arrange
         final String linkName = "linkName";
@@ -1056,7 +1056,7 @@ public class AmqpsSessionManagerTest
     // Tests_SRS_AMQPSESSIONMANAGER_12_041: [The function shall call all device session's convertFromProton, and if any of them not null return with the value.]
 
     @Test
-    public void convertFromProtonSuccess() throws IllegalArgumentException, InterruptedException, TransportException
+    public void convertFromProtonSuccess() throws IllegalArgumentException, TransportException
     {
         // arrange
         final String linkName = "linkName";
@@ -1095,7 +1095,7 @@ public class AmqpsSessionManagerTest
 
     // Tests_SRS_AMQPSESSIONMANAGER_12_041: [The function shall call all device session's convertFromProton, and if any of them not null return with the value.]
     @Test
-    public void convertFromProtonNull() throws IllegalArgumentException, InterruptedException, TransportException
+    public void convertFromProtonNull() throws IllegalArgumentException, TransportException
     {
         // arrange
         final String linkName = "linkName";

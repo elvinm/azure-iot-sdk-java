@@ -142,7 +142,7 @@ public class IotHubAuthenticationProviderTest
     //Tests_SRS_AUTHENTICATIONPROVIDER_34_059: [This function shall save the provided pathToCertificate.]
     //Tests_SRS_AUTHENTICATIONPROVIDER_34_030: [If the provided pathToCertificate is different than the saved path, this function shall set sslContextNeedsRenewal to true.]
     @Test
-    public void setPathToCertificateWorks() throws IOException
+    public void setPathToCertificateWorks()
     {
         //arrange
         IotHubAuthenticationProvider auth = new IotHubAuthenticationProviderMock(expectedHostname, expectedGatewayHostname, expectedDeviceId, expectedModuleId);
@@ -161,7 +161,7 @@ public class IotHubAuthenticationProviderTest
     //Tests_SRS_AUTHENTICATIONPROVIDER_34_064: [This function shall save the provided userCertificateString.]
     //Tests_SRS_AUTHENTICATIONPROVIDER_34_031: [If the provided certificate is different than the saved certificate, this function shall set sslContextNeedsRenewal to true.]
     @Test
-    public void setCertificateWorks() throws IOException
+    public void setCertificateWorks()
     {
         //arrange
         IotHubAuthenticationProvider auth = new IotHubAuthenticationProviderMock(expectedHostname, expectedGatewayHostname, expectedDeviceId, expectedModuleId);

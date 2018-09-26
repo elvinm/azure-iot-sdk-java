@@ -216,7 +216,7 @@ abstract public class Mqtt implements MqttCallback
                 {
                     //Codes_SRS_Mqtt_25_014: [The function shall publish message payload on the publishTopic specified to the IoT Hub given in the configuration.]
                     IMqttDeliveryToken publishToken = this.mqttConnection.getMqttAsyncClient().publish(publishTopic, mqttMessage);
-                    this.unacknowledgedSentMessages.put(publishToken.getMessageId(), message);
+                    unacknowledgedSentMessages.put(publishToken.getMessageId(), message);
                 }
             }
             catch (MqttException e)
@@ -382,9 +382,9 @@ abstract public class Mqtt implements MqttCallback
         {
             if (this.listener != null)
             {
-                if (this.unacknowledgedSentMessages.containsKey(iMqttDeliveryToken.getMessageId()))
+                if (unacknowledgedSentMessages.containsKey(iMqttDeliveryToken.getMessageId()))
                 {
-                    Message deliveredMessage = this.unacknowledgedSentMessages.get(iMqttDeliveryToken.getMessageId());
+                    Message deliveredMessage = unacknowledgedSentMessages.get(iMqttDeliveryToken.getMessageId());
 
                     if (deliveredMessage instanceof IotHubTransportMessage)
                     {
@@ -401,7 +401,7 @@ abstract public class Mqtt implements MqttCallback
                     }
 
                     //Codes_SRS_Mqtt_34_042: [If this object has a saved listener, that listener shall be notified of the successfully delivered message.]
-                    this.listener.onMessageSent(this.unacknowledgedSentMessages.get(iMqttDeliveryToken.getMessageId()), null);
+                    this.listener.onMessageSent(unacknowledgedSentMessages.get(iMqttDeliveryToken.getMessageId()), null);
                 }
             }
         }

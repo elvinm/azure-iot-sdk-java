@@ -29,7 +29,7 @@ public class ResponseDataTest
 {
     //SRS_ResponseData_25_001: [ Constructor shall create null responseData and set the ContractState to DPS_REGISTRATION_UNKNOWN. ]
     @Test
-    public void constructorSucceeds() throws Exception
+    public void constructorSucceeds()
     {
         //act
         ResponseData testResponseData = newInstance(ResponseData.class);
@@ -42,7 +42,7 @@ public class ResponseDataTest
     //SRS_ResponseData_25_004: [ This method shall save the value of ContractState. ]
     //SRS_ResponseData_25_005: [ This method shall return the saved value of ContractState. ]
     @Test
-    public void setAndGetState(@Mocked ContractState mockedContractState) throws Exception
+    public void setAndGetState(@Mocked ContractState mockedContractState)
     {
         //arrange
         ResponseData testResponseData = newInstance(ResponseData.class);
@@ -56,7 +56,7 @@ public class ResponseDataTest
     //SRS_ResponseData_25_002: [ This method shall save the value of responseData. ]
     //SRS_ResponseData_25_003: [ This method shall return the saved value of responseData. ]
     @Test
-    public void setAndGetResponseData() throws Exception
+    public void setAndGetResponseData()
     {
         //arrange
         byte[] testData = "testData".getBytes();

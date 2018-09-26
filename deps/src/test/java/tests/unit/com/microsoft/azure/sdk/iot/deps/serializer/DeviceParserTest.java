@@ -39,7 +39,7 @@ public class DeviceParserTest
     private static String validDateString;
 
     @Before
-    public void setUp() throws ParseException
+    public void setUp()
     {
         validDate = new Date();
         validDateString = new SimpleDateFormat(SIMPLEDATEFORMAT).format(validDate);
@@ -84,7 +84,7 @@ public class DeviceParserTest
 
     //Tests_SRS_DEVICE_PARSER_34_002: [This constructor shall create a DeviceParser object based off of the provided json.]
     @Test
-    public void fromJsonWithCAAuthentication() throws ParseException
+    public void fromJsonWithCAAuthentication()
     {
         //arrange
         String deviceId = "deviceId";
@@ -166,7 +166,7 @@ public class DeviceParserTest
 
     //Tests_SRS_DEVICE_PARSER_34_001: [This method shall return a json representation of this.]
     @Test
-    public void toJsonForSymmetricKeySecuredDevice() throws NoSuchAlgorithmException
+    public void toJsonForSymmetricKeySecuredDevice()
     {
         // arrange
         DeviceParser parser = new DeviceParser();

@@ -84,7 +84,7 @@ public class RegisterTaskTest
 
     //Tests_SRS_RegisterTask_25_001: [ Constructor shall save provisioningDeviceClientConfig , securityProvider, provisioningDeviceClientContract and authorization.]
     @Test
-    public void constructorSucceeds() throws ProvisioningDeviceClientException
+    public void constructorSucceeds()
     {
         //arrange
 
@@ -100,7 +100,7 @@ public class RegisterTaskTest
 
     //Tests_SRS_RegisterTask_25_002: [ Constructor throw ProvisioningDeviceClientException if provisioningDeviceClientConfig , securityProvider, authorization or provisioningDeviceClientContract is null.]
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void constructorThrowsOnNullConfig() throws ProvisioningDeviceClientException
+    public void constructorThrowsOnNullConfig()
     {
         //arrange
         //act
@@ -109,7 +109,7 @@ public class RegisterTaskTest
     }
 
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void constructorThrowsOnNullSecurityProvider() throws ProvisioningDeviceClientException
+    public void constructorThrowsOnNullSecurityProvider()
     {
         //arrange
         //act
@@ -118,14 +118,14 @@ public class RegisterTaskTest
     }
 
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void constructorThrowsOnNullContract() throws ProvisioningDeviceClientException
+    public void constructorThrowsOnNullContract()
     {
         //act
         RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, new Class[]{ProvisioningDeviceClientConfig.class, SecurityProvider.class, ProvisioningDeviceClientContract.class, Authorization.class}, mockedProvisioningDeviceClientConfig, mockedSecurityProvider, null, mockedAuthorization);
     }
 
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void constructorThrowsOnNullAuthorization() throws ProvisioningDeviceClientException
+    public void constructorThrowsOnNullAuthorization()
     {
         //act
         RegisterTask registerTask = Deencapsulation.newInstance(RegisterTask.class, new Class[]{ProvisioningDeviceClientConfig.class, SecurityProvider.class, ProvisioningDeviceClientContract.class, Authorization.class}, mockedProvisioningDeviceClientConfig, mockedSecurityProvider, mockedProvisioningDeviceClientContract, null);

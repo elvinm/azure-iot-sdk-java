@@ -180,7 +180,7 @@ public class DeviceMethodTest
         new NonStrictExpectations()
         {
             {
-                mockedIotHubConnectionString.createConnectionString(STANDARD_CONNECTIONSTRING);
+                IotHubConnectionStringBuilder.createConnectionString(STANDARD_CONNECTIONSTRING);
                 result = new IllegalArgumentException();
             }
         };
@@ -358,7 +358,7 @@ public class DeviceMethodTest
         new MockUp<DeviceOperations>()
         {
             @Mock
-            HttpResponse request(IotHubConnectionString mockedIotHubConnectionString, URL url, HttpMethod method, byte[] payload, String requestId, long timeoutInMs) throws IOException, IotHubException, IllegalArgumentException
+            HttpResponse request(IotHubConnectionString mockedIotHubConnectionString, URL url, HttpMethod method, byte[] payload, String requestId, long timeoutInMs) throws IotHubException, IllegalArgumentException
             {
                 throw new IotHubException();
             }

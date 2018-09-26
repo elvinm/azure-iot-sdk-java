@@ -68,7 +68,7 @@ public class StatusTaskTest
 
     //Tests_SRS_StatusTask_25_001: [ Constructor shall save operationId , dpsSecurityProvider, provisioningDeviceClientContract and authorization. ]
     @Test
-    public void constructorSucceeds() throws ProvisioningDeviceClientException
+    public void constructorSucceeds()
     {
         //arrange
         //act
@@ -82,35 +82,35 @@ public class StatusTaskTest
 
     //Tests_SRS_StatusTask_25_002: [ Constructor shall throw ProvisioningDeviceClientException if operationId , dpsSecurityProvider, authorization or provisioningDeviceClientContract is null. ]
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void constructorThrowsOnNullSecurityProvider() throws ProvisioningDeviceClientException
+    public void constructorThrowsOnNullSecurityProvider()
     {
         //act
         StatusTask statusTask = Deencapsulation.newInstance(StatusTask.class, new Class[]{SecurityProvider.class, ProvisioningDeviceClientContract.class, String.class, Authorization.class}, null, mockedProvisioningDeviceClientContract, TEST_OPERATION_ID, mockedAuthorization);
     }
 
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void constructorThrowsOnNullContract() throws ProvisioningDeviceClientException
+    public void constructorThrowsOnNullContract()
     {
         //act
         StatusTask statusTask = Deencapsulation.newInstance(StatusTask.class, new Class[]{SecurityProvider.class, ProvisioningDeviceClientContract.class, String.class, Authorization.class}, mockedSecurityProvider, null, TEST_OPERATION_ID, mockedAuthorization);
     }
 
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void constructorThrowsOnNullOperationId() throws ProvisioningDeviceClientException
+    public void constructorThrowsOnNullOperationId()
     {
         //act
         StatusTask statusTask = Deencapsulation.newInstance(StatusTask.class, new Class[]{SecurityProvider.class, ProvisioningDeviceClientContract.class, String.class, Authorization.class}, mockedSecurityProvider, mockedProvisioningDeviceClientContract, null, mockedAuthorization);
     }
 
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void constructorThrowsOnEmptyOperationId() throws ProvisioningDeviceClientException
+    public void constructorThrowsOnEmptyOperationId()
     {
         //act
         StatusTask statusTask = Deencapsulation.newInstance(StatusTask.class, new Class[]{SecurityProvider.class, ProvisioningDeviceClientContract.class, String.class, Authorization.class}, mockedSecurityProvider, mockedProvisioningDeviceClientContract, "", mockedAuthorization);
     }
 
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void constructorThrowsOnNullAuth() throws ProvisioningDeviceClientException
+    public void constructorThrowsOnNullAuth()
     {
         //act
         StatusTask statusTask = Deencapsulation.newInstance(StatusTask.class, new Class[]{SecurityProvider.class, ProvisioningDeviceClientContract.class, String.class, Authorization.class}, mockedSecurityProvider, mockedProvisioningDeviceClientContract, TEST_OPERATION_ID, null);

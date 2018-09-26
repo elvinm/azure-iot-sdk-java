@@ -112,7 +112,7 @@ public class ContractApiHttpTest
 
     /* SRS_HTTP_DEVICE_REGISTRATION_CLIENT_21_003: [The createFromConnectionString shall throw IllegalArgumentException if the input string is null, threw by the constructor.] */
     @Test(expected = IllegalArgumentException.class)
-    public void createFromConnectionStringThrowsOnNullConnectionString() throws ProvisioningServiceClientException
+    public void createFromConnectionStringThrowsOnNullConnectionString()
     {
         // arrange
         final ProvisioningConnectionString provisioningConnectionString = null;
@@ -125,7 +125,7 @@ public class ContractApiHttpTest
 
     /* SRS_HTTP_DEVICE_REGISTRATION_CLIENT_21_004: [The createFromConnectionString shall create a new ContractApiHttp instance and return it.] */
     @Test
-    public void createFromConnectionStringSucceeded() throws ProvisioningServiceClientException
+    public void createFromConnectionStringSucceeded()
     {
         // arrange
         final ProvisioningConnectionString provisioningConnectionString = mockedProvisioningConnectionString;
@@ -160,7 +160,7 @@ public class ContractApiHttpTest
 
     /* SRS_HTTP_DEVICE_REGISTRATION_CLIENT_21_006: [If the request get problem to create the SAS token, it shall throw IllegalArgumentException.*/
     @Test(expected = IllegalArgumentException.class)
-    public void requestThrowsOnSasToken() throws ProvisioningServiceClientException, IOException
+    public void requestThrowsOnSasToken() throws ProvisioningServiceClientException
     {
         // arrange
 
@@ -204,7 +204,7 @@ public class ContractApiHttpTest
 
     /* SRS_HTTP_DEVICE_REGISTRATION_CLIENT_21_008: [If the provided path is null or empty, the request shall throw IllegalArgumentException.*/
     @Test(expected = IllegalArgumentException.class)
-    public void requestThrowsOnNullPath() throws ProvisioningServiceClientException, IOException
+    public void requestThrowsOnNullPath() throws ProvisioningServiceClientException
     {
         // arrange
 
@@ -230,7 +230,7 @@ public class ContractApiHttpTest
 
     /* SRS_HTTP_DEVICE_REGISTRATION_CLIENT_21_009: [If the provided path contains not valid characters, the request shall throw IllegalArgumentException.*/
     @Test(expected = IllegalArgumentException.class)
-    public void requestThrowsOnEmptyPath() throws ProvisioningServiceClientException, IOException
+    public void requestThrowsOnEmptyPath() throws ProvisioningServiceClientException
     {
         // arrange
 
@@ -348,7 +348,6 @@ public class ContractApiHttpTest
         {
             {
                 mockedHttpRequest.setHeaderField("authorization", VALID_SASTOKEN);
-                ;
                 times = 1;
                 mockedHttpRequest.setHeaderField("Request-Id", "1001");
                 times = 1;

@@ -272,7 +272,7 @@ public class JobClient
         return new JobResult(response.getBody());
     }
 
-    private TwinState getParserFromDevice(DeviceTwinDevice device) throws IOException
+    private TwinState getParserFromDevice(DeviceTwinDevice device)
     {
         TwinCollection tags = null;
         TwinCollection desired = null;

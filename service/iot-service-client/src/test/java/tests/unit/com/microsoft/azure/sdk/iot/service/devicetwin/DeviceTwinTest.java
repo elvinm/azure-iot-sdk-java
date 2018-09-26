@@ -1333,7 +1333,7 @@ public class DeviceTwinTest
 
     //Tests_SRS_DEVICETWIN_34_069: [This function shall return the results of calling queryTwinCollection(sqlQuery, DEFAULT_PAGE_SIZE).]
     @Test
-    public void queryTwinCollectionWithoutPageSizeUsesDefaultPageSize() throws IOException, IotHubException
+    public void queryTwinCollectionWithoutPageSizeUsesDefaultPageSize() throws IOException
     {
         //arrange
         DeviceTwin deviceTwin = new DeviceTwin();
@@ -1354,7 +1354,7 @@ public class DeviceTwinTest
 
     //Tests_SRS_DEVICETWIN_34_070: [This function shall return a new QueryCollection object of type TWIN with the provided sql query and page size.]
     @Test
-    public void queryTwinCollectionWithPageSizeSuccess() throws IOException, IotHubException
+    public void queryTwinCollectionWithPageSizeSuccess() throws IOException
     {
         //arrange
         String expectedSqlQuery = "some query";
@@ -1496,7 +1496,7 @@ public class DeviceTwinTest
                 mockQueryCollectionResponse.getContinuationToken();
                 result = expectedContinuationToken;
 
-                Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[]{Collection.class, String.class}, (Collection) any, expectedContinuationToken);
+                Deencapsulation.newInstance(QueryCollectionResponse.class, new Class[]{Collection.class, String.class}, any, expectedContinuationToken);
                 result = mockQueryCollectionResponse;
             }
         };
@@ -1507,7 +1507,7 @@ public class DeviceTwinTest
 
     //Tests_SRS_DEVICETWIN_34_071: [This function shall return if the provided deviceTwinQueryCollection has next.]
     @Test
-    public void hasNextDeviceTwinQueryCollectionSuccess() throws IOException, IotHubException
+    public void hasNextDeviceTwinQueryCollectionSuccess()
     {
         //arrange
         DeviceTwin deviceTwin = new DeviceTwin();
@@ -1529,7 +1529,7 @@ public class DeviceTwinTest
 
     //Tests_SRS_DEVICETWIN_34_080: [If the provided deviceTwinQueryCollection is null, an IllegalArgumentException shall be thrown.]
     @Test(expected = IllegalArgumentException.class)
-    public void hasNextDeviceTwinQueryCollectionThrowsForNullQuery() throws IOException, IotHubException
+    public void hasNextDeviceTwinQueryCollectionThrowsForNullQuery()
     {
         //arrange
         DeviceTwin deviceTwin = new DeviceTwin();

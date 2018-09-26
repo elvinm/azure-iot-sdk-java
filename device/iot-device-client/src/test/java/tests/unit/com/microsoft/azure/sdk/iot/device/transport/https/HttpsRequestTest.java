@@ -249,7 +249,7 @@ public class HttpsRequestTest
             }
 
             @Mock
-            public Map<String, List<String>> getResponseHeaders() throws IOException
+            public Map<String, List<String>> getResponseHeaders()
             {
                 return new HashMap<>();
             }
@@ -519,7 +519,7 @@ public class HttpsRequestTest
 
     //Tests_SRS_HTTPSREQUEST_25_015: [The function shall throw IllegalArgumentException if argument is null.]
     @Test(expected = IllegalArgumentException.class)
-    public void setSSLContextThrowsOnNull(@Mocked final HttpsConnection mockConn, final @Mocked URL mockUrl) throws TransportException
+    public void setSSLContextThrowsOnNull(@Mocked final HttpsConnection mockConn, final @Mocked URL mockUrl)
     {
         final HttpsMethod httpsMethod = HttpsMethod.POST;
         final byte[] body = new byte[0];
@@ -573,7 +573,7 @@ public class HttpsRequestTest
 
     // Tests_SRS_HTTPSREQUEST_34_031: [The function shall save the provided arguments to be used when the http connection is built during the call to send().]
     @Test
-    public void constructorSavesFields() throws MalformedURLException, TransportException
+    public void constructorSavesFields() throws MalformedURLException
     {
         //arrange
         URL url = new URL("http://www.microsoft.com");

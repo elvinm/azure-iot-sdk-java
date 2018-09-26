@@ -71,13 +71,13 @@ public class ContractAPIHttp extends ProvisioningDeviceClientContract
     }
 
     @Override
-    public void open(RequestData requestData) throws ProvisioningDeviceConnectionException
+    public void open(RequestData requestData)
     {
         // dummy call for Http
     }
 
     @Override
-    public void close() throws ProvisioningDeviceConnectionException
+    public void close()
     {
         // dummy call for Http
     }

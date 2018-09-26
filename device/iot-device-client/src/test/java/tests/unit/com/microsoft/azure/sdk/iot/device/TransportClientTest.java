@@ -149,7 +149,7 @@ public class TransportClientTest
     // Tests_SRS_TRANSPORTCLIENT_12_012: [The function shall set the created DeviceIO to all registered device client.]
     // Tests_SRS_TRANSPORTCLIENT_12_013: [The function shall open the transport in multiplexing mode.]
     @Test
-    public void openSuccess() throws IOException, TransportException
+    public void openSuccess() throws IOException
     {
         // arrange
         IotHubClientProtocol iotHubClientProtocol = IotHubClientProtocol.AMQPS;

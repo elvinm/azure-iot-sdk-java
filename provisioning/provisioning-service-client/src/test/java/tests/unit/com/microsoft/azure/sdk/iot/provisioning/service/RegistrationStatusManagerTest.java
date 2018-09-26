@@ -67,7 +67,7 @@ public class RegistrationStatusManagerTest
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_005: [The get shall throw IllegalArgumentException if the provided id is null or empty.] */
     @Test(expected = IllegalArgumentException.class)
-    public void getThrowsOnNullId() throws ProvisioningServiceClientException
+    public void getThrowsOnNullId()
     {
         // arrange
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
@@ -80,7 +80,7 @@ public class RegistrationStatusManagerTest
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_005: [The get shall throw IllegalArgumentException if the provided id is null or empty.] */
     @Test(expected = IllegalArgumentException.class)
-    public void getThrowsOnEmptyId() throws ProvisioningServiceClientException
+    public void getThrowsOnEmptyId()
     {
         // arrange
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
@@ -198,7 +198,7 @@ public class RegistrationStatusManagerTest
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_011: [The delete shall throw IllegalArgumentException if the provided DeviceRegistrationState is null.] */
     @Test(expected = IllegalArgumentException.class)
-    public void deleteDeviceRegistrationStatusThrowsOnNullDeviceRegistrationState() throws ProvisioningServiceClientException
+    public void deleteDeviceRegistrationStatusThrowsOnNullDeviceRegistrationState()
     {
         // arrange
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
@@ -328,28 +328,28 @@ public class RegistrationStatusManagerTest
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_017: [The delete shall throw IllegalArgumentException if the provided id is null or empty.] */
     @Test(expected = IllegalArgumentException.class)
-    public void deleteIdAndETagThrowsOnNullId() throws ProvisioningServiceClientException
+    public void deleteIdAndETagThrowsOnNullId()
     {
         // arrange
         final String eTag = "validEtag";
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{String.class, String.class}, (String) null, eTag);
+        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{String.class, String.class}, null, eTag);
 
         // assert
     }
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_017: [The delete shall throw IllegalArgumentException if the provided id is null or empty.] */
     @Test(expected = IllegalArgumentException.class)
-    public void deleteIdAndETagThrowsOnEmptyId() throws ProvisioningServiceClientException
+    public void deleteIdAndETagThrowsOnEmptyId()
     {
         // arrange
         final String eTag = "validEtag";
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
 
         // act
-        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{String.class, String.class}, (String) "", eTag);
+        Deencapsulation.invoke(registrationStatusManager, "delete", new Class[]{String.class, String.class}, "", eTag);
 
         // assert
     }
@@ -476,7 +476,7 @@ public class RegistrationStatusManagerTest
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_023: [The createEnrollmentGroupQuery shall throw IllegalArgumentException if the provided querySpecification is null.] */
     @Test(expected = IllegalArgumentException.class)
-    public void createEnrollmentGroupQueryThrowsOnNullQuerySpecification() throws ProvisioningServiceClientException
+    public void createEnrollmentGroupQueryThrowsOnNullQuerySpecification()
     {
         // arrange
         final String enrollmentGroupId = "enrollmentGroupId-1";
@@ -490,7 +490,7 @@ public class RegistrationStatusManagerTest
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_024: [The createEnrollmentGroupQuery shall throw IllegalArgumentException if the provided enrollmentGroupId is null or empty.] */
     @Test(expected = IllegalArgumentException.class)
-    public void createEnrollmentGroupQueryThrowsOnNullEnrollmentGroupId(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
+    public void createEnrollmentGroupQueryThrowsOnNullEnrollmentGroupId(@Mocked final QuerySpecification mockedQuerySpecification)
     {
         // arrange
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
@@ -503,7 +503,7 @@ public class RegistrationStatusManagerTest
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_024: [The createEnrollmentGroupQuery shall throw IllegalArgumentException if the provided enrollmentGroupId is null or empty.] */
     @Test(expected = IllegalArgumentException.class)
-    public void createEnrollmentGroupQueryThrowsOnEmptyEnrollmentGroupId(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
+    public void createEnrollmentGroupQueryThrowsOnEmptyEnrollmentGroupId(@Mocked final QuerySpecification mockedQuerySpecification)
     {
         // arrange
         RegistrationStatusManager registrationStatusManager = createRegistrationStatusManager();
@@ -516,7 +516,7 @@ public class RegistrationStatusManagerTest
 
     /* SRS_REGISTRATION_STATUS_MANAGER_21_025: [The createEnrollmentGroupQuery shall throw IllegalArgumentException if the provided pageSize is negative.] */
     @Test(expected = IllegalArgumentException.class)
-    public void createEnrollmentGroupQueryThrowsOnNegativePageSize(@Mocked final QuerySpecification mockedQuerySpecification) throws ProvisioningServiceClientException
+    public void createEnrollmentGroupQueryThrowsOnNegativePageSize(@Mocked final QuerySpecification mockedQuerySpecification)
     {
         // arrange
         final String enrollmentGroupId = "enrollmentGroupId-1";
@@ -531,7 +531,7 @@ public class RegistrationStatusManagerTest
     /* SRS_REGISTRATION_STATUS_MANAGER_21_026: [The createEnrollmentGroupQuery shall create Query iterator with a Http path `registrations/[id]`.] */
     /* SRS_REGISTRATION_STATUS_MANAGER_21_027: [The createEnrollmentGroupQuery shall create and return a new instance of the Query iterator.] */
     @Test
-    public void createEnrollmentGroupQuerySucceed(@Mocked final QuerySpecification mockedQuerySpecification, @Mocked final Query mockedQuery) throws ProvisioningServiceClientException
+    public void createEnrollmentGroupQuerySucceed(@Mocked final QuerySpecification mockedQuerySpecification, @Mocked final Query mockedQuery)
     {
         // arrange
         final String enrollmentGroupId = "enrollmentGroupId-1";

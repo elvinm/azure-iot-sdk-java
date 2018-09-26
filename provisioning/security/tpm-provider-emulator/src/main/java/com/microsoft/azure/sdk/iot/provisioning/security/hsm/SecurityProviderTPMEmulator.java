@@ -448,7 +448,7 @@ public class SecurityProviderTPMEmulator extends SecurityProviderTpm
      * @throws SecurityProviderException If endorsement key could not be extracted.
      */
     @Override
-    public byte[] getEndorsementKey() throws SecurityProviderException
+    public byte[] getEndorsementKey()
     {
         //SRS_SecurityProviderTPMEmulator_25_032: [ This method shall return the TPM2B_PUBLIC form of EK. ]
         return (new TPM2B_PUBLIC(ekPublic)).toTpm();
@@ -461,7 +461,7 @@ public class SecurityProviderTPMEmulator extends SecurityProviderTpm
      * @throws SecurityProviderException If StorageRootKey could not be extracted.
      */
     @Override
-    public byte[] getStorageRootKey() throws SecurityProviderException
+    public byte[] getStorageRootKey()
     {
         //SRS_SecurityProviderTPMEmulator_25_033: [ This method shall return the TPM2B_PUBLIC form of SRK. ]
         return (new TPM2B_PUBLIC(srkPublic)).toTpm();

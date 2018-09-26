@@ -104,7 +104,7 @@ public class MqttIotHubConnectionTest
 
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_001: [The constructor shall save the configuration.]
     @Test
-    public void constructorSavesCorrectConfigAndListener() throws IOException, TransportException
+    public void constructorSavesCorrectConfigAndListener()
     {
         baseExpectations();
 
@@ -118,7 +118,7 @@ public class MqttIotHubConnectionTest
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_003: [The constructor shall throw a new IllegalArgumentException
     // if any of the parameters of the configuration is null or empty.]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorThrowsIllegalArgumentExceptionIfHostNameIsEmpty() throws TransportException
+    public void constructorThrowsIllegalArgumentExceptionIfHostNameIsEmpty()
     {
         new NonStrictExpectations()
         {
@@ -138,7 +138,7 @@ public class MqttIotHubConnectionTest
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_003: [The constructor shall throw a new IllegalArgumentException
     // if any of the parameters of the configuration is null or empty.]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorThrowsIllegalArgumentExceptionIfConfigIsNull() throws TransportException
+    public void constructorThrowsIllegalArgumentExceptionIfConfigIsNull()
     {
         new NonStrictExpectations()
         {
@@ -158,7 +158,7 @@ public class MqttIotHubConnectionTest
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_003: [The constructor shall throw a new IllegalArgumentException
     // if any of the parameters of the configuration is null or empty.]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorThrowsIllegalArgumentExceptionIfHostNameIsNull() throws TransportException
+    public void constructorThrowsIllegalArgumentExceptionIfHostNameIsNull()
     {
         new NonStrictExpectations()
         {
@@ -178,7 +178,7 @@ public class MqttIotHubConnectionTest
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_003: [The constructor shall throw a new IllegalArgumentException
     // if any of the parameters of the configuration is null or empty.]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorThrowsIllegalArgumentExceptionIfDeviceIDIsEmpty() throws TransportException
+    public void constructorThrowsIllegalArgumentExceptionIfDeviceIDIsEmpty()
     {
         new NonStrictExpectations()
         {
@@ -198,7 +198,7 @@ public class MqttIotHubConnectionTest
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_003: [The constructor shall throw a new IllegalArgumentException
     // if any of the parameters of the configuration is null or empty.]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorThrowsIllegalArgumentExceptionIfDeviceIDIsNull() throws TransportException
+    public void constructorThrowsIllegalArgumentExceptionIfDeviceIDIsNull()
     {
         new NonStrictExpectations()
         {
@@ -218,7 +218,7 @@ public class MqttIotHubConnectionTest
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_003: [The constructor shall throw a new IllegalArgumentException
     // if any of the parameters of the configuration is null or empty.]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorThrowsIllegalArgumentExceptionIfSasTokenIsEmpty() throws TransportException
+    public void constructorThrowsIllegalArgumentExceptionIfSasTokenIsEmpty()
     {
         new NonStrictExpectations()
         {
@@ -238,7 +238,7 @@ public class MqttIotHubConnectionTest
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_003: [The constructor shall throw a new IllegalArgumentException
     // if any of the parameters of the configuration is null or empty.]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorThrowsIllegalArgumentExceptionIfSasTokenIsNull() throws TransportException
+    public void constructorThrowsIllegalArgumentExceptionIfSasTokenIsNull()
     {
         new NonStrictExpectations()
         {
@@ -524,7 +524,7 @@ public class MqttIotHubConnectionTest
 
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_007: [If the MQTT connection is already open, the function shall do nothing.]
     @Test
-    public void openDoesNothingIfAlreadyOpened() throws IOException, TransportException
+    public void openDoesNothingIfAlreadyOpened() throws TransportException
     {
         baseExpectations();
         openExpectations();
@@ -545,7 +545,7 @@ public class MqttIotHubConnectionTest
 
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_006: [The function shall close the MQTT connection.]
     @Test
-    public void closeClosesMqttConnection() throws IOException, TransportException
+    public void closeClosesMqttConnection() throws TransportException
     {
         baseExpectations();
         openExpectations();
@@ -599,7 +599,7 @@ public class MqttIotHubConnectionTest
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_021: [If a TransportException is encountered while closing the three clients, this function shall set this object's state to closed and then rethrow the exception.]
     @Test
-    public void closeThrowsHandled() throws IOException, TransportException
+    public void closeThrowsHandled() throws TransportException
     {
         //arrange
         baseExpectations();
@@ -637,7 +637,7 @@ public class MqttIotHubConnectionTest
 
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_007: [If the MQTT connection is closed, the function shall do nothing.]
     @Test
-    public void closeDoesNothingIfConnectionNotYetOpened() throws IOException, TransportException
+    public void closeDoesNothingIfConnectionNotYetOpened() throws TransportException
     {
         baseExpectations();
 
@@ -663,7 +663,7 @@ public class MqttIotHubConnectionTest
 
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_007: [If the MQTT connection is closed, the function shall do nothing.]
     @Test
-    public void closeDoesNothingIfConnectionAlreadyClosed() throws IOException, TransportException
+    public void closeDoesNothingIfConnectionAlreadyClosed() throws TransportException
     {
         baseExpectations();
         openExpectations();
@@ -693,7 +693,7 @@ public class MqttIotHubConnectionTest
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_011: [If the message was successfully received by the service,
     // the function shall return status code OK_EMPTY.]
     @Test
-    public void sendEventSendsMessageCorrectlyToIotHub() throws IOException, TransportException
+    public void sendEventSendsMessageCorrectlyToIotHub() throws TransportException
     {
         baseExpectations();
         openExpectations();
@@ -727,7 +727,7 @@ public class MqttIotHubConnectionTest
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_010: [If the message is null or empty,
     // the function shall return status code BAD_FORMAT.]
     @Test
-    public void sendEventReturnsBadFormatIfMessageIsNull() throws IOException, TransportException
+    public void sendEventReturnsBadFormatIfMessageIsNull() throws TransportException
     {
         baseExpectations();
         openExpectations();
@@ -743,7 +743,7 @@ public class MqttIotHubConnectionTest
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_010: [If the message is null or empty,
     // the function shall return status code BAD_FORMAT.]
     @Test
-    public void sendEventReturnsBadFormatIfMessageHasNullBody() throws IOException, TransportException
+    public void sendEventReturnsBadFormatIfMessageHasNullBody() throws TransportException
     {
         baseExpectations();
         openExpectations();
@@ -769,7 +769,7 @@ public class MqttIotHubConnectionTest
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_010: [If the message is null or empty,
     // the function shall return status code BAD_FORMAT.]
     @Test
-    public void sendEventReturnsBadFormatIfMessageHasEmptyBody() throws IOException, TransportException
+    public void sendEventReturnsBadFormatIfMessageHasEmptyBody() throws TransportException
     {
         baseExpectations();
 
@@ -832,7 +832,7 @@ public class MqttIotHubConnectionTest
     }
 
     @Test
-    public void sendEventSendsDeviceTwinMessage(@Mocked final IotHubTransportMessage mockDeviceTwinMsg) throws IOException, TransportException
+    public void sendEventSendsDeviceTwinMessage(@Mocked final IotHubTransportMessage mockDeviceTwinMsg) throws TransportException
     {
         baseExpectations();
         openExpectations();
@@ -872,7 +872,7 @@ public class MqttIotHubConnectionTest
     }
 
     @Test
-    public void sendEventSendsDeviceMethodMessage(@Mocked final IotHubTransportMessage mockDeviceMethodMsg) throws IOException, TransportException
+    public void sendEventSendsDeviceMethodMessage(@Mocked final IotHubTransportMessage mockDeviceMethodMsg) throws TransportException
     {
         baseExpectations();
         openExpectations();
@@ -914,7 +914,7 @@ public class MqttIotHubConnectionTest
     // Tests_SRS_MQTTIOTHUBCONNECTION_15_014: [The function shall attempt to consume a message
     // from the received messages queue.]
     @Test
-    public void receiveMessageSucceeds() throws IOException, TransportException
+    public void receiveMessageSucceeds() throws TransportException
     {
         baseExpectations();
         openExpectations();
@@ -956,7 +956,7 @@ public class MqttIotHubConnectionTest
     }
 
     @Test
-    public void receiveDeviceTwinMessageSucceeds() throws IOException, TransportException
+    public void receiveDeviceTwinMessageSucceeds() throws TransportException
     {
         baseExpectations();
         openExpectations();
@@ -997,7 +997,7 @@ public class MqttIotHubConnectionTest
     }
 
     @Test
-    public void receiveDeviceMethodMessageSucceeds() throws IOException, TransportException
+    public void receiveDeviceMethodMessageSucceeds() throws TransportException
     {
         baseExpectations();
         openExpectations();
@@ -1181,7 +1181,7 @@ public class MqttIotHubConnectionTest
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_049: [If the provided listener object is null, this function shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void setListenerThrowsForNullListener() throws TransportException
+    public void setListenerThrowsForNullListener()
     {
         //arrange
         baseExpectations();
@@ -1193,7 +1193,7 @@ public class MqttIotHubConnectionTest
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_050: [This function shall save the provided listener object.]
     @Test
-    public void setListenerSavesListener() throws TransportException
+    public void setListenerSavesListener()
     {
         //arrange
         baseExpectations();
@@ -1210,7 +1210,7 @@ public class MqttIotHubConnectionTest
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_051: [If this object has not received the provided message from the service, this function shall throw a TransportException.]
     @Test(expected = TransportException.class)
-    public void sendMessageResultThrowsWhenMessageNotReceivedFirst() throws TransportException, IOException
+    public void sendMessageResultThrowsWhenMessageNotReceivedFirst() throws TransportException
     {
         //arrange
         baseExpectations();
@@ -1228,7 +1228,7 @@ public class MqttIotHubConnectionTest
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_057: [If the provided message or result is null, this function shall throw a TransportException.]
     @Test(expected = TransportException.class)
-    public void sendMessageResultThrowsForNullMessage() throws TransportException, IOException
+    public void sendMessageResultThrowsForNullMessage() throws TransportException
     {
         //arrange
         baseExpectations();
@@ -1244,7 +1244,7 @@ public class MqttIotHubConnectionTest
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_057: [If the provided message or result is null, this function shall throw a TransportException.]
     @Test(expected = TransportException.class)
-    public void sendMessageResultThrowsForNullResult() throws TransportException, IOException
+    public void sendMessageResultThrowsForNullResult() throws TransportException
     {
         //arrange
         baseExpectations();
@@ -1262,7 +1262,7 @@ public class MqttIotHubConnectionTest
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_056: [If the ack was sent successfully, this function shall remove the provided message from the saved map of messages to acknowledge.]
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_052: [If this object has received the provided message from the service, this function shall retrieve the Mqtt messageId for that message.]
     @Test
-    public void sendMessageResultForMethods() throws TransportException, IOException
+    public void sendMessageResultForMethods() throws TransportException
     {
         //arrange
         baseExpectations();
@@ -1317,7 +1317,7 @@ public class MqttIotHubConnectionTest
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_054: [If the provided message has message type DEVICE_TWIN, this function shall invoke the twin client to send the ack and return the result.]
     @Test
-    public void sendMessageResultForTwin() throws TransportException, IOException
+    public void sendMessageResultForTwin() throws TransportException
     {
         //arrange
         baseExpectations();
@@ -1370,7 +1370,7 @@ public class MqttIotHubConnectionTest
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_055: [If the provided message has message type other than DEVICE_METHODS and DEVICE_TWIN, this function shall invoke the telemetry client to send the ack and return the result.]
     @Test
-    public void sendMessageResultForTelemetry() throws TransportException, IOException
+    public void sendMessageResultForTelemetry() throws TransportException
     {
         //arrange
         baseExpectations();
@@ -1425,7 +1425,7 @@ public class MqttIotHubConnectionTest
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_060: [If a transport message is successfully received, and the message has a type of DEVICE_TWIN, this function shall set the callback and callback context of this object from the saved values in config for methods.]
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_063: [If a transport message is successfully received, this function shall notify its listener that a message was received and provide the received message.]
     @Test
-    public void onMessageArrivedReceivesMessageForTwin() throws TransportException, IOException
+    public void onMessageArrivedReceivesMessageForTwin() throws TransportException
     {
         //arrange
         final int expectedMessageId = 2000;
@@ -1475,7 +1475,7 @@ public class MqttIotHubConnectionTest
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_061: [If a transport message is successfully received, and the message has a type of DEVICE_METHODS, this function shall set the callback and callback context of this object from the saved values in config for twin.]
     @Test
-    public void onMessageArrivedReceivesMessageForMethods() throws TransportException, IOException
+    public void onMessageArrivedReceivesMessageForMethods() throws TransportException
     {
         //arrange
         final int expectedMessageId = 2000;
@@ -1514,7 +1514,7 @@ public class MqttIotHubConnectionTest
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_062: [If a transport message is successfully received, and the message has a type of DEVICE_TELEMETRY, this function shall set the callback and callback context of this object from the saved values in config for telemetry.]
     @Test
-    public void onMessageArrivedReceivesMessageForTelemetry() throws TransportException, IOException
+    public void onMessageArrivedReceivesMessageForTelemetry() throws TransportException
     {
         //arrange
         final int expectedMessageId = 2000;
@@ -1565,7 +1565,7 @@ public class MqttIotHubConnectionTest
 
     //Tests_SRS_MQTTIOTHUBCONNECTION_34_064: [This function shall return the saved connectionId.]
     @Test
-    public void getConnectionIdReturnsSavedConnectionId() throws TransportException
+    public void getConnectionIdReturnsSavedConnectionId()
     {
         //arrange
         String expectedConnectionId = "1234";

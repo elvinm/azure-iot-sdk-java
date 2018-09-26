@@ -33,7 +33,7 @@ public class RegistryApiVerticle extends AbstractVerticle
     }
 
     @Override
-    public void start() throws Exception {
+    public void start() {
 
         //Consumer for PUT_registry_connect
         vertx.eventBus().<JsonObject>consumer(PUT_REGISTRY_CONNECT_SERVICE_ID).handler(message ->

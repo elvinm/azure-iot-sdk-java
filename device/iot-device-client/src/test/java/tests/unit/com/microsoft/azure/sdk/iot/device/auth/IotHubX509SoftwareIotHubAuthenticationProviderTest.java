@@ -49,7 +49,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
     @Mocked
     SSLContext mockSSLContext;
 
-    private void commonExpectations() throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyManagementException, KeyStoreException, IOException
+    private void commonExpectations()
     {
         new NonStrictExpectations()
         {
@@ -64,7 +64,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBX509AUTHENTICATION_34_002: [This constructor will create and save an IotHubX509 object using the provided public key certificate and private key.]
     @Test
-    public void constructorSuccessCertStringKeyString() throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, IOException, KeyManagementException, KeyStoreException
+    public void constructorSuccessCertStringKeyString()
     {
         //act
         new IotHubX509SoftwareAuthenticationProvider(hostname, gatewayHostname, deviceId, moduleId, publicKeyCertificate, false, privateKey, false);
@@ -81,7 +81,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBX509AUTHENTICATION_34_002: [This constructor will create and save an IotHubX509 object using the provided public key certificate and private key.]
     @Test
-    public void constructorSuccessCertPathKeyString() throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, IOException, KeyManagementException, KeyStoreException
+    public void constructorSuccessCertPathKeyString()
     {
         //act
         new IotHubX509SoftwareAuthenticationProvider(hostname, gatewayHostname, deviceId, moduleId, publicKeyCertificate, true, privateKey, false);
@@ -98,7 +98,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBX509AUTHENTICATION_34_002: [This constructor will create and save an IotHubX509 object using the provided public key certificate and private key.]
     @Test
-    public void constructorSuccessCertStringKeyPath() throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, IOException, KeyManagementException, KeyStoreException
+    public void constructorSuccessCertStringKeyPath()
     {
         //act
         new IotHubX509SoftwareAuthenticationProvider(hostname, gatewayHostname, deviceId, moduleId, publicKeyCertificate, false, privateKey, true);
@@ -115,7 +115,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBX509AUTHENTICATION_34_002: [This constructor will create and save an IotHubX509 object using the provided public key certificate and private key.]
     @Test
-    public void constructorSuccessCertPathKeyPath() throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, IOException, KeyManagementException, KeyStoreException
+    public void constructorSuccessCertPathKeyPath()
     {
         //act
         new IotHubX509SoftwareAuthenticationProvider(hostname, gatewayHostname, deviceId, moduleId, publicKeyCertificate, true, privateKey, true);
@@ -132,7 +132,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBX509AUTHENTICATION_34_005: [This function shall return the saved IotHubSSLContext.]
     @Test
-    public void getSSLContextGets() throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, IOException, KeyManagementException, KeyStoreException, TransportException
+    public void getSSLContextGets() throws IOException
     {
         //arrange
         new NonStrictExpectations()
@@ -222,7 +222,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
     //Tests_SRS_IOTHUBX509AUTHENTICATION_34_059: [This function shall save the provided pathToCertificate.]
     //Tests_SRS_IOTHUBX509AUTHENTICATION_34_030: [If the provided pathToCertificate is different than the saved path, this function shall set sslContextNeedsRenewal to true.]
     @Test
-    public void setPathToCertificateWorks() throws IOException
+    public void setPathToCertificateWorks()
     {
         //arrange
         IotHubAuthenticationProvider auth = new IotHubX509SoftwareAuthenticationProvider(hostname, gatewayHostname, deviceId, moduleId, publicKeyCertificate, false, privateKey, false);
@@ -241,7 +241,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
     //Tests_SRS_IOTHUBX509AUTHENTICATION_34_031: [If the provided certificate is different than the saved certificate, this function shall set sslContextNeedsRenewal to true.]
     //Tests_SRS_IOTHUBX509AUTHENTICATION_34_064: [This function shall save the provided userCertificateString.]
     @Test
-    public void setCertificateWorks() throws IOException
+    public void setCertificateWorks()
     {
         //arrange
         IotHubAuthenticationProvider auth = new IotHubX509SoftwareAuthenticationProvider(hostname, gatewayHostname, deviceId, moduleId, publicKeyCertificate, false, privateKey, false);
@@ -259,7 +259,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBX509SOFTWAREAUTHENTICATION_34_004: [If the security provider throws a SecurityProviderException while generating an SSLContext, this function shall throw an IOException.]
     @Test(expected = IOException.class)
-    public void getSSLContextThrowsIOExceptionIfExceptionEncountered() throws SecurityProviderException, IOException, TransportException
+    public void getSSLContextThrowsIOExceptionIfExceptionEncountered() throws IOException
     {
         //arrange
         IotHubAuthenticationProvider authentication = new IotHubX509SoftwareAuthenticationProvider(hostname, gatewayHostname, deviceId, moduleId, publicKeyCertificate, false, privateKey, false);
@@ -282,7 +282,7 @@ public class IotHubX509SoftwareIotHubAuthenticationProviderTest
     //Tests_SRS_IOTHUBX509SOFTWAREAUTHENTICATION_34_003: [If this object's ssl context has not been generated yet, this function shall generate it from the saved security provider.]
     //Tests_SRS_IOTHUBX509SOFTWAREAUTHENTICATION_34_005: [This function shall return the saved IotHubSSLContext.]
     @Test
-    public void getSSLContextSuccess() throws IOException, TransportException
+    public void getSSLContextSuccess() throws IOException
     {
         //arrange
         IotHubAuthenticationProvider authentication = new IotHubX509SoftwareAuthenticationProvider(hostname, gatewayHostname, deviceId, moduleId, publicKeyCertificate, false, privateKey, false);

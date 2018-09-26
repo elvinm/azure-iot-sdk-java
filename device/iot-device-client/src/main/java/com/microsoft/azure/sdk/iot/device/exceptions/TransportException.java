@@ -12,8 +12,6 @@ public class TransportException extends DeviceClientException
     protected boolean isRetryable = false;
     protected IotHubService iotHubService = NOT_APPLICABLE;
 
-    ;
-
     public TransportException()
     {
         super();

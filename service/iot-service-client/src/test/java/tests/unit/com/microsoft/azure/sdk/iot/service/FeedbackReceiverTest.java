@@ -27,7 +27,7 @@ public class FeedbackReceiverTest
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_hostName_null() throws Exception
+    public void constructor_input_hostName_null()
     {
         // Arrange
         String hostName = null;
@@ -42,7 +42,7 @@ public class FeedbackReceiverTest
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_hostName_null_without_deviceId() throws Exception
+    public void constructor_input_hostName_null_without_deviceId()
     {
         // Arrange
         String hostName = null;
@@ -57,7 +57,7 @@ public class FeedbackReceiverTest
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_userName_null() throws Exception
+    public void constructor_input_userName_null()
     {
         // Arrange
         String hostName = "xxx";
@@ -72,7 +72,7 @@ public class FeedbackReceiverTest
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_userName_null_without_deviceId() throws Exception
+    public void constructor_input_userName_null_without_deviceId()
     {
         // Arrange
         String hostName = "xxx";
@@ -87,7 +87,7 @@ public class FeedbackReceiverTest
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_sasToken_null() throws Exception
+    public void constructor_input_sasToken_null()
     {
         // Arrange
         String hostName = "xxx";
@@ -102,7 +102,7 @@ public class FeedbackReceiverTest
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_sasToken_null_without_deviceId() throws Exception
+    public void constructor_input_sasToken_null_without_deviceId()
     {
         // Arrange
         String hostName = "xxx";
@@ -117,7 +117,7 @@ public class FeedbackReceiverTest
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_deviceId_null() throws Exception
+    public void constructor_input_deviceId_null()
     {
         // Arrange
         String hostName = "xxx";
@@ -132,7 +132,7 @@ public class FeedbackReceiverTest
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_protocol_null() throws Exception
+    public void constructor_input_protocol_null()
     {
         // Arrange
         String hostName = "xxx";
@@ -146,7 +146,7 @@ public class FeedbackReceiverTest
 
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_hostName_empty() throws Exception
+    public void constructor_input_hostName_empty()
     {
         // Arrange
         String hostName = "";
@@ -160,7 +160,7 @@ public class FeedbackReceiverTest
 
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_hostName_empty_without_deviceId() throws Exception
+    public void constructor_input_hostName_empty_without_deviceId()
     {
         // Arrange
         String hostName = "";
@@ -174,7 +174,7 @@ public class FeedbackReceiverTest
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_userName_empty() throws Exception
+    public void constructor_input_userName_empty()
     {
         // Arrange
         String hostName = "xxx";
@@ -190,7 +190,7 @@ public class FeedbackReceiverTest
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_userName_empty_without_deviceId() throws Exception
+    public void constructor_input_userName_empty_without_deviceId()
     {
         // Arrange
         String hostName = "xxx";
@@ -205,7 +205,7 @@ public class FeedbackReceiverTest
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_sasToken_empty() throws Exception
+    public void constructor_input_sasToken_empty()
     {
         // Arrange
         String hostName = "xxx";
@@ -220,7 +220,7 @@ public class FeedbackReceiverTest
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_sasToken_empty_without_deviceId() throws Exception
+    public void constructor_input_sasToken_empty_without_deviceId()
     {
         // Arrange
         String hostName = "xxx";
@@ -235,7 +235,7 @@ public class FeedbackReceiverTest
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_001: [The constructor shall throw IllegalArgumentException if any the input string is null or empty]
     // Assert
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_input_deviceId_empty() throws Exception
+    public void constructor_input_deviceId_empty()
     {
         // Arrange
         String hostName = "xxx";
@@ -251,7 +251,7 @@ public class FeedbackReceiverTest
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_002: [The constructor shall store deviceId]
     // Tests_SRS_SERVICE_SDK_JAVA_FEEDBACKRECEIVER_12_003: [The constructor shall create a new instance of AmqpReceive object]
     @Test
-    public void constructor_save_properties() throws Exception
+    public void constructor_save_properties()
     {
         // Arrange
         String hostName = "aaa";

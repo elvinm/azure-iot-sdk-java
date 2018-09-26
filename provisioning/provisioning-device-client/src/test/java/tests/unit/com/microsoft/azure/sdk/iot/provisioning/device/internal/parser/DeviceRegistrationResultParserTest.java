@@ -6,7 +6,7 @@ public class DeviceRegistrationResultParserTest
 {
 
     @Test
-    public void deviceRegistrationResultJsonSerializingSuccessful() throws Exception
+    public void deviceRegistrationResultJsonSerializingSuccessful()
     {
         /*final String expectedJson =
                 "{\n" +

@@ -46,7 +46,7 @@ public class ModuleApiVerticle extends AbstractVerticle
     }
 
     @Override
-    public void start() throws Exception {
+    public void start() {
 
         //Consumer for PUT_module_connectFromEnvironment_transportType
         vertx.eventBus().<JsonObject>consumer(PUT_MODULE_CONNECTFROMENVIRONMENT_TRANSPORTTYPE_SERVICE_ID).handler(message ->

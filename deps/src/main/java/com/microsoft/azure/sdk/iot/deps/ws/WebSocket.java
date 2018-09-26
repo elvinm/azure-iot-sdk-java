@@ -89,7 +89,7 @@ public interface WebSocket
      */
     ByteBuffer getWsInputBuffer();
 
-    public enum WebSocketState
+    enum WebSocketState
     {
         /**
          * WebSocket
@@ -115,7 +115,7 @@ public interface WebSocket
     PN_WS_FAILED
     }
 
-    public enum WebSocketFrameReadState
+    enum WebSocketFrameReadState
     {
         /**
          * The initial read

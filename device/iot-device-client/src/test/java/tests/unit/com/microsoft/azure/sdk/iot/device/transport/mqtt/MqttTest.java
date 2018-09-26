@@ -106,7 +106,7 @@ public class MqttTest
                 }
 
                 @Mock
-                Pair<String, byte[]> peekMessage() throws IOException
+                Pair<String, byte[]> peekMessage()
                 {
                     return new MutablePair<>(MOCK_PARSE_TOPIC, new byte[0]);
                 }
@@ -124,7 +124,7 @@ public class MqttTest
                 }
 
                 @Mock
-                Pair<String, byte[]> peekMessage() throws IOException
+                Pair<String, byte[]> peekMessage()
                 {
                     return new MutablePair<>(MOCK_PARSE_TOPIC, new byte[0]);
                 }
@@ -246,7 +246,7 @@ public class MqttTest
         };
     }
 
-    private void baseConstructorVerifications(boolean withParameter) throws MqttException
+    private void baseConstructorVerifications(boolean withParameter)
     {
         new Verifications()
         {
@@ -455,7 +455,7 @@ public class MqttTest
 
     //Tests_SRS_Mqtt_34_055: [If an MQTT connection is connected, the function shall disconnect that connection.]
     @Test
-    public void disconnectDoesNotDisconnectIfNotConnected() throws IOException, MqttException, TransportException
+    public void disconnectDoesNotDisconnectIfNotConnected() throws MqttException, TransportException
     {
         //arrange
         baseConstructorExpectations();
@@ -875,7 +875,7 @@ public class MqttTest
         new MockUp<MqttMessaging>()
         {
             @Mock
-            Pair<String, byte[]> peekMessage() throws IOException
+            Pair<String, byte[]> peekMessage()
             {
                 return new MutablePair<>(MOCK_PARSE_TOPIC, payload);
             }
@@ -922,7 +922,7 @@ public class MqttTest
         new MockUp<MqttMessaging>()
         {
             @Mock
-            Pair<String, byte[]> peekMessage() throws IOException
+            Pair<String, byte[]> peekMessage()
             {
                 return new MutablePair<>(MOCK_PARSE_TOPIC_WITH_INPUT_NAME, payload);
             }
@@ -958,7 +958,7 @@ public class MqttTest
         new MockUp<MqttMessaging>()
         {
             @Mock
-            Pair<String, byte[]> peekMessage() throws IOException
+            Pair<String, byte[]> peekMessage()
             {
                 return new MutablePair<>(null, payload);
             }
@@ -992,7 +992,7 @@ public class MqttTest
         new MockUp<MqttMessaging>()
         {
             @Mock
-            Pair<String, byte[]> peekMessage() throws IOException
+            Pair<String, byte[]> peekMessage()
             {
                 return new MutablePair<>(MOCK_PARSE_TOPIC, null);
             }
@@ -1013,7 +1013,7 @@ public class MqttTest
         new MockUp<MqttMessaging>()
         {
             @Mock
-            Pair<String, byte[]> peekMessage() throws IOException
+            Pair<String, byte[]> peekMessage()
             {
                 return new MutablePair<>(MOCK_PARSE_TOPIC, null);
             }
@@ -1075,7 +1075,7 @@ public class MqttTest
 
     //Tests_SRS_Mqtt_34_045: [If this object has a saved listener, this function shall notify the listener that connection was lost.]
     @Test
-    public void connectionLostAttemptsToReconnectWithSASTokenStillValid() throws IOException, MqttException
+    public void connectionLostAttemptsToReconnectWithSASTokenStillValid()
     {
         //arrange
         Mqtt mockMqtt = null;

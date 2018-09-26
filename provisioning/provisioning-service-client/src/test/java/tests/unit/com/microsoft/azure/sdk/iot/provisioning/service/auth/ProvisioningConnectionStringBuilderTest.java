@@ -28,7 +28,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_001: [The function shall throw IllegalArgumentException if the input string is empty or null.] */
     @Test(expected = IllegalArgumentException.class)
-    public void createConnectionStringThrowsOnNullConnectionString() throws Exception
+    public void createConnectionStringThrowsOnNullConnectionString()
     {
         // arrange
         String connectionString = null;
@@ -39,7 +39,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_001: [The function shall throw IllegalArgumentException if the input string is empty or null.] */
     @Test(expected = IllegalArgumentException.class)
-    public void createConnectionStringThrowsOnEmpyConnectionString() throws Exception
+    public void createConnectionStringThrowsOnEmpyConnectionString()
     {
         // arrange
         String connectionString = "";
@@ -50,7 +50,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_002: [The function shall create a new ProvisioningConnectionString object deserializing the given string.] */
     @Test
-    public void createConnectionStringDeserializerSucceeded() throws Exception
+    public void createConnectionStringDeserializerSucceeded()
     {
         // arrange
         String deviceProvisioningServiceName = "PROVISIONINGNAME";
@@ -75,7 +75,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_003: [The function shall throw IllegalArgumentException if the input string is empty or null.] */
     @Test(expected = IllegalArgumentException.class)
-    public void createConnectionStringThrowsOnNullHostName() throws Exception
+    public void createConnectionStringThrowsOnNullHostName()
     {
         // arrange
         AuthenticationMethod authenticationMethod = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", "myPolicy", "<key>");
@@ -86,7 +86,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_003: [The function shall throw IllegalArgumentException if the input string is empty or null.] */
     @Test(expected = IllegalArgumentException.class)
-    public void createConnectionStringThrowsOnEmptyHostName() throws Exception
+    public void createConnectionStringThrowsOnEmptyHostName()
     {
         // arrange
         AuthenticationMethod authenticationMethod = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", "myPolicy", "<key>");
@@ -97,7 +97,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_004: [The function shall throw IllegalArgumentException if the input authenticationMethod is null.] */
     @Test(expected = IllegalArgumentException.class)
-    public void createConnectionStringThrowsOnNullAuthenticationMethod() throws Exception
+    public void createConnectionStringThrowsOnNullAuthenticationMethod()
     {
         // arrange
         AuthenticationMethod authenticationMethod = null;
@@ -108,7 +108,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_005: [The function shall create a new ProvisioningConnectionString object using the given hostname and authenticationMethod.] */
     @Test
-    public void createConnectionStringWithPolicyKeySucceeded() throws Exception
+    public void createConnectionStringWithPolicyKeySucceeded()
     {
         // arrange
         AuthenticationMethod auth = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyKey", "myPolicy", "<key>");
@@ -123,7 +123,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_005: [The function shall create a new ProvisioningConnectionString object using the given hostname and authenticationMethod.] */
     @Test
-    public void createConnectionStringWithPolicyTokenSucceeded() throws Exception
+    public void createConnectionStringWithPolicyTokenSucceeded()
     {
         // arrange
         AuthenticationMethod auth = Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.provisioning.service.auth.ServiceAuthenticationWithSharedAccessPolicyToken", "myPolicy", "<token>");
@@ -138,7 +138,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_006: [The function shall throw IllegalArgumentException if the input string is empty or null.] */
     @Test(expected = IllegalArgumentException.class)
-    public void parserThrowsOnNullConnectionString() throws Exception
+    public void parserThrowsOnNullConnectionString()
     {
         // arrange
         String deviceProvisioningServiceName = "PROVISIONINGNAME";
@@ -155,7 +155,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_006: [The function shall throw IllegalArgumentException if the input string is empty or null.] */
     @Test(expected = IllegalArgumentException.class)
-    public void parserThrowsOnEmptyConnectionString() throws Exception
+    public void parserThrowsOnEmptyConnectionString()
     {
         // arrange
         String deviceProvisioningServiceName = "PROVISIONINGNAME";
@@ -172,7 +172,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_007: [The function shall throw IllegalArgumentException if the input target itoHubConnectionString is null.] */
     @Test(expected = IllegalArgumentException.class)
-    public void parserThrowsOnNullProvisioningConnectionString() throws Exception
+    public void parserThrowsOnNullProvisioningConnectionString()
     {
         // arrange
         String deviceProvisioningServiceName = "PROVISIONINGNAME";
@@ -189,7 +189,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_008: [The function shall throw exception if tokenizing or parsing failed.] */
     @Test(expected = Exception.class)
-    public void parserThrowsOnInvalidHostName() throws Exception
+    public void parserThrowsOnInvalidHostName()
     {
         // arrange
         String deviceProvisioningServiceName = "b.c.d";
@@ -205,7 +205,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_008: [The function shall throw exception if tokenizing or parsing failed.] */
     @Test(expected = Exception.class)
-    public void parserThrowsOnKeyMissing() throws Exception
+    public void parserThrowsOnKeyMissing()
     {
         // arrange
         String connectionString = "a=A;b=B;HostName=";
@@ -216,7 +216,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_008: [The function shall throw exception if tokenizing or parsing failed.] */
     @Test(expected = Exception.class)
-    public void parserThrowsOnMissingDeviceProvisioningServiceName() throws Exception
+    public void parserThrowsOnMissingDeviceProvisioningServiceName()
     {
         // arrange
         String deviceProvisioningServiceName = "";
@@ -233,7 +233,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_009: [The function shall tokenize and parse the given connection string and fill up the target ProvisioningConnectionString object with proper values.] */
     @Test
-    public void parserSimpleHostNameSucceeded() throws Exception
+    public void parserSimpleHostNameSucceeded()
     {
         // arrange
         String deviceProvisioningServiceName = "";
@@ -258,7 +258,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_009: [The function shall tokenize and parse the given connection string and fill up the target ProvisioningConnectionString object with proper values.] */
     @Test
-    public void parserSucceeded() throws Exception
+    public void parserSucceeded()
     {
         // arrange
         String deviceProvisioningServiceName = "PROVISIONINGNAME";
@@ -284,7 +284,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_010: [The function shall create a new ServiceAuthenticationWithSharedAccessPolicyToken and set the authenticationMethod if sharedAccessKey is not defined.] */
     @Test
-    public void parserWithSharedAccessKeyNotDefinedSucceeded() throws Exception
+    public void parserWithSharedAccessKeyNotDefinedSucceeded()
     {
         // arrange
         String deviceProvisioningServiceName = "b.c.d";
@@ -308,7 +308,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_011: [The function shall create a new ServiceAuthenticationWithSharedAccessPolicyKey and set the authenticationMethod if the sharedAccessSignature is not defined.] */
     @Test
-    public void parserWithSharedAccessSignatureNotDefinedSucceeded() throws Exception
+    public void parserWithSharedAccessSignatureNotDefinedSucceeded()
     {
         // arrange
         String deviceProvisioningServiceName = "b.c.d";
@@ -332,7 +332,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_012: [The function shall validate the connection string object.] */
     @Test
-    public void parserValidateConnectionStringSucceeded() throws Exception
+    public void parserValidateConnectionStringSucceeded()
     {
         // arrange
         String deviceProvisioningServiceName = "b.c.d";
@@ -357,7 +357,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_013: [The function shall return the substring of the host name until the first `.` character.] */
     @Test
-    public void parserDeviceProvisioningServiceNameWithOneSeparatorSucceeded() throws Exception
+    public void parserDeviceProvisioningServiceNameWithOneSeparatorSucceeded()
     {
         // arrange
         String deviceProvisioningServiceName = "PROVISIONINGNAME";
@@ -379,7 +379,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_013: [The function shall return the substring of the host name until the first `.` character.] */
     @Test
-    public void parserDeviceProvisioningServiceNameWithMultipleSeparatorSucceeded() throws Exception
+    public void parserDeviceProvisioningServiceNameWithMultipleSeparatorSucceeded()
     {
         // arrange
         String deviceProvisioningServiceName = "PROVISIONINGNAME";
@@ -401,7 +401,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_014: [The function shall return empty string if `.` character was not found.] */
     @Test
-    public void parserDeviceProvisioningServiceNameWithoutSeparatorSucceeded() throws Exception
+    public void parserDeviceProvisioningServiceNameWithoutSeparatorSucceeded()
     {
         // arrange
         String deviceProvisioningServiceName = "PROVISIONINGNAME";
@@ -421,7 +421,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_015: [The function shall throw IllegalArgumentException if the sharedAccessKeyName of the input itoHubConnectionString is null or empty.] */
     @Test(expected = IllegalArgumentException.class)
-    public void validateThrowsOnEmptySharedAccessKeyName() throws Exception
+    public void validateThrowsOnEmptySharedAccessKeyName()
     {
         // arrange
         ProvisioningConnectionString provisioningConnectionString = Deencapsulation.newInstance(ProvisioningConnectionString.class);
@@ -437,7 +437,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_016: [The function shall throw IllegalArgumentException if either of the sharedAccessKey or the sharedAccessSignature of the input itoHubConnectionString is null or empty.] */
     @Test(expected = IllegalArgumentException.class)
-    public void validateThrowsOnEmptySharedAccessKeyAndSignature() throws Exception
+    public void validateThrowsOnEmptySharedAccessKeyAndSignature()
     {
         // arrange
         ProvisioningConnectionString provisioningConnectionString = Deencapsulation.newInstance(ProvisioningConnectionString.class);
@@ -453,7 +453,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_017: [The function shall call property validation functions for hostname, sharedAccessKeyName, sharedAccessKey, sharedAccessSignature.] */
     @Test
-    public void validateValidatesFormatsSucceeded() throws Exception
+    public void validateValidatesFormatsSucceeded()
     {
         // arrange
         String deviceProvisioningServiceName = "b.c.d";
@@ -481,7 +481,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_018: [The function shall validate the property value against the given regex.] */
     @Test
-    public void validateFormatSucceeded() throws Exception
+    public void validateFormatSucceeded()
     {
         // arrange
         String regex = "[a-zA-Z0-9_\\-\\.]+$";
@@ -499,7 +499,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_019: [The function shall throw IllegalArgumentException if the value did not match with the pattern.] */
     @Test(expected = IllegalArgumentException.class)
-    public void validateFormatThrowsIfNotMatch() throws Exception
+    public void validateFormatThrowsIfNotMatch()
     {
         // arrange
         String regex = "[a-zA-Z0-9_\\-\\.]+$";
@@ -517,7 +517,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_020: [The function shall validate the property value against the given regex if the value is not null or empty.] */
     @Test
-    public void validateFormatIfSpecifiedSucceeded() throws Exception
+    public void validateFormatIfSpecifiedSucceeded()
     {
         // arrange
         String regex = "[a-zA-Z0-9_\\-\\.]+$";
@@ -543,7 +543,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_020: [The function shall validate the property value against the given regex if the value is not null or empty.] */
     @Test
-    public void validateFormatIfSpecifiedWithEmptyValueSucceeded() throws Exception
+    public void validateFormatIfSpecifiedWithEmptyValueSucceeded()
     {
         // arrange
         String regex = "[a-zA-Z0-9_\\-\\.]+$";
@@ -562,7 +562,7 @@ public class ProvisioningConnectionStringBuilderTest
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_021: [The function shall validate the given hostName.] */
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_022: [The function shall parse and set the hostname to the given target provisioningConnectionString object.] */
     @Test
-    public void setHostNameSucceeded() throws Exception
+    public void setHostNameSucceeded()
     {
         // arrange
         String regex = "[a-zA-Z0-9_\\-\\.]+$";
@@ -590,7 +590,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_023: [The function shall populate and set the authenticationMethod on the given target provisioningConnectionString object.] */
     @Test
-    public void setAuthenticationMethodWithKeySucceeded() throws Exception
+    public void setAuthenticationMethodWithKeySucceeded()
     {
         // arrange
         String regex = "[a-zA-Z0-9_\\-\\.]+$";
@@ -622,7 +622,7 @@ public class ProvisioningConnectionStringBuilderTest
 
     /* Tests_SRS_PROVISIONINGCONNECTIONSTRING_BUILDER_21_023: [The function shall populate and set the authenticationMethod on the given target provisioningConnectionString object.] */
     @Test
-    public void setAuthenticationMethodWithTokenSucceeded() throws Exception
+    public void setAuthenticationMethodWithTokenSucceeded()
     {
         // arrange
         String regex = "[a-zA-Z0-9_\\-\\.]+$";

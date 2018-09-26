@@ -11,5 +11,5 @@ public enum AuthenticationTypeParser
 
     @SerializedName("selfSigned") SELF_SIGNED,
 
-    @SerializedName("certificateAuthority") CERTIFICATE_AUTHORITY;
+    @SerializedName("certificateAuthority") CERTIFICATE_AUTHORITY
 }

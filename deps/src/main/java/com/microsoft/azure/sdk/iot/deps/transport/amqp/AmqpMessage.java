@@ -40,7 +40,7 @@ public class AmqpMessage
      */
     public void setBody(Data msgData)
     {
-        messageImpl.setBody((Section) msgData);
+        messageImpl.setBody(msgData);
     }
 
     /**
@@ -85,7 +85,7 @@ public class AmqpMessage
         this.messageImpl.decode(data, offset, length);
     }
 
-    public int encode(byte[] data, int offset) throws IOException
+    public int encode(byte[] data, int offset)
     {
         if (data == null)
         {

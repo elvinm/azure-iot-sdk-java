@@ -160,7 +160,7 @@ public class JobResultTest
 
     /* Tests_SRS_JOBRESULT_21_002: [The constructor shall parse the body using the JobsResponseParser.] */
     @Test
-    public void constructorParseJson() throws IOException
+    public void constructorParseJson()
     {
         //arrange
         final String json = "validJson";
@@ -208,7 +208,7 @@ public class JobResultTest
 
     /* Tests_SRS_JOBRESULT_21_004: [The constructor shall locally store all results information in the provided body.] */
     @Test
-    public void constructorStoreJsonContent() throws IOException
+    public void constructorStoreJsonContent()
     {
         //arrange
         final String json = "validJson";
@@ -246,7 +246,7 @@ public class JobResultTest
 
     /* Tests_SRS_JOBRESULT_21_004: [The constructor shall locally store all results information in the provided body.] */
     @Test
-    public void constructorStoreJsonContentNoTags() throws IOException
+    public void constructorStoreJsonContentNoTags()
     {
         //arrange
         final String json = "validJson";
@@ -283,7 +283,7 @@ public class JobResultTest
     /* Tests_SRS_JOBRESULT_21_018: [The getDeviceId shall return the stored deviceId.] */
     /* Tests_SRS_JOBRESULT_21_019: [The getParentJobId shall return the stored parentJobId.] */
     @Test
-    public void gettersTwinContent() throws IOException
+    public void gettersTwinContent()
     {
         //arrange
         final String json = "validJson";
@@ -321,7 +321,7 @@ public class JobResultTest
 
     /* Tests_SRS_JOBRESULT_21_021: [The getUpdateTwin shall return the nullable deviceId.] */
     @Test
-    public void gettersTwinContentWithNullDeviceId() throws IOException
+    public void gettersTwinContentWithNullDeviceId()
     {
         //arrange
         final String json = "validJson";
@@ -362,7 +362,7 @@ public class JobResultTest
     /* Tests_SRS_JOBRESULT_25_021: [The getOutcomeResult shall return the stored outcome.] */
     /* Tests_SRS_JOBRESULT_25_022: [The getError shall return the stored error message.] */
     @Test
-    public void gettersMethodContent(@Mocked MethodParser mockedMethodParser) throws IOException
+    public void gettersMethodContent(@Mocked MethodParser mockedMethodParser)
     {
         //arrange
         final String json = "validJson";
@@ -420,7 +420,7 @@ public class JobResultTest
 
     /* Tests_SRS_JOBRESULT_25_021: [The getOutcomeResult shall return the stored outcome.] */
     @Test
-    public void gettersEmptyOutcome(@Mocked MethodParser mockedMethodParser) throws IOException
+    public void gettersEmptyOutcome(@Mocked MethodParser mockedMethodParser)
     {
         //arrange
         final String json = "validJson";
@@ -465,7 +465,7 @@ public class JobResultTest
 
     /* Tests_SRS_JOBRESULT_21_020: [The toString shall return a String with a pretty print json that represents this class.] */
     @Test
-    public void toStringReturnClassContent() throws IOException
+    public void toStringReturnClassContent()
     {
         //arrange
         final String json = "validJson";
@@ -493,7 +493,7 @@ public class JobResultTest
 
     /* Tests_SRS_JOBRESULT_21_020: [The toString shall return a String with a pretty print json that represents this class.] */
     @Test
-    public void toStringReturnJobTypeUnknown() throws IOException
+    public void toStringReturnJobTypeUnknown()
     {
         //arrange
         final String json = "validJson";

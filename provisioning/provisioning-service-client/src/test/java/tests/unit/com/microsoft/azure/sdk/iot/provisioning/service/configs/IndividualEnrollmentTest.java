@@ -46,8 +46,6 @@ public class IndividualEnrollmentTest
         return individualEnrollment;
     }
 
-    ;
-
     private MockIndividualEnrollment makeMockedEnrollment()
     {
         return new MockIndividualEnrollment(VALID_REGISTRATION_ID, new TpmAttestation(VALID_ENDORSEMENT_KEY, VALID_STORAGE_ROOT_KEY));

@@ -304,7 +304,7 @@ public class QueryTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void continueQueryThrowsOnNegativePageSize() throws IOException, IotHubException
+    public void continueQueryThrowsOnNegativePageSize()
     {
         //arrange
         final String testToken = UUID.randomUUID().toString();
@@ -321,7 +321,7 @@ public class QueryTest
     //Tests_SRS_QUERY_25_013: [The method shall create a QueryResponse object with the contents from the response body and save it.]
     //Tests_SRS_QUERY_25_020: [This method shall save all the parameters for future use.]
     @Test
-    public void sendQueryRequestSucceeds() throws IotHubException, IOException
+    public void sendQueryRequestSucceeds() throws IOException
     {
         //arrange
         final String testToken = UUID.randomUUID().toString();
@@ -362,7 +362,7 @@ public class QueryTest
     }
 
     @Test
-    public void sendQueryRequestForNoSqlSucceeds() throws IotHubException, IOException
+    public void sendQueryRequestForNoSqlSucceeds() throws IOException
     {
         //arrange
         final String testToken = UUID.randomUUID().toString();
@@ -404,7 +404,7 @@ public class QueryTest
 
     //Tests_SRS_QUERY_25_007: [The method shall set the http headers x-ms-continuation and x-ms-max-item-count with request continuation token and page size if they were not null.]
     @Test
-    public void sendQueryRequestSetsHeadersIfFound() throws IotHubException, IOException
+    public void sendQueryRequestSetsHeadersIfFound() throws IOException
     {
         //arrange
         final String testToken = UUID.randomUUID().toString();
@@ -447,7 +447,7 @@ public class QueryTest
     }
 
     @Test
-    public void sendQueryRequestDoesNotSetNullHeaders() throws IotHubException, IOException
+    public void sendQueryRequestDoesNotSetNullHeaders() throws IOException
     {
         //arrange
         final String testToken = UUID.randomUUID().toString();
@@ -489,7 +489,7 @@ public class QueryTest
     }
 
     @Test(expected = IOException.class)
-    public void sendQueryRequestThrowsWhenResponseThrows() throws IotHubException, IOException
+    public void sendQueryRequestThrowsWhenResponseThrows()
     {
 
         //arrange
@@ -519,7 +519,7 @@ public class QueryTest
 
     //Tests_SRS_QUERY_25_010: [The method shall read the continuation token (x-ms-continuation) and response type (x-ms-item-type) from the HTTP Headers and save it.]
     @Test
-    public void sendQueryRequestSetsResContinuationTokenOnlyIfFound() throws IotHubException, IOException
+    public void sendQueryRequestSetsResContinuationTokenOnlyIfFound()
     {
 
         //arrange
@@ -546,7 +546,7 @@ public class QueryTest
     }
 
     @Test
-    public void sendQueryRequestDoesNotSetResContinuationTokenIfNotFound() throws IotHubException, IOException
+    public void sendQueryRequestDoesNotSetResContinuationTokenIfNotFound()
     {
         //arrange
         final String testResponseToken = UUID.randomUUID().toString();
@@ -571,7 +571,7 @@ public class QueryTest
     }
 
     @Test
-    public void sendQueryRequestSetsItemOnlyIfFound() throws IotHubException, IOException
+    public void sendQueryRequestSetsItemOnlyIfFound()
     {
         //arrange
         final Map<String, String> testHeaderResponseMap = new HashMap<>();
@@ -597,7 +597,7 @@ public class QueryTest
 
     //Tests_SRS_QUERY_25_012: [If the response type is Unknown or not found then this method shall throw IOException.]
     @Test(expected = IOException.class)
-    public void sendQueryRequestThrowsIfItemNotFound() throws IotHubException, IOException
+    public void sendQueryRequestThrowsIfItemNotFound()
     {
         //arrange
         final Map<String, String> testHeaderResponseMap = new HashMap<>();
@@ -618,7 +618,7 @@ public class QueryTest
 
     //Tests_SRS_QUERY_25_012: [If the response type is Unknown or not found then this method shall throw IOException.]
     @Test(expected = IOException.class)
-    public void sendQueryRequestThrowsIfTypeUnknown() throws IotHubException, IOException
+    public void sendQueryRequestThrowsIfTypeUnknown()
     {
         //arrange
         final Map<String, String> testHeaderResponseMap = new HashMap<>();
@@ -640,7 +640,7 @@ public class QueryTest
 
     //Tests_SRS_QUERY_25_011: [If the request type and response does not match then the method shall throw IOException.]
     @Test(expected = IOException.class)
-    public void sendQueryRequestThrowsIfRequestAndResponseTypeDoesNotMatch() throws IotHubException, IOException
+    public void sendQueryRequestThrowsIfRequestAndResponseTypeDoesNotMatch()
     {
         //arrange
         final Map<String, String> testHeaderResponseMap = new HashMap<>();
@@ -732,7 +732,7 @@ public class QueryTest
 
     //Tests_SRS_QUERY_25_014: [The method shall return the continuation token found in response to a query (which can be null).]
     @Test
-    public void getTokenGets() throws IotHubException, IOException
+    public void getTokenGets()
     {
         //arrange
         final String testResponseToken = UUID.randomUUID().toString();
@@ -761,7 +761,7 @@ public class QueryTest
 
     //Tests_SRS_QUERY_25_015: [The method shall return true if next element from QueryResponse is available and false otherwise.]
     @Test
-    public void hasNextReturnsTrueIfNextExists() throws IotHubException, IOException
+    public void hasNextReturnsTrueIfNextExists()
     {
         //arrange
         final Map<String, String> testHeaderResponseMap = new HashMap<>();
@@ -791,7 +791,7 @@ public class QueryTest
 
     //Tests_SRS_QUERY_25_021: [If no further query response is available, then this method shall continue to request query to IotHub if continuation token is available.]
     @Test
-    public void hasNextReturnsFalseIfNextDoesNotExistsAndTokenIsNull() throws IotHubException, IOException
+    public void hasNextReturnsFalseIfNextDoesNotExistsAndTokenIsNull()
     {
         //arrange
         final Map<String, String> testHeaderResponseMap = new HashMap<>();
@@ -820,7 +820,7 @@ public class QueryTest
     }
 
     @Test
-    public void hasNextReturnsFalseIfContinueQueryHasNothing() throws IotHubException, IOException
+    public void hasNextReturnsFalseIfContinueQueryHasNothing() throws IOException
     {
         //arrange
         final String testResponseToken = UUID.randomUUID().toString();
@@ -869,7 +869,7 @@ public class QueryTest
 
     //Tests_SRS_QUERY_25_016: [The method shall return the next element for this QueryResponse.]
     @Test
-    public void nextReturnsIfNextExists() throws IotHubException, IOException
+    public void nextReturnsIfNextExists()
     {
         //arrange
         final Object mockObject = new Object();
@@ -902,7 +902,7 @@ public class QueryTest
 
     //Tests_SRS_QUERY_25_022: [The method shall check if any further elements are available by calling hasNext and if none is available then it shall throw NoSuchElementException.]
     @Test(expected = NoSuchElementException.class)
-    public void nextThrowsIfNextDoesNotExists() throws IotHubException, IOException
+    public void nextThrowsIfNextDoesNotExists()
     {
         //arrange
         final Object mockObject = new Object();

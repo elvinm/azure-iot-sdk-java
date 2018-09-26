@@ -92,16 +92,16 @@ public class IotHubSSLContextTest
     @Mocked
     CertificateFactory mockedCertificateFactory;
 
-    private void generateSSLContextExpectations() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException, CertificateException
+    private void generateSSLContextExpectations() throws NoSuchAlgorithmException, KeyStoreException
     {
         new NonStrictExpectations()
         {
             {
-                mockedSSLContext.getInstance(anyString);
+                SSLContext.getInstance(anyString);
                 result = mockedSSLContext;
-                mockedTrustManagerFactory.getInstance(anyString);
+                TrustManagerFactory.getInstance(anyString);
                 result = mockedTrustManagerFactory;
-                mockedKeyStore.getInstance(anyString);
+                KeyStore.getInstance(anyString);
                 result = mockedKeyStore;
                 Deencapsulation.invoke(mockedCertificateManager, "getCertificateCollection");
                 result = testCollection;
@@ -180,7 +180,7 @@ public class IotHubSSLContextTest
     //Tests_SRS_IOTHUBSSLCONTEXT_34_021: [The constructor shall initialize a default trust manager factory that accepts communications from Iot Hub.]
     //Tests_SRS_IOTHUBSSLCONTEXT_34_024: [The constructor shall initialize SSL context with its initialized keystore, its initialized TrustManagerFactory and a new secure random.]
     @Test
-    public void constructorWithCertAndKeySuccess() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException, CertificateException, UnrecoverableKeyException
+    public void constructorWithCertAndKeySuccess() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException
     {
         //arrange
         final String publicKeyCert = "someCert";
@@ -244,7 +244,7 @@ public class IotHubSSLContextTest
 
     //Tests_SRS_IOTHUBSSLCONTEXT_34_025: [If the provided cert is a path, this function shall set the path of the default cert to the provided cert path.]
     @Test
-    public void constructorUpdatesDefaultCertPath() throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyManagementException, KeyStoreException, IOException
+    public void constructorUpdatesDefaultCertPath()
     {
         //arrange
         final String defaultCertPath = "somePath";
@@ -272,7 +272,7 @@ public class IotHubSSLContextTest
 
     //Tests_SRS_IOTHUBSSLCONTEXT_34_026: [If the provided cert is not a path, this function shall set the default cert to the provided cert.]
     @Test
-    public void constructorUpdatesDefaultCert() throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyManagementException, KeyStoreException, IOException
+    public void constructorUpdatesDefaultCert()
     {
         //arrange
         final String defaultCert = "someCert";
@@ -304,7 +304,7 @@ public class IotHubSSLContextTest
     // Tests_SRS_IOTHUBSSLCONTEXT_34_045: [The constructor shall initialize a default trust manager factory that accepts communications from Iot Hub.]
     // Tests_SRS_IOTHUBSSLCONTEXT_34_046: [The constructor shall initialize SSL context with its initialized keystore, its initialized TrustManagerFactory and a new secure random.]
     @Test
-    public void constructorWithDefaultCertAndPublicCertAndPrivateKey() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException, CertificateException, UnrecoverableKeyException
+    public void constructorWithDefaultCertAndPublicCertAndPrivateKey() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException
     {
         //arrange
         final String publicKeyCert = "someCert";
@@ -375,7 +375,7 @@ public class IotHubSSLContextTest
 
     // Tests_SRS_IOTHUBSSLCONTEXT_34_040: [If the provided cert is a path, this function shall set the path of the default cert to the provided cert path.]
     @Test
-    public void constructorWithDefaultCertPathAndPublicCertAndPrivateKey() throws IOException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException, CertificateException
+    public void constructorWithDefaultCertPathAndPublicCertAndPrivateKey() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException
     {
         //arrange
         final String publicKeyCert = "someCert";
@@ -446,7 +446,7 @@ public class IotHubSSLContextTest
 
     // Tests_SRS_IOTHUBSSLCONTEXT_34_031: [This function shall return a Private Key instance created by the provided PEM formatted privateKeyString.]
     @Test
-    public void parsePrivateKeySuccess() throws CertificateException, IOException
+    public void parsePrivateKeySuccess() throws IOException
     {
         //arrange
         new NonStrictExpectations(IotHubSSLContext.class)
@@ -475,7 +475,7 @@ public class IotHubSSLContextTest
     }
 
     @Test
-    public void parsePrivateKeyType2Success() throws CertificateException, IOException
+    public void parsePrivateKeyType2Success() throws IOException
     {
         //arrange
         new NonStrictExpectations(IotHubSSLContext.class)
@@ -505,7 +505,7 @@ public class IotHubSSLContextTest
 
     // Tests_SRS_IOTHUBSSLCONTEXT_34_032: [If any exception is encountered while attempting to create the private key instance, this function shall throw a CertificateException.]
     @Test(expected = CertificateException.class)
-    public void parsePrivateKeyExceptionsWrappedInCertificateException() throws CertificateException, IOException
+    public void parsePrivateKeyExceptionsWrappedInCertificateException()
     {
         //arrange
         new NonStrictExpectations()
@@ -596,7 +596,7 @@ public class IotHubSSLContextTest
 
     // Tests_SRS_IOTHUBSSLCONTEXT_34_034: [If any exception is encountered while attempting to create the public key certificate instance, this function shall throw a CertificateException.]
     @Test(expected = CertificateException.class)
-    public void parsePublicKeyCertificateExceptionsWrappedInCertificateException() throws CertificateException, IOException
+    public void parsePublicKeyCertificateExceptionsWrappedInCertificateException()
     {
         //arrange
         new NonStrictExpectations()

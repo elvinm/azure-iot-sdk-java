@@ -35,7 +35,6 @@ public class TwinProperty
     private Object lock = new Object();
     private ConcurrentMap<String, Property> property = new ConcurrentHashMap<>();
     private Integer version;
-    ;
     private Boolean reportMetadata;
     protected TwinProperty()
     {

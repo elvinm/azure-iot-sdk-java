@@ -190,7 +190,7 @@ public class AmqpSendTest
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSEND_12_003: [The event handler shall set the member AmqpsSendHandler object to handle the given connection events]
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSEND_12_004: [The event handler shall create an AmqpsSendHandler object to handle reactor events]
     @Test
-    public void onReactorInit_creates_SendHandler() throws IOException
+    public void onReactorInit_creates_SendHandler()
     {
         // Arrange
         String hostName = "aaa";
@@ -213,7 +213,7 @@ public class AmqpSendTest
 
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPSEND_12_005: [The event handler shall invalidate the member AmqpsSendHandler object]
     @Test
-    public void onReactorInit_invalidates_SendHandler() throws IOException
+    public void onReactorInit_invalidates_SendHandler()
     {
         // Arrange
         String hostName = "aaa";
@@ -304,7 +304,7 @@ public class AmqpSendTest
         new Expectations()
         {
             {
-                reactor = proton.reactor(amqpSend);
+                reactor = Proton.reactor(amqpSend);
                 reactor.run();
             }
         };

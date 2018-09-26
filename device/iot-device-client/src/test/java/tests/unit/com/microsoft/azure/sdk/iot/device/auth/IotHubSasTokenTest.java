@@ -30,7 +30,7 @@ public class IotHubSasTokenTest
 
     // Tests_SRS_IOTHUBSASTOKEN_11_001: [The SAS token shall have the format "SharedAccessSignature sig=<signature>&se=<expiryTime>&sr=<resourceURI>". The params can be in any order.]
     @Test
-    public void sasTokenHasCorrectFormat() throws URISyntaxException
+    public void sasTokenHasCorrectFormat()
     {
         final long expiryTime = 100;
         final String signature = "sample-sig";
@@ -55,7 +55,7 @@ public class IotHubSasTokenTest
 
     // Tests_SRS_IOTHUBSASTOKEN_11_002: [The expiry time shall be the given expiry time, where it is a UNIX timestamp and indicates the time after which the token becomes invalid.]
     @Test
-    public void expiryTimeSetCorrectly() throws URISyntaxException
+    public void expiryTimeSetCorrectly()
     {
         final long expiryTime = 100;
         final String signature = "sample-sig";
@@ -87,7 +87,7 @@ public class IotHubSasTokenTest
     // Tests_SRS_IOTHUBSASTOKEN_11_005: [The signature shall be correctly computed and set.]
     // Tests_SRS_IOTHUBSASTOKEN_11_006: [The function shall return the string representation of the SAS token.]
     @Test
-    public void signatureSetCorrectly() throws URISyntaxException
+    public void signatureSetCorrectly()
     {
         final long expiryTime = 100;
         final String signature = "sample-sig";
@@ -119,7 +119,7 @@ public class IotHubSasTokenTest
 
     // Tests_SRS_IOTHUBSASTOKEN_11_013: [**The token generated from DeviceClientConfig shall use correct expiry time (seconds rather than milliseconds)]
     @Test
-    public void constructorSetsExpiryTimeCorrectly() throws URISyntaxException
+    public void constructorSetsExpiryTimeCorrectly()
     {
         final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, "iothub.sample-iothub-hostname.net", "sample-device-ID", "sample-device-key", null);
 
@@ -147,7 +147,7 @@ public class IotHubSasTokenTest
 
     // Tests_SRS_IOTHUBSASTOKEN_25_007: [**If device key is not provided in config then the SASToken from config shall be used.**]**
     @Test
-    public void setValidSASTokenCorrectly() throws URISyntaxException
+    public void setValidSASTokenCorrectly()
     {
         String sastoken = "SharedAccessSignature sr=blah&sig=blah&se=" + Long.MAX_VALUE;
         final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, "iothub.sample-iothub-hostname.net", "sample-device-ID", null, sastoken);
@@ -160,7 +160,7 @@ public class IotHubSasTokenTest
     // Tests_SRS_IOTHUBSASTOKEN_25_008: [**The required format for the SAS Token shall be verified and IllegalArgumentException is thrown if unmatched.**]**
     // Tests_SRS_IOTHUBSASTOKEN_11_001: [**The SAS token shall have the format `SharedAccessSignature sig=<signature >&se=<expiryTime>&sr=<resourceURI>`. The params can be in any order.**]**
     @Test(expected = IllegalArgumentException.class)
-    public void doesNotSetInvalidSASToken() throws URISyntaxException
+    public void doesNotSetInvalidSASToken()
     {
         String sastoken = "SharedAccessSignature sr=blah&sig=blah&se=" + Long.MAX_VALUE;
         final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, "iothub.sample-iothub-hostname.net", "sample-device-ID", null, sastoken);
@@ -171,7 +171,7 @@ public class IotHubSasTokenTest
     // Tests_SRS_IOTHUBSASTOKEN_25_008: [**The required format for the SAS Token shall be verified and IllegalArgumentException is thrown if unmatched.**]**
     //Tests_SRS_IOTHUBSASTOKEN_11_001: [**The SAS token shall have the format `SharedAccessSignature sig=<signature >&se=<expiryTime>&sr=<resourceURI>`. The params can be in any order.**]**
     @Test(expected = IllegalArgumentException.class)
-    public void doesNotSetSASTokenWithoutSe() throws URISyntaxException
+    public void doesNotSetSASTokenWithoutSe()
     {
         String sastoken = "SharedAccessSignature sr=blah&sig=blah";
         final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, "iothub.sample-iothub-hostname.net", "sample-device-ID", null, sastoken);
@@ -182,7 +182,7 @@ public class IotHubSasTokenTest
     // Tests_SRS_IOTHUBSASTOKEN_25_008: [**The required format for the SAS Token shall be verified and IllegalArgumentException is thrown if unmatched.**]**
     // Tests_SRS_IOTHUBSASTOKEN_11_001: [**The SAS token shall have the format `SharedAccessSignature sig=<signature >&se=<expiryTime>&sr=<resourceURI>`. The params can be in any order.**]**
     @Test(expected = IllegalArgumentException.class)
-    public void doesNotSetSASTokenWithoutSr() throws URISyntaxException
+    public void doesNotSetSASTokenWithoutSr()
     {
         String sastoken = "SharedAccessSignature sig=blah&se=" + Long.MAX_VALUE;
         final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, "iothub.sample-iothub-hostname.net", "sample-device-ID", null, sastoken);
@@ -193,10 +193,9 @@ public class IotHubSasTokenTest
     // Tests_SRS_IOTHUBSASTOKEN_25_008: [**The required format for the SAS Token shall be verified and IllegalArgumentException is thrown if unmatched.**]**
     // Tests_SRS_IOTHUBSASTOKEN_11_001: [**The SAS token shall have the format `SharedAccessSignature sig=<signature >&se=<expiryTime>&sr=<resourceURI>`. The params can be in any order.**]**
     @Test(expected = IllegalArgumentException.class)
-    public void doesNotSetSASTokenWithoutSig() throws URISyntaxException
+    public void doesNotSetSASTokenWithoutSig()
     {
         String sastoken = "SharedAccessSignature sr=srValue&se=" + Long.MAX_VALUE;
-        ;
         final IotHubConnectionString iotHubConnectionString = Deencapsulation.newInstance(IotHubConnectionString.class, new Class[]{String.class, String.class, String.class, String.class}, "iothub.sample-iothub-hostname.net", "sample-device-ID", null, sastoken);
 
         IotHubSasToken token = Deencapsulation.newInstance(IotHubSasToken.class, new Class[]{String.class, String.class, String.class, String.class, long.class}, iotHubConnectionString.getHostName(), iotHubConnectionString.getDeviceId(), iotHubConnectionString.getSharedAccessKey(), iotHubConnectionString.getSharedAccessToken(), 0);
@@ -242,7 +241,7 @@ public class IotHubSasTokenTest
 
     // Tests_SRS_IOTHUBSASTOKEN_11_001: [**The SAS token shall have the format `SharedAccessSignature sig=<signature >&se=<expiryTime>&sr=<resourceURI>`. The params can be in any order.**]**
     @Test
-    public void setValidSASTokenCorrectlyDespiteReorganizedSignature() throws URISyntaxException
+    public void setValidSASTokenCorrectlyDespiteReorganizedSignature()
     {
         //Typical order of fields in SAS token is sr=<>&sig=<>&se=<>, however these should be able to be reorganized freely
         //This test tries se=<>&sr=<>&sig=<>
@@ -256,7 +255,7 @@ public class IotHubSasTokenTest
 
     // Tests_SRS_IOTHUBSASTOKEN_11_001: [**The SAS token shall have the format `SharedAccessSignature sig=<signature >&se=<expiryTime>&sr=<resourceURI>`. The params can be in any order.**]**
     @Test
-    public void setValidSASTokenCorrectlyDespiteFurtherReorganizedSignature() throws URISyntaxException
+    public void setValidSASTokenCorrectlyDespiteFurtherReorganizedSignature()
     {
         //Typical order of fields in SAS token is sr=<>&sig=<>&se=<>, however these should be able to be reorganized freely
         //This test tries se=<>&sig=<>&sr=<>

@@ -118,7 +118,7 @@ public class FileUploadTaskTest
         };
     }
 
-    private void cloudExpectations() throws IOException, IllegalArgumentException, URISyntaxException, StorageException
+    private void cloudExpectations() throws IllegalArgumentException, StorageException
     {
         new NonStrictExpectations()
         {
@@ -410,7 +410,7 @@ public class FileUploadTaskTest
                 times = 1;
             }
         };
-        assertEquals(VALID_URI_STRING, ((URI) Deencapsulation.getField(fileUploadTask, "blobURI")).toString());
+        assertEquals(VALID_URI_STRING, Deencapsulation.getField(fileUploadTask, "blobURI").toString());
     }
 
     /* Tests_SRS_FILEUPLOADTASK_21_019: [The run shall create a `CloudBlockBlob` using the `blobUri`.] */
@@ -562,7 +562,7 @@ public class FileUploadTaskTest
 
     /* Tests_SRS_FILEUPLOADTASK_21_031: [If run failed to send the request, it shall call the userCallback with the status `ERROR`, and abort the upload.] */
     @Test
-    public void runFileUploadRequestParserThrows() throws IOException, IllegalArgumentException, URISyntaxException, StorageException
+    public void runFileUploadRequestParserThrows() throws IllegalArgumentException
     {
         // arrange
         new NonStrictExpectations()
@@ -592,7 +592,7 @@ public class FileUploadTaskTest
 
     /* Tests_SRS_FILEUPLOADTASK_21_031: [If run failed to send the request, it shall call the userCallback with the status `ERROR`, and abort the upload.] */
     @Test
-    public void runCreateRequestMessageThrows() throws IOException, IllegalArgumentException, URISyntaxException, StorageException
+    public void runCreateRequestMessageThrows() throws IllegalArgumentException
     {
         // arrange
         new NonStrictExpectations()
@@ -626,7 +626,7 @@ public class FileUploadTaskTest
 
     /* Tests_SRS_FILEUPLOADTASK_21_031: [If run failed to send the request, it shall call the userCallback with the status `ERROR`, and abort the upload.] */
     @Test
-    public void runSendRequestThrows() throws IOException, IllegalArgumentException, URISyntaxException, StorageException
+    public void runSendRequestThrows() throws IOException, IllegalArgumentException
     {
         // arrange
         new NonStrictExpectations()
@@ -662,7 +662,7 @@ public class FileUploadTaskTest
 
     /* Tests_SRS_FILEUPLOADTASK_21_013: [If result status for the blob request is not `OK`, or `OK_EMPTY`, the run shall call the userCallback bypassing the received status, and abort the upload.] */
     @Test
-    public void runRequestReceivedInternalServerError() throws IOException, IllegalArgumentException, URISyntaxException, StorageException
+    public void runRequestReceivedInternalServerError() throws IOException, IllegalArgumentException
     {
         // arrange
         requestExpectations(VALID_BLOB_NAME, VALID_REQUEST_JSON);
@@ -693,7 +693,7 @@ public class FileUploadTaskTest
 
     /* Tests_SRS_FILEUPLOADTASK_21_014: [If result status for the blob request is `OK_EMPTY`, the run shall call the userCallback with the stratus `ERROR`, and abort the upload.] */
     @Test
-    public void runIoTHubResponseDoNotContainsMessage() throws IOException, IllegalArgumentException, URISyntaxException, StorageException
+    public void runIoTHubResponseDoNotContainsMessage() throws IOException, IllegalArgumentException
     {
         // arrange
         requestExpectations(VALID_BLOB_NAME, VALID_REQUEST_JSON);
@@ -724,7 +724,7 @@ public class FileUploadTaskTest
 
     /* Tests_SRS_FILEUPLOADTASK_21_016: [If the `responseMessage` is null, empty, do not contains a valid json, or if the information in json is not correct, the run shall call the `userCallback` reporting the error, and abort the upload.] */
     @Test
-    public void runIoTHubResponseNullBytesInMessage() throws IOException, IllegalArgumentException, URISyntaxException, StorageException
+    public void runIoTHubResponseNullBytesInMessage() throws IOException, IllegalArgumentException
     {
         // arrange
         requestExpectations(VALID_BLOB_NAME, VALID_REQUEST_JSON);
@@ -757,7 +757,7 @@ public class FileUploadTaskTest
 
     /* Tests_SRS_FILEUPLOADTASK_21_016: [If the `responseMessage` is null, empty, do not contains a valid json, or if the information in json is not correct, the run shall call the `userCallback` reporting the error, and abort the upload.] */
     @Test
-    public void runIoTHubResponseEmptyMessage() throws IOException, IllegalArgumentException, URISyntaxException, StorageException
+    public void runIoTHubResponseEmptyMessage() throws IOException, IllegalArgumentException
     {
         // arrange
         requestExpectations(VALID_BLOB_NAME, VALID_REQUEST_JSON);
@@ -790,7 +790,7 @@ public class FileUploadTaskTest
 
     /* Tests_SRS_FILEUPLOADTASK_21_016: [If the `responseMessage` is null, empty, do not contains a valid json, or if the information in json is not correct, the run shall call the `userCallback` reporting the error, and abort the upload.] */
     @Test
-    public void runIoTHubResponseInvalidMessage() throws IOException, IllegalArgumentException, URISyntaxException, StorageException
+    public void runIoTHubResponseInvalidMessage() throws IOException, IllegalArgumentException
     {
         // arrange
         requestExpectations(VALID_BLOB_NAME, VALID_REQUEST_JSON);
@@ -823,7 +823,7 @@ public class FileUploadTaskTest
 
     /* Tests_SRS_FILEUPLOADTASK_21_016: [If the `responseMessage` is null, empty, do not contains a valid json, or if the information in json is not correct, the run shall call the `userCallback` reporting the error, and abort the upload.] */
     @Test
-    public void runFileUploadResponseParserThrows() throws IOException, IllegalArgumentException, URISyntaxException, StorageException
+    public void runFileUploadResponseParserThrows() throws IOException, IllegalArgumentException
     {
         // arrange
         requestExpectations(VALID_BLOB_NAME, VALID_REQUEST_JSON);
@@ -858,7 +858,7 @@ public class FileUploadTaskTest
 
     /* Tests_SRS_FILEUPLOADTASK_21_032: [If create the blob URI failed, the run shall call the `userCallback` reporting the error, and abort the upload.] */
     @Test
-    public void runMakeURIThrows(@Mocked final URI mockURI) throws IOException, IllegalArgumentException, URISyntaxException, StorageException
+    public void runMakeURIThrows(@Mocked final URI mockURI) throws IOException, IllegalArgumentException, URISyntaxException
     {
         // arrange
         requestExpectations(VALID_BLOB_NAME, VALID_REQUEST_JSON);
@@ -892,7 +892,7 @@ public class FileUploadTaskTest
     /* Tests_SRS_FILEUPLOADTASK_21_022: [If the upload to blob failed, the run shall create a notification the IoT Hub with `isSuccess` equals false, `statusCode` equals -1.] */
     /* Tests_SRS_FILEUPLOADTASK_21_030: [If the upload to blob failed, the run shall call the `userCallback` reporting an error status `ERROR`.] */
     @Test
-    public void runCloudBlockBlobThrows() throws IOException, IllegalArgumentException, URISyntaxException, StorageException
+    public void runCloudBlockBlobThrows() throws IOException, IllegalArgumentException, StorageException
     {
         // arrange
         requestExpectations(VALID_BLOB_NAME, VALID_REQUEST_JSON);
@@ -929,7 +929,7 @@ public class FileUploadTaskTest
     /* Tests_SRS_FILEUPLOADTASK_21_022: [If the upload to blob failed, the run shall create a notification the IoT Hub with `isSuccess` equals false, `statusCode` equals -1.] */
     /* Tests_SRS_FILEUPLOADTASK_21_030: [If the upload to blob failed, the run shall call the `userCallback` reporting an error status `ERROR`.] */
     @Test
-    public void runCloudBlockBlobUploadThrows() throws IOException, IllegalArgumentException, URISyntaxException, StorageException
+    public void runCloudBlockBlobUploadThrows() throws IOException, IllegalArgumentException, StorageException
     {
         // arrange
         requestExpectations(VALID_BLOB_NAME, VALID_REQUEST_JSON);

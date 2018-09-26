@@ -139,7 +139,7 @@ public class ExportImportDeviceParserTest
 
     //Tests_SRS_EXPORTIMPORTDEVICE_PARSER_34_001: [The parser shall save the ExportImportDeviceParser's authentication to the returned json representation]
     @Test
-    public void toJsonForSymmetricKeySecuredDevice() throws NoSuchAlgorithmException
+    public void toJsonForSymmetricKeySecuredDevice()
     {
         // arrange
         ExportImportDeviceParser parser = new ExportImportDeviceParser();
@@ -157,7 +157,7 @@ public class ExportImportDeviceParserTest
     }
 
     @Test
-    public void toJsonForTaggedDevice() throws NoSuchAlgorithmException
+    public void toJsonForTaggedDevice()
     {
         // arrange
         ExportImportDeviceParser parser = new ExportImportDeviceParser();

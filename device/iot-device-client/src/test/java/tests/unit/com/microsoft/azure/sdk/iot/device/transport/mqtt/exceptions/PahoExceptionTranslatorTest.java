@@ -65,7 +65,7 @@ public class PahoExceptionTranslatorTest
 
     // Tests_SRS_PahoExceptionTranslator_34_143: [When deriving the TransportException from the provided MqttException, this function shall map REASON_CODE_BROKER_UNAVAILABLE to MqttServerUnavailableException.]
     @Test
-    public void onConnectionLostMapsBrokerUnavailableException() throws IOException, TransportException
+    public void onConnectionLostMapsBrokerUnavailableException()
     {
         //arrange
         new NonStrictExpectations()
@@ -85,7 +85,7 @@ public class PahoExceptionTranslatorTest
 
     // Tests_SRS_PahoExceptionTranslator_34_144: [When deriving the TransportException from the provided MqttException, this function shall map REASON_CODE_FAILED_AUTHENTICATION to MqttBadUsernameOrPasswordException.]
     @Test
-    public void onConnectionLostMapsFailedAuthenticationException() throws IOException, TransportException
+    public void onConnectionLostMapsFailedAuthenticationException()
     {
         //arrange
         new NonStrictExpectations()
@@ -105,7 +105,7 @@ public class PahoExceptionTranslatorTest
 
     // Tests_SRS_PahoExceptionTranslator_34_145: [When deriving the TransportException from the provided MqttException, this function shall map REASON_CODE_NOT_AUTHORIZED to MqttUnauthorizedException.]
     @Test
-    public void onConnectionLostMapsNotAuthorizedException() throws IOException, TransportException
+    public void onConnectionLostMapsNotAuthorizedException()
     {
         //arrange
         new NonStrictExpectations()
@@ -125,7 +125,7 @@ public class PahoExceptionTranslatorTest
 
     //Tests_SRS_PahoExceptionTranslator_34_147: [When deriving the TransportException from the provided MqttException, this function shall map any connect codes between 6 and 255 inclusive to MqttUnexpectedErrorException.]
     @Test
-    public void onConnectionLostMapsUnexpectedConnectCodeException() throws IOException, TransportException
+    public void onConnectionLostMapsUnexpectedConnectCodeException()
     {
         //arrange
         new NonStrictExpectations()
@@ -145,7 +145,7 @@ public class PahoExceptionTranslatorTest
 
     //Tests_SRS_PahoExceptionTranslator_34_148: [When deriving the TransportException from the provided MqttException, this function shall map all other MqttExceptions to ProtocolException.]
     @Test
-    public void onConnectionLostMapsUnknownPahoException() throws IOException, TransportException
+    public void onConnectionLostMapsUnknownPahoException()
     {
         //arrange
         new NonStrictExpectations()
@@ -165,7 +165,7 @@ public class PahoExceptionTranslatorTest
 
     // Tests_SRS_Mqtt_34_046: [When deriving the TransportException from the provided MqttException, this function shall map REASON_CODE_SUBSCRIBE_FAILED, REASON_CODE_CLIENT_NOT_CONNECTED, REASON_CODE_TOKEN_INUSE, REASON_CODE_CONNECTION_LOST, REASON_CODE_SERVER_CONNECT_ERROR, REASON_CODE_CLIENT_TIMEOUT, REASON_CODE_WRITE_TIMEOUT, and REASON_CODE_MAX_INFLIGHT to a retryable ProtocolException.]
     @Test
-    public void onConnectionLostMapsRetryableExceptionsCorrectly() throws IOException, TransportException
+    public void onConnectionLostMapsRetryableExceptionsCorrectly()
     {
         //arrange
         new StrictExpectations()

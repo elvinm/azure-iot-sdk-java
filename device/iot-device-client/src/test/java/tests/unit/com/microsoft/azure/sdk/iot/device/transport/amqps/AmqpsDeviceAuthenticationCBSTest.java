@@ -224,7 +224,7 @@ public class AmqpsDeviceAuthenticationCBSTest
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONCBS_12_023: [The function shall call the super to get the message.]
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONCBS_12_024: [The function shall set the message type to CBS authentication if the message is not null.]
     @Test
-    public void getMessageFromReceiverLinkSuccess() throws IOException
+    public void getMessageFromReceiverLinkSuccess()
     {
         //arrange
         final String linkName = "linkName";
@@ -261,7 +261,7 @@ public class AmqpsDeviceAuthenticationCBSTest
 
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONCBS_12_025: [The function shall return the message.]
     @Test
-    public void getMessageFromReceiverLinkSuperFailed() throws IOException
+    public void getMessageFromReceiverLinkSuperFailed()
     {
         //arrange
         String linkName = "receiver";
@@ -286,7 +286,7 @@ public class AmqpsDeviceAuthenticationCBSTest
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONCBS_12_028: [The function shall read the application properties and if the status code property is not 200 return false.]
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONCBS_12_029: [The function shall return true If both the correlationID and status code matches.]
     @Test
-    public void authenticationMessageReceivedSuccess() throws IOException
+    public void authenticationMessageReceivedSuccess()
     {
         //arrange
         final String propertyKey = "status-code";
@@ -324,7 +324,7 @@ public class AmqpsDeviceAuthenticationCBSTest
 
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONCBS_12_026: [The function shall return false if the amqpdMessage parameter is null or does not have Properties and Application properties.]
     @Test
-    public void authenticationMessageReceivePropertiesNull() throws IOException
+    public void authenticationMessageReceivePropertiesNull()
     {
         //arrange
         final String propertyKey = "status-code";
@@ -348,7 +348,7 @@ public class AmqpsDeviceAuthenticationCBSTest
 
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONCBS_12_026: [The function shall return false if the amqpdMessage parameter is null or does not have Properties and Application properties.]
     @Test
-    public void authenticationMessageReceiveApplicationPropertiesNull() throws IOException
+    public void authenticationMessageReceiveApplicationPropertiesNull()
     {
         //arrange
         final String propertyKey = "status-code";
@@ -374,7 +374,7 @@ public class AmqpsDeviceAuthenticationCBSTest
 
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONCBS_12_029: [The function shall return true If both the correlationID and status code matches.]
     @Test
-    public void authenticationMessageReceiveUUIDMismatch() throws IOException
+    public void authenticationMessageReceiveUUIDMismatch()
     {
         //arrange
         final String propertyKey = "status-code";
@@ -404,7 +404,7 @@ public class AmqpsDeviceAuthenticationCBSTest
 
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONCBS_12_029: [The function shall return true If both the correlationID and status code matches.]
     @Test
-    public void authenticationMessageReceive404() throws IOException
+    public void authenticationMessageReceive404()
     {
         //arrange
         final String propertyKey = "status-code";

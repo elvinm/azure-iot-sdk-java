@@ -43,8 +43,6 @@ public class EnrollmentGroupTest
         return enrollmentGroup;
     }
 
-    ;
-
     private MockEnrollmentGroup makeMockedEnrollmentGroup()
     {
         return new MockEnrollmentGroup(VALID_ENROLLMENT_GROUP_ID, X509Attestation.createFromRootCertificates(PUBLIC_KEY_CERTIFICATE_STRING, null));

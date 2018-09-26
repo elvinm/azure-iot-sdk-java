@@ -141,7 +141,7 @@ public class HttpsTransportManagerTest
 
     /* Tests_SRS_HTTPSTRANSPORTMANAGER_21_007: [The send shall create a new instance of the `HttpMessage`, by parsing the Message with `parseHttpsJsonMessage` from `HttpsSingleMessage`.] */
     @Test
-    public void sendCreateHttpMessageSucceed() throws IOException, TransportException
+    public void sendCreateHttpMessageSucceed() throws TransportException
     {
         // arrange
         final HttpsIotHubConnection httpsIotHubConnection = mockConn;
@@ -202,7 +202,7 @@ public class HttpsTransportManagerTest
 
     /* Tests_SRS_HTTPSTRANSPORTMANAGER_21_009: [If the IotHubMethod is `GET`, the send shall set the httpsMethod as `GET`.] */
     @Test
-    public void sendMethodGETSucceed() throws IOException, TransportException
+    public void sendMethodGETSucceed() throws TransportException
     {
         // arrange
         final HttpsIotHubConnection httpsIotHubConnection = mockConn;
@@ -240,7 +240,7 @@ public class HttpsTransportManagerTest
 
     /* Tests_SRS_HTTPSTRANSPORTMANAGER_21_010: [If the IotHubMethod is `POST`, the send shall set the httpsMethod as `POST`.] */
     @Test
-    public void sendMethodPOSTSucceed() throws IOException, TransportException
+    public void sendMethodPOSTSucceed() throws TransportException
     {
         // arrange
         final HttpsIotHubConnection httpsIotHubConnection = mockConn;
@@ -304,7 +304,7 @@ public class HttpsTransportManagerTest
     /* Tests_SRS_HTTPSTRANSPORTMANAGER_21_012: [The send shall set the httpsPath with the uriPath in the message.] */
     /* Tests_SRS_HTTPSTRANSPORTMANAGER_21_013: [The send shall call `sendHttpsMessage` from `HttpsIotHubConnection` to send the message.] */
     @Test
-    public void sendSucceed() throws IOException, TransportException
+    public void sendSucceed() throws TransportException
     {
         // arrange
         final HttpsIotHubConnection httpsIotHubConnection = mockConn;
@@ -342,7 +342,7 @@ public class HttpsTransportManagerTest
 
     /* Tests_SRS_HTTPSTRANSPORTMANAGER_21_014: [If `sendHttpsMessage` failed, the send shall bypass the exception.] */
     @Test(expected = IOException.class)
-    public void sendSendHttpsMessageThrows() throws IOException, TransportException
+    public void sendSendHttpsMessageThrows() throws TransportException
     {
         // arrange
         final HttpsIotHubConnection httpsIotHubConnection = mockConn;
@@ -547,14 +547,14 @@ public class HttpsTransportManagerTest
 
     //Tests_SRS_HTTPSTRANSPORTMANAGER_34_020: [If the provided uri is null or empty, this function shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void invokeMethodThrowsForNullUri() throws TransportException, IOException, URISyntaxException
+    public void invokeMethodThrowsForNullUri()
     {
         //arrange
         final HttpsTransportManager transportManager = new HttpsTransportManager(mockConfig);
         final String expectedDeviceId = "myDevice";
 
         //act
-        Deencapsulation.invoke(transportManager, "invokeMethod", new Class[]{MethodRequest.class, URI.class}, mockedMethodRequest, (URI) null);
+        Deencapsulation.invoke(transportManager, "invokeMethod", new Class[]{MethodRequest.class, URI.class}, mockedMethodRequest, null);
     }
 
 
@@ -609,7 +609,7 @@ public class HttpsTransportManagerTest
     // format devices/<deviceid>/modules/<moduleid>/files if a moduleId is present or
     // devices/<deviceid>/modules/<moduleid>/files otherwise, and then send it.]
     @Test
-    public void sendFileUploadMessageSuccessWithModule() throws TransportException, IOException, URISyntaxException
+    public void sendFileUploadMessageSuccessWithModule() throws IOException
     {
         //arrange
         final HttpsTransportManager transportManager = new HttpsTransportManager(mockConfig);
@@ -641,7 +641,7 @@ public class HttpsTransportManagerTest
     // format devices/<deviceid>/modules/<moduleid>/files if a moduleId is present or
     // devices/<deviceid>/modules/<moduleid>/files otherwise, and then send it.]
     @Test
-    public void sendFileUploadMessageSuccessWithoutModule() throws TransportException, IOException, URISyntaxException
+    public void sendFileUploadMessageSuccessWithoutModule() throws IOException
     {
         //arrange
         final HttpsTransportManager transportManager = new HttpsTransportManager(mockConfig);
@@ -672,7 +672,7 @@ public class HttpsTransportManagerTest
     // format devices/<deviceid>/modules/<moduleid>/files/notifications if a moduleId is present or
     // devices/<deviceid>/modules/<moduleid>/files/notifications otherwise, and then send it.]
     @Test
-    public void sendFileUploadNotificationMessageSuccessWithModule() throws TransportException, IOException, URISyntaxException
+    public void sendFileUploadNotificationMessageSuccessWithModule() throws IOException
     {
         //arrange
         final HttpsTransportManager transportManager = new HttpsTransportManager(mockConfig);
@@ -704,7 +704,7 @@ public class HttpsTransportManagerTest
     // format devices/<deviceid>/modules/<moduleid>/files/notifications if a moduleId is present or
     // devices/<deviceid>/modules/<moduleid>/files/notifications otherwise, and then send it.]
     @Test
-    public void sendFileUploadNotificationMessageSuccessWithoutModule() throws TransportException, IOException, URISyntaxException
+    public void sendFileUploadNotificationMessageSuccessWithoutModule() throws IOException
     {
         //arrange
         final HttpsTransportManager transportManager = new HttpsTransportManager(mockConfig);

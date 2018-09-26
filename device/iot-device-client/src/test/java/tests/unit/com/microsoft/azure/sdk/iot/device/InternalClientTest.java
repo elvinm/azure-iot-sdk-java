@@ -64,7 +64,7 @@ public class InternalClientTest
 
     /* Tests_SRS_INTERNALCLIENT_21_004: [If the connection string is null or empty, the function shall throw an IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void constructorNullConnectionStringThrows() throws URISyntaxException, IOException
+    public void constructorNullConnectionStringThrows()
     {
         //arrange
         final IotHubConnectionString mockIotHubConnectionString = null;
@@ -76,7 +76,7 @@ public class InternalClientTest
 
     // Tests_SRS_INTERNALCLIENT_34_078: [If the connection string or protocol is null, this function shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void x509ConstructorNullConnectionStringThrows() throws URISyntaxException, IOException
+    public void x509ConstructorNullConnectionStringThrows()
     {
         //arrange
         final String mockIotHubConnectionString = null;
@@ -88,7 +88,7 @@ public class InternalClientTest
 
     // Tests_SRS_INTERNALCLIENT_34_078: [If the connection string or protocol is null, this function shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void x509ConstructorNullProtocolThrows() throws URISyntaxException, IOException
+    public void x509ConstructorNullProtocolThrows()
     {
         //arrange
         final String mockIotHubConnectionString = "some connection string";
@@ -101,7 +101,7 @@ public class InternalClientTest
     // Tests_SRS_INTERNALCLIENT_34_079: [This function shall save a new config using the provided connection string, and x509 certificate information.]
     // Tests_SRS_INTERNALCLIENT_34_080: [This function shall save a new DeviceIO instance using the created config and the provided send/receive periods.]
     @Test
-    public void x509ConstructorCreatesConfigAndDeviceIO() throws URISyntaxException, IOException
+    public void x509ConstructorCreatesConfigAndDeviceIO()
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -128,7 +128,7 @@ public class InternalClientTest
     //Tests_SRS_INTERNALCLIENT_34_066: [The provided security provider will be saved in config.]
     //Tests_SRS_INTERNALCLIENT_34_067: [The constructor shall initialize the IoT Hub transport for the protocol specified, creating a instance of the deviceIO.]
     @Test
-    public void createFromSecurityProviderUsesUriAndDeviceIdAndSavesSecurityProviderAndCreatesDeviceIO() throws URISyntaxException, SecurityProviderException, IOException
+    public void createFromSecurityProviderUsesUriAndDeviceIdAndSavesSecurityProviderAndCreatesDeviceIO() throws URISyntaxException, IOException
     {
         //arrange
         final String expectedUri = "some uri";
@@ -160,7 +160,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_34_073: [If the provided securityProvider is null, this function shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void createFromSecurityProviderThrowForNullSecurityProvider() throws URISyntaxException, SecurityProviderException, IOException
+    public void createFromSecurityProviderThrowForNullSecurityProvider()
     {
         //arrange
         final String expectedUri = "some uri";
@@ -173,7 +173,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_34_074: [If the provided uri is null, this function shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void createFromSecurityProviderThrowForNullUri() throws URISyntaxException, SecurityProviderException, IOException
+    public void createFromSecurityProviderThrowForNullUri()
     {
         //arrange
         final String expectedUri = "some uri";
@@ -186,7 +186,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_34_075: [If the provided deviceId is null, this function shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void createFromSecurityProviderThrowForNullDeviceId() throws URISyntaxException, SecurityProviderException, IOException
+    public void createFromSecurityProviderThrowForNullDeviceId()
     {
         //arrange
         final String expectedUri = "some uri";
@@ -199,7 +199,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_34_072: [If the provided protocol is null, this function shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void createFromSecurityProviderThrowForNullProtocol() throws URISyntaxException, SecurityProviderException, IOException
+    public void createFromSecurityProviderThrowForNullProtocol()
     {
         //arrange
         final String expectedUri = "some uri";
@@ -211,7 +211,7 @@ public class InternalClientTest
 
     /* Tests_SRS_INTERNALCLIENT_21_005: [If protocol is null, the function shall throw an IllegalArgumentException.] */
     @Test(expected = IllegalArgumentException.class)
-    public void constructorNullProtocolThrows() throws URISyntaxException, IOException
+    public void constructorNullProtocolThrows()
     {
         //arrange
         final IotHubClientProtocol protocol = null;
@@ -222,7 +222,7 @@ public class InternalClientTest
 
     /* Tests_SRS_INTERNALCLIENT_21_002: [The constructor shall initialize the IoT Hub transport for the protocol specified, creating a instance of the deviceIO.] */
     @Test(expected = IllegalArgumentException.class)
-    public void constructorBadDeviceIOThrows() throws URISyntaxException, IOException
+    public void constructorBadDeviceIOThrows()
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -236,9 +236,9 @@ public class InternalClientTest
             {
                 Deencapsulation.newInstance(IotHubConnectionString.class, mockIotHubConnectionString);
                 times = 1;
-                Deencapsulation.newInstance(DeviceClientConfig.class, (IotHubConnectionString) any, DeviceClientConfig.AuthType.SAS_TOKEN);
+                Deencapsulation.newInstance(DeviceClientConfig.class, any, DeviceClientConfig.AuthType.SAS_TOKEN);
                 times = 1;
-                Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.device.DeviceIO", new Class[]{DeviceClientConfig.class, IotHubClientProtocol.class, long.class, long.class}, (DeviceClientConfig) any, protocol, SEND_PERIOD_MILLIS, RECEIVE_PERIOD_MILLIS_AMQPS);
+                Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.device.DeviceIO", new Class[]{DeviceClientConfig.class, IotHubClientProtocol.class, long.class, long.class}, any, protocol, SEND_PERIOD_MILLIS, RECEIVE_PERIOD_MILLIS_AMQPS);
                 times = 1;
             }
         };
@@ -246,7 +246,7 @@ public class InternalClientTest
 
     /* Tests_SRS_INTERNALCLIENT_21_003: [The constructor shall save the connection configuration using the object DeviceClientConfig.] */
     @Test(expected = IllegalArgumentException.class)
-    public void constructorBadDeviceClientConfigThrows() throws URISyntaxException, IOException
+    public void constructorBadDeviceClientConfigThrows()
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -258,9 +258,9 @@ public class InternalClientTest
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(DeviceClientConfig.class, (IotHubConnectionString) any, DeviceClientConfig.AuthType.SAS_TOKEN);
+                Deencapsulation.newInstance(DeviceClientConfig.class, any, DeviceClientConfig.AuthType.SAS_TOKEN);
                 times = 1;
-                Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.device.DeviceIO", new Class[]{DeviceClientConfig.class, IotHubClientProtocol.class, long.class, long.class}, (DeviceClientConfig) any, protocol, SEND_PERIOD_MILLIS, RECEIVE_PERIOD_MILLIS_AMQPS);
+                Deencapsulation.newInstance("com.microsoft.azure.sdk.iot.device.DeviceIO", new Class[]{DeviceClientConfig.class, IotHubClientProtocol.class, long.class, long.class}, any, protocol, SEND_PERIOD_MILLIS, RECEIVE_PERIOD_MILLIS_AMQPS);
                 times = 0;
             }
         };
@@ -268,7 +268,7 @@ public class InternalClientTest
 
     /* Tests_SRS_INTERNALCLIENT_21_006: [The open shall open the deviceIO connection.] */
     @Test
-    public void openOpensDeviceIOSuccess() throws IOException, URISyntaxException
+    public void openOpensDeviceIOSuccess()
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -295,7 +295,7 @@ public class InternalClientTest
     /* Tests_SRS_INTERNALCLIENT_21_042: [The closeNow shall closeNow the deviceIO connection.] */
     /* Tests_SRS_INTERNALCLIENT_21_043: [If the closing a connection via deviceIO is not successful, the closeNow shall throw IOException.] */
     @Test
-    public void closeClosesTransportSuccess() throws IOException, URISyntaxException
+    public void closeClosesTransportSuccess() throws IOException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -329,7 +329,7 @@ public class InternalClientTest
     /* Tests_SRS_INTERNALCLIENT_21_042: [The closeNow shall closeNow the deviceIO connection.] */
     /* Tests_SRS_INTERNALCLIENT_21_043: [If the closing a connection via deviceIO is not successful, the closeNow shall throw IOException.] */
     @Test
-    public void closeWaitAndClosesTransportSuccess() throws IOException, URISyntaxException
+    public void closeWaitAndClosesTransportSuccess() throws IOException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -360,7 +360,7 @@ public class InternalClientTest
 
     /* Tests_SRS_INTERNALCLIENT_21_008: [The closeNow shall closeNow the deviceIO connection.] */
     @Test
-    public void closeNowClosesTransportSuccess() throws IOException, URISyntaxException
+    public void closeNowClosesTransportSuccess() throws IOException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -382,7 +382,7 @@ public class InternalClientTest
 
     /* Tests_SRS_INTERNALCLIENT_21_009: [If the closing a connection via deviceIO is not successful, the closeNow shall throw IOException.] */
     @Test
-    public void closeNowBadCloseTransportThrows() throws IOException, URISyntaxException
+    public void closeNowBadCloseTransportThrows() throws IOException
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -418,7 +418,7 @@ public class InternalClientTest
 
     /* Tests_SRS_INTERNALCLIENT_21_010: [The sendEventAsync shall asynchronously send the message using the deviceIO connection.] */
     @Test
-    public void sendEventAsyncSendsSuccess(@Mocked final Message mockMessage, @Mocked final IotHubEventCallback mockCallback) throws IOException, URISyntaxException
+    public void sendEventAsyncSendsSuccess(@Mocked final Message mockMessage, @Mocked final IotHubEventCallback mockCallback)
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -442,7 +442,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_34_045: [This function shall set the provided message's connection device id to the config's saved device id.]
     @Test
-    public void sendEventAsyncSetsConnectionDeviceId(@Mocked final Message mockMessage, @Mocked final IotHubEventCallback mockCallback) throws IOException, URISyntaxException
+    public void sendEventAsyncSetsConnectionDeviceId(@Mocked final Message mockMessage, @Mocked final IotHubEventCallback mockCallback)
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -475,7 +475,7 @@ public class InternalClientTest
     /* Tests_SRS_INTERNALCLIENT_21_011: [If starting to send via deviceIO is not successful, the sendEventAsync shall bypass the threw exception.] */
     // Tests_SRS_INTERNALCLIENT_12_001: [The function shall call deviceIO.sendEventAsync with the client's config parameter to enable multiplexing.]
     @Test
-    public void sendEventAsyncBadSendThrows(@Mocked final Message mockMessage, @Mocked final IotHubEventCallback mockCallback) throws IOException, URISyntaxException
+    public void sendEventAsyncBadSendThrows(@Mocked final Message mockMessage, @Mocked final IotHubEventCallback mockCallback)
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -514,7 +514,7 @@ public class InternalClientTest
     // Tests_SRS_INTERNALCLIENT_11_013: [The function shall set the message callback, with its associated context.]
     // Tests_SRS_INTERNALCLIENT_12_001: [The function shall call deviceIO.sendEventAsync with the client's config parameter to enable multiplexing.]
     @Test
-    public void setMessageCallbackSetsMessageCallback(@Mocked final MessageCallback mockCallback) throws IOException, URISyntaxException
+    public void setMessageCallbackSetsMessageCallback(@Mocked final MessageCallback mockCallback)
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -536,7 +536,7 @@ public class InternalClientTest
 
     // Tests_SRS_INTERNALCLIENT_11_014: [If the callback is null but the context is non-null, the function shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void setMessageCallbackRejectsNullCallbackAndNonnullContext() throws IOException, URISyntaxException
+    public void setMessageCallbackRejectsNullCallbackAndNonnullContext()
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -551,7 +551,7 @@ public class InternalClientTest
      **Tests_SRS_INTERNALCLIENT_25_025: [**The function shall create a new instance of class Device Twin and request all twin properties by calling getDeviceTwin**]**
      */
     @Test
-    public void startDeviceTwinSucceeds(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException
+    public void startDeviceTwinSucceeds(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB)
     {
         //arrange
 
@@ -584,7 +584,7 @@ public class InternalClientTest
      **Tests_SRS_INTERNALCLIENT_25_026: [**If the deviceTwinStatusCallback or genericPropertyCallBack is null, the function shall throw an InvalidParameterException.**]**
      */
     @Test(expected = IllegalArgumentException.class)
-    public void startDeviceTwinThrowsIfStatusCBisNull(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException
+    public void startDeviceTwinThrowsIfStatusCBisNull(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final PropertyCallBack mockedPropertyCB)
 
     {
         //arrange
@@ -619,7 +619,7 @@ public class InternalClientTest
      **Tests_SRS_INTERNALCLIENT_25_026: [**If the deviceTwinStatusCallback or genericPropertyCallBack is null, the function shall throw an InvalidParameterException.**]**
      */
     @Test(expected = IllegalArgumentException.class)
-    public void startDeviceTwinThrowsIfPropCBisNull(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB) throws IOException, URISyntaxException
+    public void startDeviceTwinThrowsIfPropCBisNull(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB)
 
     {
         //arrange
@@ -637,7 +637,7 @@ public class InternalClientTest
         Deencapsulation.invoke(client, "open");
 
         //act
-        Deencapsulation.invoke(client, "startTwinInternal", mockedStatusCB, null, (PropertyCallBack) null, null);
+        Deencapsulation.invoke(client, "startTwinInternal", mockedStatusCB, null, null, null);
 
     }
 
@@ -645,7 +645,7 @@ public class InternalClientTest
      **Tests_SRS_INTERNALCLIENT_25_028: [**If this method is called twice on the same instance of the client then this method shall throw UnsupportedOperationException.**]**
      */
     @Test
-    public void startDeviceTwinThrowsIfCalledTwice(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException
+    public void startDeviceTwinThrowsIfCalledTwice(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB)
 
     {
         //arrange
@@ -687,7 +687,7 @@ public class InternalClientTest
      **Tests_SRS_INTERNALCLIENT_25_027: [**If the client has not been open, the function shall throw an IOException.**]**
      */
     @Test(expected = IOException.class)
-    public void startDeviceTwinThrowsIfCalledWhenClientNotOpen(@Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException
+    public void startDeviceTwinThrowsIfCalledWhenClientNotOpen(@Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB)
 
     {
         //arrange
@@ -711,7 +711,7 @@ public class InternalClientTest
      **Tests_SRS_INTERNALCLIENT_25_031: [**This method shall subscribe to desired properties by calling subscribeDesiredPropertiesNotification on the twin object.**]**
      */
     @Test
-    public void subscribeToDPSucceeds(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB, @Mocked final Map<Property, Pair<PropertyCallBack<String, Object>, Object>> mockMap) throws IOException, URISyntaxException
+    public void subscribeToDPSucceeds(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB, @Mocked final Map<Property, Pair<PropertyCallBack<String, Object>, Object>> mockMap)
 
     {
         //arrange
@@ -743,7 +743,7 @@ public class InternalClientTest
     }
 
     @Test
-    public void subscribeToDPWorksWhenMapIsNull(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException
+    public void subscribeToDPWorksWhenMapIsNull(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB)
 
     {
         //arrange
@@ -778,7 +778,7 @@ public class InternalClientTest
      **Tests_SRS_INTERNALCLIENT_25_030: [**If the client has not been open, the function shall throw an IOException.**]**
      */
     @Test
-    public void subscribeToDPThrowsIfCalledWhenClientNotOpen(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB, @Mocked final Map<Property, Pair<PropertyCallBack<String, Object>, Object>> mockMap) throws IOException, URISyntaxException
+    public void subscribeToDPThrowsIfCalledWhenClientNotOpen(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB, @Mocked final Map<Property, Pair<PropertyCallBack<String, Object>, Object>> mockMap)
 
     {
         //arrange
@@ -818,7 +818,7 @@ public class InternalClientTest
      **Tests_SRS_INTERNALCLIENT_25_029: [**If the client has not started twin before calling this method, the function shall throw an IOException.**]**
      */
     @Test
-    public void subscribeToDPThrowsIfCalledBeforeStartingTwin(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final Map<Property, Pair<PropertyCallBack<String, Object>, Object>> mockMap) throws IOException, URISyntaxException
+    public void subscribeToDPThrowsIfCalledBeforeStartingTwin(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final Map<Property, Pair<PropertyCallBack<String, Object>, Object>> mockMap)
 
     {
         //arrange
@@ -858,7 +858,7 @@ public class InternalClientTest
      **Tests_SRS_INTERNALCLIENT_25_035: [**This method shall send to reported properties by calling updateReportedProperties on the twin object.**]**
      */
     @Test
-    public void sendRPSucceeds(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB, @Mocked final Set<Property> mockSet) throws IOException, URISyntaxException
+    public void sendRPSucceeds(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB, @Mocked final Set<Property> mockSet) throws IOException
     {
         //arrange
 
@@ -888,7 +888,7 @@ public class InternalClientTest
     }
 
     @Test
-    public void sendRPWithVersionSucceeds(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB, @Mocked final Set<Property> mockSet) throws IOException, URISyntaxException
+    public void sendRPWithVersionSucceeds(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB, @Mocked final Set<Property> mockSet) throws IOException
     {
         //arrange
 
@@ -921,7 +921,7 @@ public class InternalClientTest
      **Tests_SRS_INTERNALCLIENT_25_032: [**If the client has not started twin before calling this method, the function shall throw an IOException.**]**
      */
     @Test
-    public void sendRPThrowsIfCalledBeforeStartingTwin(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final Set<Property> mockSet) throws IOException, URISyntaxException
+    public void sendRPThrowsIfCalledBeforeStartingTwin(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final Set<Property> mockSet) throws IOException
     {
         //arrange
 
@@ -957,7 +957,7 @@ public class InternalClientTest
     }
 
     @Test
-    public void sendRPWithVersionThrowsIfCalledBeforeStartingTwin(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final Set<Property> mockSet) throws IOException, URISyntaxException
+    public void sendRPWithVersionThrowsIfCalledBeforeStartingTwin(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final Set<Property> mockSet) throws IOException
     {
         //arrange
 
@@ -996,7 +996,7 @@ public class InternalClientTest
      **Tests_SRS_INTERNALCLIENT_25_033: [**If the client has not been open, the function shall throw an IOException.**]**
      */
     @Test
-    public void sendRPThrowsIfCalledWhenClientNotOpen(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final Set<Property> mockSet) throws IOException, URISyntaxException
+    public void sendRPThrowsIfCalledWhenClientNotOpen(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final Set<Property> mockSet) throws IOException
     {
         //arrange
 
@@ -1033,7 +1033,7 @@ public class InternalClientTest
     }
 
     @Test
-    public void sendRPWithVersionThrowsIfCalledWhenClientNotOpen(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final Set<Property> mockSet) throws IOException, URISyntaxException
+    public void sendRPWithVersionThrowsIfCalledWhenClientNotOpen(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final Set<Property> mockSet) throws IOException
     {
         //arrange
 
@@ -1073,7 +1073,7 @@ public class InternalClientTest
      **Tests_SRS_INTERNALCLIENT_25_034: [**If reportedProperties is null or empty, the function shall throw an InvalidParameterException.**]**
      */
     @Test
-    public void sendRPThrowsIfCalledWhenRPNullOrEmpty(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException
+    public void sendRPThrowsIfCalledWhenRPNullOrEmpty(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException
     {
         //arrange
 
@@ -1110,7 +1110,7 @@ public class InternalClientTest
     }
 
     @Test
-    public void sendRPWithVersionThrowsIfCalledWhenRPNullOrEmpty(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException
+    public void sendRPWithVersionThrowsIfCalledWhenRPNullOrEmpty(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException
     {
         //arrange
 
@@ -1150,7 +1150,7 @@ public class InternalClientTest
      **Tests_SRS_INTERNALCLIENT_21_053: [**If version is negative, the function shall throw an IllegalArgumentException.**]**
      */
     @Test
-    public void sendRPThrowsIfCalledWhenVersionIsNegative(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB, @Mocked final Set<Property> mockSet) throws IOException, URISyntaxException
+    public void sendRPThrowsIfCalledWhenVersionIsNegative(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB, @Mocked final Set<Property> mockSet) throws IOException
     {
         //arrange
 
@@ -1190,7 +1190,7 @@ public class InternalClientTest
     Tests_SRS_INTERNALCLIENT_25_038: [**This method shall subscribe to device methods by calling subscribeToDeviceMethod on DeviceMethod object which it created.**]**
      */
     @Test
-    public void subscribeToDeviceMethodSucceeds(@Mocked final IotHubEventCallback mockedStatusCB, @Mocked final DeviceMethodCallback mockedDeviceMethodCB, @Mocked final DeviceMethod mockedMethod) throws IOException, URISyntaxException
+    public void subscribeToDeviceMethodSucceeds(@Mocked final IotHubEventCallback mockedStatusCB, @Mocked final DeviceMethodCallback mockedDeviceMethodCB, @Mocked final DeviceMethod mockedMethod)
     {
         //arrange
 
@@ -1224,7 +1224,7 @@ public class InternalClientTest
     Tests_SRS_INTERNALCLIENT_25_036: [**If the client has not been open, the function shall throw an IOException.**]**
      */
     @Test(expected = IOException.class)
-    public void subscribeToDeviceMethodThrowsIfClientNotOpen(@Mocked final IotHubEventCallback mockedStatusCB, @Mocked final DeviceMethodCallback mockedDeviceMethodCB) throws IOException, URISyntaxException
+    public void subscribeToDeviceMethodThrowsIfClientNotOpen(@Mocked final IotHubEventCallback mockedStatusCB, @Mocked final DeviceMethodCallback mockedDeviceMethodCB)
     {
         //arrange
 
@@ -1246,7 +1246,7 @@ public class InternalClientTest
     Tests_SRS_INTERNALCLIENT_25_037: [**If deviceMethodCallback or deviceMethodStatusCallback is null, the function shall throw an IllegalArgumentException.**]**
      */
     @Test(expected = IllegalArgumentException.class)
-    public void subscribeToDeviceMethodThrowsIfDeviceMethodCallbackNull(@Mocked final IotHubEventCallback mockedStatusCB) throws IOException, URISyntaxException
+    public void subscribeToDeviceMethodThrowsIfDeviceMethodCallbackNull(@Mocked final IotHubEventCallback mockedStatusCB)
     {
         //arrange
 
@@ -1266,7 +1266,7 @@ public class InternalClientTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void subscribeToDeviceMethodThrowsIfDeviceMethodStatusCallbackNull(@Mocked final DeviceMethodCallback mockedDeviceMethodCB) throws IOException, URISyntaxException
+    public void subscribeToDeviceMethodThrowsIfDeviceMethodStatusCallbackNull(@Mocked final DeviceMethodCallback mockedDeviceMethodCB)
     {
         //arrange
 
@@ -1289,7 +1289,7 @@ public class InternalClientTest
     Tests_SRS_INTERNALCLIENT_25_039: [**This method shall update the deviceMethodCallback if called again, but it shall not subscribe twice.**]**
      */
     @Test
-    public void subscribeToDeviceMethodWorksEvenWhenCalledTwice(@Mocked final IotHubEventCallback mockedStatusCB, @Mocked final DeviceMethodCallback mockedDeviceMethodCB, @Mocked final DeviceMethod mockedMethod) throws IOException, URISyntaxException
+    public void subscribeToDeviceMethodWorksEvenWhenCalledTwice(@Mocked final IotHubEventCallback mockedStatusCB, @Mocked final DeviceMethodCallback mockedDeviceMethodCB, @Mocked final DeviceMethod mockedMethod)
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.MQTT;
@@ -1319,7 +1319,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_34_044: [**If the SAS token has expired before this call, throw a Security Exception**]
     @Test(expected = SecurityException.class)
-    public void tokenExpiresAfterDeviceClientInitializedBeforeOpen() throws SecurityException, URISyntaxException, IOException
+    public void tokenExpiresAfterDeviceClientInitializedBeforeOpen() throws SecurityException
     {
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
         InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[]{IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, protocol, SEND_PERIOD, RECEIVE_PERIOD);
@@ -1340,7 +1340,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_99_003: [If the callback is null the method shall throw an IllegalArgument exception.]
     @Test(expected = IllegalArgumentException.class)
-    public void registerConnectionStateCallbackNullCallback() throws IllegalArgumentException, URISyntaxException, IOException
+    public void registerConnectionStateCallbackNullCallback() throws IllegalArgumentException
     {
         //arrange
 
@@ -1388,7 +1388,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_28_001: [The function shall set the device config's RetryPolicy .]
     @Test
-    public void setRetryPolicySetPolicy() throws URISyntaxException
+    public void setRetryPolicySetPolicy()
     {
         //arrange
 
@@ -1411,7 +1411,7 @@ public class InternalClientTest
 
     // Tests_SRS_INTERNALCLIENT_34_070: [The function shall set the device config's operation timeout .]
     @Test
-    public void setDeviceOperationTimeoutSetsConfig() throws URISyntaxException
+    public void setDeviceOperationTimeoutSetsConfig()
     {
         //arrange
 
@@ -1435,7 +1435,7 @@ public class InternalClientTest
 
     // Tests_SRS_INTERNALCLIENT_34_071: [This function shall return the product info saved in config.]
     @Test
-    public void getProductInfoFetchesFromConfig() throws URISyntaxException
+    public void getProductInfoFetchesFromConfig()
     {
         //arrange
 
@@ -1458,7 +1458,7 @@ public class InternalClientTest
     }
 
     @Test
-    public void subscribeToDPSucceedsEvenWhenUserCBIsNull(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException, URISyntaxException
+    public void subscribeToDPSucceedsEvenWhenUserCBIsNull(@Mocked final DeviceTwin mockedDeviceTwin, @Mocked final IotHubEventCallback mockedStatusCB, @Mocked final PropertyCallBack mockedPropertyCB) throws IOException
     {
         //arrange
         final Device mockDevice = new Device()
@@ -1498,7 +1498,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_21_040: [If the client has not started twin before calling this method, the function shall throw an IOException.]
     @Test(expected = IOException.class)
-    public void getDeviceTwinThrowsIfNotStartedYet() throws URISyntaxException, IOException
+    public void getDeviceTwinThrowsIfNotStartedYet()
     {
         //arrange
         InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[]{IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, IotHubClientProtocol.AMQPS, SEND_PERIOD, RECEIVE_PERIOD);
@@ -1509,7 +1509,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_21_041: [If the client has not been open, the function shall throw an IOException.]
     @Test(expected = IOException.class)
-    public void getDeviceTwinThrowsIfNotOpen(@Mocked DeviceTwin mockedDeviceTwin) throws URISyntaxException, IOException
+    public void getDeviceTwinThrowsIfNotOpen(@Mocked DeviceTwin mockedDeviceTwin)
     {
         //arrange
         InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[]{IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, IotHubClientProtocol.AMQPS, SEND_PERIOD, RECEIVE_PERIOD);
@@ -1531,7 +1531,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_21_042: [The function shall get all desired properties by calling getDeviceTwin.]
     @Test
-    public void getDeviceTwinSuccess(final @Mocked DeviceTwin mockedDeviceTwin) throws URISyntaxException, IOException
+    public void getDeviceTwinSuccess(final @Mocked DeviceTwin mockedDeviceTwin)
     {
         //arrange
         InternalClient client = Deencapsulation.newInstance(InternalClient.class, new Class[]{IotHubConnectionString.class, IotHubClientProtocol.class, long.class, long.class}, mockIotHubConnectionString, IotHubClientProtocol.AMQPS, SEND_PERIOD, RECEIVE_PERIOD);
@@ -1562,7 +1562,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_34_081: [If device io has not been opened yet, this function shall throw an IOException.]
     @Test(expected = IOException.class)
-    public void startDeviceTwinThrowsIfClientNotOpen() throws IOException
+    public void startDeviceTwinThrowsIfClientNotOpen()
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -1574,7 +1574,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_34_082: [If either callback is null, this function shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void startDeviceTwinThrowsIfCallbackNull() throws IOException
+    public void startDeviceTwinThrowsIfCallbackNull()
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -1594,7 +1594,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_34_083: [If either callback is null, this function shall throw an IllegalArgumentException.]
     @Test(expected = UnsupportedOperationException.class)
-    public void startDeviceTwinThrowsIfTwinAlreadyStarted(final @Mocked DeviceTwin mockedDeviceTwin) throws IOException
+    public void startDeviceTwinThrowsIfTwinAlreadyStarted(final @Mocked DeviceTwin mockedDeviceTwin)
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -1615,7 +1615,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_34_084: [This function shall initialize a DeviceTwin object and invoke getDeviceTwin on it.]
     @Test
-    public void startDeviceTwinSuccess(final @Mocked DeviceTwin mockedDeviceTwin) throws IOException
+    public void startDeviceTwinSuccess(final @Mocked DeviceTwin mockedDeviceTwin)
     {
         //arrange
         final IotHubClientProtocol protocol = IotHubClientProtocol.AMQPS;
@@ -1724,7 +1724,7 @@ public class InternalClientTest
 
     // Tests_SRS_INTERNALCLIENT_02_015: [If optionName is null or not an option handled by the client, then it shall throw IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void setOptionWithNullOptionNameThrows() throws IOException, URISyntaxException
+    public void setOptionWithNullOptionNameThrows()
     {
         // arrange
         final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;DeviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
@@ -1749,7 +1749,7 @@ public class InternalClientTest
 
     // Tests_SRS_INTERNALCLIENT_02_015: [If optionName is null or not an option handled by the client, then it shall throw IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void setOptionWithUnknownOptionNameThrows() throws IOException, URISyntaxException
+    public void setOptionWithUnknownOptionNameThrows()
     {
         // arrange
         final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;DeviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
@@ -1773,7 +1773,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_02_017: [Available only for HTTP.]
     @Test(expected = IllegalArgumentException.class)
-    public void setOptionMinimumPollingIntervalWithAMQPfails() throws IOException, URISyntaxException
+    public void setOptionMinimumPollingIntervalWithAMQPfails()
     {
         // arrange
         final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;DeviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
@@ -1796,7 +1796,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_02_018: [Value needs to have type long].
     @Test(expected = IllegalArgumentException.class)
-    public void setOptionMinimumPollingIntervalWithStringInsteadOfLongFails() throws IOException, URISyntaxException
+    public void setOptionMinimumPollingIntervalWithStringInsteadOfLongFails()
     {
         // arrange
         final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;DeviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
@@ -1818,7 +1818,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_02_005: [Setting the option can only be done before open call.]
     @Test(expected = IllegalStateException.class)
-    public void setOptionMinimumPollingIntervalAfterOpenFails() throws IOException, URISyntaxException
+    public void setOptionMinimumPollingIntervalAfterOpenFails() throws IOException
     {
         // arrange
         final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;DeviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
@@ -1842,7 +1842,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_02_016: ["SetMinimumPollingInterval" - time in milliseconds between 2 consecutive polls.]
     @Test
-    public void setOptionMinimumPollingIntervalSucceeds() throws IOException, URISyntaxException
+    public void setOptionMinimumPollingIntervalSucceeds() throws IOException
     {
         // arrange
         final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;DeviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
@@ -1873,7 +1873,7 @@ public class InternalClientTest
 
     // Tests_SRS_INTERNALCLIENT_21_040: ["SetSendInterval" - time in milliseconds between 2 consecutive message sends.]
     @Test
-    public void setOptionSendIntervalSucceeds() throws IOException, URISyntaxException
+    public void setOptionSendIntervalSucceeds() throws IOException
     {
         // arrange
         final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;DeviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
@@ -1903,7 +1903,7 @@ public class InternalClientTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void setOptionSendIntervalWithStringInsteadOfLongFails() throws IOException, URISyntaxException
+    public void setOptionSendIntervalWithStringInsteadOfLongFails()
     {
         // arrange
         final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;DeviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
@@ -1924,7 +1924,7 @@ public class InternalClientTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void setOptionValueNullThrows() throws IOException, URISyntaxException
+    public void setOptionValueNullThrows()
     {
         // arrange
         final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;DeviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
@@ -1944,7 +1944,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_25_022: [**"SetSASTokenExpiryTime" should have value type long.]
     @Test(expected = IllegalArgumentException.class)
-    public void setOptionSASTokenExpiryTimeWithStringInsteadOfLongFails() throws IOException, URISyntaxException
+    public void setOptionSASTokenExpiryTimeWithStringInsteadOfLongFails()
     {
         // arrange
         final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;DeviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
@@ -1968,7 +1968,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_25_021: ["SetSASTokenExpiryTime" - time in seconds after which SAS Token expires.]
     @Test
-    public void setOptionSASTokenExpiryTimeHTTPSucceeds() throws IOException, URISyntaxException
+    public void setOptionSASTokenExpiryTimeHTTPSucceeds()
     {
         // arrange
         final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;DeviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
@@ -2003,7 +2003,7 @@ public class InternalClientTest
     //Tests_SRS_INTERNALCLIENT_25_021: ["SetSASTokenExpiryTime" - time in seconds after which SAS Token expires.]
     //Tests_SRS_INTERNALCLIENT_25_024: ["SetSASTokenExpiryTime" shall restart the transport if transport is already open after updating expiry time.]
     @Test
-    public void setOptionSASTokenExpiryTimeAfterClientOpenHTTPSucceeds() throws IOException, URISyntaxException
+    public void setOptionSASTokenExpiryTimeAfterClientOpenHTTPSucceeds() throws IOException
     {
         // arrange
         new NonStrictExpectations()
@@ -2049,7 +2049,7 @@ public class InternalClientTest
                                     after updating expiry time.]
     */
     @Test
-    public void setOptionSASTokenExpiryTimeAfterClientOpenTransportWithSasTokenSucceeds() throws IOException, URISyntaxException
+    public void setOptionSASTokenExpiryTimeAfterClientOpenTransportWithSasTokenSucceeds() throws IOException
     {
         // arrange
         new NonStrictExpectations()
@@ -2091,7 +2091,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_25_021: ["SetSASTokenExpiryTime" - Time in secs to specify SAS Token Expiry time.]
     @Test
-    public void setOptionSASTokenExpiryTimeAMQPSucceeds() throws IOException, URISyntaxException
+    public void setOptionSASTokenExpiryTimeAMQPSucceeds()
     {
         // arrange
         new NonStrictExpectations()
@@ -2128,7 +2128,7 @@ public class InternalClientTest
     //Tests_SRS_INTERNALCLIENT_25_021: ["SetSASTokenExpiryTime" - time in seconds after which SAS Token expires.]
     //Tests_SRS_INTERNALCLIENT_25_024: ["SetSASTokenExpiryTime" shall restart the transport if transport is already open after updating expiry time.]
     @Test
-    public void setOptionSASTokenExpiryTimeAfterClientOpenAMQPSucceeds() throws IOException, URISyntaxException
+    public void setOptionSASTokenExpiryTimeAfterClientOpenAMQPSucceeds() throws IOException
     {
         // arrange
         new NonStrictExpectations()
@@ -2170,7 +2170,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_25_021: [**"SetSASTokenExpiryTime" - Time in secs to specify SAS Token Expiry time.]
     @Test
-    public void setOptionSASTokenExpiryTimeMQTTSucceeds() throws IOException, URISyntaxException
+    public void setOptionSASTokenExpiryTimeMQTTSucceeds()
     {
         // arrange
         new NonStrictExpectations()
@@ -2208,7 +2208,7 @@ public class InternalClientTest
     //Tests_SRS_INTERNALCLIENT_25_021: ["SetSASTokenExpiryTime" - time in seconds after which SAS Token expires.]
     //Tests_SRS_INTERNALCLIENT_25_024: ["SetSASTokenExpiryTime" shall restart the transport if transport is already open after updating expiry time.]
     @Test
-    public void setOptionSASTokenExpiryTimeAfterClientOpenMQTTSucceeds() throws IOException, URISyntaxException
+    public void setOptionSASTokenExpiryTimeAfterClientOpenMQTTSucceeds() throws IOException
     {
         // arrange
         new NonStrictExpectations()
@@ -2250,7 +2250,7 @@ public class InternalClientTest
 
     // Tests_SRS_INTERNALCLIENT_12_027: [The function shall throw IOError if either the deviceIO or the tranportClient's open() or closeNow() throws.]
     @Test(expected = IOError.class)
-    public void setOptionClientSASTokenExpiryTimeAfterClientOpenAMQPThrowsDeviceIOClose() throws IOException, URISyntaxException
+    public void setOptionClientSASTokenExpiryTimeAfterClientOpenAMQPThrowsDeviceIOClose() throws IOException
     {
         // arrange
         new NonStrictExpectations()
@@ -2282,7 +2282,7 @@ public class InternalClientTest
 
     // Tests_SRS_INTERNALCLIENT_12_027: [The function shall throw IOError if either the deviceIO or the tranportClient's open() or closeNow() throws.]
     @Test(expected = IOError.class)
-    public void setOptionClientSASTokenExpiryTimeAfterClientOpenAMQPThrowsTransportDeviceIOOpen() throws IOException, URISyntaxException
+    public void setOptionClientSASTokenExpiryTimeAfterClientOpenAMQPThrowsTransportDeviceIOOpen()
     {
         // arrange
         new NonStrictExpectations()
@@ -2314,7 +2314,7 @@ public class InternalClientTest
 
     //Tests_SRS_INTERNALCLIENT_34_065: [""SetSASTokenExpiryTime" if this option is called when not using sas token authentication, an IllegalStateException shall be thrown.*]
     @Test(expected = IllegalStateException.class)
-    public void setOptionSASTokenExpiryTimeWhenNotUsingSasTokenAuthThrows() throws URISyntaxException, IOException
+    public void setOptionSASTokenExpiryTimeWhenNotUsingSasTokenAuthThrows()
     {
         // arrange
         final String connString = "HostName=iothub.device.com;CredentialType=SharedAccessKey;DeviceId=testdevice;" + "SharedAccessKey=adjkl234j52=";
@@ -2342,7 +2342,7 @@ public class InternalClientTest
 
     // Tests_SRS_INTERNALCLIENT_12_029: [*SetCertificatePath" shall throw if the transportClient or deviceIO already open, otherwise set the path on the config.]
     @Test
-    public void setOptionSetCertificatePathX509Success() throws IOException, URISyntaxException
+    public void setOptionSetCertificatePathX509Success()
     {
         // arrange
         new NonStrictExpectations()
@@ -2380,7 +2380,7 @@ public class InternalClientTest
 
     // Tests_SRS_INTERNALCLIENT_12_029: [*SetCertificatePath" shall throw if the transportClient or deviceIO already open, otherwise set the path on the config.]
     @Test
-    public void setOptionSetCertificatePathSASSuccess() throws IOException, URISyntaxException
+    public void setOptionSetCertificatePathSASSuccess()
     {
         // arrange
         new NonStrictExpectations()

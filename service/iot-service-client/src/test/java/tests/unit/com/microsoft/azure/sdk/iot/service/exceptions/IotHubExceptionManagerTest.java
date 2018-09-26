@@ -243,7 +243,7 @@ public class IotHubExceptionManagerTest
     // Tests_SRS_SERVICE_SDK_JAVA_IOTHUBEXCEPTIONMANAGER_21_013: [If the httpresponse contains a reason message, the function must print this reason in the error message]
     // Assert
     @Test
-    public void httpResponseVerification301WithErrorReason() throws IotHubException
+    public void httpResponseVerification301WithErrorReason()
     {
         // Arrange
         final int status = 301;

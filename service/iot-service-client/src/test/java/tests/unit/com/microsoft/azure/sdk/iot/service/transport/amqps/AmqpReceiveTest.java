@@ -67,7 +67,7 @@ public class AmqpReceiveTest
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPRECEIVE_12_003: [The function shall create an AmqpsReceiveHandler object to handle reactor events]
     // Tests_SRS_SERVICE_SDK_JAVA_AMQPRECEIVE_12_004: [The function shall invalidate the member AmqpsReceiveHandler object]
     @Test
-    public void onReactorInit_call_flow_and_init_ok() throws IOException
+    public void onReactorInit_call_flow_and_init_ok()
     {
         // Arrange
         String hostName = "aaa";
@@ -109,7 +109,7 @@ public class AmqpReceiveTest
         new Expectations()
         {
             {
-                reactor = proton.reactor(amqpReceive);
+                reactor = Proton.reactor(amqpReceive);
                 reactor.start();
                 reactor.stop();
                 reactor.process();
@@ -139,7 +139,7 @@ public class AmqpReceiveTest
         new Expectations()
         {
             {
-                reactor = proton.reactor(amqpReceive);
+                reactor = Proton.reactor(amqpReceive);
                 reactor.start();
                 reactor.stop();
                 reactor.process();

@@ -23,7 +23,7 @@ public class DeviceRegistrationParserTest
     //SRS_DeviceRegistration_25_002: [ The constructor shall save the provided Registration Id. ]
     //SRS_DeviceRegistration_25_007: [ This method shall create the expected Json with the provided Registration Id, EndorsementKey and StorageRootKey. ]
     @Test
-    public void constructorWithoutTPMSucceed() throws Exception
+    public void constructorWithoutTPMSucceed()
     {
         final String expectedJson = "{\"registrationId\":\"" + TEST_REGISTRATION_ID + "\"}";
 
@@ -35,14 +35,14 @@ public class DeviceRegistrationParserTest
 
     //SRS_DeviceRegistration_25_001: [ The constructor shall throw IllegalArgumentException if Registration Id is null or empty. ]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorWithoutTPMOnNullRegistrationIdThrows() throws Exception
+    public void constructorWithoutTPMOnNullRegistrationIdThrows()
     {
         DeviceRegistrationParser deviceRegistrationParser = new DeviceRegistrationParser(null);
     }
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void constructorWithoutTPMOnEmptyRegistrationIdThrows() throws Exception
+    public void constructorWithoutTPMOnEmptyRegistrationIdThrows()
     {
         DeviceRegistrationParser deviceRegistrationParser = new DeviceRegistrationParser("");
     }
@@ -50,7 +50,7 @@ public class DeviceRegistrationParserTest
     //SRS_DeviceRegistration_25_006: [ The constructor shall save the provided Registration Id, EndorsementKey and StorageRootKey. ]
     //SRS_DeviceRegistration_25_007: [ This method shall create the expected Json with the provided Registration Id, EndorsementKey and StorageRootKey. ]
     @Test
-    public void constructorWithTPMSucceed() throws Exception
+    public void constructorWithTPMSucceed()
     {
         final String regID = "testID";
         final String eKey = "testEndorsementKey";
@@ -64,7 +64,7 @@ public class DeviceRegistrationParserTest
 
     //SRS_DeviceRegistration_25_003: [ The constructor shall throw IllegalArgumentException if Registration Id is null or empty. ]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorWithTPMOnNullRegistrationIdThrows() throws Exception
+    public void constructorWithTPMOnNullRegistrationIdThrows()
     {
         final String eKey = "testEndorsementKey";
         final String sRKey = "testStorageRootKey";
@@ -72,7 +72,7 @@ public class DeviceRegistrationParserTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void constructorWithTPMOnEmptyRegistrationIdThrows() throws Exception
+    public void constructorWithTPMOnEmptyRegistrationIdThrows()
     {
         final String eKey = "testEndorsementKey";
         final String sRKey = "testStorageRootKey";
@@ -81,7 +81,7 @@ public class DeviceRegistrationParserTest
 
     //SRS_DeviceRegistration_25_004: [ The constructor shall throw IllegalArgumentException if EndorsementKey is null or empty. ]
     @Test(expected = IllegalArgumentException.class)
-    public void constructorWithTPMOnNullEkThrows() throws Exception
+    public void constructorWithTPMOnNullEkThrows()
     {
         final String eKey = "testEndorsementKey";
         final String sRKey = "testStorageRootKey";
@@ -89,7 +89,7 @@ public class DeviceRegistrationParserTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void constructorWithTPMOnEmptyEkThrows() throws Exception
+    public void constructorWithTPMOnEmptyEkThrows()
     {
         final String eKey = "testEndorsementKey";
         final String sRKey = "testStorageRootKey";

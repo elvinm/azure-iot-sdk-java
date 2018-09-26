@@ -35,7 +35,7 @@ public class DeviceApiVerticle extends AbstractVerticle
     }
 
     @Override
-    public void start() throws Exception {
+    public void start() {
 
         //Consumer for PUT_device_connect_transportType
         vertx.eventBus().<JsonObject>consumer(PUT_DEVICE_CONNECT_TRANSPORTTYPE_SERVICE_ID).handler(message ->

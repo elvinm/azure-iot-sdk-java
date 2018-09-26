@@ -90,7 +90,7 @@ public class ContractAPIAmqpTest
         return new ContractAPIAmqp(mockedProvisioningDeviceClientConfig);
     }
 
-    private void prepareSendMessage(String operationId) throws IOException
+    private void prepareSendMessage(String operationId)
     {
         new NonStrictExpectations()
         {
@@ -99,11 +99,11 @@ public class ContractAPIAmqpTest
                 result = mockedMessage;
                 new HashMap<>();
                 result = mockedHashMap;
-                mockedHashMap.put((String) any, (String) any);
+                mockedHashMap.put((String) any, any);
 
                 if (operationId != null)
                 {
-                    mockedHashMap.put((String) any, (String) any);
+                    mockedHashMap.put((String) any, any);
                 }
                 new ApplicationProperties(mockedHashMap);
                 mockedMessage.setApplicationProperties((ApplicationProperties) any);
@@ -203,7 +203,7 @@ public class ContractAPIAmqpTest
     }
 
     @Test
-    public void openSucceeds() throws ProvisioningDeviceClientException, IOException
+    public void openSucceeds() throws ProvisioningDeviceClientException
     {
         //arrange
         ContractAPIAmqp contractAPIAmqp = createContractClass();
@@ -330,7 +330,7 @@ public class ContractAPIAmqpTest
 
     //SRS_ContractAPIAmqp_07_003: [If responseCallback is null, this method shall throw ProvisioningDeviceClientException.]
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void authenticateWithProvisioningServiceThrowsOnResponseNull() throws ProvisioningDeviceClientException, IOException, InterruptedException {
+    public void authenticateWithProvisioningServiceThrowsOnResponseNull() throws ProvisioningDeviceClientException {
         //arrange
         ContractAPIAmqp contractAPIAmqp = createContractClass();
 
@@ -377,7 +377,7 @@ public class ContractAPIAmqpTest
         new Verifications()
         {
             {
-                mockedProvisionAmqpConnection.sendRegisterMessage((ResponseCallback) any, (Object) any);
+                mockedProvisionAmqpConnection.sendRegisterMessage((ResponseCallback) any, any);
                 times = 1;
             }
         };
@@ -385,7 +385,7 @@ public class ContractAPIAmqpTest
 
     // SRS_ContractAPIAmqp_07_009: [If requestData is null this method shall throw ProvisioningDeviceClientException.]
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void getRegistrationStatusThrowsOnRequestNull() throws ProvisioningDeviceClientException, IOException, InterruptedException {
+    public void getRegistrationStatusThrowsOnRequestNull() throws ProvisioningDeviceClientException {
         //arrange
         ContractAPIAmqp contractAPIAmqp = createContractClass();
 
@@ -395,7 +395,7 @@ public class ContractAPIAmqpTest
 
     // SRS_ContractAPIAmqp_07_010: [If requestData.getOperationId() is null or empty, this method shall throw ProvisioningDeviceClientException.]
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void getRegistrationStatusThrowsOnOperationIdNull() throws ProvisioningDeviceClientException, IOException, InterruptedException {
+    public void getRegistrationStatusThrowsOnOperationIdNull() throws ProvisioningDeviceClientException {
         //arrange
         ContractAPIAmqp contractAPIAmqp = createContractClass();
 
@@ -413,7 +413,7 @@ public class ContractAPIAmqpTest
 
     // SRS_ContractAPIAmqp_07_010: [If requestData.getOperationId() is null or empty, this method shall throw ProvisioningDeviceClientException.]
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void getRegistrationStatusThrowsOnOperationIdEmpty() throws ProvisioningDeviceClientException, IOException, InterruptedException {
+    public void getRegistrationStatusThrowsOnOperationIdEmpty() throws ProvisioningDeviceClientException {
         //arrange
         ContractAPIAmqp contractAPIAmqp = createContractClass();
 
@@ -431,7 +431,7 @@ public class ContractAPIAmqpTest
 
     // SRS_ContractAPIAmqp_07_010: [If responseCallback is null, this method shall throw ProvisioningDeviceClientException.]
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void getRegistrationStatusThrowsOnResponseNull() throws ProvisioningDeviceClientException, IOException, InterruptedException {
+    public void getRegistrationStatusThrowsOnResponseNull() throws ProvisioningDeviceClientException {
         //arrange
         ContractAPIAmqp contractAPIAmqp = createContractClass();
 
@@ -449,7 +449,7 @@ public class ContractAPIAmqpTest
 
     // SRS_ContractAPIAmqp_07_012: [If amqpConnection is null or not connected, this method shall throw ProvisioningDeviceConnectionException.]
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void getRegistrationStatusThrowsOnAmqpNull() throws ProvisioningDeviceClientException, IOException, InterruptedException {
+    public void getRegistrationStatusThrowsOnAmqpNull() throws ProvisioningDeviceClientException {
         //arrange
         ContractAPIAmqp contractAPIAmqp = createContractClass();
 
@@ -524,14 +524,14 @@ public class ContractAPIAmqpTest
         new Verifications()
         {
             {
-                mockedProvisionAmqpConnection.sendStatusMessage((String) any, (ResponseCallback) any, (Object) any);
+                mockedProvisionAmqpConnection.sendStatusMessage((String) any, (ResponseCallback) any, any);
                 times = 1;
             }
         };
     }
 
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void requestNonceForTPMThrowResponseCallbackNull() throws ProvisioningDeviceClientException, IOException, InterruptedException
+    public void requestNonceForTPMThrowResponseCallbackNull() throws ProvisioningDeviceClientException
     {
         //arrange
         ContractAPIAmqp contractAPIAmqp = createContractClass();
@@ -544,7 +544,7 @@ public class ContractAPIAmqpTest
     }
 
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void requestNonceForTPMThrowSslContextNull() throws ProvisioningDeviceClientException, IOException, InterruptedException
+    public void requestNonceForTPMThrowSslContextNull() throws ProvisioningDeviceClientException
     {
         //arrange
         ContractAPIAmqp contractAPIAmqp = createContractClass();
@@ -570,7 +570,7 @@ public class ContractAPIAmqpTest
     }
 
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void requestNonceForTPMThrowStorageRootKeyNull() throws ProvisioningDeviceClientException, IOException, InterruptedException
+    public void requestNonceForTPMThrowStorageRootKeyNull() throws ProvisioningDeviceClientException
     {
         //arrange
         ContractAPIAmqp contractAPIAmqp = createContractClass();
@@ -594,7 +594,7 @@ public class ContractAPIAmqpTest
     }
 
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void requestNonceForTPMThrowEndorsementKeyNull() throws ProvisioningDeviceClientException, IOException, InterruptedException
+    public void requestNonceForTPMThrowEndorsementKeyNull() throws ProvisioningDeviceClientException
     {
         //arrange
         ContractAPIAmqp contractAPIAmqp = createContractClass();
@@ -616,7 +616,7 @@ public class ContractAPIAmqpTest
     }
 
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void requestNonceForTPMThrowRegistrationIdNull() throws ProvisioningDeviceClientException, IOException, InterruptedException
+    public void requestNonceForTPMThrowRegistrationIdNull() throws ProvisioningDeviceClientException
     {
         ContractAPIAmqp contractAPIAmqp = createContractClass();
 
@@ -635,7 +635,7 @@ public class ContractAPIAmqpTest
     }
 
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void requestNonceForTPMThrowRegistrationIdEmpty() throws ProvisioningDeviceClientException, IOException, InterruptedException
+    public void requestNonceForTPMThrowRegistrationIdEmpty() throws ProvisioningDeviceClientException
     {
         ContractAPIAmqp contractAPIAmqp = createContractClass();
 
@@ -654,7 +654,7 @@ public class ContractAPIAmqpTest
     }
 
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void requestNonceForTPMThrowRequestDataNull() throws ProvisioningDeviceClientException, IOException, InterruptedException
+    public void requestNonceForTPMThrowRequestDataNull() throws ProvisioningDeviceClientException
     {
         ContractAPIAmqp contractAPIAmqp = createContractClass();
 
@@ -665,7 +665,7 @@ public class ContractAPIAmqpTest
     }
 
     @Test(expected = ProvisioningDeviceClientException.class)
-    public void requestNonceForTPMSuccess() throws ProvisioningDeviceClientException, IOException, InterruptedException
+    public void requestNonceForTPMSuccess() throws ProvisioningDeviceClientException
     {
         ContractAPIAmqp contractAPIAmqp = createContractClass();
 

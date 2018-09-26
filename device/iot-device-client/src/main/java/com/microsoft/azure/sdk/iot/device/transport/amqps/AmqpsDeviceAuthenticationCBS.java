@@ -85,7 +85,7 @@ public final class AmqpsDeviceAuthenticationCBS extends AmqpsDeviceAuthenticatio
     /**
      * Send message from the waiting queue
      */
-    void sendAuthenticationMessages() throws TransportException
+    void sendAuthenticationMessages()
     {
         synchronized (queueLock)
         {

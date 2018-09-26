@@ -202,7 +202,7 @@ public class AmqpsDeviceAuthenticationX509Test
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONX509_12_010: [The function shall call the prototype class makeDomain function with the sslContext.]
     // Tests_SRS_AMQPSDEVICEAUTHENTICATIONX509_12_011: [The function shall set the domain on the transport.]
     @Test
-    public void setSSLContextCallsMakeDomainAndSetsDomain() throws IOException, TransportException
+    public void setSSLContextCallsMakeDomainAndSetsDomain() throws IOException
     {
         //arrange
         final AmqpsDeviceAuthenticationX509 auth = new AmqpsDeviceAuthenticationX509(mockDeviceClientConfig);

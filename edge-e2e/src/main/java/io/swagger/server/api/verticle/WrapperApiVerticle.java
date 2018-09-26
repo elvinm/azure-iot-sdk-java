@@ -32,7 +32,7 @@ public class WrapperApiVerticle extends AbstractVerticle
     }
 
     @Override
-    public void start() throws Exception {
+    public void start() {
 
         //Consumer for PUT_wrapper_cleanup
         vertx.eventBus().<JsonObject>consumer(PUT_WRAPPER_CLEANUP_SERVICE_ID).handler(message ->

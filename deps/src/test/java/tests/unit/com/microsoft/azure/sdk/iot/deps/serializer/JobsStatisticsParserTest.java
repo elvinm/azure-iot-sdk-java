@@ -24,7 +24,7 @@ public class JobsStatisticsParserTest
     /* Tests_SRS_JOBSSTATISTICSPARSER_21_004: [The getRunningCount shall return the value of the runningCount counter.] */
     /* Tests_SRS_JOBSSTATISTICSPARSER_21_005: [The getPendingCount shall return the value of the pendingCount counter.] */
     @Test
-    public void gettersSucceed() throws ParseException
+    public void gettersSucceed()
     {
         // arrange
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();

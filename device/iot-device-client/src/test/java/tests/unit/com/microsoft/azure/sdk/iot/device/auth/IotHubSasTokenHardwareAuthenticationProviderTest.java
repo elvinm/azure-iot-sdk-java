@@ -60,7 +60,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_033: [This constructor shall generate and save a sas token from the security provider with the default time to live.]
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_034: [This constructor shall retrieve and save the ssl context from the security provider.]
     @Test
-    public void securityProviderConstructorSavesNeededInfo() throws IOException, InvalidKeyException, SecurityProviderException
+    public void securityProviderConstructorSavesNeededInfo() throws IOException, SecurityProviderException
     {
         //arrange
         final String someToken = "someToken";
@@ -111,7 +111,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_003: [If the provided security provider is not an instance of SecurityProviderTpm, this function shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void securityProviderConstructorThrowsForInvalidSecurityProviderInstance() throws IOException, InvalidKeyException, SecurityProviderException
+    public void securityProviderConstructorThrowsForInvalidSecurityProviderInstance() throws IOException
     {
         //act
         new IotHubSasTokenHardwareAuthenticationProvider(expectedHostname, expectedGatewayHostname, expectedDeviceId, expectedModuleId, mockSecurityProvider);
@@ -119,7 +119,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_023: [If the security provider throws an exception while retrieving a sas token or ssl context from it, this function shall throw an IOException.]
     @Test(expected = IOException.class)
-    public void securityProviderConstructorThrowsIfRetrievingSSLContextFromSecurityProviderThrows() throws IOException, InvalidKeyException, SecurityProviderException
+    public void securityProviderConstructorThrowsIfRetrievingSSLContextFromSecurityProviderThrows() throws IOException, SecurityProviderException
     {
         //arrange
         final String someToken = "someToken";
@@ -150,7 +150,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_035: [If the saved sas token has expired and there is a security provider, the saved sas token shall be refreshed with a new token from the security provider.]
     @Test
-    public void getRenewedSasTokenAutoRenewsFromSecurityProvider(@Mocked final System systemMock) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException, SecurityProviderException, InvalidKeyException
+    public void getRenewedSasTokenAutoRenewsFromSecurityProvider(@Mocked final System systemMock) throws IOException, SecurityProviderException
     {
         //arrange
         final String someToken = "someToken";
@@ -195,7 +195,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_005: [This function shall return the saved sas token.]
     @Test
-    public void getSasTokenReturnsSavedValue() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException, InvalidKeyException, SecurityProviderException
+    public void getSasTokenReturnsSavedValue() throws IOException, SecurityProviderException
     {
         //arrange
         new NonStrictExpectations()
@@ -251,7 +251,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
         sasAuth.setIotHubTrustedCert("any string");
     }
 
-    private void securityProviderExpectations() throws UnsupportedEncodingException, InvalidKeyException, SecurityProviderException
+    private void securityProviderExpectations() throws UnsupportedEncodingException, SecurityProviderException
     {
         new NonStrictExpectations()
         {
@@ -276,7 +276,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_008: [This function shall return the generated IotHubSSLContext.]
     @Test
-    public void getSSLContextSuccess() throws IOException, InvalidKeyException, SecurityProviderException
+    public void getSSLContextSuccess() throws IOException, SecurityProviderException
     {
         //arrange
         final String someToken = "someToken";
@@ -324,7 +324,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_009: [If the token scope cannot be encoded, this function shall throw an IOException.]
     @Test(expected = IOException.class)
-    public void generateSasTokenSignatureFromSecurityProviderFailsToEncodeTokenScopeThrowsIOException() throws IOException, InvalidKeyException, SecurityProviderException
+    public void generateSasTokenSignatureFromSecurityProviderFailsToEncodeTokenScopeThrowsIOException() throws IOException
     {
         //arrange
         new NonStrictExpectations()
@@ -341,7 +341,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_010: [If the call for the saved security provider to sign with identity returns null or empty bytes, this function shall throw an IOException.]
     @Test(expected = IOException.class)
-    public void generateSasTokenSignatureFromSecurityProviderFailsToSignWithIdentityAndReturnsNullThrowsIOException() throws IOException, InvalidKeyException, SecurityProviderException
+    public void generateSasTokenSignatureFromSecurityProviderFailsToSignWithIdentityAndReturnsNullThrowsIOException() throws IOException, SecurityProviderException
     {
         //arrange
         new NonStrictExpectations()
@@ -361,7 +361,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_010: [If the call for the saved security provider to sign with identity returns null or empty bytes, this function shall throw an IOException.]
     @Test(expected = IOException.class)
-    public void generateSasTokenSignatureFromSecurityProviderFailsToSignWithIdentityAndReturnsEmptyBytesThrowsIOException() throws IOException, InvalidKeyException, SecurityProviderException
+    public void generateSasTokenSignatureFromSecurityProviderFailsToSignWithIdentityAndReturnsEmptyBytesThrowsIOException() throws IOException, SecurityProviderException
     {
         //arrange
         new NonStrictExpectations()
@@ -381,7 +381,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_011: [When generating the sas token signature from the security provider, if an UnsupportedEncodingException or SecurityProviderException is thrown, this function shall throw an IOException.]
     @Test(expected = IOException.class)
-    public void generateSasTokenSignatureThrowsUnsupportedEncodingWrappedInIOException() throws IOException, InvalidKeyException, SecurityProviderException
+    public void generateSasTokenSignatureThrowsUnsupportedEncodingWrappedInIOException() throws IOException
     {
         //arrange
         new NonStrictExpectations()
@@ -398,7 +398,7 @@ public class IotHubSasTokenHardwareAuthenticationProviderTest
 
     //Tests_SRS_IOTHUBSASTOKENHARDWAREAUTHENTICATION_34_011: [When generating the sas token signature from the security provider, if an UnsupportedEncodingException or SecurityProviderException is thrown, this function shall throw an IOException.]
     @Test(expected = IOException.class)
-    public void generateSasTokenSignatureFromSecurityProviderThrowsDuringSignWithIdentityThrowsIOException() throws IOException, InvalidKeyException, SecurityProviderException
+    public void generateSasTokenSignatureFromSecurityProviderThrowsDuringSignWithIdentityThrowsIOException() throws IOException, SecurityProviderException
     {
         //arrange
         new NonStrictExpectations()

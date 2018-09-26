@@ -1036,7 +1036,7 @@ public class WebSocketImplTest
         random.nextBytes(data);
 
         byte finbit = (byte) (WebSocketHeader.FINBIT_MASK & 0xFF);
-        byte opcode = (byte) WebSocketHeader.OPCODE_MASK & 0x2;
+        byte opcode = WebSocketHeader.OPCODE_MASK & 0x2;
         byte firstbyte = (byte) (finbit | opcode);
         byte secondbyte = (byte) (size - 2);
 
@@ -1120,7 +1120,7 @@ public class WebSocketImplTest
         when(mockWebSocketHandler.unwrapBuffer((ByteBuffer) any())).thenAnswer(new Answer<WebSocketHandler.WebsocketTuple>()
         {
             @Override
-            public WebSocketHandler.WebsocketTuple answer(InvocationOnMock invocation) throws Throwable {
+            public WebSocketHandler.WebsocketTuple answer(InvocationOnMock invocation) {
                 Object[] arguments = invocation.getArguments();
                 ByteBuffer bb = (ByteBuffer) arguments[0];
                 bb.position(2);
@@ -1207,7 +1207,7 @@ public class WebSocketImplTest
         when(mockWebSocketHandler.unwrapBuffer((ByteBuffer) any())).thenAnswer(new Answer<WebSocketHandler.WebsocketTuple>()
         {
             @Override
-            public WebSocketHandler.WebsocketTuple answer(InvocationOnMock invocation) throws Throwable {
+            public WebSocketHandler.WebsocketTuple answer(InvocationOnMock invocation) {
                 Object[] arguments = invocation.getArguments();
                 ByteBuffer bb = (ByteBuffer) arguments[0];
                 bb.position(2);
@@ -1227,7 +1227,7 @@ public class WebSocketImplTest
         byte[] message = new byte[chunkSize];
 
         byte finbit = (byte) (WebSocketHeader.FINBIT_MASK & 0xFF);
-        byte opcode = (byte) WebSocketHeader.OPCODE_MASK & 0x2;
+        byte opcode = WebSocketHeader.OPCODE_MASK & 0x2;
         byte firstbyte = (byte) (finbit | opcode);
         byte secondbyte = (byte) payloadLength;
 

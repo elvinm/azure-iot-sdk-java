@@ -321,7 +321,7 @@ public class AmqpsConnection extends BaseHandler
      *
      * @return the created Ssl domain
      */
-    private SslDomain makeDomain() throws IOException
+    private SslDomain makeDomain()
     {
         SslDomain domain = Proton.sslDomain();
         domain.setPeerAuthentication(SslDomain.VerifyMode.VERIFY_PEER);

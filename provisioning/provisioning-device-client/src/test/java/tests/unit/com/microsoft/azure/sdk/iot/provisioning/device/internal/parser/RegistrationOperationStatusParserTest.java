@@ -54,7 +54,6 @@ public class RegistrationOperationStatusParserTest
 
         assertNotNull(tpmRegistrationResultParser.getAuthenticationKey());
         assertEquals(TEST_AUTH_KEY, tpmRegistrationResultParser.getAuthenticationKey());
-        ;
     }
 
     //SRS_TpmRegistrationResultParser_25_002: [ The constructor shall throw IllegalArgumentException if the provided Json is null or empty. ]

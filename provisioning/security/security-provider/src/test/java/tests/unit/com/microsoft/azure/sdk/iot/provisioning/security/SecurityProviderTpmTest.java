@@ -65,7 +65,7 @@ public class SecurityProviderTpmTest
     //SRS_SecurityClientTpm_25_002: [ This method shall hash the EnrollmentKey using SHA-256. ]
     //SRS_SecurityClientTpm_25_003: [ This method shall convert the resultant hash to Base32 to convert all the data to be case agnostic and remove "=" from the string. ]
     @Test
-    public void getRegistrationIdSucceeds() throws SecurityProviderException, EncoderException
+    public void getRegistrationIdSucceeds() throws SecurityProviderException
     {
         //arrange
         SecurityProviderTpm securityClientTpm = new SecurityProviderTPMTestImpl(ENROLLMENT_KEY);
@@ -111,7 +111,7 @@ public class SecurityProviderTpmTest
     //SRS_SecurityClient_25_002: [ This method shall retrieve the default CertificateFactory instance. ]
     //SRS_SecurityClient_25_003: [ This method shall load all the trusted certificates to the keystore. ]
     @Test
-    public void getSSLContextSucceeds() throws SecurityProviderException, KeyManagementException, KeyStoreException, CertificateException
+    public void getSSLContextSucceeds() throws SecurityProviderException, KeyManagementException, KeyStoreException
     {
         //arrange
         SecurityProviderTpm securityClientTpm = new SecurityProviderTPMTestImpl(ENROLLMENT_KEY);
@@ -158,25 +158,25 @@ public class SecurityProviderTpmTest
         }
 
         @Override
-        public byte[] activateIdentityKey(byte[] key) throws SecurityProviderException
+        public byte[] activateIdentityKey(byte[] key)
         {
             return TEST_ACTIVATION;
         }
 
         @Override
-        public byte[] getEndorsementKey() throws SecurityProviderException
+        public byte[] getEndorsementKey()
         {
             return ek;
         }
 
         @Override
-        public byte[] getStorageRootKey() throws SecurityProviderException
+        public byte[] getStorageRootKey()
         {
             return STORAGE_ROOT_KEY;
         }
 
         @Override
-        public byte[] signWithIdentity(byte[] data) throws SecurityProviderException
+        public byte[] signWithIdentity(byte[] data)
         {
             return TEST_SIGN_DATA;
         }

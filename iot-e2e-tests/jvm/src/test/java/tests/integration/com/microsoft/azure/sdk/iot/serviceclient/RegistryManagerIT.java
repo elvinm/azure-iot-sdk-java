@@ -39,7 +39,7 @@ public class RegistryManagerIT
     private static RegistryManager registryManager;
 
     @BeforeClass
-    public static void setUp() throws URISyntaxException, InvalidKeyException, StorageException, IOException
+    public static void setUp() throws IOException
     {
         iotHubConnectionString = Tools.retrieveEnvironmentVariableValue(IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME);
         registryManager = RegistryManager.createFromConnectionString(iotHubConnectionString);

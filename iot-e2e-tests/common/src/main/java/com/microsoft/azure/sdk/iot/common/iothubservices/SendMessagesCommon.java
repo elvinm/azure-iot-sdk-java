@@ -86,7 +86,7 @@ public class SendMessagesCommon extends MethodNameLoggingIntegrationTest
         this.testInstance = new SendMessagesITRunner(client, protocol, device, authenticationType, clientType);
     }
 
-    public static Collection inputsCommon() throws IOException, IotHubException, GeneralSecurityException, URISyntaxException, ModuleClientException
+    public static Collection inputsCommon() throws IOException, IotHubException, URISyntaxException, ModuleClientException
     {
         registryManager = RegistryManager.createFromConnectionString(iotHubConnectionString);
         String uuid = UUID.randomUUID().toString();
@@ -709,7 +709,7 @@ public class SendMessagesCommon extends MethodNameLoggingIntegrationTest
             latch.countDown();
         }
 
-        private void openConnection() throws IOException, URISyntaxException
+        private void openConnection() throws URISyntaxException
         {
             client = new DeviceClient(connString, protocol);
             IotHubServicesCommon.openClientWithRetry(client);

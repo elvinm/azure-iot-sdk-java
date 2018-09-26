@@ -75,7 +75,7 @@ public class AmqpFileUploadNotificationReceive extends BaseHandler implements Am
      *
      * @throws IOException If underlying layers throws it for any reason
      */
-    public synchronized void open() throws IOException
+    public synchronized void open()
     {
         // Codes_SRS_SERVICE_SDK_JAVA_AMQPFILEUPLOADNOTIFICATIONRECEIVE_25_003: [The function shall create an AmqpsReceiveHandler object to handle reactor events]
         if (amqpReceiveHandler == null)
@@ -108,7 +108,7 @@ public class AmqpFileUploadNotificationReceive extends BaseHandler implements Am
      * @throws IOException          This exception is thrown if the input AmqpReceive object is null
      * @throws InterruptedException This exception is thrown if the receive process has been interrupted
      */
-    public synchronized FileUploadNotification receive(long timeoutMs) throws IOException, InterruptedException
+    public synchronized FileUploadNotification receive(long timeoutMs) throws IOException
     {
         if (amqpReceiveHandler != null)
         {

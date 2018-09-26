@@ -24,7 +24,6 @@ public class AmqpsSessionDeviceOperation
     private static final double PERCENTAGE_FACTOR = 0.75;
     private static final int SEC_IN_MILLISEC = 1000;
     private final DeviceClientConfig deviceClientConfig;
-    ;
     private final AmqpsDeviceAuthentication amqpsDeviceAuthentication;
     private final CountDownLatch authenticationLatch = new CountDownLatch(1);
     private AmqpsDeviceAuthenticationState amqpsAuthenticatorState = AmqpsDeviceAuthenticationState.UNKNOWN;

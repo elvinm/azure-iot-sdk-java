@@ -91,7 +91,7 @@ public class QueryCollectionTest
         new NonStrictExpectations()
         {
             {
-                mockParserUtility.validateQuery((String) any);
+                ParserUtility.validateQuery((String) any);
                 result = new IllegalArgumentException();
             }
         };
@@ -534,7 +534,7 @@ public class QueryCollectionTest
 
     //Tests_SRS_QUERYCOLLECTION_34_026: [If this query is not the initial query, this function shall return true if there is a continuation token and false otherwise.]
     @Test
-    public void hasNextReturnsFalseIfNoContinuationToken() throws IOException, IotHubException
+    public void hasNextReturnsFalseIfNoContinuationToken()
     {
         //arrange
         QueryCollection queryCollection = Deencapsulation.newInstance(QueryCollection.class, new Class[]{String.class, int.class, QueryType.class, IotHubConnectionString.class, URL.class, HttpMethod.class, long.class}, "some query", expectedPageSize, QueryType.DEVICE_JOB, mockConnectionString, mockUrl, mockHttpMethod, expectedTimeout);
@@ -550,7 +550,7 @@ public class QueryCollectionTest
 
     //Tests_SRS_QUERYCOLLECTION_34_026: [If this query is not the initial query, this function shall return true if there is a continuation token and false otherwise.]
     @Test
-    public void hasNextReturnsTrueIfContinuationTokenSaved() throws IOException, IotHubException
+    public void hasNextReturnsTrueIfContinuationTokenSaved()
     {
         //arrange
         QueryCollection queryCollection = Deencapsulation.newInstance(QueryCollection.class, new Class[]{String.class, int.class, QueryType.class, IotHubConnectionString.class, URL.class, HttpMethod.class, long.class}, "some query", expectedPageSize, QueryType.DEVICE_JOB, mockConnectionString, mockUrl, mockHttpMethod, expectedTimeout);
@@ -566,7 +566,7 @@ public class QueryCollectionTest
 
     //Tests_SRS_QUERYCOLLECTION_34_032: [If this object has a next set to return, this function shall return it.]
     @Test
-    public void nextReturnsNextSetIfItHasOne() throws IOException, IotHubException
+    public void nextReturnsNextSetIfItHasOne()
     {
         //arrange
         QueryCollection queryCollection = Deencapsulation.newInstance(QueryCollection.class, new Class[]{String.class, int.class, QueryType.class, IotHubConnectionString.class, URL.class, HttpMethod.class, long.class}, "anyString", expectedPageSize, QueryType.JOB_RESPONSE, mockConnectionString, mockUrl, mockHttpMethod, expectedTimeout);
@@ -595,7 +595,7 @@ public class QueryCollectionTest
 
     //Tests_SRS_QUERYCOLLECTION_34_033: [If this object does not have a next set to return, this function shall return null.]
     @Test
-    public void nextReturnsNullIfItDoesNotHaveNext() throws IOException, IotHubException
+    public void nextReturnsNullIfItDoesNotHaveNext()
     {
         //arrange
         QueryCollection queryCollection = Deencapsulation.newInstance(QueryCollection.class, new Class[]{String.class, int.class, QueryType.class, IotHubConnectionString.class, URL.class, HttpMethod.class, long.class}, "anyString", expectedPageSize, QueryType.JOB_RESPONSE, mockConnectionString, mockUrl, mockHttpMethod, expectedTimeout);
@@ -618,7 +618,7 @@ public class QueryCollectionTest
 
     //Tests_SRS_QUERYCOLLECTION_34_034: [If this object has a next set to return using the provided query options, this function shall return it.]
     @Test
-    public void nextWithOptionsReturnsNextSetIfItHasOne() throws IOException, IotHubException
+    public void nextWithOptionsReturnsNextSetIfItHasOne()
     {
         //arrange
         QueryCollection queryCollection = Deencapsulation.newInstance(QueryCollection.class, new Class[]{String.class, int.class, QueryType.class, IotHubConnectionString.class, URL.class, HttpMethod.class, long.class}, "anyString", expectedPageSize, QueryType.JOB_RESPONSE, mockConnectionString, mockUrl, mockHttpMethod, expectedTimeout);
@@ -644,7 +644,7 @@ public class QueryCollectionTest
 
     //Tests_SRS_QUERYCOLLECTION_34_035: [If this object does not have a next set to return, this function shall return null.]
     @Test
-    public void nextWithOptionsReturnsNullIfItDoesNotHaveNext() throws IOException, IotHubException
+    public void nextWithOptionsReturnsNullIfItDoesNotHaveNext()
     {
         //arrange
         QueryCollection queryCollection = Deencapsulation.newInstance(QueryCollection.class, new Class[]{String.class, int.class, QueryType.class, IotHubConnectionString.class, URL.class, HttpMethod.class, long.class}, "anyString", expectedPageSize, QueryType.JOB_RESPONSE, mockConnectionString, mockUrl, mockHttpMethod, expectedTimeout);

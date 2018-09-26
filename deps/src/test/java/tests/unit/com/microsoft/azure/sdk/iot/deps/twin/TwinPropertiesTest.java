@@ -44,7 +44,7 @@ public class TwinPropertiesTest
     {
         // arrange
         // act
-        Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, (TwinCollection) null, (TwinCollection) null);
+        Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, null, null);
 
         // assert
     }
@@ -55,7 +55,7 @@ public class TwinPropertiesTest
     {
         // arrange
         // act
-        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, PROPERTIES, (TwinCollection) null);
+        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, PROPERTIES, null);
 
         // assert
         assertEquals(PROPERTIES, Deencapsulation.getField(twinProperties, "desired"));
@@ -68,7 +68,7 @@ public class TwinPropertiesTest
     {
         // arrange
         // act
-        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, (TwinCollection) null, PROPERTIES);
+        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, null, PROPERTIES);
 
         // assert
         assertEquals(PROPERTIES, Deencapsulation.getField(twinProperties, "reported"));
@@ -107,7 +107,7 @@ public class TwinPropertiesTest
     public void toJsonElementReturnsDesiredJsonElement()
     {
         // arrange
-        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, PROPERTIES, (TwinCollection) null);
+        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, PROPERTIES, null);
 
         // act
         JsonElement jsonElement = Deencapsulation.invoke(twinProperties, "toJsonElement");
@@ -121,7 +121,7 @@ public class TwinPropertiesTest
     public void toJsonElementReturnsReportedJsonElement()
     {
         // arrange
-        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, (TwinCollection) null, PROPERTIES);
+        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, null, PROPERTIES);
 
         // act
         JsonElement jsonElement = Deencapsulation.invoke(twinProperties, "toJsonElement");
@@ -169,7 +169,7 @@ public class TwinPropertiesTest
         // arrange
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         TwinCollection rawMap = gson.fromJson(JSON_FULL_SAMPLE, TwinCollection.class);
-        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, rawMap, (TwinCollection) null);
+        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, rawMap, null);
         String expectedJson = "{\"desired\":" + JSON_FULL_SAMPLE + "}";
 
         // act
@@ -186,7 +186,7 @@ public class TwinPropertiesTest
         // arrange
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
         TwinCollection rawMap = gson.fromJson(JSON_FULL_SAMPLE, TwinCollection.class);
-        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, (TwinCollection) null, rawMap);
+        TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class, new Class[]{TwinCollection.class, TwinCollection.class}, null, rawMap);
         String expectedJson = "{\"reported\":" + JSON_FULL_SAMPLE + "}";
 
         // act
@@ -233,8 +233,8 @@ public class TwinPropertiesTest
         TwinProperties twinProperties = Deencapsulation.newInstance(TwinProperties.class);
 
         // act - assert
-        assertNull((TwinCollection) Deencapsulation.invoke(twinProperties, "getDesired"));
-        assertNull((TwinCollection) Deencapsulation.invoke(twinProperties, "getReported"));
+        assertNull(Deencapsulation.invoke(twinProperties, "getDesired"));
+        assertNull(Deencapsulation.invoke(twinProperties, "getReported"));
     }
 
     /* SRS_TWIN_PROPERTIES_21_011: [The toString shall return a String with the information in this class in a pretty print JSON.] */

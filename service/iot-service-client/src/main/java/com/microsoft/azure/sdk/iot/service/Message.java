@@ -138,7 +138,7 @@ public class Message
      *               with HttpBatch.Encoding set to UTF-8.
      * @throws UnsupportedEncodingException This exception is thrown if unsupported encoding used
      */
-    public Message(String string) throws UnsupportedEncodingException
+    public Message(String string)
     {
         this();
         this.body = string.getBytes(StandardCharsets.UTF_8);

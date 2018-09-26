@@ -74,7 +74,7 @@ public class HttpsRequestResponseSerializerTest
     // <header>: <value1>; <value2>
     // .]
     @Test
-    public void serializeTestWithQuery() throws MalformedURLException, TransportException, UnsupportedEncodingException, URISyntaxException
+    public void serializeTestWithQuery() throws MalformedURLException
     {
         //arrange
         new NonStrictExpectations()
@@ -115,7 +115,7 @@ public class HttpsRequestResponseSerializerTest
     // <header>: <value1>; <value2>
     // .]
     @Test
-    public void serializeTestWithoutQuery() throws MalformedURLException, TransportException, UnsupportedEncodingException, URISyntaxException
+    public void serializeTestWithoutQuery() throws MalformedURLException
     {
         //arrange
         new NonStrictExpectations()
@@ -150,7 +150,7 @@ public class HttpsRequestResponseSerializerTest
 
     // Tests_SRS_HTTPREQUESTRESPONSESERIALIZER_34_001: [If the provided request is null, this function shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void serializeThrowsForNullRequest() throws UnsupportedEncodingException, URISyntaxException
+    public void serializeThrowsForNullRequest()
     {
         //act
         HttpsRequestResponseSerializer.serializeRequest(null, "modules/testModule/sign", "api-version=2018-06-28", "");
@@ -158,7 +158,7 @@ public class HttpsRequestResponseSerializerTest
 
     // Tests_SRS_HTTPREQUESTRESPONSESERIALIZER_34_002: [If the provided request's url is null, this function shall throw an IllegalArgumentException.]
     @Test(expected = IllegalArgumentException.class)
-    public void serializeThrowsForRequestWithNullRequestUrl() throws UnsupportedEncodingException, URISyntaxException
+    public void serializeThrowsForRequestWithNullRequestUrl()
     {
         new NonStrictExpectations()
         {

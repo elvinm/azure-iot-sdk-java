@@ -1307,7 +1307,7 @@ public class ProvisioningTaskTest
     SRS_provisioningtask_25_013: [ Upon reaching intermediate state i.e UNASSIGNED or ASSIGNING, this method shall continue to query for status until a terminal state is reached. Also if status callback is defined then it shall be invoked with status PROVISIONING_DEVICE_STATUS_ASSIGNING.]
     */
     @Test
-    public void invokeRegisterReturnsUnassignedToAssignedSucceeds() throws Exception, InterruptedException, ExecutionException, TimeoutException, ProvisioningDeviceClientException
+    public void invokeRegisterReturnsUnassignedToAssignedSucceeds() throws Exception
     {
         // arrange
         constructorExpectations();
