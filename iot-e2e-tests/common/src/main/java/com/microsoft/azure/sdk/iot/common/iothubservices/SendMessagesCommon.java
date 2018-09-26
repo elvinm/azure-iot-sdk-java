@@ -54,7 +54,7 @@ public class SendMessagesCommon extends MethodNameLoggingIntegrationTest
     private static final Integer RETRY_MILLISECONDS = 100;
 
     protected static String iotHubConnectionString = "";
-    private static final int INTERTEST_GUARDIAN_DELAY_MILLISECONDS = 2000;
+    private static final int INTERTEST_GUARDIAN_DELAY_MILLISECONDS = 0;
     protected static String publicKeyCert;
     protected static String privateKey;
     protected static String x509Thumbprint;

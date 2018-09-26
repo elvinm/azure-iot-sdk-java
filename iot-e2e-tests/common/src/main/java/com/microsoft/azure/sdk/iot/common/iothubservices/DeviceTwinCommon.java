@@ -55,7 +55,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
     private static final Integer PAGE_SIZE = 2;
 
     protected static String iotHubConnectionString = "";
-    private static final int INTERTEST_GUARDIAN_DELAY_MILLISECONDS = 2000;
+    private static final int INTERTEST_GUARDIAN_DELAY_MILLISECONDS = 0;
 
     protected static String publicKeyCert;
     protected static String privateKey;
