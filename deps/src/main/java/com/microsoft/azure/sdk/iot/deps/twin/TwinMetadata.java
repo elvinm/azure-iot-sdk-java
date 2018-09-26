@@ -19,7 +19,7 @@ import java.util.Map;
  * </p>
  * <p> This class store the Date and Version for each entity in the {@link TwinCollection}.
  * </p>
- * <p> For instance, the following is a valid TwinCollection with its metadata.
+ * <p> For instance, the following is a valid TwinCollection with its metadata. </p>
  * <pre>
  * {@code
  *  "$metadata":{
@@ -40,7 +40,6 @@ import java.util.Map;
  *  }
  * }
  * </pre>
- * </p>
  * @see <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins">Understand and use device twins in IoT Hub</a>
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iothub/devicetwinapi">Device Twin Api</a>
  */

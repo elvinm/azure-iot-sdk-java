@@ -24,7 +24,7 @@ import java.util.Map;
  * updated date time, and version.
  * </p>
  * <p> For instance, the following is a valid TwinState, represented as
- * {@code initialTwin} in the rest API.
+ * {@code initialTwin} in the rest API.</p>
  * <pre>
  *     {@code
  *      {
@@ -93,7 +93,6 @@ import java.util.Map;
  *      }
  *     }
  * </pre>
- * </p>
  * @see <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins">Understand and use device twins in IoT Hub</a>
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iothub/devicetwinapi">Device Twin Api</a>
  */
@@ -120,7 +119,7 @@ public class TwinState extends RegisterManager
      * <p> This constructor creates an instance of the TwinState with the provided {@link TwinCollection}
      * tags and desired properties.
      * </p>
-     * <p> When serialized, this class will looks like the following example:
+     * <p> When serialized, this class will looks like the following example:</p>
      * <pre>
      *     {@code
      *          "initialTwin": {
@@ -141,7 +140,6 @@ public class TwinState extends RegisterManager
      *      }
      *     }
      * </pre>
-     * </p>
      * @param tags             the {@link TwinCollection} with the initial tags state. It can be {@code null}.
      * @param desiredProperty  the {@link TwinCollection} with the desired properties. It can be {@code null}.
      * @param reportedProperty the {@link TwinCollection} with the reported properties. It can be {@code null}.

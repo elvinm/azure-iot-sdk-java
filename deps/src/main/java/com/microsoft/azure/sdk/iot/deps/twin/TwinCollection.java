@@ -30,7 +30,7 @@ import java.util.Map;
  * </p>
  * <p> Because of the Twin metadata, the character <b>$</b> is not allowed in the entry key.
  * </p>
- * <p> For instance, the following JSON is a valid TwinCollection with its metadata.
+ * <p> For instance, the following JSON is a valid TwinCollection with its metadata. </p>
  * <pre>
  * {@code
  * {
@@ -63,7 +63,6 @@ import java.util.Map;
  * }
  * }
  * </pre>
- * </p>
  * <p> This class exposes the Twin collection with or without metadata as a Map here
  * user can gat both the value and the metadata. For instance, in the above TwinCollection,
  * {@link #get(Object)} for <b>Color</b> will return <b>White</b> and the {@link #getTwinMetadata(String)}
@@ -72,7 +71,7 @@ import java.util.Map;
  * that will returns the {@code Integer} <b>4</b>.
  * </p>
  * <p> For the nested TwinCollection, you can do the same, for instance, the following code will return the
- * value and metadata of the <b>NewValue</b> nested in <b>MaxSpeed</b>:
+ * value and metadata of the <b>NewValue</b> nested in <b>MaxSpeed</b>: </p>
  * <pre>
  * {@code
  *      // Get the value of the MaxSpeed, which is a inner TwinCollection.
@@ -88,7 +87,6 @@ import java.util.Map;
  *      Integer newValueLastUpdatedVersion = maxSpeedNewValueMetadata.getLastUpdatedVersion(); //Shall contain `4`
  * }
  * </pre>
- *</p>
  * @see <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins">Understand and use device twins in IoT Hub</a>
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iothub/devicetwinapi">Device Twin Api</a>
  */
@@ -170,7 +168,7 @@ public class TwinCollection extends HashMap<String, Object>
      * as part of the collection. So, we need to reorganize this map using the
      * TwinCollection format. This constructor will do that.
      * </p>
-     * <p> For instance, the following JSON is a valid TwinCollection with its metadata.
+     * <p> For instance, the following JSON is a valid TwinCollection with its metadata. </p>
      * <pre>
      * {@code
      * {
@@ -203,7 +201,6 @@ public class TwinCollection extends HashMap<String, Object>
      * }
      * }
      * </pre>
-     * </p>
      * @param rawCollection the {@code Map<? extends String, Object>} with contain all TwinCollection information, without
      *                      any differentiation between each entity is the Twin information and each entity is part
      *                      of the Twin metadata.

@@ -93,7 +93,7 @@ public class TwinProperties
      * <p> This constructor creates an instance of the TwinProperties with the provided {@link TwinCollection}
      * desired property.
      * </p>
-     * <p> When serialized, this class will looks like the following example:
+     * <p> When serialized, this class will looks like the following example:</p>
      * <pre>
      * {@code
      *  "desired":{
@@ -112,7 +112,6 @@ public class TwinProperties
      *  }
      * }
      * </pre>
-     * </p>
      * @param desired  the {@link TwinCollection} with the desired property. It cannot be {@code null}.
      * @param reported the {@link TwinCollection} with the reported property. It cannot be {@code null}.
      * @throws IllegalArgumentException if both desired and reported properties are {@code null}.
