@@ -351,15 +351,8 @@ public class AmqpsConnection extends BaseHandler
                 ((TransportInternal) transport).addTransportLayer(webSocket);
             }
 
-            try
-            {
-                SslDomain domain = makeDomain();
-                transport.ssl(domain);
-            }
-            catch (IOException e)
-            {
-                logger.LogDebug("onConnectionBound has thrown exception while creating ssl context: %s", e.getMessage());
-            }
+            SslDomain domain = makeDomain();
+            transport.ssl(domain);
         }
 
         logger.LogDebug("Exited from method %s", logger.getMethodName());
