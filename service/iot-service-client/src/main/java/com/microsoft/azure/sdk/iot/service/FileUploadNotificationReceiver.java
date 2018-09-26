@@ -142,15 +142,8 @@ public class FileUploadNotificationReceiver extends Receiver
         final CompletableFuture<Void> future = new CompletableFuture<>();
         executor.submit(() ->
         {
-            try
-            {
-                close();
-                future.complete(null);
-            }
-            catch (IOException e)
-            {
-                future.completeExceptionally(e);
-            }
+            close();
+            future.complete(null);
         });
         return future;
     }

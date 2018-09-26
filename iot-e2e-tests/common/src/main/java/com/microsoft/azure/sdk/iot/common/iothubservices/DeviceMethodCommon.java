@@ -188,7 +188,7 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
         {
             this.testInstance.deviceTestManager.start();
         }
-        catch (IOException | InterruptedException e)
+        catch (IOException e)
         {
             e.printStackTrace();
             fail(e.getMessage());

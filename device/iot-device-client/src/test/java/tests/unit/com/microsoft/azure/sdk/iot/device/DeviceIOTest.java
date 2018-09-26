@@ -385,14 +385,7 @@ public class DeviceIOTest
     {
         // arrange
         final Object deviceIO = newDeviceIO();
-        try
-        {
-            openDeviceIO(deviceIO, mockedTransport, mockExecutors, mockScheduler);
-        }
-        catch (IOException e)
-        {
-            // catch and ignore IOException from open
-        }
+        openDeviceIO(deviceIO, mockedTransport, mockExecutors, mockScheduler);
 
         new NonStrictExpectations()
         {

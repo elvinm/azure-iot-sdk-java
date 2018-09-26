@@ -44,7 +44,7 @@ public abstract class SecurityProviderX509 extends SecurityProvider
             //SRS_SecurityClientX509_25_002: [ This method shall generate the SSL context. ]
             return this.generateSSLContext(this.getClientCertificate(), this.getClientPrivateKey(), this.getIntermediateCertificatesChain());
         }
-        catch (NoSuchProviderException | UnrecoverableKeyException | NoSuchAlgorithmException | KeyStoreException | KeyManagementException | IOException | CertificateException e)
+        catch (UnrecoverableKeyException | NoSuchAlgorithmException | KeyStoreException | KeyManagementException | IOException | CertificateException e)
         {
             //SRS_SecurityClientX509_25_003: [ This method shall throw SecurityProviderException chained with the exception thrown from underlying API calls to SSL library. ]
             throw new SecurityProviderException(e);

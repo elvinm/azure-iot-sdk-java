@@ -170,12 +170,9 @@ public class AmqpFileUploadNotificationReceive extends BaseHandler implements Am
 
             fileUploadNotificationQueue.add(fileUploadNotification);
         }
-        catch (IOException e)
-        {
-            this.fileUploadNotification = null;
-        }
         catch (Exception e)
         {
+            this.fileUploadNotification = null;
             // this should never happen. However if it does, proton can't handle it. So guard against throwing it at proton.
             System.out.println("Service threw something mysteriously dangerous, message abandoned.");
         }
