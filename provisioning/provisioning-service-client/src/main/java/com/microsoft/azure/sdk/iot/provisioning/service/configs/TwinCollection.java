@@ -13,24 +13,23 @@ import java.util.Map;
 
 /**
  * Representation of a single Twin collection for Provisioning.
- * <p>
  * <p> The TwinCollection is an extension of a {@code HashMap} of {@code String} and
  * {@code Object} that contain individual and general versioning mechanism.
- * <p>
+ * </p>
  * <p> By the Twin definition, the {@code Object} can contain types of {@code Boolean},
  * {@code Number}, {@code String}, {@code Object}, or a sub-TwinCollection, but
  * it cannot be types defined by the user or arrays.
- * <p>
+ * </p>
  * <p> A TwinCollection can contain up to 5 levels of sub TwinCollections. Once the
  * TwinCollection is a extension of the {@code HashMap}, both TwinCollection as well
  * as its sub-TwinCollections can be casted to Map of String and Object.
- * <p>
+ * </p>
  * <p> The collection will be represented in the rest API as a JSON in the body. It can
  * or cannot contain the metadata (identified by the <b>$</b> character at the
  * beginning of the key.
- * <p>
+ * </p>
  * <p> Because of the Twin metadata, the character <b>$</b> is not allowed in the entry key.
- * <p>
+ * </p>
  * <p> For instance, the following JSON is a valid TwinCollection with its metadata.
  * <pre>
  * {@code
@@ -64,14 +63,14 @@ import java.util.Map;
  * }
  * }
  * </pre>
- * <p>
+ * </p>
  * <p> This class exposes the Twin collection with or without metadata as a Map here
  * user can gat both the value and the metadata. For instance, in the above TwinCollection,
  * {@link #get(Object)} for <b>Color</b> will return <b>White</b> and the {@link #getTwinMetadata(String)}
  * for <b>Color</b> will return the Object TwinMetadata that contain {@link TwinMetadata#getLastUpdated()}
  * that will returns the {@code Date} <b>2017-09-21T02:07:44.238Z</b> and {@link TwinMetadata#getLastUpdatedVersion()}
  * that will returns the {@code Integer} <b>4</b>.
- * <p>
+ * </p>
  * <p> For the nested TwinCollection, you can do the same, for instance, the following code will return the
  * value and metadata of the <b>NewValue</b> nested in <b>MaxSpeed</b>:
  * <pre>
@@ -89,7 +88,7 @@ import java.util.Map;
  *      Integer newValueLastUpdatedVersion = maxSpeedNewValueMetadata.getLastUpdatedVersion(); //Shall contain `4`
  * }
  * </pre>
- *
+ *</p>
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iot-dps/deviceenrollment">Device Enrollment</a>
  * @see <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins">Understand and use device twins in IoT Hub</a>
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iothub/devicetwinapi">Device Twin Api</a>

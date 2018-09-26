@@ -282,7 +282,6 @@ public class HttpConnection
      * name.
      *
      * @return the response headers.
-     * @throws IOException This exception thrown if no response was received.
      */
     public Map<String, List<String>> getResponseHeaders()
     {

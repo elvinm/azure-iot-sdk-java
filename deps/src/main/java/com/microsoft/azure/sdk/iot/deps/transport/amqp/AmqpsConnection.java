@@ -123,6 +123,8 @@ public class AmqpsConnection extends BaseHandler
      * Returns the status of the connection
      *
      * @return status of the connection
+     *
+     * @throws Exception if any exception was encountered during opening the connection
      */
     public boolean isConnected() throws Exception
     {

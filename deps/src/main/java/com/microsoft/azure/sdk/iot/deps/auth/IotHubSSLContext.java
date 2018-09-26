@@ -75,6 +75,9 @@ public class IotHubSSLContext
     /**
      * Creates a default SSLContext for the IotHub with the specified certificate.
      *
+     * @param trustedCert the certificate to trust
+     * @param isPath if the trustedCert is an absolute path, or false if it is a PEM string
+     *
      * @throws KeyStoreException        if no Provider supports a KeyStoreSpi implementation for the specified type or
      *                                  if the keystore has not been initialized,
      *                                  or the given alias already exists and does not identify an entry containing a trusted certificate,
@@ -103,16 +106,26 @@ public class IotHubSSLContext
     }
 
     /**
+     *
+     *
+
+     */
+    /**
      * Creates a default SSLContext for the IotHub with the specified certificate.
      *
-     * @throws KeyStoreException        if no Provider supports a KeyStoreSpi implementation for the specified type or
-     *                                  if the keystore has not been initialized,
-     *                                  or the given alias already exists and does not identify an entry containing a trusted certificate,
-     *                                  or this operation fails for some other reason.
+     * @param publicKeyCertificateString
+     * @param privateKeyString
+     * @param cert
+     * @param isPath
      * @throws KeyManagementException   As per https://docs.oracle.com/javase/7/docs/api/java/security/KeyManagementException.html
      * @throws IOException              If the certificate provided was null or invalid
      * @throws CertificateException     As per https://docs.oracle.com/javase/7/docs/api/java/security/cert/CertificateException.html
      * @throws NoSuchAlgorithmException if the default SSL Context cannot be created
+     * @throws KeyStoreException        if no Provider supports a KeyStoreSpi implementation for the specified type or
+     *                                  if the keystore has not been initialized,
+     *                                  or the given alias already exists and does not identify an entry containing a trusted certificate,
+     *                                  or this operation fails for some other reason.
+     * @throws UnrecoverableKeyException if accessing the passphrase protected keystore fails due to the key
      */
     public IotHubSSLContext(String publicKeyCertificateString, String privateKeyString, String cert, boolean isPath) throws KeyStoreException, KeyManagementException, IOException, CertificateException, NoSuchAlgorithmException, UnrecoverableKeyException
     {
