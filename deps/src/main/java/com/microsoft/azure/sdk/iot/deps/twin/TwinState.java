@@ -15,15 +15,14 @@ import java.util.Map;
 
 /**
  * Representation of a single Twin.
- * <p>
  * <p> The TwinState can contain one {@link TwinCollection} of <b>Tags</b>, and one
  * {@link TwinCollection} of <b>properties.desired</b>.
- * <p>
+ * </p>
  * <p> Each entity in the collections can contain a associated {@link TwinMetadata}.
- * <p>
+ * </p>
  * <p> These metadata are provided by the Service and contains information about the last
  * updated date time, and version.
- * <p>
+ * </p>
  * <p> For instance, the following is a valid TwinState, represented as
  * {@code initialTwin} in the rest API.
  * <pre>
@@ -94,7 +93,7 @@ import java.util.Map;
  *      }
  *     }
  * </pre>
- *
+ * </p>
  * @see <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins">Understand and use device twins in IoT Hub</a>
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iothub/devicetwinapi">Device Twin Api</a>
  */
@@ -118,10 +117,9 @@ public class TwinState extends RegisterManager
 
     /**
      * CONSTRUCTOR
-     * <p>
      * <p> This constructor creates an instance of the TwinState with the provided {@link TwinCollection}
      * tags and desired properties.
-     * <p>
+     * </p>
      * <p> When serialized, this class will looks like the following example:
      * <pre>
      *     {@code
@@ -143,7 +141,7 @@ public class TwinState extends RegisterManager
      *      }
      *     }
      * </pre>
-     *
+     * </p>
      * @param tags             the {@link TwinCollection} with the initial tags state. It can be {@code null}.
      * @param desiredProperty  the {@link TwinCollection} with the desired properties. It can be {@code null}.
      * @param reportedProperty the {@link TwinCollection} with the reported properties. It can be {@code null}.
@@ -164,7 +162,6 @@ public class TwinState extends RegisterManager
     /**
      * Empty constructor
      * <p>
-     * <p>
      * Used only by the tools that will deserialize this class.
      * </p>
      */
@@ -176,9 +173,8 @@ public class TwinState extends RegisterManager
 
     /**
      * Factory
-     * <p>
      * <p> Create a new instance of the TwinState parsing the provided string as a JSON with the full Twin information.
-     *
+     * </p>
      * @param json the {@code String} with the JSON received from the service. It cannot be {@code null} or empty.
      * @return The new instance of the {@code TwinState}.
      */
@@ -212,9 +208,8 @@ public class TwinState extends RegisterManager
 
     /**
      * Factory
-     * <p>
      * <p> Create a new instance of the TwinState parsing the provided string as a JSON with only desired properties information.
-     *
+     * </p>
      * @param json the {@code String} with the JSON received from the service. It cannot be {@code null} or empty.
      * @return The new instance of the {@code TwinState}.
      */
@@ -236,9 +231,8 @@ public class TwinState extends RegisterManager
 
     /**
      * Factory
-     * <p>
      * <p> Create a new instance of the TwinState parsing the provided string as a JSON with only reported properties information.
-     *
+     * </p>
      * @param json the {@code String} with the JSON received from the service. It cannot be {@code null} or empty.
      * @return The new instance of the {@code TwinState}.
      */
@@ -260,9 +254,8 @@ public class TwinState extends RegisterManager
 
     /**
      * Factory
-     * <p>
      * <p> Create a new instance of the TwinState parsing the provided string as a JSON with only desired properties information.
-     *
+     * </p>
      * @param json the {@code String} with the JSON received from the service. It cannot be {@code null} or empty.
      * @return The new instance of the {@code TwinState}.
      */
@@ -285,9 +278,9 @@ public class TwinState extends RegisterManager
     /**
      * Serializer
      * <p>
-     * <p>
      * Creates a {@code JsonElement}, which the content represents
      * the information in this class and its subclasses in a JSON format.
+     * </p>
      * <p>
      * This is useful if the caller will integrate this JSON with JSON from
      * other classes to generate a consolidated JSON.

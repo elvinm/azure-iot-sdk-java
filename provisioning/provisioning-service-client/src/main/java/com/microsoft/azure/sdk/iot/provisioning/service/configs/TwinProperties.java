@@ -10,14 +10,13 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Representation of a single Twin Properties for the Device Provisioning Service.
- * <p>
  * <p> The Properties on the TwinState shall contains one {@link TwinCollection} of <b>desired</b> property.
- * <p>
+ * </p>
  * <p> The desired property is a collection that can contain a associated {@link TwinMetadata}.
- * <p>
+ * </p>
  * <p> These metadata are provided by the Service and contains information about the last
  * updated date time, and version.
- * <p>
+ * </p>
  * <p> For instance, the following is a valid desired property, represented as
  * {@code properties.desired} in the rest API.
  * <pre>
@@ -49,7 +48,7 @@ import com.google.gson.annotations.SerializedName;
  *      }
  *     }
  * </pre>
- *
+ * </p>
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iot-dps/deviceenrollment">Device Enrollment</a>
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iot-dps/deviceenrollmentgroup">Device Enrollment Group</a>
  * @see <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins">Understand and use device twins in IoT Hub</a>

@@ -10,15 +10,15 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Representation of a single Twin initial state for the Device Provisioning Service.
- * <p>
  * <p> The TwinState can contain one {@link TwinCollection} of <b>Tags</b>, and one
  * {@link TwinCollection} of <b>properties.desired</b>.
+ * </p>
  * <p>
- * <p> Each entity in the collections can contain a associated {@link TwinMetadata}.
- * <p>
+ * Each entity in the collections can contain a associated {@link TwinMetadata}.
+ * </p>
  * <p> These metadata are provided by the Service and contains information about the last
  * updated date time, and version.
- * <p>
+ * </p>
  * <p> For instance, the following is a valid TwinState, represented as
  * {@code initialTwin} in the rest API.
  * <pre>
@@ -66,7 +66,7 @@ import com.google.gson.annotations.SerializedName;
  *      }
  *     }
  * </pre>
- *
+ * </p>
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iot-dps/deviceenrollment">Device Enrollment</a>
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iot-dps/deviceenrollmentgroup">Device Enrollment Group</a>
  * @see <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins">Understand and use device twins in IoT Hub</a>
@@ -87,10 +87,9 @@ public class TwinState
 
     /**
      * CONSTRUCTOR
-     * <p>
      * <p> This constructor creates an instance of the TwinState with the provided {@link TwinCollection}
      * tags and desired properties.
-     * <p>
+     * </p>
      * <p> When serialized, this class will looks like the following example:
      * <pre>
      *     {@code
@@ -112,7 +111,7 @@ public class TwinState
      *      }
      *     }
      * </pre>
-     *
+     * </p>
      * @param tags            the {@link TwinCollection} with the initial tags state. It can be {@code null}.
      * @param desiredProperty the {@link TwinCollection} with the initial desired properties. It can be {@code null}.
      */
@@ -132,7 +131,6 @@ public class TwinState
     /**
      * Empty constructor
      * <p>
-     * <p>
      * Used only by the tools that will deserialize this class.
      * </p>
      */
@@ -145,9 +143,9 @@ public class TwinState
     /**
      * Serializer
      * <p>
-     * <p>
      * Creates a {@code JsonElement}, which the content represents
      * the information in this class and its subclasses in a JSON format.
+     * </p>
      * <p>
      * This is useful if the caller will integrate this JSON with JSON from
      * other classes to generate a consolidated JSON.

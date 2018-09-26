@@ -13,13 +13,12 @@ import java.util.Map;
 
 /**
  * Representation of a single Twin metadata for the {@link TwinCollection}.
- * <p>
  * <p> The metadata is a set of pairs lastUpdated/lastUpdatedVersion for each
  * property and sub-property in the Twin. It is optionally provided by
  * the service and the clients can only ready it.
- * <p>
+ * </p>
  * <p> This class store the Date and Version for each entity in the {@link TwinCollection}.
- * <p>
+ * </p>
  * <p> For instance, the following is a valid TwinCollection with its metadata.
  * <pre>
  * {@code
@@ -41,7 +40,7 @@ import java.util.Map;
  *  }
  * }
  * </pre>
- *
+ * </p>
  * @see <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins">Understand and use device twins in IoT Hub</a>
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iothub/devicetwinapi">Device Twin Api</a>
  */
