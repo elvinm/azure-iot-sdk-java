@@ -49,6 +49,7 @@ public class JobsParser
     private String jobId;
     @Expose(serialize = true, deserialize = false)
     @SerializedName(TYPE_TAG)
+    @SuppressWarnings("unused")
     private String jobType;
     @Expose(serialize = true, deserialize = false)
     @SerializedName(CLOUDTODEVICEMETHOD_TAG)

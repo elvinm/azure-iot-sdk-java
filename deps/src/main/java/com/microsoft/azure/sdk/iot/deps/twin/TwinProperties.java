@@ -18,7 +18,7 @@ import com.google.gson.annotations.SerializedName;
  * updated date time, and version.
  * </p>
  * <p> For instance, the following is a valid desired property, represented as
- * {@code properties.desired} in the rest API.
+ * {@code properties.desired} in the rest API.</p>
  * <pre>
  *     {@code
  *      {
@@ -71,7 +71,6 @@ import com.google.gson.annotations.SerializedName;
  *      }
  *     }
  * </pre>
- * </p>
  * @see <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins">Understand and use device twins in IoT Hub</a>
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/iothub/devicetwinapi">Device Twin Api</a>
  */
