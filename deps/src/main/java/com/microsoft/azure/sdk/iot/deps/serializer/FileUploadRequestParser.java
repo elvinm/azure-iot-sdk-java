@@ -20,6 +20,7 @@ public class FileUploadRequestParser
     private static final String BLOB_NAME_TAG = "blobName";
     @Expose(serialize = true, deserialize = true)
     @SerializedName(BLOB_NAME_TAG)
+    @SuppressWarnings("unused")
     private String blobName;
 
     /**
