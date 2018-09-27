@@ -140,6 +140,8 @@ public class SendEvent
                 msg.setExpiryTime(D2C_MESSAGE_TIMEOUT);
                 System.out.println(msgStr);
 
+                //here is a commit
+
                 EventCallback callback = new EventCallback();
                 client.sendEventAsync(msg, callback, msg);
             }
