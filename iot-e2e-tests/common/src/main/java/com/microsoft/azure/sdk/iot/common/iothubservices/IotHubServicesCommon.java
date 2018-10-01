@@ -6,11 +6,13 @@
 package com.microsoft.azure.sdk.iot.common.iothubservices;
 
 import com.microsoft.azure.sdk.iot.common.*;
+import com.microsoft.azure.sdk.iot.common.helpers.Tools;
 import com.microsoft.azure.sdk.iot.device.*;
 import com.microsoft.azure.sdk.iot.device.transport.IotHubConnectionStatus;
 import com.microsoft.azure.sdk.iot.service.auth.AuthenticationType;
 import org.junit.Assert;
 
+import javax.tools.Tool;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +39,12 @@ public class IotHubServicesCommon
                                     final long RETRY_MILLISECONDS,
                                     final long SEND_TIMEOUT_MILLISECONDS,
                                     long interMessageDelay,
-                                    List<IotHubConnectionStatus> statusUpdates) throws IOException, InterruptedException
+                                    List<IotHubConnectionStatus> statusUpdates,
+                                    String hostname,
+                                    String deviceId,
+                                    String moduleId) throws IOException, InterruptedException
     {
-        openClientWithRetry(client);
+        openClientWithRetry(client, hostname, deviceId, moduleId, protocol.toString());
 
         for (int i = 0; i < messagesToSend.size(); ++i)
         {
@@ -51,7 +56,7 @@ public class IotHubServicesCommon
                 messagesToSend.get(i).message.setExpiryTime(200);
             }
 
-            sendMessageAndWaitForResponse(client, messagesToSend.get(i), RETRY_MILLISECONDS, SEND_TIMEOUT_MILLISECONDS, protocol);
+            sendMessageAndWaitForResponse(client, messagesToSend.get(i), RETRY_MILLISECONDS, SEND_TIMEOUT_MILLISECONDS, protocol, hostname, deviceId, moduleId);
 
             if (isErrorInjectionMessage(messagesToSend.get(i)))
             {
@@ -63,7 +68,7 @@ public class IotHubServicesCommon
 
                     if (System.currentTimeMillis() - startTime > ERROR_INJECTION_MESSAGE_EFFECT_TIMEOUT)
                     {
-                        fail("Sending message over " + protocol + " protocol failed: Error injection message never caused connection to be lost");
+                        fail(Tools.buildExceptionMessage("Sending message over " + protocol + " protocol failed: Error injection message never caused connection to be lost", hostname, deviceId, protocol.toString(), moduleId));
                     }
                 }
             }
@@ -83,7 +88,10 @@ public class IotHubServicesCommon
                                                                          final long SEND_TIMEOUT_MILLISECONDS,
                                                                          final IotHubConnectionStatus expectedStatus,
                                                                          int interMessageDelay,
-                                                                         AuthenticationType authType) throws IOException, InterruptedException
+                                                                         AuthenticationType authType,
+                                                                         String hostname,
+                                                                         String deviceId,
+                                                                         String moduleId) throws IOException, InterruptedException
     {
         final List<IotHubConnectionStatus> actualStatusUpdates = new ArrayList<>();
         client.registerConnectionStatusChangeCallback(new IotHubConnectionStatusChangeCallback()
@@ -94,9 +102,9 @@ public class IotHubServicesCommon
             }
         }, new Object());
 
-        sendMessages(client, protocol, messagesToSend, RETRY_MILLISECONDS, SEND_TIMEOUT_MILLISECONDS, interMessageDelay, actualStatusUpdates);
+        sendMessages(client, protocol, messagesToSend, RETRY_MILLISECONDS, SEND_TIMEOUT_MILLISECONDS, interMessageDelay, actualStatusUpdates, hostname, deviceId, moduleId);
 
-        assertTrue(protocol + ", " + authType + ": Expected connection status update to occur: " + expectedStatus, actualStatusUpdates.contains(expectedStatus));
+        assertTrue(Tools.buildExceptionMessage(protocol + ", " + authType + ": Expected connection status update to occur: " + expectedStatus, hostname, deviceId, protocol.toString(), moduleId), actualStatusUpdates.contains(expectedStatus));
     }
 
     /**
@@ -110,7 +118,10 @@ public class IotHubServicesCommon
                                                                int numberOfMessages,
                                                                long retryMilliseconds,
                                                                long timeoutMilliseconds,
-                                                               AuthenticationType authType)
+                                                               AuthenticationType authType,
+                                                               String hostname,
+                                                               String deviceId,
+                                                               String moduleId)
     {
         for (int i = 0; i < numberOfMessages; ++i)
         {
@@ -145,7 +156,7 @@ public class IotHubServicesCommon
             }
             catch (Exception e)
             {
-                Assert.fail(protocol + ", " + authType + ": Sending message over " + protocol + " protocol failed");
+                Assert.fail(Tools.buildExceptionMessage(protocol + ", " + authType + ": Sending message over " + protocol + " protocol failed", hostname, deviceId, protocol, moduleId));
             }
         }
     }
@@ -157,7 +168,10 @@ public class IotHubServicesCommon
                                              IotHubClientProtocol protocol,
                                              final int NUM_MESSAGES_PER_CONNECTION,
                                              final long RETRY_MILLISECONDS,
-                                             final long SEND_TIMEOUT_MILLISECONDS)
+                                             final long SEND_TIMEOUT_MILLISECONDS,
+                                             String hostname,
+                                             String deviceId,
+                                             String moduleId)
     {
         String messageString = "Java client e2e test message over " + protocol + " protocol";
         Message msg = new Message(messageString);
@@ -182,12 +196,12 @@ public class IotHubServicesCommon
 
                 if (messageSent.getCallbackStatusCode() != IotHubStatusCode.OK_EMPTY)
                 {
-                    Assert.fail("Sending message over " + protocol + " protocol failed: expected status code OK_EMPTY but received: " + messageSent.getCallbackStatusCode());
+                    Assert.fail(Tools.buildExceptionMessage("Sending message over " + protocol + " protocol failed: expected status code OK_EMPTY but received: " + messageSent.getCallbackStatusCode(), hostname, deviceId, protocol.toString(), moduleId));
                 }
             }
             catch (Exception e)
             {
-                Assert.fail("Sending message over " + protocol + " protocol failed: Exception encountered while sending messages: " + e.getMessage());
+                Assert.fail(Tools.buildExceptionMessage("Sending message over " + protocol + " protocol failed: Exception encountered while sending messages: " + e.getMessage(), hostname, deviceId, protocol.toString(), moduleId));
             }
         }
     }
@@ -196,7 +210,10 @@ public class IotHubServicesCommon
                                                                          IotHubClientProtocol protocol,
                                                                          final long RETRY_MILLISECONDS,
                                                                          final long SEND_TIMEOUT_MILLISECONDS,
-                                                                         AuthenticationType authType) throws IOException
+                                                                         AuthenticationType authType,
+                                                                         String hostname,
+                                                                         String deviceId,
+                                                                         String moduleId) throws IOException
     {
         try
         {
@@ -204,7 +221,7 @@ public class IotHubServicesCommon
             expiredMessage.setAbsoluteExpiryTime(1); //setting this to 0 causes the message to never expire
             Success messageSentExpiredCallback = new Success();
 
-            openClientWithRetry(client);
+            openClientWithRetry(client, hostname, deviceId, moduleId, protocol.toString());
             client.sendEventAsync(expiredMessage, new EventCallback(IotHubStatusCode.MESSAGE_EXPIRED), messageSentExpiredCallback);
 
             long startTime = System.currentTimeMillis();
@@ -221,20 +238,23 @@ public class IotHubServicesCommon
 
             if (messageSentExpiredCallback.getCallbackStatusCode() != IotHubStatusCode.MESSAGE_EXPIRED)
             {
-                Assert.fail("Sending message over " + protocol + " protocol failed: expected status code MESSAGE_EXPIRED but received: " + messageSentExpiredCallback.getCallbackStatusCode());
+                Assert.fail(Tools.buildExceptionMessage("Sending message over " + protocol + " protocol failed: expected status code MESSAGE_EXPIRED but received: " + messageSentExpiredCallback.getCallbackStatusCode(), hostname, deviceId, protocol.toString(), moduleId));
             }
         }
         catch (Exception e)
         {
             client.closeNow();
-            Assert.fail("Sending expired message over " + protocol + " protocol failed: Exception encountered while sending message and waiting for MESSAGE_EXPIRED callback: " + e.getMessage());
+            Assert.fail(Tools.buildExceptionMessage("Sending expired message over " + protocol + " protocol failed: Exception encountered while sending message and waiting for MESSAGE_EXPIRED callback: " + e.getMessage(), hostname, deviceId, protocol.toString(), moduleId));
         }
     }
 
     public static void sendMessagesExpectingUnrecoverableConnectionLossAndTimeout(InternalClient client,
                                                                                   IotHubClientProtocol protocol,
                                                                                   Message errorInjectionMessage,
-                                                                                  AuthenticationType authType) throws IOException, InterruptedException
+                                                                                  AuthenticationType authType,
+                                                                                  String hostname,
+                                                                                  String deviceId,
+                                                                                  String moduleId) throws IOException, InterruptedException
     {
         final List<IotHubConnectionStatus> statusUpdates = new ArrayList<>();
         client.registerConnectionStatusChangeCallback(new IotHubConnectionStatusChangeCallback()
@@ -245,7 +265,7 @@ public class IotHubServicesCommon
             }
         }, new Object());
 
-        openClientWithRetry(client);
+        openClientWithRetry(client, hostname, deviceId, moduleId, protocol.toString());
 
         client.sendEventAsync(errorInjectionMessage, new EventCallback(null), new Success());
 
@@ -260,13 +280,20 @@ public class IotHubServicesCommon
             }
         }
 
-        assertTrue(protocol + ", " + authType + ": Expected notification about disconnected but retrying.", statusUpdates.contains(IotHubConnectionStatus.DISCONNECTED_RETRYING));
-        assertTrue(protocol + ", " + authType + ": Expected notification about disconnected.", statusUpdates.contains(IotHubConnectionStatus.DISCONNECTED));
+        assertTrue(Tools.buildExceptionMessage(protocol + ", " + authType + ": Expected notification about disconnected but retrying.", hostname, deviceId, protocol.toString(), moduleId), statusUpdates.contains(IotHubConnectionStatus.DISCONNECTED_RETRYING));
+        assertTrue(Tools.buildExceptionMessage(protocol + ", " + authType + ": Expected notification about disconnected.", hostname, deviceId, protocol.toString(), moduleId), statusUpdates.contains(IotHubConnectionStatus.DISCONNECTED));
 
         client.closeNow();
     }
 
-    public static void sendMessageAndWaitForResponse(InternalClient client, MessageAndResult messageAndResult, long RETRY_MILLISECONDS, long SEND_TIMEOUT_MILLISECONDS, IotHubClientProtocol protocol)
+    public static void sendMessageAndWaitForResponse(InternalClient client,
+                                                     MessageAndResult messageAndResult,
+                                                     long RETRY_MILLISECONDS,
+                                                     long SEND_TIMEOUT_MILLISECONDS,
+                                                     IotHubClientProtocol protocol,
+                                                     String hostname,
+                                                     String deviceId,
+                                                     String moduleId)
     {
         try
         {
@@ -287,12 +314,12 @@ public class IotHubServicesCommon
 
             if (messageAndResult.statusCode != null && messageSent.getCallbackStatusCode() != messageAndResult.statusCode)
             {
-                Assert.fail("Sending message over " + protocol + " protocol failed: expected " + messageAndResult.statusCode + " but received " + messageSent.getCallbackStatusCode());
+                Assert.fail(Tools.buildExceptionMessage("Sending message over " + protocol + " protocol failed: expected " + messageAndResult.statusCode + " but received " + messageSent.getCallbackStatusCode(), hostname, deviceId, protocol.toString(), moduleId));
             }
         }
         catch (Exception e)
         {
-            Assert.fail("Sending message over " + protocol + " protocol failed: Exception encountered while sending and waiting on a message: " + e.getMessage());
+            Assert.fail(Tools.buildExceptionMessage("Sending message over " + protocol + " protocol failed: Exception encountered while sending and waiting on a message: " + e.getMessage(), hostname, deviceId, protocol.toString(), moduleId));
         }
     }
 
@@ -310,7 +337,7 @@ public class IotHubServicesCommon
         return false;
     }
 
-    public static void openClientWithRetry(InternalClient client)
+    public static void openClientWithRetry(InternalClient client, String hostname, String deviceId, String moduleId, String protocol)
     {
         boolean clientOpenSucceeded = false;
         long startTime = System.currentTimeMillis();
@@ -318,7 +345,7 @@ public class IotHubServicesCommon
         {
             if (System.currentTimeMillis() - startTime > OPEN_RETRY_TIMEOUT)
             {
-                Assert.fail("Timed out trying to open the client");
+                Assert.fail(Tools.buildExceptionMessage("Timed out trying to open the client", hostname, deviceId, protocol.toString(), moduleId));
             }
 
             try
@@ -329,7 +356,7 @@ public class IotHubServicesCommon
             catch (IOException e)
             {
                 //ignore and try again
-                System.out.println("Encountered exception while opening device client, retrying...");
+                System.out.println(Tools.buildExceptionMessage("Encountered exception while opening device client, retrying...", hostname, deviceId, protocol.toString(), moduleId));
                 e.printStackTrace();
             }
         }
@@ -337,7 +364,7 @@ public class IotHubServicesCommon
         System.out.println("Successfully opened connection!");
     }
 
-    public static void openTransportClientWithRetry(TransportClient client) throws InterruptedException
+    public static void openTransportClientWithRetry(TransportClient client, String hostname, String deviceId, String protocol) throws InterruptedException
     {
         boolean clientOpenSucceeded = false;
         long startTime = System.currentTimeMillis();
@@ -345,7 +372,7 @@ public class IotHubServicesCommon
         {
             if (System.currentTimeMillis() - startTime > OPEN_RETRY_TIMEOUT)
             {
-                Assert.fail("Timed out trying to open the transport client");
+                Assert.fail(Tools.buildExceptionMessage("Timed out trying to open the transport client", hostname, deviceId, protocol.toString(), null));
             }
 
             try
@@ -375,7 +402,7 @@ public class IotHubServicesCommon
         System.out.println("Successfully opened connection!");
     }
 
-    public static void waitForStabilizedConnection(List actualStatusUpdates, long timeout) throws InterruptedException
+    public static void waitForStabilizedConnection(List actualStatusUpdates, long timeout, String hostname, String deviceId, String protocol, String moduleId) throws InterruptedException
     {
         System.out.println("Waiting for stabilized connection...");
 
@@ -390,7 +417,7 @@ public class IotHubServicesCommon
             // 2 minutes timeout waiting for error injection to occur
             if (timeElapsed > timeout)
             {
-                fail("Timed out waiting for error injection message to take effect");
+                fail(Tools.buildExceptionMessage("Timed out waiting for error injection message to take effect", hostname, deviceId, protocol.toString(), moduleId));
             }
         }
 
@@ -404,7 +431,7 @@ public class IotHubServicesCommon
             // 2 minutes timeout waiting for connection to stabilized
             if (timeElapsed > timeout)
             {
-                fail("Timed out waiting for a stable connection after error injection");
+                fail(Tools.buildExceptionMessage("Timed out waiting for a stable connection after error injection", hostname, deviceId, protocol.toString(), moduleId));
             }
         }
 

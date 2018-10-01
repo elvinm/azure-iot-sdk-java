@@ -7,6 +7,7 @@ package com.microsoft.azure.sdk.iot.common.iothubservices;
 
 import com.microsoft.azure.sdk.iot.common.ErrorInjectionHelper;
 import com.microsoft.azure.sdk.iot.common.MessageAndResult;
+import com.microsoft.azure.sdk.iot.common.helpers.Tools;
 import com.microsoft.azure.sdk.iot.device.*;
 import com.microsoft.azure.sdk.iot.device.exceptions.ModuleClientException;
 import com.microsoft.azure.sdk.iot.device.transport.IotHubConnectionStatus;
@@ -23,6 +24,7 @@ import org.junit.*;
 import com.microsoft.azure.sdk.iot.common.helpers.DeviceEmulator;
 import com.microsoft.azure.sdk.iot.common.helpers.DeviceTestManager;
 
+import javax.tools.Tool;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
@@ -40,7 +42,6 @@ import static org.junit.Assert.*;
  */
 public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
 {
-    private static final String IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME = "IOTHUB_CONNECTION_STRING";
     protected static String iotHubConnectionString = "";
     protected static String publicKeyCert;
     protected static String privateKey;
@@ -54,6 +55,8 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
 
     private static Device deviceX509;
     private static Module moduleX509;
+
+    private static String hostName;
 
     private static final Long RESPONSE_TIMEOUT = TimeUnit.SECONDS.toSeconds(200);
     private static final Long CONNECTION_TIMEOUT = TimeUnit.SECONDS.toSeconds(5);
@@ -77,6 +80,8 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
     {
         methodServiceClient = DeviceMethod.createFromConnectionString(iotHubConnectionString);
         registryManager = RegistryManager.createFromConnectionString(iotHubConnectionString);
+
+        hostName = com.microsoft.azure.sdk.iot.service.IotHubConnectionString.createConnectionString(iotHubConnectionString).getHostName();
 
         deviceTestManagers = new ArrayList<>();
 
@@ -177,6 +182,16 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
             this.clientType = clientType;
             this.device = device;
             this.module = module;
+        }
+
+        public String getModuleIdIfPresent()
+        {
+            if (this.module != null)
+            {
+                return this.module.getId();
+            }
+
+            return null;
         }
     }
 
@@ -323,10 +338,10 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
         deviceTestManger.waitIotHub(1, 10);
 
         // Assert
-        assertNotNull(result);
-        assertEquals((long)DeviceEmulator.METHOD_SUCCESS, (long)result.getStatus());
-        assertEquals(DeviceEmulator.METHOD_LOOPBACK + ":" + PAYLOAD_STRING, result.getPayload());
-        Assert.assertEquals(0, deviceTestManger.getStatusError());
+        assertNotNull(Tools.buildExceptionMessage("Unexpected null result", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), result);
+        assertEquals(Tools.buildExceptionMessage("Unexpected status: " + (long)result.getStatus(), hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), (long)DeviceEmulator.METHOD_SUCCESS, (long)result.getStatus());
+        assertEquals(Tools.buildExceptionMessage("Payload did not match expectations: " + result.getPayload(), hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), DeviceEmulator.METHOD_LOOPBACK + ":" + PAYLOAD_STRING, result.getPayload());
+        Assert.assertEquals(Tools.buildExceptionMessage("Device test manager encountered an error", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), deviceTestManger.getStatusError());
     }
 
     @Test
@@ -356,9 +371,9 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
         for (RunnableInvoke run:runs)
         {
             MethodResult result = run.getResult();
-            assertNotNull((run.getException() == null ? "Runnable returns null without exception information" : run.getException().getMessage()), result);
-            assertEquals((long)DeviceEmulator.METHOD_SUCCESS,(long)result.getStatus());
-            assertEquals(run.getExpectedPayload(), result.getPayload().toString());
+            assertNotNull(Tools.buildExceptionMessage((run.getException() == null ? "Runnable returns null without exception information" : run.getException().getMessage()), hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), result);
+            assertEquals(Tools.buildExceptionMessage("Expected 200, but received " + result.getStatus(), hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()),(long)DeviceEmulator.METHOD_SUCCESS, (long)result.getStatus());
+            assertEquals(Tools.buildExceptionMessage("Received unexpected payload: " + result.getPayload().toString(), hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), run.getExpectedPayload(), result.getPayload().toString());
         }
     }
 
@@ -382,10 +397,10 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
         deviceTestManger.waitIotHub(1, 10);
 
         // Assert
-        assertNotNull(result);
-        assertEquals((long)DeviceEmulator.METHOD_SUCCESS, (long)result.getStatus());
+        assertNotNull(Tools.buildExceptionMessage("Unexpected null result", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), result);
+        assertEquals(Tools.buildExceptionMessage("Expected 200, but received " + result.getStatus(), hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()),(long)DeviceEmulator.METHOD_SUCCESS, (long)result.getStatus());
         assertEquals(DeviceEmulator.METHOD_LOOPBACK + ":" + PAYLOAD_STRING, result.getPayload());
-        Assert.assertEquals(0, deviceTestManger.getStatusError());
+        Assert.assertEquals(Tools.buildExceptionMessage("Device test manager encountered an error", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), deviceTestManger.getStatusError());
     }
 
     @Test
@@ -407,10 +422,10 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
         deviceTestManger.waitIotHub(1, 10);
 
         // Assert
-        assertNotNull(result);
-        assertEquals((long)DeviceEmulator.METHOD_SUCCESS, (long)result.getStatus());
+        assertNotNull(Tools.buildExceptionMessage("Unexpected null result", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), result);
+        assertEquals(Tools.buildExceptionMessage("Expected 200, but received " + result.getStatus(), hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()),(long)DeviceEmulator.METHOD_SUCCESS, (long)result.getStatus());
         assertEquals(DeviceEmulator.METHOD_LOOPBACK + ":null", result.getPayload());
-        Assert.assertEquals(0, deviceTestManger.getStatusError());
+        Assert.assertEquals(Tools.buildExceptionMessage("Device test manager encountered an error", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), deviceTestManger.getStatusError());
     }
 
     @Test
@@ -432,10 +447,10 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
         deviceTestManger.waitIotHub(1, 10);
 
         // Assert
-        assertNotNull(result);
-        assertEquals((long)DeviceEmulator.METHOD_SUCCESS, (long)result.getStatus());
+        assertNotNull(Tools.buildExceptionMessage("Unexpected null result", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), result);
+        assertEquals(Tools.buildExceptionMessage("Expected 200, but received " + result.getStatus(), hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()),(long)DeviceEmulator.METHOD_SUCCESS, (long)result.getStatus());
         assertEquals(DeviceEmulator.METHOD_DELAY_IN_MILLISECONDS + ":succeed", result.getPayload());
-        Assert.assertEquals(0, deviceTestManger.getStatusError());
+        Assert.assertEquals(Tools.buildExceptionMessage("Device test manager encountered an error", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), deviceTestManger.getStatusError());
     }
 
     @Test
@@ -457,10 +472,10 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
         deviceTestManger.waitIotHub(1, 10);
 
         // Assert
-        assertNotNull(result);
+        assertNotNull(Tools.buildExceptionMessage("Unexpected null result", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), result);
         assertEquals((long)DeviceEmulator.METHOD_THROWS, (long)result.getStatus());
         assertEquals("java.lang.NumberFormatException: For input string: \"" + PAYLOAD_STRING + "\"", result.getPayload());
-        Assert.assertEquals(0, deviceTestManger.getStatusError());
+        Assert.assertEquals(Tools.buildExceptionMessage("Device test manager encountered an error", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), deviceTestManger.getStatusError());
     }
 
     @Test
@@ -482,10 +497,10 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
         deviceTestManger.waitIotHub(1, 10);
 
         // Assert
-        assertNotNull(result);
-        assertEquals((long)DeviceEmulator.METHOD_NOT_DEFINED, (long)result.getStatus());
-        Assert.assertEquals("unknown:" + DeviceEmulator.METHOD_UNKNOWN, result.getPayload());
-        Assert.assertEquals(0, deviceTestManger.getStatusError());
+        assertNotNull(Tools.buildExceptionMessage("Unexpected null result", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), result);
+        assertEquals(Tools.buildExceptionMessage("Expected METHOD_NOT_FOUND but received: " + result.getStatus(), hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), (long)DeviceEmulator.METHOD_NOT_DEFINED, (long)result.getStatus());
+        Assert.assertEquals(Tools.buildExceptionMessage("Expected METHOD_UNKNOWN but received: " + result.getPayload(), hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), "unknown:" + DeviceEmulator.METHOD_UNKNOWN, result.getPayload());
+        Assert.assertEquals(Tools.buildExceptionMessage("Device test manager encountered an error", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), deviceTestManger.getStatusError());
     }
 
     @Test
@@ -524,10 +539,10 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
         deviceTestManger.waitIotHub(1, 10);
 
         // Assert
-        assertNotNull(result);
-        assertEquals((long)DeviceEmulator.METHOD_SUCCESS, (long)result.getStatus());
-        assertEquals(DeviceEmulator.METHOD_DELAY_IN_MILLISECONDS + ":succeed", result.getPayload());
-        Assert.assertEquals(0, deviceTestManger.getStatusError());
+        assertNotNull(Tools.buildExceptionMessage("Unexpected null result", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), result);
+        assertEquals(Tools.buildExceptionMessage("Expected 200, but received " + result.getStatus(), hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()),(long)DeviceEmulator.METHOD_SUCCESS, (long)result.getStatus());
+        assertEquals(Tools.buildExceptionMessage("Received unexpected payload: " + result.getPayload(), hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), DeviceEmulator.METHOD_DELAY_IN_MILLISECONDS + ":succeed", result.getPayload());
+        Assert.assertEquals(Tools.buildExceptionMessage("Device test manager encountered an error", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), deviceTestManger.getStatusError());
     }
 
     @Test
@@ -549,10 +564,10 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
         deviceTestManger.waitIotHub(1, 10);
 
         // Assert
-        assertNotNull(result);
-        assertEquals((long)DeviceEmulator.METHOD_SUCCESS, (long)result.getStatus());
-        assertEquals(DeviceEmulator.METHOD_DELAY_IN_MILLISECONDS + ":succeed", result.getPayload());
-        Assert.assertEquals(0, deviceTestManger.getStatusError());
+        assertNotNull(Tools.buildExceptionMessage("Unexpected null result", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), result);
+        assertEquals(Tools.buildExceptionMessage("Expected 200, but received " + result.getStatus(), hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()),(long)DeviceEmulator.METHOD_SUCCESS, (long)result.getStatus());
+        assertEquals(Tools.buildExceptionMessage("Received unexpected payload: " + result.getPayload(), hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), DeviceEmulator.METHOD_DELAY_IN_MILLISECONDS + ":succeed", result.getPayload());
+        Assert.assertEquals(Tools.buildExceptionMessage("Device test manager encountered an error", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), deviceTestManger.getStatusError());
     }
 
     @Test
@@ -574,10 +589,10 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
         deviceTestManger.waitIotHub(1, 10);
 
         // Assert
-        assertNotNull(result);
-        assertEquals((long)DeviceEmulator.METHOD_SUCCESS, (long)result.getStatus());
+        assertNotNull(Tools.buildExceptionMessage("Unexpected null result", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), result);
+        assertEquals(Tools.buildExceptionMessage("Expected 200, but received " + result.getStatus(), hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()),(long)DeviceEmulator.METHOD_SUCCESS, (long)result.getStatus());
         assertEquals(DeviceEmulator.METHOD_DELAY_IN_MILLISECONDS + ":succeed", result.getPayload());
-        Assert.assertEquals(0, deviceTestManger.getStatusError());
+        Assert.assertEquals(Tools.buildExceptionMessage("Device test manager encountered an error", hostName, testInstance.device.getDeviceId(), testInstance.protocol.toString(), testInstance.getModuleIdIfPresent()), deviceTestManger.getStatusError());
     }
 
     @Test (expected = IotHubGatewayTimeoutException.class)
@@ -888,7 +903,7 @@ public class DeviceMethodCommon extends MethodNameLoggingIntegrationTest
                 this.testInstance.protocol);
 
         // Assert
-        IotHubServicesCommon.waitForStabilizedConnection(actualStatusUpdates, ERROR_INJECTION_WAIT_TIMEOUT);
+        IotHubServicesCommon.waitForStabilizedConnection(actualStatusUpdates, ERROR_INJECTION_WAIT_TIMEOUT, hostName, testInstance.device.getDeviceId(), testInstance.getModuleIdIfPresent(), testInstance.protocol.toString());
         invokeMethodSucceed();
     }
 }

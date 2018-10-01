@@ -12,6 +12,7 @@ import com.microsoft.azure.sdk.iot.common.iothubservices.SendMessagesCommon;
 import com.microsoft.azure.sdk.iot.device.*;
 import com.microsoft.azure.sdk.iot.device.exceptions.ModuleClientException;
 import com.microsoft.azure.sdk.iot.service.Device;
+import com.microsoft.azure.sdk.iot.service.Module;
 import com.microsoft.azure.sdk.iot.service.auth.AuthenticationType;
 import com.microsoft.azure.sdk.iot.service.exceptions.IotHubException;
 import org.junit.runner.RunWith;
@@ -29,7 +30,7 @@ public class SendMessagesIT extends SendMessagesCommon
     @Parameterized.Parameters(name = "{1} with {3} auth using {4}")
     public static Collection inputs() throws IOException, IotHubException, GeneralSecurityException, URISyntaxException, ModuleClientException
     {
-        iotHubConnectionString = Tools.retrieveEnvironmentVariableValue(TestConstants.IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME);
+        iotHubConnectionString = "HostName=TimsPOCHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nObLi2HnDr1ona1Tzunmwcutase3Tlp+alCGgLcylIs=";//Tools.retrieveEnvironmentVariableValue(TestConstants.IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME);
         X509Cert cert = new X509Cert(0,false, "TestLeaf", "TestRoot");
         privateKey =  cert.getPrivateKeyLeafPem();
         publicKeyCert = cert.getPublicCertLeafPem();
@@ -37,8 +38,8 @@ public class SendMessagesIT extends SendMessagesCommon
         return SendMessagesCommon.inputsCommon();
     }
 
-    public SendMessagesIT(InternalClient client, IotHubClientProtocol protocol, Device device, AuthenticationType authenticationType, String clientType)
+    public SendMessagesIT(InternalClient client, IotHubClientProtocol protocol, Device device, AuthenticationType authenticationType, String clientType, Module module)
     {
-        super(client, protocol, device, authenticationType, clientType);
+        super(client, protocol, device, authenticationType, clientType, module);
     }
 }

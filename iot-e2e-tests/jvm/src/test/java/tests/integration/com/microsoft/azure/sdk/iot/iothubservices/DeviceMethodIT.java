@@ -26,7 +26,7 @@ public class DeviceMethodIT extends DeviceMethodCommon
     @Parameterized.Parameters(name = "{1} with {2} auth using {3}")
     public static Collection inputsCommons() throws IOException, IotHubException, GeneralSecurityException, URISyntaxException, InterruptedException, ModuleClientException
     {
-        iotHubConnectionString = Tools.retrieveEnvironmentVariableValue(TestConstants.IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME);
+        iotHubConnectionString = "HostName=TimsPOCHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nObLi2HnDr1ona1Tzunmwcutase3Tlp+alCGgLcylIs=";//Tools.retrieveEnvironmentVariableValue(TestConstants.IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME);
         X509Cert cert = new X509Cert(0,false, "TestLeaf", "TestRoot");
         privateKey =  cert.getPrivateKeyLeafPem();
         publicKeyCert = cert.getPublicCertLeafPem();

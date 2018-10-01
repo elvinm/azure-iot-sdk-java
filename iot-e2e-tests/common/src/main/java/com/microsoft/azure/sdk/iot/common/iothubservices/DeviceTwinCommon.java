@@ -8,6 +8,7 @@ package com.microsoft.azure.sdk.iot.common.iothubservices;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.microsoft.azure.sdk.iot.common.*;
+import com.microsoft.azure.sdk.iot.common.helpers.Tools;
 import com.microsoft.azure.sdk.iot.device.*;
 import com.microsoft.azure.sdk.iot.device.DeviceTwin.Device;
 import com.microsoft.azure.sdk.iot.device.DeviceTwin.Property;
@@ -77,7 +78,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
     private static RawTwinQuery scRawTwinQueryClient;
     private static DeviceTwin sCDeviceTwin;
     private static DeviceState deviceUnderTest = null;
-
+    private static String hostName;
     private static DeviceState[] devicesUnderTest;
 
     private DeviceTwinCommon.DeviceTwinITRunner testInstance;
@@ -265,7 +266,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                             false);
                 }
             }
-            IotHubServicesCommon.openClientWithRetry(internalClient);
+            IotHubServicesCommon.openClientWithRetry(internalClient, hostName, testInstance.deviceId, testInstance.moduleId, testInstance.protocol.toString());
             if (internalClient instanceof DeviceClient)
             {
                 ((DeviceClient) internalClient).startDeviceTwin(new DeviceTwinStatusCallBack(), deviceState, deviceState.dCDeviceForTwin, deviceState);
@@ -318,6 +319,8 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         registryManager = RegistryManager.createFromConnectionString(iotHubConnectionString);
         scRawTwinQueryClient = RawTwinQuery.createFromConnectionString(iotHubConnectionString);
 
+        hostName = com.microsoft.azure.sdk.iot.service.IotHubConnectionString.createConnectionString(iotHubConnectionString).getHostName();
+        
         String uuid = UUID.randomUUID().toString();
         String deviceIdAmqps = "java-device-client-e2e-test-amqps".concat("-" + uuid);
         String deviceIdAmqpsWs = "java-device-client-e2e-test-amqpsws".concat("-" + uuid);
@@ -495,7 +498,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                     {
                         fail(e.getMessage());
                     }
-                    assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+                    assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
                 }
             });
         }
@@ -508,7 +511,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
 
         // verify if they are received by SC
         int actualReportedPropFound = readReportedProperties(deviceUnderTest, PROPERTY_KEY, PROPERTY_VALUE);
-        assertEquals(MAX_PROPERTIES_TO_TEST.intValue(), actualReportedPropFound);
+        assertEquals(Tools.buildExceptionMessage("Missing reported properties", hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), MAX_PROPERTIES_TO_TEST.intValue(), actualReportedPropFound);
     }
 
     @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
@@ -523,12 +526,12 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
             deviceUnderTest.dCDeviceForTwin.createNewReportedProperties(1);
             internalClient.sendReportedProperties(deviceUnderTest.dCDeviceForTwin.getReportedProp());
             Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
-            assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+            assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
         }
 
         Thread.sleep(MAXIMUM_TIME_FOR_IOTHUB_PROPAGATION_BETWEEN_DEVICE_SERVICE_CLIENTS);
         int actualReportedPropFound = readReportedProperties(deviceUnderTest, PROPERTY_KEY, PROPERTY_VALUE);
-        assertEquals(MAX_PROPERTIES_TO_TEST.intValue(), actualReportedPropFound);
+        assertEquals(Tools.buildExceptionMessage("Missing reported properties", hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), MAX_PROPERTIES_TO_TEST.intValue(), actualReportedPropFound);
 
     }
 
@@ -548,12 +551,12 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         // assert
-        assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+        assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
 
         // verify if they are received by SC
         Thread.sleep(MAXIMUM_TIME_FOR_IOTHUB_PROPAGATION_BETWEEN_DEVICE_SERVICE_CLIENTS);
         int actualReportedPropFound = readReportedProperties(deviceUnderTest, PROPERTY_KEY, PROPERTY_VALUE_UPDATE);
-        assertEquals(MAX_PROPERTIES_TO_TEST.intValue(), actualReportedPropFound);
+        assertEquals(Tools.buildExceptionMessage("Missing reported properties", hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), MAX_PROPERTIES_TO_TEST.intValue(), actualReportedPropFound);
     }
 
     @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
@@ -586,7 +589,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                     {
                         fail(e.getMessage());
                     }
-                    assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+                    assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
                 }
             });
         }
@@ -598,12 +601,12 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         }
 
         // assert
-        assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+        assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
 
         // verify if they are received by SC
         Thread.sleep(MAXIMUM_TIME_FOR_IOTHUB_PROPAGATION_BETWEEN_DEVICE_SERVICE_CLIENTS);
         int actualReportedPropFound = readReportedProperties(deviceUnderTest, PROPERTY_KEY, PROPERTY_VALUE_UPDATE);
-        assertEquals(MAX_PROPERTIES_TO_TEST.intValue(), actualReportedPropFound);
+        assertEquals(Tools.buildExceptionMessage("Missing reported properties", hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), MAX_PROPERTIES_TO_TEST.intValue(), actualReportedPropFound);
     }
 
     @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
@@ -625,12 +628,12 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         // assert
-        assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+        assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
 
         // verify if they are received by SC
         Thread.sleep(MAXIMUM_TIME_FOR_IOTHUB_PROPAGATION_BETWEEN_DEVICE_SERVICE_CLIENTS);
         int actualReportedPropFound = readReportedProperties(deviceUnderTest, PROPERTY_KEY, PROPERTY_VALUE_UPDATE);
-        assertEquals(MAX_PROPERTIES_TO_TEST.intValue(), actualReportedPropFound);
+        assertEquals(Tools.buildExceptionMessage("Missing reported properties", hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), MAX_PROPERTIES_TO_TEST.intValue(), actualReportedPropFound);
     }
 
     private void subscribeToDesiredPropertiesAndVerify(int numOfProp) throws IOException, InterruptedException, IotHubException
@@ -659,12 +662,12 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         // assert
-        assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+        assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
         for (PropertyState propertyState : deviceUnderTest.dCDeviceForTwin.propertyStateList)
         {
-            assertTrue("Callback was not triggered for one or more properties", propertyState.callBackTriggered);
+            assertTrue(Tools.buildExceptionMessage("Callback was not triggered for one or more properties", hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), propertyState.callBackTriggered);
             assertTrue(((String) propertyState.propertyNewValue).startsWith(PROPERTY_VALUE_UPDATE));
-            assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+            assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
         }
     }
 
@@ -703,13 +706,13 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         // assert
-        assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+        assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
         for (PropertyState propertyState : deviceUnderTest.dCDeviceForTwin.propertyStateList)
         {
-            assertTrue("Callback was not triggered for one or more properties", propertyState.callBackTriggered);
-            assertNotEquals("Version was not set in the callback", (int)propertyState.propertyNewVersion, -1);
+            assertTrue(Tools.buildExceptionMessage("Callback was not triggered for one or more properties", hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), propertyState.callBackTriggered);
+            assertNotEquals(Tools.buildExceptionMessage("Version was not set in the callback", hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), (int)propertyState.propertyNewVersion, -1);
             assertTrue(((String) propertyState.propertyNewValue).startsWith(PROPERTY_VALUE_UPDATE));
-            assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+            assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
         }
     }
 
@@ -756,13 +759,13 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
         // assert
-        assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+        assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
         for (PropertyState propertyState : deviceUnderTest.dCDeviceForTwin.propertyStateList)
         {
-            assertTrue("Callback was not triggered for one or more properties", propertyState.callBackTriggered);
-            assertNotEquals("Version was not set in the callback", (int)propertyState.propertyNewVersion, -1);
+            assertTrue(Tools.buildExceptionMessage("Callback was not triggered for one or more properties", hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), propertyState.callBackTriggered);
+            assertNotEquals(Tools.buildExceptionMessage("Version was not set in the callback", hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), (int)propertyState.propertyNewVersion, -1);
             assertTrue(((String) propertyState.propertyNewValue).startsWith(PROPERTY_VALUE_UPDATE));
-            assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+            assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
         }
     }
 
@@ -820,7 +823,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         {
             assertTrue(propertyState.property.toString(), propertyState.callBackTriggered);
             assertTrue(((String) propertyState.propertyNewValue).startsWith(PROPERTY_VALUE_UPDATE));
-            assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+            assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
         }
     }
 
@@ -855,7 +858,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         {
             assertTrue(propertyState.property.toString(), propertyState.callBackTriggered);
             assertTrue(((String) propertyState.propertyNewValue).startsWith(PROPERTY_VALUE_UPDATE));
-            assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+            assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
         }
     }
 
@@ -2094,10 +2097,13 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                 errorInjectionMsgAndRet,
                 RETRY_MILLISECONDS,
                 SEND_TIMEOUT_MILLISECONDS,
-                this.testInstance.protocol);
+                this.testInstance.protocol, 
+                hostName, 
+                this.testInstance.deviceId, 
+                this.testInstance.moduleId);
 
         // Assert
-        IotHubServicesCommon.waitForStabilizedConnection(actualStatusUpdates, ERROR_INJECTION_WAIT_TIMEOUT);
+        IotHubServicesCommon.waitForStabilizedConnection(actualStatusUpdates, ERROR_INJECTION_WAIT_TIMEOUT, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId);
         // add one new reported property
         deviceUnderTest.dCDeviceForTwin.createNewReportedProperties(1);
         internalClient.sendReportedProperties(deviceUnderTest.dCDeviceForTwin.getReportedProp());
@@ -2123,10 +2129,13 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                 errorInjectionMsgAndRet,
                 RETRY_MILLISECONDS,
                 SEND_TIMEOUT_MILLISECONDS,
-                this.testInstance.protocol);
+                this.testInstance.protocol,
+                hostName,
+                testInstance.deviceId,
+                testInstance.moduleId);
 
         // Assert
-        IotHubServicesCommon.waitForStabilizedConnection(actualStatusUpdates, ERROR_INJECTION_WAIT_TIMEOUT);
+        IotHubServicesCommon.waitForStabilizedConnection(actualStatusUpdates, ERROR_INJECTION_WAIT_TIMEOUT, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId);
         deviceUnderTest.dCDeviceForTwin.propertyStateList.get(0).callBackTriggered = false;
         assertEquals(1, deviceUnderTest.sCDeviceForTwin.getDesiredProperties().size());
         Set<Pair> dp = new HashSet<>();
@@ -2140,7 +2149,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
 
         assertTrue("Callback was not triggered for one or more properties", deviceUnderTest.dCDeviceForTwin.propertyStateList.get(0).callBackTriggered);
         assertTrue(((String) deviceUnderTest.dCDeviceForTwin.propertyStateList.get(0).propertyNewValue).startsWith(PROPERTY_VALUE_UPDATE + "2"));
-        assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+        assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
     }
 
     private void errorInjectionGetDeviceTwinFlow(Message errorInjectionMessage) throws Exception
@@ -2157,10 +2166,13 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                 errorInjectionMsgAndRet,
                 RETRY_MILLISECONDS,
                 SEND_TIMEOUT_MILLISECONDS,
-                this.testInstance.protocol);
+                this.testInstance.protocol,
+                hostName,
+                testInstance.deviceId,
+                testInstance.moduleId);
 
         // Assert
-        IotHubServicesCommon.waitForStabilizedConnection(actualStatusUpdates, ERROR_INJECTION_WAIT_TIMEOUT);
+        IotHubServicesCommon.waitForStabilizedConnection(actualStatusUpdates, ERROR_INJECTION_WAIT_TIMEOUT, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId);
         for (PropertyState propertyState : deviceUnderTest.dCDeviceForTwin.propertyStateList)
         {
             propertyState.callBackTriggered = false;
@@ -2178,13 +2190,13 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
 
         Thread.sleep(MAXIMUM_TIME_TO_WAIT_FOR_IOTHUB);
 
-        assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+        assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
         for (PropertyState propertyState : deviceUnderTest.dCDeviceForTwin.propertyStateList)
         {
-            assertTrue("Callback was not triggered for one or more properties", propertyState.callBackTriggered);
-            assertNotEquals("Version was not set in the callback", (int)propertyState.propertyNewVersion, -1);
+            assertTrue(Tools.buildExceptionMessage("Callback was not triggered for one or more properties", hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), propertyState.callBackTriggered);
+            assertNotEquals(Tools.buildExceptionMessage("Version was not set in the callback", hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), (int)propertyState.propertyNewVersion, -1);
             assertTrue(((String) propertyState.propertyNewValue).startsWith(PROPERTY_VALUE_UPDATE));
-            assertEquals(deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
+            assertEquals(Tools.buildExceptionMessage("Expected SUCCESS but got " + deviceUnderTest.deviceTwinStatus, hostName, testInstance.deviceId, testInstance.protocol.toString(), testInstance.moduleId), deviceUnderTest.deviceTwinStatus, STATUS.SUCCESS);
         }
     }
 }

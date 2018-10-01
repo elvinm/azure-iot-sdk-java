@@ -12,7 +12,7 @@ public class FileUploadIT extends FileUploadCommon
     @BeforeClass
     public static void setup() throws IOException
     {
-        iotHubConnectionString = Tools.retrieveEnvironmentVariableValue(TestConstants.IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME);
+        iotHubConnectionString = "HostName=TimsPOCHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nObLi2HnDr1ona1Tzunmwcutase3Tlp+alCGgLcylIs=";//Tools.retrieveEnvironmentVariableValue(TestConstants.IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME);
         FileUploadCommon.setUp();
     }
 }

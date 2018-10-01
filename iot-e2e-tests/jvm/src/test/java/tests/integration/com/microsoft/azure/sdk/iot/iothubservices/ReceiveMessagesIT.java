@@ -30,7 +30,7 @@ public class ReceiveMessagesIT extends ReceiveMessagesCommon
     @Parameterized.Parameters(name = "{1} with {4} auth using {5}")
     public static Collection inputs() throws IOException, IotHubException, GeneralSecurityException, URISyntaxException, ModuleClientException
     {
-        iotHubConnectionString = Tools.retrieveEnvironmentVariableValue(TestConstants.IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME);
+        iotHubConnectionString = "HostName=TimsPOCHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nObLi2HnDr1ona1Tzunmwcutase3Tlp+alCGgLcylIs=";//Tools.retrieveEnvironmentVariableValue(TestConstants.IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME);
         X509Cert cert = new X509Cert(0,false, "TestLeaf", "TestRoot");
         privateKey =  cert.getPrivateKeyLeafPem();
         publicKeyCert = cert.getPublicCertLeafPem();

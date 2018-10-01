@@ -20,7 +20,7 @@ public class DeviceTwinIT extends DeviceTwinCommon
     @Parameterized.Parameters(name = "{2} with {3} auth using {4}")
     public static Collection inputsCommons() throws IOException, GeneralSecurityException
     {
-        iotHubConnectionString = Tools.retrieveEnvironmentVariableValue(TestConstants.IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME);
+        iotHubConnectionString = "HostName=TimsPOCHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nObLi2HnDr1ona1Tzunmwcutase3Tlp+alCGgLcylIs=";//Tools.retrieveEnvironmentVariableValue(TestConstants.IOT_HUB_CONNECTION_STRING_ENV_VAR_NAME);
         X509Cert cert = new X509Cert(0,false, "TestLeaf", "TestRoot");
         privateKey =  cert.getPrivateKeyLeafPem();
         publicKeyCert = cert.getPublicCertLeafPem();
