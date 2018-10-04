@@ -53,7 +53,7 @@ import static org.junit.Assert.assertNotNull;
  * 94% method,
  * 88% line
  */
-@Ignore
+
 public class AmqpsIotHubConnectionTest {
 
     final String hostName = "test.host.name";
@@ -218,9 +218,6 @@ public class AmqpsIotHubConnectionTest {
 
     @Mocked
     MessageImpl mockedMessageImpl;
-
-    @Mocked
-    AmqpsIotHubConnection.ReconnectionTask mockedReconnectionTask;
 
     // Tests_SRS_AMQPSIOTHUBCONNECTION_15_001: [The constructor shall throw IllegalArgumentException if
     // any of the parameters of the configuration is null or empty.]
@@ -2012,8 +2009,8 @@ public class AmqpsIotHubConnectionTest {
         baseExpectations();
         final AmqpsIotHubConnection connection = new AmqpsIotHubConnection(mockConfig);
         connection.setListener(mockedIotHubListener);
-        Deencapsulation.setField(connection, "reactor", mockReactor);
-        new NonStrictExpectations()
+        Deencapsulation.setField(connection, "scheduledExecutorService", mockScheduledExecutorService);
+        new NonStrictExpectations(connection)
         {
             {
                 mockEvent.getTransport();
@@ -2024,6 +2021,7 @@ public class AmqpsIotHubConnectionTest {
                 result = mockedSymbol;
                 mockedSymbol.toString();
                 result = AmqpSessionWindowViolationException.errorCode;
+                Deencapsulation.invoke(connection, "scheduleReconnection", new Class[] {Throwable.class}, (Throwable) any);
             }
         };
 
@@ -2034,7 +2032,9 @@ public class AmqpsIotHubConnectionTest {
         new Verifications()
         {
             {
-                Deencapsulation.newInstance(AmqpsIotHubConnection.ReconnectionTask.class, new Class[] {Throwable.class, IotHubListener.class, String.class}, any, mockedIotHubListener, connection.getConnectionId());
+                Deencapsulation.invoke(connection, "scheduleReconnection", new Class[] {Throwable.class}, (Throwable) any);
+                times = 1;
+                Deencapsulation.newInstance(AmqpsIotHubConnection.ReconnectionTask.class, new Class[] {Throwable.class, IotHubListener.class, String.class}, any, mockedIotHubListener, connection.connectionId);
                 times = 1;
             }
         };
