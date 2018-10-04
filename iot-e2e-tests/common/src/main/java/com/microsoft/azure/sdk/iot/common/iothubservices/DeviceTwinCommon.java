@@ -766,6 +766,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         }
     }
 
+    @Ignore
     @Test(timeout = MAX_MILLISECS_TIMEOUT_KILL_TEST)
     public void testSubscribeToDesiredPropertiesMultiThreaded() throws IOException, InterruptedException, IotHubException
     {
@@ -1471,6 +1472,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
         removeMultipleDevices(MAX_DEVICES);
     }
 
+    @Ignore
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
     public void sendReportedPropertiesRecoveredFromTcpConnectionDrop() throws Exception
     {
@@ -1479,6 +1481,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                 ErrorInjectionHelper.DefaultDurationInSec));
     }
 
+    @Ignore
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
     public void subscribeToDesiredPropertiesRecoveredFromTcpConnectionDrop() throws Exception
     {
@@ -1496,6 +1499,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                 ErrorInjectionHelper.DefaultDurationInSec));
     }
 
+    @Ignore
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
     public void sendReportedPropertiesRecoveredFromAmqpsConnectionDrop() throws Exception
     {
@@ -1535,7 +1539,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                 ErrorInjectionHelper.DefaultDelayInSec,
                 ErrorInjectionHelper.DefaultDurationInSec));
     }
-
+    @Ignore
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
     public void sendReportedPropertiesRecoveredFromAmqpsSessionDrop() throws Exception
     {
@@ -1575,7 +1579,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                 ErrorInjectionHelper.DefaultDelayInSec,
                 ErrorInjectionHelper.DefaultDurationInSec));
     }
-
+    @Ignore
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
     public void sendReportedPropertiesRecoveredFromAmqpsCBSReqLinkDrop() throws Exception
     {
@@ -1633,7 +1637,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                 ErrorInjectionHelper.DefaultDelayInSec,
                 ErrorInjectionHelper.DefaultDurationInSec));
     }
-
+    @Ignore
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
     public void sendReportedPropertiesRecoveredFromAmqpsCBSRespLinkDrop() throws Exception
     {
@@ -1691,7 +1695,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                 ErrorInjectionHelper.DefaultDelayInSec,
                 ErrorInjectionHelper.DefaultDurationInSec));
     }
-
+    @Ignore
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
     public void sendReportedPropertiesRecoveredFromAmqpsD2CLinkDrop() throws Exception
     {
@@ -1731,7 +1735,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                 ErrorInjectionHelper.DefaultDelayInSec,
                 ErrorInjectionHelper.DefaultDurationInSec));
     }
-
+    @Ignore
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
     public void sendReportedPropertiesRecoveredFromAmqpsC2DLinkDrop() throws Exception
     {
@@ -1793,7 +1797,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                 ErrorInjectionHelper.DefaultDelayInSec,
                 ErrorInjectionHelper.DefaultDurationInSec));
     }
-
+    @Ignore
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
     public void sendReportedPropertiesRecoveredFromAmqpsTwinReqLinkDrop() throws Exception
     {
@@ -1854,7 +1858,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                 ErrorInjectionHelper.DefaultDelayInSec,
                 ErrorInjectionHelper.DefaultDurationInSec));
     }
-
+    @Ignore
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
     public void sendReportedPropertiesRecoveredFromAmqpsTwinRespLinkDrop() throws Exception
     {
@@ -1915,7 +1919,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                 ErrorInjectionHelper.DefaultDelayInSec,
                 ErrorInjectionHelper.DefaultDurationInSec));
     }
-
+    @Ignore
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
     public void sendReportedPropertiesRecoveredFromAmqpsMethodReqLinkDrop() throws Exception
     {
@@ -1976,7 +1980,7 @@ public class DeviceTwinCommon extends MethodNameLoggingIntegrationTest
                 ErrorInjectionHelper.DefaultDelayInSec,
                 ErrorInjectionHelper.DefaultDurationInSec));
     }
-
+    @Ignore
     @Test(timeout = ERROR_INJECTION_EXECUTION_TIMEOUT)
     public void sendReportedPropertiesRecoveredFromAmqpsMethodRespLinkDrop() throws Exception
     {
